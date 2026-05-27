@@ -12259,7 +12259,45 @@
         "detail": "Current-standard review revalidated 常|じょう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading じょう, MeaningJP usual / normal, KanjiMeanings usual / normal / always / common / continually / long-lasting / ordinary / regular, example sentence 日常の生活を大切にしています。, reading にちじょうのせいかつをたいせつにしています。, translation I value everyday life., notes/support surface 常 / 日常 / 通常 / 非常 / 常に, audio kanji-reading-常-じょう, stroke-order media, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; Obsidian proof is recorded separately only when rereviewProvenance is present."
       }
     ],
-    "fixSummary": "Corrected PrimaryReading from the support word-form つねに to the exact source-backed kanji reading じょう; refreshed meaning, example, notes, evidence, and media expectations."
+    "fixSummary": "Corrected PrimaryReading from the support word-form つねに to the exact source-backed kanji reading じょう; refreshed meaning, example, notes, evidence, and media expectations.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "常|じょう",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 常; DisplayWord 常; StudyWordKanji (blank); PrimaryReading じょう; MeaningJP usual / normal; KanjiMeanings usual / normal / always / common / continually / long-lasting / ordinary / regular; OnReading ジョウ; KunReading つね、 とこ-; Notes <ruby>常<rt>じょう</rt></ruby> - usual / normal ／ <ruby>日常<rt>にちじょう</rt></ruby> - everyday life ／ <ruby>通常<rt>つうじょう</rt></ruby> - usually / normal ／ <ruby>非常<rt>ひじょう</rt></ruby> - emergency / extraordinary ／ <ruby>常<rt>つね</rt></ruby>に - always; Example 日常の生活を大切にしています。 ／ にちじょうのせいかつをたいせつにしています。 ／ I value everyday life.; Audio [sound:5E38_常-kanji-reading-常-じょう.wav]; StrokeOrder <img src=\"5E38_常-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 日常|にちじょう; englishMeaning usual / normal; preferred words 日常 / 通常 / 非常 / 常に; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 日常の生活を大切にしています。 / にちじょうのせいかつをたいせつにしています。 / I value everyday life..",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading じょう; meaning usual / normal; broader usual / normal; notes 常 / 日常 / 通常 / 非常 / 常に; example 日常の生活を大切にしています。.",
+        "tracked governed Japanese source evidence rechecked for 常|じょう: https://www.kanjipedia.jp/kanji/0003505300; Bunka Joyo Kanji reading index; Japanese-source corrective review for 常|じょう: Kanjipedia lists 音 ジョウ, 訓 つね and とこ, with meanings including usual, normal, always, and ordinary, with compounds such as 日常, 通常, and 非常; governed inventory lists ジョウ, つね, and とこ. This supports exact source-backed PrimaryReading じょう, MeaningJP usual / normal, and KanjiMeanings usual / normal for the individual kanji 常. 常に remains support vocabulary, not the primary kanji reading.",
+        "primary reading, on/kun, and meaning decision: Uses じょう because it is an exact governed on-reading for the individual kanji 常 and appears in common N3-useful compounds such as 日常 and 通常; 常に remains support vocabulary but not the primary kanji reading. Reviewer judgment confirms PrimaryReading じょう, OnReading ジョウ, KunReading つね、 とこ-, MeaningJP usual / normal, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>常<rt>じょう</rt></ruby> - usual / normal ／ <ruby>日常<rt>にちじょう</rt></ruby> - everyday life ／ <ruby>通常<rt>つうじょう</rt></ruby> - usually / normal ／ <ruby>非常<rt>ひじょう</rt></ruby> - emergency / extraordinary ／ <ruby>常<rt>つね</rt></ruby>に - always stays support-only for the single-kanji anchor 常; support vocabulary clarifies common usage while DisplayWord remains 常 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 日常の生活を大切にしています。 / にちじょうのせいかつをたいせつにしています。 / I value everyday life.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0156; priority routine; signal n3-kanji-0097; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading つね; live card reading じょう; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5E38_常-kanji-reading-常-じょう.wav]; manifest data/media/kanji/5E/5E38_常/manifest.json; managed path audio/5E38_常-kanji-reading-常-じょう.wav; source voicevox-nemo; category kanji-reading; text 常; reading じょう; voice 女声1 / ノーマル; locale ja-JP; checksum e6389a8f74f7c34ffe18fc7027c80b35a3e8434fc1b686fcb8a5cc1108cd9120; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5E38_常-stroke-order.gif\" />; manifest data/media/kanji/5E/5E38_常/manifest.json; managed path animations/5E38_常-stroke-order.gif; source remote-stroke-order-animation; checksum 1367442ce9ae317f0cc266cb635deadd4d69dafe5bc72410bc39281a31d085b4; source file exists true; media target identity matched 常.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "日常の生活を大切にしています。",
+        "reading": "にちじょうのせいかつをたいせつにしています。",
+        "translation": "I value everyday life.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 日常の生活を大切にしています。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 常|じょう without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "幸",
@@ -12356,7 +12394,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 幸|しあわせ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading しあわせ, MeaningJP happiness, KanjiMeanings happiness / good fortune / blessing / fortune, example sentence 家族が元気でいることが一番の幸せです。, reading かぞくがげんきでいることがいちばんのしあわせです。, translation Having my family healthy is my greatest happiness., notes/support surface 幸せ / 幸運 / 不幸, audio kanji-reading-幸-しあわせ, stroke-order media 5E78_幸-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "幸|しあわせ",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 幸; DisplayWord 幸; StudyWordKanji (blank); PrimaryReading しあわせ; MeaningJP happiness; KanjiMeanings happiness / good fortune / blessing / fortune; OnReading コウ; KunReading さいわ.い、 さち、 しあわ.せ; Notes <ruby>幸<rt>しあわ</rt></ruby>せ - happiness ／ <ruby>幸運<rt>こううん</rt></ruby> - good luck ／ <ruby>不幸<rt>ふこう</rt></ruby> - misfortune; Example 家族が元気でいることが一番の幸せです。 ／ かぞくがげんきでいることがいちばんのしあわせです。 ／ Having my family healthy is my greatest happiness.; Audio [sound:5E78_幸-kanji-reading-幸-しあわせ.wav]; StrokeOrder <img src=\"5E78_幸-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 幸せ|しあわせ; englishMeaning happiness / good fortune; preferred words 幸せ / 幸運 / 不幸; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 家族が元気でいることが一番の幸せです。 / かぞくがげんきでいることがいちばんのしあわせです。 / Having my family healthy is my greatest happiness..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading しあわせ; meaning happiness; broader happiness / good fortune / blessing / fortune; notes 幸せ / 幸運 / 不幸; example 家族が元気でいることが一番の幸せです。.",
+        "tracked governed Japanese source evidence rechecked for 幸|しあわせ: https://www.kanjipedia.jp/kanji/0002193000; Kanjipedia; Kanjipedia review for 幸|しあわせ: Kanjipedia lists 音 コウ and 訓 しあわせ / さいわい / さち, with meanings for happiness, good fortune, blessing, and fortune, plus support vocabulary such as 幸運, 幸福, 不幸, 多幸, and 薄幸. This supports the exported PrimaryReading しあわせ, MeaningJP happiness, and KanjiMeanings happiness / good fortune / blessing / fortune for the individual kanji 幸.",
+        "primary reading, on/kun, and meaning decision: Uses しあわせ because the learner-facing support surface and example practice the common word 幸せ directly; コウ remains visible in compounds such as 幸運 and 不幸. Reviewer judgment confirms PrimaryReading しあわせ, OnReading コウ, KunReading さいわ.い、 さち、 しあわ.せ, MeaningJP happiness, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>幸<rt>しあわ</rt></ruby>せ - happiness ／ <ruby>幸運<rt>こううん</rt></ruby> - good luck ／ <ruby>不幸<rt>ふこう</rt></ruby> - misfortune stays support-only for the single-kanji anchor 幸; support vocabulary clarifies common usage while DisplayWord remains 幸 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 家族が元気でいることが一番の幸せです。 / かぞくがげんきでいることがいちばんのしあわせです。 / Having my family healthy is my greatest happiness.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0086; priority routine; signal n3-kanji-0098; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading こう; live card reading しあわせ; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5E78_幸-kanji-reading-幸-しあわせ.wav]; manifest data/media/kanji/5E/5E78_幸/manifest.json; managed path audio/5E78_幸-kanji-reading-幸-しあわせ.wav; source voicevox-nemo; category kanji-reading; text 幸; reading しあわせ; voice 女声1 / ノーマル; locale ja-JP; checksum 5159e7eb9125e80c29e544c6fb21295041c730869808b5f5b34801b0cb89556d; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5E78_幸-stroke-order.gif\" />; manifest data/media/kanji/5E/5E78_幸/manifest.json; managed path animations/5E78_幸-stroke-order.gif; source remote-stroke-order-animation; checksum 60c108996006c637e27d802107cd873b300cc8e0e153e05624467b48f68467a3; source file exists true; media target identity matched 幸.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "家族が元気でいることが一番の幸せです。",
+        "reading": "かぞくがげんきでいることがいちばんのしあわせです。",
+        "translation": "Having my family healthy is my greatest happiness.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 家族が元気でいることが一番の幸せです。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 幸|しあわせ without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "幾",
@@ -12455,7 +12531,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 幾|いくつ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading いくつ, MeaningJP how many, KanjiMeanings how many / several / how far / how long / how much / some, example sentence この箱の中に幾つか古い写真が入っています。, reading このはこのなかにいくつかふるいしゃしんがはいっています。, translation There are several old photos in this box., notes/support surface 幾つ / 幾ら / 幾分, audio kanji-reading-幾-いくつ, stroke-order media 5E7E_幾-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "幾|いくつ",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 幾; DisplayWord 幾; StudyWordKanji (blank); PrimaryReading いくつ; MeaningJP how many; KanjiMeanings how many / several / how far / how long / how much / some; OnReading キ; KunReading いく-、 いく.つ、 いく.ら; Notes <ruby>幾<rt>いく</rt></ruby>つ - how many ／ <ruby>幾<rt>いく</rt></ruby>ら - how much ／ <ruby>幾分<rt>いくぶん</rt></ruby> - somewhat; Example この箱の中に幾つか古い写真が入っています。 ／ このはこのなかにいくつかふるいしゃしんがはいっています。 ／ There are several old photos in this box.; Audio [sound:5E7E_幾-kanji-reading-幾-いくつ.wav]; StrokeOrder <img src=\"5E7E_幾-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 幾つ|いくつ; englishMeaning how many / several; preferred words 幾つ / 幾ら / 幾分; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example この箱の中に幾つか古い写真が入っています。 / このはこのなかにいくつかふるいしゃしんがはいっています。 / There are several old photos in this box..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading いくつ; meaning how many; broader how many / several / how far / how long / how much / some; notes 幾つ / 幾ら / 幾分; example この箱の中に幾つか古い写真が入っています。.",
+        "tracked governed Japanese source evidence rechecked for 幾|いくつ: https://www.kanjipedia.jp/kanji/0001248400; Kanjipedia; Kanjipedia review for 幾|いくつ: Kanjipedia lists 音 キ and the いく reading, with meanings and word links for how many, how much, several, some, how far, and how long through forms such as 幾, 幾つ, 幾ら, 幾何, 幾多, 幾年, and 幾分. This supports the exported PrimaryReading いくつ, MeaningJP how many, and KanjiMeanings how many / several / how far / how long / how much / some for the individual kanji 幾.",
+        "primary reading, on/kun, and meaning decision: Uses いくつ because the learner-facing support surface and example practice 幾つ directly; キ remains visible in compounds such as 幾何 and 幾分. Reviewer judgment confirms PrimaryReading いくつ, OnReading キ, KunReading いく-、 いく.つ、 いく.ら, MeaningJP how many, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>幾<rt>いく</rt></ruby>つ - how many ／ <ruby>幾<rt>いく</rt></ruby>ら - how much ／ <ruby>幾分<rt>いくぶん</rt></ruby> - somewhat stays support-only for the single-kanji anchor 幾; support vocabulary clarifies common usage while DisplayWord remains 幾 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: この箱の中に幾つか古い写真が入っています。 / このはこのなかにいくつかふるいしゃしんがはいっています。 / There are several old photos in this box.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0049; priority routine; signal n3-kanji-0099; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading いく; live card reading いくつ; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5E7E_幾-kanji-reading-幾-いくつ.wav]; manifest data/media/kanji/5E/5E7E_幾/manifest.json; managed path audio/5E7E_幾-kanji-reading-幾-いくつ.wav; source voicevox-nemo; category kanji-reading; text 幾; reading いくつ; voice 女声1 / ノーマル; locale ja-JP; checksum 63cbefd6bf8b995eb4dc29e2da1ae5bc668ce538619447b4cdeab3579622ae52; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5E7E_幾-stroke-order.gif\" />; manifest data/media/kanji/5E/5E7E_幾/manifest.json; managed path animations/5E7E_幾-stroke-order.gif; source remote-stroke-order-animation; checksum a839a70bdaba6654fd1a7890f9135704f47575f3e483f83e83c402d93e30c331; source file exists true; media target identity matched 幾.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "この箱の中に幾つか古い写真が入っています。",
+        "reading": "このはこのなかにいくつかふるいしゃしんがはいっています。",
+        "translation": "There are several old photos in this box.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: この箱の中に幾つか古い写真が入っています。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 幾|いくつ without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "座",
@@ -12551,7 +12665,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 座|すわる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading すわる, MeaningJP sit, KanjiMeanings sit / seat / gathering, example sentence いすに座ってください。, reading いすにすわってください。, translation Please sit in the chair., notes/support surface 座る / 座席, audio kanji-reading-座-すわる, stroke-order media 5EA7_座-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "座|すわる",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 座; DisplayWord 座; StudyWordKanji (blank); PrimaryReading すわる; MeaningJP sit; KanjiMeanings sit / seat / gathering; OnReading ザ; KunReading すわ.る; Notes <ruby>座<rt>すわ</rt></ruby>る - sit ／ <ruby>座席<rt>ざせき</rt></ruby> - seat; Example いすに座ってください。 ／ いすにすわってください。 ／ Please sit in the chair.; Audio [sound:5EA7_座-kanji-reading-座-すわる.wav]; StrokeOrder <img src=\"5EA7_座-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 座る|すわる; englishMeaning sit / seat; preferred words 座る; blocked meanings cushion / squat; blocked words (none); blocked sentence phrases (none); starter example いすに座ってください。 / いすにすわってください。 / Please sit in the chair..",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading すわる; meaning sit; broader sit / seat / gathering; notes 座る / 座席; example いすに座ってください.",
+        "tracked governed Japanese source evidence rechecked for 座|すわる: https://www.kanjipedia.jp/kanji/0002483300; Kanjipedia; Kanjipedia review for 座|すわる: Kanjipedia lists 音 ザ and 訓 すわる, with meanings for sit, seat, and gathering or place, plus support vocabulary such as 座席, 座談, 座標, 着座, 正座, 星座, and 講座. This supports the exported PrimaryReading すわる, MeaningJP sit, and focused KanjiMeanings sit / seat / gathering for the individual kanji 座.",
+        "primary reading, on/kun, and meaning decision: Uses すわる because the learner-facing support surface and example practice 座る directly; ザ remains visible in compounds such as 座席. Reviewer judgment confirms PrimaryReading すわる, OnReading ザ, KunReading すわ.る, MeaningJP sit, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>座<rt>すわ</rt></ruby>る - sit ／ <ruby>座席<rt>ざせき</rt></ruby> - seat stays support-only for the single-kanji anchor 座; support vocabulary clarifies common usage while DisplayWord remains 座 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: いすに座ってください。 / いすにすわってください。 / Please sit in the chair.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0100; priority routine; signal n3-kanji-0100; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading ざ; live card reading すわる; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5EA7_座-kanji-reading-座-すわる.wav]; manifest data/media/kanji/5E/5EA7_座/manifest.json; managed path audio/5EA7_座-kanji-reading-座-すわる.wav; source voicevox-nemo; category kanji-reading; text 座; reading すわる; voice 女声1 / ノーマル; locale ja-JP; checksum 595e13b605a735bba2e510ecbe66ef9d17d40b6c49b3e4b4d98d6f0174c8773a; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5EA7_座-stroke-order.gif\" />; manifest data/media/kanji/5E/5EA7_座/manifest.json; managed path animations/5EA7_座-stroke-order.gif; source remote-stroke-order-animation; checksum 1805facd5c01697eeae96613b4b3cf0703fdd9a21ab9c8b37d5875e0028b5b3b; source file exists true; media target identity matched 座.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "いすに座ってください。",
+        "reading": "いすにすわってください。",
+        "translation": "Please sit in the chair.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: いすに座ってください。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 座|すわる without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "庭",
@@ -12647,7 +12799,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 庭|にわ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading にわ, MeaningJP garden, KanjiMeanings garden / yard / courtyard, example sentence 庭にきれいな花が咲いています。, reading にわにきれいなはながさいています。, translation Beautiful flowers are blooming in the garden., notes/support surface 庭 / 庭園 / 家庭, audio kanji-reading-庭-にわ, stroke-order media 5EAD_庭-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "庭|にわ",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 庭; DisplayWord 庭; StudyWordKanji (blank); PrimaryReading にわ; MeaningJP garden; KanjiMeanings garden / yard / courtyard; OnReading テイ; KunReading にわ; Notes <ruby>庭<rt>にわ</rt></ruby> - garden ／ <ruby>庭園<rt>ていえん</rt></ruby> - garden / park ／ <ruby>家庭<rt>かてい</rt></ruby> - home / household; Example 庭にきれいな花が咲いています。 ／ にわにきれいなはながさいています。 ／ Beautiful flowers are blooming in the garden.; Audio [sound:5EAD_庭-kanji-reading-庭-にわ.wav]; StrokeOrder <img src=\"5EAD_庭-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 庭|にわ; englishMeaning garden / yard; preferred words 庭 / 庭園 / 家庭; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 庭にきれいな花が咲いています。 / にわにきれいなはながさいています。 / Beautiful flowers are blooming in the garden..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading にわ; meaning garden; broader garden / yard / courtyard; notes 庭 / 庭園 / 家庭; example 庭にきれいな花.",
+        "tracked governed Japanese source evidence rechecked for 庭|にわ: https://www.kanjipedia.jp/kanji/0004959700/; Kanjipedia; Kanjipedia review for 庭|にわ: Kanjipedia lists 音 テイ and 訓 にわ, with meanings for garden, yard, and courtyard, plus support vocabulary such as 庭園, 校庭, 家庭, 中庭, and 庭球. This supports the exported PrimaryReading にわ, MeaningJP garden, and KanjiMeanings garden / yard / courtyard for the individual kanji 庭.",
+        "primary reading, on/kun, and meaning decision: Uses にわ because the learner-facing support surface and example practice the common noun 庭 directly; テイ remains visible in compounds such as 庭園 and 家庭. Reviewer judgment confirms PrimaryReading にわ, OnReading テイ, KunReading にわ, MeaningJP garden, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>庭<rt>にわ</rt></ruby> - garden ／ <ruby>庭園<rt>ていえん</rt></ruby> - garden / park ／ <ruby>家庭<rt>かてい</rt></ruby> - home / household stays support-only for the single-kanji anchor 庭; support vocabulary clarifies common usage while DisplayWord remains 庭 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 庭にきれいな花が咲いています。 / にわにきれいなはながさいています。 / Beautiful flowers are blooming in the garden.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0225; priority routine; signal n3-kanji-0101; kinds routine-tokenization-review; tokenizer reading にわ; live card reading にわ; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5EAD_庭-kanji-reading-庭-にわ.wav]; manifest data/media/kanji/5E/5EAD_庭/manifest.json; managed path audio/5EAD_庭-kanji-reading-庭-にわ.wav; source voicevox-nemo; category kanji-reading; text 庭; reading にわ; voice 女声1 / ノーマル; locale ja-JP; checksum 97806c4f219666fe2e5d15e3c1ab799936f982c1d860928c44a60a8ebcd1ceb2; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5EAD_庭-stroke-order.gif\" />; manifest data/media/kanji/5E/5EAD_庭/manifest.json; managed path animations/5EAD_庭-stroke-order.gif; source remote-stroke-order-animation; checksum 4a6a4361341c5c7fe43be547fad957f0419ca6452b87b9269395e85225d9d795; source file exists true; media target identity matched 庭.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "庭にきれいな花が咲いています。",
+        "reading": "にわにきれいなはながさいています。",
+        "translation": "Beautiful flowers are blooming in the garden.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 庭にきれいな花が咲いています。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 庭|にわ without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "式",
@@ -12749,7 +12939,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 式|しき with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading しき, MeaningJP ceremony / style, KanjiMeanings ceremony / style / expression / form / function / method / rite / system, example sentence 来週、弟の入学式があります。, reading らいしゅう、おとうとのにゅうがくしきがあります。, translation My younger brother&#39;s entrance ceremony is next week., notes/support surface 入学式 / 卒業式 / 方式, audio kanji-reading-式-しき, stroke-order media 5F0F_式-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "式|しき",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 式; DisplayWord 式; StudyWordKanji (blank); PrimaryReading しき; MeaningJP ceremony / style; KanjiMeanings ceremony / style / expression / form / function / method / rite / system; OnReading シキ; KunReading (blank); Notes <ruby>入学式<rt>にゅうがくしき</rt></ruby> - entrance ceremony ／ <ruby>卒業式<rt>そつぎょうしき</rt></ruby> - graduation ceremony ／ <ruby>方式<rt>ほうしき</rt></ruby> - method / system; Example 来週、弟の入学式があります。 ／ らいしゅう、おとうとのにゅうがくしきがあります。 ／ My younger brother&#39;s entrance ceremony is next week.; Audio [sound:5F0F_式-kanji-reading-式-しき.wav]; StrokeOrder <img src=\"5F0F_式-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 入学式|にゅうがくしき; englishMeaning ceremony / style; preferred words 入学式 / 卒業式 / 方式; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 来週、弟の入学式があります。 / らいしゅう、おとうとのにゅうがくしきがあります。 / My younger brother's entrance ceremony is next week..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading しき; meaning ceremony / style; broader ceremony / style / expression / form / function / method / rite / system; notes 入学式 / 卒業式 / 方式; example 来週、弟の入学式があります。.",
+        "tracked governed Japanese source evidence rechecked for 式|しき: https://www.kanjipedia.jp/kanji/0002902200/; Kanjipedia; Kanjipedia review for 式|しき: Kanjipedia lists 音 シキ, with meanings for ceremony, style, expression, form, function, method, rite, and system, plus support vocabulary such as 式典, 儀式, 方式, 形式, 式場, and 数式. This supports the exported PrimaryReading しき, MeaningJP ceremony / style, and KanjiMeanings ceremony / style / expression / form / function / method / rite / system for the individual kanji 式.",
+        "primary reading, on/kun, and meaning decision: Uses しき because the learner-facing support surface and example practice common ceremony words such as 入学式; the on-reading is the practical anchor for this kanji. Reviewer judgment confirms PrimaryReading しき, OnReading シキ, KunReading (blank), MeaningJP ceremony / style, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>入学式<rt>にゅうがくしき</rt></ruby> - entrance ceremony ／ <ruby>卒業式<rt>そつぎょうしき</rt></ruby> - graduation ceremony ／ <ruby>方式<rt>ほうしき</rt></ruby> - method / system stays support-only for the single-kanji anchor 式; support vocabulary clarifies common usage while DisplayWord remains 式 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 来週、弟の入学式があります。 / らいしゅう、おとうとのにゅうがくしきがあります。 / My younger brother&#39;s entrance ceremony is next week.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0130; priority routine; signal n3-kanji-0102; kinds routine-tokenization-review; tokenizer reading しき; live card reading しき; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5F0F_式-kanji-reading-式-しき.wav]; manifest data/media/kanji/5F/5F0F_式/manifest.json; managed path audio/5F0F_式-kanji-reading-式-しき.wav; source voicevox-nemo; category kanji-reading; text 式; reading しき; voice 女声1 / ノーマル; locale ja-JP; checksum 7c5b3ca8e062971e76777787ba72eeed1a340a8135a550559bac8e7974fde1e6; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5F0F_式-stroke-order.gif\" />; manifest data/media/kanji/5F/5F0F_式/manifest.json; managed path animations/5F0F_式-stroke-order.gif; source remote-stroke-order-animation; checksum 34d582a6cf57be7b0ee4637b8462fbf63bbf528049b231a2bdb3a7da71844ffb; source file exists true; media target identity matched 式.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "来週、弟の入学式があります。",
+        "reading": "らいしゅう、おとうとのにゅうがくしきがあります。",
+        "translation": "My younger brother&#39;s entrance ceremony is next week.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 来週、弟の入学式があります。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 式|しき without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "当",
@@ -12849,7 +13077,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 当|とう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading とう, MeaningJP true / hit / appropriate, KanjiMeanings true / hit / appropriate / right, example sentence その話は本当ですか。, reading そのはなしはほんとうですか。, translation Is that story true?, notes/support surface 本当 / 当たる / 当番, audio kanji-reading-当-とう, stroke-order media 5F53_当-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "当|とう",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 当; DisplayWord 当; StudyWordKanji (blank); PrimaryReading とう; MeaningJP true / hit / appropriate; KanjiMeanings true / hit / appropriate / right; OnReading トウ; KunReading あ.たり、 あ.たる、 あ.て、 あ.てる、 まさ.に、 まさ.にべし; Notes <ruby>本当<rt>ほんとう</rt></ruby> - truth / real ／ <ruby>当<rt>あ</rt></ruby>たる - hit / win ／ <ruby>当番<rt>とうばん</rt></ruby> - person on duty; Example その話は本当ですか。 ／ そのはなしはほんとうですか。 ／ Is that story true?; Audio [sound:5F53_当-kanji-reading-当-とう.wav]; StrokeOrder <img src=\"5F53_当-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 本当|ほんとう; englishMeaning true / hit / appropriate; preferred words 本当 / 当たる / 当番; blocked meanings himself; blocked words (none); blocked sentence phrases (none); starter example その話は本当ですか。 / そのはなしはほんとうですか。 / Is that story true?.",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading とう; meaning true / hit / appropriate; broader true / hit / appropriate / right; notes 本当 / 当たる / 当番; example その話は本当ですか。.",
+        "tracked governed Japanese source evidence rechecked for 当|とう: https://www.kanjipedia.jp/kanji/0005149200; Kanjipedia; Kanjipedia review for 当|とう: Kanjipedia lists 音 トウ and 訓 あたる / あてる, with meanings for hit, apply, appropriate, right, and taking a role, and it shows support vocabulary such as 当番, 当日, 当時, 当選, 本当, 該当, and 見当. This supports the exported PrimaryReading とう, MeaningJP true / hit / appropriate, and focused KanjiMeanings true / hit / appropriate / right for the individual kanji 当.",
+        "primary reading, on/kun, and meaning decision: Uses とう because the learner-facing support surface and example practice 本当 and 当番, while あたる remains visible in notes as the common kun-reading support. Reviewer judgment confirms PrimaryReading とう, OnReading トウ, KunReading あ.たり、 あ.たる、 あ.て、 あ.てる、 まさ.に、 まさ.にべし, MeaningJP true / hit / appropriate, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>本当<rt>ほんとう</rt></ruby> - truth / real ／ <ruby>当<rt>あ</rt></ruby>たる - hit / win ／ <ruby>当番<rt>とうばん</rt></ruby> - person on duty stays support-only for the single-kanji anchor 当; support vocabulary clarifies common usage while DisplayWord remains 当 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: その話は本当ですか。 / そのはなしはほんとうですか。 / Is that story true?; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0236; priority routine; signal n3-kanji-0103; kinds routine-tokenization-review; tokenizer reading とう; live card reading とう; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5F53_当-kanji-reading-当-とう.wav]; manifest data/media/kanji/5F/5F53_当/manifest.json; managed path audio/5F53_当-kanji-reading-当-とう.wav; source voicevox-nemo; category kanji-reading; text 当; reading とう; voice 女声1 / ノーマル; locale ja-JP; checksum 1c40c9e5aaac6e3f648676dcc610fb6dc2b0e3c439d0179b03a594cf7bab752b; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5F53_当-stroke-order.gif\" />; manifest data/media/kanji/5F/5F53_当/manifest.json; managed path animations/5F53_当-stroke-order.gif; source remote-stroke-order-animation; checksum 65ff0cf300a0a42a7fef124bf47bef0b406b8704417b5191758b720c1ffb335b; source file exists true; media target identity matched 当.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "その話は本当ですか。",
+        "reading": "そのはなしはほんとうですか。",
+        "translation": "Is that story true?",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: その話は本当ですか。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 当|とう without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "役",
@@ -12949,7 +13215,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 役|やく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading やく, MeaningJP role / usefulness, KanjiMeanings role / usefulness / duty / office / service, example sentence この辞書は勉強にとても役に立ちます。, reading このじしょはべんきょうにとてもやくにたちます。, translation This dictionary is very useful for studying., notes/support surface 役に立つ / 役目 / 役所, audio kanji-reading-役-やく, stroke-order media 5F79_役-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-013",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "役|やく",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 役; DisplayWord 役; StudyWordKanji (blank); PrimaryReading やく; MeaningJP role / usefulness; KanjiMeanings role / usefulness / duty / office / service; OnReading エキ、 ヤク; KunReading (blank); Notes <ruby>役<rt>やく</rt></ruby>に<ruby>立<rt>た</rt></ruby>つ - be useful ／ <ruby>役目<rt>やくめ</rt></ruby> - role / duty ／ <ruby>役所<rt>やくしょ</rt></ruby> - government office; Example この辞書は勉強にとても役に立ちます。 ／ このじしょはべんきょうにとてもやくにたちます。 ／ This dictionary is very useful for studying.; Audio [sound:5F79_役-kanji-reading-役-やく.wav]; StrokeOrder <img src=\"5F79_役-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 役に立つ|やくにたつ; englishMeaning role / usefulness; preferred words 役に立つ / 役目 / 役所; blocked meanings campaign / drafted labor / war; blocked words (none); blocked sentence phrases (none); starter example この辞書は勉強にとても役に立ちます。 / このじしょはべんきょうにとてもやくにたちます。 / This dictionary is very useful for studying..",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading やく; meaning role / usefulness; broader role / usefulness / duty / office / service; notes 役に立つ / 役目 / 役所; example この辞書は勉強にとても役に立ちます。.",
+        "tracked governed Japanese source evidence rechecked for 役|やく: https://www.kanjipedia.jp/kanji/0006798300; Kanjipedia; Kanjipedia review for 役|やく: Kanjipedia lists 音 ヤク / エキ, with meanings for role, usefulness, duty, office, and service through work duty, position, assigned role, and use or being used, plus support vocabulary such as 役員, 役職, 役柄, 配役, 役所, 役者, 役務, and 役得. This supports the exported PrimaryReading やく, MeaningJP role / usefulness, and focused KanjiMeanings role / usefulness / duty / office / service for the individual kanji 役.",
+        "primary reading, on/kun, and meaning decision: Uses やく because the learner-facing support surface and example practice 役に立つ directly; エキ remains visible as a broader on-reading. Reviewer judgment confirms PrimaryReading やく, OnReading エキ、 ヤク, KunReading (blank), MeaningJP role / usefulness, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>役<rt>やく</rt></ruby>に<ruby>立<rt>た</rt></ruby>つ - be useful ／ <ruby>役目<rt>やくめ</rt></ruby> - role / duty ／ <ruby>役所<rt>やくしょ</rt></ruby> - government office stays support-only for the single-kanji anchor 役; support vocabulary clarifies common usage while DisplayWord remains 役 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: この辞書は勉強にとても役に立ちます。 / このじしょはべんきょうにとてもやくにたちます。 / This dictionary is very useful for studying.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0305; priority routine; signal n3-kanji-0104; kinds routine-tokenization-review; tokenizer reading やく; live card reading やく; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5F79_役-kanji-reading-役-やく.wav]; manifest data/media/kanji/5F/5F79_役/manifest.json; managed path audio/5F79_役-kanji-reading-役-やく.wav; source voicevox-nemo; category kanji-reading; text 役; reading やく; voice 女声1 / ノーマル; locale ja-JP; checksum eb5d1ff4c6828177054a937cb941dda1db3724ac96d0c028e02452a9105415db; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5F79_役-stroke-order.gif\" />; manifest data/media/kanji/5F/5F79_役/manifest.json; managed path animations/5F79_役-stroke-order.gif; source remote-stroke-order-animation; checksum 5c6580b8c5aee6b6159328c8bc2f1d2045d62de6aff4882e50adc79a9cfbd334; source file exists true; media target identity matched 役.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "この辞書は勉強にとても役に立ちます。",
+        "reading": "このじしょはべんきょうにとてもやくにたちます。",
+        "translation": "This dictionary is very useful for studying.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: この辞書は勉強にとても役に立ちます。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 役|やく without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "彼",
@@ -13045,7 +13349,45 @@
         "detail": "Current-standard review revalidated 彼|かれ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading かれ, MeaningJP he, KanjiMeanings he / that, example sentence 彼は駅の近くに住んでいます。, reading かれはえきのちかくにすんでいます。, translation He lives near the station., notes/support surface 彼 / 彼女 / 彼ら, audio kanji-reading-彼-かれ, stroke-order media 5F7C_彼-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
     ],
-    "fixSummary": "Blocked the low-value the gloss so the N3 card keeps the useful he / that scope."
+    "fixSummary": "Blocked the low-value the gloss so the N3 card keeps the useful he / that scope.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "彼|かれ",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 彼; DisplayWord 彼; StudyWordKanji (blank); PrimaryReading かれ; MeaningJP he; KanjiMeanings he / that; OnReading ヒ; KunReading か.の、 かれ; Notes <ruby>彼<rt>かれ</rt></ruby> - he ／ <ruby>彼女<rt>かのじょ</rt></ruby> - she / girlfriend ／ <ruby>彼<rt>かれ</rt></ruby>ら - they; Example 彼は駅の近くに住んでいます。 ／ かれはえきのちかくにすんでいます。 ／ He lives near the station.; Audio [sound:5F7C_彼-kanji-reading-彼-かれ.wav]; StrokeOrder <img src=\"5F7C_彼-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 彼|かれ; englishMeaning he / that; preferred words 彼 / 彼女 / 彼ら; blocked meanings the; blocked words (none); blocked sentence phrases (none); starter example 彼は駅の近くに住んでいます。 / かれはえきのちかくにすんでいます。 / He lives near the station..",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading かれ; meaning he; broader he / that; notes 彼 / 彼女 / 彼ら; example 彼は駅の近くに住んでいます。.",
+        "tracked governed Japanese source evidence rechecked for 彼|かれ: https://www.kanjipedia.jp/kanji/0005802500; Kanjipedia; Kanjipedia review for 彼|かれ: Kanjipedia lists 音 ヒ and 訓 かれ / かの, with meanings for he, that person, that, and yonder/over there, plus support vocabulary such as 彼, 彼女, 彼氏, 彼我, and 彼岸. This supports the exported PrimaryReading かれ, MeaningJP he, and focused KanjiMeanings he / that for the individual kanji 彼.",
+        "primary reading, on/kun, and meaning decision: Uses かれ because the learner-facing card, support surface, and example practice the direct pronoun 彼; ヒ remains visible in support compounds such as 彼岸 and 彼我, and かの remains visible through 彼女. Reviewer judgment confirms PrimaryReading かれ, OnReading ヒ, KunReading か.の、 かれ, MeaningJP he, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>彼<rt>かれ</rt></ruby> - he ／ <ruby>彼女<rt>かのじょ</rt></ruby> - she / girlfriend ／ <ruby>彼<rt>かれ</rt></ruby>ら - they stays support-only for the single-kanji anchor 彼; support vocabulary clarifies common usage while DisplayWord remains 彼 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 彼は駅の近くに住んでいます。 / かれはえきのちかくにすんでいます。 / He lives near the station.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0258; priority routine; signal n3-kanji-0105; kinds routine-tokenization-review; tokenizer reading かれ; live card reading かれ; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5F7C_彼-kanji-reading-彼-かれ.wav]; manifest data/media/kanji/5F/5F7C_彼/manifest.json; managed path audio/5F7C_彼-kanji-reading-彼-かれ.wav; source voicevox-nemo; category kanji-reading; text 彼; reading かれ; voice 女声1 / ノーマル; locale ja-JP; checksum 5ecbaf7a840f6d2c3744737d8890589513a74911e554e3a9e6b57a731c7470e8; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5F7C_彼-stroke-order.gif\" />; manifest data/media/kanji/5F/5F7C_彼/manifest.json; managed path animations/5F7C_彼-stroke-order.gif; source remote-stroke-order-animation; checksum 66d8c425c18a122493210be45ad29996137cd76fa81c348b6612a9876513c060; source file exists true; media target identity matched 彼.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "彼は駅の近くに住んでいます。",
+        "reading": "かれはえきのちかくにすんでいます。",
+        "translation": "He lives near the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 彼は駅の近くに住んでいます。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 彼|かれ without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "復",
@@ -13143,7 +13485,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 復|ふく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ふく, MeaningJP review / restore, KanjiMeanings review / restore / resume / return to / revert, example sentence 寝る前に今日の内容を復習します。, reading ねるまえにきょうのないようをふくしゅうします。, translation I review today's material before sleeping., notes/support surface 復習 / 回復, audio kanji-reading-復-ふく, stroke-order media 5FA9_復-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "復|ふく",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 復; DisplayWord 復; StudyWordKanji (blank); PrimaryReading ふく; MeaningJP review / restore; KanjiMeanings review / restore / resume / return to / revert; OnReading フク; KunReading また; Notes <ruby>復習<rt>ふくしゅう</rt></ruby> - review ／ <ruby>回復<rt>かいふく</rt></ruby> - recovery; Example 寝る前に今日の内容を復習します。 ／ ねるまえにきょうのないようをふくしゅうします。 ／ I review today&#39;s material before sleeping.; Audio [sound:5FA9_復-kanji-reading-復-ふく.wav]; StrokeOrder <img src=\"5FA9_復-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 復習|ふくしゅう; englishMeaning review / restore; preferred words 復習 / 回復; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 寝る前に今日の内容を復習します。 / ねるまえにきょうのないようをふくしゅうします。 / I review today's material before sleeping..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading ふく; meaning review / restore; broader review / restore / resume / return to / revert; notes 復習 / 回復; example 復習します.",
+        "tracked governed Japanese source evidence rechecked for 復|ふく: https://www.kanjipedia.jp/kanji/0006109900; Kanjipedia; Kanjipedia review for 復|ふく: Kanjipedia lists 音 フク and readings including かえる / かえす / また / ふたたび, with meanings for return, restore, revenge/repay, repeat/do again, and answer/report, plus support vocabulary such as 復習, 回復, 復活, 往復, 反復, and 報復. This supports the exported PrimaryReading ふく, MeaningJP review / restore, and KanjiMeanings review / restore / resume / return to / revert for the individual kanji 復.",
+        "primary reading, on/kun, and meaning decision: Uses ふく because the learner-facing support surface is anchored in common compounds 復習 and 回復 and the example practices 復習; また remains visible in the kun-reading field. Reviewer judgment confirms PrimaryReading ふく, OnReading フク, KunReading また, MeaningJP review / restore, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>復習<rt>ふくしゅう</rt></ruby> - review ／ <ruby>回復<rt>かいふく</rt></ruby> - recovery stays support-only for the single-kanji anchor 復; support vocabulary clarifies common usage while DisplayWord remains 復 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 寝る前に今日の内容を復習します。 / ねるまえにきょうのないようをふくしゅうします。 / I review today&#39;s material before sleeping.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0274; priority routine; signal n3-kanji-0106; kinds routine-tokenization-review; tokenizer reading ふく; live card reading ふく; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5FA9_復-kanji-reading-復-ふく.wav]; manifest data/media/kanji/5F/5FA9_復/manifest.json; managed path audio/5FA9_復-kanji-reading-復-ふく.wav; source voicevox-nemo; category kanji-reading; text 復; reading ふく; voice 女声1 / ノーマル; locale ja-JP; checksum 4792578376848c1d3d723ca4f92db1d4f7945a1987e70add46476f0465b1c58b; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5FA9_復-stroke-order.gif\" />; manifest data/media/kanji/5F/5FA9_復/manifest.json; managed path animations/5FA9_復-stroke-order.gif; source remote-stroke-order-animation; checksum 6b1c178b41b732b54209a1c6bdb725b732c8402808a6a2fd1df3bed5cb1a10e1; source file exists true; media target identity matched 復.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "寝る前に今日の内容を復習します。",
+        "reading": "ねるまえにきょうのないようをふくしゅうします。",
+        "translation": "I review today&#39;s material before sleeping.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 寝る前に今日の内容を復習します。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 復|ふく without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "必",
@@ -13241,7 +13621,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 必|かならず with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading かならず, MeaningJP certainly, KanjiMeanings certainly / inevitably / certain / inevitable / invariably, example sentence 明日は必ず連絡してください。, reading あしたはかならずれんらくしてください。, translation Please be sure to contact me tomorrow., notes/support surface 必ず / 必要 / 必死, audio kanji-reading-必-かならず, stroke-order media 5FC5_必-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "必|かならず",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 必; DisplayWord 必; StudyWordKanji (blank); PrimaryReading かならず; MeaningJP certainly; KanjiMeanings certainly / inevitably / certain / inevitable / invariably; OnReading ヒツ; KunReading かなら.ず; Notes <ruby>必<rt>かなら</rt></ruby>ず - certainly ／ <ruby>必要<rt>ひつよう</rt></ruby> - necessary ／ <ruby>必死<rt>ひっし</rt></ruby> - desperate / frantic; Example 明日は必ず連絡してください。 ／ あしたはかならずれんらくしてください。 ／ Please be sure to contact me tomorrow.; Audio [sound:5FC5_必-kanji-reading-必-かならず.wav]; StrokeOrder <img src=\"5FC5_必-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 必ず|かならず; englishMeaning certainly / inevitably; preferred words 必ず / 必要 / 必死; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 明日は必ず連絡してください。 / あしたはかならずれんらくしてください。 / Please be sure to contact me tomorrow..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading かならず; meaning certainly; broader certainly / inevitably / certain / inevitable / invariably; notes 必ず / 必要 / 必死; example 必ず連絡.",
+        "tracked governed Japanese source evidence rechecked for 必|かならず: https://www.kanjipedia.jp/kanji/0005902800; Kanjipedia; Kanjipedia review for 必|かならず: Kanjipedia lists 音 ヒツ and 訓 かならず, with meanings for certainly, surely, without fail, and necessary/must, plus support vocabulary such as 必ず, 必携, 必見, 必死, 必要, 必然, and 必至. This supports the exported PrimaryReading かならず, MeaningJP certainly, and KanjiMeanings certainly / inevitably / certain / inevitable / invariably for the individual kanji 必.",
+        "primary reading, on/kun, and meaning decision: Uses かならず because the learner-facing support surface and example practice 必ず directly; ヒツ remains visible in compounds such as 必要 and 必死. Reviewer judgment confirms PrimaryReading かならず, OnReading ヒツ, KunReading かなら.ず, MeaningJP certainly, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>必<rt>かなら</rt></ruby>ず - certainly ／ <ruby>必要<rt>ひつよう</rt></ruby> - necessary ／ <ruby>必死<rt>ひっし</rt></ruby> - desperate / frantic stays support-only for the single-kanji anchor 必; support vocabulary clarifies common usage while DisplayWord remains 必 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 明日は必ず連絡してください。 / あしたはかならずれんらくしてください。 / Please be sure to contact me tomorrow.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0263; priority routine; signal n3-kanji-0107; kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning; tokenizer reading (none); live card reading かならず; comparable false; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5FC5_必-kanji-reading-必-かならず.wav]; manifest data/media/kanji/5F/5FC5_必/manifest.json; managed path audio/5FC5_必-kanji-reading-必-かならず.wav; source voicevox-nemo; category kanji-reading; text 必; reading かならず; voice 女声1 / ノーマル; locale ja-JP; checksum 3e4e416c7ecd7ae601a0777cbb26c1971a310745d9386d534b54a77e7be10fa4; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5FC5_必-stroke-order.gif\" />; manifest data/media/kanji/5F/5FC5_必/manifest.json; managed path animations/5FC5_必-stroke-order.gif; source remote-stroke-order-animation; checksum c15b7c88f8391cc17032aeceee4ebd5031aa6896c0ca8789ddfc9380df5c3a5c; source file exists true; media target identity matched 必.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "明日は必ず連絡してください。",
+        "reading": "あしたはかならずれんらくしてください。",
+        "translation": "Please be sure to contact me tomorrow.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 明日は必ず連絡してください。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 必|かならず without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "忘",
@@ -13335,7 +13753,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 忘|わすれる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading わすれる, MeaningJP forget, KanjiMeanings forget, example sentence 大事な書類を家に忘れました。, reading だいじなしょるいをいえにわすれました。, translation I forgot an important document at home., notes/support surface 忘れる / 忘れ物 / 物忘れ, audio kanji-reading-忘-わすれる, stroke-order media 5FD8_忘-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "忘|わすれる",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 忘; DisplayWord 忘; StudyWordKanji (blank); PrimaryReading わすれる; MeaningJP forget; KanjiMeanings forget; OnReading ボウ; KunReading わす.れる; Notes <ruby>忘<rt>わす</rt></ruby>れる - forget ／ <ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby> - forgotten item ／ <ruby>物忘<rt>ものわす</rt></ruby>れ - forgetfulness; Example 大事な書類を家に忘れました。 ／ だいじなしょるいをいえにわすれました。 ／ I forgot an important document at home.; Audio [sound:5FD8_忘-kanji-reading-忘-わすれる.wav]; StrokeOrder <img src=\"5FD8_忘-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 忘れる|わすれる; englishMeaning forget; preferred words 忘れる / 忘れ物 / 物忘れ; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 大事な書類を家に忘れました。 / だいじなしょるいをいえにわすれました。 / I forgot an important document at home..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading わすれる; meaning forget; broader forget; notes 忘れる / 忘れ物 / 物忘れ; example 大事な書類を家に忘れました。.",
+        "tracked governed Japanese source evidence rechecked for 忘|わすれる: https://www.kanjipedia.jp/kanji/0006423400/; Kanjipedia; Kanjipedia review for 忘|わすれる: Kanjipedia lists 音 ボウ and 訓 わすれる, with meaning forget / not remember, plus support vocabulary such as 忘却, 忘失, 忘年, 忘れる, 健忘, and 備忘. This supports the exported PrimaryReading わすれる, MeaningJP forget, and KanjiMeanings forget for the individual kanji 忘.",
+        "primary reading, on/kun, and meaning decision: Uses わすれる because the learner-facing support surface and example practice 忘れる directly; ボウ remains visible in support vocabulary such as 忘年 and 物忘れ. Reviewer judgment confirms PrimaryReading わすれる, OnReading ボウ, KunReading わす.れる, MeaningJP forget, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>忘<rt>わす</rt></ruby>れる - forget ／ <ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby> - forgotten item ／ <ruby>物忘<rt>ものわす</rt></ruby>れ - forgetfulness stays support-only for the single-kanji anchor 忘; support vocabulary clarifies common usage while DisplayWord remains 忘 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 大事な書類を家に忘れました。 / だいじなしょるいをいえにわすれました。 / I forgot an important document at home.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0290; priority routine; signal n3-kanji-0108; kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning; tokenizer reading (none); live card reading わすれる; comparable false; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5FD8_忘-kanji-reading-忘-わすれる.wav]; manifest data/media/kanji/5F/5FD8_忘/manifest.json; managed path audio/5FD8_忘-kanji-reading-忘-わすれる.wav; source voicevox-nemo; category kanji-reading; text 忘; reading わすれる; voice 女声1 / ノーマル; locale ja-JP; checksum e5d7e987cd636afcc3f22395150e0bbe2207170020f062ba4661e7d58d16a2cb; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5FD8_忘-stroke-order.gif\" />; manifest data/media/kanji/5F/5FD8_忘/manifest.json; managed path animations/5FD8_忘-stroke-order.gif; source remote-stroke-order-animation; checksum 94d2c0edc9586b849cf592985988ddb38c5ca42e570057e15df620f77821d0d7; source file exists true; media target identity matched 忘.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "大事な書類を家に忘れました。",
+        "reading": "だいじなしょるいをいえにわすれました。",
+        "translation": "I forgot an important document at home.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 大事な書類を家に忘れました。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 忘|わすれる without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "忙",
@@ -13429,7 +13885,45 @@
         "detail": "Current-standard review revalidated 忙|いそがしい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading いそがしい, MeaningJP busy, KanjiMeanings busy / occupied, example sentence 今週は仕事で忙しいです。, reading こんしゅうはしごとでいそがしいです。, translation I am busy with work this week., notes/support surface 忙しい, audio kanji-reading-忙-いそがしい, stroke-order media 5FD9_忙-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
     ],
-    "fixSummary": "Blocked the low-value restless gloss so the N3 card keeps the useful busy / occupied scope."
+    "fixSummary": "Blocked the low-value restless gloss so the N3 card keeps the useful busy / occupied scope.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "忙|いそがしい",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 忙; DisplayWord 忙; StudyWordKanji (blank); PrimaryReading いそがしい; MeaningJP busy; KanjiMeanings busy / occupied; OnReading ボウ、 モウ; KunReading いそが.しい、 うれえるさま、 おそ.れる、 せわ.しい; Notes <ruby>忙<rt>いそが</rt></ruby>しい - busy; Example 今週は仕事で忙しいです。 ／ こんしゅうはしごとでいそがしいです。 ／ I am busy with work this week.; Audio [sound:5FD9_忙-kanji-reading-忙-いそがしい.wav]; StrokeOrder <img src=\"5FD9_忙-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 忙しい|いそがしい; englishMeaning busy; preferred words 忙しい; blocked meanings restless; blocked words (none); blocked sentence phrases (none); starter example 今週は仕事で忙しいです。 / こんしゅうはしごとでいそがしいです。 / I am busy with work this week..",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading いそがしい; meaning busy; broader busy / occupied; notes 忙しい; example 今週は仕事で忙しいです.",
+        "tracked governed Japanese source evidence rechecked for 忙|いそがしい: https://www.kanjipedia.jp/kanji/0006418400; Kanjipedia; Kanjipedia review for 忙|いそがしい: Kanjipedia lists 音 ボウ / モウ and 訓 いそがしい / せわしい, with meanings for busy and hurried, plus support vocabulary such as 忙しい, 忙中, 多忙, 煩忙, and 繁忙. This supports the exported PrimaryReading いそがしい, MeaningJP busy, and focused KanjiMeanings busy / occupied for the individual kanji 忙.",
+        "primary reading, on/kun, and meaning decision: Uses いそがしい because the learner-facing support surface and example practice 忙しい directly; ボウ remains visible through support compounds such as 多忙 and 繁忙. Reviewer judgment confirms PrimaryReading いそがしい, OnReading ボウ、 モウ, KunReading いそが.しい、 うれえるさま、 おそ.れる、 せわ.しい, MeaningJP busy, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>忙<rt>いそが</rt></ruby>しい - busy stays support-only for the single-kanji anchor 忙; support vocabulary clarifies common usage while DisplayWord remains 忙 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 今週は仕事で忙しいです。 / こんしゅうはしごとでいそがしいです。 / I am busy with work this week.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0291; priority routine; signal n3-kanji-0109; kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning; tokenizer reading (none); live card reading いそがしい; comparable false; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5FD9_忙-kanji-reading-忙-いそがしい.wav]; manifest data/media/kanji/5F/5FD9_忙/manifest.json; managed path audio/5FD9_忙-kanji-reading-忙-いそがしい.wav; source voicevox-nemo; category kanji-reading; text 忙; reading いそがしい; voice 女声1 / ノーマル; locale ja-JP; checksum 8fe45cc35234028a719e9d0c5463067752b707106f77815511e4076ccace0eed; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5FD9_忙-stroke-order.gif\" />; manifest data/media/kanji/5F/5FD9_忙/manifest.json; managed path animations/5FD9_忙-stroke-order.gif; source remote-stroke-order-animation; checksum de7e84921ec6f9eda9c14a39fe015591e1adb08e2c90fc997543354d2be977a9; source file exists true; media target identity matched 忙.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "今週は仕事で忙しいです。",
+        "reading": "こんしゅうはしごとでいそがしいです。",
+        "translation": "I am busy with work this week.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 今週は仕事で忙しいです。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 忙|いそがしい without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "念",
@@ -13531,7 +14025,45 @@
         "detail": "Current-standard review revalidated 念|ねん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ねん, MeaningJP thought / concern, KanjiMeanings thought / concern / attention / desire / feeling / idea / wish, example sentence せっかく来たのに会えなくて残念でした。, reading せっかくきたのにあえなくてざんねんでした。, translation It was disappointing that we couldn't meet after I came all this way., notes/support surface 残念 / 記念 / 念のため, audio kanji-reading-念-ねん, stroke-order media 5FF5_念-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
     ],
-    "fixSummary": "Blocked the low-value sense gloss so the N3 card keeps the useful thought / concern / attention / wish scope."
+    "fixSummary": "Blocked the low-value sense gloss so the N3 card keeps the useful thought / concern / attention / wish scope.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "念|ねん",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 念; DisplayWord 念; StudyWordKanji (blank); PrimaryReading ねん; MeaningJP thought / concern; KanjiMeanings thought / concern / attention / desire / feeling / idea / wish; OnReading ネン; KunReading (blank); Notes <ruby>残念<rt>ざんねん</rt></ruby> - regrettable / disappointing ／ <ruby>記念<rt>きねん</rt></ruby> - commemoration ／ <ruby>念<rt>ねん</rt></ruby>のため - just in case; Example せっかく来たのに会えなくて残念でした。 ／ せっかくきたのにあえなくてざんねんでした。 ／ It was disappointing that we couldn&#39;t meet after I came all this way.; Audio [sound:5FF5_念-kanji-reading-念-ねん.wav]; StrokeOrder <img src=\"5FF5_念-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 残念|ざんねん; englishMeaning thought / concern; preferred words 残念 / 記念 / 念のため; blocked meanings sense; blocked words (none); blocked sentence phrases (none); starter example せっかく来たのに会えなくて残念でした。 / せっかくきたのにあえなくてざんねんでした。 / It was disappointing that we couldn't meet after I came all this way..",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading ねん; meaning thought / concern; broader thought / concern / attention / desire / feeling / idea / wish; notes 残念 / 記念 / 念のため; example 残念でした.",
+        "tracked governed Japanese source evidence rechecked for 念|ねん: https://www.kanjipedia.jp/kanji/0005486400; Kanjipedia; Kanjipedia review for 念|ねん: Kanjipedia lists 音 ネン and meaning branches for thought/feeling, keeping something in mind, and chanting/reciting, plus support vocabulary such as 残念, 記念, 懸念, 信念, 念願, 念書, 念頭, and 念のため. This supports the exported PrimaryReading ねん, MeaningJP thought / concern, and focused KanjiMeanings thought / concern / attention / desire / feeling / idea / wish for the individual kanji 念.",
+        "primary reading, on/kun, and meaning decision: Uses ねん because the learner-facing support surface is anchored in common compounds and expressions 残念, 記念, and 念のため; the card keeps the productive on-reading as the primary reading. Reviewer judgment confirms PrimaryReading ねん, OnReading ネン, KunReading (blank), MeaningJP thought / concern, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>残念<rt>ざんねん</rt></ruby> - regrettable / disappointing ／ <ruby>記念<rt>きねん</rt></ruby> - commemoration ／ <ruby>念<rt>ねん</rt></ruby>のため - just in case stays support-only for the single-kanji anchor 念; support vocabulary clarifies common usage while DisplayWord remains 念 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: せっかく来たのに会えなくて残念でした。 / せっかくきたのにあえなくてざんねんでした。 / It was disappointing that we couldn&#39;t meet after I came all this way.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0244; priority routine; signal n3-kanji-0110; kinds routine-tokenization-review; tokenizer reading ねん; live card reading ねん; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:5FF5_念-kanji-reading-念-ねん.wav]; manifest data/media/kanji/5F/5FF5_念/manifest.json; managed path audio/5FF5_念-kanji-reading-念-ねん.wav; source voicevox-nemo; category kanji-reading; text 念; reading ねん; voice 女声1 / ノーマル; locale ja-JP; checksum dd5851dcfa0639de830ea80262e4e8f2cdd2cc1d49254a0eaf738d3770a0ab53; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"5FF5_念-stroke-order.gif\" />; manifest data/media/kanji/5F/5FF5_念/manifest.json; managed path animations/5FF5_念-stroke-order.gif; source remote-stroke-order-animation; checksum 3d2cc3b70ae2b37be0934d14a292eccaf9c8420bc4a63a38c87a5d7228ae5cbe; source file exists true; media target identity matched 念.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "せっかく来たのに会えなくて残念でした。",
+        "reading": "せっかくきたのにあえなくてざんねんでした。",
+        "translation": "It was disappointing that we couldn&#39;t meet after I came all this way.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: せっかく来たのに会えなくて残念でした。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 念|ねん without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "怒",
@@ -13628,7 +14160,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 怒|おこる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading おこる, MeaningJP get angry, KanjiMeanings anger / get angry / angry / be offended, example sentence そんなことで怒らないでください。, reading そんなことでおこらないでください。, translation Please don't get angry over something like that., notes/support surface 怒る / 怒り / 激怒, audio kanji-reading-怒-おこる, stroke-order media 6012_怒-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "怒|おこる",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 怒; DisplayWord 怒; StudyWordKanji (blank); PrimaryReading おこる; MeaningJP get angry; KanjiMeanings anger / get angry / angry / be offended; OnReading ド、 ヌ; KunReading いか.る、 おこ.る; Notes <ruby>怒<rt>おこ</rt></ruby>る - get angry ／ <ruby>怒<rt>いか</rt></ruby>り - anger ／ <ruby>激怒<rt>げきど</rt></ruby> - rage; Example そんなことで怒らないでください。 ／ そんなことでおこらないでください。 ／ Please don&#39;t get angry over something like that.; Audio [sound:6012_怒-kanji-reading-怒-おこる.wav]; StrokeOrder <img src=\"6012_怒-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 怒る|おこる; englishMeaning anger / get angry; preferred words 怒る / 怒り / 激怒; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example そんなことで怒らないでください。 / そんなことでおこらないでください。 / Please don't get angry over something like that..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading おこる; meaning get angry; broader anger / get angry / angry / be offended; notes 怒る / 怒り / 激怒; example 怒らないでください.",
+        "tracked governed Japanese source evidence rechecked for 怒|おこる: https://www.kanjipedia.jp/kanji/0005140700; Kanjipedia; Kanjipedia review for 怒|おこる: Kanjipedia lists 音 ド / ヌ and 訓 いかる / おこる, with meanings for get angry, be angry/indignant, and fierce/violent force, plus support vocabulary such as 怒る, 怒り, 怒気, 激怒, 喜怒, and 憤怒. This supports the exported PrimaryReading おこる, MeaningJP get angry, and KanjiMeanings anger / get angry / angry / be offended for the individual kanji 怒.",
+        "primary reading, on/kun, and meaning decision: Uses おこる because the learner-facing support surface and example practice 怒る directly; いかる and ド remain visible through support words such as 怒り and 激怒. Reviewer judgment confirms PrimaryReading おこる, OnReading ド、 ヌ, KunReading いか.る、 おこ.る, MeaningJP get angry, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>怒<rt>おこ</rt></ruby>る - get angry ／ <ruby>怒<rt>いか</rt></ruby>り - anger ／ <ruby>激怒<rt>げきど</rt></ruby> - rage stays support-only for the single-kanji anchor 怒; support vocabulary clarifies common usage while DisplayWord remains 怒 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: そんなことで怒らないでください。 / そんなことでおこらないでください。 / Please don&#39;t get angry over something like that.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0232; priority routine; signal n3-kanji-0111; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading いか; live card reading おこる; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:6012_怒-kanji-reading-怒-おこる.wav]; manifest data/media/kanji/60/6012_怒/manifest.json; managed path audio/6012_怒-kanji-reading-怒-おこる.wav; source voicevox-nemo; category kanji-reading; text 怒; reading おこる; voice 女声1 / ノーマル; locale ja-JP; checksum a824c7f56f966b07bac3f6416b66e6b4d8031427f228d0621179eb9da335cac6; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"6012_怒-stroke-order.gif\" />; manifest data/media/kanji/60/6012_怒/manifest.json; managed path animations/6012_怒-stroke-order.gif; source remote-stroke-order-animation; checksum 9789f761bbd33dae85b3c3c523bd4d5568483df2ea6729a73d90320d2457dabd; source file exists true; media target identity matched 怒.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "そんなことで怒らないでください。",
+        "reading": "そんなことでおこらないでください。",
+        "translation": "Please don&#39;t get angry over something like that.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: そんなことで怒らないでください。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 怒|おこる without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "怖",
@@ -13725,7 +14295,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 怖|こわい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading こわい, MeaningJP scary, KanjiMeanings scary / fearful / be frightened / dreadful, example sentence 子どものころは犬が少し怖かったです。, reading こどものころはいぬがすこしこわかったです。, translation When I was a child, dogs were a little scary to me., notes/support surface 怖い / 恐怖 / 怖がる, audio kanji-reading-怖-こわい, stroke-order media 6016_怖-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-014",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "怖|こわい",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 怖; DisplayWord 怖; StudyWordKanji (blank); PrimaryReading こわい; MeaningJP scary; KanjiMeanings scary / fearful / be frightened / dreadful; OnReading フ、 ホ; KunReading お.じる、 おそ.れる、 こわ.い、 こわ.がる; Notes <ruby>怖<rt>こわ</rt></ruby>い - scary ／ <ruby>恐怖<rt>きょうふ</rt></ruby> - fear ／ <ruby>怖<rt>こわ</rt></ruby>がる - be afraid; Example 子どものころは犬が少し怖かったです。 ／ こどものころはいぬがすこしこわかったです。 ／ When I was a child, dogs were a little scary to me.; Audio [sound:6016_怖-kanji-reading-怖-こわい.wav]; StrokeOrder <img src=\"6016_怖-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 怖い|こわい; englishMeaning scary / fearful; preferred words 怖い / 恐怖 / 怖がる; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 子どものころは犬が少し怖かったです。 / こどものころはいぬがすこしこわかったです。 / When I was a child, dogs were a little scary to me..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading こわい; meaning scary; broader scary / fearful / be frightened / dreadful; notes 怖い / 恐怖 / 怖がる; example 犬が少し怖かったです.",
+        "tracked governed Japanese source evidence rechecked for 怖|こわい: https://www.kanjipedia.jp/kanji/0006031100; Kanjipedia; Kanjipedia review for 怖|こわい: Kanjipedia lists 音 フ and 訓 こわい, with meanings for scary, fear, and being frightened, plus support vocabulary such as 怖い, 恐怖, 畏怖, and 怖怖. This supports the exported PrimaryReading こわい, MeaningJP scary, and KanjiMeanings scary / fearful / be frightened / dreadful for the individual kanji 怖.",
+        "primary reading, on/kun, and meaning decision: Uses こわい because the learner-facing support surface and example practice 怖い directly; フ remains visible in compounds such as 恐怖. Reviewer judgment confirms PrimaryReading こわい, OnReading フ、 ホ, KunReading お.じる、 おそ.れる、 こわ.い、 こわ.がる, MeaningJP scary, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>怖<rt>こわ</rt></ruby>い - scary ／ <ruby>恐怖<rt>きょうふ</rt></ruby> - fear ／ <ruby>怖<rt>こわ</rt></ruby>がる - be afraid stays support-only for the single-kanji anchor 怖; support vocabulary clarifies common usage while DisplayWord remains 怖 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 子どものころは犬が少し怖かったです。 / こどものころはいぬがすこしこわかったです。 / When I was a child, dogs were a little scary to me.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0270; priority routine; signal n3-kanji-0112; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading こわ; live card reading こわい; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:6016_怖-kanji-reading-怖-こわい.wav]; manifest data/media/kanji/60/6016_怖/manifest.json; managed path audio/6016_怖-kanji-reading-怖-こわい.wav; source voicevox-nemo; category kanji-reading; text 怖; reading こわい; voice 女声1 / ノーマル; locale ja-JP; checksum c6e9b85a295b9bb14f62877dca33b52b207c1876c28b61ba57a7d9b82f9d13ad; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"6016_怖-stroke-order.gif\" />; manifest data/media/kanji/60/6016_怖/manifest.json; managed path animations/6016_怖-stroke-order.gif; source remote-stroke-order-animation; checksum 7030cfa2885c5cb83aa427bbae4c5544839249e7cf8e37efd40c02e37367a37b; source file exists true; media target identity matched 怖.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "子どものころは犬が少し怖かったです。",
+        "reading": "こどものころはいぬがすこしこわかったです。",
+        "translation": "When I was a child, dogs were a little scary to me.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 子どものころは犬が少し怖かったです。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 怖|こわい without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "性",
@@ -13823,7 +14431,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 性|せい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading せい, MeaningJP nature / quality, KanjiMeanings nature / quality / gender / sex, example sentence 彼は明るい性格で友達が多いです。, reading かれはあかるいせいかくでともだちがおおいです。, translation He has a cheerful personality and many friends., notes/support surface 性格 / 可能性 / 女性, audio kanji-reading-性-せい, stroke-order media 6027_性-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "性|せい",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 性; DisplayWord 性; StudyWordKanji (blank); PrimaryReading せい; MeaningJP nature / quality; KanjiMeanings nature / quality / gender / sex; OnReading ショウ、 セイ; KunReading さが; Notes <ruby>性格<rt>せいかく</rt></ruby> - personality ／ <ruby>可能性<rt>かのうせい</rt></ruby> - possibility ／ <ruby>女性<rt>じょせい</rt></ruby> - woman; Example 彼は明るい性格で友達が多いです。 ／ かれはあかるいせいかくでともだちがおおいです。 ／ He has a cheerful personality and many friends.; Audio [sound:6027_性-kanji-reading-性-せい.wav]; StrokeOrder <img src=\"6027_性-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 性格|せいかく; englishMeaning nature / quality; preferred words 性格 / 可能性 / 女性; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 彼は明るい性格で友達が多いです。 / かれはあかるいせいかくでともだちがおおいです。 / He has a cheerful personality and many friends..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading せい; meaning nature / quality; broader nature / quality / gender / sex; notes 性格 / 可能性 / 女性; example 彼は明るい性格で友達が多いです。.",
+        "tracked governed Japanese source evidence rechecked for 性|せい: https://www.kanjipedia.jp/kanji/0003862200; Kanjipedia; Kanjipedia review for 性|せい: Kanjipedia lists 音 セイ / ショウ and 訓 さが, with meanings for nature, quality, innate character, and sex/gender, plus support vocabulary such as 性格, 可能性, 女性, 個性, and 本性. This supports the exported PrimaryReading せい, MeaningJP nature / quality, and KanjiMeanings nature / quality / gender / sex for the individual kanji 性.",
+        "primary reading, on/kun, and meaning decision: Uses せい because the learner-facing support surface practices high-frequency compounds 性格, 可能性, and 女性; ショウ and さが remain visible in source readings without displacing the common N3-facing on-reading. Reviewer judgment confirms PrimaryReading せい, OnReading ショウ、 セイ, KunReading さが, MeaningJP nature / quality, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>性格<rt>せいかく</rt></ruby> - personality ／ <ruby>可能性<rt>かのうせい</rt></ruby> - possibility ／ <ruby>女性<rt>じょせい</rt></ruby> - woman stays support-only for the single-kanji anchor 性; support vocabulary clarifies common usage while DisplayWord remains 性 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 彼は明るい性格で友達が多いです。 / かれはあかるいせいかくでともだちがおおいです。 / He has a cheerful personality and many friends.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0170; priority routine; signal n3-kanji-0113; kinds routine-tokenization-review; tokenizer reading せい; live card reading せい; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:6027_性-kanji-reading-性-せい.wav]; manifest data/media/kanji/60/6027_性/manifest.json; managed path audio/6027_性-kanji-reading-性-せい.wav; source voicevox-nemo; category kanji-reading; text 性; reading せい; voice 女声1 / ノーマル; locale ja-JP; checksum 2005e4b01549d236583ff0d3f7a92bc20e08f38fb43f62c34aa13df9e690bd0e; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"6027_性-stroke-order.gif\" />; manifest data/media/kanji/60/6027_性/manifest.json; managed path animations/6027_性-stroke-order.gif; source remote-stroke-order-animation; checksum de87931ab9d22a10e328532215505113aeddc1e332065f8f12b5657b4030368d; source file exists true; media target identity matched 性.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "彼は明るい性格で友達が多いです。",
+        "reading": "かれはあかるいせいかくでともだちがおおいです。",
+        "translation": "He has a cheerful personality and many friends.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 彼は明るい性格で友達が多いです。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 性|せい without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "恐",
@@ -13919,7 +14565,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 恐|おそれる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading おそれる, MeaningJP fear, KanjiMeanings fear / dread / awe, example sentence 失敗を恐れずに挑戦してみましょう。, reading しっぱいをおそれずにちょうせんしてみましょう。, translation Let's try without fearing failure., notes/support surface 恐れる / 恐ろしい / 恐怖, audio kanji-reading-恐-おそれる, stroke-order media 6050_恐-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "恐|おそれる",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 恐; DisplayWord 恐; StudyWordKanji (blank); PrimaryReading おそれる; MeaningJP fear; KanjiMeanings fear / dread / awe; OnReading キョウ; KunReading おそ.る、 おそ.れる、 おそ.ろしい、 こわ.い、 こわ.がる; Notes <ruby>恐<rt>おそ</rt></ruby>れる - fear ／ <ruby>恐<rt>おそ</rt></ruby>ろしい - terrible / frightening ／ <ruby>恐怖<rt>きょうふ</rt></ruby> - fear; Example 失敗を恐れずに挑戦してみましょう。 ／ しっぱいをおそれずにちょうせんしてみましょう。 ／ Let&#39;s try without fearing failure.; Audio [sound:6050_恐-kanji-reading-恐-おそれる.wav]; StrokeOrder <img src=\"6050_恐-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 恐れる|おそれる; englishMeaning fear / dread; preferred words 恐れる / 恐ろしい / 恐怖; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 失敗を恐れずに挑戦してみましょう。 / しっぱいをおそれずにちょうせんしてみましょう。 / Let's try without fearing failure..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading おそれる; meaning fear; broader fear / dread / awe; notes 恐れる / 恐ろしい / 恐怖; example 失敗を恐れずに挑戦してみましょう。.",
+        "tracked governed Japanese source evidence rechecked for 恐|おそれる: https://www.kanjipedia.jp/kanji/0001505400; Kanjipedia; Kanjipedia review for 恐|おそれる: Kanjipedia lists 音 キョウ and 訓 おそれる / おそろしい / こわい, with meanings for fear, dread, and awe, plus support vocabulary such as 恐れる, 恐ろしい, 恐怖, and 恐縮. This supports the exported PrimaryReading おそれる, MeaningJP fear, and KanjiMeanings fear / dread / awe for the individual kanji 恐.",
+        "primary reading, on/kun, and meaning decision: Uses おそれる because the example and support surface directly practice 恐れる; キョウ remains visible through compounds such as 恐怖. Reviewer judgment confirms PrimaryReading おそれる, OnReading キョウ, KunReading おそ.る、 おそ.れる、 おそ.ろしい、 こわ.い、 こわ.がる, MeaningJP fear, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>恐<rt>おそ</rt></ruby>れる - fear ／ <ruby>恐<rt>おそ</rt></ruby>ろしい - terrible / frightening ／ <ruby>恐怖<rt>きょうふ</rt></ruby> - fear stays support-only for the single-kanji anchor 恐; support vocabulary clarifies common usage while DisplayWord remains 恐 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 失敗を恐れずに挑戦してみましょう。 / しっぱいをおそれずにちょうせんしてみましょう。 / Let&#39;s try without fearing failure.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0062; priority routine; signal n3-kanji-0114; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading こわ; live card reading おそれる; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:6050_恐-kanji-reading-恐-おそれる.wav]; manifest data/media/kanji/60/6050_恐/manifest.json; managed path audio/6050_恐-kanji-reading-恐-おそれる.wav; source voicevox-nemo; category kanji-reading; text 恐; reading おそれる; voice 女声1 / ノーマル; locale ja-JP; checksum 5aadba38fe12ef2c290d9b3faee3e0809b2eee3e7848727939f30f3728381526; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"6050_恐-stroke-order.gif\" />; manifest data/media/kanji/60/6050_恐/manifest.json; managed path animations/6050_恐-stroke-order.gif; source remote-stroke-order-animation; checksum 1454cf66b47d16e413725595588a16f9a5e8ac959f6e87fe2239aa47a7db2869; source file exists true; media target identity matched 恐.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "失敗を恐れずに挑戦してみましょう。",
+        "reading": "しっぱいをおそれずにちょうせんしてみましょう。",
+        "translation": "Let&#39;s try without fearing failure.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 失敗を恐れずに挑戦してみましょう。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 恐|おそれる without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "恥",
@@ -14015,7 +14699,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 恥|はずかしい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はずかしい, MeaningJP embarrassed, KanjiMeanings shame / embarrassment / dishonor, example sentence みんなの前でほめられて少し恥ずかしかったです。, reading みんなのまえでほめられてすこしはずかしかったです。, translation I felt a little embarrassed when I was praised in front of everyone., notes/support surface 恥ずかしい / 恥 / 恥じる, audio kanji-reading-恥-はずかしい, stroke-order media 6065_恥-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "恥|はずかしい",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 恥; DisplayWord 恥; StudyWordKanji (blank); PrimaryReading はずかしい; MeaningJP embarrassed; KanjiMeanings shame / embarrassment / dishonor; OnReading チ; KunReading は.じらう、 は.じる、 は.ずかしい、 はじ; Notes <ruby>恥<rt>は</rt></ruby>ずかしい - embarrassed ／ <ruby>恥<rt>はじ</rt></ruby> - shame ／ <ruby>恥<rt>は</rt></ruby>じる - feel ashamed; Example みんなの前でほめられて少し恥ずかしかったです。 ／ みんなのまえでほめられてすこしはずかしかったです。 ／ I felt a little embarrassed when I was praised in front of everyone.; Audio [sound:6065_恥-kanji-reading-恥-はずかしい.wav]; StrokeOrder <img src=\"6065_恥-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 恥ずかしい|はずかしい; englishMeaning shame / embarrassment; preferred words 恥ずかしい / 恥 / 恥じる; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example みんなの前でほめられて少し恥ずかしかったです。 / みんなのまえでほめられてすこしはずかしかったです。 / I felt a little embarrassed when I was praised in front of everyone..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading はずかしい; meaning embarrassed; broader shame / embarrassment / dishonor; notes 恥ずかしい / 恥 / 恥じる; example みんなの前でほめられて少し恥ずかしかったです。.",
+        "tracked governed Japanese source evidence rechecked for 恥|はずかしい: https://www.kanjipedia.jp/kanji/0004676500; Kanjipedia; Kanjipedia review for 恥|はずかしい: Kanjipedia lists 音 チ and 訓 はじ / はじる / はずかしい, with meanings for shame, embarrassment, and dishonor, plus support vocabulary such as 恥ずかしい, 恥, 恥じる, and 恥辱. This supports the exported PrimaryReading はずかしい, MeaningJP embarrassed, and KanjiMeanings shame / embarrassment / dishonor for the individual kanji 恥.",
+        "primary reading, on/kun, and meaning decision: Uses はずかしい because the learner-facing support surface and example practice the common adjective 恥ずかしい directly; チ remains visible through source and support vocabulary. Reviewer judgment confirms PrimaryReading はずかしい, OnReading チ, KunReading は.じらう、 は.じる、 は.ずかしい、 はじ, MeaningJP embarrassed, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>恥<rt>は</rt></ruby>ずかしい - embarrassed ／ <ruby>恥<rt>はじ</rt></ruby> - shame ／ <ruby>恥<rt>は</rt></ruby>じる - feel ashamed stays support-only for the single-kanji anchor 恥; support vocabulary clarifies common usage while DisplayWord remains 恥 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: みんなの前でほめられて少し恥ずかしかったです。 / みんなのまえでほめられてすこしはずかしかったです。 / I felt a little embarrassed when I was praised in front of everyone.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0216; priority routine; signal n3-kanji-0115; kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant; tokenizer reading はじ; live card reading はずかしい; comparable true; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:6065_恥-kanji-reading-恥-はずかしい.wav]; manifest data/media/kanji/60/6065_恥/manifest.json; managed path audio/6065_恥-kanji-reading-恥-はずかしい.wav; source voicevox-nemo; category kanji-reading; text 恥; reading はずかしい; voice 女声1 / ノーマル; locale ja-JP; checksum 30b4eab85bdf971b214ec660c83ab731056dc0bfe93910b7770d439eccce52db; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"6065_恥-stroke-order.gif\" />; manifest data/media/kanji/60/6065_恥/manifest.json; managed path animations/6065_恥-stroke-order.gif; source remote-stroke-order-animation; checksum 466ae2e2be6a053eced385ce535d0922b5e820d1e4bf2159623373bbfb34ab13; source file exists true; media target identity matched 恥.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "みんなの前でほめられて少し恥ずかしかったです。",
+        "reading": "みんなのまえでほめられてすこしはずかしかったです。",
+        "translation": "I felt a little embarrassed when I was praised in front of everyone.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: みんなの前でほめられて少し恥ずかしかったです。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 恥|はずかしい without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "息",
@@ -14113,7 +14835,45 @@
         "detail": "Current-standard review revalidated 息|いき with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading いき, MeaningJP breath, KanjiMeanings breath / son / respiration / rest, example sentence 山の上まで走って息が切れました。, reading やまのうえまではしっていきがきれました。, translation I ran to the top of the hill and got out of breath., notes/support surface 息 / 息子 / 休息, audio kanji-reading-息-いき, stroke-order media 606F_息-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
     ],
-    "fixSummary": "Blocked low-value or noisy broader meanings coming to an end, interest (on money), and nuture before certification; retained learner-useful, source-supported meanings breath / son / respiration / rest."
+    "fixSummary": "Blocked low-value or noisy broader meanings coming to an end, interest (on money), and nuture before certification; retained learner-useful, source-supported meanings breath / son / respiration / rest.",
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "息|いき",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 息; DisplayWord 息; StudyWordKanji (blank); PrimaryReading いき; MeaningJP breath; KanjiMeanings breath / son / respiration / rest; OnReading ソク; KunReading いき; Notes <ruby>息<rt>いき</rt></ruby> - breath ／ <ruby>息子<rt>むすこ</rt></ruby> - son ／ <ruby>休息<rt>きゅうそく</rt></ruby> - rest; Example 山の上まで走って息が切れました。 ／ やまのうえまではしっていきがきれました。 ／ I ran to the top of the hill and got out of breath.; Audio [sound:606F_息-kanji-reading-息-いき.wav]; StrokeOrder <img src=\"606F_息-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 息|いき; englishMeaning breath / son; preferred words 息 / 息子 / 休息; blocked meanings coming to an end / interest (on money) / nuture; blocked words (none); blocked sentence phrases (none); starter example 山の上まで走って息が切れました。 / やまのうえまではしっていきがきれました。 / I ran to the top of the hill and got out of breath..",
+        "golden and Platinum expectations checked separately: Platinum status fixed_then_platinum; reading いき; meaning breath; broader breath / son / respiration / rest; notes 息 / 息子 / 休息; example 山の上まで走って息が切れました。.",
+        "tracked governed Japanese source evidence rechecked for 息|いき: https://www.kanjipedia.jp/kanji/0004342100/; Kanjipedia; Kanjipedia review for 息|いき: Kanjipedia lists 音 ソク and 訓 いき, with meanings for breath/respiration, rest/cease, and child/son, plus support vocabulary such as 息, 息子, 休息, and 息切れ. This supports the exported PrimaryReading いき, MeaningJP breath, and cleaned KanjiMeanings breath / son / respiration / rest for the individual kanji 息.",
+        "primary reading, on/kun, and meaning decision: Uses いき because the card, example, and first support word directly practice the core standalone noun 息; ソク remains visible through 休息. Reviewer judgment confirms PrimaryReading いき, OnReading ソク, KunReading いき, MeaningJP breath, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>息<rt>いき</rt></ruby> - breath ／ <ruby>息子<rt>むすこ</rt></ruby> - son ／ <ruby>休息<rt>きゅうそく</rt></ruby> - rest stays support-only for the single-kanji anchor 息; support vocabulary clarifies common usage while DisplayWord remains 息 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 山の上まで走って息が切れました。 / やまのうえまではしっていきがきれました。 / I ran to the top of the hill and got out of breath.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0197; priority routine; signal n3-kanji-0116; kinds routine-tokenization-review; tokenizer reading いき; live card reading いき; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:606F_息-kanji-reading-息-いき.wav]; manifest data/media/kanji/60/606F_息/manifest.json; managed path audio/606F_息-kanji-reading-息-いき.wav; source voicevox-nemo; category kanji-reading; text 息; reading いき; voice 女声1 / ノーマル; locale ja-JP; checksum e398ea073dabda2fa7885d196ffde3a7890fe498f3d3d158c6f2b93c148b9153; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"606F_息-stroke-order.gif\" />; manifest data/media/kanji/60/606F_息/manifest.json; managed path animations/606F_息-stroke-order.gif; source remote-stroke-order-animation; checksum d7c4e796be2a4c00f0874a55529f5de274ab5c31a48f7ba185efa173acfc406b; source file exists true; media target identity matched 息.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "山の上まで走って息が切れました。",
+        "reading": "やまのうえまではしっていきがきれました。",
+        "translation": "I ran to the top of the hill and got out of breath.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 山の上まで走って息が切れました。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 息|いき without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "悲",
@@ -14211,7 +14971,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 悲|かなしい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading かなしい, MeaningJP sad, KanjiMeanings sad / sorrowful / deplore / grieve / regret, example sentence その映画の最後はとても悲しかったです。, reading そのえいがのさいごはとてもかなしかったです。, translation The ending of that movie was very sad., notes/support surface 悲しい / 悲しむ / 悲劇, audio kanji-reading-悲-かなしい, stroke-order media 60B2_悲-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "悲|かなしい",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 悲; DisplayWord 悲; StudyWordKanji (blank); PrimaryReading かなしい; MeaningJP sad; KanjiMeanings sad / sorrowful / deplore / grieve / regret; OnReading ヒ; KunReading かな.しい、 かな.しむ; Notes <ruby>悲<rt>かな</rt></ruby>しい - sad ／ <ruby>悲<rt>かな</rt></ruby>しむ - grieve ／ <ruby>悲劇<rt>ひげき</rt></ruby> - tragedy; Example その映画の最後はとても悲しかったです。 ／ そのえいがのさいごはとてもかなしかったです。 ／ The ending of that movie was very sad.; Audio [sound:60B2_悲-kanji-reading-悲-かなしい.wav]; StrokeOrder <img src=\"60B2_悲-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 悲しい|かなしい; englishMeaning sad / sorrowful; preferred words 悲しい / 悲しむ / 悲劇; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example その映画の最後はとても悲しかったです。 / そのえいがのさいごはとてもかなしかったです。 / The ending of that movie was very sad..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading かなしい; meaning sad; broader sad / sorrowful / deplore / grieve / regret; notes 悲しい / 悲しむ / 悲劇; example その映画の最後はとても悲しかったです。.",
+        "tracked governed Japanese source evidence rechecked for 悲|かなしい: https://www.kanjipedia.jp/kanji/0005832600; Kanjipedia; Kanjipedia review for 悲|かなしい: Kanjipedia lists 音 ヒ and 訓 かなしい / かなしむ, with meanings for sad, sorrowful, grief, regret, and compassion, plus support vocabulary such as 悲しい, 悲しむ, 悲劇, 悲哀, and 慈悲. This supports the exported PrimaryReading かなしい, MeaningJP sad, and KanjiMeanings sad / sorrowful / deplore / grieve / regret for the individual kanji 悲.",
+        "primary reading, on/kun, and meaning decision: Uses かなしい because the learner-facing support surface and example practice 悲しい directly; ヒ remains visible through compounds such as 悲劇. Reviewer judgment confirms PrimaryReading かなしい, OnReading ヒ, KunReading かな.しい、 かな.しむ, MeaningJP sad, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>悲<rt>かな</rt></ruby>しい - sad ／ <ruby>悲<rt>かな</rt></ruby>しむ - grieve ／ <ruby>悲劇<rt>ひげき</rt></ruby> - tragedy stays support-only for the single-kanji anchor 悲; support vocabulary clarifies common usage while DisplayWord remains 悲 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: その映画の最後はとても悲しかったです。 / そのえいがのさいごはとてもかなしかったです。 / The ending of that movie was very sad.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0259; priority routine; signal n3-kanji-0117; kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning; tokenizer reading (none); live card reading かなしい; comparable false; matches false. Reviewer decision: normal bare-kanji tokenizer reading variant or coverage context only; no card/source issue found after human review. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:60B2_悲-kanji-reading-悲-かなしい.wav]; manifest data/media/kanji/60/60B2_悲/manifest.json; managed path audio/60B2_悲-kanji-reading-悲-かなしい.wav; source voicevox-nemo; category kanji-reading; text 悲; reading かなしい; voice 女声1 / ノーマル; locale ja-JP; checksum c6db89b020ed804a35e80a8537ac4f7f119d8c092e0485b8bbd73f2b393ae3ee; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"60B2_悲-stroke-order.gif\" />; manifest data/media/kanji/60/60B2_悲/manifest.json; managed path animations/60B2_悲-stroke-order.gif; source remote-stroke-order-animation; checksum a7127a8e14ebddc449fb51e7ba03d94d7484870a9d02720dbe4485416031872b; source file exists true; media target identity matched 悲.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "その映画の最後はとても悲しかったです。",
+        "reading": "そのえいがのさいごはとてもかなしかったです。",
+        "translation": "The ending of that movie was very sad.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: その映画の最後はとても悲しかったです。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 悲|かなしい without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "情",
@@ -14312,7 +15110,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 情|じょう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading じょう, MeaningJP situation / emotion, KanjiMeanings situation / emotion / circumstances / facts / feelings / passion / sympathy, example sentence 事情を説明すれば分かってもらえると思います。, reading じじょうをせつめいすればわかってもらえるとおもいます。, translation I think they will understand if you explain the situation., notes/support surface 事情 / 感情 / 愛情, audio kanji-reading-情-じょう, stroke-order media 60C5_情-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "情|じょう",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 情; DisplayWord 情; StudyWordKanji (blank); PrimaryReading じょう; MeaningJP situation / emotion; KanjiMeanings situation / emotion / circumstances / facts / feelings / passion / sympathy; OnReading ジョウ、 セイ; KunReading なさ.け; Notes <ruby>事情<rt>じじょう</rt></ruby> - situation / circumstances ／ <ruby>感情<rt>かんじょう</rt></ruby> - emotion ／ <ruby>愛情<rt>あいじょう</rt></ruby> - affection; Example 事情を説明すれば分かってもらえると思います。 ／ じじょうをせつめいすればわかってもらえるとおもいます。 ／ I think they will understand if you explain the situation.; Audio [sound:60C5_情-kanji-reading-情-じょう.wav]; StrokeOrder <img src=\"60C5_情-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 事情|じじょう; englishMeaning situation / emotion; preferred words 事情 / 感情 / 愛情; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 事情を説明すれば分かってもらえると思います。 / じじょうをせつめいすればわかってもらえるとおもいます。 / I think they will understand if you explain the situation..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading じょう; meaning situation / emotion; broader situation / emotion / circumstances / facts / feelings / passion / sympathy; notes 事情 / 感情 / 愛情; example 事情を説明すれば分かってもらえると思います。.",
+        "tracked governed Japanese source evidence rechecked for 情|じょう: https://www.kanjipedia.jp/kanji/0003510400; Kanjipedia; Kanjipedia review for 情|じょう: Kanjipedia lists 音 ジョウ / セイ and 訓 なさけ, with meanings for feelings/emotion, circumstances/facts, sympathy, and affection, plus support vocabulary such as 事情, 感情, 愛情, 情報, and 友情. This supports the exported PrimaryReading じょう, MeaningJP situation / emotion, and KanjiMeanings situation / emotion / circumstances / facts / feelings / passion / sympathy for the individual kanji 情.",
+        "primary reading, on/kun, and meaning decision: Uses じょう because the support surface practices common N3-facing compounds 事情, 感情, and 愛情; セイ and なさけ remain visible in source readings without changing the primary card target. Reviewer judgment confirms PrimaryReading じょう, OnReading ジョウ、 セイ, KunReading なさ.け, MeaningJP situation / emotion, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>事情<rt>じじょう</rt></ruby> - situation / circumstances ／ <ruby>感情<rt>かんじょう</rt></ruby> - emotion ／ <ruby>愛情<rt>あいじょう</rt></ruby> - affection stays support-only for the single-kanji anchor 情; support vocabulary clarifies common usage while DisplayWord remains 情 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 事情を説明すれば分かってもらえると思います。 / じじょうをせつめいすればわかってもらえるとおもいます。 / I think they will understand if you explain the situation.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0157; priority routine; signal n3-kanji-0118; kinds routine-tokenization-review; tokenizer reading じょう; live card reading じょう; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:60C5_情-kanji-reading-情-じょう.wav]; manifest data/media/kanji/60/60C5_情/manifest.json; managed path audio/60C5_情-kanji-reading-情-じょう.wav; source voicevox-nemo; category kanji-reading; text 情; reading じょう; voice 女声1 / ノーマル; locale ja-JP; checksum e6389a8f74f7c34ffe18fc7027c80b35a3e8434fc1b686fcb8a5cc1108cd9120; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"60C5_情-stroke-order.gif\" />; manifest data/media/kanji/60/60C5_情/manifest.json; managed path animations/60C5_情-stroke-order.gif; source remote-stroke-order-animation; checksum cfe8991667842e56c1b815245f8a592abc3ebeee1dc41e72b6e8edad4cbbf8e6; source file exists true; media target identity matched 情.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "事情を説明すれば分かってもらえると思います。",
+        "reading": "じじょうをせつめいすればわかってもらえるとおもいます。",
+        "translation": "I think they will understand if you explain the situation.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 事情を説明すれば分かってもらえると思います。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 情|じょう without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "想",
@@ -14411,7 +15247,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 想|そう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading そう, MeaningJP think / imagine, KanjiMeanings think / imagine / concept / idea / thought, example sentence その景色は想像していたよりきれいでした。, reading そのけしきはそうぞうしていたよりきれいでした。, translation That scenery was more beautiful than I had imagined., notes/support surface 想像 / 感想 / 理想, audio kanji-reading-想-そう, stroke-order media 60F3_想-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "想|そう",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 想; DisplayWord 想; StudyWordKanji (blank); PrimaryReading そう; MeaningJP think / imagine; KanjiMeanings think / imagine / concept / idea / thought; OnReading ソ、 ソウ; KunReading おも.う; Notes <ruby>想像<rt>そうぞう</rt></ruby> - imagination ／ <ruby>感想<rt>かんそう</rt></ruby> - impression ／ <ruby>理想<rt>りそう</rt></ruby> - ideal; Example その景色は想像していたよりきれいでした。 ／ そのけしきはそうぞうしていたよりきれいでした。 ／ That scenery was more beautiful than I had imagined.; Audio [sound:60F3_想-kanji-reading-想-そう.wav]; StrokeOrder <img src=\"60F3_想-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 想像|そうぞう; englishMeaning think / imagine; preferred words 想像 / 感想 / 理想; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example その景色は想像していたよりきれいでした。 / そのけしきはそうぞうしていたよりきれいでした。 / That scenery was more beautiful than I had imagined..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading そう; meaning think / imagine; broader think / imagine / concept / idea / thought; notes 想像 / 感想 / 理想; example その景色は想像していたよりきれいでした。.",
+        "tracked governed Japanese source evidence rechecked for 想|そう: https://www.kanjipedia.jp/kanji/0004263600; Kanjipedia; Kanjipedia review for 想|そう: Kanjipedia lists 音 ソウ / ソ and 訓 おもう, with meanings for think, imagine, and thought/idea, plus support vocabulary such as 想像, 感想, 理想, 空想, and 予想. This supports the exported PrimaryReading そう, MeaningJP think / imagine, and KanjiMeanings think / imagine / concept / idea / thought for the individual kanji 想.",
+        "primary reading, on/kun, and meaning decision: Uses そう because the support surface practices high-frequency compounds 想像, 感想, and 理想; ソ and おもう remain visible through source readings. Reviewer judgment confirms PrimaryReading そう, OnReading ソ、 ソウ, KunReading おも.う, MeaningJP think / imagine, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>想像<rt>そうぞう</rt></ruby> - imagination ／ <ruby>感想<rt>かんそう</rt></ruby> - impression ／ <ruby>理想<rt>りそう</rt></ruby> - ideal stays support-only for the single-kanji anchor 想; support vocabulary clarifies common usage while DisplayWord remains 想 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: その景色は想像していたよりきれいでした。 / そのけしきはそうぞうしていたよりきれいでした。 / That scenery was more beautiful than I had imagined.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0190; priority routine; signal n3-kanji-0119; kinds routine-tokenization-review; tokenizer reading そう; live card reading そう; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:60F3_想-kanji-reading-想-そう.wav]; manifest data/media/kanji/60/60F3_想/manifest.json; managed path audio/60F3_想-kanji-reading-想-そう.wav; source voicevox-nemo; category kanji-reading; text 想; reading そう; voice 女声1 / ノーマル; locale ja-JP; checksum 4ddffc0c1141a0b72383be9ed25fc69db766070795d4233068ecb74a2c9be9a9; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"60F3_想-stroke-order.gif\" />; manifest data/media/kanji/60/60F3_想/manifest.json; managed path animations/60F3_想-stroke-order.gif; source remote-stroke-order-animation; checksum b0f280fc6be915f2385945b624b232d4e69773a2f1b119d75e4021c3a9c3c60c; source file exists true; media target identity matched 想.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "その景色は想像していたよりきれいでした。",
+        "reading": "そのけしきはそうぞうしていたよりきれいでした。",
+        "translation": "That scenery was more beautiful than I had imagined.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: その景色は想像していたよりきれいでした。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 想|そう without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "愛",
@@ -14507,7 +15381,45 @@
         "source": "core N3 current-standard structural Platinum review",
         "detail": "Current-standard review revalidated 愛|あい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading あい, MeaningJP love, KanjiMeanings affection / love / favourite, example sentence 家族の愛情に支えられてきました。, reading かぞくのあいじょうにささえられてきました。, translation I have been supported by my family's affection., notes/support surface 愛情 / 愛 / 可愛がる, audio kanji-reading-愛-あい, stroke-order media 611B_愛-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
-    ]
+    ],
+    "rereviewProvenance": {
+      "type": "substantive current standard rereview",
+      "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+      "batchId": "n3-kanji-obsidian-rereview-batch-015",
+      "reviewedAt": "2026-05-26",
+      "reviewer": "codex-obsidian-review",
+      "reviewedAfterStandard": true,
+      "mechanicalMigration": false,
+      "result": "approved_for_current_standard_platinum",
+      "scope": "full kanji card rereview from square zero",
+      "cardReviewed": "愛|あい",
+      "evidenceChecked": [
+        "live generated N3 card surface from out/build/package/exports/jlpt-n3.tsv: Kanji 愛; DisplayWord 愛; StudyWordKanji (blank); PrimaryReading あい; MeaningJP love; KanjiMeanings affection / love / favourite; OnReading アイ; KunReading いと.しい、 お.しむ、 かな.しい、 まな、 め.でる; Notes <ruby>愛情<rt>あいじょう</rt></ruby> - affection ／ <ruby>愛<rt>あい</rt></ruby> - love ／ <ruby>可愛<rt>かわい</rt></ruby>がる - adore / cherish; Example 家族の愛情に支えられてきました。 ／ かぞくのあいじょうにささえられてきました。 ／ I have been supported by my family&#39;s affection.; Audio [sound:611B_愛-kanji-reading-愛-あい.wav]; StrokeOrder <img src=\"611B_愛-stroke-order.gif\" />.",
+        "tracked starter source data checked as card-surface origin, not Japanese-source evidence: display word 愛情|あいじょう; englishMeaning affection / love; preferred words 愛情 / 愛 / 可愛がる; blocked meanings (none); blocked words (none); blocked sentence phrases (none); starter example 家族の愛情に支えられてきました。 / かぞくのあいじょうにささえられてきました。 / I have been supported by my family's affection..",
+        "golden and Platinum expectations checked separately: Platinum status platinum; reading あい; meaning love; broader affection / love / favourite; notes 愛情 / 愛 / 可愛がる; example 家族の愛情に支えられてきました。.",
+        "tracked governed Japanese source evidence rechecked for 愛|あい: https://www.kanjipedia.jp/kanji/0000020000; Kanjipedia; Kanjipedia review for 愛|あい: Kanjipedia lists 音 アイ with 訓 such as めでる, おしむ, まな, いとしい, and related meanings for love, affection, fondness, cherishing, and valuing, plus support vocabulary such as 愛情, 愛, 愛する, 愛好, and 親愛. This supports the exported PrimaryReading あい, MeaningJP love, and KanjiMeanings affection / love / favourite for the individual kanji 愛.",
+        "primary reading, on/kun, and meaning decision: Uses あい because the card and support surface practice the common on-reading in 愛情 and 愛; additional kun-readings remain visible in source readings without overloading the N3 card. Reviewer judgment confirms PrimaryReading あい, OnReading アイ, KunReading いと.しい、 お.しむ、 かな.しい、 まな、 め.でる, MeaningJP love, and tracked broader meaning snippets remain learner-useful for an N3 single-kanji card without promoting support vocabulary to the card anchor.",
+        "notes/support review: <ruby>愛情<rt>あいじょう</rt></ruby> - affection ／ <ruby>愛<rt>あい</rt></ruby> - love ／ <ruby>可愛<rt>かわい</rt></ruby>がる - adore / cherish stays support-only for the single-kanji anchor 愛; support vocabulary clarifies common usage while DisplayWord remains 愛 and StudyWordKanji remains blank.",
+        "actual example sentence quality review: 家族の愛情に支えられてきました。 / かぞくのあいじょうにささえられてきました。 / I have been supported by my family&#39;s affection.; checked from the live generated card as natural Japanese, learner-useful, level-appropriate for N3, support-only for the target kanji, reading-correct, and translation-correct by human reviewer judgment.",
+        "N3 kanji NLP support packet reviewed after npm run deck:kanji:nlp-signals -- --levels=3: nlp-review-kanji-n3-0001; priority routine; signal n3-kanji-0120; kinds routine-tokenization-review; tokenizer reading あい; live card reading あい; comparable true; matches true. Reviewer decision: aligned tokenizer support; no NLP-indicated card/source issue found. NLP remains assistive-only support, not Japanese source evidence and not Gold/Platinum/Obsidian certification proof.",
+        "audio identity: generated Audio field [sound:611B_愛-kanji-reading-愛-あい.wav]; manifest data/media/kanji/61/611B_愛/manifest.json; managed path audio/611B_愛-kanji-reading-愛-あい.wav; source voicevox-nemo; category kanji-reading; text 愛; reading あい; voice 女声1 / ノーマル; locale ja-JP; checksum ad5b0b2cc210884f37ea27101122609baa8442e589303948578d648278623419; source file exists true.",
+        "stroke-order identity: generated StrokeOrder field <img src=\"611B_愛-stroke-order.gif\" />; manifest data/media/kanji/61/611B_愛/manifest.json; managed path animations/611B_愛-stroke-order.gif; source remote-stroke-order-animation; checksum 9db95c5cb7aada39f5e9a4ef71184b04643b08dca70f2b609d5d7710c29f04a2; source file exists true; media target identity matched 愛.",
+        "evidence lanes checked separately: sourceEvidence for Japanese source truth; internalChecks for generated/golden/media/audio/stroke regression; reviewEvidence for manual card judgment; rereviewProvenance records only this substantive post-standard review.",
+        "quality gates checked true after live review; no golden review counted as Japanese source truth, no Platinum structural text counted as Obsidian proof, no generated TSV/APKG/starter file counted as Japanese-source evidence, and no NLP signal counted as certification proof.",
+        "verification limitations actively considered during this Obsidian rereview; no active non-core verification limitations recorded for this card."
+      ],
+      "limitationDecision": "no active non-core verification limitations recorded after this batch review",
+      "sentenceQualityReview": {
+        "example": "家族の愛情に支えられてきました。",
+        "reading": "かぞくのあいじょうにささえられてきました。",
+        "translation": "I have been supported by my family&#39;s affection.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true,
+        "reviewerJudgment": "Best-effort reviewer judgment: 家族の愛情に支えられてきました。 is natural Japanese, learner-useful, level-appropriate for the N3 kanji card, and supports 愛|あい without replacing the individual-kanji anchor; reading and translation were checked against the live generated card."
+      }
+    }
   },
   {
     "kanji": "感",

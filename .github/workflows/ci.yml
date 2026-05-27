@@ -81,6 +81,9 @@ jobs:
       - name: Verify Obsidian proof provider parity for platinum governance gate
         run: npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set
 
+      - name: Verify Obsidian proof provider parity for word rereview status
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set
+
       - name: Verify Obsidian proof provider parity for word certification status
         run: npm run data:obsidian:proof:provider-parity -- --consumer=word-certify-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set
 

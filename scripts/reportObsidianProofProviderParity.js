@@ -63,6 +63,9 @@ const {
 const {
     buildPlatinumWordRereviewStatusReport,
 } = require("../src/services/platinumWordRereviewStatusService");
+const {
+    buildObsidianWordCertificationStatusSummary,
+} = require("../src/services/obsidianWordCertificationStatusService");
 
 const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_BATCH_REPORT: "kanji-batch-report",
@@ -70,6 +73,7 @@ const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_PLATINUM_LEVEL: "kanji-platinum-level",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
     PLATINUM_GOVERNANCE_GATE: "platinum-governance-gate",
+    WORD_CERTIFY_STATUS: "word-certify-status",
     WORD_REREVIEW_STATUS: "word-rereview-status",
 });
 
@@ -144,7 +148,10 @@ function parseArgs(argv) {
 }
 
 function assertConsumerDeckKind({ consumer, deckKind }) {
-    const wordConsumers = new Set([SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS]);
+    const wordConsumers = new Set([
+        SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS,
+        SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS,
+    ]);
     const expectedDeckKind = wordConsumers.has(consumer) ? "word" : "kanji";
     if (deckKind !== expectedDeckKind) {
         throw new Error(`Consumer ${consumer} requires --deck-kind=${expectedDeckKind}.`);
@@ -441,6 +448,35 @@ function projectWordRereviewStatusReport(report = {}) {
             needsSubstantiveRereview: card.needsSubstantiveRereview,
             blockedOrFailing: card.blockedOrFailing,
             reasons: card.reasons,
+        })),
+    };
+}
+
+function projectWordCertificationStatusReport(summary = {}) {
+    return {
+        passed: summary.passed,
+        currentReviewStandard: summary.currentReviewStandard,
+        totals: summary.totals,
+        certificationGate: summary.certificationGate,
+        failureCount: summary.failureCount,
+        levels: (summary.levels || []).map((levelReport) => ({
+            level: levelReport.level,
+            generatedRows: levelReport.generatedRows,
+            reviewEntries: levelReport.reviewEntries,
+            counts: levelReport.counts,
+            passed: levelReport.passed,
+            structuralReviewPassed: levelReport.structuralReviewPassed,
+            structuralCoverageFailures: levelReport.structuralCoverageFailures,
+        })),
+        failures: (summary.failures || []).map((failure) => ({
+            level: failure.level,
+            card: failure.card,
+            category: failure.category,
+            field: failure.field,
+            expected: failure.expected,
+            actual: failure.actual,
+            evidenceLane: failure.evidenceLane,
+            reviewerAction: failure.reviewerAction,
         })),
     };
 }
@@ -1004,6 +1040,92 @@ function buildWordRereviewStatusProviderParityForLevel({
     };
 }
 
+function buildWordCertificationStatusProviderParityForLevel({
+    rows = [],
+    rawEntries = [],
+    cwd = process.cwd(),
+    ledgerDir,
+    level = 5,
+    sourceReviewSetPath,
+    wordPitchAccentData = {},
+    kanjiLevelData = null,
+} = {}) {
+    const inlineProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "word",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    });
+    const ledgerProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "word",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER,
+    });
+    const reportOptions = {
+        rows,
+        level,
+        wordPitchAccentData,
+        kanjiLevelData,
+    };
+    const inlineRereviewReport = buildPlatinumWordRereviewStatusReport({
+        ...reportOptions,
+        entries: inlineProvider.entries,
+    });
+    const ledgerRereviewReport = buildPlatinumWordRereviewStatusReport({
+        ...reportOptions,
+        entries: ledgerProvider.entries,
+    });
+    const inlineProjection = projectWordCertificationStatusReport(
+        buildObsidianWordCertificationStatusSummary([inlineRereviewReport])
+    );
+    const ledgerProjection = projectWordCertificationStatusReport(
+        buildObsidianWordCertificationStatusSummary([ledgerRereviewReport])
+    );
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
+        inlineProjection,
+        ledgerProjection,
+        buildDualReadMismatch: () => ({
+            inlineCounts: inlineProjection.totals,
+            ledgerCounts: ledgerProjection.totals,
+            inlineGate: {
+                passed: inlineProjection.passed,
+                failureCount: inlineProjection.failureCount,
+                failures: inlineProjection.failures,
+            },
+            ledgerGate: {
+                passed: ledgerProjection.passed,
+                failureCount: ledgerProjection.failureCount,
+                failures: ledgerProjection.failures,
+            },
+        }),
+    });
+
+    return {
+        level,
+        deckKind: "word",
+        consumer: SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
+    };
+}
+
 async function buildObsidianProofProviderParityReport({
     cwd = process.cwd(),
     levels = [3],
@@ -1028,7 +1150,10 @@ async function buildObsidianProofProviderParityReport({
     const fieldSourceInputs = consumer === SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT
         ? loadKanjiFieldSourceContractInputs({ cwd })
         : {};
-    const wordPitchAccentData = consumer === SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS
+    const wordPitchAccentData = [
+        SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS,
+        SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS,
+    ].includes(consumer)
         ? loadWordPitchAccentData(path.join(cwd, "templates", "word_pitch_accent_data.json"))
         : {};
 
@@ -1046,7 +1171,17 @@ async function buildObsidianProofProviderParityReport({
             rawEntries: rawReviewSet.entries,
             config,
         });
-        if (consumer === SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS) {
+        if (consumer === SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS) {
+            scopes.push(buildWordCertificationStatusProviderParityForLevel({
+                rows,
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+                wordPitchAccentData,
+                kanjiLevelData: null,
+            }));
+        } else if (consumer === SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS) {
             scopes.push(buildWordRereviewStatusProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -1130,6 +1265,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "- During dual-read transition, inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
         "- After inline proof is removed, canonical ledger integrity must prove every scoped ledger event binds to a tracked review-set entry and applies cleanly.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
+        "- Word certification status totals, zero-failure gate posture, and failure objects must match before deck:words:obsidian:certify-status reads the proof provider by default.",
         "- Structural Platinum gate projections must match before deck:platinum:n<level> reads the proof provider by default.",
         "- Kanji card-field source contract projections must match before data:build:kanji-field-source-contract reads the proof provider by default.",
         "- Platinum governance gate kanji proof-provider projections must match before deck:platinum:governance-gate reads the proof provider by default.",
@@ -1217,6 +1353,7 @@ module.exports = {
     buildPlatinumGovernanceGateProviderParityForLevel,
     buildTrackedReviewSetRows,
     buildTrackedWordReviewSetRows,
+    buildWordCertificationStatusProviderParityForLevel,
     buildWordRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
     main,
@@ -1226,6 +1363,7 @@ module.exports = {
     projectKanjiBatchReport,
     projectKanjiPlatinumLevelReport,
     projectKanjiRereviewStatusReport,
+    projectWordCertificationStatusReport,
     projectWordRereviewStatusReport,
     projectPlatinumGovernanceGateReport,
 };

@@ -1,4 +1,3 @@
-const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadConfig } = require("../src/config");
@@ -14,11 +13,19 @@ const {
     buildObsidianWordCertificationStatusSummary,
     formatObsidianWordCertificationStatusReport,
 } = require("../src/services/obsidianWordCertificationStatusService");
+const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+    loadReviewSetWithObsidianProof,
+    normalizeObsidianProofProviderMode,
+} = require("../src/services/obsidianProofProviderService");
 
-function parseArgs(argv) {
+function parseArgs(argv, {
+    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+} = {}) {
     const options = {
         json: false,
         levels: [5, 4],
+        proofProvider: normalizeObsidianProofProviderMode(defaultProofProvider),
         unknownArgs: [],
     };
 
@@ -29,6 +36,8 @@ function parseArgs(argv) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
+        } else if (arg.startsWith("--proof-provider=")) {
+            options.proofProvider = normalizeObsidianProofProviderMode(parseStringOption(arg, "proof-provider"));
         } else {
             collectUnknownArg(options, arg);
         }
@@ -37,25 +46,31 @@ function parseArgs(argv) {
     return options;
 }
 
-function readReviewSet(level) {
-    const reviewSetPath = path.join(process.cwd(), "templates", `platinum_n${level}_word_review_set.json`);
-    if (!fs.existsSync(reviewSetPath)) {
-        throw new Error(`Missing platinum word review set at ${reviewSetPath}`);
-    }
-
-    return JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
+function readReviewSet(level, {
+    cwd = process.cwd(),
+    proofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+} = {}) {
+    return loadReviewSetWithObsidianProof({
+        cwd,
+        deckKind: "word",
+        level,
+        proofProvider,
+    }).entries;
 }
 
-async function main() {
-    const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("deck:words:obsidian:certify-status", options.unknownArgs);
+async function main({
+    commandName = "deck:words:obsidian:certify-status",
+    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+} = {}) {
+    const options = parseArgs(process.argv.slice(2), { defaultProofProvider });
+    assertNoUnknownArgs(commandName, options.unknownArgs);
 
     const config = loadConfig();
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const levelReports = [];
     for (const level of options.levels) {
-        const entries = readReviewSet(level);
+        const entries = readReviewSet(level, { proofProvider: options.proofProvider });
         const rows = await buildWordRowsForLevel({ level, config });
         levelReports.push(buildPlatinumWordRereviewStatusReport({
             rows,

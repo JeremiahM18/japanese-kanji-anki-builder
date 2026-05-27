@@ -72,8 +72,15 @@ test("obsidian word certification status parseArgs accepts scoped fail-closed st
     assert.deepEqual(options, {
         json: true,
         levels: [5, 4],
+        proofProvider: "ledger-if-available",
         unknownArgs: ["--oops"],
     });
+});
+
+test("obsidian word certification status parseArgs accepts explicit proof provider audits", () => {
+    const options = parseCertificationStatusArgs(["--levels=5,4", "--proof-provider=inline"]);
+
+    assert.equal(options.proofProvider, "inline");
 });
 
 test("platinum word source posture parseArgs accepts scoped read-only posture options", () => {

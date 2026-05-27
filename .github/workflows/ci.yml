@@ -60,6 +60,9 @@ jobs:
       - name: Reconcile Obsidian proof ledger parity
         run: npm run data:obsidian:proof:reconcile -- --levels=3
 
+      - name: Verify Obsidian proof provider parity
+        run: npm run data:obsidian:proof:provider-parity -- --levels=3
+
       - name: Run tracked JLPT kanji source governance audit
         run: npm run data:audit:jlpt:sources -- --governance-strict --limit=25
 

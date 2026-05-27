@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
+const crypto = require("node:crypto");
 
 const {
     buildDeckPackage,
@@ -124,6 +125,13 @@ test("word deck packaging includes explicit word audio but prunes static images 
         audio: 1,
     });
     assert.equal(summary.mediaAssetCount, 2);
+    assert.equal(summary.timingsMs.copyMedia >= 0, true);
+    assert.equal(summary.timingsMs.writeMediaIntegrity >= 0, true);
+    assert.equal(summary.timingsMs.buildAnkiPackage >= 0, true);
+    assert.equal(summary.ankiPackage.timingsMs.total >= 0, true);
+    const mediaIntegrity = JSON.parse(fs.readFileSync(summary.mediaIntegrityPath, "utf-8"));
+    assert.equal(mediaIntegrity.files.length, 2);
+    assert.equal(mediaIntegrity.files.some((entry) => entry.sha256 === crypto.createHash("sha256").update("word-audio").digest("hex")), true);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-stroke-order.gif")), true);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-word-reading-日本-にほん.wav")), true);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-stroke-order.png")), false);
@@ -287,6 +295,8 @@ test("kanji deck packaging copies the exact referenced primary-reading audio", a
         svgStrokeOrderAnimationFallback: 0,
         audio: 1,
     });
+    assert.equal(summary.ankiPackage.timingsMs.runPythonApkgBuilder >= 0, true);
+    assert.equal(summary.ankiPackage.pythonTimingsMs.writeArchive >= 0, true);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.gif")), false);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.png")), false);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-くるま.wav")), true);

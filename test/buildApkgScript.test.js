@@ -61,6 +61,7 @@ function inspectApkg(python, apkgPath) {
         "        assert 'collection.anki2' in names",
         "        assert 'media' in names",
         "        media = json.loads(archive.read('media').decode('utf-8'))",
+        "        compression = {name: archive.getinfo(name).compress_type for name in archive.namelist()}",
         "        archive.extract('collection.anki2', temp_dir)",
         "    conn = sqlite3.connect(f'{temp_dir}/collection.anki2')",
         "    try:",
@@ -74,6 +75,7 @@ function inspectApkg(python, apkgPath) {
         "        'cards': [{'nid': row[0], 'did': row[1], 'ord': row[2], 'due': row[3]} for row in cards],",
         "        'deckNames': sorted(deck.get('name') for deck in decks.values()),",
         "        'media': media,",
+        "        'compression': compression,",
         "    }))",
     ].join("\n");
     const result = spawnSync(
@@ -107,12 +109,18 @@ test("buildApkg.py produces byte-stable APKG output for unchanged package inputs
 
         const first = runBuildApkg(python, outDir);
         const firstHash = sha256(first.filePath);
+        const inspected = inspectApkg(python, first.filePath);
         const second = runBuildApkg(python, outDir);
         const secondHash = sha256(second.filePath);
 
         assert.equal(firstHash, secondHash);
         assert.equal(first.noteCount, 1);
         assert.equal(first.mediaFileCount, 1);
+        assert.equal(first.timingsMs.writeArchive >= 0, true);
+        assert.equal(first.timingsMs.createCollectionDb >= 0, true);
+        assert.equal(inspected.compression["collection.anki2"], 8);
+        assert.equal(inspected.compression.media, 8);
+        assert.equal(inspected.compression["0"], 0);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

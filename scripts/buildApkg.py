@@ -3,6 +3,7 @@ import hashlib
 import json
 import shutil
 import sqlite3
+import time
 import zipfile
 from pathlib import Path
 
@@ -249,7 +250,112 @@ def update_hash_with_file(digest, file_path: Path, label: str):
     digest.update(b"\0")
 
 
-def build_package_fingerprint(levels, package_exports_dir: Path, media_dir: Path, deck_kind: str, note_schema) -> str:
+def update_hash_with_media_file(digest, file_path: Path, media_integrity):
+    digest.update("media".encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(str(file_path.name).encode("utf-8"))
+    digest.update(b"\0")
+
+    checksum = media_integrity.get(file_path.name, {}).get("sha256")
+    if checksum:
+        digest.update(b"sha256")
+        digest.update(b"\0")
+        digest.update(checksum.encode("utf-8"))
+    else:
+        digest.update(b"bytes")
+        digest.update(b"\0")
+        digest.update(file_path.read_bytes())
+    digest.update(b"\0")
+
+
+def is_safe_portable_relative_path(value: str) -> bool:
+    if not isinstance(value, str) or not value or "\\" in value or "\0" in value:
+        return False
+    parts = value.split("/")
+    return all(part and part not in {".", ".."} for part in parts)
+
+
+def is_path_inside(parent: Path, child: Path) -> bool:
+    try:
+        child.resolve().relative_to(parent.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def load_media_integrity(package_root: Path):
+    integrity_path = package_root / "media-integrity.json"
+    if not integrity_path.exists():
+        return {}
+
+    parsed = json.loads(integrity_path.read_text(encoding="utf-8"))
+    files = parsed.get("files", [])
+    if not isinstance(files, list):
+        raise RuntimeError("media-integrity.json must contain a files array.")
+
+    source_root_value = parsed.get("sourceRoot")
+    source_root_path = None
+    if source_root_value:
+        source_root = str(source_root_value)
+        if not is_safe_portable_relative_path(source_root):
+            raise RuntimeError("media-integrity.json has an unsafe sourceRoot.")
+        source_root_path = (REPO_ROOT / Path(*source_root.split("/"))).resolve()
+        if not is_path_inside(REPO_ROOT, source_root_path):
+            raise RuntimeError("media-integrity.json sourceRoot escapes the repository.")
+        if not source_root_path.exists() or not source_root_path.is_dir():
+            source_root_path = None
+
+    media_integrity = {}
+    for entry in files:
+        if not isinstance(entry, dict):
+            continue
+        file_name = str(entry.get("fileName") or "")
+        sha256 = str(entry.get("sha256") or "").lower()
+        if not file_name or not sha256:
+            continue
+        if len(sha256) != 64 or any(char not in "0123456789abcdef" for char in sha256):
+            raise RuntimeError(f"Invalid media-integrity checksum for {file_name}.")
+
+        source_path = None
+        source_relative_path = entry.get("sourceRelativePath")
+        if source_root_path is not None and source_relative_path:
+            source_relative_path = str(source_relative_path)
+            if not is_safe_portable_relative_path(source_relative_path):
+                raise RuntimeError(f"Unsafe media-integrity source path for {file_name}.")
+            source_path = source_root_path / Path(*source_relative_path.split("/"))
+
+        byte_size = entry.get("byteSize")
+        media_integrity[file_name] = {
+            "sha256": sha256,
+            "sourcePath": source_path,
+            "byteSize": byte_size if isinstance(byte_size, int) and byte_size >= 0 else None,
+        }
+
+    return media_integrity
+
+
+def resolve_archive_media_path(package_media_path: Path, media_integrity):
+    entry = media_integrity.get(package_media_path.name, {})
+    source_path = entry.get("sourcePath")
+    if source_path:
+        return source_path
+
+    return package_media_path
+
+
+def list_package_media_files(media_dir: Path, media_integrity):
+    if media_integrity:
+        return [media_dir / file_name for file_name in sorted(media_integrity.keys())]
+
+    return sorted([item for item in media_dir.iterdir() if item.is_file()]) if media_dir.exists() else []
+
+
+def capture_timing(timings_ms, key: str, started_at: float):
+    if timings_ms is not None:
+        timings_ms[key] = round((time.perf_counter() - started_at) * 1000, 2)
+
+
+def build_package_fingerprint(levels, package_exports_dir: Path, media_dir: Path, deck_kind: str, note_schema, media_integrity=None) -> str:
     digest = hashlib.sha256()
     digest.update(deck_kind.encode("utf-8"))
     digest.update(b"\0")
@@ -263,7 +369,7 @@ def build_package_fingerprint(levels, package_exports_dir: Path, media_dir: Path
 
     if media_dir.exists():
         for file_path in sorted([item for item in media_dir.iterdir() if item.is_file()]):
-            update_hash_with_file(digest, file_path, "media")
+            update_hash_with_media_file(digest, file_path, media_integrity or {})
 
     return digest.hexdigest()
 
@@ -276,11 +382,17 @@ def build_deterministic_mod(seed: int) -> int:
     return DETERMINISTIC_MOD_EPOCH + (seed % 31_536_000)
 
 
-def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_kind: str):
+def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_kind: str, timings_ms=None, media_integrity=None):
     db_path.parent.mkdir(parents=True, exist_ok=True)
 
+    schema_started_at = time.perf_counter()
     note_schema = load_anki_note_schema(deck_kind)
-    fingerprint = build_package_fingerprint(levels, package_exports_dir, package_exports_dir.parent / "media", deck_kind, note_schema)
+    capture_timing(timings_ms, "collection.loadNoteSchema", schema_started_at)
+
+    fingerprint_started_at = time.perf_counter()
+    fingerprint = build_package_fingerprint(levels, package_exports_dir, package_exports_dir.parent / "media", deck_kind, note_schema, media_integrity)
+    capture_timing(timings_ms, "collection.buildFingerprint", fingerprint_started_at)
+
     unique_seed = build_deterministic_seed(fingerprint)
     mod = build_deterministic_mod(unique_seed)
     now_ms = mod * 1000
@@ -292,6 +404,7 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
     card_rows = []
     order = 1
 
+    rows_started_at = time.perf_counter()
     for level in levels:
         header, rows = parse_tsv(package_exports_dir / build_export_file_name(level, deck_kind))
         validate_tsv_header(header, level, field_names, deck_kind)
@@ -333,7 +446,9 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
                 "",
             ))
             order += 1
+    capture_timing(timings_ms, "collection.parseRows", rows_started_at)
 
+    sqlite_started_at = time.perf_counter()
     conn = sqlite3.connect(str(db_path))
     try:
         cur = conn.cursor()
@@ -373,25 +488,31 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
         conn.commit()
     finally:
         conn.close()
+    capture_timing(timings_ms, "collection.writeSqlite", sqlite_started_at)
 
     return len(note_rows), len(deck_ids_by_level)
 
 
-def write_deterministic_archive_file(archive, file_path: Path, arcname: str):
+def write_deterministic_archive_file(archive, file_path: Path, arcname: str, compression=zipfile.ZIP_DEFLATED):
     info = zipfile.ZipInfo(arcname, date_time=DETERMINISTIC_ZIP_TIMESTAMP)
-    info.compress_type = zipfile.ZIP_DEFLATED
+    info.compress_type = compression
     info.external_attr = 0o644 << 16
     archive.writestr(info, file_path.read_bytes())
 
 
 def build_apkg(out_dir: Path, levels, deck_kind: str):
+    total_started_at = time.perf_counter()
+    timings_ms = {}
+    result = None
     package_root = out_dir / "package"
     exports_dir = package_root / "exports"
     media_dir = package_root / "media"
     apkg_path = package_root / build_apkg_file_name(levels, deck_kind)
     stage_dir = package_root / ".apkg-staging"
 
+    validate_started_at = time.perf_counter()
     missing_exports = [level for level in levels if not (exports_dir / build_export_file_name(level, deck_kind)).exists()]
+    capture_timing(timings_ms, "validateExports", validate_started_at)
     if missing_exports:
         missing_list = ", ".join(f"N{level}" for level in missing_exports)
         raise RuntimeError(
@@ -406,44 +527,71 @@ def build_apkg(out_dir: Path, levels, deck_kind: str):
             + "`."
         )
 
+    stage_started_at = time.perf_counter()
     if stage_dir.exists():
         shutil.rmtree(stage_dir, ignore_errors=True)
     stage_dir.mkdir(parents=True, exist_ok=True)
+    capture_timing(timings_ms, "prepareStage", stage_started_at)
 
     try:
         collection_path = stage_dir / "collection.anki2"
         media_index_path = stage_dir / "media"
 
-        note_count, deck_count = create_collection_db(collection_path, levels, exports_dir, deck_kind)
+        integrity_started_at = time.perf_counter()
+        media_integrity = load_media_integrity(package_root)
+        capture_timing(timings_ms, "loadMediaIntegrity", integrity_started_at)
 
-        media_files = sorted([item for item in media_dir.iterdir() if item.is_file()]) if media_dir.exists() else []
+        collection_started_at = time.perf_counter()
+        note_count, deck_count = create_collection_db(collection_path, levels, exports_dir, deck_kind, timings_ms, media_integrity)
+        capture_timing(timings_ms, "createCollectionDb", collection_started_at)
+
+        media_list_started_at = time.perf_counter()
+        media_files = list_package_media_files(media_dir, media_integrity)
         media_map = {}
         for index, file_path in enumerate(media_files):
-            staged_media_path = stage_dir / str(index)
-            shutil.copyfile(file_path, staged_media_path)
             media_map[str(index)] = file_path.name
+        capture_timing(timings_ms, "listMediaFiles", media_list_started_at)
 
+        media_index_started_at = time.perf_counter()
         media_index_path.write_text(json.dumps(media_map, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        capture_timing(timings_ms, "writeMediaIndex", media_index_started_at)
 
+        remove_started_at = time.perf_counter()
         if apkg_path.exists():
             apkg_path.unlink()
+        capture_timing(timings_ms, "removeExistingApkg", remove_started_at)
 
+        archive_started_at = time.perf_counter()
         with zipfile.ZipFile(apkg_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
             write_deterministic_archive_file(archive, collection_path, "collection.anki2")
             write_deterministic_archive_file(archive, media_index_path, "media")
-            for index in range(len(media_files)):
-                write_deterministic_archive_file(archive, stage_dir / str(index), str(index))
+            for index, file_path in enumerate(media_files):
+                write_deterministic_archive_file(
+                    archive,
+                    resolve_archive_media_path(file_path, media_integrity),
+                    str(index),
+                    compression=zipfile.ZIP_STORED,
+                )
+        capture_timing(timings_ms, "writeArchive", archive_started_at)
 
-        return {
+        timings_ms["totalBeforeCleanup"] = round((time.perf_counter() - total_started_at) * 1000, 2)
+        result = {
             "filePath": str(apkg_path),
             "skipped": False,
             "skipReason": "",
             "noteCount": note_count,
             "deckCount": deck_count,
             "mediaFileCount": len(media_files),
+            "timingsMs": timings_ms,
         }
+        return result
     finally:
+        cleanup_started_at = time.perf_counter()
         shutil.rmtree(stage_dir, ignore_errors=True)
+        capture_timing(timings_ms, "cleanupStage", cleanup_started_at)
+        timings_ms["total"] = round((time.perf_counter() - total_started_at) * 1000, 2)
+        if result is not None:
+            result["timingsMs"] = timings_ms
 
 
 def main():

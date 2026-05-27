@@ -187,6 +187,8 @@ npm run deck:kanji:additional:ready
 
 `deck:ready` validates setup, syncs media, builds exports, packages files under `out/build/package`, rebuilds from a clean package directory, reports managed manifest coverage and exported card media completeness, and fails on export fallbacks by default.
 
+The generated package also includes `media-integrity.json`, a local sidecar used to bind packaged media filenames to managed-media SHA-256 identities during deterministic APKG creation. It is not source evidence, Obsidian proof, or release QA.
+
 Exported card media completeness is the release-critical signal for kanji deck media readiness. Use `--allow-export-fallbacks` only for an explicitly degraded local artifact.
 
 `deck:kanji:additional:ready` writes separate `additional_unverified_Nx` exports under `out/build/additional_unverified` and packages them as a separate `kanji-additional` APKG. The governed default currently writes empty `0`-row exports because all raw additional source claims are already-core source-claim collisions and are suppressed from the physical surface.

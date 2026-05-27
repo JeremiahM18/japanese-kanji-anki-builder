@@ -437,11 +437,13 @@ async function runBuildPipeline({
             rootDir: deckPackage.rootDir,
             exportsDir: deckPackage.exportsDir,
             mediaDir: deckPackage.mediaDir,
+            mediaIntegrityPath: deckPackage.mediaIntegrityPath,
             readmePath: deckPackage.readmePath,
             exportCount: deckPackage.exportCount,
             mediaAssetCount: deckPackage.mediaAssetCount,
             mediaCounts: deckPackage.mediaCounts,
             ankiPackage: deckPackage.ankiPackage,
+            timingsMs: deckPackage.timingsMs,
         },
         normalization: {
             sentenceCorpus: {

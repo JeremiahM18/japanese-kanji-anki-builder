@@ -1,6 +1,9 @@
 const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
+const crypto = require("node:crypto");
+const { performance } = require("node:perf_hooks");
+const { pipeline } = require("node:stream/promises");
 
 const { mapWithConcurrency } = require("../utils/concurrency");
 const { assertSafeGeneratedPath, ensureDir, removeGeneratedPath } = require("../utils/fs");
@@ -16,6 +19,7 @@ function buildDeckPackagePaths(rootDir) {
         rootDir: packageDir,
         exportsDir: path.join(packageDir, "exports"),
         mediaDir: path.join(packageDir, "media"),
+        mediaIntegrityPath: path.join(packageDir, "media-integrity.json"),
         readmePath: path.join(packageDir, "IMPORT.txt"),
         summaryPath: path.join(packageDir, "package-summary.json"),
     };
@@ -72,6 +76,54 @@ async function copyFileIntoPackage(sourcePath, destinationPath) {
     await fsp.copyFile(sourcePath, destinationPath);
 }
 
+function isSha256(value) {
+    return /^[a-f0-9]{64}$/i.test(String(value || ""));
+}
+
+async function copyFileIntoPackageWithSha256(sourcePath, destinationPath) {
+    ensureDir(path.dirname(destinationPath));
+
+    const hash = crypto.createHash("sha256");
+    let byteSize = 0;
+    const sourceStream = fs.createReadStream(sourcePath);
+
+    sourceStream.on("data", (chunk) => {
+        hash.update(chunk);
+        byteSize += chunk.length;
+    });
+
+    await pipeline(sourceStream, fs.createWriteStream(destinationPath));
+
+    return {
+        sha256: hash.digest("hex"),
+        byteSize,
+    };
+}
+
+function withOptionalChecksum(candidate, asset) {
+    if (asset?.checksum) {
+        return {
+            ...candidate,
+            checksum: asset.checksum,
+        };
+    }
+
+    return candidate;
+}
+
+function capturePackageTiming(timingsMs, key, startedAt) {
+    timingsMs[key] = Number((performance.now() - startedAt).toFixed(2));
+}
+
+async function capturePackagePhase(timingsMs, key, action) {
+    const startedAt = performance.now();
+    try {
+        return await action();
+    } finally {
+        capturePackageTiming(timingsMs, key, startedAt);
+    }
+}
+
 function filterPackageAssetCandidates(candidates, assetKinds) {
     if (!Array.isArray(assetKinds) || assetKinds.length === 0) {
         return candidates;
@@ -82,30 +134,87 @@ function filterPackageAssetCandidates(candidates, assetKinds) {
 }
 
 function buildPackageAssetCandidatesFromManifest(manifest, kanji, { assetKinds = null } = {}) {
-    const bestStrokeOrderPath = manifest?.assets?.strokeOrderAnimation?.path || manifest?.assets?.strokeOrderImage?.path || "";
-    const bestAudioPath = selectBestAudioAsset(manifest?.assets?.audio || [], {
+    const bestStrokeOrderAsset = manifest?.assets?.strokeOrderAnimation || manifest?.assets?.strokeOrderImage || null;
+    const bestAudioAsset = selectBestAudioAsset(manifest?.assets?.audio || [], {
         category: "kanji-reading",
         text: kanji,
-    })?.path || "";
+    });
 
     return filterPackageAssetCandidates([
-        { kind: "strokeOrder", relativePath: bestStrokeOrderPath },
-        { kind: "strokeOrderImage", relativePath: manifest?.assets?.strokeOrderImage?.path || "" },
-        { kind: "strokeOrderAnimation", relativePath: manifest?.assets?.strokeOrderAnimation?.path || "" },
-        { kind: "audio", relativePath: bestAudioPath },
+        withOptionalChecksum({ kind: "strokeOrder", relativePath: bestStrokeOrderAsset?.path || "" }, bestStrokeOrderAsset),
+        withOptionalChecksum({ kind: "strokeOrderImage", relativePath: manifest?.assets?.strokeOrderImage?.path || "" }, manifest?.assets?.strokeOrderImage),
+        withOptionalChecksum({ kind: "strokeOrderAnimation", relativePath: manifest?.assets?.strokeOrderAnimation?.path || "" }, manifest?.assets?.strokeOrderAnimation),
+        withOptionalChecksum({ kind: "audio", relativePath: bestAudioAsset?.path || "" }, bestAudioAsset),
     ], assetKinds).filter((entry) => entry.relativePath);
 }
 
 function buildReferencedPackageAssetCandidatesFromManifest(manifest, { assetKinds = null } = {}) {
-    const bestStrokeOrderPath = manifest?.assets?.strokeOrderAnimation?.path || manifest?.assets?.strokeOrderImage?.path || "";
+    const bestStrokeOrderAsset = manifest?.assets?.strokeOrderAnimation || manifest?.assets?.strokeOrderImage || null;
     const audioAssets = Array.isArray(manifest?.assets?.audio) ? manifest.assets.audio : [];
 
     return filterPackageAssetCandidates([
-        { kind: "strokeOrder", relativePath: bestStrokeOrderPath },
-        { kind: "strokeOrderImage", relativePath: manifest?.assets?.strokeOrderImage?.path || "" },
-        { kind: "strokeOrderAnimation", relativePath: manifest?.assets?.strokeOrderAnimation?.path || "" },
-        ...audioAssets.map((asset) => ({ kind: "audio", relativePath: asset?.path || "" })),
+        withOptionalChecksum({ kind: "strokeOrder", relativePath: bestStrokeOrderAsset?.path || "" }, bestStrokeOrderAsset),
+        withOptionalChecksum({ kind: "strokeOrderImage", relativePath: manifest?.assets?.strokeOrderImage?.path || "" }, manifest?.assets?.strokeOrderImage),
+        withOptionalChecksum({ kind: "strokeOrderAnimation", relativePath: manifest?.assets?.strokeOrderAnimation?.path || "" }, manifest?.assets?.strokeOrderAnimation),
+        ...audioAssets.map((asset) => withOptionalChecksum({ kind: "audio", relativePath: asset?.path || "" }, asset)),
     ], assetKinds).filter((entry) => entry.relativePath);
+}
+
+function toPortableRelativePath(fromDir, toPath) {
+    const relativePath = path.relative(fromDir, toPath);
+    if (!relativePath || relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+        return null;
+    }
+
+    return relativePath.split(path.sep).join("/");
+}
+
+function buildPackageMediaIntegrity({ assets, mediaRootDir }) {
+    const resolvedMediaRootDir = path.resolve(mediaRootDir);
+    const sourceRoot = toPortableRelativePath(process.cwd(), resolvedMediaRootDir);
+
+    return {
+        version: 1,
+        generatedArtifact: true,
+        checksumAlgorithm: "sha256",
+        sourceRoot: sourceRoot || null,
+        files: assets.map((asset) => ({
+            fileName: asset.fileName,
+            sha256: asset.sha256,
+            byteSize: asset.byteSize,
+            kind: asset.kind,
+            kanji: asset.kanji,
+            relativePath: asset.relativePath,
+            sourceRelativePath: sourceRoot
+                ? toPortableRelativePath(resolvedMediaRootDir, path.resolve(asset.sourcePath))
+                : null,
+        })),
+    };
+}
+
+function buildManifestBackedPackagedAssets({ assets, mediaRootDir }) {
+    const resolvedMediaRootDir = path.resolve(mediaRootDir);
+    const sourceRoot = toPortableRelativePath(process.cwd(), resolvedMediaRootDir);
+    if (!sourceRoot) {
+        return null;
+    }
+
+    const packagedAssets = [];
+    for (const asset of assets) {
+        const sourceRelativePath = toPortableRelativePath(resolvedMediaRootDir, path.resolve(asset.sourcePath));
+        const checksum = String(asset.checksum || "").trim().toLowerCase();
+        if (!sourceRelativePath || !isSha256(checksum)) {
+            return null;
+        }
+
+        packagedAssets.push({
+            ...asset,
+            sha256: checksum,
+            byteSize: null,
+        });
+    }
+
+    return packagedAssets;
 }
 
 async function readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService }) {
@@ -266,33 +375,45 @@ async function buildDeckPackage({
     deckKind = "kanji",
     referencedMedia = [],
 }) {
+    const totalStartedAt = performance.now();
+    const timingsMs = {};
     const packagePaths = buildDeckPackagePaths(outDir);
-    assertSafeGeneratedPath(packagePaths.rootDir, { label: "deck package directory" });
-    ensureDir(packagePaths.rootDir);
-    await removeGeneratedPath(packagePaths.exportsDir, { recursive: true, force: true, label: "deck package exports directory" });
-    await removeGeneratedPath(packagePaths.mediaDir, { recursive: true, force: true, label: "deck package media directory" });
-    await removeGeneratedPath(packagePaths.readmePath, { force: true, label: "deck package import guide" });
-    await removeGeneratedPath(packagePaths.summaryPath, { force: true, label: "deck package summary" });
-    ensureDir(packagePaths.exportsDir);
-    ensureDir(packagePaths.mediaDir);
 
-    await mapWithConcurrency(exports, packageConcurrency, async (artifact) => {
+    await capturePackagePhase(timingsMs, "prepareDirectories", async () => {
+        assertSafeGeneratedPath(packagePaths.rootDir, { label: "deck package directory" });
+        ensureDir(packagePaths.rootDir);
+        await removeGeneratedPath(packagePaths.exportsDir, { recursive: true, force: true, label: "deck package exports directory" });
+        await removeGeneratedPath(packagePaths.mediaDir, { recursive: true, force: true, label: "deck package media directory" });
+        await removeGeneratedPath(packagePaths.mediaIntegrityPath, { force: true, label: "deck package media integrity sidecar" });
+        await removeGeneratedPath(packagePaths.readmePath, { force: true, label: "deck package import guide" });
+        await removeGeneratedPath(packagePaths.summaryPath, { force: true, label: "deck package summary" });
+        ensureDir(packagePaths.exportsDir);
+        ensureDir(packagePaths.mediaDir);
+    });
+
+    await capturePackagePhase(timingsMs, "copyExports", async () => mapWithConcurrency(exports, packageConcurrency, async (artifact) => {
         await copyFileIntoPackage(
             artifact.filePath,
             path.join(packagePaths.exportsDir, path.basename(artifact.filePath))
         );
-    });
+    }));
 
+    const assetSelectionStartedAt = performance.now();
     const selectedKanji = collectReferencedKanji({ exports, kanjiByLevel });
     const isWordDeck = deckKind === "word";
     const isKanjiDeck = deckKind === "kanji" || deckKind === "kanji-additional";
     const kanjiAssetKinds = isWordDeck
         ? ["strokeOrder", "strokeOrderAnimation"]
         : ["strokeOrder", "audio"];
+    capturePackageTiming(timingsMs, "selectKanji", assetSelectionStartedAt);
+
+    const referencedMediaStartedAt = performance.now();
     const referencedMediaFileNames = isKanjiDeck
         ? collectReferencedMediaFileNames(exports)
         : null;
-    const { assets, mediaCounts } = await collectPackageAssets({
+    capturePackageTiming(timingsMs, "collectReferencedMediaFileNames", referencedMediaStartedAt);
+
+    const { assets, mediaCounts } = await capturePackagePhase(timingsMs, "collectManifestAssets", async () => collectPackageAssets({
         kanjiList: selectedKanji,
         mediaRootDir,
         strokeOrderService,
@@ -300,11 +421,13 @@ async function buildDeckPackage({
         concurrency: packageConcurrency,
         assetKinds: kanjiAssetKinds,
         referencedFileNames: referencedMediaFileNames,
-    });
-    const explicitReferencedAssets = await collectExplicitReferencedAssets({
+    }));
+    const explicitReferencedAssets = await capturePackagePhase(timingsMs, "collectExplicitReferencedAssets", async () => collectExplicitReferencedAssets({
         referencedMedia,
         mediaRootDir,
-    });
+    }));
+
+    const mergeAssetsStartedAt = performance.now();
     const mergedAssetMap = new Map(assets.map((asset) => [asset.fileName, asset]));
     for (const asset of explicitReferencedAssets.assets) {
         if (!mergedAssetMap.has(asset.fileName)) {
@@ -320,39 +443,90 @@ async function buildDeckPackage({
         audio: mediaCounts.audio + explicitReferencedAssets.mediaCounts.audio,
     };
     const mergedAssets = [...mergedAssetMap.values()].sort((a, b) => a.fileName.localeCompare(b.fileName));
+    capturePackageTiming(timingsMs, "mergeAssets", mergeAssetsStartedAt);
 
-    await mapWithConcurrency(mergedAssets, packageConcurrency, async (asset) => {
-        await copyFileIntoPackage(asset.sourcePath, path.join(packagePaths.mediaDir, asset.fileName));
-    });
+    const manifestBackedIntegrityStartedAt = performance.now();
+    let packagedAssets = buildManifestBackedPackagedAssets({ assets: mergedAssets, mediaRootDir });
+    capturePackageTiming(timingsMs, "prepareManifestBackedMediaIntegrity", manifestBackedIntegrityStartedAt);
+    let ankiPackage = null;
 
-    const ankiPackage = await buildAnkiPackage({
-        packageRootDir: packagePaths.rootDir,
-        exports,
-        mediaDir: packagePaths.mediaDir,
-        levels: exports.map((artifact) => artifact.level),
-        deckKind,
-    });
+    if (packagedAssets) {
+        await capturePackagePhase(timingsMs, "writeMediaIntegrity", async () => fsp.writeFile(
+            packagePaths.mediaIntegrityPath,
+            `${JSON.stringify(buildPackageMediaIntegrity({ assets: packagedAssets, mediaRootDir }), null, 2)}\n`,
+            "utf-8"
+        ));
 
-    await fsp.writeFile(packagePaths.readmePath, buildImportGuide({
+        await capturePackagePhase(timingsMs, "copyMedia", async () => mapWithConcurrency(mergedAssets, packageConcurrency, async (asset) => {
+            await copyFileIntoPackage(asset.sourcePath, path.join(packagePaths.mediaDir, asset.fileName));
+        }));
+
+        ankiPackage = await capturePackagePhase(timingsMs, "buildAnkiPackage", async () => buildAnkiPackage({
+            packageRootDir: packagePaths.rootDir,
+            exports,
+            mediaDir: packagePaths.mediaDir,
+            levels: exports.map((artifact) => artifact.level),
+            deckKind,
+        }));
+    } else {
+        packagedAssets = await capturePackagePhase(timingsMs, "copyMedia", async () => mapWithConcurrency(mergedAssets, packageConcurrency, async (asset) => {
+            const integrity = await copyFileIntoPackageWithSha256(asset.sourcePath, path.join(packagePaths.mediaDir, asset.fileName));
+            const expectedChecksum = String(asset.checksum || "").trim();
+            if (isSha256(expectedChecksum) && expectedChecksum.toLowerCase() !== integrity.sha256) {
+                throw new Error(`Managed media checksum mismatch for ${asset.fileName}: manifest ${expectedChecksum}, copied ${integrity.sha256}.`);
+            }
+
+            return {
+                ...asset,
+                sha256: integrity.sha256,
+                byteSize: integrity.byteSize,
+            };
+        }));
+
+        await capturePackagePhase(timingsMs, "writeMediaIntegrity", async () => fsp.writeFile(
+            packagePaths.mediaIntegrityPath,
+            `${JSON.stringify(buildPackageMediaIntegrity({ assets: packagedAssets, mediaRootDir }), null, 2)}\n`,
+            "utf-8"
+        ));
+
+        ankiPackage = await capturePackagePhase(timingsMs, "buildAnkiPackage", async () => buildAnkiPackage({
+            packageRootDir: packagePaths.rootDir,
+            exports,
+            mediaDir: packagePaths.mediaDir,
+            levels: exports.map((artifact) => artifact.level),
+            deckKind,
+        }));
+    }
+
+    await capturePackagePhase(timingsMs, "writeImportGuide", async () => fsp.writeFile(packagePaths.readmePath, buildImportGuide({
         exportCount: exports.length,
         mediaAssetCount: mergedAssets.length,
         mediaCounts: mergedMediaCounts,
         ankiPackage,
-    }), "utf-8");
+    }), "utf-8"));
 
     const summary = {
         rootDir: packagePaths.rootDir,
         exportsDir: packagePaths.exportsDir,
         mediaDir: packagePaths.mediaDir,
+        mediaIntegrityPath: packagePaths.mediaIntegrityPath,
         readmePath: packagePaths.readmePath,
         exportCount: exports.length,
         mediaAssetCount: mergedAssets.length,
         mediaCounts: mergedMediaCounts,
         ankiPackage,
-        assets: mergedAssets,
+        assets: packagedAssets,
+    };
+    summary.timingsMs = {
+        ...timingsMs,
+        total: Number((performance.now() - totalStartedAt).toFixed(2)),
     };
 
-    await fsp.writeFile(packagePaths.summaryPath, `${JSON.stringify(summary, null, 2)}\n`, "utf-8");
+    await capturePackagePhase(timingsMs, "writePackageSummary", async () => fsp.writeFile(packagePaths.summaryPath, `${JSON.stringify(summary, null, 2)}\n`, "utf-8"));
+    summary.timingsMs = {
+        ...timingsMs,
+        total: Number((performance.now() - totalStartedAt).toFixed(2)),
+    };
     return summary;
 }
 

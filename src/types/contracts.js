@@ -171,6 +171,8 @@
  * @property {number} noteCount
  * @property {number} deckCount
  * @property {number} mediaFileCount
+ * @property {Record<string, number>=} timingsMs
+ * @property {Record<string, number>|null=} pythonTimingsMs
  */
 
 /**
@@ -181,7 +183,7 @@
  * @property {number|null} limit
  * @property {number} concurrency
  * @property {BuildExportArtifact[]} exports
- * @property {{rootDir: string, exportsDir: string, mediaDir: string, readmePath: string, exportCount: number, mediaAssetCount: number, mediaCounts: {strokeOrder: number, strokeOrderImage: number, strokeOrderAnimation: number, trueStrokeOrderAnimation: number, svgStrokeOrderAnimationFallback: number, audio: number}, ankiPackage: AnkiPackageSummary}} package
+ * @property {{rootDir: string, exportsDir: string, mediaDir: string, mediaIntegrityPath?: string, readmePath: string, exportCount: number, mediaAssetCount: number, mediaCounts: {strokeOrder: number, strokeOrderImage: number, strokeOrderAnimation: number, trueStrokeOrderAnimation: number, svgStrokeOrderAnimationFallback: number, audio: number}, ankiPackage: AnkiPackageSummary, timingsMs?: Record<string, number>}} package
  * @property {{sentenceCorpus: Omit<DatasetNormalizationSummary, "name"|"mode"|"normalizedText">, curatedStudyData: Omit<DatasetNormalizationSummary, "name"|"mode"|"normalizedText">}} normalization
  * @property {{sentenceCoveragePath: string, curatedCoveragePath: string, mediaCoveragePath: string, sentenceNormalizationPath: string, curatedNormalizationPath: string, mediaSyncPath: string}} reports
  * @property {{sentenceCorpus: number, curatedStudyData: number, strokeOrder: number, trueAnimation: number, audio: number, fullMedia: number}} coverage

@@ -523,6 +523,10 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.deepEqual(summary.levels, [5]);
     assert.equal(summary.mediaSync.skipped, true);
     assert.equal(summary.package.mediaAssetCount, 2);
+    assert.equal(summary.package.timingsMs.copyMedia >= 0, true);
+    assert.equal(summary.package.timingsMs.writeMediaIntegrity >= 0, true);
+    assert.equal(summary.package.timingsMs.buildAnkiPackage >= 0, true);
+    assert.equal(summary.package.ankiPackage.timingsMs.runPythonApkgBuilder >= 0, true);
     assert.deepEqual(summary.package.mediaCounts, {
         strokeOrder: 1,
         strokeOrderImage: 0,
@@ -538,6 +542,7 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.equal(fs.existsSync(path.join(outDir, "package", "media", "65E5_日-stroke-order.svg")), false);
     assert.equal(fs.existsSync(path.join(outDir, "package", "media", "65E5_日-stroke-order.gif")), true);
     assert.equal(fs.existsSync(path.join(outDir, "package", "media", "65E5_日-kanji-reading-日.mp3")), true);
+    assert.equal(fs.existsSync(path.join(outDir, "package", "media-integrity.json")), true);
     assert.equal(fs.existsSync(path.join(outDir, "package", "IMPORT.txt")), true);
 
     const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n5.tsv"), "utf-8");
@@ -547,6 +552,10 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     const storedSummary = JSON.parse(fs.readFileSync(path.join(outDir, "build-summary.json"), "utf-8"));
     assert.equal(storedSummary.exports.length, 1);
     assert.equal(storedSummary.package.mediaAssetCount, 2);
+    assert.equal(storedSummary.package.timingsMs.copyMedia >= 0, true);
+    assert.equal(storedSummary.package.timingsMs.writeMediaIntegrity >= 0, true);
+    assert.equal(storedSummary.package.timingsMs.buildAnkiPackage >= 0, true);
+    assert.equal(storedSummary.package.ankiPackage.timingsMs.runPythonApkgBuilder >= 0, true);
     assert.deepEqual(storedSummary.package.mediaCounts, {
         strokeOrder: 1,
         strokeOrderImage: 0,

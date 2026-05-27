@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { spawnSync } = require("node:child_process");
+const { performance } = require("node:perf_hooks");
 
 const { describePythonTool, resolvePythonCommand } = require("./toolchainService");
 
@@ -51,6 +52,10 @@ function formatAnkiPackageSkipReason(error) {
     return error instanceof Error ? error.message : String(error);
 }
 
+function captureTiming(timingsMs, key, startedAt) {
+    timingsMs[key] = Number((performance.now() - startedAt).toFixed(2));
+}
+
 function runPythonApkgBuilder({ outDir, levels, deckKind }) {
     const python = resolvePythonCommand();
     if (!python) {
@@ -96,11 +101,23 @@ async function buildAnkiPackage({
     levels,
     deckKind = "kanji",
 }) {
+    const totalStartedAt = performance.now();
+    const timingsMs = {};
+
+    const describeStartedAt = performance.now();
     const pythonTool = describePythonTool();
+    captureTiming(timingsMs, "describePythonTool", describeStartedAt);
+
+    const resolveStartedAt = performance.now();
     const python = pythonTool.available ? resolvePythonCommand() : null;
+    captureTiming(timingsMs, "resolvePythonCommand", resolveStartedAt);
+
+    const listMediaStartedAt = performance.now();
     const mediaFiles = listMediaFiles(mediaDir);
+    captureTiming(timingsMs, "listMediaFiles", listMediaStartedAt);
 
     if (!python) {
+        timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
         return {
             filePath: null,
             skipped: true,
@@ -110,15 +127,19 @@ async function buildAnkiPackage({
             noteCount: 0,
             deckCount: 0,
             mediaFileCount: mediaFiles.length,
+            timingsMs,
         };
     }
 
     try {
+        const pythonStartedAt = performance.now();
         const result = runPythonApkgBuilder({
             outDir: path.dirname(packageRootDir),
             levels,
             deckKind,
         });
+        captureTiming(timingsMs, "runPythonApkgBuilder", pythonStartedAt);
+        timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
 
         return {
             filePath: result.filePath || path.join(packageRootDir, buildApkgFileName(levels, deckKind)),
@@ -127,8 +148,11 @@ async function buildAnkiPackage({
             noteCount: Number(result.noteCount) || 0,
             deckCount: Number(result.deckCount) || new Set(levels || []).size,
             mediaFileCount: Number(result.mediaFileCount) || mediaFiles.length,
+            timingsMs,
+            pythonTimingsMs: result.timingsMs || null,
         };
     } catch (error) {
+        timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
         return {
             filePath: null,
             skipped: true,
@@ -136,6 +160,7 @@ async function buildAnkiPackage({
             noteCount: 0,
             deckCount: 0,
             mediaFileCount: mediaFiles.length,
+            timingsMs,
         };
     }
 }

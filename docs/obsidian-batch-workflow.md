@@ -229,15 +229,17 @@ Required parity gates before any consumer switch:
 git status --short --untracked-files=all
 npm run data:obsidian:proof:validate
 npm run data:obsidian:proof:reconcile -- --levels=3
+npm run data:obsidian:proof:provider-parity -- --levels=3
 npm run data:obsidian:proof:views
 npm run data:obsidian:proof:sqlite
 npm run data:obsidian:proof:sqlite:query -- --deck-kind=kanji --level=3 --limit=5
-node --test test/obsidianProofLedger.test.js test/obsidianProofReconciliation.test.js test/obsidianProofCompatibilityView.test.js test/obsidianProofSqliteMirror.test.js
+node --test test/obsidianProofLedger.test.js test/obsidianProofReconciliation.test.js test/obsidianProofCompatibilityView.test.js test/obsidianProofSqliteMirror.test.js test/obsidianProofProviderService.test.js test/obsidianProofProviderParity.test.js
 ```
 
 No-go conditions:
 
 - Reconciliation is not exact: inline-only, ledger-only, mismatch, or duplicate-inline counts are non-zero.
+- Provider parity is not exact: inline source and ledger-derived proof must produce identical rereview-status counts, card classifications, and queue samples before switching that consumer.
 - The compatibility view omits an inline proof that should have a ledger event.
 - The SQLite mirror cannot rebuild from JSONL without reading generated TSV/APKG output.
 - Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=3` counts without a matching proof-ledger change.

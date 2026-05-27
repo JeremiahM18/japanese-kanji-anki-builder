@@ -95,6 +95,29 @@ test("deriveSentenceQualityReview structures existing inline evidence", () => {
     });
 });
 
+test("deriveSentenceQualityReview structures legacy kanji example review evidence", () => {
+    const review = deriveSentenceQualityReview(buildInlineProvenance({
+        evidenceChecked: [
+            "generated surface: Kanji and DisplayWord are 一, StudyWordKanji is blank, PrimaryReading is いち",
+            "example review: 一時に学校へ行きます。 / いちじにがっこうへいきます。 / I go to school at one o'clock.; checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+        ],
+    }), {
+        cardReviewed: "一|いち",
+        level: 5,
+    });
+
+    assert.deepEqual(review, {
+        example: "一時に学校へ行きます。",
+        reading: "いちじにがっこうへいきます。",
+        translation: "I go to school at one o'clock.",
+        naturalJapanese: true,
+        learnerUseful: true,
+        levelAppropriate: true,
+        supportOnly: true,
+        reviewerJudgment: "checked as learner-useful, level-appropriate, natural enough, and support-only by best-effort reviewer judgment",
+    });
+});
+
 test("inline proof migration builds JSONL events from tracked inline provenance", () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-inline-migration-"));
     writeReviewSet(rootDir, [{

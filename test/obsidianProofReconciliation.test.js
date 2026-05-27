@@ -125,6 +125,46 @@ test("buildObsidianProofReconciliationReport passes when inline proof matches le
     assert.equal(report.totals.inlineOnlyProofs, 0);
 });
 
+test("buildObsidianProofReconciliationReport normalizes legacy inline sentence evidence before comparing ledger proof", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-reconcile-"));
+    const legacyEvidence = [
+        "live generated kanji card surface checked for 常|じょう",
+        "governed japanese-source evidence checked for 常|じょう",
+        "primary reading, on/kun compatibility, learner meaning, and broader meanings checked",
+        "notes and support vocabulary checked for learner usefulness",
+        "exact primary-reading audio identity checked for 常|じょう",
+        "stroke-order media identity checked for 常",
+        "source evidence, JLPT placement evidence, internal checks, NLP assistive signals, and review proof kept in separate evidence lanes",
+        "example review: 日常の生活を大切にしています。 / にちじょうのせいかつをたいせつにしています。 / I value everyday life.; Fixture sentence review is natural, useful, level fit, support-only, and checked.",
+    ];
+    writeJson(path.join(rootDir, "templates", "platinum_n3_review_set.json"), [{
+        kanji: "常",
+        readingIncludes: ["じょう"],
+        rereviewProvenance: buildProvenance({
+            sentenceQualityReview: undefined,
+            evidenceChecked: legacyEvidence,
+        }),
+    }]);
+    writeLedger(rootDir, [buildProofEvent({
+        proof: {
+            ...buildProofEvent().proof,
+            evidenceChecked: legacyEvidence,
+        },
+    })]);
+
+    const report = buildObsidianProofReconciliationReport({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        deckKinds: ["kanji"],
+        levels: [3],
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.totals.matchedProofs, 1);
+    assert.equal(report.totals.proofMismatches, 0);
+    assert.equal(report.totals.normalizedSentenceQualityReviews, 1);
+});
+
 test("buildObsidianProofReconciliationReport reports inline-only, ledger-only, and mismatched proof targets", () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-reconcile-"));
     writeJson(path.join(rootDir, "templates", "platinum_n3_review_set.json"), [

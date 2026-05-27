@@ -10,6 +10,10 @@ const {
     buildEntryTargetKeys,
     getReviewSetRelativePath,
 } = require("./obsidianProofCompatibilityViewService");
+const {
+    getInlineProvenanceNormalizationStats,
+    normalizeInlineProvenance,
+} = require("./obsidianProofInlineProvenanceService");
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -68,6 +72,8 @@ function loadInlineProofsForReviewSet({
     const inlineProofs = [];
     const duplicateTargets = new Map();
     const seenTargets = new Map();
+    let normalizedSentenceQualityReviews = 0;
+    let sanitizedSentenceQualityReviews = 0;
 
     for (const entry of entries) {
         if (!isPlainRecord(entry.rereviewProvenance)) {
@@ -76,6 +82,18 @@ function loadInlineProofsForReviewSet({
         const targetKey = getInlineProofTargetKey(entry, { deckKind, level });
         if (!targetKey) {
             throw new Error(`Inline rereviewProvenance in ${sourceReviewSetPath} is missing a card target.`);
+        }
+        const cardReviewed = normalizeText(entry.rereviewProvenance.cardReviewed)
+            || targetKey.split(":").slice(2).join(":");
+        const normalizationStats = getInlineProvenanceNormalizationStats(entry.rereviewProvenance);
+        const provenance = normalizeInlineProvenance(entry.rereviewProvenance, {
+            cardReviewed,
+            level,
+        });
+        if (normalizationStats.normalizedSentenceQualityReview) {
+            normalizedSentenceQualityReviews += 1;
+        } else if (normalizationStats.sanitizedSentenceQualityReview) {
+            sanitizedSentenceQualityReviews += 1;
         }
         const prior = seenTargets.get(targetKey);
         if (prior) {
@@ -86,7 +104,7 @@ function loadInlineProofsForReviewSet({
             targetKey,
             sourceReviewSetPath,
             entry,
-            provenance: entry.rereviewProvenance,
+            provenance,
         });
     }
 
@@ -97,6 +115,8 @@ function loadInlineProofsForReviewSet({
         sourceEntries: entries.length,
         inlineProofs,
         duplicateInlineTargets: [...duplicateTargets.keys()].sort(),
+        normalizedSentenceQualityReviews,
+        sanitizedSentenceQualityReviews,
     };
 }
 
@@ -116,6 +136,8 @@ function summarizeScope({
     inlineProofs,
     ledgerProofs,
     duplicateInlineTargets,
+    normalizedSentenceQualityReviews = 0,
+    sanitizedSentenceQualityReviews = 0,
 }) {
     const inlineByTarget = new Map(inlineProofs.map((proof) => [proof.targetKey, proof]));
     const ledgerByTarget = new Map(ledgerProofs.map((proof) => [proof.targetKey, proof]));
@@ -141,6 +163,8 @@ function summarizeScope({
         inlineOnlyProofs: inlineOnlyTargets.length,
         ledgerOnlyProofs: ledgerOnlyTargets.length,
         proofMismatches: proofMismatches.length,
+        normalizedSentenceQualityReviews,
+        sanitizedSentenceQualityReviews,
         duplicateInlineTargets,
         inlineOnlyTargets,
         ledgerOnlyTargets,
@@ -180,6 +204,8 @@ function buildObsidianProofReconciliation({
                     inlineProofs: reviewSet.inlineProofs,
                     ledgerProofs: sourceScopedLedgerProofs,
                     duplicateInlineTargets: reviewSet.duplicateInlineTargets,
+                    normalizedSentenceQualityReviews: reviewSet.normalizedSentenceQualityReviews,
+                    sanitizedSentenceQualityReviews: reviewSet.sanitizedSentenceQualityReviews,
                 }),
                 sourceReviewSetPath: reviewSet.sourceReviewSetPath,
                 sourceEntries: reviewSet.sourceEntries,
@@ -195,6 +221,10 @@ function buildObsidianProofReconciliation({
         inlineOnlyProofs: acc.inlineOnlyProofs + report.inlineOnlyProofs,
         ledgerOnlyProofs: acc.ledgerOnlyProofs + report.ledgerOnlyProofs,
         proofMismatches: acc.proofMismatches + report.proofMismatches,
+        normalizedSentenceQualityReviews: acc.normalizedSentenceQualityReviews
+            + report.normalizedSentenceQualityReviews,
+        sanitizedSentenceQualityReviews: acc.sanitizedSentenceQualityReviews
+            + report.sanitizedSentenceQualityReviews,
         duplicateInlineTargets: acc.duplicateInlineTargets + report.duplicateInlineTargets.length,
     }), {
         sourceEntries: 0,
@@ -204,6 +234,8 @@ function buildObsidianProofReconciliation({
         inlineOnlyProofs: 0,
         ledgerOnlyProofs: 0,
         proofMismatches: 0,
+        normalizedSentenceQualityReviews: 0,
+        sanitizedSentenceQualityReviews: 0,
         duplicateInlineTargets: 0,
     });
 
@@ -232,6 +264,8 @@ function buildObsidianProofReconciliationReport(options = {}) {
                 inlineOnlyProofs: 0,
                 ledgerOnlyProofs: 0,
                 proofMismatches: 0,
+                normalizedSentenceQualityReviews: 0,
+                sanitizedSentenceQualityReviews: 0,
                 duplicateInlineTargets: 0,
             },
             scopes: [],
@@ -262,6 +296,8 @@ function formatObsidianProofReconciliationReport(report = {}) {
         `Inline-only proofs: ${totals.inlineOnlyProofs || 0}`,
         `Ledger-only proofs: ${totals.ledgerOnlyProofs || 0}`,
         `Proof mismatches: ${totals.proofMismatches || 0}`,
+        `Inline sentence-quality objects normalized from evidence: ${totals.normalizedSentenceQualityReviews || 0}`,
+        `Inline sentence-quality objects sanitized to canonical schema: ${totals.sanitizedSentenceQualityReviews || 0}`,
         `Duplicate inline targets: ${totals.duplicateInlineTargets || 0}`,
         "",
         "Authority boundary:",
@@ -281,6 +317,8 @@ function formatObsidianProofReconciliationReport(report = {}) {
             `- Inline-only: ${scope.inlineOnlyProofs}; sample: ${formatTargetSample(scope.inlineOnlyTargets)}`,
             `- Ledger-only: ${scope.ledgerOnlyProofs}; sample: ${formatTargetSample(scope.ledgerOnlyTargets)}`,
             `- Mismatches: ${scope.proofMismatches}; sample: ${formatTargetSample(scope.mismatchedTargets.map((item) => item.targetKey))}`,
+            `- Inline sentence-quality normalized: ${scope.normalizedSentenceQualityReviews}`,
+            `- Inline sentence-quality sanitized: ${scope.sanitizedSentenceQualityReviews}`,
             `- Duplicate inline targets: ${scope.duplicateInlineTargets.length}; sample: ${formatTargetSample(scope.duplicateInlineTargets)}`
         );
     }

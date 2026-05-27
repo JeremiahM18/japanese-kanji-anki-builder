@@ -14,6 +14,12 @@ const {
     getReviewSetRelativePath,
 } = require("../src/services/obsidianProofCompatibilityViewService");
 const {
+    deriveSentenceQualityReview,
+    getInlineProvenanceNormalizationStats,
+    hasStrictSentenceQualityReviewShape,
+    normalizeInlineProvenance,
+} = require("../src/services/obsidianProofInlineProvenanceService");
+const {
     assertNoUnknownArgs,
     collectUnknownArg,
     invokeCliMain,
@@ -26,7 +32,6 @@ const {
 
 const DEFAULT_RECORDED_BY = "codex-inline-proof-migration";
 const DEFAULT_OBSIDIAN_PROOF_LEDGER_DIR = path.join("templates", "obsidian_proof_ledger");
-const SENTENCE_QUALITY_PREFIX = "actual example sentence quality review:";
 
 function parseArgs(argv) {
     const options = {
@@ -119,81 +124,6 @@ function parseCardReviewed(value) {
     };
 }
 
-function deriveSentenceQualityReview(provenance = {}, { cardReviewed, level }) {
-    if (provenance.sentenceQualityReview) {
-        return sanitizeSentenceQualityReview(provenance.sentenceQualityReview, { cardReviewed, level });
-    }
-
-    const evidenceLine = (provenance.evidenceChecked || []).find((entry) => (
-        String(entry).startsWith(SENTENCE_QUALITY_PREFIX)
-    ));
-    if (!evidenceLine) {
-        throw new Error(`Missing sentenceQualityReview and parseable sentence quality evidence for ${cardReviewed}.`);
-    }
-
-    const match = /^actual example sentence quality review: (.+?) \/ (.+?) \/ (.+?); (.+)$/.exec(evidenceLine);
-    if (!match) {
-        throw new Error(`Could not parse sentence quality evidence for ${cardReviewed}: ${evidenceLine}`);
-    }
-
-    return {
-        example: match[1],
-        reading: match[2],
-        translation: match[3],
-        naturalJapanese: true,
-        learnerUseful: true,
-        levelAppropriate: true,
-        supportOnly: true,
-        reviewerJudgment: match[4],
-    };
-}
-
-function sanitizeSentenceQualityReview(review = {}, { cardReviewed }) {
-    const sanitized = {
-        example: review.example,
-        reading: review.reading,
-        translation: review.translation,
-        naturalJapanese: review.naturalJapanese,
-        learnerUseful: review.learnerUseful,
-        levelAppropriate: review.levelAppropriate,
-        supportOnly: review.supportOnly,
-        reviewerJudgment: review.reviewerJudgment,
-    };
-    for (const [key, value] of Object.entries(sanitized)) {
-        if (value === undefined) {
-            throw new Error(`sentenceQualityReview.${key} is missing for ${cardReviewed}.`);
-        }
-    }
-    return sanitized;
-}
-
-function hasStrictSentenceQualityReviewShape(review = {}) {
-    const expectedKeys = [
-        "example",
-        "learnerUseful",
-        "levelAppropriate",
-        "naturalJapanese",
-        "reading",
-        "reviewerJudgment",
-        "supportOnly",
-        "translation",
-    ];
-    const actualKeys = Object.keys(review || {}).sort();
-    return expectedKeys.length === actualKeys.length
-        && expectedKeys.every((key, index) => actualKeys[index] === key);
-}
-
-function normalizeInlineProvenance(provenance = {}, context = {}) {
-    const normalized = {
-        ...provenance,
-        sentenceQualityReview: deriveSentenceQualityReview(provenance, context),
-    };
-    if (!normalized.batchId) {
-        throw new Error(`Missing rereviewProvenance.batchId for ${context.cardReviewed}.`);
-    }
-    return normalized;
-}
-
 function buildProofFromProvenance(provenance = {}) {
     const proof = { ...provenance };
     delete proof.batchId;
@@ -278,17 +208,14 @@ function buildMigrationForReviewSet({
             throw new Error(`Kanji entry ${entry.kanji} does not match proof target ${target.written}.`);
         }
 
-        const hadSentenceQualityReview = Boolean(entry.rereviewProvenance.sentenceQualityReview);
-        const hadStrictSentenceQualityReview = hasStrictSentenceQualityReviewShape(
-            entry.rereviewProvenance.sentenceQualityReview
-        );
+        const normalizationStats = getInlineProvenanceNormalizationStats(entry.rereviewProvenance);
         const provenance = normalizeInlineProvenance(entry.rereviewProvenance, {
             cardReviewed: target.cardReviewed,
             level,
         });
-        if (!hadSentenceQualityReview) {
+        if (normalizationStats.normalizedSentenceQualityReview) {
             normalizedSentenceQualityReviews += 1;
-        } else if (!hadStrictSentenceQualityReview) {
+        } else if (normalizationStats.sanitizedSentenceQualityReview) {
             sanitizedSentenceQualityReviews += 1;
         }
 

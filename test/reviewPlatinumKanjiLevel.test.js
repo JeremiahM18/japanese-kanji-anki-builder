@@ -4,6 +4,9 @@ const assert = require("node:assert/strict");
 const { parseArgs, parseKanjiTsvForPlatinum } = require("../scripts/reviewPlatinumKanjiLevel");
 const { parseArgs: parseAdditionalArgs } = require("../scripts/reviewPlatinumAdditionalKanjiLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumKanjiBatchReport");
+const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+} = require("../src/services/obsidianProofProviderService");
 
 test("parseArgs accepts platinum kanji review options", () => {
     const options = parseArgs(["--level=5", "--json", "--require-all", "--allow-empty"]);
@@ -71,14 +74,29 @@ test("parseKanjiTsvForPlatinum preserves release-critical kanji card fields", ()
 });
 
 test("platinumKanjiBatchReport parseArgs accepts scoped read-only batch options", () => {
-    const options = parseBatchReportArgs(["--level=N5", "--kanji=日,本", "--limit=2", "--queue=missing-current-standard", "--json", "--oops"]);
+    const options = parseBatchReportArgs([
+        "--level=N5",
+        "--kanji=日,本",
+        "--limit=2",
+        "--proof-provider=inline",
+        "--queue=missing-current-standard",
+        "--json",
+        "--oops",
+    ]);
 
     assert.deepEqual(options, {
         json: true,
         kanji: ["日", "本"],
         level: 5,
         limit: 2,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
         queue: "missing-current-standard",
         unknownArgs: ["--oops"],
     });
+});
+
+test("platinumKanjiBatchReport parseArgs defaults to ledger fallback proof provider", () => {
+    const options = parseBatchReportArgs([]);
+
+    assert.equal(options.proofProvider, OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE);
 });

@@ -1,9 +1,12 @@
-const fs = require("node:fs");
-const path = require("node:path");
 const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
+const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+    loadReviewSetWithObsidianProof,
+    normalizeObsidianProofProviderMode,
+} = require("../src/services/obsidianProofProviderService");
 const {
     KANJI_BATCH_QUEUE_MODES,
     buildPlatinumKanjiBatchReport,
@@ -17,12 +20,15 @@ function parseLevel(value) {
     return [1, 2, 3, 4, 5].includes(parsed) ? parsed : null;
 }
 
-function parseArgs(argv) {
+function parseArgs(argv, {
+    defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+} = {}) {
     const options = {
         json: false,
         kanji: [],
         level: null,
         limit: 12,
+        proofProvider: normalizeObsidianProofProviderMode(defaultProofProvider),
         queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
         unknownArgs: [],
     };
@@ -36,6 +42,8 @@ function parseArgs(argv) {
             options.level = parseLevel(parseStringOption(arg, "level"));
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
+        } else if (arg.startsWith("--proof-provider=")) {
+            options.proofProvider = normalizeObsidianProofProviderMode(parseStringOption(arg, "proof-provider"));
         } else if (arg.startsWith("--queue=")) {
             options.queue = normalizeQueueMode(parseStringOption(arg, "queue"));
         } else {
@@ -55,12 +63,11 @@ async function main() {
     }
 
     const config = loadConfig();
-    const reviewSetPath = path.join(process.cwd(), "templates", `platinum_n${options.level}_review_set.json`);
-    if (!fs.existsSync(reviewSetPath)) {
-        throw new Error("Missing platinum kanji review set at " + reviewSetPath);
-    }
-
-    const entries = JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
+    const entries = loadReviewSetWithObsidianProof({
+        deckKind: "kanji",
+        level: options.level,
+        proofProvider: options.proofProvider,
+    }).entries;
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const rows = await buildKanjiRowsForLevel({ level: options.level, config });
     const report = buildPlatinumKanjiBatchReport({

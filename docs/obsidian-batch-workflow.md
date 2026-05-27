@@ -212,6 +212,47 @@ npm run deck:words:obsidian:certify-status -- --levels=<level>
 
 If this fails during an in-progress level, treat the failure as the remaining queue. Do not weaken the gate.
 
+## Proof Ledger ETL And Consumer Switch
+
+Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`. During the transition, current consumers still read `rereviewProvenance` from the tracked review-set JSON. The generated compatibility view under `out/obsidian-proof/compatibility/` bridges those shapes; the SQLite database under `out/obsidian-proof/sqlite/` is a local query mirror only.
+
+Keep these lanes separate:
+
+- Canonical proof ledger: `templates/obsidian_proof_ledger/*.jsonl`.
+- Legacy compatibility source while consumers are being switched: `templates/platinum_n3_review_set.json`.
+- Generated compatibility view: `out/obsidian-proof/compatibility/templates/platinum_n3_review_set.json`.
+- Generated local query mirror: `out/obsidian-proof/sqlite/obsidian-proof-ledger.sqlite`.
+
+Required parity gates before any consumer switch:
+
+```bash
+git status --short --untracked-files=all
+npm run data:obsidian:proof:validate
+npm run data:obsidian:proof:reconcile -- --levels=3
+npm run data:obsidian:proof:views
+npm run data:obsidian:proof:sqlite
+npm run data:obsidian:proof:sqlite:query -- --deck-kind=kanji --level=3 --limit=5
+node --test test/obsidianProofLedger.test.js test/obsidianProofReconciliation.test.js test/obsidianProofCompatibilityView.test.js test/obsidianProofSqliteMirror.test.js
+```
+
+No-go conditions:
+
+- Reconciliation is not exact: inline-only, ledger-only, mismatch, or duplicate-inline counts are non-zero.
+- The compatibility view omits an inline proof that should have a ledger event.
+- The SQLite mirror cannot rebuild from JSONL without reading generated TSV/APKG output.
+- Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=3` counts without a matching proof-ledger change.
+- `deck:kanji:obsidian:certify-status -- --levels=3` fails for anything other than the known remaining Obsidian backlog.
+
+Switch consumers in small stages:
+
+1. Inventory consumers that read inline `rereviewProvenance`: start with `src/services/platinumKanjiRereviewStatusService.js`, `src/services/obsidianKanjiCertificationStatusService.js`, `src/services/platinumKanjiBatchReportService.js`, and `src/services/kanjiCardFieldSourceContractService.js`.
+2. Add a proof-provider abstraction that can load canonical JSONL and return compatibility-shaped `rereviewProvenance` without changing status behavior.
+3. Run dual-read parity tests for the switched consumer: inline source versus ledger-derived source must produce identical counts, failure classifications, and queue samples.
+4. Switch one consumer at a time. Commit each consumer switch with its focused tests and the parity gates above.
+5. Only after all consumers are ledger-fed, remove inline proof from tracked review-set source or make it generated-only. That removal must be its own commit and must keep the generated compatibility view available for older tooling until all callers are migrated.
+
+Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
+
 ## What Not To Claim
 
 - A clean NLP packet is not Obsidian.

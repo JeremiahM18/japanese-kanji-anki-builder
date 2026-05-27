@@ -11,6 +11,8 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run typecheck` | Run the staged JSDoc typecheck gate |
 | `npm run supply-chain:audit` | Verify lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, workflow permissions, and release artifact boundaries |
 | `npm run bench:export` | Measure export-service performance for local regression investigation |
+| `npm run bench:obsidian-proof-etl` | Measure tracked Obsidian proof ledger validation, compatibility-view generation, and SQLite mirror generation |
+| `npm run bench:obsidian-proof-etl:gate` | Manual local Obsidian proof ETL performance guardrail; not a CI gate unless explicitly wired |
 | `npm run bench:build:gate` | Manual local-data build performance guardrail; requires a ready workspace and writes benchmark output |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
@@ -140,6 +142,12 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run nlp:governance-gate` | Run the complete NLP fail-closed gate: model manifest audit, tokenization artifact validation, tokenization audit signals, embedding artifact validation, suggestion artifact validation, review packet validation, draft-proposal validation, and runtime/model-artifact preflight |
 | `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |
 | `npm run data:verify:jlpt` | Verify tracked JLPT inventory contract shape and consistency |
+| `npm run data:obsidian:proof:validate` | Validate canonical tracked JSONL Obsidian proof ledger files |
+| `npm run data:obsidian:proof:reconcile -- --levels=3` | Compare canonical JSONL proof to legacy inline `rereviewProvenance` for exact parity |
+| `npm run data:obsidian:proof:migrate-inline -- --levels=3` | Dry-run migration from tracked inline `rereviewProvenance` into JSONL ledger events |
+| `npm run data:obsidian:proof:views` | Generate compatibility review-set JSON from canonical ledger events |
+| `npm run data:obsidian:proof:sqlite` | Generate the local SQLite query mirror from canonical ledger events |
+| `npm run data:obsidian:proof:sqlite:query` | Query the generated local SQLite mirror after rebuilding it from JSONL |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |

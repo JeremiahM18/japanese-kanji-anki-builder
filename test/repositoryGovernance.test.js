@@ -458,6 +458,7 @@ test("tracked text release artifacts pin LF line endings", () => {
     const requiredPatterns = [
         ".gitattributes text eol=lf",
         "*.json text eol=lf",
+        "*.jsonl text eol=lf",
         "*.md text eol=lf",
         "*.tsv text eol=lf",
         "*.yml text eol=lf",

@@ -46,6 +46,7 @@
     "data:template:jlpt:textbook-consensus": "node scripts/createJlptKanjiSourceInputTemplate.js",
     "data:audit:jlpt:words": "node scripts/auditJlptWordAlignment.js",
     "data:audit:audio": "node scripts/auditAudioPolicy.js",
+    "data:obsidian:proof:validate": "node scripts/validateObsidianProofLedger.js",
     "data:audit:stroke-order": "node scripts/auditStrokeOrderPolicy.js",
     "media:review:audio": "node scripts/reportAudioReview.js",
     "media:review:word-audio": "node scripts/reportWordAudioReview.js",

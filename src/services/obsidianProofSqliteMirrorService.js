@@ -11,6 +11,7 @@ const {
     ensureDir,
     getDefaultGeneratedPathRoots,
 } = require("../utils/fs");
+const { hashFileSync } = require("../utils/fileHash");
 const { resolvePythonCommand } = require("./toolchainService");
 
 const DEFAULT_OBSIDIAN_PROOF_SQLITE_DIR = path.join("out", "obsidian-proof", "sqlite");
@@ -24,6 +25,15 @@ function toPosixPath(value) {
 function writeJsonFile(filePath, value) {
     ensureDir(path.dirname(filePath));
     fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+function buildFileHashRecord({ cwd, filePath }) {
+    const hash = hashFileSync(filePath);
+    return {
+        path: toPosixPath(path.relative(cwd, filePath)),
+        bytes: hash.bytes,
+        sha256: hash.sha256,
+    };
 }
 
 function resolveSqliteOutput({
@@ -66,6 +76,9 @@ function buildSqlitePayload({
         authority: OBSIDIAN_PROOF_LEDGER_AUTHORITY,
         ledgerDir: toPosixPath(path.relative(cwd, ledger.ledgerDir)),
         ledgerFiles: ledger.files.map((file) => toPosixPath(path.relative(cwd, file))),
+        inputHashes: {
+            ledgerFiles: ledger.files.map((file) => buildFileHashRecord({ cwd, filePath: file })),
+        },
         events: ledger.events,
     };
 }
@@ -167,6 +180,13 @@ function buildObsidianProofSqliteMirror({
         payloadPath: toPosixPath(path.relative(resolvedCwd, payloadPath)),
         ledgerDir: toPosixPath(path.relative(resolvedCwd, ledger.ledgerDir)),
         ledgerFiles: ledger.files.map((file) => toPosixPath(path.relative(resolvedCwd, file))),
+        inputHashes: {
+            ledgerFiles: ledger.files.map((file) => buildFileHashRecord({ cwd: resolvedCwd, filePath: file })),
+        },
+        generatedArtifacts: {
+            payload: buildFileHashRecord({ cwd: resolvedCwd, filePath: payloadPath }),
+            sqlite: buildFileHashRecord({ cwd: resolvedCwd, filePath: output.outputDbPath }),
+        },
         proofEvents: ledger.events.length,
         sqlite: {
             ...sqliteSummary,
@@ -209,6 +229,8 @@ function formatObsidianProofSqliteMirrorReport(report = {}) {
         lines.push(
             `SQLite version: ${report.sqlite.sqliteVersion}`,
             `Evidence-check rows: ${report.sqlite.evidenceChecks}`,
+            `SQLite sha256: ${report.generatedArtifacts?.sqlite?.sha256 || "(missing)"}`,
+            `Payload sha256: ${report.generatedArtifacts?.payload?.sha256 || "(missing)"}`,
             `Tables: ${(report.sqlite.tables || []).join(", ")}`
         );
     }

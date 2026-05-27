@@ -131,6 +131,9 @@ test("buildObsidianProofSqliteMirror writes a queryable local SQLite mirror", {
     assert.equal(report.passed, true);
     assert.equal(report.proofEvents, 1);
     assert.equal(fs.existsSync(dbPath), true);
+    assert.match(report.inputHashes.ledgerFiles[0].sha256, /^[a-f0-9]{64}$/);
+    assert.match(report.generatedArtifacts.payload.sha256, /^[a-f0-9]{64}$/);
+    assert.match(report.generatedArtifacts.sqlite.sha256, /^[a-f0-9]{64}$/);
 
     const inspected = inspectSqlite(dbPath);
     assert.equal(inspected.proofEvents, 1);

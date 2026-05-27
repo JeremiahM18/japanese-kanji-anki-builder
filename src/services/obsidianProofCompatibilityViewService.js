@@ -12,6 +12,7 @@ const {
     ensureDir,
     getDefaultGeneratedPathRoots,
 } = require("../utils/fs");
+const { hashFileSync } = require("../utils/fileHash");
 
 const DEFAULT_OBSIDIAN_PROOF_COMPATIBILITY_DIR = path.join(
     "out",
@@ -21,6 +22,15 @@ const DEFAULT_OBSIDIAN_PROOF_COMPATIBILITY_DIR = path.join(
 
 function toPosixPath(value) {
     return String(value).replace(/\\/g, "/");
+}
+
+function buildFileHashRecord({ cwd, filePath }) {
+    const hash = hashFileSync(filePath);
+    return {
+        path: toPosixPath(path.relative(cwd, filePath)),
+        bytes: hash.bytes,
+        sha256: hash.sha256,
+    };
 }
 
 function getReviewSetRelativePath({ deckKind, level }) {
@@ -197,6 +207,8 @@ function buildCompatibilityViewForGroup({
         ...summary,
         sourceReviewSetPath,
         outputReviewSetPath: toPosixPath(path.relative(cwd, outputPath)),
+        inputHash: buildFileHashRecord({ cwd, filePath: sourcePath }),
+        outputHash: buildFileHashRecord({ cwd, filePath: outputPath }),
         proofIdsApplied: events.map((event) => event.proofId).sort(),
     };
 }
@@ -238,16 +250,23 @@ function buildObsidianProofCompatibilityViews({
         ledgerDir: toPosixPath(path.relative(resolvedCwd, ledger.ledgerDir)),
         outputDir: toPosixPath(path.relative(resolvedCwd, resolvedOutputDir)),
         ledgerFiles: ledger.files.map((file) => toPosixPath(path.relative(resolvedCwd, file))),
+        inputHashes: {
+            ledgerFiles: ledger.files.map((file) => buildFileHashRecord({ cwd: resolvedCwd, filePath: file })),
+        },
         ledgerProofEvents: ledger.events.length,
         reviewSets,
     };
 
-    writeJsonFile(path.join(resolvedOutputDir, "manifest.json"), manifest);
+    const manifestPath = path.join(resolvedOutputDir, "manifest.json");
+    writeJsonFile(manifestPath, manifest);
 
     return {
         passed: true,
-        manifestPath: toPosixPath(path.relative(resolvedCwd, path.join(resolvedOutputDir, "manifest.json"))),
-        manifest,
+        manifestPath: toPosixPath(path.relative(resolvedCwd, manifestPath)),
+        manifest: {
+            ...manifest,
+            manifestHash: buildFileHashRecord({ cwd: resolvedCwd, filePath: manifestPath }),
+        },
     };
 }
 
@@ -290,6 +309,7 @@ function formatObsidianProofCompatibilityViewReport(report = {}) {
                 `source entries=${reviewSet.sourceEntries}`,
                 `ledger proofs applied=${reviewSet.ledgerProofsApplied}`,
                 `inline proofs omitted=${reviewSet.inlineProofsOmitted}`,
+                `output sha256=${reviewSet.outputHash?.sha256 || "(missing)"}`,
                 `output=${reviewSet.outputReviewSetPath}`,
             ].join("; "));
         }

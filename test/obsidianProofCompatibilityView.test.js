@@ -112,6 +112,10 @@ test("buildObsidianProofCompatibilityViews writes ledger-derived review-set JSON
     assert.equal(report.manifest.reviewSets[0].sourceEntries, 2);
     assert.equal(report.manifest.reviewSets[0].ledgerProofsApplied, 1);
     assert.equal(report.manifest.reviewSets[0].inlineProofsOmitted, 1);
+    assert.match(report.manifest.inputHashes.ledgerFiles[0].sha256, /^[a-f0-9]{64}$/);
+    assert.match(report.manifest.reviewSets[0].inputHash.sha256, /^[a-f0-9]{64}$/);
+    assert.match(report.manifest.reviewSets[0].outputHash.sha256, /^[a-f0-9]{64}$/);
+    assert.match(report.manifest.manifestHash.sha256, /^[a-f0-9]{64}$/);
 
     const outputEntries = JSON.parse(fs.readFileSync(
         path.join(rootDir, "out", "obsidian-proof", "compatibility", "templates", "platinum_n3_review_set.json"),

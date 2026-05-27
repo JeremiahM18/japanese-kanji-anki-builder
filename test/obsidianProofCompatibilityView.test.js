@@ -84,6 +84,70 @@ function buildProofEvent(overrides = {}) {
     };
 }
 
+function buildWordProofEvent(overrides = {}) {
+    return {
+        schemaVersion: 1,
+        recordType: "obsidian-proof-event",
+        proofId: "word-n5-obsidian-fixture-01",
+        target: {
+            deckKind: "word",
+            level: 5,
+            written: "本",
+            reading: "ほん",
+            cardReviewed: "本|ほん",
+        },
+        batch: {
+            id: "n5-word-obsidian-fixture-batch",
+            sequence: 1,
+        },
+        proof: {
+            type: "substantive current standard rereview",
+            reviewStandard: "word-platinum-v3-evidence-lanes",
+            reviewedAt: "2026-05-19",
+            reviewer: "fixture-reviewer",
+            reviewedAfterStandard: true,
+            mechanicalMigration: false,
+            result: "approved_for_current_standard_platinum",
+            scope: "full word-card rereview from square zero",
+            cardReviewed: "本|ほん",
+            evidenceChecked: [
+                "live generated word surface for 本|ほん",
+                "governed Japanese-source word evidence for 本|ほん",
+                "learner-facing meaning book",
+                "example sentence 日本語の本を読みます。 and exported reading/translation fit",
+                "notes/support surface checked",
+                "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+                "exact word-reading audio identity word-reading-本-ほん",
+                "pitch accent source and rendered pitch label checked",
+                "managed media provenance and no silent fallback",
+                "golden regression as internal regression only, not source truth",
+                "word vocabulary deck placement and product fit considered; learner useful",
+                "verification limitations considered; no active core-card limitations recorded",
+            ],
+            limitationDecision: "verification limitations considered; no active core-card limitations recorded",
+            sentenceQualityReview: {
+                example: "日本語の本を読みます。",
+                reading: "にほんごのほんをよみます。",
+                translation: "I read a Japanese book.",
+                naturalJapanese: true,
+                learnerUseful: true,
+                levelAppropriate: true,
+                releaseQuality: true,
+                reviewerJudgment: "Fixture sentence review is natural, useful, level fit, release quality, and checked.",
+            },
+        },
+        authority: OBSIDIAN_PROOF_LEDGER_AUTHORITY,
+        ledger: {
+            recordedAt: "2026-05-27",
+            recordedBy: "fixture-writer",
+            sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+            sourceCommit: "abcdef1",
+            representationMigration: true,
+        },
+        ...overrides,
+    };
+}
+
 test("buildObsidianProofCompatibilityViews writes ledger-derived review-set JSON", () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-view-"));
     writeJson(path.join(rootDir, "templates", "platinum_n3_review_set.json"), [
@@ -124,6 +188,36 @@ test("buildObsidianProofCompatibilityViews writes ledger-derived review-set JSON
     assert.equal(outputEntries[0].rereviewProvenance.cardReviewed, "常|じょう");
     assert.equal(outputEntries[0].rereviewProvenance.reviewStandard, "kanji-platinum-v3-evidence-lanes");
     assert.equal(outputEntries[1].rereviewProvenance, undefined);
+});
+
+test("buildObsidianProofCompatibilityViews writes word ledger-derived review-set JSON", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-view-"));
+    writeJson(path.join(rootDir, "templates", "platinum_n5_word_review_set.json"), [
+        {
+            word: "本",
+            status: "platinum",
+            readingIncludes: ["ほん"],
+            rereviewProvenance: { type: "legacy inline proof should be replaced" },
+        },
+    ]);
+    writeLedger(rootDir, [buildWordProofEvent()]);
+
+    const report = buildObsidianProofCompatibilityViews({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        outputDir: "out/obsidian-proof/compatibility",
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.manifest.reviewSets[0].deckKind, "word");
+    assert.equal(report.manifest.reviewSets[0].ledgerProofsApplied, 1);
+
+    const outputEntries = JSON.parse(fs.readFileSync(
+        path.join(rootDir, "out", "obsidian-proof", "compatibility", "templates", "platinum_n5_word_review_set.json"),
+        "utf8"
+    ));
+    assert.equal(outputEntries[0].rereviewProvenance.cardReviewed, "本|ほん");
+    assert.equal(outputEntries[0].rereviewProvenance.sentenceQualityReview.releaseQuality, true);
 });
 
 test("buildObsidianProofCompatibilityViewReport fails closed when ledger target is missing from source review set", () => {

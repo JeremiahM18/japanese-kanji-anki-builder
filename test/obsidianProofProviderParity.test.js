@@ -15,6 +15,13 @@ const {
     REQUIRED_KANJI_SOURCE_EVIDENCE_TYPES,
 } = require("../src/services/platinumKanjiReviewService");
 const {
+    CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+    REQUIRED_WORD_INTERNAL_CHECK_TYPES,
+    REQUIRED_WORD_QUALITY_GATES,
+    REQUIRED_WORD_REVIEW_EVIDENCE_TYPES,
+    REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
+} = require("../src/services/platinumReviewService");
+const {
     buildKanjiBatchReportProviderParityForLevel,
     buildKanjiFieldSourceContractProviderParityForLevel,
     buildKanjiPlatinumLevelProviderParityForLevel,
@@ -22,6 +29,8 @@ const {
     buildObsidianProofProviderParityReport,
     buildPlatinumGovernanceGateProviderParityForLevel,
     buildTrackedReviewSetRows,
+    buildTrackedWordReviewSetRows,
+    buildWordRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
     parseArgs,
     ROW_SOURCES,
@@ -196,6 +205,168 @@ function buildProofEvent(overrides = {}) {
     };
 }
 
+function buildWordRow(overrides = {}) {
+    return {
+        word: "本",
+        reading: "ほん",
+        readingBreakdown: "<ruby>本<rt>ほん</rt></ruby>",
+        audio: "[sound:本-word-reading-本-ほん.wav]",
+        pitchAccent: "Pitch 1: 1",
+        meaning: "book",
+        jlptLevel: "JLPT N5",
+        coverageRole: "JLPT core + reading coverage",
+        focusKanji: "本",
+        coversReading: "本: ほん",
+        kanjiBreakdown: "本 （ほん） ／ book",
+        exampleSentence: "日本語の本を読みます。 ／ にほんごのほんをよみます。 ／ I read a Japanese book.",
+        notes: "Core beginner noun for book.",
+        ...overrides,
+    };
+}
+
+function buildWordProvenance(overrides = {}) {
+    return {
+        type: "substantive current standard rereview",
+        reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        batchId: "n5-word-obsidian-rereview-batch-002",
+        reviewedAt: "2026-05-19",
+        reviewer: "codex-platinum-review",
+        reviewedAfterStandard: true,
+        mechanicalMigration: false,
+        result: "approved_for_current_standard_platinum",
+        scope: "N5 word Obsidian lane batch 2 generated-order substantive rereview",
+        cardReviewed: "本|ほん",
+        evidenceChecked: [
+            "live generated word surface for 本|ほん from out/word-build/exports/jlpt-n5-words.tsv",
+            "governed Japanese-source word evidence for 本|ほん: tracked JLearn lane plus exact local JMdict row entrySeq=1522150",
+            "learner-facing meaning book",
+            "example sentence 日本語の本を読みます。 and exported reading/translation fit",
+            "notes/support surface: Core beginner noun for book.",
+            "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
+            "exact word-reading audio identity word-reading-本-ほん exists in out/word-build/package/media",
+            "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
+            "managed media provenance and no silent fallback",
+            "golden regression as internal regression only, not source truth",
+            "word vocabulary deck placement and product fit considered; learner useful",
+            "verification limitations considered; no active core-card limitations recorded",
+        ],
+        limitationDecision: "verification limitations considered; no active core-card limitations recorded",
+        sentenceQualityReview: {
+            example: "日本語の本を読みます。",
+            reading: "にほんごのほんをよみます。",
+            translation: "I read a Japanese book.",
+            naturalJapanese: true,
+            learnerUseful: true,
+            levelAppropriate: true,
+            releaseQuality: true,
+            reviewerJudgment: "Current-standard whole-card revalidation with separated evidence lanes for 本|ほん checked generated surface, Japanese-source evidence, example sentence 日本語の本を読みます。, reading にほんごのほんをよみます。, translation I read a Japanese book., notes/support surface Core beginner noun for book., reading breakdown 本 （ほん） ／ book, meaning book, labels JLPT N5; JLPT core + reading coverage; focus 本; covers 本: ほん, audio word-reading-本-ほん, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations.",
+        },
+        ...overrides,
+    };
+}
+
+function buildWordEntry(overrides = {}) {
+    return {
+        word: "本",
+        status: "platinum",
+        readingIncludes: ["ほん"],
+        meaningIncludes: ["book"],
+        jlptLevelIncludes: ["JLPT N5"],
+        coverageRoleIncludes: ["JLPT core + reading coverage"],
+        focusIncludes: ["本"],
+        coversReadingIncludes: ["本: ほん"],
+        breakdownIncludes: ["本 （ほん） ／ book"],
+        exampleIncludes: ["日本語の本を読みます。"],
+        pitchAccentIncludes: ["Pitch 1: 1"],
+        notesIncludes: ["Core beginner noun for book."],
+        selectionRationale: "本|ほん is a common beginner noun and belongs in the N5 word deck.",
+        reviewedAt: "2026-05-19",
+        reviewer: "codex-platinum-review",
+        reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        revalidatedAt: "2026-05-19",
+        revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+        sourceEvidence: REQUIRED_WORD_SOURCE_EVIDENCE_TYPES.map((type) => ({
+            type,
+            source: "fixture source",
+            detail: "JMdict dictionary source verified 本|ほん, reading ほん, learner meaning book, and example 日本語の本を読みます。",
+        })),
+        internalChecks: REQUIRED_WORD_INTERNAL_CHECK_TYPES.map((type) => {
+            const details = {
+                "generated-surface": "Generated word-card surface inspected for 本|ほん: word, reading, meaning book, example 日本語の本を読みます。, audio, and pitch accent fields.",
+                "golden-regression": "Separate golden regression gate checked 本|ほん; this regression gate protects generated field expectations but is not source truth and not source evidence.",
+                "level-contract": "templates/jlpt_word_level_contract.json lists 本|ほん for JLPT N5.",
+                "media-audit": "Managed media provenance audit checked 本|ほん exact asset fragment word-reading-本-ほん in tracked media.",
+                "audio-review": "Audio review checked 本|ほん exact asset fragment word-reading-本-ほん.",
+                "pitch-accent-review": "Pitch accent review checked 本|ほん source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1.",
+                "label-review": "Label review checked 本|ほん JLPT N5, JLPT core + reading coverage, focus 本, and covered readings 本: ほん.",
+            };
+            return {
+                type,
+                source: "fixture source",
+                detail: details[type],
+            };
+        }),
+        reviewEvidence: REQUIRED_WORD_REVIEW_EVIDENCE_TYPES.map((type) => {
+            const details = {
+                "example-review": "Example review checked 本|ほん, reading ほん, sentence 日本語の本を読みます。, and the exported reading line for release quality.",
+                "manual-review": "Manual review judged 本|ほん common and learner-friendly for the N5 word deck, with accurate reading ほん, meaning book, and example 日本語の本を読みます。",
+                "current-standard-review": buildWordProvenance().sentenceQualityReview.reviewerJudgment,
+            };
+            return {
+                type,
+                source: "fixture source",
+                detail: details[type],
+            };
+        }),
+        qualityGates: Object.fromEntries(REQUIRED_WORD_QUALITY_GATES.map((gate) => [gate, true])),
+        rereviewProvenance: buildWordProvenance(),
+        ...overrides,
+    };
+}
+
+function buildWordProofEvent(overrides = {}) {
+    const provenance = buildWordProvenance();
+    return {
+        schemaVersion: 1,
+        recordType: "obsidian-proof-event",
+        proofId: "word-n5-obsidian-002-01",
+        target: {
+            deckKind: "word",
+            level: 5,
+            written: "本",
+            reading: "ほん",
+            cardReviewed: "本|ほん",
+        },
+        batch: {
+            id: provenance.batchId,
+            sequence: 2,
+        },
+        proof: {
+            type: provenance.type,
+            reviewStandard: provenance.reviewStandard,
+            reviewedAt: provenance.reviewedAt,
+            reviewer: provenance.reviewer,
+            reviewedAfterStandard: provenance.reviewedAfterStandard,
+            mechanicalMigration: provenance.mechanicalMigration,
+            result: provenance.result,
+            scope: provenance.scope,
+            cardReviewed: provenance.cardReviewed,
+            evidenceChecked: provenance.evidenceChecked,
+            limitationDecision: provenance.limitationDecision,
+            sentenceQualityReview: provenance.sentenceQualityReview,
+        },
+        authority: OBSIDIAN_PROOF_LEDGER_AUTHORITY,
+        ledger: {
+            recordedAt: "2026-05-27",
+            recordedBy: "fixture-writer",
+            sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+            sourceCommit: "abcdef1",
+            representationMigration: true,
+        },
+        ...overrides,
+    };
+}
+
 function buildFieldSourceInputs() {
     return {
         jlptLevelContract: {
@@ -276,6 +447,20 @@ test("provider parity script parses platinum governance gate consumer", () => {
     assert.equal(options.consumer, "platinum-governance-gate");
 });
 
+test("provider parity script parses word rereview-status consumer and deck kind", () => {
+    const options = parseArgs([
+        "--levels=5,4",
+        "--consumer=word-rereview-status",
+        "--deck-kind=word",
+        "--row-source=tracked-review-set",
+    ]);
+
+    assert.equal(options.consumer, "word-rereview-status");
+    assert.equal(options.deckKind, "word");
+    assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
+});
+
 test("provider parity defaults to CI-safe tracked review-set rows", () => {
     const options = parseArgs([]);
 
@@ -304,6 +489,27 @@ test("tracked review-set rows preserve card identity without local generated dat
     });
 });
 
+test("tracked word review-set rows preserve word identity without local generated data", () => {
+    const rows = buildTrackedWordReviewSetRows([buildWordEntry()], 5);
+
+    assert.equal(rows.length, 1);
+    assert.deepEqual(rows[0], {
+        word: "本",
+        reading: "ほん",
+        readingBreakdown: "本 （ほん） ／ book",
+        audio: "[sound:本-word-reading-本-ほん.wav]",
+        pitchAccent: "Pitch 1: 1",
+        meaning: "book",
+        jlptLevel: "JLPT N5",
+        coverageRole: "JLPT core + reading coverage",
+        focusKanji: "本",
+        coversReading: "本: ほん",
+        kanjiBreakdown: "本 （ほん） ／ book",
+        exampleSentence: "日本語の本を読みます。",
+        notes: "Core beginner noun for book.",
+    });
+});
+
 test("provider parity report can run from tracked proof inputs without local data files", async () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
     writeReviewSet(rootDir, [buildEntry()]);
@@ -321,6 +527,41 @@ test("provider parity report can run from tracked proof inputs without local dat
     assert.equal(report.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
     assert.equal(report.scopes[0].inlineProjection.generatedRows, 1);
     assert.equal(report.scopes[0].ledgerProjection.generatedRows, 1);
+});
+
+test("word rereview-status provider parity passes when inline and ledger projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildWordProofEvent()]);
+
+    const scope = buildWordRereviewStatusProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [buildWordEntry()],
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        kanjiLevelData: null,
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.counts.substantive_current_standard_review_proven, 1);
+    assert.equal(scope.ledgerProjection.counts.substantive_current_standard_review_proven, 1);
 });
 
 test("kanji rereview-status provider parity passes when inline and ledger projections match", () => {

@@ -24,6 +24,9 @@ const {
     loadJlptLevelContract,
 } = require("../src/datasets/jlptLevelContract");
 const {
+    loadWordPitchAccentData,
+} = require("../src/datasets/wordPitchAccentData");
+const {
     loadPlatinumCardSourceManifest,
 } = require("../src/datasets/platinumCardSourceManifest");
 const {
@@ -54,6 +57,12 @@ const {
 const {
     buildKanjiRowsForLevel,
 } = require("./reviewPlatinumKanjiLevel");
+const {
+    buildWordRowsForLevel,
+} = require("./reviewPlatinumWordLevel");
+const {
+    buildPlatinumWordRereviewStatusReport,
+} = require("../src/services/platinumWordRereviewStatusService");
 
 const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_BATCH_REPORT: "kanji-batch-report",
@@ -61,6 +70,7 @@ const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_PLATINUM_LEVEL: "kanji-platinum-level",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
     PLATINUM_GOVERNANCE_GATE: "platinum-governance-gate",
+    WORD_REREVIEW_STATUS: "word-rereview-status",
 });
 
 const ROW_SOURCES = Object.freeze({
@@ -87,6 +97,7 @@ function stableJson(value) {
 function parseArgs(argv) {
     const options = {
         consumer: SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
+        deckKind: "kanji",
         json: false,
         kanji: [],
         levels: [3],
@@ -110,6 +121,8 @@ function parseArgs(argv) {
             options.requireAllRows = true;
         } else if (arg.startsWith("--consumer=")) {
             options.consumer = parseStringOption(arg, "consumer");
+        } else if (arg.startsWith("--deck-kind=")) {
+            options.deckKind = parseStringOption(arg, "deck-kind").trim();
         } else if (arg.startsWith("--kanji=")) {
             options.kanji = parseCsvOption(arg, "kanji");
         } else if (arg.startsWith("--level=")) {
@@ -128,6 +141,14 @@ function parseArgs(argv) {
     }
 
     return options;
+}
+
+function assertConsumerDeckKind({ consumer, deckKind }) {
+    const wordConsumers = new Set([SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS]);
+    const expectedDeckKind = wordConsumers.has(consumer) ? "word" : "kanji";
+    if (deckKind !== expectedDeckKind) {
+        throw new Error(`Consumer ${consumer} requires --deck-kind=${expectedDeckKind}.`);
+    }
 }
 
 function assertSupportedConsumer(consumer) {
@@ -194,10 +215,54 @@ function buildTrackedReviewSetRows(entries = [], level = 3) {
     return rows;
 }
 
-async function buildRowsForParity({ level, rowSource, rawEntries, config } = {}) {
+function buildTrackedWordReviewSetRow(entry = {}, level = 5) {
+    const word = normalizeText(entry.word || entry.written || entry.displayWord);
+    const reading = firstString(entry.readingIncludes);
+    return {
+        word,
+        reading,
+        readingBreakdown: joinStrings(entry.breakdownIncludes) || reading,
+        audio: word && reading ? `[sound:${word}-word-reading-${word}-${reading}.wav]` : "",
+        pitchAccent: joinStrings(entry.pitchAccentIncludes) || "Pitch 1",
+        meaning: joinStrings(entry.meaningIncludes),
+        jlptLevel: joinStrings(entry.jlptLevelIncludes) || `JLPT N${level}`,
+        coverageRole: joinStrings(entry.coverageRoleIncludes),
+        focusKanji: joinStrings(entry.focusIncludes),
+        coversReading: joinStrings(entry.coversReadingIncludes),
+        kanjiBreakdown: joinStrings(entry.breakdownIncludes),
+        exampleSentence: joinStrings(entry.exampleIncludes),
+        notes: joinStrings(entry.notesIncludes, " / "),
+    };
+}
+
+function buildTrackedWordReviewSetRows(entries = [], level = 5) {
+    const rows = [];
+    const seen = new Set();
+
+    for (const entry of Array.isArray(entries) ? entries : []) {
+        const word = normalizeText(entry.word || entry.written || entry.displayWord);
+        const reading = firstString(entry.readingIncludes);
+        const identity = `${word}|${reading}`;
+        if (!word || !reading || seen.has(identity)) {
+            continue;
+        }
+        seen.add(identity);
+        rows.push(buildTrackedWordReviewSetRow(entry, level));
+    }
+
+    return rows;
+}
+
+async function buildRowsForParity({ level, deckKind = "kanji", rowSource, rawEntries, config } = {}) {
     const normalizedRowSource = normalizeRowSource(rowSource);
     if (normalizedRowSource === ROW_SOURCES.GENERATED) {
+        if (deckKind === "word") {
+            return buildWordRowsForLevel({ level, config });
+        }
         return buildKanjiRowsForLevel({ level, config });
+    }
+    if (deckKind === "word") {
+        return buildTrackedWordReviewSetRows(rawEntries, level);
     }
     return buildTrackedReviewSetRows(rawEntries, level);
 }
@@ -212,6 +277,14 @@ function sampleKanji(cards = [], predicate, limit = 24) {
 
 function sampleValues(values = [], limit = 24) {
     return (Array.isArray(values) ? values : [])
+        .filter(Boolean)
+        .slice(0, limit);
+}
+
+function sampleWordIdentities(cards = [], predicate, limit = 24) {
+    return cards
+        .filter(predicate)
+        .map((card) => card.identity)
         .filter(Boolean)
         .slice(0, limit);
 }
@@ -333,6 +406,35 @@ function projectKanjiRereviewStatusReport(report = {}) {
         },
         cards: cards.map((card) => ({
             kanji: card.kanji,
+            status: card.status,
+            structuralPassed: card.structuralPassed,
+            substantiveRereviewProven: card.substantiveRereviewProven,
+            needsSubstantiveRereview: card.needsSubstantiveRereview,
+            blockedOrFailing: card.blockedOrFailing,
+            reasons: card.reasons,
+        })),
+    };
+}
+
+function projectWordRereviewStatusReport(report = {}) {
+    const cards = Array.isArray(report.cards) ? report.cards : [];
+    return {
+        level: report.level,
+        generatedRows: report.generatedRows,
+        reviewEntries: report.reviewEntries,
+        counts: report.counts,
+        passed: report.passed,
+        structuralReviewPassed: report.structuralReviewPassed,
+        structuralCoverageFailures: report.structuralCoverageFailures,
+        queueSamples: {
+            proven: sampleWordIdentities(cards, (card) => card.substantiveRereviewProven),
+            needsSubstantiveRereview: sampleWordIdentities(cards, (card) => card.needsSubstantiveRereview),
+            blockedOrFailing: sampleWordIdentities(cards, (card) => card.blockedOrFailing),
+        },
+        cards: cards.map((card) => ({
+            identity: card.identity,
+            word: card.word,
+            reading: card.reading,
             status: card.status,
             structuralPassed: card.structuralPassed,
             substantiveRereviewProven: card.substantiveRereviewProven,
@@ -828,10 +930,85 @@ function buildKanjiRereviewStatusProviderParityForLevel({
     };
 }
 
+function buildWordRereviewStatusProviderParityForLevel({
+    rows = [],
+    rawEntries = [],
+    cwd = process.cwd(),
+    ledgerDir,
+    level = 5,
+    sourceReviewSetPath,
+    wordPitchAccentData = {},
+    kanjiLevelData = null,
+} = {}) {
+    const inlineProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "word",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    });
+    const ledgerProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "word",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER,
+    });
+    const reportOptions = {
+        rows,
+        level,
+        wordPitchAccentData,
+        kanjiLevelData,
+    };
+    const inlineReport = buildPlatinumWordRereviewStatusReport({
+        ...reportOptions,
+        entries: inlineProvider.entries,
+    });
+    const ledgerReport = buildPlatinumWordRereviewStatusReport({
+        ...reportOptions,
+        entries: ledgerProvider.entries,
+    });
+    const inlineProjection = projectWordRereviewStatusReport(inlineReport);
+    const ledgerProjection = projectWordRereviewStatusReport(ledgerReport);
+    const inlineProofCount = countInlineProofs(rawEntries);
+    const parity = buildProviderParityOutcome({
+        inlineProofCount,
+        inlineProvider,
+        ledgerProvider,
+        inlineProjection,
+        ledgerProjection,
+        buildDualReadMismatch: () => ({
+            inlineCounts: inlineProjection.counts,
+            ledgerCounts: ledgerProjection.counts,
+            inlineQueueSamples: inlineProjection.queueSamples,
+            ledgerQueueSamples: ledgerProjection.queueSamples,
+        }),
+    });
+
+    return {
+        level,
+        deckKind: "word",
+        consumer: SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS,
+        comparisonMode: parity.comparisonMode,
+        passed: parity.passed,
+        inlineProofCount,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: parity.mismatch,
+    };
+}
+
 async function buildObsidianProofProviderParityReport({
     cwd = process.cwd(),
     levels = [3],
     consumer = SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
+    deckKind = "kanji",
     kanji = [],
     limit = 12,
     queue = KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
@@ -842,6 +1019,7 @@ async function buildObsidianProofProviderParityReport({
     config = loadConfig(),
 } = {}) {
     assertSupportedConsumer(consumer);
+    assertConsumerDeckKind({ consumer, deckKind });
     const normalizedRowSource = normalizeRowSource(rowSource);
     const scopes = [];
     const curatedStudyData = consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT
@@ -850,21 +1028,35 @@ async function buildObsidianProofProviderParityReport({
     const fieldSourceInputs = consumer === SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT
         ? loadKanjiFieldSourceContractInputs({ cwd })
         : {};
+    const wordPitchAccentData = consumer === SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS
+        ? loadWordPitchAccentData(path.join(cwd, "templates", "word_pitch_accent_data.json"))
+        : {};
 
     for (const level of levels) {
         const rawReviewSet = loadReviewSetWithObsidianProof({
             cwd,
-            deckKind: "kanji",
+            deckKind,
             level,
             proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
         });
         const rows = await buildRowsForParity({
             level,
+            deckKind,
             rowSource: normalizedRowSource,
             rawEntries: rawReviewSet.entries,
             config,
         });
-        if (consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT) {
+        if (consumer === SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS) {
+            scopes.push(buildWordRereviewStatusProviderParityForLevel({
+                rows,
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+                wordPitchAccentData,
+                kanjiLevelData: null,
+            }));
+        } else if (consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT) {
             scopes.push(buildKanjiBatchReportProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -917,6 +1109,7 @@ async function buildObsidianProofProviderParityReport({
     return {
         passed: scopes.every((scope) => scope.passed),
         consumer,
+        deckKind,
         levels,
         rowSource: normalizedRowSource,
         scopes,
@@ -928,6 +1121,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "Japanese Kanji Builder Obsidian Proof Provider Dual-Read Parity",
         "",
         `Consumer: ${report.consumer || SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS}`,
+        `Deck kind: ${report.deckKind || "kanji"}`,
         `Levels: ${(report.levels || []).map((level) => `N${level}`).join(", ") || "(none)"}`,
         `Row source: ${report.rowSource || ROW_SOURCES.TRACKED_REVIEW_SET}`,
         `Result: ${report.passed ? "passing" : "failing"}`,
@@ -946,7 +1140,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
     for (const scope of report.scopes || []) {
         lines.push(
             "",
-            `kanji:N${scope.level}`,
+            `${scope.deckKind || "kanji"}:N${scope.level}`,
             `- Result: ${scope.passed ? "passing" : "failing"}`,
             `- Comparison mode: ${scope.comparisonMode || "dual-read-parity"}`,
             `- Source entries: ${scope.inlineProvider?.sourceEntries || 0}`,
@@ -984,6 +1178,7 @@ async function main() {
     const report = await buildObsidianProofProviderParityReport({
         levels: options.levels,
         consumer: options.consumer,
+        deckKind: options.deckKind,
         kanji: options.kanji,
         limit: options.limit,
         queue: options.queue,
@@ -1021,6 +1216,8 @@ module.exports = {
     buildObsidianProofProviderParityReport,
     buildPlatinumGovernanceGateProviderParityForLevel,
     buildTrackedReviewSetRows,
+    buildTrackedWordReviewSetRows,
+    buildWordRereviewStatusProviderParityForLevel,
     formatObsidianProofProviderParityReport,
     main,
     normalizeRowSource,
@@ -1029,5 +1226,6 @@ module.exports = {
     projectKanjiBatchReport,
     projectKanjiPlatinumLevelReport,
     projectKanjiRereviewStatusReport,
+    projectWordRereviewStatusReport,
     projectPlatinumGovernanceGateReport,
 };

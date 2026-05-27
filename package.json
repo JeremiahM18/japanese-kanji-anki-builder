@@ -48,6 +48,7 @@
     "data:audit:audio": "node scripts/auditAudioPolicy.js",
     "data:obsidian:proof:validate": "node scripts/validateObsidianProofLedger.js",
     "data:obsidian:proof:views": "node scripts/buildObsidianProofCompatibilityViews.js",
+    "data:obsidian:proof:sqlite": "node scripts/buildObsidianProofSqlite.js",
     "data:audit:stroke-order": "node scripts/auditStrokeOrderPolicy.js",
     "media:review:audio": "node scripts/reportAudioReview.js",
     "media:review:word-audio": "node scripts/reportWordAudioReview.js",

@@ -1,0 +1,155 @@
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
+const { spawnSync } = require("node:child_process");
+const test = require("node:test");
+const assert = require("node:assert/strict");
+
+const {
+    OBSIDIAN_PROOF_LEDGER_AUTHORITY,
+} = require("../src/datasets/obsidianProofLedger");
+const {
+    buildObsidianProofSqliteMirror,
+    buildObsidianProofSqliteMirrorReport,
+} = require("../src/services/obsidianProofSqliteMirrorService");
+const { resolvePythonCommand } = require("../src/services/toolchainService");
+
+const python = resolvePythonCommand();
+
+function writeLedger(rootDir, events) {
+    const ledgerPath = path.join(rootDir, "templates", "obsidian_proof_ledger", "kanji_n3_fixture.jsonl");
+    fs.mkdirSync(path.dirname(ledgerPath), { recursive: true });
+    fs.writeFileSync(ledgerPath, `${events.map((event) => JSON.stringify(event)).join("\n")}\n`, "utf8");
+    return ledgerPath;
+}
+
+function buildProofEvent(overrides = {}) {
+    return {
+        schemaVersion: 1,
+        recordType: "obsidian-proof-event",
+        proofId: "kanji-n3-obsidian-fixture-01",
+        target: {
+            deckKind: "kanji",
+            level: 3,
+            written: "常",
+            reading: "じょう",
+            cardReviewed: "常|じょう",
+        },
+        batch: {
+            id: "n3-kanji-obsidian-fixture-batch",
+            sequence: 99,
+        },
+        proof: {
+            type: "substantive current standard rereview",
+            reviewStandard: "kanji-platinum-v3-evidence-lanes",
+            reviewedAt: "2026-05-26",
+            reviewer: "fixture-reviewer",
+            reviewedAfterStandard: true,
+            mechanicalMigration: false,
+            result: "approved_for_current_standard_platinum",
+            scope: "full kanji card rereview from square zero",
+            cardReviewed: "常|じょう",
+            evidenceChecked: [
+                "live generated kanji card surface checked for 常|じょう",
+                "governed japanese-source evidence checked for 常|じょう",
+                "primary reading, on/kun compatibility, learner meaning, and broader meanings checked",
+                "example sentence quality review checked for natural Japanese, learner usefulness, level appropriateness, support-only usage, reading, and translation",
+                "notes and support vocabulary checked for learner usefulness",
+                "exact primary-reading audio identity checked for 常|じょう",
+                "stroke-order media identity checked for 常",
+                "source evidence, JLPT placement evidence, internal checks, NLP assistive signals, and review proof kept in separate evidence lanes",
+            ],
+            limitationDecision: "no active limitation remains",
+            sentenceQualityReview: {
+                example: "日常の生活を大切にしています。",
+                reading: "にちじょうのせいかつをたいせつにしています。",
+                translation: "I value everyday life.",
+                naturalJapanese: true,
+                learnerUseful: true,
+                levelAppropriate: true,
+                supportOnly: true,
+                reviewerJudgment: "Fixture sentence review is natural, useful, level fit, support-only, and checked.",
+            },
+        },
+        authority: OBSIDIAN_PROOF_LEDGER_AUTHORITY,
+        ledger: {
+            recordedAt: "2026-05-26",
+            recordedBy: "fixture-writer",
+            sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+            sourceCommit: "abcdef1",
+            representationMigration: false,
+        },
+        ...overrides,
+    };
+}
+
+function inspectSqlite(dbPath) {
+    const inspectScript = [
+        "import json, sqlite3, sys",
+        "conn = sqlite3.connect(sys.argv[1])",
+        "summary = {",
+        "  'proofEvents': conn.execute('select count(*) from proof_events').fetchone()[0],",
+        "  'evidenceChecks': conn.execute('select count(*) from evidence_checks').fetchone()[0],",
+        "  'cardReviewed': conn.execute('select card_reviewed from proof_events').fetchone()[0],",
+        "  'metadataSource': conn.execute(\"select value from metadata where key='sourceOfTruth'\").fetchone()[0],",
+        "}",
+        "conn.close()",
+        "print(json.dumps(summary, ensure_ascii=False, sort_keys=True))",
+    ].join("\n");
+    const result = spawnSync(python.command, [
+        ...python.argsPrefix,
+        "-c",
+        inspectScript,
+        dbPath,
+    ], {
+        encoding: "utf8",
+        env: {
+            ...process.env,
+            PYTHONIOENCODING: "utf-8",
+        },
+        shell: false,
+        windowsHide: true,
+    });
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    return JSON.parse(result.stdout);
+}
+
+test("buildObsidianProofSqliteMirror writes a queryable local SQLite mirror", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-sqlite-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const report = buildObsidianProofSqliteMirror({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        outputDir: "out/obsidian-proof/sqlite",
+    });
+
+    const dbPath = path.join(rootDir, report.outputDbPath);
+    assert.equal(report.passed, true);
+    assert.equal(report.proofEvents, 1);
+    assert.equal(fs.existsSync(dbPath), true);
+
+    const inspected = inspectSqlite(dbPath);
+    assert.equal(inspected.proofEvents, 1);
+    assert.equal(inspected.evidenceChecks, 8);
+    assert.equal(inspected.cardReviewed, "常|じょう");
+    assert.equal(inspected.metadataSource, "templates/obsidian_proof_ledger/*.jsonl");
+});
+
+test("buildObsidianProofSqliteMirrorReport rejects unsafe database filenames", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-sqlite-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const report = buildObsidianProofSqliteMirrorReport({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        outputDir: "out/obsidian-proof/sqlite",
+        dbFile: "..\\unsafe.sqlite",
+    });
+
+    assert.equal(report.passed, false);
+    assert.match(report.failures[0], /plain filename/);
+});

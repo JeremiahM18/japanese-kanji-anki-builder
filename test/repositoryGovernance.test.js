@@ -177,6 +177,7 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=3 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=3 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=3 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt -- --strict --tracked-only"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt:words"), true);
     assert.equal(workflow.includes("npm run deck:words:platinum:source-posture -- --levels=5,4"), true);
@@ -186,6 +187,7 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.match(readme, /Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=3`, `data:obsidian:proof:provider-parity -- --levels=3 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=3 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=3 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=3 --row-source=tracked-review-set`/);
     assert.match(readme, /Clean CI does not run `deck:platinum:governance-gate` or generated-row Obsidian proof-provider parity/);
     assert.match(readme, /data:audit:jlpt -- --strict --tracked-only/);
 });

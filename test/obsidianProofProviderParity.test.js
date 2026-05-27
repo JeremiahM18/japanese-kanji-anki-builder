@@ -20,6 +20,7 @@ const {
     buildKanjiPlatinumLevelProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
+    buildPlatinumGovernanceGateProviderParityForLevel,
     buildTrackedReviewSetRows,
     formatObsidianProofProviderParityReport,
     parseArgs,
@@ -266,6 +267,15 @@ test("provider parity script parses kanji field-source contract consumer", () =>
     assert.equal(options.consumer, "kanji-field-source-contract");
 });
 
+test("provider parity script parses platinum governance gate consumer", () => {
+    const options = parseArgs([
+        "--levels=3",
+        "--consumer=platinum-governance-gate",
+    ]);
+
+    assert.equal(options.consumer, "platinum-governance-gate");
+});
+
 test("provider parity defaults to CI-safe tracked review-set rows", () => {
     const options = parseArgs([]);
 
@@ -409,6 +419,49 @@ test("kanji field-source contract provider parity fails when rereview binding wo
     assert.equal(scope.inlineProjection.entries["常"].reviewBinding.rereviewReviewedAt, "2026-05-26");
     assert.equal(scope.ledgerProjection.entries["常"].reviewBinding.rereviewReviewedAt, "");
     assert.match(formatted, /Inline coverage/);
+});
+
+test("platinum governance gate provider parity passes when kanji gate projections match", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, [buildProofEvent()]);
+
+    const scope = buildPlatinumGovernanceGateProviderParityForLevel({
+        rows: [buildRow()],
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+    });
+
+    assert.equal(scope.passed, true);
+    assert.equal(scope.inlineProjection.passed, true);
+    assert.equal(scope.ledgerProjection.passed, true);
+    assert.equal(scope.inlineProjection.kanjiRereviewReports[0].counts.substantive_current_standard_review_proven, 1);
+    assert.equal(scope.ledgerProjection.kanjiRereviewReports[0].counts.substantive_current_standard_review_proven, 1);
+});
+
+test("platinum governance gate provider parity fails when kanji proof warning posture drifts", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    writeLedger(rootDir, []);
+
+    const scope = buildPlatinumGovernanceGateProviderParityForLevel({
+        rows: [buildRow()],
+        rawEntries: [buildEntry()],
+        cwd: rootDir,
+        level: 3,
+        sourceReviewSetPath: "templates/platinum_n3_review_set.json",
+    });
+    const formatted = formatObsidianProofProviderParityReport({
+        passed: false,
+        consumer: "platinum-governance-gate",
+        levels: [3],
+        scopes: [scope],
+    });
+
+    assert.equal(scope.passed, false);
+    assert.equal(scope.inlineProjection.kanjiRereviewReports[0].counts.needs_substantive_rereview, 0);
+    assert.equal(scope.ledgerProjection.kanjiRereviewReports[0].counts.needs_substantive_rereview, 1);
+    assert.match(formatted, /Inline governance gate/);
 });
 
 test("kanji rereview-status provider parity fails when ledger misses inline proof", () => {

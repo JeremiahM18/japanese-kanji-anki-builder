@@ -85,9 +85,16 @@ test("platinum governance gate parseArgs accepts scoped real-row gate options", 
     assert.deepEqual(options, {
         json: true,
         kanjiLevels: [5, 4],
+        proofProvider: "ledger-if-available",
         wordLevels: [5],
         unknownArgs: ["--oops"],
     });
+});
+
+test("platinum governance gate parseArgs accepts kanji proof-provider override", () => {
+    const options = parsePlatinumGovernanceGateArgs(["--proof-provider=inline"]);
+
+    assert.equal(options.proofProvider, "inline");
 });
 
 test("platinum word row builder uses the managed media root for exact word audio", () => {

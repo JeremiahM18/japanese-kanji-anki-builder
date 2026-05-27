@@ -6,6 +6,11 @@ const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
+const {
+    OBSIDIAN_PROOF_PROVIDER_MODES,
+    loadReviewSetWithObsidianProof,
+    normalizeObsidianProofProviderMode,
+} = require("../src/services/obsidianProofProviderService");
 const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
 const {
@@ -28,6 +33,7 @@ function parseArgs(argv) {
     const options = {
         json: false,
         kanjiLevels: [5, 4],
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
         wordLevels: [5, 4],
         unknownArgs: [],
     };
@@ -39,6 +45,8 @@ function parseArgs(argv) {
             options.kanjiLevels = parseLevelsArgument(parseStringOption(arg, "kanji-levels"));
         } else if (arg.startsWith("--word-levels=")) {
             options.wordLevels = parseLevelsArgument(parseStringOption(arg, "word-levels"));
+        } else if (arg.startsWith("--proof-provider=")) {
+            options.proofProvider = normalizeObsidianProofProviderMode(parseStringOption(arg, "proof-provider"));
         } else {
             collectUnknownArg(options, arg);
         }
@@ -47,13 +55,23 @@ function parseArgs(argv) {
     return options;
 }
 
-function readReviewSet({ kind, level }) {
+function readReviewSet({ kind, level, proofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.INLINE }) {
     const fileName = kind === "word"
         ? `platinum_n${level}_word_review_set.json`
         : `platinum_n${level}_review_set.json`;
-    const reviewSetPath = path.join(process.cwd(), "templates", fileName);
+    const sourceReviewSetPath = path.join("templates", fileName);
+    const reviewSetPath = path.join(process.cwd(), sourceReviewSetPath);
     if (!fs.existsSync(reviewSetPath)) {
         throw new Error(`Missing platinum ${kind} review set at ${reviewSetPath}`);
+    }
+
+    if (kind === "kanji") {
+        return loadReviewSetWithObsidianProof({
+            deckKind: "kanji",
+            level,
+            sourceReviewSetPath,
+            proofProvider,
+        }).entries;
     }
 
     return JSON.parse(fs.readFileSync(reviewSetPath, "utf-8"));
@@ -68,7 +86,11 @@ async function buildGateReport({ options, config }) {
     const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
 
     for (const level of options.kanjiLevels) {
-        const entries = readReviewSet({ kind: "kanji", level });
+        const entries = readReviewSet({
+            kind: "kanji",
+            level,
+            proofProvider: options.proofProvider || OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
+        });
         const rows = await buildKanjiRowsForLevel({ level, config });
         kanjiRereviewReports.push(buildPlatinumKanjiRereviewStatusReport({
             rows,

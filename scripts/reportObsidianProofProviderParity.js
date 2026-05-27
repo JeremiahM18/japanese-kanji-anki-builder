@@ -31,6 +31,10 @@ const {
     buildKanjiCardFieldSourceContract,
 } = require("../src/services/kanjiCardFieldSourceContractService");
 const {
+    buildManifestGovernancePosture,
+    evaluatePlatinumGovernanceGate,
+} = require("../src/services/platinumGovernanceGateService");
+const {
     loadKanjiSourceOriginEvidence,
     resolveKanjiSourceOriginIdsForEntry,
 } = require("../src/services/platinumKanjiSourceOriginService");
@@ -56,6 +60,7 @@ const SUPPORTED_CONSUMERS = Object.freeze({
     KANJI_FIELD_SOURCE_CONTRACT: "kanji-field-source-contract",
     KANJI_PLATINUM_LEVEL: "kanji-platinum-level",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
+    PLATINUM_GOVERNANCE_GATE: "platinum-governance-gate",
 });
 
 const ROW_SOURCES = Object.freeze({
@@ -293,6 +298,102 @@ function projectKanjiRereviewStatusReport(report = {}) {
             blockedOrFailing: card.blockedOrFailing,
             reasons: card.reasons,
         })),
+    };
+}
+
+function projectPlatinumGovernanceGateReport(report = {}) {
+    return {
+        passed: report.passed,
+        issues: report.issues,
+        warnings: report.warnings,
+        kanjiRereviewReports: (report.summaries?.kanjiRereviewReports || []).map(projectKanjiRereviewStatusReport),
+        manifestPostures: report.summaries?.manifestPostures || [],
+        wordSourcePostureSummary: report.summaries?.wordSourcePostureSummary || {},
+    };
+}
+
+function buildPlatinumGovernanceGateProviderParityForLevel({
+    rows = [],
+    rawEntries = [],
+    cwd = process.cwd(),
+    ledgerDir,
+    level = 3,
+    sourceReviewSetPath,
+} = {}) {
+    const inlineProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.INLINE,
+    });
+    const ledgerProvider = applyObsidianProofProvider({
+        entries: rawEntries,
+        cwd,
+        ledgerDir,
+        deckKind: "kanji",
+        level,
+        sourceReviewSetPath,
+        proofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER,
+    });
+    const inlineKanjiReport = buildPlatinumKanjiRereviewStatusReport({
+        rows,
+        entries: inlineProvider.entries,
+        level,
+    });
+    const ledgerKanjiReport = buildPlatinumKanjiRereviewStatusReport({
+        rows,
+        entries: ledgerProvider.entries,
+        level,
+    });
+    const inlineReport = evaluatePlatinumGovernanceGate({
+        kanjiRereviewReports: [inlineKanjiReport],
+        wordRereviewReports: [],
+        wordSourcePostureSummary: { totals: {} },
+        manifestPostures: [buildManifestGovernancePosture({
+            kind: "kanji",
+            level,
+            entries: inlineProvider.entries,
+        })],
+    });
+    const ledgerReport = evaluatePlatinumGovernanceGate({
+        kanjiRereviewReports: [ledgerKanjiReport],
+        wordRereviewReports: [],
+        wordSourcePostureSummary: { totals: {} },
+        manifestPostures: [buildManifestGovernancePosture({
+            kind: "kanji",
+            level,
+            entries: ledgerProvider.entries,
+        })],
+    });
+    const inlineProjection = projectPlatinumGovernanceGateReport(inlineReport);
+    const ledgerProjection = projectPlatinumGovernanceGateReport(ledgerReport);
+    const passed = stableJson(inlineProjection) === stableJson(ledgerProjection);
+
+    return {
+        level,
+        consumer: SUPPORTED_CONSUMERS.PLATINUM_GOVERNANCE_GATE,
+        passed,
+        inlineProvider: inlineProvider.summary,
+        ledgerProvider: ledgerProvider.summary,
+        inlineProjection,
+        ledgerProjection,
+        mismatch: passed ? null : {
+            inlineGate: {
+                passed: inlineProjection.passed,
+                issues: inlineProjection.issues,
+                warnings: inlineProjection.warnings,
+            },
+            ledgerGate: {
+                passed: ledgerProjection.passed,
+                issues: ledgerProjection.issues,
+                warnings: ledgerProjection.warnings,
+            },
+            inlineCounts: inlineProjection.kanjiRereviewReports[0]?.counts || {},
+            ledgerCounts: ledgerProjection.kanjiRereviewReports[0]?.counts || {},
+        },
     };
 }
 
@@ -702,6 +803,14 @@ async function buildObsidianProofProviderParityReport({
                 requireAllRows,
                 allowEmpty,
             }));
+        } else if (consumer === SUPPORTED_CONSUMERS.PLATINUM_GOVERNANCE_GATE) {
+            scopes.push(buildPlatinumGovernanceGateProviderParityForLevel({
+                rows,
+                rawEntries: rawReviewSet.entries,
+                cwd,
+                level,
+                sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
+            }));
         } else {
             scopes.push(buildKanjiRereviewStatusProviderParityForLevel({
                 rows,
@@ -736,6 +845,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
         "- Structural Platinum gate projections must match before deck:platinum:n<level> reads the proof provider by default.",
         "- Kanji card-field source contract projections must match before data:build:kanji-field-source-contract reads the proof provider by default.",
+        "- Platinum governance gate kanji proof-provider projections must match before deck:platinum:governance-gate reads the proof provider by default.",
         "- tracked-review-set row source is CI-safe proof-provider parity; generated row source is local live-row parity and may require ignored data/* inputs.",
         "- This command does not certify cards, repair proof, read generated TSV/APKG output, or claim release readiness.",
     ];
@@ -763,7 +873,9 @@ function formatObsidianProofProviderParityReport(report = {}) {
                 `- Inline failed kanji: ${JSON.stringify(scope.mismatch.inlineFailedKanji || [])}`,
                 `- Ledger failed kanji: ${JSON.stringify(scope.mismatch.ledgerFailedKanji || [])}`,
                 `- Inline coverage: ${JSON.stringify(scope.mismatch.inlineCoverage || {})}`,
-                `- Ledger coverage: ${JSON.stringify(scope.mismatch.ledgerCoverage || {})}`
+                `- Ledger coverage: ${JSON.stringify(scope.mismatch.ledgerCoverage || {})}`,
+                `- Inline governance gate: ${JSON.stringify(scope.mismatch.inlineGate || {})}`,
+                `- Ledger governance gate: ${JSON.stringify(scope.mismatch.ledgerGate || {})}`
             );
         }
     }
@@ -812,6 +924,7 @@ module.exports = {
     buildKanjiPlatinumLevelProviderParityForLevel,
     buildKanjiRereviewStatusProviderParityForLevel,
     buildObsidianProofProviderParityReport,
+    buildPlatinumGovernanceGateProviderParityForLevel,
     buildTrackedReviewSetRows,
     formatObsidianProofProviderParityReport,
     main,
@@ -821,4 +934,5 @@ module.exports = {
     projectKanjiBatchReport,
     projectKanjiPlatinumLevelReport,
     projectKanjiRereviewStatusReport,
+    projectPlatinumGovernanceGateReport,
 };

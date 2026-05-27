@@ -78,7 +78,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
 | `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate |
 | `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate |
-| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum pass versus Obsidian proof |
+| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum pass versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status |
 | `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active word Platinum source-family independence posture |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
@@ -146,13 +146,13 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |
 | `npm run data:verify:jlpt` | Verify tracked JLPT inventory contract shape and consistency |
 | `npm run data:obsidian:proof:validate` | Validate canonical tracked JSONL Obsidian proof ledger files |
-| `npm run data:obsidian:proof:reconcile -- --levels=5,4,3` | Bind canonical JSONL proof to tracked review-set entries; if legacy inline proof exists during a transition, compare it to the ledger |
-| `npm run data:obsidian:proof:migrate-inline -- --levels=3` | Dry-run migration from tracked inline `rereviewProvenance` into JSONL ledger events for a not-yet-canonicalized kanji level |
+| `npm run data:obsidian:proof:reconcile -- --levels=5,4,3` | Bind canonical JSONL proof to tracked review-set entries; if legacy inline proof exists during a transition, compare it to the ledger. `--allow-incomplete` may skip a missing review-set scope only when no scoped ledger proof exists for that scope |
+| `npm run data:obsidian:proof:migrate-inline -- --deck-kind=<kanji\|word> --levels=<levels>` | Dry-run migration from tracked inline `rereviewProvenance` into JSONL ledger events for not-yet-canonicalized kanji or word levels; use `--write --update-source-review-set` only after the dry-run reports exact identity, sentence-quality, and duplicate safety |
 | `npm run data:obsidian:proof:remove-inline -- --levels=5,4,3` | Dry-run removal of legacy inline proof after scoped canonical JSONL ledger events are present and bound |
 | `npm run data:obsidian:proof:views` | Generate compatibility review-set JSON from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite` | Generate the local SQLite query mirror from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite:query` | Query the generated local SQLite mirror after rebuilding it from JSONL |
-| `npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set` | CI-safe provider integrity test for switched kanji consumers using tracked review-set row proxies; it performs dual-read parity while inline proof exists and canonical-ledger integrity after inline proof removal. Add `--consumer=kanji-platinum-level`, `--consumer=kanji-batch-report`, `--consumer=kanji-field-source-contract`, or `--consumer=platinum-governance-gate` for consumer-specific projections, and use `--row-source=generated` locally to compare against live generated rows |
+| `npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set` | CI-safe provider integrity test for switched proof consumers using tracked review-set row proxies; it performs dual-read parity while inline proof exists and canonical-ledger integrity after inline proof removal. Add `--consumer=kanji-platinum-level`, `--consumer=kanji-batch-report`, `--consumer=kanji-field-source-contract`, `--consumer=platinum-governance-gate`, or `--consumer=word-rereview-status --deck-kind=word --levels=5,4` for consumer-specific projections, and use `--row-source=generated` locally to compare against live generated rows |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |

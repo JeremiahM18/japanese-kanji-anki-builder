@@ -106,13 +106,15 @@ For migrated kanji proof levels (N5/N4/N3), switched kanji proof consumers read 
 
 Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 generated word denominator is `987` rows. Structural Platinum is `987/987`, strict Obsidian proof is `987/987`, `0` Platinum entries need Obsidian, and `0` generated N5/N4 word rows are blocked/failing structurally.
 
+For migrated N5/N4 word proof, `deck:words:obsidian:rereview-status -- --levels=5,4` now reads scoped canonical JSONL Obsidian proof from `templates/obsidian_proof_ledger/word_n5.jsonl` and `templates/obsidian_proof_ledger/word_n4.jsonl` through the proof-provider path. Inline word `rereviewProvenance` remains in the tracked word review sets during the transition for exact reconciliation and provider parity; it is not a separate authority and must not be removed until later word consumers are switched one at a time.
+
 `deck:words:platinum:source-posture -- --levels=5,4` currently inspects `987` structurally current-standard entries: `121/987` have independent source families proven, `866/987` are single-source-family, and `0/987` are missing governed source evidence.
 
 Single-source entries carry `word_source_independence_not_proven`. Source-family posture is a diagnostic. It is not the rereview selection pool and not substantive Platinum proof.
 
 ### Cross-Product Gates
 
-- `deck:words:obsidian:rereview-status -- --levels=5,4` uses generated word rows as the denominator. N5 word `287/287` and N4 word `700/700` Obsidian remain separate from `987/987` structural Platinum.
+- `deck:words:obsidian:rereview-status -- --levels=5,4` uses generated word rows as the denominator and defaults to canonical JSONL proof for migrated N5/N4 word ledgers. N5 word `287/287` and N4 word `700/700` Obsidian remain separate from `987/987` structural Platinum.
 - `deck:words:obsidian:certify-status -- --levels=5,4` is the fail-closed word Obsidian gate. It currently passes for the full N5/N4 word square-zero certification denominator.
 - `deck:platinum:governance-gate` exercises real generated N5/N4 kanji and word rows when ignored local inputs are present. It currently passes with governance warnings for word single-source-family posture, bulk-template or missing card-specific revalidation summaries, marker-only example-quality automation, and zero active verification limitations.
 - JLPT kanji source evidence is governed separately from deck readiness. The source audit currently passes source-use governance with `--governance-strict` while evidence-depth work remains incomplete.

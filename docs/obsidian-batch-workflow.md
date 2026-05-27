@@ -214,13 +214,13 @@ If this fails during an in-progress level, treat the failure as the remaining qu
 
 ## Proof Ledger ETL And Consumer Switch
 
-Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`. Migrated kanji proof levels (N5/N4/N3) no longer carry inline `rereviewProvenance` objects in tracked review-set JSON; switched consumers read those proofs through the scoped proof-provider path. The generated compatibility view under `out/obsidian-proof/compatibility/` can recreate compatibility-shaped review-set JSON for older tooling; the SQLite database under `out/obsidian-proof/sqlite/` is a local query mirror only.
+Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`. Migrated kanji proof levels (N5/N4/N3) no longer carry inline `rereviewProvenance` objects in tracked review-set JSON; switched consumers read those proofs through the scoped proof-provider path. Migrated word proof levels (N5/N4) now have canonical `word_n5.jsonl` and `word_n4.jsonl` ledger files, while inline word `rereviewProvenance` remains in the tracked word review sets during the transition for exact reconciliation and not as a second authority. The generated compatibility view under `out/obsidian-proof/compatibility/` can recreate compatibility-shaped review-set JSON for older tooling; the SQLite database under `out/obsidian-proof/sqlite/` is a local query mirror only.
 
 Keep these lanes separate:
 
 - Canonical proof ledger: `templates/obsidian_proof_ledger/*.jsonl`.
-- Tracked review-set binding source: `templates/platinum_n<level>_review_set.json`.
-- Generated compatibility view: `out/obsidian-proof/compatibility/templates/platinum_n<level>_review_set.json`.
+- Tracked review-set binding source: `templates/platinum_n<level>_review_set.json` and `templates/platinum_n<level>_word_review_set.json`.
+- Generated compatibility view: `out/obsidian-proof/compatibility/templates/platinum_n<level>_review_set.json` and `out/obsidian-proof/compatibility/templates/platinum_n<level>_word_review_set.json`.
 - Generated local query mirror: `out/obsidian-proof/sqlite/obsidian-proof-ledger.sqlite`.
 
 Required parity gates before any consumer switch:
@@ -237,6 +237,8 @@ npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-ga
 npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=generated
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=generated
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set
+npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=generated
 npm run data:obsidian:proof:views
 npm run data:obsidian:proof:sqlite
 npm run data:obsidian:proof:sqlite:query -- --deck-kind=kanji --level=3 --limit=5
@@ -252,6 +254,7 @@ No-go conditions:
 - The compatibility view fails to recreate ledger-derived `rereviewProvenance` for a migrated proof event.
 - The SQLite mirror cannot rebuild from JSONL without reading generated TSV/APKG output.
 - Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=5,4,3` or `deck:kanji:obsidian:certify-status -- --levels=5,4,3` counts without a matching proof-ledger change.
+- Any word consumer switch changes `deck:words:obsidian:rereview-status -- --levels=5,4` counts without a matching proof-ledger change, or changes the `987/987` Obsidian, `0` needs, `0` blocked N5/N4 word status.
 - `deck:kanji:obsidian:certify-status -- --levels=3` fails for anything other than the known remaining Obsidian backlog.
 
 Switch consumers in small stages:
@@ -260,13 +263,15 @@ Switch consumers in small stages:
 2. Add a proof-provider abstraction that can load canonical JSONL and return compatibility-shaped `rereviewProvenance` without changing status behavior.
 3. Run provider integrity tests for the switched consumer: dual-read parity while inline proof exists, then canonical-ledger integrity after inline proof removal.
 4. Switch one consumer at a time. Commit each consumer switch with its focused tests and the parity gates above.
-5. Only after all consumers are ledger-fed, remove inline proof from tracked review-set source or make it generated-only. That removal must be its own commit and must keep the generated compatibility view available for older tooling until all callers are migrated.
+5. Only after all consumers for that deck kind are ledger-fed, remove inline proof from tracked review-set source or make it generated-only. That removal must be its own commit and must keep the generated compatibility view available for older tooling until all callers are migrated.
 
 Current transition state:
 
 - `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:rereview-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched kanji consumers. They use the scoped proof-provider path so migrated N5/N4/N3 kanji proof comes from canonical JSONL. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2/N1 kanji proof is not migrated yet and must not be claimed as Obsidian until a scoped ledger exists and gates pass.
 
-Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
+- `deck:words:obsidian:rereview-status` is the first switched word consumer. For migrated N5/N4 word proof it defaults to `ledger-if-available` and can be audited with `--proof-provider=inline`, `--proof-provider=ledger`, or `--proof-provider=ledger-if-available`. `deck:words:obsidian:certify-status`, word Platinum batch and level gates, word governance inputs, and inline word proof removal remain later one-consumer-at-a-time lanes.
+
+Do not treat the word proof-ledger migration as new Obsidian review. It is a representation migration for already-certified N5/N4 word proof. Word proof has separate exact written-reading identity binding, evidence checklist, and release-quality sentence review requirements.
 
 ## What Not To Claim
 

@@ -82,6 +82,7 @@ async function main() {
             voice: options.audioVoice || undefined,
             locale: options.audioLocale || undefined,
         },
+        mediaRootDir: config.mediaRootDir,
     });
 
     console.log(JSON.stringify({

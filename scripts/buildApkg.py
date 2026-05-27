@@ -367,7 +367,10 @@ def build_package_fingerprint(levels, package_exports_dir: Path, media_dir: Path
     for level in levels:
         update_hash_with_file(digest, package_exports_dir / build_export_file_name(level, deck_kind), f"export:N{level}")
 
-    if media_dir.exists():
+    if media_integrity:
+        for file_name in sorted(media_integrity.keys()):
+            update_hash_with_media_file(digest, media_dir / file_name, media_integrity)
+    elif media_dir.exists():
         for file_path in sorted([item for item in media_dir.iterdir() if item.is_file()]):
             update_hash_with_media_file(digest, file_path, media_integrity or {})
 
@@ -452,6 +455,9 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
     conn = sqlite3.connect(str(db_path))
     try:
         cur = conn.cursor()
+        cur.execute("PRAGMA journal_mode=OFF")
+        cur.execute("PRAGMA synchronous=OFF")
+        cur.execute("PRAGMA temp_store=MEMORY")
         cur.executescript(
             """
             CREATE TABLE col (id integer primary key, crt integer not null, mod integer not null, scm integer not null, ver integer not null, dty integer not null, usn integer not null, ls integer not null, conf text not null, models text not null, decks text not null, dconf text not null, tags text not null);

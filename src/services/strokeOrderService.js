@@ -234,6 +234,22 @@ function createStrokeOrderService({
         const imageAsset = imageLookup.asset;
         const animationAsset = animationLookup.asset;
 
+        if (!imageAsset && !animationAsset && existingManifest) {
+            setCachedManifest(manifestCache, normalizedKanji, existingManifest, { nowFn });
+            return {
+                kanji: normalizedKanji,
+                manifest: existingManifest,
+                found: {
+                    image: false,
+                    animation: false,
+                },
+                acquisition: {
+                    image: imageLookup.attempts,
+                    animation: animationLookup.attempts,
+                },
+            };
+        }
+
         const writtenManifest = await updateManifest(mediaRootDir, normalizedKanji, async (manifest) => {
             const nextManifest = cloneManifestForUpdate(manifest);
             const layout = ensureMediaLayout(mediaRootDir, normalizedKanji);

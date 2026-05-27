@@ -18,6 +18,46 @@ function makeTempDir() {
     return fs.mkdtempSync(path.join(os.tmpdir(), "deck-package-service-test-"));
 }
 
+function makeWorkspaceTempDir(prefix) {
+    const root = path.join(process.cwd(), "out");
+    fs.mkdirSync(root, { recursive: true });
+    return fs.mkdtempSync(path.join(root, prefix));
+}
+
+function buildSuccessfulAnkiPackageStub(outDir) {
+    return async ({ levels = [], deckKind = "kanji" } = {}) => ({
+        filePath: path.join(outDir, "package", `${deckKind}-fixture.apkg`),
+        skipped: false,
+        skipReason: "",
+        noteCount: 1,
+        deckCount: levels.length || 1,
+        mediaFileCount: 0,
+        timingsMs: {
+            total: 0,
+            runPythonApkgBuilder: 0,
+        },
+        pythonTimingsMs: {
+            writeArchive: 0,
+        },
+    });
+}
+
+function buildSkippedAnkiPackageStub() {
+    return async () => ({
+        filePath: "",
+        skipped: true,
+        skipReason: "fixture packaging skipped",
+        noteCount: 0,
+        deckCount: 0,
+        mediaFileCount: 0,
+        timingsMs: {
+            total: 0,
+            runPythonApkgBuilder: 0,
+        },
+        pythonTimingsMs: null,
+    });
+}
+
 test("buildPackageAssetCandidatesFromManifest can restrict kanji media to rendered word-deck assets", () => {
     const manifest = {
         assets: {
@@ -43,6 +83,140 @@ test("buildPackageAssetCandidatesFromManifest can restrict kanji media to render
             { kind: "strokeOrderAnimation", relativePath: "animations/65E5_日-stroke-order.gif" },
         ]
     );
+});
+
+test("deck packaging builds source-backed APKG media without duplicating package media files", async () => {
+    const rootDir = makeWorkspaceTempDir("deck-package-source-backed-");
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media-root");
+        const outDir = path.join(rootDir, "out");
+        const exportPath = path.join(rootDir, "jlpt-n5.tsv");
+        fs.writeFileSync(
+            exportPath,
+            [
+                "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence",
+                "日\t日\tday\tにち\t\tニチ\tひ\t<img src=\"65E5_日-stroke-order.gif\" />\t[sound:65E5_日-kanji-reading-日-にち.wav]\t日\t\t",
+            ].join("\n"),
+            "utf-8"
+        );
+
+        const layout = ensureMediaLayout(mediaRootDir, "日");
+        fs.writeFileSync(path.join(layout.animationsDir, "65E5_日-stroke-order.gif"), "animation");
+        fs.writeFileSync(path.join(layout.audioDir, "65E5_日-kanji-reading-日-にち.wav"), "audio");
+        await writeManifest(mediaRootDir, {
+            kanji: "日",
+            version: 1,
+            updatedAt: new Date().toISOString(),
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: {
+                    kind: "animation",
+                    path: "animations/65E5_日-stroke-order.gif",
+                    mimeType: "image/gif",
+                    source: "fixture",
+                },
+                audio: [{
+                    kind: "audio",
+                    path: "audio/65E5_日-kanji-reading-日-にち.wav",
+                    mimeType: "audio/wav",
+                    source: "fixture",
+                    category: "kanji-reading",
+                    text: "日",
+                    reading: "にち",
+                }],
+            },
+        });
+
+        const summary = await buildDeckPackage({
+            outDir,
+            exports: [{
+                level: 5,
+                filePath: exportPath,
+                rows: 1,
+            }],
+            kanjiByLevel: { 5: ["日"] },
+            mediaRootDir,
+            deckKind: "kanji",
+            buildAnkiPackageFn: buildSuccessfulAnkiPackageStub(outDir),
+        });
+
+        assert.equal(summary.mediaDirectoryMode, "source-backed-apkg");
+        assert.equal(summary.mediaAssetCount, 2);
+        assert.equal(summary.materializedMediaAssetCount, 0);
+        assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-stroke-order.gif")), false);
+        assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-kanji-reading-日-にち.wav")), false);
+
+        const mediaIntegrity = JSON.parse(fs.readFileSync(summary.mediaIntegrityPath, "utf-8"));
+        assert.equal(mediaIntegrity.sourceRoot.endsWith("/media-root"), true);
+        assert.equal(mediaIntegrity.files.length, 2);
+        assert.equal(mediaIntegrity.files.every((entry) => entry.sourceRelativePath), true);
+        assert.equal(mediaIntegrity.files.every((entry) => entry.byteSize > 0), true);
+
+        const guide = fs.readFileSync(summary.readmePath, "utf-8");
+        assert.match(guide, /Package media folder: not materialized/);
+    } finally {
+        fs.rmSync(rootDir, { recursive: true, force: true });
+    }
+});
+
+test("deck packaging materializes package media when APKG creation is skipped", async () => {
+    const rootDir = makeWorkspaceTempDir("deck-package-apkg-skipped-");
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media-root");
+        const outDir = path.join(rootDir, "out");
+        const exportPath = path.join(rootDir, "jlpt-n5.tsv");
+        fs.writeFileSync(
+            exportPath,
+            [
+                "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\tKanjiMeanings\tStudyWordKanji\tOnReading\tKunReading\tStrokeOrder\tAudio\tRadical\tNotes\tExampleSentence",
+                "日\t日\tday\tにち\t\tニチ\tひ\t<img src=\"65E5_日-stroke-order.gif\" />\t\t日\t\t",
+            ].join("\n"),
+            "utf-8"
+        );
+
+        const layout = ensureMediaLayout(mediaRootDir, "日");
+        fs.writeFileSync(path.join(layout.animationsDir, "65E5_日-stroke-order.gif"), "animation");
+        await writeManifest(mediaRootDir, {
+            kanji: "日",
+            version: 1,
+            updatedAt: new Date().toISOString(),
+            assets: {
+                strokeOrderImage: null,
+                strokeOrderAnimation: {
+                    kind: "animation",
+                    path: "animations/65E5_日-stroke-order.gif",
+                    mimeType: "image/gif",
+                    source: "fixture",
+                },
+                audio: [],
+            },
+        });
+
+        const summary = await buildDeckPackage({
+            outDir,
+            exports: [{
+                level: 5,
+                filePath: exportPath,
+                rows: 1,
+            }],
+            kanjiByLevel: { 5: ["日"] },
+            mediaRootDir,
+            deckKind: "kanji",
+            buildAnkiPackageFn: buildSkippedAnkiPackageStub(),
+        });
+
+        assert.equal(summary.ankiPackage.skipped, true);
+        assert.equal(summary.mediaDirectoryMode, "materialized");
+        assert.equal(summary.materializedMediaAssetCount, 1);
+        assert.equal(fs.existsSync(path.join(summary.mediaDir, "65E5_日-stroke-order.gif")), true);
+
+        const guide = fs.readFileSync(summary.readmePath, "utf-8");
+        assert.match(guide, /Package media folder: materialized/);
+    } finally {
+        fs.rmSync(rootDir, { recursive: true, force: true });
+    }
 });
 
 test("word deck packaging includes explicit word audio but prunes static images and kanji-reading audio", async () => {
@@ -295,8 +469,15 @@ test("kanji deck packaging copies the exact referenced primary-reading audio", a
         svgStrokeOrderAnimationFallback: 0,
         audio: 1,
     });
-    assert.equal(summary.ankiPackage.timingsMs.runPythonApkgBuilder >= 0, true);
-    assert.equal(summary.ankiPackage.pythonTimingsMs.writeArchive >= 0, true);
+    assert.equal(
+        summary.ankiPackage.cacheHit
+            ? summary.ankiPackage.timingsMs.cacheLookup >= 0
+            : summary.ankiPackage.timingsMs.runPythonApkgBuilder >= 0,
+        true
+    );
+    if (!summary.ankiPackage.cacheHit) {
+        assert.equal(summary.ankiPackage.pythonTimingsMs.writeArchive >= 0, true);
+    }
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.gif")), false);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-stroke-order.png")), false);
     assert.equal(fs.existsSync(path.join(summary.mediaDir, "8ECA_車-kanji-reading-車-くるま.wav")), true);

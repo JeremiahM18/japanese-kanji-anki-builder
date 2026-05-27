@@ -1,12 +1,25 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
 
 const {
+    buildExistingCompleteSyncResult,
     parseLevelArgument,
     selectKanjiForSync,
     summarizeSyncResults,
     syncMediaForKanjiList,
 } = require("../src/services/mediaSync");
+const { buildKanjiMediaId } = require("../src/services/mediaStore");
+
+function makeTempDir() {
+    return fs.mkdtempSync(path.join(os.tmpdir(), "media-sync-test-"));
+}
+
+function cleanupTempDir(dirPath) {
+    fs.rmSync(dirPath, { recursive: true, force: true });
+}
 
 test("parseLevelArgument accepts N-prefix and numeric values", () => {
     assert.equal(parseLevelArgument("N5"), 5);
@@ -150,6 +163,83 @@ test("syncMediaForKanjiList preserves one result when stroke-order or audio fail
     assert.equal(result.results[0].strokeOrder.error, "stroke failed");
     assert.equal(result.results[0].audio.manifest.assets.audio.length, 1);
     assert.equal(result.summary.errors.length, 1);
+});
+
+test("syncMediaForKanjiList skips acquisition when managed media is already complete", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const mediaId = buildKanjiMediaId("日");
+        const baseDir = path.join(mediaRootDir, "kanji", "65", mediaId);
+        fs.mkdirSync(path.join(baseDir, "images"), { recursive: true });
+        fs.mkdirSync(path.join(baseDir, "animations"), { recursive: true });
+        fs.mkdirSync(path.join(baseDir, "audio"), { recursive: true });
+        fs.writeFileSync(path.join(baseDir, "images", mediaId + "-stroke-order.png"), "image");
+        fs.writeFileSync(path.join(baseDir, "animations", mediaId + "-stroke-order.gif"), "animation");
+        fs.writeFileSync(path.join(baseDir, "audio", mediaId + "-kanji-reading-日-にち.wav"), "audio");
+        fs.writeFileSync(path.join(baseDir, "manifest.json"), JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: {
+                    kind: "image",
+                    path: "images/" + mediaId + "-stroke-order.png",
+                    mimeType: "image/png",
+                    source: "local-filesystem",
+                },
+                strokeOrderAnimation: {
+                    kind: "animation",
+                    path: "animations/" + mediaId + "-stroke-order.gif",
+                    mimeType: "image/gif",
+                    source: "remote-stroke-order-animation",
+                },
+                audio: [{
+                    kind: "audio",
+                    path: "audio/" + mediaId + "-kanji-reading-日-にち.wav",
+                    mimeType: "audio/wav",
+                    source: "voicevox-nemo",
+                    category: "kanji-reading",
+                    text: "日",
+                    reading: "にち",
+                    locale: "ja-JP",
+                }],
+            },
+        }, null, 2), "utf-8");
+
+        const existingComplete = await buildExistingCompleteSyncResult({
+            kanji: "日",
+            mediaRootDir,
+            audioMetadata: { reading: "にち" },
+        });
+        assert.equal(existingComplete.strokeOrder.skipped, true);
+        assert.equal(existingComplete.audio.skipped, true);
+
+        const result = await syncMediaForKanjiList({
+            kanjiList: ["日"],
+            mediaRootDir,
+            strokeOrderService: {
+                async syncKanji() {
+                    throw new Error("stroke sync should not run");
+                },
+            },
+            audioService: {
+                async syncKanji() {
+                    throw new Error("audio sync should not run");
+                },
+            },
+            audioMetadata: { reading: "にち" },
+        });
+
+        assert.equal(result.results.length, 1);
+        assert.equal(result.summary.errors.length, 0);
+        assert.equal(result.summary.strokeOrder.imageHits, 1);
+        assert.equal(result.summary.strokeOrder.animationHits, 1);
+        assert.equal(result.summary.audio.hits, 1);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
 });
 
 

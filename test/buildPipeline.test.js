@@ -526,7 +526,12 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.equal(summary.package.timingsMs.copyMedia >= 0, true);
     assert.equal(summary.package.timingsMs.writeMediaIntegrity >= 0, true);
     assert.equal(summary.package.timingsMs.buildAnkiPackage >= 0, true);
-    assert.equal(summary.package.ankiPackage.timingsMs.runPythonApkgBuilder >= 0, true);
+    assert.equal(
+        summary.package.ankiPackage.cacheHit
+            ? summary.package.ankiPackage.timingsMs.cacheLookup >= 0
+            : summary.package.ankiPackage.timingsMs.runPythonApkgBuilder >= 0,
+        true
+    );
     assert.deepEqual(summary.package.mediaCounts, {
         strokeOrder: 1,
         strokeOrderImage: 0,
@@ -555,7 +560,12 @@ test("runBuildPipeline writes exports reports summary and an import-ready packag
     assert.equal(storedSummary.package.timingsMs.copyMedia >= 0, true);
     assert.equal(storedSummary.package.timingsMs.writeMediaIntegrity >= 0, true);
     assert.equal(storedSummary.package.timingsMs.buildAnkiPackage >= 0, true);
-    assert.equal(storedSummary.package.ankiPackage.timingsMs.runPythonApkgBuilder >= 0, true);
+    assert.equal(
+        storedSummary.package.ankiPackage.cacheHit
+            ? storedSummary.package.ankiPackage.timingsMs.cacheLookup >= 0
+            : storedSummary.package.ankiPackage.timingsMs.runPythonApkgBuilder >= 0,
+        true
+    );
     assert.deepEqual(storedSummary.package.mediaCounts, {
         strokeOrder: 1,
         strokeOrderImage: 0,

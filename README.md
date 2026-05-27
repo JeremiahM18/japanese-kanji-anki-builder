@@ -415,3 +415,7 @@ Word build artifacts:
 - `out/word-build/reports/`
 - `out/word-build/build-summary.json`
 - `out/word-build/package/`
+
+Shared generated package cache:
+
+- `out/.apkg-cache/`

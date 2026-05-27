@@ -250,6 +250,20 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
         const audioAsset = audioLookup.asset;
         const mergedMetadata = mergeAudioMetadata(audioAsset, normalizedMetadata);
 
+        if (!audioAsset && existingManifest) {
+            setCachedManifest(manifestCache, normalizedKanji, existingManifest, { nowFn });
+            return {
+                kanji: normalizedKanji,
+                manifest: existingManifest,
+                found: {
+                    audio: false,
+                },
+                acquisition: {
+                    audio: audioLookup.attempts,
+                },
+            };
+        }
+
         const writtenManifest = await updateManifest(mediaRootDir, normalizedKanji, async (manifest) => {
             if (!audioAsset) {
                 return manifest;

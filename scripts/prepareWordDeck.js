@@ -310,6 +310,7 @@ async function main() {
         audioService,
         concurrency,
         audioMetadata: {},
+        mediaRootDir: config.mediaRootDir,
     });
 
     const exports = [];

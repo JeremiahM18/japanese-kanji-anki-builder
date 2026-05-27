@@ -405,11 +405,13 @@ test("syncKanji reuses existing managed audio assets without provider lookups", 
         });
 
         const result = await audioService.syncKanji("日", { text: "日", reading: "にち" });
+        const storedManifest = JSON.parse(fs.readFileSync(path.join(baseDir, "manifest.json"), "utf-8"));
         assert.equal(providerRequests, 0);
         assert.equal(result.found.audio, false);
         assert.equal(result.acquisition.audio.length, 0);
         assert.equal(result.manifest.assets.audio.length, 1);
         assert.match(result.manifest.assets.audio[0].path, new RegExp("^audio/" + mediaId + "-kanji-reading-日"));
+        assert.equal(storedManifest.updatedAt, "2026-01-01T00:00:00.000Z");
     } finally {
         cleanupTempDir(rootDir);
     }

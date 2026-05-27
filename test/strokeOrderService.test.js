@@ -561,6 +561,7 @@ test("syncKanji reuses existing managed stroke-order assets without provider loo
         });
 
         const result = await service.syncKanji("日");
+        const storedManifest = JSON.parse(fs.readFileSync(path.join(baseDir, "manifest.json"), "utf-8"));
         assert.equal(imageRequests, 0);
         assert.equal(animationRequests, 0);
         assert.equal(result.found.image, false);
@@ -569,6 +570,7 @@ test("syncKanji reuses existing managed stroke-order assets without provider loo
         assert.equal(result.acquisition.animation.length, 0);
         assert.equal(result.manifest.assets.strokeOrderImage.path, "images/" + mediaId + "-stroke-order.png");
         assert.equal(result.manifest.assets.strokeOrderAnimation.path, "animations/" + mediaId + "-stroke-order.gif");
+        assert.equal(storedManifest.updatedAt, "2026-01-01T00:00:00.000Z");
     } finally {
         cleanupTempDir(rootDir);
     }

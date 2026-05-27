@@ -1,4 +1,9 @@
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
+const { selectBestAudioAsset } = require("./audioService");
+const {
+    managedAssetExists,
+    readManifestIfExists,
+} = require("./mediaStore");
 const { mapWithConcurrency } = require("../utils/concurrency");
 
 function parseLevelArgument(value) {
@@ -76,8 +81,68 @@ function summarizeSyncResults(results) {
     return summary;
 }
 
-async function syncMediaForKanjiList({ kanjiList, strokeOrderService, audioService, concurrency = 4, audioMetadata = {} }) {
+async function buildExistingCompleteSyncResult({ kanji, mediaRootDir, audioMetadata = {} }) {
+    if (!mediaRootDir) {
+        return null;
+    }
+
+    const manifest = await readManifestIfExists(mediaRootDir, kanji);
+    if (!manifest) {
+        return null;
+    }
+
+    const strokeOrderImage = manifest.assets?.strokeOrderImage || null;
+    const strokeOrderAnimation = manifest.assets?.strokeOrderAnimation || null;
+    const audioAsset = selectBestAudioAsset(manifest.assets?.audio || [], {
+        category: "kanji-reading",
+        text: kanji,
+        reading: audioMetadata.reading,
+    });
+
+    const hasImage = managedAssetExists(mediaRootDir, kanji, strokeOrderImage?.path);
+    const hasAnimation = managedAssetExists(mediaRootDir, kanji, strokeOrderAnimation?.path);
+    const hasAudio = managedAssetExists(mediaRootDir, kanji, audioAsset?.path);
+
+    if (!hasImage || !hasAnimation || !hasAudio) {
+        return null;
+    }
+
+    return {
+        kanji,
+        strokeOrder: {
+            kanji,
+            manifest,
+            found: {
+                image: false,
+                animation: false,
+            },
+            acquisition: {
+                image: [],
+                animation: [],
+            },
+            skipped: true,
+        },
+        audio: {
+            kanji,
+            manifest,
+            found: {
+                audio: false,
+            },
+            acquisition: {
+                audio: [],
+            },
+            skipped: true,
+        },
+    };
+}
+
+async function syncMediaForKanjiList({ kanjiList, strokeOrderService, audioService, concurrency = 4, audioMetadata = {}, mediaRootDir = null }) {
     const results = await mapWithConcurrency(kanjiList, concurrency, async (kanji) => {
+        const existingComplete = await buildExistingCompleteSyncResult({ kanji, mediaRootDir, audioMetadata });
+        if (existingComplete) {
+            return existingComplete;
+        }
+
         const tasks = [
             strokeOrderService.syncKanji(kanji),
             typeof audioService?.syncKanji === "function"
@@ -126,6 +191,7 @@ async function syncMediaForKanjiList({ kanjiList, strokeOrderService, audioServi
 }
 
 module.exports = {
+    buildExistingCompleteSyncResult,
     parseLevelArgument,
     selectKanjiForSync,
     summarizeSyncResults,

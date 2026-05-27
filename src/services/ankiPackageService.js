@@ -1,8 +1,10 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const crypto = require("node:crypto");
 const { spawnSync } = require("node:child_process");
 const { performance } = require("node:perf_hooks");
 
+const { assertSafeGeneratedPath, ensureDir } = require("../utils/fs");
 const { describePythonTool, resolvePythonCommand } = require("./toolchainService");
 
 function normalizeDeckSlug(levels) {
@@ -34,6 +36,112 @@ function buildApkgFileName(levels, deckKind = "kanji") {
     return `${prefix}-${normalizeDeckSlug(levels)}.apkg`;
 }
 
+function resolveNoteSchemaPath(deckKind = "kanji") {
+    if (deckKind === "word") {
+        return path.resolve(__dirname, "..", "config", "ankiWordNoteSchema.json");
+    }
+
+    return path.resolve(__dirname, "..", "config", "ankiNoteSchema.json");
+}
+
+function resolveApkgBuilderScriptPath() {
+    return path.resolve(__dirname, "..", "..", "scripts", "buildApkg.py");
+}
+
+function updateDigestWithFile(digest, filePath, label) {
+    digest.update(label);
+    digest.update("\0");
+    digest.update(path.basename(filePath));
+    digest.update("\0");
+    digest.update(fs.readFileSync(filePath));
+    digest.update("\0");
+}
+
+function computeFileSha256(filePath) {
+    return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+}
+
+function computeApkgCacheKey({ packageRootDir, exports, levels, deckKind }) {
+    const mediaIntegrityPath = path.join(packageRootDir, "media-integrity.json");
+    const noteSchemaPath = resolveNoteSchemaPath(deckKind);
+    const builderScriptPath = resolveApkgBuilderScriptPath();
+    const exportArtifacts = Array.isArray(exports) ? exports : [];
+    if (!fs.existsSync(mediaIntegrityPath) || !fs.existsSync(noteSchemaPath) || !fs.existsSync(builderScriptPath)) {
+        return null;
+    }
+    if (exportArtifacts.some((artifact) => !artifact?.filePath || !fs.existsSync(artifact.filePath))) {
+        return null;
+    }
+
+    const digest = crypto.createHash("sha256");
+    digest.update("apkg-cache-v1");
+    digest.update("\0");
+    digest.update(deckKind);
+    digest.update("\0");
+    digest.update((Array.isArray(levels) ? levels : []).join(","));
+    digest.update("\0");
+    updateDigestWithFile(digest, noteSchemaPath, "note-schema");
+    updateDigestWithFile(digest, builderScriptPath, "apkg-builder");
+    updateDigestWithFile(digest, mediaIntegrityPath, "media-integrity");
+    for (const artifact of [...exportArtifacts].sort((a, b) => String(a.filePath).localeCompare(String(b.filePath)))) {
+        digest.update(String(artifact.level || ""));
+        digest.update("\0");
+        updateDigestWithFile(digest, artifact.filePath, "export");
+    }
+    return digest.digest("hex");
+}
+
+function resolveApkgCachePaths(cacheKey) {
+    if (!cacheKey) {
+        return null;
+    }
+
+    const cacheDir = path.join(process.cwd(), "out", ".apkg-cache");
+    assertSafeGeneratedPath(cacheDir, { label: "APKG cache directory" });
+    const apkgPath = path.join(cacheDir, `${cacheKey}.apkg`);
+    return {
+        cacheDir,
+        apkgPath,
+        sha256Path: `${apkgPath}.sha256`,
+    };
+}
+
+function readCachedApkg({ cachePaths, destinationPath }) {
+    try {
+        if (!cachePaths || !fs.existsSync(cachePaths.apkgPath) || !fs.existsSync(cachePaths.sha256Path)) {
+            return false;
+        }
+
+        const expectedSha256 = String(fs.readFileSync(cachePaths.sha256Path, "utf-8")).trim().toLowerCase();
+        if (!/^[a-f0-9]{64}$/.test(expectedSha256)) {
+            return false;
+        }
+        if (computeFileSha256(cachePaths.apkgPath) !== expectedSha256) {
+            return false;
+        }
+
+        fs.copyFileSync(cachePaths.apkgPath, destinationPath);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function writeCachedApkg({ cachePaths, sourcePath }) {
+    try {
+        if (!cachePaths || !sourcePath || !fs.existsSync(sourcePath)) {
+            return false;
+        }
+
+        ensureDir(cachePaths.cacheDir);
+        fs.copyFileSync(sourcePath, cachePaths.apkgPath);
+        fs.writeFileSync(cachePaths.sha256Path, `${computeFileSha256(cachePaths.apkgPath)}\n`, "utf-8");
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 function listMediaFiles(mediaDir) {
     if (!fs.existsSync(mediaDir)) {
         return [];
@@ -42,6 +150,20 @@ function listMediaFiles(mediaDir) {
     return fs.readdirSync(mediaDir)
         .filter((fileName) => fs.statSync(path.join(mediaDir, fileName)).isFile())
         .sort();
+}
+
+function readMediaIntegrityFileCount(packageRootDir) {
+    const integrityPath = path.join(packageRootDir, "media-integrity.json");
+    if (!fs.existsSync(integrityPath)) {
+        return null;
+    }
+
+    try {
+        const parsed = JSON.parse(fs.readFileSync(integrityPath, "utf-8"));
+        return Array.isArray(parsed?.files) ? parsed.files.length : null;
+    } catch {
+        return null;
+    }
 }
 
 function formatAnkiPackageSkipReason(error) {
@@ -56,17 +178,30 @@ function captureTiming(timingsMs, key, startedAt) {
     timingsMs[key] = Number((performance.now() - startedAt).toFixed(2));
 }
 
-function runPythonApkgBuilder({ outDir, levels, deckKind }) {
-    const python = resolvePythonCommand();
-    if (!python) {
+function resolvePythonCommandFromTool(pythonTool) {
+    if (!pythonTool?.available) {
+        return null;
+    }
+
+    return {
+        command: pythonTool.command,
+        argsPrefix: Array.isArray(pythonTool.runArgsPrefix) ? pythonTool.runArgsPrefix : [],
+        version: pythonTool.version,
+    };
+}
+
+function runPythonApkgBuilder({ outDir, levels, deckKind, python = null }) {
+    const resolvedPython = python || resolvePythonCommand();
+    if (!resolvedPython) {
         throw new Error("Missing required packaging tool: Python.");
     }
 
-    const scriptPath = path.resolve(__dirname, "..", "..", "scripts", "buildApkg.py");
+    const scriptPath = resolveApkgBuilderScriptPath();
     const result = spawnSync(
-        python.command,
+        resolvedPython.command,
         [
-            ...python.argsPrefix,
+            ...resolvedPython.argsPrefix,
+            "-S",
             scriptPath,
             `--out-dir=${outDir}`,
             `--levels=${(Array.isArray(levels) ? levels : []).join(",") || "5"}`,
@@ -96,7 +231,7 @@ function runPythonApkgBuilder({ outDir, levels, deckKind }) {
 
 async function buildAnkiPackage({
     packageRootDir,
-    exports: _exports,
+    exports,
     mediaDir,
     levels,
     deckKind = "kanji",
@@ -109,12 +244,39 @@ async function buildAnkiPackage({
     captureTiming(timingsMs, "describePythonTool", describeStartedAt);
 
     const resolveStartedAt = performance.now();
-    const python = pythonTool.available ? resolvePythonCommand() : null;
+    const python = resolvePythonCommandFromTool(pythonTool);
     captureTiming(timingsMs, "resolvePythonCommand", resolveStartedAt);
 
     const listMediaStartedAt = performance.now();
-    const mediaFiles = listMediaFiles(mediaDir);
+    const mediaIntegrityFileCount = readMediaIntegrityFileCount(packageRootDir);
+    const mediaFiles = mediaIntegrityFileCount === null ? listMediaFiles(mediaDir) : null;
+    const mediaFileCount = mediaIntegrityFileCount ?? mediaFiles.length;
     captureTiming(timingsMs, "listMediaFiles", listMediaStartedAt);
+
+    const cacheKeyStartedAt = performance.now();
+    const cacheKey = computeApkgCacheKey({ packageRootDir, exports, levels, deckKind });
+    const cachePaths = resolveApkgCachePaths(cacheKey);
+    const apkgPath = path.join(packageRootDir, buildApkgFileName(levels, deckKind));
+    captureTiming(timingsMs, "computeCacheKey", cacheKeyStartedAt);
+
+    const cacheLookupStartedAt = performance.now();
+    const cacheHit = readCachedApkg({ cachePaths, destinationPath: apkgPath });
+    captureTiming(timingsMs, "cacheLookup", cacheLookupStartedAt);
+
+    if (cacheHit) {
+        timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
+        return {
+            filePath: apkgPath,
+            skipped: false,
+            skipReason: "",
+            noteCount: (Array.isArray(exports) ? exports : []).reduce((sum, artifact) => sum + (Number(artifact?.rows) || 0), 0),
+            deckCount: new Set(levels || []).size,
+            mediaFileCount,
+            timingsMs,
+            pythonTimingsMs: null,
+            cacheHit: true,
+        };
+    }
 
     if (!python) {
         timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
@@ -126,7 +288,7 @@ async function buildAnkiPackage({
                 : "Missing required packaging tool: Python.",
             noteCount: 0,
             deckCount: 0,
-            mediaFileCount: mediaFiles.length,
+            mediaFileCount,
             timingsMs,
         };
     }
@@ -137,8 +299,12 @@ async function buildAnkiPackage({
             outDir: path.dirname(packageRootDir),
             levels,
             deckKind,
+            python,
         });
         captureTiming(timingsMs, "runPythonApkgBuilder", pythonStartedAt);
+        const cacheStoreStartedAt = performance.now();
+        writeCachedApkg({ cachePaths, sourcePath: result.filePath });
+        captureTiming(timingsMs, "cacheStore", cacheStoreStartedAt);
         timingsMs.total = Number((performance.now() - totalStartedAt).toFixed(2));
 
         return {
@@ -147,7 +313,7 @@ async function buildAnkiPackage({
             skipReason: "",
             noteCount: Number(result.noteCount) || 0,
             deckCount: Number(result.deckCount) || new Set(levels || []).size,
-            mediaFileCount: Number(result.mediaFileCount) || mediaFiles.length,
+            mediaFileCount: Number(result.mediaFileCount) || mediaFileCount,
             timingsMs,
             pythonTimingsMs: result.timingsMs || null,
         };
@@ -159,7 +325,7 @@ async function buildAnkiPackage({
             skipReason: formatAnkiPackageSkipReason(error),
             noteCount: 0,
             deckCount: 0,
-            mediaFileCount: mediaFiles.length,
+            mediaFileCount,
             timingsMs,
         };
     }

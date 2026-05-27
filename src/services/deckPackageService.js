@@ -36,7 +36,7 @@ function createEmptyMediaCounts() {
     };
 }
 
-function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts, ankiPackage }) {
+function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts, ankiPackage, mediaDirectoryMode }) {
     return [
         "Japanese Kanji Builder Deck Package",
         "",
@@ -52,6 +52,12 @@ function buildImportGuide({ exportCount, mediaAssetCount, mediaCounts, ankiPacka
             `- Decks: ${ankiPackage.deckCount}`,
         ] : []),
         ...(ankiPackage?.skipped ? [`Anki package skipped: ${ankiPackage.skipReason}`] : []),
+        ...(mediaDirectoryMode === "source-backed-apkg" ? [
+            "Package media folder: not materialized because the APKG was built directly from managed-media source paths.",
+        ] : []),
+        ...(mediaDirectoryMode === "materialized" ? [
+            "Package media folder: materialized for TSV/manual-copy compatibility.",
+        ] : []),
         "",
         "Suggested import flow:",
         ...(ankiPackage?.filePath
@@ -93,6 +99,27 @@ async function copyFileIntoPackageWithSha256(sourcePath, destinationPath) {
     });
 
     await pipeline(sourceStream, fs.createWriteStream(destinationPath));
+
+    return {
+        sha256: hash.digest("hex"),
+        byteSize,
+    };
+}
+
+async function hashFileSha256(sourcePath) {
+    const hash = crypto.createHash("sha256");
+    let byteSize = 0;
+    const sourceStream = fs.createReadStream(sourcePath);
+
+    sourceStream.on("data", (chunk) => {
+        hash.update(chunk);
+        byteSize += chunk.length;
+    });
+
+    await new Promise((resolve, reject) => {
+        sourceStream.on("error", reject);
+        sourceStream.on("end", resolve);
+    });
 
     return {
         sha256: hash.digest("hex"),
@@ -217,6 +244,64 @@ function buildManifestBackedPackagedAssets({ assets, mediaRootDir }) {
     return packagedAssets;
 }
 
+async function buildSourceBackedPackagedAssets({ assets, mediaRootDir, concurrency = 8 }) {
+    const resolvedMediaRootDir = path.resolve(mediaRootDir);
+    const sourceRoot = toPortableRelativePath(process.cwd(), resolvedMediaRootDir);
+    if (!sourceRoot) {
+        return null;
+    }
+
+    const resolvedAssets = [];
+    for (const asset of assets) {
+        const sourceRelativePath = toPortableRelativePath(resolvedMediaRootDir, path.resolve(asset.sourcePath));
+        if (!sourceRelativePath) {
+            return null;
+        }
+        resolvedAssets.push({
+            ...asset,
+            sourceRelativePath,
+        });
+    }
+
+    return mapWithConcurrency(resolvedAssets, concurrency, async (asset) => {
+        const checksum = String(asset.checksum || "").trim().toLowerCase();
+        if (isSha256(checksum)) {
+            const stat = await fsp.stat(asset.sourcePath);
+            if (!stat.isFile()) {
+                throw new Error(`Managed media source is not a file: ${asset.sourcePath}`);
+            }
+            return {
+                ...asset,
+                sha256: checksum,
+                byteSize: stat.size,
+            };
+        }
+
+        const integrity = await hashFileSha256(asset.sourcePath);
+        return {
+            ...asset,
+            sha256: integrity.sha256,
+            byteSize: integrity.byteSize,
+        };
+    });
+}
+
+async function copyPackageMediaAssetsWithIntegrity({ assets, mediaDir, packageConcurrency }) {
+    return mapWithConcurrency(assets, packageConcurrency, async (asset) => {
+        const integrity = await copyFileIntoPackageWithSha256(asset.sourcePath, path.join(mediaDir, asset.fileName));
+        const expectedChecksum = String(asset.checksum || asset.sha256 || "").trim();
+        if (isSha256(expectedChecksum) && expectedChecksum.toLowerCase() !== integrity.sha256) {
+            throw new Error(`Managed media checksum mismatch for ${asset.fileName}: manifest ${expectedChecksum}, copied ${integrity.sha256}.`);
+        }
+
+        return {
+            ...asset,
+            sha256: integrity.sha256,
+            byteSize: integrity.byteSize,
+        };
+    });
+}
+
 async function readManagedManifest({ kanji, mediaRootDir, strokeOrderService, audioService }) {
     const manifestProvider = typeof strokeOrderService?.getManifest === "function"
         ? strokeOrderService
@@ -274,6 +359,7 @@ async function collectPackageAssets({ kanjiList, mediaRootDir, strokeOrderServic
                     fileName,
                     sourcePath: absolutePath,
                     relativePath: candidate.relativePath,
+                    checksum: candidate.checksum,
                 });
             }
         }
@@ -341,6 +427,7 @@ async function collectExplicitReferencedAssets({ referencedMedia = [], mediaRoot
                 fileName,
                 sourcePath: absolutePath,
                 relativePath,
+                checksum: reference.checksum,
             });
         }
     }
@@ -374,6 +461,7 @@ async function buildDeckPackage({
     packageConcurrency = 8,
     deckKind = "kanji",
     referencedMedia = [],
+    buildAnkiPackageFn = buildAnkiPackage,
 }) {
     const totalStartedAt = performance.now();
     const timingsMs = {};
@@ -446,8 +534,10 @@ async function buildDeckPackage({
     capturePackageTiming(timingsMs, "mergeAssets", mergeAssetsStartedAt);
 
     const manifestBackedIntegrityStartedAt = performance.now();
-    let packagedAssets = buildManifestBackedPackagedAssets({ assets: mergedAssets, mediaRootDir });
+    const manifestBackedAssets = buildManifestBackedPackagedAssets({ assets: mergedAssets, mediaRootDir });
     capturePackageTiming(timingsMs, "prepareManifestBackedMediaIntegrity", manifestBackedIntegrityStartedAt);
+    let packagedAssets = manifestBackedAssets;
+    let mediaDirectoryMode = mergedAssets.length === 0 ? "empty" : "materialized";
     let ankiPackage = null;
 
     if (packagedAssets) {
@@ -457,45 +547,82 @@ async function buildDeckPackage({
             "utf-8"
         ));
 
-        await capturePackagePhase(timingsMs, "copyMedia", async () => mapWithConcurrency(mergedAssets, packageConcurrency, async (asset) => {
-            await copyFileIntoPackage(asset.sourcePath, path.join(packagePaths.mediaDir, asset.fileName));
-        }));
-
-        ankiPackage = await capturePackagePhase(timingsMs, "buildAnkiPackage", async () => buildAnkiPackage({
+        ankiPackage = await capturePackagePhase(timingsMs, "buildAnkiPackage", async () => buildAnkiPackageFn({
             packageRootDir: packagePaths.rootDir,
             exports,
             mediaDir: packagePaths.mediaDir,
             levels: exports.map((artifact) => artifact.level),
             deckKind,
         }));
-    } else {
-        packagedAssets = await capturePackagePhase(timingsMs, "copyMedia", async () => mapWithConcurrency(mergedAssets, packageConcurrency, async (asset) => {
-            const integrity = await copyFileIntoPackageWithSha256(asset.sourcePath, path.join(packagePaths.mediaDir, asset.fileName));
-            const expectedChecksum = String(asset.checksum || "").trim();
-            if (isSha256(expectedChecksum) && expectedChecksum.toLowerCase() !== integrity.sha256) {
-                throw new Error(`Managed media checksum mismatch for ${asset.fileName}: manifest ${expectedChecksum}, copied ${integrity.sha256}.`);
+
+        await capturePackagePhase(timingsMs, "copyMedia", async () => {
+            if (ankiPackage?.skipped) {
+                packagedAssets = await copyPackageMediaAssetsWithIntegrity({
+                    assets: packagedAssets,
+                    mediaDir: packagePaths.mediaDir,
+                    packageConcurrency,
+                });
+                mediaDirectoryMode = "materialized";
+                return;
             }
-
-            return {
-                ...asset,
-                sha256: integrity.sha256,
-                byteSize: integrity.byteSize,
-            };
+            mediaDirectoryMode = mergedAssets.length === 0 ? "empty" : "source-backed-apkg";
+        });
+    } else {
+        packagedAssets = await capturePackagePhase(timingsMs, "prepareSourceBackedMediaIntegrity", async () => buildSourceBackedPackagedAssets({
+            assets: mergedAssets,
+            mediaRootDir,
+            concurrency: packageConcurrency,
         }));
 
-        await capturePackagePhase(timingsMs, "writeMediaIntegrity", async () => fsp.writeFile(
-            packagePaths.mediaIntegrityPath,
-            `${JSON.stringify(buildPackageMediaIntegrity({ assets: packagedAssets, mediaRootDir }), null, 2)}\n`,
-            "utf-8"
-        ));
+        if (packagedAssets) {
+            await capturePackagePhase(timingsMs, "writeMediaIntegrity", async () => fsp.writeFile(
+                packagePaths.mediaIntegrityPath,
+                `${JSON.stringify(buildPackageMediaIntegrity({ assets: packagedAssets, mediaRootDir }), null, 2)}\n`,
+                "utf-8"
+            ));
 
-        ankiPackage = await capturePackagePhase(timingsMs, "buildAnkiPackage", async () => buildAnkiPackage({
-            packageRootDir: packagePaths.rootDir,
-            exports,
-            mediaDir: packagePaths.mediaDir,
-            levels: exports.map((artifact) => artifact.level),
-            deckKind,
-        }));
+            ankiPackage = await capturePackagePhase(timingsMs, "buildAnkiPackage", async () => buildAnkiPackageFn({
+                packageRootDir: packagePaths.rootDir,
+                exports,
+                mediaDir: packagePaths.mediaDir,
+                levels: exports.map((artifact) => artifact.level),
+                deckKind,
+            }));
+
+            await capturePackagePhase(timingsMs, "copyMedia", async () => {
+                if (ankiPackage?.skipped) {
+                    packagedAssets = await copyPackageMediaAssetsWithIntegrity({
+                        assets: packagedAssets,
+                        mediaDir: packagePaths.mediaDir,
+                        packageConcurrency,
+                    });
+                    mediaDirectoryMode = "materialized";
+                    return;
+                }
+                mediaDirectoryMode = mergedAssets.length === 0 ? "empty" : "source-backed-apkg";
+            });
+        } else {
+            packagedAssets = await capturePackagePhase(timingsMs, "copyMedia", async () => copyPackageMediaAssetsWithIntegrity({
+                assets: mergedAssets,
+                mediaDir: packagePaths.mediaDir,
+                packageConcurrency,
+            }));
+
+            await capturePackagePhase(timingsMs, "writeMediaIntegrity", async () => fsp.writeFile(
+                packagePaths.mediaIntegrityPath,
+                `${JSON.stringify(buildPackageMediaIntegrity({ assets: packagedAssets, mediaRootDir }), null, 2)}\n`,
+                "utf-8"
+            ));
+
+            ankiPackage = await capturePackagePhase(timingsMs, "buildAnkiPackage", async () => buildAnkiPackageFn({
+                packageRootDir: packagePaths.rootDir,
+                exports,
+                mediaDir: packagePaths.mediaDir,
+                levels: exports.map((artifact) => artifact.level),
+                deckKind,
+            }));
+            mediaDirectoryMode = mergedAssets.length === 0 ? "empty" : "materialized";
+        }
     }
 
     await capturePackagePhase(timingsMs, "writeImportGuide", async () => fsp.writeFile(packagePaths.readmePath, buildImportGuide({
@@ -503,6 +630,7 @@ async function buildDeckPackage({
         mediaAssetCount: mergedAssets.length,
         mediaCounts: mergedMediaCounts,
         ankiPackage,
+        mediaDirectoryMode,
     }), "utf-8"));
 
     const summary = {
@@ -513,6 +641,8 @@ async function buildDeckPackage({
         readmePath: packagePaths.readmePath,
         exportCount: exports.length,
         mediaAssetCount: mergedAssets.length,
+        materializedMediaAssetCount: mediaDirectoryMode === "materialized" ? mergedAssets.length : 0,
+        mediaDirectoryMode,
         mediaCounts: mergedMediaCounts,
         ankiPackage,
         assets: packagedAssets,

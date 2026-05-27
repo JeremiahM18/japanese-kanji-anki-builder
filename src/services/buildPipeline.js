@@ -338,6 +338,7 @@ async function runBuildPipeline({
                 audioService,
                 concurrency: effectiveConcurrency,
                 audioMetadata: syncAudioMetadata,
+                mediaRootDir: config.mediaRootDir,
             });
 
             return {
@@ -441,6 +442,8 @@ async function runBuildPipeline({
             readmePath: deckPackage.readmePath,
             exportCount: deckPackage.exportCount,
             mediaAssetCount: deckPackage.mediaAssetCount,
+            materializedMediaAssetCount: deckPackage.materializedMediaAssetCount,
+            mediaDirectoryMode: deckPackage.mediaDirectoryMode,
             mediaCounts: deckPackage.mediaCounts,
             ankiPackage: deckPackage.ankiPackage,
             timingsMs: deckPackage.timingsMs,

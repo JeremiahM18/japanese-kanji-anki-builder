@@ -35,7 +35,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run voicevox:stop` | Stop the local VOICEVOX Docker container after governed audio work |
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |
-| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji review packet for the selected queue |
+| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji review packet for the selected queue; N3 uses the scoped canonical JSONL proof provider with legacy inline fallback for levels without migrated ledgers |
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
@@ -148,7 +148,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run data:obsidian:proof:views` | Generate compatibility review-set JSON from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite` | Generate the local SQLite query mirror from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite:query` | Query the generated local SQLite mirror after rebuilding it from JSONL |
-| `npm run data:obsidian:proof:provider-parity -- --levels=3` | Dual-read test that inline `rereviewProvenance` and canonical ledger-derived proof produce identical kanji rereview-status consumer output |
+| `npm run data:obsidian:proof:provider-parity -- --levels=3` | Dual-read test that inline `rereviewProvenance` and canonical ledger-derived proof produce identical output for switched kanji consumers such as rereview-status and batch selection |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |

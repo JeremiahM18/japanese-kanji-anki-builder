@@ -230,6 +230,7 @@ git status --short --untracked-files=all
 npm run data:obsidian:proof:validate
 npm run data:obsidian:proof:reconcile -- --levels=3
 npm run data:obsidian:proof:provider-parity -- --levels=3
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=3 --queue=substantive-rereview --limit=8
 npm run data:obsidian:proof:views
 npm run data:obsidian:proof:sqlite
 npm run data:obsidian:proof:sqlite:query -- --deck-kind=kanji --level=3 --limit=5
@@ -239,7 +240,7 @@ node --test test/obsidianProofLedger.test.js test/obsidianProofReconciliation.te
 No-go conditions:
 
 - Reconciliation is not exact: inline-only, ledger-only, mismatch, or duplicate-inline counts are non-zero.
-- Provider parity is not exact: inline source and ledger-derived proof must produce identical rereview-status counts, card classifications, and queue samples before switching that consumer.
+- Provider parity is not exact: inline source and ledger-derived proof must produce identical consumer-specific counts, card classifications, selected cards, and queue samples before switching that consumer.
 - The compatibility view omits an inline proof that should have a ledger event.
 - The SQLite mirror cannot rebuild from JSONL without reading generated TSV/APKG output.
 - Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=3` or `deck:kanji:obsidian:certify-status -- --levels=3` counts without a matching proof-ledger change.
@@ -255,8 +256,8 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status` and `deck:kanji:obsidian:certify-status` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
-- `deck:platinum:batch`, `deck:platinum:n<level>`, `deck:platinum:governance-gate`, and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
+- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, and `deck:platinum:batch` are switched consumers. They use the scoped proof-provider path so N3 kanji proof comes from canonical JSONL when a scoped ledger exists, while levels without migrated ledgers remain on legacy inline proof until their own parity gates are added.
+- `deck:platinum:n<level>`, `deck:platinum:governance-gate`, and `data:build:kanji-field-source-contract` are still legacy inline consumers until they receive their own dual-read parity switch.
 
 Do not switch word Obsidian consumers from this N3 kanji ledger work. Word proof has separate identity binding, evidence checklist, and sentence-quality requirements.
 

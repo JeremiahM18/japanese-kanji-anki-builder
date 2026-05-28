@@ -29678,6 +29678,9 @@
   },
   "改": {
     "englishMeaning": "change / revise",
+    "blockedMeanings": [
+      "search"
+    ],
     "displayWord": {
       "written": "改める",
       "pron": "あらためる"
@@ -32455,10 +32458,10 @@
     }
   },
   "曇": {
-    "englishMeaning": "cloudy",
+    "englishMeaning": "cloud up / become cloudy",
     "displayWord": {
-      "written": "曇り",
-      "pron": "くもり"
+      "written": "曇る",
+      "pron": "くもる"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -32468,8 +32471,8 @@
     ],
     "jlpt": 2,
     "preferredWords": [
-      "曇り",
-      "曇る"
+      "曇る",
+      "曇り"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -32569,6 +32572,9 @@
       "作曲"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "pleasure"
+    ],
     "blockedSentencePhrases": [],
     "notes": "曲 （きょく） - song / tune ／ 曲がる （まがる） - turn ／ 作曲 （さっきょく） - composition",
     "alternativeNotes": [],
@@ -33211,10 +33217,10 @@
     }
   },
   "札": {
-    "englishMeaning": "bill / tag",
+    "englishMeaning": "paper money / bill",
     "displayWord": {
-      "written": "お札",
-      "pron": "おさつ"
+      "written": "札",
+      "pron": "さつ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -33224,12 +33230,16 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "千円札",
       "お札",
       "名札"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "counter for bonds"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "お札 （おさつ） - banknote ／ 名札 （なふだ） - name tag",
+    "notes": "千円札 （せんえんさつ） - 1,000-yen bill ／ お札 （おさつ） - banknote ／ 名札 （なふだ） - name tag",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "千円札が一枚だけあります。",
@@ -33483,6 +33493,9 @@
       "木材"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "materials"
+    ],
     "blockedSentencePhrases": [],
     "notes": "材料 （ざいりょう） - material / ingredients ／ 木材 （もくざい） - lumber",
     "alternativeNotes": [],

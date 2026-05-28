@@ -155,6 +155,11 @@ function getRowField(row = {}, columnName) {
     return normalizeText(row[columnName]);
 }
 
+function hasDisallowedReviewedEvidenceSurface({ citation = "", evidenceRef = "", notes = "" } = {}) {
+    const evidenceText = [citation, evidenceRef, notes].map(normalizeText).join(" ").toLowerCase();
+    return /\btable\s+of\s+contents\b/.test(evidenceText) || evidenceText.includes("目次");
+}
+
 function buildSourceMetadataBlockers({ sourceId, sourceConfig = {}, evidence = {}, policy = {} } = {}) {
     const blockers = [];
     const source = evidence.sources?.[sourceId];
@@ -250,6 +255,9 @@ function buildAssignmentFromRow({ row, sourceConfig, contractKanjiSet }) {
     }
     if (shouldValidateEvidenceFields && sourceConfig.requireEvidenceRef !== false && !evidenceRef) {
         issues.push("missing evidenceRef");
+    }
+    if (shouldValidateEvidenceFields && hasDisallowedReviewedEvidenceSurface({ citation, evidenceRef, notes })) {
+        issues.push("table-of-contents evidence is not exact source-level assignment proof; use source_access_gap unless an exact assignment surface is verified");
     }
 
     return {
@@ -347,6 +355,7 @@ module.exports = {
     SOURCE_INPUT_REVIEW_STATUSES,
     buildJlptKanjiSourceInputReport,
     buildSourceFileIntegrity,
+    hasDisallowedReviewedEvidenceSurface,
     normalizeInputLevel,
     parseSourceAssignmentRows,
 };

@@ -242,6 +242,33 @@ test("source input preflight rejects bad rows before they become source evidence
     assert.match(report.rejectedRows[2].issues.join("\n"), /missing citation/);
 });
 
+test("source input preflight rejects reviewed table-of-contents assignment evidence", () => {
+    const text = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture table of contents\tfixture:toc\tVisible in table of contents",
+        "月\t\tsource_access_gap\tFixture table of contents\tfixture:toc\tChecked table of contents; exact assignment proof unavailable",
+    ].join("\n");
+    const sourceConfig = buildSourceConfig(text);
+
+    const report = buildJlptKanjiSourceInputReport({
+        sourceId: "fixture_source",
+        sourceConfig,
+        sourceBuffer: Buffer.from(text, "utf8"),
+        contract: { kanjiLevels: { 日: 5, 月: 5 } },
+        evidence: buildEvidence(),
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+    });
+
+    assert.equal(report.valid, false);
+    assert.equal(report.reviewedAssignmentCount, 0);
+    assert.equal(report.sourceAccessGapRowCount, 1);
+    assert.match(report.rejectedRows[0].issues.join("\n"), /table-of-contents evidence is not exact source-level assignment proof/);
+});
+
 test("legacy KANJIDIC2 level mapping preserves old level 2 as N2/N3 range evidence", () => {
     assert.deepEqual(normalizeInputLevel("4", "kanjidic2-legacy-jlpt"), {
         level: 5,

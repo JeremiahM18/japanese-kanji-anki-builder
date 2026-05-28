@@ -1,5 +1,6 @@
 const {
     SOURCE_INPUT_REVIEW_STATUSES,
+    hasDisallowedReviewedEvidenceSurface,
     parseSourceAssignmentRows,
 } = require("./jlptKanjiSourceInputService");
 
@@ -29,10 +30,30 @@ function getReviewStatus(row = {}, sourceConfig = {}) {
     return normalizeText(row[sourceConfig.reviewStatusColumn]) || sourceConfig.defaultReviewStatus || "needs_review";
 }
 
+function getEvidenceSurfaceFields(row = {}, sourceConfig = {}) {
+    return {
+        citation: normalizeText(row[sourceConfig.citationColumn]),
+        evidenceRef: normalizeText(row[sourceConfig.evidenceRefColumn]),
+        notes: normalizeText(row[sourceConfig.notesColumn]),
+    };
+}
+
 function isReviewedDowngrade({ sourceRow = {}, batchRow = {}, sourceConfig = {} } = {}) {
     const sourceStatus = getReviewStatus(sourceRow, sourceConfig);
     const batchStatus = getReviewStatus(batchRow, sourceConfig);
     return sourceStatus === "reviewed" && batchStatus !== "reviewed";
+}
+
+function isReviewedReplacement({ sourceRow = {}, batchRow = {}, sourceConfig = {}, batchHeaders = [] } = {}) {
+    const sourceStatus = getReviewStatus(sourceRow, sourceConfig);
+    const batchStatus = getReviewStatus(batchRow, sourceConfig);
+    if (sourceStatus !== "reviewed" || batchStatus !== "reviewed") {
+        return false;
+    }
+    const kanjiColumn = sourceConfig.kanjiColumn || "kanji";
+    return batchHeaders
+        .filter((header) => header !== kanjiColumn && header !== "__rowNumber")
+        .some((header) => (sourceRow[header] ?? "") !== (batchRow[header] ?? ""));
 }
 
 function countBatchStatuses(rows = [], sourceConfig = {}) {
@@ -108,7 +129,18 @@ function buildJlptKanjiSourceBatchMerge({
         if (!validStatuses.has(reviewStatus)) {
             blockers.push(`batch row ${row.__rowNumber} has invalid reviewStatus: ${reviewStatus}`);
         }
+        if (reviewStatus === "reviewed" && hasDisallowedReviewedEvidenceSurface(getEvidenceSurfaceFields(row, sourceConfig))) {
+            blockers.push(`batch row ${row.__rowNumber} uses table-of-contents evidence for reviewed assignment ${kanji}; use source_access_gap unless an exact assignment surface is verified`);
+        }
         const sourceRow = sourceIndex.get(kanji);
+        if (sourceRow && isReviewedReplacement({
+            sourceRow,
+            batchRow: row,
+            sourceConfig,
+            batchHeaders,
+        })) {
+            blockers.push(`batch row ${row.__rowNumber} would replace reviewed source evidence for ${kanji}; first downgrade the old row to source_access_gap or blocked with a correction reason`);
+        }
         if (sourceRow && isReviewedDowngrade({ sourceRow, batchRow: row, sourceConfig })) {
             reviewedDowngradeCount += 1;
             if (!allowReviewedDowngrades) {

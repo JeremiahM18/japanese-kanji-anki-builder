@@ -123,6 +123,29 @@ test("source batch merge rejects unsafe worksheet shape before writing", () => {
     assert.match(result.blockers.join("\n"), /invalid reviewStatus: approved/);
 });
 
+test("source batch merge rejects reviewed table-of-contents assignment evidence", () => {
+    const sourceText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\t\tneeds_review\t\t\t",
+        "月\t\tneeds_review\t\t\t",
+    ].join("\n");
+    const batchText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture table of contents\tfixture:toc\tVisible in table of contents",
+        "月\t\tsource_access_gap\tFixture table of contents\tfixture:toc\tChecked table of contents; exact assignment proof unavailable",
+    ].join("\n");
+
+    const result = buildJlptKanjiSourceBatchMerge({
+        sourceConfig: buildSourceConfig(),
+        sourceText,
+        batchText,
+    });
+
+    assert.equal(result.valid, false);
+    assert.match(result.blockers.join("\n"), /table-of-contents evidence for reviewed assignment 日/);
+    assert.doesNotMatch(result.blockers.join("\n"), /reviewed assignment 月/);
+});
+
 test("source batch merge blocks accidental downgrade of reviewed source evidence", () => {
     const sourceText = [
         "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
@@ -141,6 +164,27 @@ test("source batch merge blocks accidental downgrade of reviewed source evidence
 
     assert.equal(result.valid, false);
     assert.match(result.blockers.join("\n"), /would downgrade reviewed source evidence for 日/);
+});
+
+test("source batch merge blocks silent replacement of reviewed source evidence", () => {
+    const sourceText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN5\treviewed\tFixture exact N5 citation\tfixture:n5\tAlready reviewed from exact N5 surface",
+    ].join("\n");
+    const batchText = [
+        "kanji\tlevel\treviewStatus\tcitation\tevidenceRef\tnotes",
+        "日\tN4\treviewed\tFixture exact N4 citation\tfixture:n4\tDifferent reviewed assignment",
+    ].join("\n");
+
+    const result = buildJlptKanjiSourceBatchMerge({
+        sourceConfig: buildSourceConfig(),
+        sourceText,
+        batchText,
+    });
+
+    assert.equal(result.valid, false);
+    assert.match(result.blockers.join("\n"), /would replace reviewed source evidence for 日/);
+    assert.match(result.blockers.join("\n"), /first downgrade the old row to source_access_gap or blocked with a correction reason/);
 });
 
 test("source batch merge allows deliberate reviewed evidence corrections with a reason", () => {

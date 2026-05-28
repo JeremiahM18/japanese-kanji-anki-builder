@@ -29438,7 +29438,7 @@
     "notesIncludes": [
       "退院",
       "退職",
-      "引き下がる"
+      "後退"
     ],
     "exampleIncludes": [
       "父は来週退院する予定です。"
@@ -29470,7 +29470,7 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses たい because it is the common on-reading across support words such as 退院 and 退職 and matches the exact primary audio; kun-readings remain visible in source evidence and related support notes.",
+    "primaryReadingRationale": "Uses たい because it is the common on-reading across support words such as 退院, 退職, and 後退 and matches the exact primary audio; kun-readings remain visible in source evidence.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-24",
     "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
@@ -29478,7 +29478,7 @@
       {
         "type": "generated-surface",
         "source": "out/build/package/exports/jlpt-n3.tsv after source/card fixes and npm run deck:ready -- --levels=3",
-        "detail": "Generated card surface inspected for 退|たい: single-kanji anchor; Kanji and DisplayWord 退; StudyWordKanji blank; PrimaryReading たい; MeaningJP withdraw / retreat; KanjiMeanings withdraw / retreat / expel / reject / repel / resign / retire; notes 退院 / 退職 / 引き下がる; example 父は来週退院する予定です。 / ちちはらいしゅうたいいんするよていです。 / My father is scheduled to leave the hospital next week.; audio field includes kanji-reading-退-たい; stroke-order field includes 9000_退-stroke-order.gif."
+        "detail": "Generated card surface inspected for 退|たい: single-kanji anchor; Kanji and DisplayWord 退; StudyWordKanji blank; PrimaryReading たい; MeaningJP withdraw / retreat; KanjiMeanings withdraw / retreat / expel / reject / repel / resign / retire; notes 退院 / 退職 / 後退; example 父は来週退院する予定です。 / ちちはらいしゅうたいいんするよていです。 / My father is scheduled to leave the hospital next week.; audio field includes kanji-reading-退-たい; stroke-order field includes 9000_退-stroke-order.gif."
       },
       {
         "type": "media-audit",
@@ -29510,10 +29510,10 @@
       {
         "type": "current-standard-review",
         "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 退|たい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading たい, MeaningJP withdraw / retreat, KanjiMeanings withdraw / retreat / expel / reject / repel / resign / retire, example sentence 父は来週退院する予定です。, reading ちちはらいしゅうたいいんするよていです。, translation My father is scheduled to leave the hospital next week., notes/support surface 退院 / 退職 / 引き下がる, audio kanji-reading-退-たい, stroke-order media 9000_退-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only."
+        "detail": "Current-standard review revalidated 退|たい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading たい, MeaningJP withdraw / retreat, KanjiMeanings withdraw / retreat / expel / reject / repel / resign / retire, example sentence 父は来週退院する予定です。, reading ちちはらいしゅうたいいんするよていです。, translation My father is scheduled to leave the hospital next week., notes/support surface 退院 / 退職 / 後退, audio kanji-reading-退-たい, stroke-order media 9000_退-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only."
       }
     ],
-    "fixSummary": "Corrected the kanji-level meaning from support-word leave the hospital / withdraw to withdraw / retreat while leaving 退院 as support-only notes and example context."
+    "fixSummary": "Corrected the kanji-level meaning from support-word leave the hospital / withdraw to withdraw / retreat while leaving 退院 as support-only notes and example context; later replaced non-target support note 引き下がる with target-bearing 後退."
   },
   {
     "kanji": "逃",

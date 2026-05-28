@@ -112,7 +112,14 @@ npm run product:artifacts:kanji:n4:preflight
 npm run product:artifacts:kanji:n4
 ```
 
-For N3/N2/N1, the all-level source preflight is expected to fail closed until those governed field-source contracts exist:
+N3:
+
+```bash
+npm run product:artifacts:kanji:n3:preflight
+npm run product:artifacts:kanji:n3
+```
+
+For N2/N1, the all-level source preflight is expected to fail closed until those governed field-source contracts exist:
 
 ```bash
 npm run product:artifacts:kanji:preflight

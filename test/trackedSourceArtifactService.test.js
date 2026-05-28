@@ -193,9 +193,21 @@ test("buildTrackedSourceKanjiPreflight certifies N4 source availability without 
     assert.equal(report.sourceFiles.kanjiCardFieldSourceContractPath.endsWith(path.join("templates", "kanji_card_field_source_contracts", "n4.json")), true);
 });
 
+test("buildTrackedSourceKanjiPreflight certifies N3 source availability without local data", () => {
+    const report = buildTrackedSourceKanjiPreflight({ level: 3 });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.certifiable, true);
+    assert.equal(report.scope.type, "n3-tracked-source-kanji-preflight");
+    assert.equal(report.kanji.counts.expectedKanji, 341);
+    assert.equal(report.kanji.counts.readingReferenceKanji, 341);
+    assert.equal(report.kanji.counts.cardFieldSourceKanji, 341);
+    assert.equal(report.kanji.blockers.some((blocker) => blocker.id === "rich-source-provenance"), false);
+    assert.equal(report.sourceFiles.kanjiCardFieldSourceContractPath.endsWith(path.join("templates", "kanji_card_field_source_contracts", "n3.json")), true);
+});
+
 test("buildTrackedSourceKanjiPreflight fails closed for levels without field-source contracts", () => {
     for (const { level, expectedKanji } of [
-        { level: 3, expectedKanji: 341 },
         { level: 2, expectedKanji: 349 },
         { level: 1, expectedKanji: 1230 },
     ]) {
@@ -269,6 +281,7 @@ test("buildTrackedSourceKanjiArtifact builds source-derived kanji TSVs without l
     const cases = [
         { level: 5, rows: 80, scope: N5_TRACKED_SOURCE_KANJI_TSV_SCOPE },
         { level: 4, rows: 212, scope: null },
+        { level: 3, rows: 341, scope: null },
     ];
 
     for (const { level, rows, scope } of cases) {
@@ -299,27 +312,27 @@ test("buildTrackedSourceKanjiArtifact builds source-derived kanji TSVs without l
 });
 
 test("buildTrackedSourceKanjiArtifact fails closed for levels missing field-source contracts", async () => {
-    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-kanji-n3-"));
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-kanji-n2-"));
 
     try {
         const report = await buildTrackedSourceKanjiArtifact({
-            level: 3,
+            level: 2,
             outDir: tempRoot,
         });
 
         assert.equal(report.passed, false);
         assert.equal(report.certifiable, false);
-        assert.equal(report.scope.type, "n3-tracked-source-kanji-tsv");
+        assert.equal(report.scope.type, "n2-tracked-source-kanji-tsv");
         assert.equal(report.kanji.rowCount, 0);
         assert.equal(report.artifacts.kanjiTsvPath, null);
-        assert.equal(fs.existsSync(path.join(tempRoot, "exports", "jlpt-n3-kanji.tsv")), false);
+        assert.equal(fs.existsSync(path.join(tempRoot, "exports", "jlpt-n2-kanji.tsv")), false);
         assert.equal(fs.existsSync(path.join(tempRoot, "reports", "tracked-source-kanji-artifact-summary.json")), true);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }
 });
 
-test("buildTrackedSourceKanjiArtifacts reports all selected levels instead of only N5", async () => {
+test("buildTrackedSourceKanjiArtifacts passes for selected N5 through N3 levels", async () => {
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-kanji-all-"));
 
     try {
@@ -328,12 +341,33 @@ test("buildTrackedSourceKanjiArtifacts reports all selected levels instead of on
             outDir: tempRoot,
         });
 
-        assert.equal(report.passed, false);
-        assert.equal(report.certifiable, false);
+        assert.equal(report.passed, true);
+        assert.equal(report.certifiable, true);
         assert.deepEqual(report.levels.map((levelReport) => levelReport.scope.level), [5, 4, 3]);
         assert.equal(report.levels[0].passed, true);
         assert.equal(report.levels[1].passed, true);
-        assert.equal(report.levels[2].passed, false);
+        assert.equal(report.levels[2].passed, true);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildTrackedSourceKanjiArtifacts reports missing higher-level contracts fail-closed", async () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-tracked-source-kanji-all-"));
+
+    try {
+        const report = await buildTrackedSourceKanjiArtifacts({
+            levels: [5, 4, 3, 2],
+            outDir: tempRoot,
+        });
+
+        assert.equal(report.passed, false);
+        assert.equal(report.certifiable, false);
+        assert.deepEqual(report.levels.map((levelReport) => levelReport.scope.level), [5, 4, 3, 2]);
+        assert.equal(report.levels[0].passed, true);
+        assert.equal(report.levels[1].passed, true);
+        assert.equal(report.levels[2].passed, true);
+        assert.equal(report.levels[3].passed, false);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

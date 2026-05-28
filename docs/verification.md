@@ -46,6 +46,8 @@ npm run product:artifacts:kanji:n5:preflight
 npm run product:artifacts:kanji:n5
 npm run product:artifacts:kanji:n4:preflight
 npm run product:artifacts:kanji:n4
+npm run product:artifacts:kanji:n3:preflight
+npm run product:artifacts:kanji:n3
 npm run product:artifacts:kanji:all
 npm run product:artifacts:kanji:release-qa
 npm run product:readiness:n5
@@ -58,17 +60,17 @@ npm run release:gate
 
 It does not certify tracked-source kanji TSVs, `.apkg` files, managed media packages, or manual QA.
 
-`product:artifacts:kanji:n5:preflight` and `product:artifacts:kanji:n4:preflight` inspect tracked templates and report whether N5 or N4 kanji source availability is sufficient for tracked-source kanji TSV certification without ignored local `data/` inputs. N5 and N4 currently report `certifiable: yes` because JLPT level, starter meanings, component/radical data, KANJIDIC2 on/kun reading reference, and level-specific card-field source provenance are tracked and audited. `product:artifacts:kanji:preflight` runs the check across N5 through N1 and fails closed where governed card-field source contracts are missing.
+`product:artifacts:kanji:n5:preflight`, `product:artifacts:kanji:n4:preflight`, and `product:artifacts:kanji:n3:preflight` inspect tracked templates and report whether N5, N4, or N3 kanji source availability is sufficient for tracked-source kanji TSV certification without ignored local `data/` inputs. N5, N4, and N3 currently report `certifiable: yes` because JLPT level, starter meanings, component/radical data, KANJIDIC2 on/kun reading reference, and level-specific card-field source provenance are tracked and audited. `product:artifacts:kanji:preflight` runs the check across N5 through N1 and fails closed where governed card-field source contracts are missing.
 
-`product:artifacts:kanji:n5` and `product:artifacts:kanji:n4` build fresh source-derived kanji TSVs from tracked contracts only: JLPT level, KANJIDIC2 reading-reference, level-specific card-field source provenance, and component/radical data. They validate the kanji note schema header, row count, required learner-facing fields, primary-reading reference membership, and deterministic repeated output. They do not read ignored local `data/`, use network inference, package `.apkg` files, or certify media/manual QA.
+`product:artifacts:kanji:n5`, `product:artifacts:kanji:n4`, and `product:artifacts:kanji:n3` build fresh source-derived kanji TSVs from tracked contracts only: JLPT level, KANJIDIC2 reading-reference, level-specific card-field source provenance, and component/radical data. They validate the kanji note schema header, row count, required learner-facing fields, primary-reading reference membership, and deterministic repeated output. They do not read ignored local `data/`, use network inference, package `.apkg` files, or certify media/manual QA.
 
-`product:artifacts:kanji:all` runs the same tracked-source kanji TSV gate across N5 through N1. Today N5 and N4 pass and write TSV artifacts; N3, N2, and N1 fail closed on missing governed card-field source contracts. That failure is expected until each level has a source-derived field contract in the existing governance lane.
+`product:artifacts:kanji:all` runs the same tracked-source kanji TSV gate across N5 through N1. Today N5, N4, and N3 pass and write TSV artifacts; N2 and N1 fail closed on missing governed card-field source contracts. That failure is expected until each level has a source-derived field contract in the existing governance lane.
 
 `product:artifacts:kanji:release-qa` checks whether each selected kanji level has a passing tracked-source TSV artifact and then blocks release until APKG approval, managed stroke-order/audio media QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded. It intentionally cannot convert a green TSV gate into release readiness.
 
 Use `-- --require-certifiable` when the tracked source contracts are expected to be complete and the command should fail closed on any missing governed source lane.
 
-Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates; the tracked KANJIDIC2 contract is reading-reference evidence only, and the tracked N5/N4 card-field source contracts are source-provenance evidence only.
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Platinum gates; the tracked KANJIDIC2 contract is reading-reference evidence only, and the tracked N5/N4/N3 card-field source contracts are source-provenance evidence only.
 
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, tracked-source N5 kanji TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
 

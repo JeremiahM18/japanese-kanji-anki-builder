@@ -189,6 +189,7 @@ npm run deck:words:obsidian:certify-status -- --levels=<levels>
 npm run product:artifacts:n5
 npm run product:artifacts:kanji:n5
 npm run product:artifacts:kanji:n4
+npm run product:artifacts:kanji:n3
 npm run product:artifacts:kanji:preflight
 npm run product:artifacts:kanji:release-qa
 npm run release:gate

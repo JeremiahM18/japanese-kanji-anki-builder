@@ -11,9 +11,9 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 ### Added
 
 - Added a governed KANJIDIC2/EDRDG kanji on/kun reading-reference contract covering the tracked JLPT kanji inventory, with source-use limits, raw source identity, attribution, loader/audit tests, and tracked-source kanji preflight integration.
-- Added governed N5 and N4 kanji card-field source contracts derived from current-standard Platinum Japanese-source evidence, with manual field-bound citation limits, source-origin independence context, loader/audit tests, and tracked-source kanji preflight certification for N5/N4 source availability.
-- Added source-derived tracked-source kanji TSV artifact gates: N5 and N4 now build from tracked JLPT, KANJIDIC2 reading-reference, card-field source, and component contracts only, while the all-level gate reports N3/N2/N1 as fail-closed until their governed field-source contracts exist. The N5 readiness checkpoint now runs the N5 kanji TSV gate, and the APKG/media/manual QA gate refuses release certification without packaging and human QA evidence.
-- Added explicit N4 tracked-source kanji preflight and TSV npm aliases so N4 release checks do not depend on memorized script arguments or an all-level gate that intentionally fails on uncontracted higher levels.
+- Added governed N5, N4, and N3 kanji card-field source contracts derived from current-standard Platinum Japanese-source evidence, with manual field-bound citation limits, source-origin independence context, loader/audit tests, and tracked-source kanji preflight certification for N5/N4/N3 source availability.
+- Added source-derived tracked-source kanji TSV artifact gates: N5, N4, and N3 now build from tracked JLPT, KANJIDIC2 reading-reference, card-field source, and component contracts only, while the all-level gate reports N2/N1 as fail-closed until their governed field-source contracts exist. The N5 readiness checkpoint now runs the N5 kanji TSV gate, and the APKG/media/manual QA gate refuses release certification without packaging and human QA evidence.
+- Added explicit N4 and N3 tracked-source kanji preflight and TSV npm aliases so level release checks do not depend on memorized script arguments or an all-level gate that intentionally fails on uncontracted higher levels.
 
 ### Security
 

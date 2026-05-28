@@ -32351,7 +32351,7 @@
   {
     "kanji": "額",
     "status": "fixed_then_platinum",
-    "fixSummary": "Re-centered the card on amount / frame / forehead, strengthened the gold assertion, and suppressed low-value volume before Platinum certification.",
+    "fixSummary": "Re-centered the card on amount / frame, kept forehead in broader/support lanes, strengthened the gold assertion, and suppressed low-value volume before Platinum certification.",
     "readingIncludes": [
       "がく"
     ],
@@ -32382,7 +32382,7 @@
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0000935300; Bunka Joyo Kanji reading index",
-        "detail": "Japanese-source review for 額|がく: Kanjipedia lists 音 ガク, 訓 ひたい with outside ぬかずく, meanings for forehead, frame or plaque, and amount / quantity / money value, with compounds such as 金額, 高額, 差額, 定額, and 額縁. Bunka Joyo reading governance supports ガク and ひたい. This supports exported PrimaryReading がく, MeaningJP amount / frame / forehead, and KanjiMeanings amount / frame / forehead / plaque / sum after suppressing the low-value gloss volume."
+        "detail": "Japanese-source review for 額|がく: Kanjipedia lists 音 ガク, 訓 ひたい with outside ぬかずく, meanings for forehead, frame or plaque, and amount / quantity / money value, with compounds such as 金額, 高額, 差額, 定額, and 額縁. Bunka Joyo reading governance supports ガク and ひたい. This supports exported PrimaryReading がく, MeaningJP amount / frame, and KanjiMeanings amount / frame / forehead / plaque / sum after suppressing the low-value gloss volume."
       }
     ],
     "qualityGates": {
@@ -32403,7 +32403,7 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses がく because the card anchors common on-reading support words such as 金額 and 高額 while retaining 額 as amount/frame/forehead; ひたい remains visible in the kun-reading field.",
+    "primaryReadingRationale": "Uses がく because the card anchors common on-reading support words such as 金額 and 高額 while retaining forehead in the broader kanji meaning lane and support word 前額; ひたい remains visible in the kun-reading field.",
     "reviewStandard": "kanji-platinum-v3-evidence-lanes",
     "revalidatedAt": "2026-05-25",
     "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
@@ -32411,7 +32411,7 @@
       {
         "type": "generated-surface",
         "source": "out/build/package/exports/jlpt-n3.tsv after npm run deck:ready -- --levels=3",
-        "detail": "Generated card surface inspected for 額|がく: single-kanji anchor; Kanji and DisplayWord 額; StudyWordKanji blank; PrimaryReading がく; MeaningJP amount / frame / forehead; KanjiMeanings amount / frame / forehead / framed picture / plaque / sum / tablet; OnReading ガク; KunReading ひたい; notes 金額 - amount of money ／ 額 - amount / frame / forehead ／ 高額 - high-priced ／ 前額 - forehead; example 見積もりの金額をもう一度確認しました。 / みつもりのきんがくをもういちどかくにんしました。 / I checked the estimated amount once again.; audio field includes kanji-reading-額-がく; stroke-order field includes 984D_額-stroke-order.gif."
+        "detail": "Generated card surface inspected for 額|がく: single-kanji anchor; Kanji and DisplayWord 額; StudyWordKanji blank; PrimaryReading がく; MeaningJP amount / frame; KanjiMeanings amount / frame / forehead / framed picture / plaque / sum / tablet; OnReading ガク; KunReading ひたい; notes 金額 - amount of money ／ 額 - amount / frame ／ 高額 - high-priced ／ 前額 - forehead; example 見積もりの金額をもう一度確認しました。 / みつもりのきんがくをもういちどかくにんしました。 / I checked the estimated amount once again.; audio field includes kanji-reading-額-がく; stroke-order field includes 984D_額-stroke-order.gif."
       },
       {
         "type": "media-audit",
@@ -32443,7 +32443,7 @@
       {
         "type": "current-standard-review",
         "source": "core N3 current-standard structural Platinum review",
-        "detail": "Current-standard review revalidated 額|がく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading がく, MeaningJP amount / frame / forehead, KanjiMeanings amount / frame / forehead / framed picture / plaque / sum / tablet, example sentence 見積もりの金額をもう一度確認しました。, reading みつもりのきんがくをもういちどかくにんしました。, translation I checked the estimated amount once again., notes/support surface 金額 / 額 / 高額, audio kanji-reading-額-がく, stroke-order media 984D_額-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+        "detail": "Current-standard review revalidated 額|がく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading がく, MeaningJP amount / frame, KanjiMeanings amount / frame / forehead / framed picture / plaque / sum / tablet, example sentence 見積もりの金額をもう一度確認しました。, reading みつもりのきんがくをもういちどかくにんしました。, translation I checked the estimated amount once again., notes/support surface 金額 / 額 / 高額 / 前額, audio kanji-reading-額-がく, stroke-order media 984D_額-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
       }
     ]
   },

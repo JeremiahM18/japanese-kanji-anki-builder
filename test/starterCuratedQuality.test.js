@@ -646,8 +646,9 @@ test("resolved curated N3-N5 entries keep selected learner-facing editorial choi
     assert.deepEqual(curatedStudyData["面"].displayWord, { written: "画面", pron: "がめん" });
     assert.deepEqual(curatedStudyData["面"].blockedMeanings, ["interesting"]);
     assert.deepEqual(curatedStudyData["頂"].blockedMeanings, ["place on the head"]);
-    assert.equal(curatedStudyData["額"].englishMeaning, "amount / frame / forehead");
-    assert.ok(curatedStudyData["額"].notes.includes("額 （がく） - amount / frame / forehead"));
+    assert.equal(curatedStudyData["額"].englishMeaning, "amount / frame");
+    assert.ok(curatedStudyData["額"].notes.includes("額 （がく） - amount / frame"));
+    assert.ok(curatedStudyData["額"].notes.includes("前額 （ぜんがく） - forehead"));
     assert.deepEqual(curatedStudyData["額"].blockedMeanings, ["volume"]);
     assert.deepEqual(curatedStudyData["類"].blockedMeanings, ["genus"]);
     assert.deepEqual(curatedStudyData["飛"].blockedMeanings, ["skip (pages)"]);

@@ -25,7 +25,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Changed
 
-- Continued governed N3 core kanji Obsidian rereview through another three 8-card batches while keeping certification fail-closed: live N3 kanji is `341/341` generated, Gold, and structural Platinum; Obsidian is `312/341`; `29` Platinum entries still need substantive Obsidian proof; and `0` generated rows are blocked/failing structurally. N3 kanji NLP packets remain assistive review context only, not certification proof.
+- Continued governed N3 core kanji Obsidian rereview through another three 8-card batches while keeping certification fail-closed: live N3 kanji is `341/341` generated, Gold, and structural Platinum; Obsidian is `336/341`; `5` Platinum entries still need substantive Obsidian proof; and `0` generated rows are blocked/failing structurally. N3 kanji NLP packets remain assistive review context only, not certification proof.
 - Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.
 - Completed the governed N4 word Obsidian proof lane while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word structural Platinum is `700/700`, N4 word Obsidian is `700/700`, total N5/N4 word Obsidian is `987/987`, `0` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
 - Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `239/344` (`69.5%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.
@@ -37,6 +37,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 - Reworked the tracked kanji Platinum regression test so clean CI no longer reads ignored `data/kanji_jlpt_only.json`, and added a source-boundary guard that rejects tracked tests reading ignored root `data/*` inputs.
 - Corrected the N3 kanji `退|たい` support notes so every support vocabulary item contains the target kanji before recording Obsidian proof.
+- Corrected the N3 kanji `額|がく` support note and primary meaning lane so `がく` is centered on amount/frame while forehead remains in broader/support lanes before recording Obsidian proof.
 - Corrected the N4 word card support note for `自業自得|じごうじとく` so the higher-level constituent `得` is consistently identified as a JLPT N2 support kanji before Obsidian proof is counted.
 
 ## [1.0.0] - 2026-03-31

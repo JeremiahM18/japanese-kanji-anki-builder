@@ -643,6 +643,16 @@
       "丸",
       "丸ごと"
     ],
+    "blockedMeanings": [
+      "-ship",
+      "curl up",
+      "explain away",
+      "full (month)",
+      "perfection",
+      "pills",
+      "roll up",
+      "seduce"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "丸い （まるい） - round ／ 丸 （まる） - circle / round shape ／ 丸ごと （まるごと） - whole / entirely",
@@ -1081,7 +1091,7 @@
     }
   },
   "乾": {
-    "englishMeaning": "dry",
+    "englishMeaning": "dry / dry something",
     "displayWord": {
       "written": "乾く",
       "pron": "かわく"
@@ -1097,6 +1107,13 @@
       "乾く",
       "乾かす",
       "乾杯"
+    ],
+    "blockedMeanings": [
+      "dessicate",
+      "drink up",
+      "drought",
+      "emperor",
+      "heaven"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -1964,7 +1981,7 @@
     }
   },
   "仏": {
-    "englishMeaning": "Buddha / Buddhist",
+    "englishMeaning": "Buddha / Buddhism / France",
     "displayWord": {
       "written": "仏教",
       "pron": "ぶっきょう"
@@ -1977,13 +1994,17 @@
     ],
     "jlpt": 2,
     "preferredWords": [
+      "仏",
       "仏教",
       "仏像",
       "大仏"
     ],
+    "blockedMeanings": [
+      "the dead"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "仏教 （ぶっきょう） - Buddhism ／ 仏像 （ぶつぞう） - Buddhist statue ／ 大仏 （だいぶつ） - Great Buddha",
+    "notes": "仏 （ほとけ） - Buddha ／ 仏教 （ぶっきょう） - Buddhism ／ 仏像 （ぶつぞう） - Buddhist statue ／ 大仏 （だいぶつ） - Great Buddha",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "京都で有名な仏像を見ました。",
@@ -2931,6 +2952,11 @@
       "伺う",
       "お伺いする",
       "様子を伺う"
+    ],
+    "blockedMeanings": [
+      "implore",
+      "pay respects",
+      "question"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],

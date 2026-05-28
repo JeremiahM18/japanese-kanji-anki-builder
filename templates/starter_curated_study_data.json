@@ -21292,7 +21292,7 @@
     }
   },
   "平": {
-    "englishMeaning": "fine / calm / flat",
+    "englishMeaning": "flat / even / calm",
     "displayWord": {
       "written": "平気",
       "pron": "へいき"
@@ -23535,7 +23535,7 @@
     }
   },
   "得": {
-    "englishMeaning": "gain / acquire / be good at",
+    "englishMeaning": "gain / acquire / benefit",
     "displayWord": {
       "written": "得意",
       "pron": "とくい"
@@ -23568,7 +23568,7 @@
     }
   },
   "御": {
-    "englishMeaning": "meal / polite prefix",
+    "englishMeaning": "honorable / polite prefix",
     "displayWord": {
       "written": "御飯",
       "pron": "ごはん"
@@ -24982,6 +24982,10 @@
   },
   "悩": {
     "englishMeaning": "worry / be troubled",
+    "blockedMeanings": [
+      "illness",
+      "in pain"
+    ],
     "displayWord": {
       "written": "悩む",
       "pron": "なやむ"
@@ -26571,6 +26575,9 @@
   },
   "戻": {
     "englishMeaning": "return / go back",
+    "blockedMeanings": [
+      "re-"
+    ],
     "displayWord": {
       "written": "戻る",
       "pron": "もどる"
@@ -27026,6 +27033,9 @@
   },
   "技": {
     "englishMeaning": "skill / technique",
+    "blockedMeanings": [
+      "vocation"
+    ],
     "displayWord": {
       "written": "技術",
       "pron": "ぎじゅつ"
@@ -27269,6 +27279,9 @@
   },
   "抜": {
     "englishMeaning": "pull out / omit",
+    "blockedMeanings": [
+      "pilfer"
+    ],
     "displayWord": {
       "written": "抜く",
       "pron": "ぬく"
@@ -27535,6 +27548,9 @@
   },
   "担": {
     "englishMeaning": "carry / take responsibility",
+    "blockedMeanings": [
+      "raise"
+    ],
     "displayWord": {
       "written": "担当",
       "pron": "たんとう"

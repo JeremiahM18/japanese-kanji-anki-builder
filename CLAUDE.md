@@ -135,6 +135,12 @@ That means:
 - do not churn word rows just to move a metric once the active triage backlog is cleared
 - use `npm run deck:words:ready -- --levels=5 --require-no-active-triage` as the normal N5 word guard before and after changes that could affect the shared word-deck pipeline
 - use `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` as the normal N4 word guard before and after changes that could affect the shared word-deck pipeline
+- readiness alone is not sufficient for frozen N4 word rows; it does not validate Gold protected snippets, current-standard Platinum protected snippets, or strict Obsidian certification proof
+- when a change can affect generated word-card fields, kanji breakdown text, shared curated meanings, review snapshots, the proof-provider path, or N4 frozen-row certification, run the N4 frozen-row proof bundle serially:
+  - `npm run deck:words:review:n4`
+  - `npm run deck:words:platinum:n4`
+  - `npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`
+  - `npm run deck:words:obsidian:certify-status -- --levels=5,4`
 
 N4 word work uses the same contract bar as N5:
 
@@ -233,7 +239,10 @@ N4 word guard checks:
 
 ```bash
 npm run deck:words:review:n4
+npm run deck:words:platinum:n4
 npm run deck:words:ready -- --levels=5,4 --require-no-active-triage
+npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4
+npm run deck:words:obsidian:certify-status -- --levels=5,4
 npm run deck:words:completion:n4 -- --json
 npm run deck:words:reading-audit:n4 -- --json
 npm run deck:words:triage:n4 -- --json

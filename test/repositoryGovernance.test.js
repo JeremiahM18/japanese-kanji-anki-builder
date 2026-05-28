@@ -281,6 +281,42 @@ test("README presents the review tier model before status snapshots", () => {
     assert.match(tierSection, /Kanji and word decks run them separately/);
 });
 
+test("CLAUDE N5/N4 word freeze guard requires fail-closed frozen-row proof checks", () => {
+    const claude = readRepoFile("CLAUDE.md");
+    const freezeSection = extractReadmeSection(claude, "N5/N4 Word Freeze");
+    const commandSection = claude.slice(claude.indexOf("N4 word guard checks:"));
+    const requiredFreezeCommands = [
+        "npm run deck:words:review:n4",
+        "npm run deck:words:platinum:n4",
+        "npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4",
+        "npm run deck:words:obsidian:certify-status -- --levels=5,4",
+    ];
+
+    assert.match(
+        freezeSection,
+        /readiness alone is not sufficient for frozen N4 word rows/i,
+        "CLAUDE.md must warn that readiness does not prove frozen N4 word certification."
+    );
+    assert.match(
+        freezeSection,
+        /Gold protected snippets, current-standard Platinum protected snippets, or strict Obsidian certification proof/i,
+        "CLAUDE.md must name the frozen-row proof surfaces that readiness misses."
+    );
+
+    for (const command of requiredFreezeCommands) {
+        assert.equal(
+            freezeSection.includes(`\`${command}\``),
+            true,
+            `N5/N4 word freeze section must require ${command}.`
+        );
+        assert.match(
+            commandSection,
+            new RegExp(command.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&"), "u"),
+            `N4 word guard command list must include ${command}.`
+        );
+    }
+});
+
 test("documentation standard defines enterprise doc schemas and README routing", () => {
     const readme = readRepoFile("README.md");
     const standard = readRepoFile(path.join("docs", "documentation-standard.md"));

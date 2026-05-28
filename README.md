@@ -78,7 +78,7 @@ All five JLPT levels are first-class product surfaces. N5/N4/N3 kanji are Obsidi
 | N5 kanji | `80/80` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n5`, `deck:kanji:obsidian:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
 | N4 kanji | `212/212` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
 | N3 kanji | `341/341` generated, Gold, current-standard structural Platinum, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:platinum:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
-| N2 kanji | `349/349` generated and Gold; `10/349` current-standard structural Platinum; Obsidian not started. | `deck:kanji:review-status`, `deck:platinum:batch -- --level=2 --limit=10 --queue=missing-current-standard --json`, `deck:ready -- --levels=2` |
+| N2 kanji | `349/349` generated and Gold; `40/349` current-standard structural Platinum; Obsidian not started. | `deck:kanji:review-status`, `deck:platinum:batch -- --level=2 --limit=10 --queue=missing-current-standard --json`, `deck:ready -- --levels=2` |
 | N1 kanji | `1230/1230` generated and Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=1` |
 | Additional kanji diagnostic | `0` physical additional cards. `421` raw source claims are governed and suppressed because they collide with core-retained kanji; unresolved duplicates are `0`. | `deck:kanji:additional:ready`, `deck:kanji:review-status` |
 

@@ -61,7 +61,16 @@ If NLP or the batch rubric exposes a real issue, fix tracked source/card data fi
 
 6. Record Obsidian proof only after the review happened.
 
-The manifest entry must carry structured `rereviewProvenance` plus actual card-bound example-sentence quality evidence. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, generated TSVs, Gold fixtures, or a clean batch report alone.
+The canonical proof record is a complete JSONL ledger event under `templates/obsidian_proof_ledger/*.jsonl`. It must carry structured proof fields plus actual card-bound example-sentence quality evidence. Do not add inline `rereviewProvenance` to tracked review sets for migrated ledger levels such as N3 kanji.
+
+Use the governed appender instead of ad hoc helper scripts. Keep the draft input under an ignored/local path such as `out/obsidian-proof/drafts/`, inspect the dry-run report, then rerun with `--write` only after the human review and dry-run both pass:
+
+```bash
+npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl
+npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl --write
+```
+
+The appender validates the proof-event schema, card identity binding, tracked review-set target, canonical ledger output path, duplicate proof ids, duplicate proof targets, and post-write reconciliation. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, generated TSVs, Gold fixtures, Platinum structural pass text, or a clean batch report alone.
 
 7. Verify the structural and reading gates for the batch.
 
@@ -118,7 +127,7 @@ npm run deck:platinum:batch -- --level=<level> --limit=12
 
 10. Commit only the completed batch.
 
-Commit the manifest changes and the exact verification notes together. Do not mix source-contract generation, Obsidian proof, APKG/media QA, unrelated cleanup, or generated ignored artifacts into the same commit.
+Commit the canonical ledger changes and the exact verification notes together. Do not mix source-contract generation, Obsidian proof, APKG/media QA, unrelated cleanup, draft input files, or generated ignored artifacts into the same commit.
 
 11. Run certification only when the selected level is expected to be fully Obsidian.
 
@@ -171,7 +180,14 @@ If NLP or the batch rubric exposes a real issue, fix tracked source/card data fi
 
 6. Record Obsidian proof only after the review happened.
 
-Only after the live generated word row is actually rereviewed should Obsidian proof be added. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
+Only after the live generated word row is actually rereviewed should Obsidian proof be added. New substantive word proof should be recorded directly as canonical JSONL ledger events, not as inline `rereviewProvenance` that gets migrated later. Word proof must bind exact written+reading identity, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
+
+Use the governed appender with an ignored/local draft input, dry-run first, and write only after the dry-run report is clean:
+
+```bash
+npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl
+npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl --write
+```
 
 7. Verify the batch.
 
@@ -202,7 +218,7 @@ npm run deck:words:platinum:batch -- --level=<level> --limit=8
 
 8. Commit only the completed batch.
 
-Commit the manifest changes and the exact verification notes together. Do not mix source-contract generation, Obsidian proof, APKG/media QA, unrelated cleanup, or generated ignored artifacts into the same commit.
+Commit the canonical ledger changes and the exact verification notes together. Do not mix source-contract generation, Obsidian proof, APKG/media QA, unrelated cleanup, draft input files, or generated ignored artifacts into the same commit.
 
 9. Run certification only when the selected level is expected to be fully Obsidian.
 
@@ -220,6 +236,7 @@ Keep these lanes separate:
 
 - Canonical proof ledger: `templates/obsidian_proof_ledger/*.jsonl`.
 - Tracked review-set binding source: `templates/platinum_n<level>_review_set.json` and `templates/platinum_n<level>_word_review_set.json`.
+- Ignored/local proof-event draft input: `out/obsidian-proof/drafts/*.jsonl`; this is an input staging aid only and must not be staged as source truth.
 - Generated compatibility view: `out/obsidian-proof/compatibility/templates/platinum_n<level>_review_set.json` and `out/obsidian-proof/compatibility/templates/platinum_n<level>_word_review_set.json`.
 - Generated local query mirror: `out/obsidian-proof/sqlite/obsidian-proof-ledger.sqlite`.
 

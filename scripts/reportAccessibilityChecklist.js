@@ -61,6 +61,9 @@ async function main() {
     }
 
     process.stdout.write(formatAccessibilityReviewReport(report));
+    if (!report.summary.valid) {
+        process.exitCode = 1;
+    }
 }
 
 if (require.main === module) {

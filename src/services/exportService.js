@@ -106,12 +106,19 @@ function formatAnkiAudioField(audioPath) {
     return `[sound:${escapeHtml(path.posix.basename(audioPath))}]`;
 }
 
+function getStrokeOrderAltText(strokeOrderPath) {
+    const fileName = path.posix.basename(strokeOrderPath || "");
+    const match = fileName.match(/^[0-9A-F]+_(.+?)-stroke-order\.[^.]+$/u);
+    const kanji = match?.[1]?.trim();
+    return kanji ? `Stroke order for ${kanji}` : "Stroke order media";
+}
+
 function formatAnkiStrokeOrderField(strokeOrderPath) {
     if (!strokeOrderPath) {
         return "";
     }
 
-    return `<img src="${escapeHtml(path.posix.basename(strokeOrderPath))}" />`;
+    return `<img src="${escapeHtml(path.posix.basename(strokeOrderPath))}" alt="${escapeHtml(getStrokeOrderAltText(strokeOrderPath))}" />`;
 }
 
 function selectPrimaryReading({ displayWord, bestWord }) {

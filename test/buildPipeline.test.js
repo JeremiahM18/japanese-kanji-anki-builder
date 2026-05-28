@@ -381,7 +381,7 @@ test("runBuildPipeline exports audio from the audio manifest when the stroke-ord
     });
 
     const tsv = fs.readFileSync(path.join(outDir, "exports", "jlpt-n5.tsv"), "utf-8");
-    assert.match(tsv, /<img src="65E5_日-stroke-order\.gif" \/>/);
+    assert.match(tsv, /<img src="65E5_日-stroke-order\.gif" alt="Stroke order for 日" \/>/);
     assert.match(tsv, /\[sound:65E5_日-kanji-reading-日-ひ\.wav\]/);
 });
 

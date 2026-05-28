@@ -1,3 +1,4 @@
+const fs = require("node:fs");
 const path = require("node:path");
 
 const JAPANESE_FONT_MARKERS = [
@@ -116,6 +117,49 @@ function formatRatio(value) {
     return Number.isFinite(value) ? Number(value.toFixed(2)) : null;
 }
 
+function hasNonEmptyAltAttribute(imgTag) {
+    return /\salt\s*=\s*(?:"[^"]+"|'[^']+'|[^\s>]+)/iu.test(String(imgTag || ""));
+}
+
+function buildExportedImageAltSummary(exportsDir) {
+    const summary = {
+        checkedFiles: [],
+        imageTagCount: 0,
+        imageTagsWithAlt: 0,
+        imageTagsMissingAlt: 0,
+        missingAltSamples: [],
+    };
+
+    if (!exportsDir || !fs.existsSync(exportsDir)) {
+        return summary;
+    }
+
+    const exportFiles = fs.readdirSync(exportsDir)
+        .filter((fileName) => fileName.endsWith(".tsv"))
+        .sort((a, b) => a.localeCompare(b, "en"));
+
+    for (const fileName of exportFiles) {
+        const filePath = path.join(exportsDir, fileName);
+        const text = fs.readFileSync(filePath, "utf-8");
+        summary.checkedFiles.push(fileName);
+
+        for (const match of text.matchAll(/<img\b[^>]*>/giu)) {
+            const tag = match[0];
+            summary.imageTagCount += 1;
+            if (hasNonEmptyAltAttribute(tag)) {
+                summary.imageTagsWithAlt += 1;
+            } else {
+                summary.imageTagsMissingAlt += 1;
+                if (summary.missingAltSamples.length < 5) {
+                    summary.missingAltSamples.push(`${fileName}: ${tag}`);
+                }
+            }
+        }
+    }
+
+    return summary;
+}
+
 function buildAccessibilityReviewReport({ deckKind, schema, packageSummary }) {
     const selectorMap = buildSelectorMap(schema.css);
     const cardStyle = selectorMap.get(".card") || {};
@@ -197,6 +241,17 @@ function buildAccessibilityReviewReport({ deckKind, schema, packageSummary }) {
                 : "Word answer side should include KanjiBreakdown so stroke-order media and cross-level labels remain visible.",
         );
     }
+
+    const exportedImageAltSummary = buildExportedImageAltSummary(packageSummary?.exportsDir);
+    const allExportedImagesHaveAlt = exportedImageAltSummary.imageTagsMissingAlt === 0;
+    addCheck(
+        "exported-image-alt-text",
+        "Exported image tags carry non-empty alt text",
+        allExportedImagesHaveAlt ? "pass" : "fail",
+        allExportedImagesHaveAlt
+            ? `Checked ${exportedImageAltSummary.imageTagCount} exported image tags across ${exportedImageAltSummary.checkedFiles.length} TSV files; all include non-empty alt text.`
+            : `Found ${exportedImageAltSummary.imageTagsMissingAlt}/${exportedImageAltSummary.imageTagCount} exported image tags without non-empty alt text. Samples: ${exportedImageAltSummary.missingAltSamples.join(" | ")}`
+    );
 
     const contrastChecksByDeck = {
         kanji: [
@@ -282,9 +337,11 @@ function formatAccessibilityReviewReport(report) {
 
 module.exports = {
     JAPANESE_FONT_MARKERS,
+    buildExportedImageAltSummary,
     buildAccessibilityReviewReport,
     buildSelectorMap,
     computeContrastRatio,
+    hasNonEmptyAltAttribute,
     formatAccessibilityReviewReport,
     parseCssBlocks,
     parseHexColor,

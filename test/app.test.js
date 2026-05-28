@@ -444,11 +444,11 @@ test("inference route exposes curated and corpus-backed study output", async () 
         assert.equal(json.inference.primaryReading, "ひ");
         assert.equal(json.inference.notes, "<ruby>日本<rt>にほん</rt></ruby> - Japan ／ curated-note");
         assert.equal(json.inference.strokeOrderPath, "animations/65E5_日-stroke-order.gif");
-        assert.equal(json.inference.strokeOrderField, '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(json.inference.strokeOrderField, '<img src="65E5_日-stroke-order.gif" alt="Stroke order for 日" />');
         assert.equal(json.inference.strokeOrderImagePath, "images/65E5_日-stroke-order.svg");
-        assert.equal(json.inference.strokeOrderImageField, '<img src="65E5_日-stroke-order.svg" />');
+        assert.equal(json.inference.strokeOrderImageField, '<img src="65E5_日-stroke-order.svg" alt="Stroke order for 日" />');
         assert.equal(json.inference.strokeOrderAnimationPath, "animations/65E5_日-stroke-order.gif");
-        assert.equal(json.inference.strokeOrderAnimationField, '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(json.inference.strokeOrderAnimationField, '<img src="65E5_日-stroke-order.gif" alt="Stroke order for 日" />');
         assert.equal(json.inference.audioPath, "audio/65E5_日-kanji-reading-日.mp3");
         assert.equal(json.inference.audioField, "[sound:65E5_日-kanji-reading-日.mp3]");
         assert.equal(json.inference.sentenceCandidates[0].type, "curated");
@@ -648,7 +648,7 @@ test("download export sets attachment headers and includes Anki-ready media fiel
         assert.equal(cols[5], "");
         assert.equal(cols[6], "ニチ");
         assert.equal(cols[7], "ひ");
-        assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
+        assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" alt="Stroke order for 日" />');
         assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
         assert.match(cols[11], /curated-note/);
         assert.match(cols[12], /日本は島国です/);

@@ -19,7 +19,10 @@ test("formatAnkiAudioField emits sound markup from the managed asset name", () =
 });
 
 test("formatAnkiStrokeOrderField emits image markup from the managed asset name", () => {
-    assert.equal(formatAnkiStrokeOrderField("animations/65E5_日-stroke-order.gif"), '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(
+        formatAnkiStrokeOrderField("animations/65E5_日-stroke-order.gif"),
+        '<img src="65E5_日-stroke-order.gif" alt="Stroke order for 日" />'
+    );
     assert.equal(formatAnkiStrokeOrderField(""), "");
 });
 
@@ -28,14 +31,14 @@ test("formatAnkiStrokeOrderField emits image markup from the managed asset name"
 test("formatAnkiStrokeOrderField keeps animated GIF references Anki can render", () => {
     assert.equal(
         formatAnkiStrokeOrderField("animations/4E00_一-stroke-order.gif"),
-        '<img src="4E00_一-stroke-order.gif" />'
+        '<img src="4E00_一-stroke-order.gif" alt="Stroke order for 一" />'
     );
 });
 
 test("formatAnki media fields escape filenames before HTML rendering", () => {
     assert.equal(
         formatAnkiStrokeOrderField('animations/bad" onerror="alert(1).gif'),
-        '<img src="bad&quot; onerror=&quot;alert(1).gif" />'
+        '<img src="bad&quot; onerror=&quot;alert(1).gif" alt="Stroke order media" />'
     );
     assert.equal(
         formatAnkiAudioField("audio/bad<script>.mp3"),
@@ -1385,7 +1388,7 @@ test("buildTsvForJlptLevel builds expected TSV rows and respects limit", async (
     assert.equal(cols[5], "");
     assert.equal(cols[6], "ニチ、 ジツ");
     assert.equal(cols[7], "ひ、 び、 か");
-    assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" />');
+    assert.equal(cols[8], '<img src="65E5_日-stroke-order.gif" alt="Stroke order for 日" />');
     assert.equal(cols[9], "[sound:65E5_日-kanji-reading-日.mp3]");
     assert.equal(cols[10], "日");
     assert.equal(cols[11], "<ruby>日本<rt>にほん</rt></ruby> - Japan ／ <ruby>日<rt>にち</rt></ruby>よう<ruby>日<rt>び</rt></ruby> - Sunday");

@@ -531,6 +531,30 @@ test("child process execution stays explicit and allowlisted", () => {
     assert.deepEqual(shellEnabledFiles, [], "Scripts and services should execute subprocesses without shell expansion.");
 });
 
+test("shipped inference and word ordering paths avoid host-locale string ordering", () => {
+    const deterministicOrderingFiles = [
+        "src/inference/candidateExtractor.js",
+        "src/inference/meaningInference.js",
+        "src/inference/ranking.js",
+        "src/inference/sentenceInference.js",
+        "src/services/wordExportService.js",
+    ];
+
+    for (const relativePath of deterministicOrderingFiles) {
+        const text = readRepoFile(relativePath);
+        assert.doesNotMatch(
+            text,
+            /\.localeCompare\(/u,
+            `${relativePath} is in the shipped inference/word ordering path and must not depend on host locale ordering.`
+        );
+        assert.match(
+            text,
+            /compareStableStrings/u,
+            `${relativePath} should use compareStableStrings for deterministic string tiebreakers.`
+        );
+    }
+});
+
 test("recursive generated-output cleanup stays behind the shared safety guard", () => {
     const files = [
         ...listJavaScriptFiles("scripts"),

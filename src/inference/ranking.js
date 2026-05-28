@@ -6,7 +6,7 @@ const {
     scoreSource,
     scoreTags,
 } = require("./sentenceInference");
-const { normalizeText } = require("../utils/text");
+const { compareStableStrings, normalizeText } = require("../utils/text");
 const { HAN_CHAR_RE, KANA_ONLY_RE, KATAKANA_ONLY_RE } = require("../utils/japanese");
 
 const INVALID_SCORE = -999;
@@ -84,7 +84,7 @@ function compareRankedCandidates(a, b) {
     if (a.pron.length !== b.pron.length) {
         return a.pron.length - b.pron.length;
     }
-    return a.text.localeCompare(b.text);
+    return compareStableStrings(a.text, b.text);
 }
 
 function createBreakdown() {

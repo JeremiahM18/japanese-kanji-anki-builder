@@ -1,4 +1,4 @@
-const { normalizeGlosses, normalizeText } = require("../utils/text");
+const { compareStableStrings, normalizeGlosses, normalizeText } = require("../utils/text");
 
 function pickPrimaryVariant(variants) {
     if (!Array.isArray(variants) || variants.length === 0) {
@@ -24,7 +24,7 @@ function pickPrimaryVariant(variants) {
         if (a.pronouncedLength !== b.pronouncedLength) {
             return a.pronouncedLength - b.pronouncedLength;
         }
-        return String(a.variant.written).localeCompare(String(b.variant.written));
+        return compareStableStrings(a.variant.written, b.variant.written);
     });
 
     return ranked[0]?.variant || null;

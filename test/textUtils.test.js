@@ -1,7 +1,12 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { decodeHtmlEntities, escapeHtml, sanitizeRubyMarkup } = require("../src/utils/text");
+const {
+    compareStableStrings,
+    decodeHtmlEntities,
+    escapeHtml,
+    sanitizeRubyMarkup,
+} = require("../src/utils/text");
 
 test("escapeHtml escapes text for HTML-rendered Anki fields", () => {
     assert.equal(
@@ -16,6 +21,13 @@ test("decodeHtmlEntities decodes one layer of Anki-visible escaped text", () => 
         "父 -> とう & <tag> \"quoted\" 'single'"
     );
     assert.equal(decodeHtmlEntities("&amp;gt;"), "&gt;");
+});
+
+test("compareStableStrings sorts by code point instead of host locale", () => {
+    assert.equal(compareStableStrings("日", "本") < 0, true);
+    assert.equal(compareStableStrings("本", "日") > 0, true);
+    assert.equal(compareStableStrings("日", "日々") < 0, true);
+    assert.equal(compareStableStrings("雨", "雨"), 0);
 });
 
 test("sanitizeRubyMarkup preserves ruby tags and escapes everything else", () => {

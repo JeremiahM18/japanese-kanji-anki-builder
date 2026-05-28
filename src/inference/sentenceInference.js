@@ -1,3 +1,5 @@
+const { compareStableStrings } = require("../utils/text");
+
 function buildDefinitionSentence(candidate) {
     return {
         type: "definition",
@@ -199,7 +201,7 @@ function selectCorpusSentences({ rankedCandidates, kanji, sentenceCorpus }) {
         const matches = sentenceCorpus
             .filter((entry) => entry.kanji === kanji || entry.written === candidate.written)
             .map((entry) => buildCorpusSentence(entry, candidate, kanji))
-            .sort((a, b) => b.score - a.score || a.japanese.localeCompare(b.japanese));
+            .sort((a, b) => b.score - a.score || compareStableStrings(a.japanese, b.japanese));
 
         sentences.push(...matches);
     }

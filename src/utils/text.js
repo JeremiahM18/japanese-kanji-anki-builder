@@ -2,6 +2,21 @@ function normalizeText(value) {
     return String(value ?? "").trim().toLowerCase();
 }
 
+function compareStableStrings(left, right) {
+    const leftChars = Array.from(String(left ?? ""));
+    const rightChars = Array.from(String(right ?? ""));
+    const sharedLength = Math.min(leftChars.length, rightChars.length);
+
+    for (let index = 0; index < sharedLength; index += 1) {
+        const diff = leftChars[index].codePointAt(0) - rightChars[index].codePointAt(0);
+        if (diff !== 0) {
+            return diff;
+        }
+    }
+
+    return leftChars.length - rightChars.length;
+}
+
 function normalizeGlosses(glosses) {
     return (Array.isArray(glosses) ? glosses : [])
         .map((gloss) => normalizeText(gloss))
@@ -71,6 +86,7 @@ function labelReading(onArr, kunArr) {
 }
 
 module.exports = {
+    compareStableStrings,
     decodeHtmlEntities,
     escapeHtml,
     labelKunReading,

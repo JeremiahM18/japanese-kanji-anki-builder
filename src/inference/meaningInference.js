@@ -1,4 +1,4 @@
-const { normalizeText } = require("../utils/text");
+const { compareStableStrings, normalizeText } = require("../utils/text");
 const { KATAKANA_ONLY_RE } = require("../utils/japanese");
 
 const LEARNER_NOISE_PATTERNS = [
@@ -69,7 +69,7 @@ function pickBestEnglishMeaning(meanings) {
             meaning,
             score: scoreMeaningCandidate(meaning),
         }))
-        .sort((a, b) => b.score - a.score || a.meaning.length - b.meaning.length || a.meaning.localeCompare(b.meaning));
+        .sort((a, b) => b.score - a.score || a.meaning.length - b.meaning.length || compareStableStrings(a.meaning, b.meaning));
 
     return ranked[0]?.meaning || String(meanings[0] ?? "").trim();
 }

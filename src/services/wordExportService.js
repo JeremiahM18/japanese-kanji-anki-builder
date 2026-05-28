@@ -9,7 +9,7 @@ const {
 } = require("./exportService");
 const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { escapeHtml, sanitizeRubyMarkup, tsvEscape } = require("../utils/text");
+const { compareStableStrings, escapeHtml, sanitizeRubyMarkup, tsvEscape } = require("../utils/text");
 const { HAN_CHAR_RE, KATAKANA_ONLY_RE, isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 const { loadAnkiNoteSchema } = require("../config/ankiNoteSchema");
 const { compilePolicyRegexList, loadDeckEditorialPolicy } = require("../datasets/deckEditorialPolicy");
@@ -103,8 +103,8 @@ function compareWordDeckAuditOrder(a, b) {
     return (
         (b.candidate.score || 0) - (a.candidate.score || 0)
         || a.candidate.written.length - b.candidate.written.length
-        || a.candidate.written.localeCompare(b.candidate.written)
-        || a.candidate.pron.localeCompare(b.candidate.pron)
+        || compareStableStrings(a.candidate.written, b.candidate.written)
+        || compareStableStrings(a.candidate.pron, b.candidate.pron)
     );
 }
 
@@ -200,7 +200,7 @@ function sortWordDeckEntriesForStudy(entries, { levelNumber, jlptOnlyJson, seed 
             a.tier - b.tier
             || hashStringToUint32(`${seed}|N${levelNumber || ""}|group|${a.groupKey}`)
             - hashStringToUint32(`${seed}|N${levelNumber || ""}|group|${b.groupKey}`)
-            || String(a.groupKey).localeCompare(String(b.groupKey))
+            || compareStableStrings(a.groupKey, b.groupKey)
         ));
 
     const ordered = [];
@@ -212,7 +212,7 @@ function sortWordDeckEntriesForStudy(entries, { levelNumber, jlptOnlyJson, seed 
             const roundBuckets = [...tierBuckets].sort((a, b) => (
                 hashStringToUint32(`${seed}|N${levelNumber || ""}|tier|${tier}|round|${round}|${a.groupKey}`)
                 - hashStringToUint32(`${seed}|N${levelNumber || ""}|tier|${tier}|round|${round}|${b.groupKey}`)
-                || String(a.groupKey).localeCompare(String(b.groupKey))
+                || compareStableStrings(a.groupKey, b.groupKey)
             ));
 
             for (const item of roundBuckets) {
@@ -696,7 +696,7 @@ function collectKanjiReadingCandidates({ kanji, inference, curatedEntry = null, 
     }
 
     return [...new Set(readings.flatMap((reading) => buildReadingSurfaceVariants(reading)))]
-        .sort((a, b) => b.length - a.length || a.localeCompare(b));
+        .sort((a, b) => b.length - a.length || compareStableStrings(a, b));
 }
 
 function buildReadingBreakdownUnits(written) {

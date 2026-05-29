@@ -172,13 +172,13 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
 
     assert.equal(workflow.includes("npm run data:audit:jlpt:sources -- --governance-strict --limit=25"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:validate"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --levels=5,4,3"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-certify-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
@@ -191,10 +191,10 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.equal(workflow.includes("npm run deck:platinum:governance-gate"), false);
     assert.equal(workflow.includes("hashFiles('data/"), false);
     assert.match(workflow, /deck:platinum:governance-gate is intentionally local-data release QA/);
-    assert.match(readme, /Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3`, `data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`, `data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=tracked-review-set`/);
-    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=tracked-review-set`/);
-    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3 --row-source=tracked-review-set`/);
-    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3 --row-source=tracked-review-set`/);
+    assert.match(readme, /Clean CI runs `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3,2`, `data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`, `data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-certify-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`/);

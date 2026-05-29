@@ -109,7 +109,7 @@ Kanji tokenizer differences are usually treated as reading variants or tokenizer
 
 4. Human-review each queued card against the live generated card, the batch rubric, tracked evidence, and any NLP signals. Check primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, and learner usefulness. If a signal reveals a real card/source issue, fix tracked data, regenerate, rerun the affected gates, and rerun NLP if its support artifact changed.
 
-5. Record Obsidian proof only after the review happened. The manifest entry must carry structured `rereviewProvenance` and actual card-bound example-sentence quality evidence. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, or a clean batch report alone.
+5. Record Obsidian proof only after the review happened. Canonical proof must be appended to the scoped JSONL ledger and provide structured compatibility-shaped `rereviewProvenance` plus actual card-bound example-sentence quality evidence. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, or a clean batch report alone.
 
 6. Verify the batch:
 

@@ -39,6 +39,8 @@ Use this report to decide whether reviewer time should stay on the current lane 
 
 The source-access audit is read-only. It ranks source lanes from tracked source-use policy, tracked source-input config, local worksheet state, tracked assignments, and the all-level source-review worklist. It does not import evidence, move kanji, move words, update decks, or change readiness.
 
+For the current Sou Matome stop decision and resume criteria, see [Source Acquisition Register](source-acquisition-register.md#sou-matome-broad-review-stop-decision). Broad Sou review is paused until exact assignment access, targeted citations, or publisher-approved equivalent evidence exist.
+
 Use dedicated kanji sources before grammar or vocabulary-adjacent sources. TRY! is blocked from assignment-consensus batching under current source access: the 2026-05-08 source-access spike found official public TRY materials expose grammar/can-do and vocabulary surfaces, not exact per-kanji assignment proof. `ask_hajimete_jlpt_kanji` is an active ASK kanji-book lane with source-input `supportedLevels` set to N1, N2, N3, and separately verified N5 checklist rows; target-entry, checklist, or index rows must explicitly show kanji assignment proof, and N4 remains unsupported until exact source access is verified.
 
 Before creating a `100+` row source-review worksheet, write an ignored source-access packet for the exact surface that makes the rows reviewable:

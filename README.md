@@ -78,7 +78,7 @@ All five JLPT levels are first-class product surfaces. N5/N4/N3 kanji are Obsidi
 | N5 kanji | `80/80` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n5`, `deck:kanji:obsidian:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
 | N4 kanji | `212/212` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
 | N3 kanji | `341/341` generated, Gold, current-standard structural Platinum, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:platinum:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
-| N2 kanji | `349/349` generated, Gold, and current-standard structural Platinum with `0` remaining; Obsidian proof is `304/349` with `45` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:platinum:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2` |
+| N2 kanji | `349/349` generated, Gold, and current-standard structural Platinum with `0` remaining; Obsidian proof is `328/349` with `21` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:platinum:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2` |
 | N1 kanji | `1230/1230` generated and Gold; Platinum not started. | `deck:kanji:review-status`, `deck:ready -- --levels=1` |
 | Additional kanji diagnostic | `0` physical additional cards. `398` additional source claims are governed and suppressed because they collide with `387` core-retained source-claim kanji; unresolved duplicates are `0`. | `deck:kanji:additional:ready`, `deck:kanji:review-status` |
 
@@ -86,9 +86,9 @@ All five JLPT levels are first-class product surfaces. N5/N4/N3 kanji are Obsidi
 
 Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `platinum` and `fixed_then_platinum` entries count as active Platinum. Legacy or unversioned history is non-certifying backlog until revalidated under the current standard.
 
-`deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` currently reports N5/N4/N3/N2 kanji as `982/982` Platinum, `937/982` Obsidian, `45/982` needing Obsidian, and `0/982` blocked/failing. N5/N4/N3 remain complete; the remaining backlog is N2 only.
+`deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` currently reports N5/N4/N3/N2 kanji as `982/982` Platinum, `961/982` Obsidian, `21/982` needing Obsidian, and `0/982` blocked/failing. N5/N4/N3 remain complete; the remaining backlog is N2 only.
 
-`deck:kanji:obsidian:certify-status -- --levels=5,4,3` is the fail-closed kanji Obsidian gate for the completed N5/N4/N3 denominator and currently passes there. `deck:kanji:obsidian:certify-status -- --levels=2` is expected to fail while N2 has `45` remaining missing-proof backlog and `0` blocked/failing rows.
+`deck:kanji:obsidian:certify-status -- --levels=5,4,3` is the fail-closed kanji Obsidian gate for the completed N5/N4/N3 denominator and currently passes there. `deck:kanji:obsidian:certify-status -- --levels=2` is expected to fail while N2 has `21` remaining missing-proof backlog and `0` blocked/failing rows.
 
 For scoped canonical kanji proof levels (N5/N4/N3 and the partial N2 lane), switched kanji proof consumers read canonical JSONL Obsidian proof from `templates/obsidian_proof_ledger/*.jsonl`; tracked review-set JSON no longer carries inline Obsidian proof objects for those levels. Kanji levels without scoped proof ledgers still fall back through the provider path until their own proof ledgers are deliberately created and gated.
 

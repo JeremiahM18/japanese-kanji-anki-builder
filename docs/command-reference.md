@@ -43,8 +43,8 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
-| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` | Classify kanji Platinum pass versus Obsidian proof; N5/N4/N3 complete proof and partial N2 proof read canonical JSONL through the scoped proof provider |
-| `npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3` | Fail-closed kanji Obsidian certification status for the completed N5/N4/N3 scope; N2 currently remains expected backlog until its canonical proof ledger reaches the full denominator |
+| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` | Classify kanji Platinum pass versus Obsidian proof; N5/N4/N3/N2 complete proof reads canonical JSONL through the scoped proof provider |
+| `npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3,2` | Fail-closed kanji Obsidian certification status for the completed N5/N4/N3/N2 scope |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
@@ -71,7 +71,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; proof-provider input defaults to ledger-if-available and currently sees partial canonical proof only, not full Obsidian certification |
+| `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; proof-provider input defaults to ledger-if-available and current canonical Obsidian proof covers the full N2 denominator |
 | `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; proof-provider input defaults to ledger-if-available and has no canonical proof unless a scoped ledger exists |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
@@ -151,7 +151,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run data:obsidian:proof:validate` | Validate canonical tracked JSONL Obsidian proof ledger files |
 | `npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2` | Bind canonical JSONL proof to tracked review-set entries; if legacy inline proof exists during a transition, compare it to the ledger. `--allow-incomplete` may skip a missing review-set scope only when no scoped ledger proof exists for that scope |
 | `npm run data:obsidian:proof:migrate-inline -- --deck-kind=<kanji\|word> --levels=<levels>` | Dry-run migration from tracked inline `rereviewProvenance` into JSONL ledger events for not-yet-canonicalized kanji or word levels; use `--write --update-source-review-set` only after the dry-run reports exact identity, sentence-quality, and duplicate safety |
-| `npm run data:obsidian:proof:remove-inline -- --levels=5,4,3` | Dry-run removal of legacy inline proof after scoped canonical JSONL ledger events are present and bound |
+| `npm run data:obsidian:proof:remove-inline -- --levels=5,4,3,2` | Dry-run removal of legacy inline proof after scoped canonical JSONL ledger events are present and bound |
 | `npm run data:obsidian:proof:views` | Generate compatibility review-set JSON from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite` | Generate the local SQLite query mirror from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite:query` | Query the generated local SQLite mirror after rebuilding it from JSONL |

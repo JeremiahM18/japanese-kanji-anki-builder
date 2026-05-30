@@ -237,7 +237,7 @@ If this fails during an in-progress level, treat the failure as the remaining qu
 
 ## Proof Ledger ETL And Consumer Switch
 
-Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`. Migrated kanji proof levels (N5/N4/N3) and migrated word proof levels (N5/N4) no longer carry inline `rereviewProvenance` objects in tracked review-set JSON; switched consumers read those proofs through the scoped proof-provider path. The generated compatibility view under `out/obsidian-proof/compatibility/` can recreate compatibility-shaped review-set JSON for older tooling; the SQLite database under `out/obsidian-proof/sqlite/` is a local query mirror only.
+Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`. Migrated kanji proof levels (N5/N4/N3/N2) and migrated word proof levels (N5/N4) no longer carry inline `rereviewProvenance` objects in tracked review-set JSON; switched consumers read those proofs through the scoped proof-provider path. The generated compatibility view under `out/obsidian-proof/compatibility/` can recreate compatibility-shaped review-set JSON for older tooling; the SQLite database under `out/obsidian-proof/sqlite/` is a local query mirror only.
 
 Keep these lanes separate:
 
@@ -259,9 +259,9 @@ npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --l
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set
-npm run data:obsidian:proof:provider-parity -- --levels=5,4,3 --row-source=generated
-npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3 --queue=substantive-rereview --limit=8 --row-source=generated
-npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=generated
 npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=generated
 npm run data:obsidian:proof:views
@@ -278,9 +278,9 @@ No-go conditions:
 - Provider integrity is not exact: inline source and ledger-derived proof must produce identical consumer-specific counts during dual-read transition; after inline removal, every scoped ledger event must apply cleanly to a tracked review-set entry.
 - The compatibility view fails to recreate ledger-derived `rereviewProvenance` for a migrated proof event.
 - The SQLite mirror cannot rebuild from JSONL without reading generated TSV/APKG output.
-- Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` counts without a matching proof-ledger change, or changes the completed N5/N4/N3 certification pass posture without matching proof. N2 certification remains expected backlog until its missing-proof count reaches zero.
+- Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` counts without a matching proof-ledger change, or changes the completed N5/N4/N3/N2 certification pass posture without matching proof.
 - Any word consumer switch changes `deck:words:obsidian:rereview-status -- --levels=5,4` counts without a matching proof-ledger change, or changes the `987/987` Obsidian, `0` needs, `0` blocked N5/N4 word status.
-- `deck:kanji:obsidian:certify-status -- --levels=3` fails for anything other than the known remaining Obsidian backlog.
+- `deck:kanji:obsidian:certify-status -- --levels=5,4,3,2` fails for any selected row.
 
 Switch consumers in small stages:
 
@@ -292,7 +292,7 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:rereview-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched kanji consumers. They use the scoped proof-provider path so N5/N4/N3 kanji proof and the partial N2 kanji proof lane come from canonical JSONL. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2 must still be treated as incomplete until its scoped ledger covers the full generated denominator; N1 kanji proof is not started and must not be claimed as Obsidian until a scoped ledger exists and gates pass.
+- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:rereview-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched kanji consumers. They use the scoped proof-provider path so N5/N4/N3/N2 kanji proof comes from canonical JSONL. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2 Obsidian proof is complete at the full generated denominator; N1 kanji proof is not started and must not be claimed as Obsidian until a scoped ledger exists and gates pass.
 
 - `deck:words:obsidian:rereview-status`, `deck:words:obsidian:certify-status`, their older Platinum compatibility aliases, `deck:words:platinum:batch`, `deck:words:platinum:n<level>`, and `deck:platinum:governance-gate` word inputs are the switched word consumers. For migrated N5/N4 word proof they default to `ledger-if-available` and can be audited with `--proof-provider=ledger` or `--proof-provider=ledger-if-available`. `--proof-provider=inline` is now only a negative-control legacy audit for those migrated word levels because tracked inline proof has been removed.
 

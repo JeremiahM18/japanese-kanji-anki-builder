@@ -155,6 +155,46 @@ test("tracked kanji platinum manifests do not regress known support-word primary
     }
 });
 
+test("tracked kanji fixed-then-platinum entries document generated-surface fixes", () => {
+    const platinumFiles = fs
+        .readdirSync(TEMPLATES_DIR)
+        .filter((name) => /^platinum_n[1-5]_review_set\.json$/.test(name))
+        .sort();
+
+    for (const fileName of platinumFiles) {
+        const entries = loadJson(path.join("templates", fileName));
+        const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
+
+        for (const entry of manifestActiveEntries) {
+            const hasFixSummary = typeof entry.fixSummary === "string" && entry.fixSummary.trim().length > 0;
+            const fixEvidenceText = [
+                entry.fixSummary,
+                ...normalizeList(entry.internalChecks).map((check) => check.detail),
+                ...normalizeList(entry.reviewEvidence).map((evidence) => evidence.detail),
+                ...normalizeList(entry.sourceEvidence).map((evidence) => evidence.detail),
+            ].filter(Boolean).join("\n");
+
+            if (entry.status === "fixed_then_platinum") {
+                assert.ok(
+                    hasFixSummary,
+                    `${fileName} ${entry.kanji} is fixed_then_platinum and must document the generated-surface fix`
+                );
+                assert.ok(
+                    fixEvidenceText.length >= 20,
+                    `${fileName} ${entry.kanji} fixed_then_platinum evidence must explain what was fixed before promotion`
+                );
+                continue;
+            }
+
+            assert.equal(
+                hasFixSummary,
+                false,
+                `${fileName} ${entry.kanji} has a fixSummary but is not marked fixed_then_platinum`
+            );
+        }
+    }
+});
+
 test("tracked active N3 through N5 kanji platinum primary readings are exact governed on/kun readings", () => {
     const readingReference = loadJson(path.join("templates", "kanji_reading_reference_contract.json"));
 

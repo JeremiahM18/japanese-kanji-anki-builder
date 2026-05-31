@@ -69,7 +69,7 @@ These tier names are product gates, not marketing labels. Kanji and word decks r
 
 Run live commands for release decisions. This section is an orientation snapshot, not the release gate.
 
-All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obsidian certified; N1 is now in governed structural Platinum batching, with canonical Obsidian proof started and still incomplete.
+All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obsidian certified; N1 is currently a trusted-reset lane with fresh governed Platinum batching restarted and no Obsidian certification counted.
 
 ### Kanji Product
 
@@ -79,10 +79,10 @@ All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obs
 | N4 kanji | `212/212` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
 | N3 kanji | `341/341` generated, Gold, current-standard structural Platinum, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:platinum:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
 | N2 kanji | `349/349` generated, Gold, current-standard structural Platinum, and Obsidian certified with `0` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:platinum:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2`, `deck:kanji:obsidian:certify-status -- --levels=2` |
-| N1 kanji | `1230/1230` generated and Gold; `88/1230` current-standard structural Platinum from the governed selector, `88/1230` Obsidian proof, `0` structural Platinum entries still needing Obsidian proof, and `1142` missing Platinum. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:platinum:n1`, `deck:platinum:batch -- --level=1 --limit=8` |
+| N1 kanji | `1230/1230` generated and Gold; trusted current-standard structural Platinum has restarted at `8/1230`, trusted Obsidian proof remains reset to `0/1230`, and `1222` generated rows still require fresh Platinum review before any Obsidian proof is recorded. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:platinum:n1`, `deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard` |
 | Additional kanji diagnostic | `0` physical additional cards. `398` additional source claims are governed and suppressed because they collide with `387` core-retained source-claim kanji; unresolved duplicates are `0`. | `deck:kanji:additional:ready`, `deck:kanji:review-status` |
 
-`deck:readiness` currently reports N5 through N1 kanji as ready with `100.0%` of readiness checks passing for sentence, curated, stroke-order, required media, readings, meanings, examples, and contextual notes.
+`deck:readiness` currently reports N5 through N1 kanji as ready with `100.0%` of mechanical readiness checks passing for sentence, curated, stroke-order, required media, readings, meanings, examples, and contextual notes. For N1, this is not content trust, Platinum coverage, Obsidian certification, or release approval.
 
 Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `platinum` and `fixed_then_platinum` entries count as active Platinum. Legacy or unversioned history is non-certifying backlog until revalidated under the current standard.
 

@@ -5,6 +5,7 @@ const {
     auditKanjiCardFieldSourceContract,
     defaultKanjiCardFieldSourceContractPathForLevel,
     loadKanjiCardFieldSourceContract,
+    parseKanjiCardFieldSourceContract,
 } = require("../src/datasets/kanjiCardFieldSourceContract");
 const { loadKanjiReadingReferenceContract } = require("../src/datasets/kanjiReadingReferenceContract");
 const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
@@ -108,6 +109,30 @@ function formatBuildReport({ options, outPath, audit } = {}) {
     ].join("\n");
 }
 
+function findEntriesMissingRereviewBinding(contract = {}) {
+    return Object.values(contract.entries || {})
+        .filter((entry) => {
+            const binding = entry.reviewBinding || {};
+            return !binding.rereviewReviewedAt || !binding.rereviewReviewer || !binding.rereviewResult;
+        })
+        .map((entry) => entry.kanji)
+        .sort((a, b) => a.localeCompare(b));
+}
+
+function assertWritableContract(contract = {}, { level } = {}) {
+    const missingRereviewBinding = findEntriesMissingRereviewBinding(contract);
+    if (missingRereviewBinding.length > 0) {
+        throw new Error([
+            `Cannot build N${level} kanji card field source contract: ${missingRereviewBinding.length} entries are missing Obsidian rereview binding.`,
+            `Affected kanji: ${missingRereviewBinding.join(", ")}`,
+            "Run the substantive Obsidian rereview first, then rebuild the field-source contract.",
+            "No contract file was written.",
+        ].join("\n"));
+    }
+
+    parseKanjiCardFieldSourceContract(contract);
+}
+
 function run(options = {}) {
     const level = Number(options.level || DEFAULT_LEVEL);
 
@@ -150,6 +175,8 @@ function run(options = {}) {
         sourceManifestPath: options.sourceManifest || DEFAULT_SOURCE_MANIFEST,
         sourceOriginEvidencePath: options.sourceEvidence || DEFAULT_SOURCE_EVIDENCE,
     });
+
+    assertWritableContract(contract, { level });
 
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, `${JSON.stringify(contract, null, 2)}\n`, "utf8");
@@ -197,6 +224,7 @@ module.exports = {
     DEFAULT_SOURCE_EVIDENCE,
     DEFAULT_SOURCE_MANIFEST,
     defaultReviewSet,
+    findEntriesMissingRereviewBinding,
     formatBuildReport,
     main,
     parseArgs,

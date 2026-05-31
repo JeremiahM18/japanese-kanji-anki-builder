@@ -1,5 +1,8 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
 
 const {
     auditKanjiCardFieldSourceContract,
@@ -16,7 +19,7 @@ const {
     loadReviewSetWithObsidianProof,
 } = require("../src/services/obsidianProofProviderService");
 const { resolveKanjiSourceOriginIdsForEntry } = require("../src/services/platinumKanjiSourceOriginService");
-const { parseArgs } = require("../scripts/buildKanjiCardFieldSourceContract");
+const { parseArgs, run: runBuildKanjiCardFieldSourceContract } = require("../scripts/buildKanjiCardFieldSourceContract");
 
 function loadAuditInputs(level = 5) {
     return {
@@ -42,6 +45,21 @@ test("builder CLI defaults to ledger-if-available proof provider", () => {
     assert.equal(defaults.proofProvider, "ledger-if-available");
     assert.equal(options.proofProvider, "inline");
     assert.equal(options.reviewSet, "templates/platinum_n3_review_set.json");
+});
+
+test("builder fails closed before writing N1 structural-only field-source contract", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-n1-field-source-"));
+    const out = path.join(tempDir, "n1.json");
+
+    try {
+        assert.throws(
+            () => runBuildKanjiCardFieldSourceContract({ level: 1, out }),
+            /Cannot build N1 kanji card field source contract: 8 entries are missing Obsidian rereview binding[\s\S]*No contract file was written/
+        );
+        assert.equal(fs.existsSync(out), false);
+    } finally {
+        fs.rmSync(tempDir, { recursive: true, force: true });
+    }
 });
 
 test("tracked kanji card field source contracts pass governed coverage audit", () => {

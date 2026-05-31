@@ -72,7 +72,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; proof-provider input defaults to ledger-if-available and current canonical Obsidian proof covers the full N2 denominator |
-| `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; proof-provider input defaults to ledger-if-available and has no canonical proof unless a scoped ledger exists |
+| `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; proof-provider input defaults to ledger-if-available and reads the scoped N1 canonical ledger for the started-but-incomplete Obsidian proof lane |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word review packet for the selected queue; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |

@@ -5,9 +5,14 @@ const assert = require("node:assert/strict");
 
 const {
     ACTIVE_PLATINUM_STATUSES: ACTIVE_KANJI_PLATINUM_STATUSES,
+    CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     evaluatePlatinumKanjiReviewSet,
     formatPlatinumKanjiReviewReport,
 } = require("../src/services/platinumKanjiReviewService");
+const {
+    OBSIDIAN_PROOF_LEDGER_AUTHORITY,
+    loadObsidianProofLedger,
+} = require("../src/datasets/obsidianProofLedger");
 const {
     ACTIVE_PLATINUM_STATUSES: ACTIVE_WORD_PLATINUM_STATUSES,
     evaluatePlatinumWordReviewSet,
@@ -57,9 +62,95 @@ function auditTextIncludes(haystack, needle) {
     return normalizeAuditText(haystack).includes(normalizeAuditText(needle));
 }
 
+function normalizeProofText(value) {
+    return normalizeAuditText(value).replace(/[_-]+/g, " ");
+}
+
+function buildKanjiCardKey(kanji, reading) {
+    return `${kanji}|${reading}`;
+}
+
+function assertProofTextPattern(text, pattern, message) {
+    assert.match(normalizeProofText(text), pattern, message);
+}
+
+function assertAuditIncludes(label, haystack, needle) {
+    assert.ok(auditTextIncludes(haystack, needle), `${label} missing reviewed card value: ${needle}`);
+}
+
 function activeEntries(entries = [], activeStatuses = []) {
     return entries.filter((entry) => activeStatuses.includes(entry.status));
 }
+
+function loadKanjiObsidianProofEvents(level) {
+    return loadObsidianProofLedger({
+        cwd: ROOT_DIR,
+        files: [path.join("templates", "obsidian_proof_ledger", `kanji_n${level}.jsonl`)],
+    }).events.filter((event) => event.target.deckKind === "kanji" && event.target.level === level);
+}
+
+const LEDGER_GRADE_KANJI_EVIDENCE_REQUIREMENTS = Object.freeze([
+    {
+        label: "generated card surface",
+        pattern: /\b(live generated|generated surface)\b/,
+    },
+    {
+        label: "tracked review-set context",
+        pattern: /platinum review set checked|platinum expectations checked|source origin independence|starter source data checked|source data checked/,
+    },
+    {
+        label: "tracked artifacts are not proof authority",
+        pattern: /not obsidian proof authority|not source evidence|not source authority|proof authority/,
+    },
+    {
+        label: "governed Japanese source review",
+        pattern: /governed japanese source|japanese source evidence|source evidence|kanjipedia/,
+    },
+    {
+        label: "primary reading and meaning decision",
+        pattern: /primary reading|primary field|reading\/meaning|primary fields/,
+    },
+    {
+        label: "notes and support review",
+        pattern: /notes\/support review|notes support review|support review|supporting notes|notes field|pedagogy\/product review|pedagogy product review/,
+    },
+    {
+        label: "example sentence quality review",
+        pattern: /actual example sentence quality review|example sentence quality review|example review/,
+    },
+    {
+        label: "NLP support packet review",
+        pattern: /\bnlp\b/,
+    },
+    {
+        label: "assistive-only NLP boundary",
+        pattern: /assistive only|did not override|does not treat nlp output/,
+    },
+    {
+        label: "audio identity review",
+        pattern: /audio identity|audio\/.*kanji reading/,
+    },
+    {
+        label: "stroke-order identity review",
+        pattern: /stroke order identity|stroke order/,
+    },
+    {
+        label: "evidence lane separation",
+        pattern: /evidence lanes checked separately|evidence lanes/,
+    },
+    {
+        label: "quality gate review",
+        pattern: /quality gate|quality gates|current gate/,
+    },
+    {
+        label: "verification limitation decision",
+        pattern: /verification limitations|limitation/,
+    },
+    {
+        label: "release-readiness boundary",
+        pattern: /release readiness|release evidence|release tasks|not claimed|does not treat.*release/,
+    },
+]);
 
 function buildKanjiReadingReferenceSet(entry = {}) {
     return new Set([
@@ -90,6 +181,153 @@ function buildSyntheticKanjiRows(entries = [], levelLabel = "") {
             exampleSentence: normalizeList(entry.exampleIncludes).join(" / "),
         };
     });
+}
+
+function assertLedgerGradeKanjiProofEvent({ level, entry, event }) {
+    const reading = normalizeList(entry.readingIncludes)[0] || "";
+    const cardKey = buildKanjiCardKey(entry.kanji, reading);
+    const label = `N${level} Obsidian proof ${cardKey}`;
+    const evidenceText = [
+        ...normalizeList(event.proof?.evidenceChecked),
+        event.proof?.limitationDecision,
+        JSON.stringify(event.proof?.sentenceQualityReview || {}),
+        event.authority?.boundary,
+    ].join("\n");
+
+    assert.equal(event.schemaVersion, 1, `${label} schema version`);
+    assert.equal(event.recordType, "obsidian-proof-event", `${label} record type`);
+    assert.equal(event.target.deckKind, "kanji", `${label} target deck kind`);
+    assert.equal(event.target.level, level, `${label} target level`);
+    assert.equal(event.target.written, entry.kanji, `${label} target written`);
+    assert.equal(event.target.reading, reading, `${label} target reading`);
+    assert.equal(event.target.cardReviewed, cardKey, `${label} target card identity`);
+    assert.equal(event.proof.cardReviewed, cardKey, `${label} proof card identity`);
+    assert.equal(event.proof.type, "substantive current standard rereview", `${label} proof type`);
+    assert.equal(event.proof.reviewStandard, CURRENT_KANJI_PLATINUM_REVIEW_STANDARD, `${label} proof standard`);
+    assert.equal(event.proof.reviewedAfterStandard, true, `${label} reviewed after current standard`);
+    assert.equal(event.proof.mechanicalMigration, false, `${label} must be non-mechanical proof`);
+    assert.match(event.proof.result, /^approved_/, `${label} proof result`);
+    assert.match(event.proof.scope, /full kanji card rereview/i, `${label} proof scope`);
+    assert.ok(event.proof.reviewedAt, `${label} proof reviewedAt`);
+    assert.ok(event.proof.reviewer, `${label} proof reviewer`);
+    assert.deepEqual(event.authority, OBSIDIAN_PROOF_LEDGER_AUTHORITY, `${label} proof authority boundary`);
+    assert.equal(
+        event.ledger.sourceReviewSetPath,
+        `templates/platinum_n${level}_review_set.json`,
+        `${label} source review set path`
+    );
+
+    for (const requirement of LEDGER_GRADE_KANJI_EVIDENCE_REQUIREMENTS) {
+        assertProofTextPattern(evidenceText, requirement.pattern, `${label} missing ${requirement.label}`);
+    }
+
+    assertAuditIncludes(label, evidenceText, entry.kanji);
+    assertAuditIncludes(label, evidenceText, reading);
+    for (const meaning of normalizeList(entry.meaningIncludes)) {
+        assertAuditIncludes(label, evidenceText, meaning);
+    }
+    for (const meaning of normalizeList(entry.kanjiMeaningsIncludes)) {
+        assertAuditIncludes(label, evidenceText, meaning);
+    }
+    for (const note of normalizeList(entry.notesIncludes)) {
+        assertAuditIncludes(label, evidenceText, note);
+    }
+    for (const example of normalizeList(entry.exampleIncludes)) {
+        assertAuditIncludes(label, evidenceText, example);
+    }
+
+    const sentenceReview = event.proof.sentenceQualityReview || {};
+    assert.ok(sentenceReview.example, `${label} sentence review example`);
+    assert.ok(sentenceReview.reading, `${label} sentence review reading`);
+    assert.ok(sentenceReview.translation, `${label} sentence review translation`);
+    assert.equal(sentenceReview.naturalJapanese, true, `${label} sentence review naturalJapanese`);
+    assert.equal(sentenceReview.learnerUseful, true, `${label} sentence review learnerUseful`);
+    assert.equal(sentenceReview.levelAppropriate, true, `${label} sentence review levelAppropriate`);
+    assert.equal(sentenceReview.supportOnly, true, `${label} sentence review supportOnly`);
+    assert.ok(sentenceReview.reviewerJudgment, `${label} sentence review reviewer judgment`);
+}
+
+function assertKanjiLedgerGradeForLevel(level) {
+    const entries = loadJson(path.join("templates", `platinum_n${level}_review_set.json`));
+    const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
+    const events = loadKanjiObsidianProofEvents(level);
+    const eventsByCardKey = new Map();
+
+    assert.ok(manifestActiveEntries.length > 0, `N${level} must have active Platinum entries before Obsidian proof can be checked`);
+    assert.equal(events.length, manifestActiveEntries.length, `N${level} proof ledger count must equal active Platinum count`);
+
+    for (const event of events) {
+        assert.equal(eventsByCardKey.has(event.target.cardReviewed), false, `N${level} duplicate proof target ${event.target.cardReviewed}`);
+        eventsByCardKey.set(event.target.cardReviewed, event);
+    }
+
+    for (const entry of manifestActiveEntries) {
+        const reading = normalizeList(entry.readingIncludes)[0] || "";
+        const cardKey = buildKanjiCardKey(entry.kanji, reading);
+        const event = eventsByCardKey.get(cardKey);
+
+        assert.ok(event, `N${level} missing Obsidian proof event for active Platinum card ${cardKey}`);
+        assertLedgerGradeKanjiProofEvent({ level, entry, event });
+    }
+}
+
+function assertN1StructuralAuditMeetsLedgerGradeFloor(entry) {
+    const reading = normalizeList(entry.readingIncludes)[0] || "";
+    const cardKey = buildKanjiCardKey(entry.kanji, reading);
+    const label = `N1 structural audit ${cardKey}`;
+    const audit = entry.platinumReviewAudit || {};
+    const evidenceText = [
+        ...normalizeList(audit.commandsReviewed),
+        audit.sourceFieldReview?.sourceEvidenceDetail,
+        audit.sourceFieldReview?.sourceOriginReview,
+        audit.levelPlacementReview?.sourceConfidenceNote,
+        audit.levelPlacementReview?.reviewerDecision,
+        audit.exampleSentenceReview?.reviewerJudgment,
+        audit.nlpReview?.reviewerDecision,
+        JSON.stringify(audit.nlpReview?.authority || {}),
+        audit.mediaReview?.releaseQaBoundary,
+        audit.limitationDecision?.reviewerDecision,
+        audit.rubricReview?.reviewerDecision,
+        audit.trackedSourceContractBoundary?.reason,
+    ].join("\n");
+
+    assert.equal(audit.generatedSurface?.hardChecksPassed, true, `${label} generated hard checks`);
+    assert.equal(audit.sourceFieldReview?.supports?.targetKanji, true, `${label} source target support`);
+    assert.equal(audit.sourceFieldReview?.supports?.primaryReading, true, `${label} source reading support`);
+    assert.equal(audit.sourceFieldReview?.supports?.primaryMeaning, true, `${label} source meaning support`);
+    assert.equal(audit.sourceFieldReview?.supports?.broaderMeanings, true, `${label} source broader meaning support`);
+    assert.equal(audit.sourceFieldReview?.independentFromPlacementOrigins, true, `${label} source-origin independence`);
+    assert.equal(audit.exampleSentenceReview?.naturalJapanese, true, `${label} example naturalJapanese`);
+    assert.equal(audit.exampleSentenceReview?.learnerUseful, true, `${label} example learnerUseful`);
+    assert.equal(audit.exampleSentenceReview?.levelAppropriate, true, `${label} example levelAppropriate`);
+    assert.equal(audit.exampleSentenceReview?.supportOnly, true, `${label} example supportOnly`);
+    assert.equal(audit.exampleSentenceReview?.releaseQuality, true, `${label} example releaseQuality`);
+    assert.equal(audit.nlpReview?.packetFound, true, `${label} NLP packet found`);
+    assert.equal(audit.nlpReview?.authority?.outputAuthority, "assistive_only", `${label} NLP authority`);
+    assert.equal(audit.nlpReview?.authority?.writesTrackedTemplates, false, `${label} NLP no template writes`);
+    assert.equal(audit.nlpReview?.authority?.certifiesCards, false, `${label} NLP no certification`);
+    assert.equal(audit.nlpReview?.authority?.claimsReleaseReadiness, false, `${label} NLP no release claim`);
+    assert.equal(audit.mediaReview?.audio?.exactPrimaryReading, true, `${label} audio exact reading`);
+    assert.equal(audit.mediaReview?.strokeOrder?.targetVerified, true, `${label} stroke-order target`);
+    assert.equal(audit.limitationDecision?.obsidianProofClaimed, false, `${label} no Obsidian proof claim`);
+    assert.equal(audit.rubricReview?.substantiveProofRecorded, false, `${label} no substantive proof claim`);
+    assert.equal(audit.rubricReview?.obsidianProofEligibleFromThisAudit, false, `${label} no Obsidian eligibility claim`);
+
+    assertAuditIncludes(label, evidenceText, entry.kanji);
+    assertAuditIncludes(label, evidenceText, reading);
+    for (const requirement of [
+        { label: "generated card command", pattern: /deck:ready|deck:platinum:batch/ },
+        { label: "NLP command", pattern: /deck:kanji:nlp signals|deck:kanji:nlp-signals/ },
+        { label: "audio command", pattern: /media:review:audio/ },
+        { label: "stroke-order command", pattern: /data:audit:stroke order|data:audit:stroke-order/ },
+        { label: "card-field source boundary", pattern: /card field verification|card-field verification/ },
+        { label: "source-origin independence", pattern: /independent.*source|source.*independent|source origin/ },
+        { label: "assistive-only NLP boundary", pattern: /assistive only|assistive_only|human review required/ },
+        { label: "release-readiness boundary", pattern: /release readiness|release tasks|not claimed/ },
+        { label: "Obsidian reset boundary", pattern: /obsidian proof.*reset|0\/1230|structural platinum only/ },
+    ]) {
+        assertProofTextPattern(evidenceText, requirement.pattern, `${label} missing ${requirement.label}`);
+    }
 }
 
 function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
@@ -351,6 +589,33 @@ test("active N1 kanji platinum entries include structured card audit evidence", 
             `${label} source contract boundary must explain why no N1 contract is committed`
         );
     }
+});
+
+test("active N1 kanji structural audit preserves ledger-grade review breadth without claiming Obsidian proof", () => {
+    const entries = loadJson(path.join("templates", "platinum_n1_review_set.json"));
+    const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
+
+    assert.ok(manifestActiveEntries.length > 0, "N1 must have active Platinum entries before ledger-grade floor can be checked");
+
+    for (const entry of manifestActiveEntries) {
+        assertN1StructuralAuditMeetsLedgerGradeFloor(entry);
+    }
+});
+
+test("active N2 kanji platinum entries bind to ledger-grade Obsidian proof evidence", () => {
+    assertKanjiLedgerGradeForLevel(2);
+});
+
+test("active N3 kanji platinum entries bind to ledger-grade Obsidian proof evidence", () => {
+    assertKanjiLedgerGradeForLevel(3);
+});
+
+test("active N4 kanji platinum entries bind to ledger-grade Obsidian proof evidence", () => {
+    assertKanjiLedgerGradeForLevel(4);
+});
+
+test("active N5 kanji platinum entries bind to ledger-grade Obsidian proof evidence", () => {
+    assertKanjiLedgerGradeForLevel(5);
 });
 
 test("tracked active N3 through N5 kanji platinum primary readings are exact governed on/kun readings", () => {

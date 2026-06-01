@@ -82,6 +82,28 @@ function activeEntries(entries = [], activeStatuses = []) {
     return entries.filter((entry) => activeStatuses.includes(entry.status));
 }
 
+function assertN1PlatinumResetToZero(entries = []) {
+    assert.equal(entries.length, 8, "N1 reset should retain exactly the prior eight records as non-certifying history");
+
+    for (const entry of entries) {
+        const label = `platinum_n1_review_set.json ${entry.kanji}`;
+        assert.equal(entry.status, "needs_revalidation", `${label} must not count as active Platinum`);
+        assert.ok(
+            ["platinum", "fixed_then_platinum"].includes(entry.previousStatus),
+            `${label} must record the previous active status that was reset`
+        );
+        assert.match(entry.reviewedAt || "", /^\d{4}-\d{2}-\d{2}$/, `${label} reset reviewedAt`);
+        assert.equal(entry.reviewer, "codex-platinum-reset", `${label} reset reviewer`);
+        assert.match(entry.decisionReason || "", /reset to zero/i, `${label} must document the zero reset`);
+        assert.match(entry.decisionReason || "", /square zero/i, `${label} must require square-zero rereview`);
+        assert.equal(
+            entry.previousReviewStandard,
+            CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+            `${label} must preserve the prior claimed standard as historical context`
+        );
+    }
+}
+
 function loadKanjiObsidianProofEvents(level) {
     return loadObsidianProofLedger({
         cwd: ROOT_DIR,
@@ -380,8 +402,33 @@ test("tracked populated kanji platinum manifests bind evidence to protected fiel
             entries,
         });
 
+        if (fileName === "platinum_n1_review_set.json") {
+            assert.equal(report.activePlatinumCount, 0, "N1 reset must have zero active Platinum cards");
+            assert.equal(report.currentStandardPlatinumCount, 0, "N1 reset must have zero current-standard Platinum cards");
+            assertN1PlatinumResetToZero(entries);
+            continue;
+        }
+
         assert.equal(report.passed, true, `${fileName}\n${formatPlatinumKanjiReviewReport(report)}`);
     }
+});
+
+test("N1 kanji platinum reset starts at zero with only non-certifying history", () => {
+    const entries = loadJson(path.join("templates", "platinum_n1_review_set.json"));
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: buildSyntheticKanjiRows(entries, "N1"),
+        entries,
+    });
+
+    assert.equal(activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES).length, 0);
+    assert.equal(report.activePlatinumCount, 0);
+    assert.equal(report.currentStandardPlatinumCount, 0);
+    assert.equal(report.passed, false);
+    assert.ok(
+        report.coverageFailures.some((failure) => /no Platinum entries have been reviewed/i.test(failure)),
+        "N1 zero reset must fail closed until real active Platinum entries are restored"
+    );
+    assertN1PlatinumResetToZero(entries);
 });
 
 test("tracked kanji platinum manifests do not regress known support-word primary readings", () => {
@@ -446,11 +493,14 @@ test("tracked kanji fixed-then-platinum entries document generated-surface fixes
     }
 });
 
-test("active N1 kanji platinum entries include structured card audit evidence", () => {
+test("active N1 kanji platinum entries include structured card audit evidence when present", () => {
     const entries = loadJson(path.join("templates", "platinum_n1_review_set.json"));
     const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
 
-    assert.ok(manifestActiveEntries.length > 0, "N1 must have active Platinum entries before audit evidence can be checked");
+    if (manifestActiveEntries.length === 0) {
+        assertN1PlatinumResetToZero(entries);
+        return;
+    }
 
     for (const entry of manifestActiveEntries) {
         const label = `platinum_n1_review_set.json ${entry.kanji}`;
@@ -591,11 +641,14 @@ test("active N1 kanji platinum entries include structured card audit evidence", 
     }
 });
 
-test("active N1 kanji structural audit preserves ledger-grade review breadth without claiming Obsidian proof", () => {
+test("active N1 kanji structural audit preserves ledger-grade review breadth without claiming Obsidian proof when present", () => {
     const entries = loadJson(path.join("templates", "platinum_n1_review_set.json"));
     const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
 
-    assert.ok(manifestActiveEntries.length > 0, "N1 must have active Platinum entries before ledger-grade floor can be checked");
+    if (manifestActiveEntries.length === 0) {
+        assertN1PlatinumResetToZero(entries);
+        return;
+    }
 
     for (const entry of manifestActiveEntries) {
         assertN1StructuralAuditMeetsLedgerGradeFloor(entry);

@@ -178,12 +178,8 @@ function run(options = {}) {
 
     assertWritableContract(contract, { level });
 
-    fs.mkdirSync(path.dirname(outPath), { recursive: true });
-    fs.writeFileSync(outPath, `${JSON.stringify(contract, null, 2)}\n`, "utf8");
-
-    const writtenContract = loadKanjiCardFieldSourceContract(outPath);
     const audit = auditKanjiCardFieldSourceContract({
-        fieldSourceContract: writtenContract,
+        fieldSourceContract: contract,
         jlptLevelContract,
         platinumCardSourceManifest,
         readingReferenceContract,
@@ -193,6 +189,11 @@ function run(options = {}) {
     if (!audit.passed) {
         throw new Error(`Generated kanji card field source contract failed audit:\n${audit.failures.join("\n")}`);
     }
+
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, `${JSON.stringify(contract, null, 2)}\n`, "utf8");
+
+    const writtenContract = loadKanjiCardFieldSourceContract(outPath);
 
     return {
         options: { ...options, level },

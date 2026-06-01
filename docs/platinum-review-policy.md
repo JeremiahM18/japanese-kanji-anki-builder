@@ -4,6 +4,8 @@ Platinum is the current structural and card-quality gate. It is stricter than Go
 
 Gold regression means the exported card surface is protected against drift. Platinum means the live generated card passes current field-bound evidence and quality requirements. Obsidian means explicit non-mechanical current-version rereview proof exists for the live card.
 
+For the binding operating contract that agents must follow before any Platinum or Obsidian batch, start with [Platinum And Obsidian Review Contract](platinum-obsidian-review-contract.md).
+
 ## Review Layers
 
 | Layer | Purpose | Proves | Does not prove |

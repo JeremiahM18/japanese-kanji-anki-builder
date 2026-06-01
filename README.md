@@ -58,6 +58,8 @@ See [SECURITY.md](SECURITY.md) for the disclosure policy and threat model. See [
 
 These tier names are product gates, not marketing labels. Kanji and word decks run them separately.
 
+The binding operating contract for Platinum and Obsidian work is [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md). Read it before any Platinum or Obsidian batch.
+
 | Tier | What it means | What it does not prove |
 | --- | --- | --- |
 | Silver | A generated card surface exists for the product. | Reviewed content, source truth, release quality, or learner usefulness. |
@@ -158,6 +160,7 @@ Tracked contracts define release behavior:
 | Word note schema | [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json) |
 | Gold kanji regression sets | `templates/golden_n*_review_set.json` |
 | Gold word regression sets | [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json) |
+| Platinum and Obsidian review contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
 | Platinum policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |
 | Platinum kanji review sets | `templates/platinum_n*_review_set.json` |
 | Platinum word review sets | [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json) |
@@ -360,6 +363,7 @@ Full operating rules live in [docs/nlp-model-governance.md](docs/nlp-model-gover
 | Full command list | [docs/command-reference.md](docs/command-reference.md) |
 | Verification gates | [docs/verification.md](docs/verification.md) |
 | Release bar | [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/release-process.md](docs/release-process.md), [docs/release-qa-checklist.md](docs/release-qa-checklist.md) |
+| Platinum and Obsidian operating contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
 | Card-quality review policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |
 | Source-evidence workflow | [docs/source-evidence-batching.md](docs/source-evidence-batching.md), [docs/source-acquisition-register.md](docs/source-acquisition-register.md) |
 | Dependency and artifact trust boundaries | [docs/supply-chain-security.md](docs/supply-chain-security.md) |

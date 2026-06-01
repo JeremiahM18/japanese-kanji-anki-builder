@@ -4,6 +4,8 @@ Use this runbook for every Obsidian pass. Do not wait until a level is complete 
 
 Obsidian is human rereview proof. Automation can prepare packets, reject bad structure, and verify that proof is present and card-bound. Automation does not perform the human review.
 
+Before running any Platinum or Obsidian batch, read the binding [Platinum And Obsidian Review Contract](platinum-obsidian-review-contract.md). It defines the lane boundaries, required actual card-data review, NLP boundary, `fixed_then_platinum` rule, proof authority, verification requirements, and report shape.
+
 ## Kanji Obsidian Pass
 
 1. Start clean and identify the current queue.

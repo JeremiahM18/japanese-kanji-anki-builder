@@ -50,11 +50,22 @@ test("builder CLI defaults to ledger-if-available proof provider", () => {
 test("builder fails closed before writing N1 pre-Obsidian field-source contract", () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-n1-field-source-"));
     const out = path.join(tempDir, "n1.json");
+    const n1ReviewSet = JSON.parse(fs.readFileSync(reviewSetPathForLevel(1), "utf8"));
+    const activeN1Entries = n1ReviewSet.filter((entry) => ["platinum", "fixed_then_platinum"].includes(entry.status));
+    const affectedKanji = activeN1Entries.map((entry) => entry.kanji).join(", ");
 
     try {
         assert.throws(
             () => runBuildKanjiCardFieldSourceContract({ level: 1, out }),
-            /Cannot build N1 kanji card field source contract: 8 entries are missing Obsidian rereview binding\.[\s\S]*Affected kanji: 丁, 丑, 且, 丘, 丙, 丞, 丹, 乃[\s\S]*No contract file was written\./
+            (error) => {
+                assert.match(
+                    error.message,
+                    new RegExp(`Cannot build N1 kanji card field source contract: ${activeN1Entries.length} entries are missing Obsidian rereview binding\\.`)
+                );
+                assert.ok(error.message.includes(`Affected kanji: ${affectedKanji}`));
+                assert.match(error.message, /No contract file was written\./);
+                return true;
+            }
         );
         assert.equal(fs.existsSync(out), false);
     } finally {

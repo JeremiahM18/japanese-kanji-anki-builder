@@ -432,9 +432,13 @@ test("N1 kanji platinum manifest is either reset-zero history or active current-
         return;
     }
 
-    assert.equal(activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES).length, 8);
-    assert.equal(report.activePlatinumCount, 8);
-    assert.equal(report.currentStandardPlatinumCount, 8);
+    const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
+    assert.ok(
+        manifestActiveEntries.length >= 8,
+        "N1 active current-standard coverage must retain at least the governed restart batch"
+    );
+    assert.equal(report.activePlatinumCount, manifestActiveEntries.length);
+    assert.equal(report.currentStandardPlatinumCount, manifestActiveEntries.length);
     assert.equal(report.passed, true, formatPlatinumKanjiReviewReport(report));
 });
 

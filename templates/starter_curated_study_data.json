@@ -971,7 +971,12 @@
         "example",
         "starter"
       ]
-    }
+    },
+    "blockedMeanings": [
+      "duplicate",
+      "strange",
+      "witty"
+    ]
   },
   "九": {
     "englishMeaning": "nine",
@@ -1515,7 +1520,7 @@
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "亜熱帯 （あねったい） - subtropical ／ 東南アジア （とうなんあじあ） - Southeast Asia ／ 亜流 （ありゅう） - secondary school / derivative style",
+    "notes": "亜熱帯 （あねったい） - subtropical ／ 東南アジア （とうなんあじあ） - Southeast Asia ／ 亜流 （ありゅう） - derivative style / offshoot school",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "その地域は亜熱帯の気候に分類されます。",
@@ -1714,6 +1719,13 @@
       "享受",
       "享年",
       "享楽"
+    ],
+    "blockedMeanings": [
+      "answer (phone)",
+      "catch",
+      "get",
+      "take",
+      "undergo"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -2350,6 +2362,11 @@
       "仰天",
       "仰せ"
     ],
+    "blockedMeanings": [
+      "depend",
+      "drink",
+      "take"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "仰ぐ （あおぐ） - look up to / seek ／ 仰天 （ぎょうてん） - be astonished ／ 仰せ （おおせ） - someone's honored words / command",
@@ -2579,6 +2596,9 @@
       "伎楽",
       "演伎"
     ],
+    "blockedMeanings": [
+      "deed"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "歌舞伎 （かぶき） - kabuki ／ 伎楽 （ぎがく） - ancient masked performance ／ 演伎 （えんぎ） - acting performance",
@@ -2596,8 +2616,13 @@
   },
   "伏": {
     "englishMeaning": "lie down / hide / bend down",
+    "breakdownEnglishMeaning": "lie down / hide",
     "displayWord": {
       "written": "伏せる",
+      "pron": "ふせる"
+    },
+    "breakdownDisplayWord": {
+      "written": "伏",
       "pron": "ふせる"
     },
     "breakdownOverrides": [],
@@ -2612,9 +2637,12 @@
       "起伏",
       "潜伏"
     ],
+    "blockedMeanings": [
+      "lay (pipes)"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "伏せる （ふせる） - lay down / turn over ／ 起伏 （きふく） - ups and downs ／ 潜伏 （せんぷく） - concealment / lurking",
+    "notes": "伏せる （ふせる） - turn face down / conceal ／ 起伏 （きふく） - ups and downs ／ 潜伏 （せんぷく） - concealment / lurking",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "秘密の部分は紙で伏せておきました。",

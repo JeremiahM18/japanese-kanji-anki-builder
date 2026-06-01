@@ -9721,7 +9721,7 @@
       "看伽"
     ],
     "exampleIncludes": [
-      "子どものころ、祖母が御伽話を読んでくれました。"
+      "家族が交代で祖母の看伽にあたりました。"
     ],
     "reviewedAt": "2026-06-01",
     "reviewer": "codex-platinum-review",
@@ -9729,7 +9729,7 @@
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0000643800",
-        "detail": "Japanese-source review for 伽|とぎ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000643800; readings captured as 音 カ・ガ・キャ / 訓 とぎ; meaning text checked as ①とぎ。たいくつをなぐさめること。看病をすること。「夜伽」 ②梵語(ボンゴ)の音訳に用いられる。「伽陀(カダ)」「伽羅(キャラ)」「阿伽(アカ)」; source beginning-word/support list captured as 伽 ▲ 陀(カダ) / 伽藍(ガラン) / 伽羅(キャラ) / 伽羅の仏に ▲ 箔を置く(キャラのほとけにハクをおく) / 伽羅 ▲ 蕗(キャラぶき) / 伽(とぎ). Reviewer mapped this Japanese-source field evidence to PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, and KanjiMeanings attend / companion / nursing attendance / attending / nursing for the individual kanji 伽. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Japanese-source review for 伽|とぎ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000643800; readings captured as 音 カ・ガ・キャ / 訓 とぎ; meaning text checked as ①とぎ。たいくつをなぐさめること。看病をすること。「夜伽」 ②梵語(ボンゴ)の音訳に用いられる。「伽陀(カダ)」「伽羅(キャラ)」「阿伽(アカ)」; source beginning-word/support list captured as 伽 ▲ 陀(カダ) / 伽藍(ガラン) / 伽羅(キャラ) / 伽羅の仏に ▲ 箔を置く(キャラのほとけにハクをおく) / 伽羅 ▲ 蕗(キャラぶき) / 伽(とぎ). Reviewer mapped this Japanese-source field evidence to PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, and KanjiMeanings attend / companion / nursing attendance / attending / nursing for the individual kanji 伽. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       }
     ],
     "qualityGates": {
@@ -9758,43 +9758,43 @@
       {
         "type": "generated-surface",
         "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
-        "detail": "Generated card surface inspected for 伽|とぎ: single-kanji anchor; Kanji and DisplayWord 伽; StudyWordKanji blank; PrimaryReading とぎ; MeaningJP attend / companion / nursing attendance; KanjiMeanings attend / companion / nursing attendance / attending / nursing; notes <ruby>御伽話<rt>おとぎばなし</rt></ruby> - fairy tale ／ <ruby>伽藍<rt>がらん</rt></ruby> - temple complex ／ <ruby>看伽<rt>かんが</rt></ruby> - nursing attendance; example 子どものころ、祖母が御伽話を読んでくれました。 ／ こどものころ、そぼがおとぎばなしをよんでくれました。 ／ When I was a child, my grandmother read fairy tales to me.; audio field includes kanji-reading-伽-とぎ; stroke-order field includes 伽-stroke-order. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Generated card surface inspected for 伽|とぎ: single-kanji anchor; Kanji and DisplayWord 伽; StudyWordKanji blank; PrimaryReading とぎ; MeaningJP attend / companion / nursing attendance; KanjiMeanings attend / companion / nursing attendance / attending / nursing; notes <ruby>御伽話<rt>おとぎばなし</rt></ruby> - fairy tale ／ <ruby>伽藍<rt>がらん</rt></ruby> - temple complex ／ <ruby>看伽<rt>かんが</rt></ruby> - nursing attendance; example 家族が交代で祖母の看伽にあたりました。 ／ かぞくがこうたいでそぼのかんがにあたりました。 ／ Family members took turns attending to my grandmother while she was ill.; audio field includes kanji-reading-伽-とぎ; stroke-order field includes 伽-stroke-order. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       },
       {
         "type": "media-audit",
         "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F3D_伽\\manifest.json",
-        "detail": "Managed media provenance inspected for 伽: exact audio media fragment kanji-reading-伽-とぎ; audio/4F3D_伽-kanji-reading-伽-とぎ.wav; stroke-order media animations/4F3D_伽-stroke-order.svg; package media reports full N1 coverage with no silent fallback accepted. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Managed media provenance inspected for 伽: exact audio media fragment kanji-reading-伽-とぎ; audio/4F3D_伽-kanji-reading-伽-とぎ.wav; stroke-order media animations/4F3D_伽-stroke-order.svg; package media reports full N1 coverage with no silent fallback accepted. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       },
       {
         "type": "audio-review",
         "source": "npm run media:review:audio -- --levels=1 --kanji=伽 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F3D_伽\\manifest.json",
-        "detail": "Audio artifact reviewed for 伽|とぎ: exact kanji-reading audio kanji-reading-伽-とぎ; exported PrimaryReading とぎ; managed audio path audio/4F3D_伽-kanji-reading-伽-とぎ.wav. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Audio artifact reviewed for 伽|とぎ: exact kanji-reading audio kanji-reading-伽-とぎ; exported PrimaryReading とぎ; managed audio path audio/4F3D_伽-kanji-reading-伽-とぎ.wav. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       },
       {
         "type": "stroke-order-review",
         "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F3D_伽\\manifest.json",
-        "detail": "Visual stroke-order review recorded for 伽: stroke-order media animations/4F3D_伽-stroke-order.svg shows target 伽; visual target checked; source provenance remote-stroke-order-animation-animcjk through managed media policy. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Visual stroke-order review recorded for 伽: stroke-order media animations/4F3D_伽-stroke-order.svg shows target 伽; visual target checked; source provenance remote-stroke-order-animation-animcjk through managed media policy. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       },
       {
         "type": "golden-regression",
         "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
-        "detail": "Separate golden regression gate checked 伽; this regression gate protects generated field expectations but is not source truth and not source evidence. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Separate golden regression gate checked 伽; this regression gate protects generated field expectations but is not source truth and not source evidence. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       }
     ],
     "reviewEvidence": [
       {
         "type": "manual-review",
         "source": "N1 structural Platinum batch 5 review",
-        "detail": "Final product judgment for 伽|とぎ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Final product judgment for 伽|とぎ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       },
       {
         "type": "current-standard-review",
         "source": "core N1 current-standard structural Platinum batch 5",
-        "detail": "Current-standard review revalidated 伽|とぎ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, KanjiMeanings attend / companion / nursing attendance / attending / nursing, example sentence 子どものころ、祖母が御伽話を読んでくれました。, reading こどものころ、そぼがおとぎばなしをよんでくれました。, translation When I was a child, my grandmother read fairy tales to me., notes/support surface 御伽話 / 伽藍 / 看伽, audio kanji-reading-伽-とぎ, stroke-order media 4F3D_伽-stroke-order.svg, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+        "detail": "Current-standard review revalidated 伽|とぎ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, KanjiMeanings attend / companion / nursing attendance / attending / nursing, example sentence 家族が交代で祖母の看伽にあたりました。, reading かぞくがこうたいでそぼのかんがにあたりました。, translation Family members took turns attending to my grandmother while she was ill., notes/support surface 御伽話 / 伽藍 / 看伽, audio kanji-reading-伽-とぎ, stroke-order media 4F3D_伽-stroke-order.svg, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
       }
     ],
     "verificationLimitations": [],
-    "fixSummary": "Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion.",
+    "fixSummary": "Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion.",
     "platinumReviewAudit": {
       "schemaVersion": 1,
       "auditType": "n1-structural-platinum-card-review",
@@ -9825,7 +9825,7 @@
         "onReading": "カ、 ガ、 キャ、 ギャ",
         "kunReading": "とぎ",
         "notes": "<ruby>御伽話<rt>おとぎばなし</rt></ruby> - fairy tale ／ <ruby>伽藍<rt>がらん</rt></ruby> - temple complex ／ <ruby>看伽<rt>かんが</rt></ruby> - nursing attendance",
-        "exampleSentence": "子どものころ、祖母が御伽話を読んでくれました。 ／ こどものころ、そぼがおとぎばなしをよんでくれました。 ／ When I was a child, my grandmother read fairy tales to me.",
+        "exampleSentence": "家族が交代で祖母の看伽にあたりました。 ／ かぞくがこうたいでそぼのかんがにあたりました。 ／ Family members took turns attending to my grandmother while she was ill.",
         "audio": "[sound:4F3D_伽-kanji-reading-伽-とぎ.wav]",
         "strokeOrder": "<img src=\"4F3D_伽-stroke-order.svg\" alt=\"Stroke order for 伽\" />",
         "hardChecks": {
@@ -9861,7 +9861,7 @@
           "cardFieldOnly": true,
           "jlptPlacementTruth": false
         },
-        "sourceEvidenceDetail": "Japanese-source review for 伽|とぎ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000643800; readings captured as 音 カ・ガ・キャ / 訓 とぎ; meaning text checked as ①とぎ。たいくつをなぐさめること。看病をすること。「夜伽」 ②梵語(ボンゴ)の音訳に用いられる。「伽陀(カダ)」「伽羅(キャラ)」「阿伽(アカ)」; source beginning-word/support list captured as 伽 ▲ 陀(カダ) / 伽藍(ガラン) / 伽羅(キャラ) / 伽羅の仏に ▲ 箔を置く(キャラのほとけにハクをおく) / 伽羅 ▲ 蕗(キャラぶき) / 伽(とぎ). Reviewer mapped this Japanese-source field evidence to PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, and KanjiMeanings attend / companion / nursing attendance / attending / nursing for the individual kanji 伽. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion.",
+        "sourceEvidenceDetail": "Japanese-source review for 伽|とぎ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000643800; readings captured as 音 カ・ガ・キャ / 訓 とぎ; meaning text checked as ①とぎ。たいくつをなぐさめること。看病をすること。「夜伽」 ②梵語(ボンゴ)の音訳に用いられる。「伽陀(カダ)」「伽羅(キャラ)」「阿伽(アカ)」; source beginning-word/support list captured as 伽 ▲ 陀(カダ) / 伽藍(ガラン) / 伽羅(キャラ) / 伽羅の仏に ▲ 箔を置く(キャラのほとけにハクをおく) / 伽羅 ▲ 蕗(キャラぶき) / 伽(とぎ). Reviewer mapped this Japanese-source field evidence to PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, and KanjiMeanings attend / companion / nursing attendance / attending / nursing for the individual kanji 伽. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance, replaced the fairy-tale example with a nursing-attendance example, and blocked unsupported tale and entertainer gloss noise before Platinum promotion.",
         "sourceOriginIds": [
           "kanjidic2_legacy",
           "tanos_legacy_direct"
@@ -9884,9 +9884,9 @@
         "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
       },
       "exampleSentenceReview": {
-        "sentence": "子どものころ、祖母が御伽話を読んでくれました。",
-        "reading": "こどものころ、そぼがおとぎばなしをよんでくれました。",
-        "translation": "When I was a child, my grandmother read fairy tales to me.",
+        "sentence": "家族が交代で祖母の看伽にあたりました。",
+        "reading": "かぞくがこうたいでそぼのかんがにあたりました。",
+        "translation": "Family members took turns attending to my grandmother while she was ill.",
         "naturalJapanese": true,
         "learnerUseful": true,
         "learnerFriendly": true,

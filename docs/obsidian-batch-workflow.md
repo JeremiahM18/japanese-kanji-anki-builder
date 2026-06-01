@@ -22,7 +22,7 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 npm run deck:platinum:batch -- --level=<level> --limit=12
 ```
 
-The default queue is `substantive-rereview`. It includes structurally valid Platinum entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is structural Platinum coverage, not Obsidian proof.
+The default queue is `substantive-rereview`. It includes current-standard Platinum entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is actual card-data Platinum coverage, not Obsidian proof.
 
 3. Generate or refresh the kanji deck surface.
 
@@ -161,7 +161,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=8
 ```
 
-The default queue is `substantive-rereview`. Use `--queue=missing-current-standard` only when the task is structural Platinum coverage, not Obsidian proof.
+The default queue is `substantive-rereview`. Use `--queue=missing-current-standard` only when the task is actual card-data Platinum coverage, not Obsidian proof.
 
 3. Generate or refresh the word deck surface.
 
@@ -294,7 +294,7 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:rereview-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched kanji consumers. They use the scoped proof-provider path so N5/N4/N3/N2 kanji proof comes from canonical JSONL. N1 currently has no trusted scoped canonical ledger, `136/1230` trusted current-standard Platinum entries, and `1094` remaining structural Platinum gaps; fresh N1 Obsidian proof must only be recorded after real card-level Platinum review creates trusted current-standard entries. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2 Obsidian proof is complete at the full generated denominator; N1 kanji proof must not be claimed as complete Obsidian certification until the generated denominator is fully covered and gates pass.
+- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:rereview-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched kanji consumers. They use the scoped proof-provider path so N5/N4/N3/N2 kanji proof comes from canonical JSONL. N1 currently has no trusted scoped canonical ledger, `136/1230` trusted current-standard Platinum entries, and `1094` remaining actual card-data Platinum gaps; fresh N1 Obsidian proof must only be recorded after real card-level Platinum review creates trusted current-standard entries. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2 Obsidian proof is complete at the full generated denominator; N1 kanji proof must not be claimed as complete Obsidian certification until the generated denominator is fully covered and gates pass.
 
 - `deck:words:obsidian:rereview-status`, `deck:words:obsidian:certify-status`, their older Platinum compatibility aliases, `deck:words:platinum:batch`, `deck:words:platinum:n<level>`, and `deck:platinum:governance-gate` word inputs are the switched word consumers. For migrated N5/N4 word proof they default to `ledger-if-available` and can be audited with `--proof-provider=ledger` or `--proof-provider=ledger-if-available`. `--proof-provider=inline` is now only a negative-control legacy audit for those migrated word levels because tracked inline proof has been removed.
 
@@ -308,6 +308,6 @@ For future or unmigrated word Obsidian lanes, including N3/N2/N1 word, do not ad
 - A passing NLP gate is not Obsidian.
 - A generated TSV is not Obsidian.
 - A Gold regression pass is not Obsidian.
-- A Platinum structural pass is not Obsidian.
+- A Platinum card-quality pass is not Obsidian.
 - A tracked reading-reference match is not full card-field verification.
 - A tracked-source TSV gate is not APKG, media, accessibility, listening, or manual import QA.

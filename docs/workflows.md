@@ -66,11 +66,11 @@ npm run deck:words:review:n4
 node scripts/reviewPlatinumWordLevel.js --level=5
 ```
 
-Tier names: Silver means generated surface, Gold means regression protection, Platinum means current-standard structural gate, and Obsidian means explicit non-mechanical current-version rereview proof.
+Tier names: Silver means generated surface, Gold means regression protection, Platinum means current-standard card-quality gate, and Obsidian means explicit non-mechanical current-version rereview proof.
 
-`deck:platinum:batch` and `deck:words:platinum:batch` are read-only pre-review reports. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting structural coverage gaps.
+`deck:platinum:batch` and `deck:words:platinum:batch` are read-only pre-review reports. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard Platinum coverage gaps.
 
-The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Platinum gates. They fail unless every generated N5 card has an active current-standard structural entry.
+The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Platinum gates. They fail unless every generated N5 card has an active current-standard card-quality entry.
 
 ## Run Obsidian batches
 
@@ -92,7 +92,7 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 npm run deck:platinum:batch -- --level=<level> --limit=12
 ```
 
-The default queue is `substantive-rereview`. It includes structurally valid Platinum entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is structural Platinum coverage rather than Obsidian proof.
+The default queue is `substantive-rereview`. It includes current-standard Platinum entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is actual card-data Platinum coverage rather than Obsidian proof.
 
 3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support lane before or during review:
 
@@ -144,7 +144,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=8
 ```
 
-Use `--queue=missing-current-standard` only when the task is structural Platinum coverage rather than Obsidian proof.
+Use `--queue=missing-current-standard` only when the task is actual card-data Platinum coverage rather than Obsidian proof.
 
 3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
 

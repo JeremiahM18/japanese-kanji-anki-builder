@@ -1,6 +1,6 @@
 # Platinum Review Policy
 
-Platinum is the current structural and card-quality gate. It is stricter than Gold regression and separate from Obsidian certification.
+Platinum is the current card-quality gate. It is stricter than Gold regression and separate from Obsidian certification.
 
 Gold regression means the exported card surface is protected against drift. Platinum means the live generated card passes current field-bound evidence and quality requirements. Obsidian means explicit non-mechanical current-version rereview proof exists for the live card.
 
@@ -11,7 +11,7 @@ For the binding operating contract that agents must follow before any Platinum o
 | Layer | Purpose | Proves | Does not prove |
 | --- | --- | --- | --- |
 | Gold | Stabilize current generated card output. | The reviewed export fields match the governed card contract and should not regress silently. | Final release quality, source-truth evidence, Obsidian proof, or version 1 approval. |
-| Platinum | Gate current structural and card-quality requirements. | The card is accurate, useful, learner-friendly, sourced, governed, and structurally current. | A replacement for Gold regression or Obsidian proof. |
+| Platinum | Gate current card-quality requirements. | The card is accurate, useful, learner-friendly, sourced, governed, and current-standard. | A replacement for Gold regression or Obsidian proof. |
 | Obsidian | Certify substantive current-version rereview. | Explicit non-mechanical rereview proof exists for the live card. | A later fluent/native audit unless that provenance is separately recorded. |
 
 Rules:
@@ -95,7 +95,7 @@ Use the tier names below in product and release discussion:
 
 - **Silver**: generated learner-facing surface exists and can be inspected.
 - **Gold**: golden regression protects generated output against tracked expectations.
-- **Platinum**: current-standard structural gate passes, including evidence lanes, field bindings, governed source posture, media identity, and required quality gates.
+- **Platinum**: current-standard card-quality gate passes, including evidence lanes, field bindings, governed source posture, media identity, actual card-data review, and required quality gates.
 - **Obsidian**: the card has explicit non-mechanical current-version rereview provenance after the reviewer actually performs the substantive review.
 
 ## Outcomes
@@ -109,7 +109,7 @@ Every platinum pass decision must use one explicit outcome:
 - `needs_revalidation`: old review history retained for context; it does not certify platinum and remains backlog until current-standard revalidation is completed.
 - `needs_review`: blocked until a decision or fix is made.
 
-Only current-standard `platinum` and `fixed_then_platinum` manifest entries count as **Platinum** structural coverage until they also carry explicit substantive rereview provenance for Obsidian. `deferred` and `removed` entries must not appear in generated exports. `needs_revalidation` is allowed as non-certifying history and still counts as missing Platinum coverage. `needs_review` always fails the Platinum gate.
+Only current-standard `platinum` and `fixed_then_platinum` manifest entries count as **Platinum** coverage until they also carry explicit substantive rereview provenance for Obsidian. `deferred` and `removed` entries must not appear in generated exports. `needs_revalidation` is allowed as non-certifying history and still counts as missing Platinum coverage. `needs_review` always fails the Platinum gate.
 
 Platinum validates the generated card in its current deck level; it does not itself move a word to another deck. For expansion candidates that are valid but belong elsewhere, use the expansion triage decision `move_candidate` with a target JLPT level, then physically place the word only by updating the target level's `jlpt_word_level_contract` and starter word data and running that target lane's gates.
 
@@ -302,7 +302,7 @@ npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 ```
 
-`deck:platinum:batch` is a read-only kanji pre-review report. It does not create entries or prove release readiness. By default it queues cards missing explicit substantive rereview proof, not merely cards missing structural current-standard entries. Use it before editing a platinum manifest to see generated card fields, hard-rule checks, risk flags, existing platinum status, and the next square-zero rereview queue.
+`deck:platinum:batch` is a read-only kanji pre-review report. It does not create entries or prove release readiness. By default it queues cards missing explicit substantive rereview proof, not merely cards missing current-standard Platinum entries. Use it before editing a platinum manifest to see generated card fields, hard-rule checks, risk flags, existing platinum status, and the next square-zero rereview queue.
 
 `deck:kanji:obsidian:rereview-status` is a read-only kanji Obsidian proof-status report. It separates **Platinum** structural pass from **Obsidian** current-version certification proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_rereview_proof`. Use it to classify before rereviewing rather than globally blocking structurally valid cards or silently overclaiming human rereview provenance.
 
@@ -320,13 +320,13 @@ The older `deck:platinum:rereview-status`, `deck:words:platinum:rereview-status`
 
 `deck:words:platinum:source-posture` is the read-only word source-family posture report. It is scoped to structurally current-standard word entries only. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. Word source-claim origin independence is marked `word_source_claim_origin_independence_not_evaluated` until a word source-origin manifest exists; do not imply that word placement/source-origin circularity was checked before that data exists. Source-family posture counts are not a rereview selection pool and are not substantive platinum proof.
 
-`deck:platinum:governance-gate` is the local-data real-row governance gate for N5/N4 platinum posture. It reads migrated kanji and word Obsidian proof through the scoped proof-provider path, defaulting to canonical JSONL for migrated levels; unmigrated levels still fall back through the provider path until their own scoped ledger exists. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, zero verification-limitations populations, missing Obsidian proof, and word source-family posture. If an explicitly configured incomplete word level has blocked rows, only rows missing active current-standard structural coverage can be allowed; dirty reviewed entries still fail the gate. It does not edit cards or replace level-specific release commands.
+`deck:platinum:governance-gate` is the local-data real-row governance gate for N5/N4 platinum posture. It reads migrated kanji and word Obsidian proof through the scoped proof-provider path, defaulting to canonical JSONL for migrated levels; unmigrated levels still fall back through the provider path until their own scoped ledger exists. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, zero verification-limitations populations, missing Obsidian proof, and word source-family posture. If an explicitly configured incomplete word level has blocked rows, only rows missing active current-standard Platinum coverage can be allowed; dirty reviewed entries still fail the gate. It does not edit cards or replace level-specific release commands.
 
-Each kanji Platinum command requires every generated card for that level and surface to have an active current-standard structural entry by default. Core kanji commands fail fast before generated-row construction when `--require-all` is used with an empty or incomplete Platinum manifest, so incomplete N1 gates report the missing current-standard structural coverage instead of implying release readiness. N5/N4/N3/N2 are structurally current-standard complete and have complete canonical Obsidian proof. N2 structural Platinum and Obsidian certification still do not imply APKG manual media QA, source-governance completion, or release readiness. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
+Each kanji Platinum command requires every generated card for that level and surface to have an active current-standard card-quality entry by default. Core kanji commands fail fast before generated-row construction when `--require-all` is used with an empty or incomplete Platinum manifest, so incomplete N1 gates report the missing current-standard Platinum coverage instead of implying release readiness. N5/N4/N3/N2 are current-standard complete and have complete canonical Obsidian proof. N2 Platinum and Obsidian certification still do not imply APKG manual media QA, source-governance completion, or release readiness. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
-Each word Platinum command requires every generated word card for that level and surface to have an active current-standard structural entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
+Each word Platinum command requires every generated word card for that level and surface to have an active current-standard card-quality entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
-Migrated N5/N4 word Platinum level gates read tracked review entries through the scoped Obsidian proof-provider path by default. This keeps structural Platinum evaluation compatible with canonical JSONL proof while preserving the boundary: a passing Platinum gate is not new Obsidian certification and not release readiness. Use `--proof-provider=ledger` or `--proof-provider=ledger-if-available` for normal migrated-level audits; `--proof-provider=inline` is only a negative-control legacy audit after inline removal.
+Migrated N5/N4 word Platinum level gates read tracked review entries through the scoped Obsidian proof-provider path by default. This keeps current-standard Platinum evaluation compatible with canonical JSONL proof while preserving the boundary: a passing Platinum gate is not new Obsidian certification and not release readiness. Use `--proof-provider=ledger` or `--proof-provider=ledger-if-available` for normal migrated-level audits; `--proof-provider=inline` is only a negative-control legacy audit after inline removal.
 
 Additional Platinum commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji Platinum coverage. The npm aliases pass `--allow-empty` because the governed default currently suppresses all already-core source claims from the physical additional decks, leaving `0` selected additional cards. An empty generated additional surface is valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were suppressed rather than silently skipped.
 

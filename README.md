@@ -64,7 +64,7 @@ The binding operating contract for Platinum and Obsidian work is [docs/platinum-
 | --- | --- | --- |
 | Silver | A generated card surface exists for the product. | Reviewed content, source truth, release quality, or learner usefulness. |
 | Gold | Gold regression protects reviewed generated output from drift. | Source truth, release approval, or substantive current-version rereview. |
-| Platinum | The card passes the current product's structural Platinum gate against live generated rows. Evidence lanes are separated into governed source truth, internal checks, and reviewer judgment. | Obsidian proof, native-level language judgment, or permission to shrink the square-zero certification denominator. |
+| Platinum | The card passes the current product's card-quality Platinum gate against live generated rows. Evidence lanes are separated into governed source truth, internal checks, and reviewer judgment. | Obsidian proof, native-level language judgment, or permission to shrink the square-zero certification denominator. |
 | Obsidian | Explicit non-mechanical current-version rereview proof exists for the live card. Kanji proof must include structured rereview provenance and actual example-sentence review evidence. Word proof must include structured rereview provenance, exact word-reading identity binding, a full word-card evidence checklist, and actual example-sentence review evidence. | A later fluent/native audit unless that provenance is separately recorded. |
 
 ## Current Baseline
@@ -79,16 +79,16 @@ All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obs
 | --- | --- | --- |
 | N5 kanji | `80/80` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n5`, `deck:kanji:obsidian:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
 | N4 kanji | `212/212` generated, Gold, Platinum, and Obsidian. | `deck:platinum:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
-| N3 kanji | `341/341` generated, Gold, current-standard structural Platinum, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:platinum:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
-| N2 kanji | `349/349` generated, Gold, current-standard structural Platinum, and Obsidian certified with `0` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:platinum:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2`, `deck:kanji:obsidian:certify-status -- --levels=2` |
-| N1 kanji | `1230/1230` generated and Gold; trusted current-standard structural Platinum is `136/1230`, trusted Obsidian proof remains reset to `0/1230`, and `1094` generated rows still require fresh Platinum review before any Obsidian proof is recorded. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:platinum:n1`, `deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard` |
+| N3 kanji | `341/341` generated, Gold, current-standard card-quality Platinum, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:platinum:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
+| N2 kanji | `349/349` generated, Gold, current-standard card-quality Platinum, and Obsidian certified with `0` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:platinum:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2`, `deck:kanji:obsidian:certify-status -- --levels=2` |
+| N1 kanji | `1230/1230` generated and Gold; trusted current-standard card-quality Platinum is `136/1230`, trusted Obsidian proof remains reset to `0/1230`, and `1094` generated rows still require fresh actual card-data Platinum review before any Obsidian proof is recorded. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:platinum:n1`, `deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard` |
 | Additional kanji diagnostic | `0` physical additional cards. `398` additional source claims are governed and suppressed because they collide with `387` core-retained source-claim kanji; unresolved duplicates are `0`. | `deck:kanji:additional:ready`, `deck:kanji:review-status` |
 
 `deck:ready` currently reports N5 through N1 kanji as ready with `100.0%` of mechanical readiness checks passing for sentence, curated, stroke-order, required media, readings, meanings, examples, and contextual notes. For N1, this is not content trust, Platinum coverage, Obsidian certification, or release approval.
 
 Full-level media completeness is owned by `deck:ready -- --levels=<level>` plus the media policy audits. `media:review:audio` is only scoped card-level audio identity/listening evidence for the cards under review; it must never be reported as full-level media coverage or used to shrink the media denominator.
 
-Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `platinum` and `fixed_then_platinum` entries count as active Platinum. Legacy or unversioned history is non-certifying backlog until revalidated under the current standard.
+Kanji Platinum uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `platinum` and `fixed_then_platinum` entries count as active Platinum after actual card-data review. Legacy or unversioned history is non-certifying backlog until revalidated under the current standard.
 
 `deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` currently reports N5/N4/N3/N2 kanji as `982/982` Platinum, `982/982` Obsidian, `0/982` needing Obsidian, and `0/982` blocked/failing.
 
@@ -106,7 +106,7 @@ For scoped canonical kanji proof levels (N5/N4/N3/N2), switched kanji proof cons
 | N2 word | `28` canonical Silver rows build at `28/28`; single-level readiness is incomplete; cumulative reading coverage is `4.6%` (`49/1061`). Gold, Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=2`, `deck:words:completion:n2`, `deck:words:reading-audit:n2` |
 | N1 word | `26` canonical Silver rows build at `26/26`; single-level readiness is incomplete; cumulative reading coverage is `1.2%` (`41/3284`). Gold, Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=1`, `deck:words:completion:n1`, `deck:words:reading-audit:n1` |
 
-Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 generated word denominator is `987` rows. Structural Platinum is `987/987`, strict Obsidian proof is `987/987`, `0` Platinum entries need Obsidian, and `0` generated N5/N4 word rows are blocked/failing structurally.
+Word Platinum uses `word-platinum-v3-evidence-lanes`. Current N5/N4 generated word denominator is `987` rows. Card-quality Platinum is `987/987`, strict Obsidian proof is `987/987`, `0` Platinum entries need Obsidian, and `0` generated N5/N4 word rows are blocked/failing current-standard Platinum.
 
 For migrated N5/N4 word proof, the word Obsidian status/certification commands and their older Platinum compatibility aliases read scoped canonical JSONL Obsidian proof from `templates/obsidian_proof_ledger/word_n5.jsonl` and `templates/obsidian_proof_ledger/word_n4.jsonl` through the proof-provider path by default. The tracked N5/N4 word review sets no longer carry inline word `rereviewProvenance`; reconciliation binds the canonical ledger proof back to those tracked entries.
 
@@ -116,7 +116,7 @@ Single-source entries carry `word_source_independence_not_proven`. Source-family
 
 ### Cross-Product Gates
 
-- `deck:words:obsidian:rereview-status -- --levels=5,4` uses generated word rows as the denominator and defaults to canonical JSONL proof for migrated N5/N4 word ledgers. N5 word `287/287` and N4 word `700/700` Obsidian remain separate from `987/987` structural Platinum.
+- `deck:words:obsidian:rereview-status -- --levels=5,4` uses generated word rows as the denominator and defaults to canonical JSONL proof for migrated N5/N4 word ledgers. N5 word `287/287` and N4 word `700/700` Obsidian remain separate from `987/987` card-quality Platinum.
 - `deck:words:obsidian:certify-status -- --levels=5,4` is the fail-closed word Obsidian gate. It currently passes for the full N5/N4 word square-zero certification denominator.
 - `deck:platinum:governance-gate` exercises real generated N5/N4 kanji and word rows when ignored local inputs are present. It currently passes with governance warnings for word single-source-family posture, bulk-template or missing card-specific revalidation summaries, marker-only example-quality automation, and zero active verification limitations. Migrated kanji and word Obsidian proof inputs read through the scoped proof-provider path.
 - JLPT kanji source evidence is governed separately from deck readiness. The source audit currently passes source-use governance with `--governance-strict` while evidence-depth work remains incomplete.
@@ -234,7 +234,7 @@ Word decks:
 Review layers:
 
 - Gold regression protects reviewed generated output from drift. It does not mean release approval.
-- Platinum gates current structural and card-quality requirements against live generated rows.
+- Platinum gates current card-quality requirements against live generated rows.
 - Platinum requires field-bound source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
 - Obsidian certification requires explicit non-mechanical current-version rereview proof.
 - Platinum manifests are in progress. Only active `platinum` and `fixed_then_platinum` entries can count as reviewed release coverage.

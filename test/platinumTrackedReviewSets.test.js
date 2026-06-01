@@ -41,6 +41,30 @@ const KNOWN_KANJI_PRIMARY_READING_REGRESSION_GUARDS = Object.freeze([
     { level: 4, kanji: "好", rejectedReading: "すき", expectedReading: "このむ" },
 ]);
 
+const N1_LEGACY_STRUCTURAL_AUDIT_TYPE = "n1-structural-platinum-card-review";
+const N1_CARD_QUALITY_AUDIT_TYPE = "n1-card-quality-platinum-review";
+const N1_ALLOWED_AUDIT_TYPES = Object.freeze([
+    N1_LEGACY_STRUCTURAL_AUDIT_TYPE,
+    N1_CARD_QUALITY_AUDIT_TYPE,
+]);
+const N1_REQUIRED_ACTUAL_CARD_DATA_REVIEW_FIELDS = Object.freeze([
+    "target kanji identity and deck fit",
+    "DisplayWord",
+    "PrimaryReading and reading rationale",
+    "MeaningJP",
+    "KanjiMeanings",
+    "notes and support vocabulary",
+    "example sentence, reading, and translation",
+    "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+    "governed Japanese-source field evidence",
+    "source-origin independence",
+    "exact primary-reading audio identity",
+    "stroke-order media target and provenance",
+    "NLP support packet and tokenization signals",
+    "verification limitations",
+    "learner usefulness and product fit",
+]);
+
 function loadJson(relativePath) {
     return JSON.parse(fs.readFileSync(path.join(ROOT_DIR, relativePath), "utf8"));
 }
@@ -298,6 +322,7 @@ function assertN1StructuralAuditMeetsLedgerGradeFloor(entry) {
     const cardKey = buildKanjiCardKey(entry.kanji, reading);
     const label = `N1 structural audit ${cardKey}`;
     const audit = entry.platinumReviewAudit || {};
+    const isCardQualityAudit = audit.auditType === N1_CARD_QUALITY_AUDIT_TYPE;
     const evidenceText = [
         ...normalizeList(audit.commandsReviewed),
         audit.sourceFieldReview?.sourceEvidenceDetail,
@@ -312,6 +337,32 @@ function assertN1StructuralAuditMeetsLedgerGradeFloor(entry) {
         audit.rubricReview?.reviewerDecision,
         audit.trackedSourceContractBoundary?.reason,
     ].join("\n");
+
+    if (isCardQualityAudit) {
+        const actualCardDataReview = audit.actualCardDataReview || {};
+        assert.equal(
+            actualCardDataReview.actualCardDataReviewed,
+            true,
+            `${label} must explicitly record actual card-data review`
+        );
+        assert.equal(
+            actualCardDataReview.reviewStandard,
+            CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
+            `${label} actual card-data review standard`
+        );
+        const checklist = normalizeList(actualCardDataReview.checklist);
+        for (const requiredField of N1_REQUIRED_ACTUAL_CARD_DATA_REVIEW_FIELDS) {
+            assert.ok(
+                checklist.includes(requiredField),
+                `${label} actual card-data checklist missing ${requiredField}`
+            );
+        }
+        assert.doesNotMatch(
+            JSON.stringify(audit),
+            /structural Platinum evidence only|structural Platinum card review only|structural Platinum-only|structure-only/i,
+            `${label} new N1 card-quality audit must not use structure-only wording`
+        );
+    }
 
     assert.equal(audit.generatedSurface?.hardChecksPassed, true, `${label} generated hard checks`);
     assert.equal(audit.sourceFieldReview?.supports?.targetKanji, true, `${label} source target support`);
@@ -346,7 +397,7 @@ function assertN1StructuralAuditMeetsLedgerGradeFloor(entry) {
         { label: "source-origin independence", pattern: /independent.*source|source.*independent|source origin/ },
         { label: "assistive-only NLP boundary", pattern: /assistive only|assistive_only|human review required/ },
         { label: "release-readiness boundary", pattern: /release readiness|release tasks|not claimed/ },
-        { label: "Obsidian reset boundary", pattern: /obsidian proof.*reset|0\/1230|structural platinum only/ },
+        { label: "Obsidian reset boundary", pattern: /obsidian proof.*reset|0\/1230|not obsidian proof/i },
     ]) {
         assertProofTextPattern(evidenceText, requirement.pattern, `${label} missing ${requirement.label}`);
     }
@@ -520,7 +571,7 @@ test("active N1 kanji platinum entries include structured card audit evidence wh
 
         assert.ok(audit && typeof audit === "object", `${label} must include platinumReviewAudit`);
         assert.equal(audit.schemaVersion, 1, `${label} audit schema version`);
-        assert.equal(audit.auditType, "n1-structural-platinum-card-review", `${label} audit type`);
+        assert.ok(N1_ALLOWED_AUDIT_TYPES.includes(audit.auditType), `${label} audit type`);
         assert.equal(audit.batch?.level, 1, `${label} audit batch level`);
         assert.equal(audit.batch?.reviewedAt, entry.revalidatedAt, `${label} audit reviewedAt must match revalidation`);
         assert.equal(audit.batch?.reviewer, entry.reviewer, `${label} audit reviewer must match revalidation`);
@@ -582,7 +633,11 @@ test("active N1 kanji platinum entries include structured card audit evidence wh
         assert.equal(levelPlacement.sourceConsensusLevel, "N1", `${label} source consensus level`);
         assert.ok(levelPlacement.sourceConfidence, `${label} source confidence must be recorded`);
         assert.equal(typeof levelPlacement.releaseBlockedBySourceConfidence, "boolean", `${label} source confidence release boundary`);
-        assert.match(levelPlacement.reviewerDecision || "", /structural Platinum/i, `${label} level placement boundary must say structural Platinum`);
+        if (audit.auditType === N1_CARD_QUALITY_AUDIT_TYPE) {
+            assert.match(levelPlacement.reviewerDecision || "", /card-quality Platinum/i, `${label} level placement boundary must say card-quality Platinum`);
+        } else {
+            assert.match(levelPlacement.reviewerDecision || "", /structural Platinum/i, `${label} level placement boundary must say structural Platinum`);
+        }
         assert.match(levelPlacement.reviewerDecision || "", /release readiness/i, `${label} level placement boundary must mention release readiness`);
 
         const exampleReview = audit.exampleSentenceReview || {};

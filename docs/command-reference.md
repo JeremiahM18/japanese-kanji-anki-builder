@@ -72,7 +72,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
 | `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; proof-provider input defaults to ledger-if-available and current canonical Obsidian proof covers the full N2 denominator |
-| `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; the trusted N1 Platinum scope is currently `8/1230`, so the full-level gate fails closed until all generated N1 rows have fresh governed current-standard entries |
+| `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; the trusted N1 Platinum scope is currently `136/1230`, so the full-level gate fails closed until all generated N1 rows have fresh governed current-standard entries |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word review packet for the selected queue; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
@@ -211,7 +211,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run media:import:audio` | Import governed local audio files into managed media |
 | `npm run media:voicevox` | Generate governed kanji reading audio through local VOICEVOX |
 | `npm run media:voicevox:words` | Generate governed word reading audio through local VOICEVOX |
-| `npm run media:review:audio` | Emit kanji audio review packets |
-| `npm run media:review:word-audio` | Emit word audio review packets |
+| `npm run media:review:audio` | Emit scoped kanji audio review packets for selected cards; not a full-level media-completeness gate |
+| `npm run media:review:word-audio` | Emit scoped word audio review packets for selected cards; not a full-level media-completeness gate |
 | `npm run data:import:pitch:kanjium` | Import governed Kanjium pitch-accent data into the canonical word pitch store |
 | `npm run data:import:pitch:voicevox` | Import generated VOICEVOX pitch-accent support labels into the canonical word pitch store |

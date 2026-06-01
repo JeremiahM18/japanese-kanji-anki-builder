@@ -11,10 +11,12 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 - NLP is required review support where the lane defines it, but NLP never approves cards, writes tracked templates, certifies Obsidian, or claims release readiness.
 - Kanji and word lanes are separate products. Do not borrow proof, status, counts, or source decisions across them.
 - Generated rows, source evidence, internal checks, reviewer judgment, media identity, NLP support, Obsidian proof, and release readiness are separate lanes.
+- Scoped media review commands are card-level evidence only. Full-level media completeness must be verified with `deck:ready -- --levels=<level>` and the relevant media policy audits.
 - If a real card field is corrected during review, the outcome is `fixed_then_platinum`, and the entry must include `fixSummary`.
 - If core truth remains uncertain, defer or remove the card. Do not hide uncertainty in prose.
 - Do not lower N2 through N5 standards to match N1. Raise N1 to the governed standard already enforced elsewhere.
 - Do not claim a batch is complete until the actual card data was reviewed and the relevant gates were run.
+- If a commit changes review counts, proof posture, readiness posture, or gate expectations, update the affected README/docs claims in that same commit.
 
 ## Evidence Boundaries
 
@@ -82,6 +84,8 @@ Word Platinum review must check:
 - learner usefulness and product fit
 
 If any reviewed surface is wrong, fix the source/card data first, regenerate as needed, rerun affected gates, and record `fixed_then_platinum` with `fixSummary`. A card that needed correction is not plain `platinum`.
+
+`media:review:audio` and `media:review:word-audio` may support exact-audio review for the selected batch, but they are not level readiness gates. Do not summarize a scoped audio packet count as the level's media status.
 
 ## NLP Support
 
@@ -151,6 +155,21 @@ node --test test/platinumTrackedReviewSets.test.js
 
 For word levels with an npm alias, run `npm run deck:words:platinum:n<level>`. For future word levels without an alias, run `node scripts/reviewPlatinumWordLevel.js --level=<level> --require-all` after that level's Platinum manifest exists.
 
+When a batch report makes a media-readiness claim for a level, also run:
+
+```bash
+npm run deck:ready -- --levels=<level>
+npm run data:audit:audio -- --json
+```
+
+For kanji media claims, also run:
+
+```bash
+npm run data:audit:stroke-order -- --json
+```
+
+Scoped `media:review:*` commands may be listed as card-level review evidence, but they do not replace these full-level gates.
+
 Obsidian proof verification normally includes:
 
 ```bash
@@ -194,6 +213,7 @@ Every batch report must state:
 - media/audio/stroke-order/pitch checks performed
 - Obsidian proof written or not written
 - tests/gates run and results
+- README/docs posture lines updated when counts or gate expectations changed
 - what remains explicitly unclaimed
 
 ## Forbidden Shortcuts

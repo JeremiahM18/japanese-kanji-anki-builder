@@ -359,6 +359,8 @@ npm run data:audit:audio -- --json
 
 Use the npm scripts for governed audio work. The word-audio generator is `scripts/generateWordVoicevoxAudio.js` behind `npm run media:voicevox:words`; `scripts/generateVoicevoxWordAudio.js` is not a repo path.
 
+`media:review:audio` and `media:review:word-audio` are scoped review packets for exact card audio identity and listening QA on the selected cards. They do not prove full-level media completeness. Full-level media completeness must come from `deck:ready -- --levels=<level>` and the relevant policy audits, such as `data:audit:audio -- --json` and `data:audit:stroke-order -- --json` for kanji media.
+
 The release audio policy requires:
 
 - VOICEVOX Nemo

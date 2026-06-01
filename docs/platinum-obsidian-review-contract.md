@@ -16,7 +16,7 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 - If core truth remains uncertain, defer or remove the card. Do not hide uncertainty in prose.
 - Do not lower N2 through N5 standards to match N1. Raise N1 to the governed standard already enforced elsewhere.
 - Do not claim a batch is complete until the actual card data was reviewed and the relevant gates were run.
-- If a commit changes review counts, proof posture, readiness posture, or gate expectations, update the affected README/docs claims in that same commit.
+- If a commit changes review counts, proof posture, readiness posture, or gate expectations, update the affected README, docs, and changelog claims in that same commit.
 
 ## Evidence Boundaries
 
@@ -213,7 +213,7 @@ Every batch report must state:
 - media/audio/stroke-order/pitch checks performed
 - Obsidian proof written or not written
 - tests/gates run and results
-- README/docs posture lines updated when counts or gate expectations changed
+- README, docs, and changelog posture lines updated when counts or gate expectations changed
 - what remains explicitly unclaimed
 
 ## Forbidden Shortcuts

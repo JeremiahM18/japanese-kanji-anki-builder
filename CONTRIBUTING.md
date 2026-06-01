@@ -10,7 +10,7 @@ This repository is maintained with production-style standards even though it is 
 - Prefer explicit validation at integration boundaries.
 - Treat JSDoc contracts as part of the public engineering surface for shared modules.
 - Update `README.md` whenever architecture, workflow, configuration, or operational behavior changes.
-- Update `CHANGELOG.md` when preparing or landing a user-visible release milestone.
+- Update `CHANGELOG.md` when preparing or landing a user-visible release milestone, or when a committed count/posture change updates README/docs release-facing status.
 - Add or update tests for behavioral changes.
 - Keep commits focused and professionally titled.
 - Do not merge with failing lint, tests, smoke validation, release gates, or CI.

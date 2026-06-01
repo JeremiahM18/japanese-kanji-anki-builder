@@ -26,6 +26,8 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Changed
 
+- Updated the N1 kanji posture to the live trusted current-standard Platinum count of `136/1230`, with `0/1230` Obsidian proof and `1094` rows still requiring fresh Platinum review before proof is recorded.
+- Clarified that scoped audio review packets are selected-card evidence only; full-level media completeness remains owned by `deck:ready` plus audio and stroke-order policy audits.
 - Completed the governed N3 core kanji Obsidian proof lane while keeping certification fail-closed: live N3 kanji is `341/341` generated, Gold, structural Platinum, and Obsidian certified; N5/N4/N3 kanji Obsidian now totals `633/633`; `0` Platinum entries need substantive Obsidian proof; and `0` generated rows are blocked/failing structurally. N3 kanji NLP packets remain assistive review context only, not certification proof.
 - Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.
 - Completed the governed N4 word Obsidian proof lane while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word structural Platinum is `700/700`, N4 word Obsidian is `700/700`, total N5/N4 word Obsidian is `987/987`, `0` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.

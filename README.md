@@ -69,7 +69,7 @@ The binding operating contract for Platinum and Obsidian work is [docs/platinum-
 
 ## Current Baseline
 
-Run live commands for release decisions. This section is an orientation snapshot, not the release gate. Commits that change review counts, proof posture, or readiness posture must update the affected snapshot lines in the same commit.
+Run live commands for release decisions. This section is an orientation snapshot, not the release gate. Commits that change review counts, proof posture, or readiness posture must update the affected README, docs, and changelog lines in the same commit.
 
 All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obsidian certified; N1 is currently a trusted-reset lane with fresh governed Platinum batching restarted and no Obsidian certification counted.
 

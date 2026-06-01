@@ -1,6 +1,6 @@
 # Documentation Standard
 
-This is the repository standard for README and docs work. Use it before changing documentation, release language, status snapshots, workflow runbooks, command references, security notes, or provenance claims.
+This is the repository standard for README, CHANGELOG, and docs work. Use it before changing documentation, release language, status snapshots, workflow runbooks, command references, security notes, or provenance claims.
 
 The goal is not prettier prose. The goal is governed, replayable documentation that lets a future reviewer know what is true, what is local-only, what is generated, what is blocked, and which command proves the claim.
 
@@ -94,6 +94,7 @@ Rules:
 - Generated/local artifacts can support inspection, but they are not tracked truth unless a tracked contract explicitly names them as promoted evidence.
 - If a count is stale or cannot be verified, remove it or label it as historical/orientation-only.
 - Do not turn an expected fail-closed backlog into an error-free status claim.
+- When a committed change updates review counts, proof posture, readiness posture, or gate expectations, update every affected README, doc, and CHANGELOG status claim in the same commit.
 
 ## Security And Release Schema
 
@@ -139,6 +140,7 @@ After editing docs:
 3. Run relevant command or parity gates for any status or command claim changed.
 4. Run `git diff --check`.
 5. Keep documentation commits focused and avoid mixing unrelated generated artifacts.
+6. Keep CHANGELOG release-facing and concise; do not turn it into a per-card or per-batch review log.
 
 ## No-Go Rules
 
@@ -164,4 +166,5 @@ Use this checklist when documentation changes are part of a release-quality task
 - Legal/source-use posture is preserved for restricted sources.
 - Security boundaries are preserved for local servers, Docker, generated outputs, dependencies, workflows, and release artifacts.
 - README links to the deeper docs rather than duplicating every detail.
+- CHANGELOG captures release-facing posture changes without becoming a batch log.
 - The final diff is small enough for a future reviewer to audit without guessing.

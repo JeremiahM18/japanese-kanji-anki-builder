@@ -8855,5 +8855,2221 @@
         "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
       }
     }
+  },
+  {
+    "kanji": "伯",
+    "status": "platinum",
+    "readingIncludes": [
+      "はく"
+    ],
+    "meaningIncludes": [
+      "count",
+      "elder uncle",
+      "chief"
+    ],
+    "kanjiMeaningsIncludes": [
+      "count",
+      "elder uncle",
+      "chief",
+      "Brazil",
+      "earl",
+      "uncle"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "伯爵",
+      "伯仲",
+      "伯父"
+    ],
+    "exampleIncludes": [
+      "物語には若い伯爵が登場します。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005621700",
+        "detail": "Japanese-source review for 伯|はく: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0005621700; readings captured as 音 ハク 外ハ / 訓 外はたがしら・かしら・おさ; meaning text checked as 一ハ はたがしら。諸侯の盟主。類覇 二ハク ①おじ。おば。父母の兄・姉。「伯父」「伯母」対叔 ②兄弟姉妹の最年長。「伯・仲・叔・季」の一番目。「伯兄」 ③かしら。おさ。「河伯」 ④一芸に秀でたものの称。「画伯」「詩伯」 ⑤五等爵（公・侯・伯・子・男）の第三位。「伯爵」 ⑥「伯耆(ほうき)の国」の略。「伯州」 ⑦「伯剌西爾(ブラジル)」の略。; source beginning-word/support list captured as 〈伯父〉(おじ) / 〈伯母〉(おば) / 伯牙琴を破る(ハクガキンをやぶる) / 伯爵(ハクシャク) / 伯叔(ハクシュク) / 伯仲(ハクチュウ) / 伯仲の間(ハクチュウのカン) / 伯仲叔季(ハクチュウシュクキ). Reviewer mapped this Japanese-source field evidence to PrimaryReading はく, MeaningJP count / elder uncle / chief, and KanjiMeanings count / elder uncle / chief / Brazil / earl / uncle for the individual kanji 伯. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses はく because the learner-facing support surface anchors 伯 through 伯爵 / 伯仲 / 伯父; other readings remain visible in the generated on/kun reading fields (ハク) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 伯|はく: single-kanji anchor; Kanji and DisplayWord 伯; StudyWordKanji blank; PrimaryReading はく; MeaningJP count / elder uncle / chief; KanjiMeanings count / elder uncle / chief / Brazil / earl / uncle; notes <ruby>伯爵<rt>はくしゃく</rt></ruby> - count / earl ／ <ruby>伯仲<rt>はくちゅう</rt></ruby> - be evenly matched ／ <ruby>伯父<rt>おじ</rt></ruby> - uncle / older uncle; example 物語には若い伯爵が登場します。 ／ ものがたりにはわかいはくしゃくがとうじょうします。 ／ A young count appears in the story.; audio field includes kanji-reading-伯-はく; stroke-order field includes 伯-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F2F_伯\\manifest.json",
+        "detail": "Managed media provenance inspected for 伯: exact audio media fragment kanji-reading-伯-はく; audio/4F2F_伯-kanji-reading-伯-はく.wav; stroke-order media animations/4F2F_伯-stroke-order.gif; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=伯 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F2F_伯\\manifest.json",
+        "detail": "Audio artifact reviewed for 伯|はく: exact kanji-reading audio kanji-reading-伯-はく; exported PrimaryReading はく; managed audio path audio/4F2F_伯-kanji-reading-伯-はく.wav."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F2F_伯\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 伯: stroke-order media animations/4F2F_伯-stroke-order.gif shows target 伯; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 伯; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 伯|はく: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 伯|はく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はく, MeaningJP count / elder uncle / chief, KanjiMeanings count / elder uncle / chief / Brazil / earl / uncle, example sentence 物語には若い伯爵が登場します。, reading ものがたりにはわかいはくしゃくがとうじょうします。, translation A young count appears in the story., notes/support surface 伯爵 / 伯仲 / 伯父, audio kanji-reading-伯-はく, stroke-order media 4F2F_伯-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "伯",
+        "displayWord": "伯",
+        "primaryReading": "はく",
+        "meaningJP": "count / elder uncle / chief",
+        "kanjiMeanings": "count / elder uncle / chief / Brazil / earl / uncle",
+        "studyWordKanji": "",
+        "onReading": "ハク",
+        "kunReading": "",
+        "notes": "<ruby>伯爵<rt>はくしゃく</rt></ruby> - count / earl ／ <ruby>伯仲<rt>はくちゅう</rt></ruby> - be evenly matched ／ <ruby>伯父<rt>おじ</rt></ruby> - uncle / older uncle",
+        "exampleSentence": "物語には若い伯爵が登場します。 ／ ものがたりにはわかいはくしゃくがとうじょうします。 ／ A young count appears in the story.",
+        "audio": "[sound:4F2F_伯-kanji-reading-伯-はく.wav]",
+        "strokeOrder": "<img src=\"4F2F_伯-stroke-order.gif\" alt=\"Stroke order for 伯\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0005621700",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 伯|はく: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0005621700; readings captured as 音 ハク 外ハ / 訓 外はたがしら・かしら・おさ; meaning text checked as 一ハ はたがしら。諸侯の盟主。類覇 二ハク ①おじ。おば。父母の兄・姉。「伯父」「伯母」対叔 ②兄弟姉妹の最年長。「伯・仲・叔・季」の一番目。「伯兄」 ③かしら。おさ。「河伯」 ④一芸に秀でたものの称。「画伯」「詩伯」 ⑤五等爵（公・侯・伯・子・男）の第三位。「伯爵」 ⑥「伯耆(ほうき)の国」の略。「伯州」 ⑦「伯剌西爾(ブラジル)」の略。; source beginning-word/support list captured as 〈伯父〉(おじ) / 〈伯母〉(おば) / 伯牙琴を破る(ハクガキンをやぶる) / 伯爵(ハクシャク) / 伯叔(ハクシュク) / 伯仲(ハクチュウ) / 伯仲の間(ハクチュウのカン) / 伯仲叔季(ハクチュウシュクキ). Reviewer mapped this Japanese-source field evidence to PrimaryReading はく, MeaningJP count / elder uncle / chief, and KanjiMeanings count / elder uncle / chief / Brazil / earl / uncle for the individual kanji 伯. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification.",
+        "sourceOriginIds": [
+          "ask_hajimete_jlpt_kanji",
+          "kanjidic2_legacy",
+          "nihongo_sou_matome_kanji",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "ask_hajimete_jlpt_kanji",
+          "edrdg_kanjidic2",
+          "nihongo_sou_matome",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "物語には若い伯爵が登場します。",
+        "reading": "ものがたりにはわかいはくしゃくがとうじょうします。",
+        "translation": "A young count appears in the story.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 伯|はく: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0029",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0033",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "はく",
+        "normalizedCardReading": "はく",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F2F_伯/manifest.json",
+        "audio": {
+          "path": "audio/4F2F_伯-kanji-reading-伯-はく.wav",
+          "source": "voicevox-nemo",
+          "text": "伯",
+          "reading": "はく",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F2F_伯-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F2F_伯-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"4F2F_伯-stroke-order.gif\" alt=\"Stroke order for 伯\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 伯|はく after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
+  },
+  {
+    "kanji": "伴",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ともなう"
+    ],
+    "meaningIncludes": [
+      "accompany"
+    ],
+    "kanjiMeaningsIncludes": [
+      "accompany",
+      "companion",
+      "bring with"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "伴う",
+      "同伴",
+      "伴奏"
+    ],
+    "exampleIncludes": [
+      "その決定には大きな責任が伴います。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005736600",
+        "detail": "Japanese-source review for 伴|ともなう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0005736600; readings captured as 音 ハン・バン / 訓 ともな う 外とも; meaning text checked as ①とも。つれ。つれの人。「伴侶(ハンリョ)」 ②ともなう。つれだつ。つきしたがう。「伴奏」「同伴」; source beginning-word/support list captured as △ 伴(とも) / 伴う(ともな－う) / △ 伴 △ 造(とものみやつこ) / 〈伴天連〉(バテレン) / 伴食(バンショク) / 伴食宰相(バンショクサイショウ) / 伴走(バンソウ) / 伴奏(バンソウ). Reviewer mapped this Japanese-source field evidence to PrimaryReading ともなう, MeaningJP accompany, and KanjiMeanings accompany / companion / bring with for the individual kanji 伴. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ともなう because the learner-facing support surface anchors 伴 through 伴う / 同伴 / 伴奏; other readings remain visible in the generated on/kun reading fields (ハン、 バン; ともな.う) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 伴|ともなう: single-kanji anchor; Kanji and DisplayWord 伴; StudyWordKanji blank; PrimaryReading ともなう; MeaningJP accompany; KanjiMeanings accompany / companion / bring with; notes <ruby>伴<rt>ともな</rt></ruby>う - accompany ／ <ruby>同伴<rt>どうはん</rt></ruby> - accompany / bring along ／ <ruby>伴奏<rt>ばんそう</rt></ruby> - musical accompaniment; example その決定には大きな責任が伴います。 ／ そのけっていにはおおきなせきにんがともないます。 ／ That decision carries great responsibility with it.; audio field includes kanji-reading-伴-ともなう; stroke-order field includes 伴-stroke-order. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F34_伴\\manifest.json",
+        "detail": "Managed media provenance inspected for 伴: exact audio media fragment kanji-reading-伴-ともなう; audio/4F34_伴-kanji-reading-伴-ともなう.wav; stroke-order media animations/4F34_伴-stroke-order.gif; package media reports full N1 coverage with no silent fallback accepted. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=伴 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F34_伴\\manifest.json",
+        "detail": "Audio artifact reviewed for 伴|ともなう: exact kanji-reading audio kanji-reading-伴-ともなう; exported PrimaryReading ともなう; managed audio path audio/4F34_伴-kanji-reading-伴-ともなう.wav. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F34_伴\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 伴: stroke-order media animations/4F34_伴-stroke-order.gif shows target 伴; visual target checked; source provenance remote-stroke-order-animation through managed media policy. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 伴; this regression gate protects generated field expectations but is not source truth and not source evidence. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 伴|ともなう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 伴|ともなう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ともなう, MeaningJP accompany, KanjiMeanings accompany / companion / bring with, example sentence その決定には大きな責任が伴います。, reading そのけっていにはおおきなせきにんがともないます。, translation That decision carries great responsibility with it., notes/support surface 伴う / 同伴 / 伴奏, audio kanji-reading-伴-ともなう, stroke-order media 4F34_伴-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set."
+      }
+    ],
+    "verificationLimitations": [],
+    "fixSummary": "Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set.",
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "伴",
+        "displayWord": "伴",
+        "primaryReading": "ともなう",
+        "meaningJP": "accompany",
+        "kanjiMeanings": "accompany / companion / bring with",
+        "studyWordKanji": "",
+        "onReading": "ハン、 バン",
+        "kunReading": "ともな.う",
+        "notes": "<ruby>伴<rt>ともな</rt></ruby>う - accompany ／ <ruby>同伴<rt>どうはん</rt></ruby> - accompany / bring along ／ <ruby>伴奏<rt>ばんそう</rt></ruby> - musical accompaniment",
+        "exampleSentence": "その決定には大きな責任が伴います。 ／ そのけっていにはおおきなせきにんがともないます。 ／ That decision carries great responsibility with it.",
+        "audio": "[sound:4F34_伴-kanji-reading-伴-ともなう.wav]",
+        "strokeOrder": "<img src=\"4F34_伴-stroke-order.gif\" alt=\"Stroke order for 伴\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0005736600",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 伴|ともなう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0005736600; readings captured as 音 ハン・バン / 訓 ともな う 外とも; meaning text checked as ①とも。つれ。つれの人。「伴侶(ハンリョ)」 ②ともなう。つれだつ。つきしたがう。「伴奏」「同伴」; source beginning-word/support list captured as △ 伴(とも) / 伴う(ともな－う) / △ 伴 △ 造(とものみやつこ) / 〈伴天連〉(バテレン) / 伴食(バンショク) / 伴食宰相(バンショクサイショウ) / 伴走(バンソウ) / 伴奏(バンソウ). Reviewer mapped this Japanese-source field evidence to PrimaryReading ともなう, MeaningJP accompany, and KanjiMeanings accompany / companion / bring with for the individual kanji 伴. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Blocked the low-value broad dictionary gloss consort from the generated 伴 KanjiMeanings surface before Platinum promotion; retained accompany / companion / bring with as the Kanjipedia-supported learner-facing meaning set.",
+        "sourceOriginIds": [
+          "ask_hajimete_jlpt_kanji",
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "ask_hajimete_jlpt_kanji",
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "その決定には大きな責任が伴います。",
+        "reading": "そのけっていにはおおきなせきにんがともないます。",
+        "translation": "That decision carries great responsibility with it.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 伴|ともなう: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0031",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0034",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "とも",
+        "normalizedCardReading": "ともなう",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F34_伴/manifest.json",
+        "audio": {
+          "path": "audio/4F34_伴-kanji-reading-伴-ともなう.wav",
+          "source": "voicevox-nemo",
+          "text": "伴",
+          "reading": "ともなう",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F34_伴-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F34_伴-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"4F34_伴-stroke-order.gif\" alt=\"Stroke order for 伴\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 伴|ともなう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
+  },
+  {
+    "kanji": "伶",
+    "status": "platinum",
+    "readingIncludes": [
+      "れい"
+    ],
+    "meaningIncludes": [
+      "performer",
+      "actor",
+      "clever"
+    ],
+    "kanjiMeaningsIncludes": [
+      "performer",
+      "actor",
+      "clever"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "伶人",
+      "優伶",
+      "伶才"
+    ],
+    "exampleIncludes": [
+      "物語には宮中で働く伶人が登場します。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0007242200",
+        "detail": "Japanese-source review for 伶|れい: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007242200; readings captured as 音 レイ / 訓 わざおぎ・さか しい; meaning text checked as ①音楽を奏する人。楽人。わざおぎ。「伶人」 ②かしこい。さとい。さかしい。「伶俐(レイリ)」; source beginning-word/support list captured as 伶官(レイカン) / 伶人(レイジン) / 伶 ▲ 俐(レイリ). Reviewer mapped this Japanese-source field evidence to PrimaryReading れい, MeaningJP performer / actor / clever, and KanjiMeanings performer / actor / clever for the individual kanji 伶. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses れい because the learner-facing support surface anchors 伶 through 伶人 / 優伶 / 伶才; other readings remain visible in the generated on/kun reading fields (リョウ、 レイ; わざおぎ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 伶|れい: single-kanji anchor; Kanji and DisplayWord 伶; StudyWordKanji blank; PrimaryReading れい; MeaningJP performer / actor / clever; KanjiMeanings performer / actor / clever; notes <ruby>伶人<rt>れいじん</rt></ruby> - court musician / performer ／ <ruby>優伶<rt>ゆうれい</rt></ruby> - actor / performer ／ <ruby>伶才<rt>れいさい</rt></ruby> - clever talent; example 物語には宮中で働く伶人が登場します。 ／ ものがたりにはきゅうちゅうではたらくれいじんがとうじょうします。 ／ A court musician appears in the story.; audio field includes kanji-reading-伶-れい; stroke-order field includes 伶-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F36_伶\\manifest.json",
+        "detail": "Managed media provenance inspected for 伶: exact audio media fragment kanji-reading-伶-れい; audio/4F36_伶-kanji-reading-伶-れい.wav; stroke-order media animations/4F36_伶-stroke-order.svg; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=伶 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F36_伶\\manifest.json",
+        "detail": "Audio artifact reviewed for 伶|れい: exact kanji-reading audio kanji-reading-伶-れい; exported PrimaryReading れい; managed audio path audio/4F36_伶-kanji-reading-伶-れい.wav."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F36_伶\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 伶: stroke-order media animations/4F36_伶-stroke-order.svg shows target 伶; visual target checked; source provenance remote-stroke-order-animation-animcjk through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 伶; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 伶|れい: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 伶|れい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading れい, MeaningJP performer / actor / clever, KanjiMeanings performer / actor / clever, example sentence 物語には宮中で働く伶人が登場します。, reading ものがたりにはきゅうちゅうではたらくれいじんがとうじょうします。, translation A court musician appears in the story., notes/support surface 伶人 / 優伶 / 伶才, audio kanji-reading-伶-れい, stroke-order media 4F36_伶-stroke-order.svg, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "伶",
+        "displayWord": "伶",
+        "primaryReading": "れい",
+        "meaningJP": "performer / actor / clever",
+        "kanjiMeanings": "performer / actor / clever",
+        "studyWordKanji": "",
+        "onReading": "リョウ、 レイ",
+        "kunReading": "わざおぎ",
+        "notes": "<ruby>伶人<rt>れいじん</rt></ruby> - court musician / performer ／ <ruby>優伶<rt>ゆうれい</rt></ruby> - actor / performer ／ <ruby>伶才<rt>れいさい</rt></ruby> - clever talent",
+        "exampleSentence": "物語には宮中で働く伶人が登場します。 ／ ものがたりにはきゅうちゅうではたらくれいじんがとうじょうします。 ／ A court musician appears in the story.",
+        "audio": "[sound:4F36_伶-kanji-reading-伶-れい.wav]",
+        "strokeOrder": "<img src=\"4F36_伶-stroke-order.svg\" alt=\"Stroke order for 伶\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0007242200",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 伶|れい: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007242200; readings captured as 音 レイ / 訓 わざおぎ・さか しい; meaning text checked as ①音楽を奏する人。楽人。わざおぎ。「伶人」 ②かしこい。さとい。さかしい。「伶俐(レイリ)」; source beginning-word/support list captured as 伶官(レイカン) / 伶人(レイジン) / 伶 ▲ 俐(レイリ). Reviewer mapped this Japanese-source field evidence to PrimaryReading れい, MeaningJP performer / actor / clever, and KanjiMeanings performer / actor / clever for the individual kanji 伶. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "物語には宮中で働く伶人が登場します。",
+        "reading": "ものがたりにはきゅうちゅうではたらくれいじんがとうじょうします。",
+        "translation": "A court musician appears in the story.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 伶|れい: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0039",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0035",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "unknown-token",
+          "missing-token-reading",
+          "kanji-card-tokenizer-coverage-gap",
+          "artifact-warning"
+        ],
+        "normalizedTokenReading": "",
+        "normalizedCardReading": "れい",
+        "readingAlignment": {
+          "comparable": false,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F36_伶/manifest.json",
+        "audio": {
+          "path": "audio/4F36_伶-kanji-reading-伶-れい.wav",
+          "source": "voicevox-nemo",
+          "text": "伶",
+          "reading": "れい",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F36_伶-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F36_伶-stroke-order.svg",
+          "animationSource": "remote-stroke-order-animation-animcjk",
+          "exportedField": "<img src=\"4F36_伶-stroke-order.svg\" alt=\"Stroke order for 伶\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 伶|れい after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
+  },
+  {
+    "kanji": "伽",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "とぎ"
+    ],
+    "meaningIncludes": [
+      "attend",
+      "companion",
+      "nursing attendance"
+    ],
+    "kanjiMeaningsIncludes": [
+      "attend",
+      "companion",
+      "nursing attendance",
+      "attending",
+      "nursing"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "御伽話",
+      "伽藍",
+      "看伽"
+    ],
+    "exampleIncludes": [
+      "子どものころ、祖母が御伽話を読んでくれました。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000643800",
+        "detail": "Japanese-source review for 伽|とぎ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000643800; readings captured as 音 カ・ガ・キャ / 訓 とぎ; meaning text checked as ①とぎ。たいくつをなぐさめること。看病をすること。「夜伽」 ②梵語(ボンゴ)の音訳に用いられる。「伽陀(カダ)」「伽羅(キャラ)」「阿伽(アカ)」; source beginning-word/support list captured as 伽 ▲ 陀(カダ) / 伽藍(ガラン) / 伽羅(キャラ) / 伽羅の仏に ▲ 箔を置く(キャラのほとけにハクをおく) / 伽羅 ▲ 蕗(キャラぶき) / 伽(とぎ). Reviewer mapped this Japanese-source field evidence to PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, and KanjiMeanings attend / companion / nursing attendance / attending / nursing for the individual kanji 伽. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses とぎ because the learner-facing support surface anchors 伽 through 御伽話 / 伽藍 / 看伽; other readings remain visible in the generated on/kun reading fields (カ、 ガ、 キャ、 ギャ; とぎ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 伽|とぎ: single-kanji anchor; Kanji and DisplayWord 伽; StudyWordKanji blank; PrimaryReading とぎ; MeaningJP attend / companion / nursing attendance; KanjiMeanings attend / companion / nursing attendance / attending / nursing; notes <ruby>御伽話<rt>おとぎばなし</rt></ruby> - fairy tale ／ <ruby>伽藍<rt>がらん</rt></ruby> - temple complex ／ <ruby>看伽<rt>かんが</rt></ruby> - nursing attendance; example 子どものころ、祖母が御伽話を読んでくれました。 ／ こどものころ、そぼがおとぎばなしをよんでくれました。 ／ When I was a child, my grandmother read fairy tales to me.; audio field includes kanji-reading-伽-とぎ; stroke-order field includes 伽-stroke-order. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F3D_伽\\manifest.json",
+        "detail": "Managed media provenance inspected for 伽: exact audio media fragment kanji-reading-伽-とぎ; audio/4F3D_伽-kanji-reading-伽-とぎ.wav; stroke-order media animations/4F3D_伽-stroke-order.svg; package media reports full N1 coverage with no silent fallback accepted. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=伽 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F3D_伽\\manifest.json",
+        "detail": "Audio artifact reviewed for 伽|とぎ: exact kanji-reading audio kanji-reading-伽-とぎ; exported PrimaryReading とぎ; managed audio path audio/4F3D_伽-kanji-reading-伽-とぎ.wav. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F3D_伽\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 伽: stroke-order media animations/4F3D_伽-stroke-order.svg shows target 伽; visual target checked; source provenance remote-stroke-order-animation-animcjk through managed media policy. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 伽; this regression gate protects generated field expectations but is not source truth and not source evidence. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 伽|とぎ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 伽|とぎ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, KanjiMeanings attend / companion / nursing attendance / attending / nursing, example sentence 子どものころ、祖母が御伽話を読んでくれました。, reading こどものころ、そぼがおとぎばなしをよんでくれました。, translation When I was a child, my grandmother read fairy tales to me., notes/support surface 御伽話 / 伽藍 / 看伽, audio kanji-reading-伽-とぎ, stroke-order media 4F3D_伽-stroke-order.svg, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion."
+      }
+    ],
+    "verificationLimitations": [],
+    "fixSummary": "Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion.",
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "伽",
+        "displayWord": "伽",
+        "primaryReading": "とぎ",
+        "meaningJP": "attend / companion / nursing attendance",
+        "kanjiMeanings": "attend / companion / nursing attendance / attending / nursing",
+        "studyWordKanji": "",
+        "onReading": "カ、 ガ、 キャ、 ギャ",
+        "kunReading": "とぎ",
+        "notes": "<ruby>御伽話<rt>おとぎばなし</rt></ruby> - fairy tale ／ <ruby>伽藍<rt>がらん</rt></ruby> - temple complex ／ <ruby>看伽<rt>かんが</rt></ruby> - nursing attendance",
+        "exampleSentence": "子どものころ、祖母が御伽話を読んでくれました。 ／ こどものころ、そぼがおとぎばなしをよんでくれました。 ／ When I was a child, my grandmother read fairy tales to me.",
+        "audio": "[sound:4F3D_伽-kanji-reading-伽-とぎ.wav]",
+        "strokeOrder": "<img src=\"4F3D_伽-stroke-order.svg\" alt=\"Stroke order for 伽\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0000643800",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 伽|とぎ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000643800; readings captured as 音 カ・ガ・キャ / 訓 とぎ; meaning text checked as ①とぎ。たいくつをなぐさめること。看病をすること。「夜伽」 ②梵語(ボンゴ)の音訳に用いられる。「伽陀(カダ)」「伽羅(キャラ)」「阿伽(アカ)」; source beginning-word/support list captured as 伽 ▲ 陀(カダ) / 伽藍(ガラン) / 伽羅(キャラ) / 伽羅の仏に ▲ 箔を置く(キャラのほとけにハクをおく) / 伽羅 ▲ 蕗(キャラぶき) / 伽(とぎ). Reviewer mapped this Japanese-source field evidence to PrimaryReading とぎ, MeaningJP attend / companion / nursing attendance, and KanjiMeanings attend / companion / nursing attendance / attending / nursing for the individual kanji 伽. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 伽 primary meaning from attend / companion / tale to attend / companion / nursing attendance and blocked unsupported tale and entertainer gloss noise before Platinum promotion.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "子どものころ、祖母が御伽話を読んでくれました。",
+        "reading": "こどものころ、そぼがおとぎばなしをよんでくれました。",
+        "translation": "When I was a child, my grandmother read fairy tales to me.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 伽|とぎ: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0008",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0036",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "とぎ",
+        "normalizedCardReading": "とぎ",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F3D_伽/manifest.json",
+        "audio": {
+          "path": "audio/4F3D_伽-kanji-reading-伽-とぎ.wav",
+          "source": "voicevox-nemo",
+          "text": "伽",
+          "reading": "とぎ",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F3D_伽-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F3D_伽-stroke-order.svg",
+          "animationSource": "remote-stroke-order-animation-animcjk",
+          "exportedField": "<img src=\"4F3D_伽-stroke-order.svg\" alt=\"Stroke order for 伽\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 伽|とぎ after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
+  },
+  {
+    "kanji": "但",
+    "status": "platinum",
+    "readingIncludes": [
+      "ただし"
+    ],
+    "meaningIncludes": [
+      "however",
+      "provided that"
+    ],
+    "kanjiMeaningsIncludes": [
+      "however",
+      "provided that",
+      "but"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "但し",
+      "但書",
+      "但馬"
+    ],
+    "exampleIncludes": [
+      "参加は自由です。但し、事前登録が必要です。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004552400",
+        "detail": "Japanese-source review for 但|ただし: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004552400; readings captured as 音 外タン・ダン / 訓 ただ し 外ただ; meaning text checked as ①ただ。いたずらに。限定を示す。 ②ただし。しかし。条件や例外を補足するときに添える語。 ③「但馬(たじま)の国」の略。「但州(タンシュウ)」; source beginning-word/support list captured as 〈但馬〉(たじま) / △ 但(ただ) / 但し書(ただしがき). Reviewer mapped this Japanese-source field evidence to PrimaryReading ただし, MeaningJP however / provided that, and KanjiMeanings however / provided that / but for the individual kanji 但. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ただし because the learner-facing support surface anchors 但 through 但し / 但書 / 但馬; other readings remain visible in the generated on/kun reading fields (タン; ただ.し) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 但|ただし: single-kanji anchor; Kanji and DisplayWord 但; StudyWordKanji blank; PrimaryReading ただし; MeaningJP however / provided that; KanjiMeanings however / provided that / but; notes <ruby>但<rt>ただ</rt></ruby>し - however / provided that ／ <ruby>但書<rt>ただしがき</rt></ruby> - proviso / note ／ <ruby>但馬<rt>たじま</rt></ruby> - Tajima; example 参加は自由です。但し、事前登録が必要です。 ／ さんかはじゆうです。ただし、じぜんとうろくがひつようです。 ／ Participation is open. However, advance registration is required.; audio field includes kanji-reading-但-ただし; stroke-order field includes 但-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F46_但\\manifest.json",
+        "detail": "Managed media provenance inspected for 但: exact audio media fragment kanji-reading-但-ただし; audio/4F46_但-kanji-reading-但-ただし.wav; stroke-order media animations/4F46_但-stroke-order.gif; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=但 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F46_但\\manifest.json",
+        "detail": "Audio artifact reviewed for 但|ただし: exact kanji-reading audio kanji-reading-但-ただし; exported PrimaryReading ただし; managed audio path audio/4F46_但-kanji-reading-但-ただし.wav."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F46_但\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 但: stroke-order media animations/4F46_但-stroke-order.gif shows target 但; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 但; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 但|ただし: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 但|ただし with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ただし, MeaningJP however / provided that, KanjiMeanings however / provided that / but, example sentence 参加は自由です。但し、事前登録が必要です。, reading さんかはじゆうです。ただし、じぜんとうろくがひつようです。, translation Participation is open. However, advance registration is required., notes/support surface 但し / 但書 / 但馬, audio kanji-reading-但-ただし, stroke-order media 4F46_但-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "但",
+        "displayWord": "但",
+        "primaryReading": "ただし",
+        "meaningJP": "however / provided that",
+        "kanjiMeanings": "however / provided that / but",
+        "studyWordKanji": "",
+        "onReading": "タン",
+        "kunReading": "ただ.し",
+        "notes": "<ruby>但<rt>ただ</rt></ruby>し - however / provided that ／ <ruby>但書<rt>ただしがき</rt></ruby> - proviso / note ／ <ruby>但馬<rt>たじま</rt></ruby> - Tajima",
+        "exampleSentence": "参加は自由です。但し、事前登録が必要です。 ／ さんかはじゆうです。ただし、じぜんとうろくがひつようです。 ／ Participation is open. However, advance registration is required.",
+        "audio": "[sound:4F46_但-kanji-reading-但-ただし.wav]",
+        "strokeOrder": "<img src=\"4F46_但-stroke-order.gif\" alt=\"Stroke order for 但\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0004552400",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 但|ただし: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004552400; readings captured as 音 外タン・ダン / 訓 ただ し 外ただ; meaning text checked as ①ただ。いたずらに。限定を示す。 ②ただし。しかし。条件や例外を補足するときに添える語。 ③「但馬(たじま)の国」の略。「但州(タンシュウ)」; source beginning-word/support list captured as 〈但馬〉(たじま) / △ 但(ただ) / 但し書(ただしがき). Reviewer mapped this Japanese-source field evidence to PrimaryReading ただし, MeaningJP however / provided that, and KanjiMeanings however / provided that / but for the individual kanji 但. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "参加は自由です。但し、事前登録が必要です。",
+        "reading": "さんかはじゆうです。ただし、じぜんとうろくがひつようです。",
+        "translation": "Participation is open. However, advance registration is required.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 但|ただし: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0023",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0037",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "ただし",
+        "normalizedCardReading": "ただし",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F46_但/manifest.json",
+        "audio": {
+          "path": "audio/4F46_但-kanji-reading-但-ただし.wav",
+          "source": "voicevox-nemo",
+          "text": "但",
+          "reading": "ただし",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F46_但-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F46_但-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"4F46_但-stroke-order.gif\" alt=\"Stroke order for 但\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 但|ただし after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
+  },
+  {
+    "kanji": "佐",
+    "status": "platinum",
+    "readingIncludes": [
+      "さ"
+    ],
+    "meaningIncludes": [
+      "assistant",
+      "help"
+    ],
+    "kanjiMeaningsIncludes": [
+      "assistant",
+      "help"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "補佐",
+      "佐藤",
+      "佐官"
+    ],
+    "exampleIncludes": [
+      "彼は部長の業務を補佐しています。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0002457100",
+        "detail": "Japanese-source review for 佐|さ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002457100; readings captured as 音 サ / 訓 外すけ・たす ける; meaning text checked as ①たすける。手助けする。「佐幕」「補佐」 ②すけ。昔の官名。次官。 ③旧軍隊・自衛隊などの「将」の下の階級。「佐官」 ④「佐渡(さど)の国」の略。「佐州」; source beginning-word/support list captured as 佐幕(サバク) / △ 佐(すけ) / △ 佐ける(たす－ける). Reviewer mapped this Japanese-source field evidence to PrimaryReading さ, MeaningJP assistant / help, and KanjiMeanings assistant / help for the individual kanji 佐. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses さ because the learner-facing support surface anchors 佐 through 補佐 / 佐藤 / 佐官; other readings remain visible in the generated on/kun reading fields (サ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 佐|さ: single-kanji anchor; Kanji and DisplayWord 佐; StudyWordKanji blank; PrimaryReading さ; MeaningJP assistant / help; KanjiMeanings assistant / help; notes <ruby>補佐<rt>ほさ</rt></ruby> - assistance / support ／ <ruby>佐藤<rt>さとう</rt></ruby> - Sato (surname) ／ <ruby>佐官<rt>さかん</rt></ruby> - field officer; example 彼は部長の業務を補佐しています。 ／ かれはぶちょうのぎょうむをほさしています。 ／ He assists the department manager with their work.; audio field includes kanji-reading-佐-さ; stroke-order field includes 佐-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F50_佐\\manifest.json",
+        "detail": "Managed media provenance inspected for 佐: exact audio media fragment kanji-reading-佐-さ; audio/4F50_佐-kanji-reading-佐-さ.wav; stroke-order media animations/4F50_佐-stroke-order.gif; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=佐 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F50_佐\\manifest.json",
+        "detail": "Audio artifact reviewed for 佐|さ: exact kanji-reading audio kanji-reading-佐-さ; exported PrimaryReading さ; managed audio path audio/4F50_佐-kanji-reading-佐-さ.wav."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F50_佐\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 佐: stroke-order media animations/4F50_佐-stroke-order.gif shows target 佐; visual target checked; source provenance remote-stroke-order-animation through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 佐; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 佐|さ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 佐|さ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading さ, MeaningJP assistant / help, KanjiMeanings assistant / help, example sentence 彼は部長の業務を補佐しています。, reading かれはぶちょうのぎょうむをほさしています。, translation He assists the department manager with their work., notes/support surface 補佐 / 佐藤 / 佐官, audio kanji-reading-佐-さ, stroke-order media 4F50_佐-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "佐",
+        "displayWord": "佐",
+        "primaryReading": "さ",
+        "meaningJP": "assistant / help",
+        "kanjiMeanings": "assistant / help",
+        "studyWordKanji": "",
+        "onReading": "サ",
+        "kunReading": "",
+        "notes": "<ruby>補佐<rt>ほさ</rt></ruby> - assistance / support ／ <ruby>佐藤<rt>さとう</rt></ruby> - Sato (surname) ／ <ruby>佐官<rt>さかん</rt></ruby> - field officer",
+        "exampleSentence": "彼は部長の業務を補佐しています。 ／ かれはぶちょうのぎょうむをほさしています。 ／ He assists the department manager with their work.",
+        "audio": "[sound:4F50_佐-kanji-reading-佐-さ.wav]",
+        "strokeOrder": "<img src=\"4F50_佐-stroke-order.gif\" alt=\"Stroke order for 佐\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0002457100",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 佐|さ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002457100; readings captured as 音 サ / 訓 外すけ・たす ける; meaning text checked as ①たすける。手助けする。「佐幕」「補佐」 ②すけ。昔の官名。次官。 ③旧軍隊・自衛隊などの「将」の下の階級。「佐官」 ④「佐渡(さど)の国」の略。「佐州」; source beginning-word/support list captured as 佐幕(サバク) / △ 佐(すけ) / △ 佐ける(たす－ける). Reviewer mapped this Japanese-source field evidence to PrimaryReading さ, MeaningJP assistant / help, and KanjiMeanings assistant / help for the individual kanji 佐. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "彼は部長の業務を補佐しています。",
+        "reading": "かれはぶちょうのぎょうむをほさしています。",
+        "translation": "He assists the department manager with their work.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 佐|さ: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0019",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0038",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "さ",
+        "normalizedCardReading": "さ",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F50_佐/manifest.json",
+        "audio": {
+          "path": "audio/4F50_佐-kanji-reading-佐-さ.wav",
+          "source": "voicevox-nemo",
+          "text": "佐",
+          "reading": "さ",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F50_佐-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F50_佐-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"4F50_佐-stroke-order.gif\" alt=\"Stroke order for 佐\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 佐|さ after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
+  },
+  {
+    "kanji": "佑",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ゆう"
+    ],
+    "meaningIncludes": [
+      "help",
+      "assist"
+    ],
+    "kanjiMeaningsIncludes": [
+      "help",
+      "assist"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "天佑",
+      "神佑",
+      "佑助"
+    ],
+    "exampleIncludes": [
+      "天佑を信じて最後まで努力し続けました。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0006852900",
+        "detail": "Japanese-source review for 佑|ゆう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006852900; readings captured as 音 ユウ・ウ / 訓 たす ける ・たす け; meaning text checked as たすける。たすけ。「佑助」「天佑」類右・祐(ユウ); source beginning-word/support list captured as 佑ける(たす－ける) / 佑助(ユウジョ). Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆう, MeaningJP help / assist, and KanjiMeanings help / assist for the individual kanji 佑. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ゆう because the learner-facing support surface anchors 佑 through 天佑 / 神佑 / 佑助; other readings remain visible in the generated on/kun reading fields (ウ、 ユウ; たす.ける) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 佑|ゆう: single-kanji anchor; Kanji and DisplayWord 佑; StudyWordKanji blank; PrimaryReading ゆう; MeaningJP help / assist; KanjiMeanings help / assist; notes <ruby>天佑<rt>てんゆう</rt></ruby> - heaven&#39;s help ／ <ruby>神佑<rt>しんゆう</rt></ruby> - divine protection ／ <ruby>佑助<rt>ゆうじょ</rt></ruby> - assistance; example 天佑を信じて最後まで努力し続けました。 ／ てんゆうをしんじてさいごまでどりょくしつづけました。 ／ Believing in heaven&#39;s help, I kept working hard to the end.; audio field includes kanji-reading-佑-ゆう; stroke-order field includes 佑-stroke-order. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F51_佑\\manifest.json",
+        "detail": "Managed media provenance inspected for 佑: exact audio media fragment kanji-reading-佑-ゆう; audio/4F51_佑-kanji-reading-佑-ゆう.wav; stroke-order media animations/4F51_佑-stroke-order.svg; package media reports full N1 coverage with no silent fallback accepted. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=佑 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F51_佑\\manifest.json",
+        "detail": "Audio artifact reviewed for 佑|ゆう: exact kanji-reading audio kanji-reading-佑-ゆう; exported PrimaryReading ゆう; managed audio path audio/4F51_佑-kanji-reading-佑-ゆう.wav. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F51_佑\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 佑: stroke-order media animations/4F51_佑-stroke-order.svg shows target 佑; visual target checked; source provenance remote-stroke-order-animation-animcjk through managed media policy. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 佑; this regression gate protects generated field expectations but is not source truth and not source evidence. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 佑|ゆう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 佑|ゆう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ゆう, MeaningJP help / assist, KanjiMeanings help / assist, example sentence 天佑を信じて最後まで努力し続けました。, reading てんゆうをしんじてさいごまでどりょくしつづけました。, translation Believing in heaven's help, I kept working hard to the end., notes/support surface 天佑 / 神佑 / 佑助, audio kanji-reading-佑-ゆう, stroke-order media 4F51_佑-stroke-order.svg, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set."
+      }
+    ],
+    "verificationLimitations": [],
+    "fixSummary": "Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set.",
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "佑",
+        "displayWord": "佑",
+        "primaryReading": "ゆう",
+        "meaningJP": "help / assist",
+        "kanjiMeanings": "help / assist",
+        "studyWordKanji": "",
+        "onReading": "ウ、 ユウ",
+        "kunReading": "たす.ける",
+        "notes": "<ruby>天佑<rt>てんゆう</rt></ruby> - heaven&#39;s help ／ <ruby>神佑<rt>しんゆう</rt></ruby> - divine protection ／ <ruby>佑助<rt>ゆうじょ</rt></ruby> - assistance",
+        "exampleSentence": "天佑を信じて最後まで努力し続けました。 ／ てんゆうをしんじてさいごまでどりょくしつづけました。 ／ Believing in heaven&#39;s help, I kept working hard to the end.",
+        "audio": "[sound:4F51_佑-kanji-reading-佑-ゆう.wav]",
+        "strokeOrder": "<img src=\"4F51_佑-stroke-order.svg\" alt=\"Stroke order for 佑\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0006852900",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 佑|ゆう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006852900; readings captured as 音 ユウ・ウ / 訓 たす ける ・たす け; meaning text checked as たすける。たすけ。「佑助」「天佑」類右・祐(ユウ); source beginning-word/support list captured as 佑ける(たす－ける) / 佑助(ユウジョ). Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆう, MeaningJP help / assist, and KanjiMeanings help / assist for the individual kanji 佑. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Blocked the unsupported broad dictionary gloss bless from the generated 佑 meaning surfaces before Platinum promotion; retained help / assist as the Kanjipedia-supported learner-facing meaning set.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "天佑を信じて最後まで努力し続けました。",
+        "reading": "てんゆうをしんじてさいごまでどりょくしつづけました。",
+        "translation": "Believing in heaven&#39;s help, I kept working hard to the end.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 佑|ゆう: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0037",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0039",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "たすく",
+        "normalizedCardReading": "ゆう",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F51_佑/manifest.json",
+        "audio": {
+          "path": "audio/4F51_佑-kanji-reading-佑-ゆう.wav",
+          "source": "voicevox-nemo",
+          "text": "佑",
+          "reading": "ゆう",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F51_佑-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F51_佑-stroke-order.svg",
+          "animationSource": "remote-stroke-order-animation-animcjk",
+          "exportedField": "<img src=\"4F51_佑-stroke-order.svg\" alt=\"Stroke order for 佑\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 佑|ゆう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
+  },
+  {
+    "kanji": "佳",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "か"
+    ],
+    "meaningIncludes": [
+      "excellent",
+      "beautiful",
+      "auspicious"
+    ],
+    "kanjiMeaningsIncludes": [
+      "excellent",
+      "beautiful",
+      "auspicious",
+      "good"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "佳作",
+      "佳人",
+      "佳境"
+    ],
+    "exampleIncludes": [
+      "その作品は映画祭で佳作に選ばれました。"
+    ],
+    "reviewedAt": "2026-06-01",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000654600",
+        "detail": "Japanese-source review for 佳|か: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000654600; readings captured as 音 カ / 訓 外よ い; meaning text checked as ①よい。美しい。「佳人」「佳麗」 ②すぐれている。「佳作」「佳境」 ③めでたい。「佳日」「佳節」; source beginning-word/support list captured as 佳境(カキョウ) / 佳 ▲ 肴(カコウ) / 佳作(カサク) / 佳日(カジツ) / 佳 ▲ 什(カジュウ) / 佳 ▲ 辰(カシン) / 佳人(カジン) / 佳人薄命(カジンハクメイ). Reviewer mapped this Japanese-source field evidence to PrimaryReading か, MeaningJP excellent / beautiful / auspicious, and KanjiMeanings excellent / beautiful / auspicious / good for the individual kanji 佳. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses か because the learner-facing support surface anchors 佳 through 佳作 / 佳人 / 佳境; other readings remain visible in the generated on/kun reading fields (カ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "detail": "Generated card surface inspected for 佳|か: single-kanji anchor; Kanji and DisplayWord 佳; StudyWordKanji blank; PrimaryReading か; MeaningJP excellent / beautiful / auspicious; KanjiMeanings excellent / beautiful / auspicious / good; notes <ruby>佳作<rt>かさく</rt></ruby> - commendable work ／ <ruby>佳人<rt>かじん</rt></ruby> - beautiful woman ／ <ruby>佳境<rt>かきょう</rt></ruby> - best / most interesting part; example その作品は映画祭で佳作に選ばれました。 ／ そのさくひんはえいがさいでかさくにえらばれました。 ／ That work was selected as a commendable piece at the film festival.; audio field includes kanji-reading-佳-か; stroke-order field includes 佳-stroke-order. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; data\\media\\kanji\\4F\\4F73_佳\\manifest.json",
+        "detail": "Managed media provenance inspected for 佳: exact audio media fragment kanji-reading-佳-か; audio/4F73_佳-kanji-reading-佳-か.wav; stroke-order media animations/4F73_佳-stroke-order.gif; package media reports full N1 coverage with no silent fallback accepted. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:audio -- --levels=1 --kanji=佳 --limit=10; exported Audio field and data\\media\\kanji\\4F\\4F73_佳\\manifest.json",
+        "detail": "Audio artifact reviewed for 佳|か: exact kanji-reading audio kanji-reading-佳-か; exported PrimaryReading か; managed audio path audio/4F73_佳-kanji-reading-佳-か.wav. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest data\\media\\kanji\\4F\\4F73_佳\\manifest.json",
+        "detail": "Visual stroke-order review recorded for 佳: stroke-order media animations/4F73_佳-stroke-order.gif shows target 佳; visual target checked; source provenance remote-stroke-order-animation through managed media policy. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 佳; this regression gate protects generated field expectations but is not source truth and not source evidence. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 structural Platinum batch 5 review",
+        "detail": "Final product judgment for 佳|か: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum batch 5",
+        "detail": "Current-standard review revalidated 佳|か with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading か, MeaningJP excellent / beautiful / auspicious, KanjiMeanings excellent / beautiful / auspicious / good, example sentence その作品は映画祭で佳作に選ばれました。, reading そのさくひんはえいがさいでかさくにえらばれました。, translation That work was selected as a commendable piece at the film festival., notes/support surface 佳作 / 佳人 / 佳境, audio kanji-reading-佳-か, stroke-order media 4F73_佳-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is structural Platinum evidence only; no Obsidian rereviewProvenance is recorded. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion."
+      }
+    ],
+    "verificationLimitations": [],
+    "fixSummary": "Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion.",
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-batch-005",
+        "level": 1,
+        "scope": "missing-current-standard queue batch 4 of 9; one governed batch of 8",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --json",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=40",
+        "npm run media:review:audio -- --levels=1 --kanji=伯,伴,伶,伽,但,佐,佑,佳 --limit=8",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/verifyKanjipediaBatch.js --batch=4"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "佳",
+        "displayWord": "佳",
+        "primaryReading": "か",
+        "meaningJP": "excellent / beautiful / auspicious",
+        "kanjiMeanings": "excellent / beautiful / auspicious / good",
+        "studyWordKanji": "",
+        "onReading": "カ",
+        "kunReading": "",
+        "notes": "<ruby>佳作<rt>かさく</rt></ruby> - commendable work ／ <ruby>佳人<rt>かじん</rt></ruby> - beautiful woman ／ <ruby>佳境<rt>かきょう</rt></ruby> - best / most interesting part",
+        "exampleSentence": "その作品は映画祭で佳作に選ばれました。 ／ そのさくひんはえいがさいでかさくにえらばれました。 ／ That work was selected as a commendable piece at the film festival.",
+        "audio": "[sound:4F73_佳-kanji-reading-佳-か.wav]",
+        "strokeOrder": "<img src=\"4F73_佳-stroke-order.gif\" alt=\"Stroke order for 佳\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0000654600",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 佳|か: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000654600; readings captured as 音 カ / 訓 外よ い; meaning text checked as ①よい。美しい。「佳人」「佳麗」 ②すぐれている。「佳作」「佳境」 ③めでたい。「佳日」「佳節」; source beginning-word/support list captured as 佳境(カキョウ) / 佳 ▲ 肴(カコウ) / 佳作(カサク) / 佳日(カジツ) / 佳 ▲ 什(カジュウ) / 佳 ▲ 辰(カシン) / 佳人(カジン) / 佳人薄命(カジンハクメイ). Reviewer mapped this Japanese-source field evidence to PrimaryReading か, MeaningJP excellent / beautiful / auspicious, and KanjiMeanings excellent / beautiful / auspicious / good for the individual kanji 佳. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Corrected the 佳 primary meaning from excellent / beautiful / favorable to excellent / beautiful / auspicious and blocked unsupported pleasing and skilled gloss noise before Platinum promotion.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "その作品は映画祭で佳作に選ばれました。",
+        "reading": "そのさくひんはえいがさいでかさくにえらばれました。",
+        "translation": "That work was selected as a commendable piece at the film festival.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 佳|か: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0009",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0040",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "けい",
+        "normalizedCardReading": "か",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4F/4F73_佳/manifest.json",
+        "audio": {
+          "path": "audio/4F73_佳-kanji-reading-佳-か.wav",
+          "source": "voicevox-nemo",
+          "text": "佳",
+          "reading": "か",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4F73_佳-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4F73_佳-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"4F73_佳-stroke-order.gif\" alt=\"Stroke order for 佳\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 佳|か after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
   }
 ]

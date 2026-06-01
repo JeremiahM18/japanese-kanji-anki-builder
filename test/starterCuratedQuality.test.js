@@ -887,6 +887,13 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["颯"].exampleSentence.japanese, "冷たい風が颯然と吹き抜けました。");
     assert.deepEqual(curatedStudyData["凜"].displayWord, { written: "凜", pron: "りん" });
     assert.ok(curatedStudyData["凜"].notes.includes("凜 （りん）"));
+    assert.deepEqual(curatedStudyData["剣"].blockedMeanings, ["clock hand", "sabre"]);
+    assert.equal(curatedStudyData["剤"].englishMeaning, "medicine / agent / compound");
+    assert.deepEqual(curatedStudyData["剤"].blockedMeanings, ["dose"]);
+    assert.deepEqual(curatedStudyData["剤"].blockedReadings, ["かる", "けず.る", "スイ"]);
+    assert.equal(curatedStudyData["剤"].exampleSentence.japanese, "薬剤の説明書を読んでから正しく飲みました。");
+    assert.deepEqual(curatedStudyData["創"].blockedMeanings, ["genesis"]);
+    assert.deepEqual(curatedStudyData["創"].blockedReadings, ["けず.しける", "ショウ"]);
     assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
     assert.deepEqual(curatedStudyData["穴"].displayWord, { written: "穴", pron: "あな" });
     assert.equal(curatedStudyData["笛"].notes, "笛 （ふえ） - flute ／ 汽笛 （きてき） - steam whistle ／ 口笛 （くちぶえ） - whistle");

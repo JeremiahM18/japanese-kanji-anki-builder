@@ -6843,6 +6843,9 @@
       "准将"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "quasi-"
+    ],
     "blockedSentencePhrases": [],
     "notes": "准教授 （じゅんきょうじゅ） - associate professor ／ 准将 （じゅんしょう） - brigadier general",
     "alternativeNotes": [],
@@ -6876,8 +6879,11 @@
     ],
     "blockedWords": [],
     "blockedMeanings": [
+      "defy",
       "keep (rain)out",
-      "slight"
+      "slight",
+      "stave off",
+      "tide over"
     ],
     "blockedSentencePhrases": [],
     "notes": "凌ぐ （しのぐ） - get through / surpass ／ 凌駕 （りょうが） - surpassing",
@@ -7084,6 +7090,9 @@
       "朝凪"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "(kokuji)"
+    ],
     "blockedSentencePhrases": [],
     "notes": "凪 （なぎ） - calm at sea ／ 夕凪 （ゆうなぎ） - evening calm ／ 朝凪 （あさなぎ） - morning calm",
     "alternativeNotes": [],
@@ -7150,6 +7159,9 @@
       "凶器"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "villain"
+    ],
     "blockedSentencePhrases": [],
     "notes": "凶 （きょう） - bad luck / misfortune ／ 凶作 （きょうさく） - poor harvest ／ 凶器 （きょうき） - deadly weapon",
     "alternativeNotes": [],
@@ -7183,6 +7195,9 @@
       "凸版"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "beetle brow"
+    ],
     "blockedSentencePhrases": [],
     "notes": "凸凹 （でこぼこ） - unevenness / bumps ／ 凸面 （とつめん） - convex surface ／ 凸版 （とっぱん） - relief printing",
     "alternativeNotes": [],
@@ -7198,7 +7213,7 @@
     }
   },
   "凹": {
-    "englishMeaning": "concave / hollow / depressed",
+    "englishMeaning": "concave / hollow / sunken",
     "displayWord": {
       "written": "凹む",
       "pron": "へこむ"
@@ -7216,8 +7231,11 @@
       "凹面"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "depressed"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "凹む （へこむ） - dent / feel down ／ 凹凸 （おうとつ） - unevenness ／ 凹面 （おうめん） - concave surface",
+    "notes": "凹む （へこむ） - become dented / cave in ／ 凹凸 （おうとつ） - unevenness ／ 凹面 （おうめん） - concave surface",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "車のドアが少し凹んでしまいました。",
@@ -7282,6 +7300,9 @@
       "日本刀"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "saber"
+    ],
     "blockedSentencePhrases": [],
     "notes": "刀 （かたな） - sword ／ 短刀 （たんとう） - dagger ／ 日本刀 （にほんとう） - Japanese sword",
     "alternativeNotes": [],
@@ -7470,6 +7491,11 @@
       "稲刈り"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "clip",
+      "prune",
+      "trim"
+    ],
     "blockedSentencePhrases": [],
     "notes": "刈る （かる） - mow / reap ／ 草刈り （くさかり） - grass cutting ／ 稲刈り （いねかり） - rice harvesting",
     "alternativeNotes": [],
@@ -7536,6 +7562,9 @@
       "死刑"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "sentence"
+    ],
     "blockedSentencePhrases": [],
     "notes": "刑事 （けいじ） - detective / criminal case ／ 刑罰 （けいばつ） - punishment ／ 死刑 （しけい） - death penalty",
     "alternativeNotes": [],
@@ -8105,6 +8134,10 @@
       "剣士"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "clock hand",
+      "sabre"
+    ],
     "blockedSentencePhrases": [],
     "notes": "剣道 （けんどう） - kendo ／ 真剣 （しんけん） - real sword / serious ／ 剣士 （けんし） - swordsman",
     "alternativeNotes": [],
@@ -8120,7 +8153,7 @@
     }
   },
   "剤": {
-    "englishMeaning": "dose / medicine / agent",
+    "englishMeaning": "medicine / agent / compound",
     "displayWord": {
       "written": "薬剤",
       "pron": "やくざい"
@@ -8138,12 +8171,20 @@
       "防腐剤"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "dose"
+    ],
+    "blockedReadings": [
+      "スイ",
+      "かる",
+      "けず.る"
+    ],
     "blockedSentencePhrases": [],
     "notes": "薬剤 （やくざい） - medicine / drug ／ 洗剤 （せんざい） - detergent ／ 防腐剤 （ぼうふざい） - preservative",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "薬剤の説明を読んでから正しく飲みました。",
-      "reading": "やくざいのせつめいをよんでからただしくのみました。",
+      "japanese": "薬剤の説明書を読んでから正しく飲みました。",
+      "reading": "やくざいのせつめいしょをよんでからただしくのみました。",
       "english": "I read the medicine instructions before taking it properly.",
       "source": "starter-curated",
       "tags": [
@@ -8269,6 +8310,13 @@
       "独創"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "genesis"
+    ],
+    "blockedReadings": [
+      "ショウ",
+      "けず.しける"
+    ],
     "blockedSentencePhrases": [],
     "notes": "創作 （そうさく） - creative work ／ 創立 （そうりつ） - founding ／ 独創 （どくそう） - originality",
     "alternativeNotes": [],

@@ -894,6 +894,34 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.equal(curatedStudyData["剤"].exampleSentence.japanese, "薬剤の説明書を読んでから正しく飲みました。");
     assert.deepEqual(curatedStudyData["創"].blockedMeanings, ["genesis"]);
     assert.deepEqual(curatedStudyData["創"].blockedReadings, ["けず.しける", "ショウ"]);
+    assert.deepEqual(curatedStudyData["劾"].preferredWords, ["弾劾", "劾問", "糾劾"]);
+    assert.deepEqual(curatedStudyData["勅"].blockedReadings, ["いまし.める"]);
+    assert.deepEqual(curatedStudyData["勺"].blockedMeanings, ["dip"]);
+    assert.equal(curatedStudyData["勺"].exampleSentence.english, "I added the stock one shaku measure at a time and checked the flavor.");
+    assert.deepEqual(curatedStudyData["匁"].preferredWords, ["匁", "一匁", "三匁"]);
+    assert.deepEqual(curatedStudyData["匠"].preferredWords, ["匠", "巨匠", "意匠"]);
+    assert.deepEqual(curatedStudyData["匡"].blockedReadings, ["オウ"]);
+    assert.deepEqual(curatedStudyData["匿"].blockedMeanings, ["shield"]);
+    assert.equal(curatedStudyData["博"].englishMeaning, "wide / extensive / doctoral title");
+    assert.deepEqual(curatedStudyData["博"].preferredWords, ["博識", "博士", "博覧会"]);
+    assert.deepEqual(curatedStudyData["博"].blockedMeanings, [
+        "command",
+        "doctor",
+        "Dr.",
+        "esteem",
+        "fair",
+        "Ph.D.",
+        "win acclaim",
+    ]);
+    assert.equal(curatedStudyData["博"].exampleSentence.japanese, "その博覧会では新しい技術が紹介されました。");
+    assert.deepEqual(curatedStudyData["卯"].preferredWords, ["卯年", "卯月", "卯"]);
+    assert.deepEqual(curatedStudyData["卯"].blockedReadings, ["モウ"]);
+    assert.deepEqual(curatedStudyData["即"].blockedReadings, ["つ.ける"]);
+    assert.equal(curatedStudyData["厘"].englishMeaning, "tiny fraction / one tenth of a sen");
+    assert.deepEqual(curatedStudyData["厘"].blockedMeanings, ["one-hundredth of a sen"]);
+    assert.deepEqual(curatedStudyData["厳"].blockedReadings, ["いつくし"]);
+    assert.deepEqual(curatedStudyData["厳"].blockedMeanings, ["rigidity"]);
+    assert.deepEqual(curatedStudyData["又"].blockedReadings, ["また.の-"]);
     assert.equal(curatedStudyData["軸"].exampleSentence.japanese, "話の軸が最後までぶれなかった。");
     assert.deepEqual(curatedStudyData["穴"].displayWord, { written: "穴", pron: "あな" });
     assert.equal(curatedStudyData["笛"].notes, "笛 （ふえ） - flute ／ 汽笛 （きてき） - steam whistle ／ 口笛 （くちぶえ） - whistle");

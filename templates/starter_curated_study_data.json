@@ -8679,11 +8679,11 @@
     "preferredWords": [
       "弾劾",
       "劾問",
-      "糾弾"
+      "糾劾"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "弾劾 （だんがい） - impeachment / denunciation ／ 劾問 （がいもん） - interrogation / censure ／ 糾弾 （きゅうだん） - condemnation",
+    "notes": "弾劾 （だんがい） - impeachment / denunciation ／ 劾問 （がいもん） - interrogation / censure ／ 糾劾 （きゅうがい） - impeachment / accusation",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "議会ではその行為を厳しく弾劾する声が上がりました。",
@@ -8748,6 +8748,9 @@
       "詔勅"
     ],
     "blockedWords": [],
+    "blockedReadings": [
+      "いまし.める"
+    ],
     "blockedSentencePhrases": [],
     "notes": "勅令 （ちょくれい） - imperial decree ／ 勅使 （ちょくし） - imperial messenger ／ 詔勅 （しょうちょく） - imperial rescript",
     "alternativeNotes": [],
@@ -9156,13 +9159,16 @@
       "五勺"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "dip"
+    ],
     "blockedSentencePhrases": [],
     "notes": "勺 （しゃく） - traditional small measure ／ 一勺 （いっしゃく） - one shaku measure ／ 五勺 （ごしゃく） - five shaku measures",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "鍋にだしを一勺ずつ加えて味を見ました。",
       "reading": "なべにだしをいっしゃくずつくわえてあじをみました。",
-      "english": "I added the stock one ladleful at a time and checked the flavor.",
+      "english": "I added the stock one shaku measure at a time and checked the flavor.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -9185,7 +9191,7 @@
     "jlpt": 1,
     "preferredWords": [
       "匁",
-      "匁量",
+      "一匁",
       "三匁"
     ],
     "blockedWords": [],
@@ -9194,7 +9200,7 @@
       "monme"
     ],
     "blockedSentencePhrases": [],
-    "notes": "匁 （もんめ） - old unit of weight ／ 匁量 （もんめりょう） - measured in monme ／ 三匁 （さんもんめ） - three monme",
+    "notes": "匁 （もんめ） - old unit of weight ／ 一匁 （いちもんめ） - one monme ／ 三匁 （さんもんめ） - three monme",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "古い道具には重さが匁で記されていました。",
@@ -9328,12 +9334,12 @@
     "jlpt": 1,
     "preferredWords": [
       "匠",
-      "職人技",
+      "巨匠",
       "意匠"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "匠 （たくみ） - master craftsperson ／ 職人技 （しょくにんわざ） - craftsmanship ／ 意匠 （いしょう） - design",
+    "notes": "匠 （たくみ） - master craftsperson ／ 巨匠 （きょしょう） - master artist ／ 意匠 （いしょう） - design",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "その家具には匠の技が生かされています。",
@@ -9365,6 +9371,9 @@
       "匡助"
     ],
     "blockedWords": [],
+    "blockedReadings": [
+      "オウ"
+    ],
     "blockedSentencePhrases": [],
     "notes": "匡正 （きょうせい） - correction / rectification ／ 匡す （ただす） - correct / rectify ／ 匡助 （きょうじょ） - assistance",
     "alternativeNotes": [],
@@ -9501,6 +9510,9 @@
       "潜匿"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "shield"
+    ],
     "blockedSentencePhrases": [],
     "notes": "匿名 （とくめい） - anonymous ／ 匿う （かくまう） - hide / shelter ／ 潜匿 （せんとく） - concealment",
     "alternativeNotes": [],
@@ -9894,10 +9906,10 @@
     }
   },
   "博": {
-    "englishMeaning": "wide / extensive / doctor",
+    "englishMeaning": "wide / extensive / doctoral title",
     "displayWord": {
-      "written": "博物館",
-      "pron": "はくぶつかん"
+      "written": "博覧会",
+      "pron": "はくらんかい"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -9907,18 +9919,27 @@
     ],
     "jlpt": 1,
     "preferredWords": [
-      "博物館",
-      "博学",
-      "博士"
+      "博識",
+      "博士",
+      "博覧会"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "Dr.",
+      "command",
+      "doctor",
+      "esteem",
+      "fair",
+      "Ph.D.",
+      "win acclaim"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "博物館 （はくぶつかん） - museum ／ 博学 （はくがく） - wide knowledge ／ 博士 （はくし） - doctoral degree / doctor",
+    "notes": "博識 （はくしき） - broad knowledge ／ 博士 （はくし） - doctoral title ／ 博覧会 （はくらんかい） - exposition",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "駅の近くに新しい博物館が開館した。",
-      "reading": "えきのちかくにあたらしいはくぶつかんがかいかんした。",
-      "english": "A new museum opened near the station.",
+      "japanese": "その博覧会では新しい技術が紹介されました。",
+      "reading": "そのはくらんかいではあたらしいぎじゅつがしょうかいされました。",
+      "english": "New technology was introduced at that exposition.",
       "source": "starter-curated",
       "tags": [
         "example",
@@ -9983,11 +10004,14 @@
     "preferredWords": [
       "卯年",
       "卯月",
-      "卯の花"
+      "卯"
+    ],
+    "blockedReadings": [
+      "モウ"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "卯年 （うどし） - year of the rabbit ／ 卯月 （うづき） - fourth lunar month ／ 卯の花 （うのはな） - deutzia flower",
+    "notes": "卯年 （うどし） - year of the rabbit ／ 卯月 （うづき） - fourth lunar month ／ 卯 （う） - fourth zodiac sign",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "祖母は卯年生まれだと言っていました。",
@@ -10088,6 +10112,9 @@
       "即座",
       "即席",
       "即日"
+    ],
+    "blockedReadings": [
+      "つ.ける"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -10241,7 +10268,7 @@
     }
   },
   "厘": {
-    "englishMeaning": "tiny fraction / one-hundredth of a sen",
+    "englishMeaning": "tiny fraction / one tenth of a sen",
     "displayWord": {
       "written": "厘",
       "pron": "りん"
@@ -10257,6 +10284,9 @@
       "厘",
       "厘毛",
       "毫厘"
+    ],
+    "blockedMeanings": [
+      "one-hundredth of a sen"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -10365,6 +10395,12 @@
       "厳しい",
       "厳重",
       "厳守"
+    ],
+    "blockedMeanings": [
+      "rigidity"
+    ],
+    "blockedReadings": [
+      "いつくし"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -10480,6 +10516,9 @@
       "又",
       "又は",
       "又しても"
+    ],
+    "blockedReadings": [
+      "また.の-"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],

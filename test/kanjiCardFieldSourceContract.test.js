@@ -47,14 +47,14 @@ test("builder CLI defaults to ledger-if-available proof provider", () => {
     assert.equal(options.reviewSet, "templates/platinum_n3_review_set.json");
 });
 
-test("builder fails closed before writing N1 reset field-source contract", () => {
+test("builder fails closed before writing N1 pre-Obsidian field-source contract", () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-n1-field-source-"));
     const out = path.join(tempDir, "n1.json");
 
     try {
         assert.throws(
             () => runBuildKanjiCardFieldSourceContract({ level: 1, out }),
-            /Generated kanji card field source contract failed audit:[\s\S]*Missing N1 field-source contract entries:[\s\S]*丁, 丑, 且, 丘, 丙, 丞, 丹, 乃/
+            /Cannot build N1 kanji card field source contract: 8 entries are missing Obsidian rereview binding\.[\s\S]*Affected kanji: 丁, 丑, 且, 丘, 丙, 丞, 丹, 乃[\s\S]*No contract file was written\./
         );
         assert.equal(fs.existsSync(out), false);
     } finally {

@@ -1,90 +1,2215 @@
 [
   {
     "kanji": "丁",
-    "status": "needs_revalidation",
-    "previousStatus": "fixed_then_platinum",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ちょう"
+    ],
+    "meaningIncludes": [
+      "city block",
+      "town division",
+      "counter"
+    ],
+    "kanjiMeaningsIncludes": [
+      "city block",
+      "town division",
+      "counter",
+      "4th calendar sign",
+      "even number",
+      "street",
+      "town"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "丁目",
+      "丁寧",
+      "包丁"
+    ],
+    "exampleIncludes": [
+      "駅の近くの三丁目に新しい店ができました。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0004774700/",
+        "detail": "Japanese-source review for 丁|ちょう: Kanjipedia lists 音 チョウ and meanings for the ちょう reading including page/cooking counter uses, a town-division unit, and even dice number, plus ひのと as the fourth heavenly stem. This supports exported PrimaryReading ちょう, MeaningJP city block / town division / counter, and KanjiMeanings city block / town division / counter / 4th calendar sign / even number / street / town for the individual kanji 丁 after removing the imprecise ward gloss. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ちょう because the generated N1 card now teaches the learner-useful city-block/town-division and counter reading visible in 丁目; テイ remains visible in support vocabulary such as 丁寧, while トウ and ひのと remain non-primary broader readings.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 丁|ちょう: single-kanji anchor; Kanji and DisplayWord 丁; StudyWordKanji blank; PrimaryReading ちょう; MeaningJP city block / town division / counter; KanjiMeanings city block / town division / counter / 4th calendar sign / even number / street / town; notes 丁目 - city block ／ 丁寧 - polite / careful ／ 包丁 - kitchen knife; example 駅の近くの三丁目に新しい店ができました。; audio field includes kanji-reading-丁-ちょう; stroke-order field includes 4E01_丁-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E01_丁/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 丁: exact audio media fragment kanji-reading-丁-ちょう; audio/4E01_丁-kanji-reading-丁-ちょう.wav; stroke-order media 4E01_丁-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E01_丁/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 丁|ちょう: exact kanji-reading audio kanji-reading-丁-ちょう; audio/4E01_丁-kanji-reading-丁-ちょう.wav; exported PrimaryReading ちょう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E01_丁/manifest.json",
+        "detail": "Visual stroke-order review recorded for 丁: stroke-order media 4E01_丁-stroke-order.gif shows target 丁; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 丁; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 丁|ちょう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 丁|ちょう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ちょう, MeaningJP city block / town division / counter, KanjiMeanings city block / town division / counter / 4th calendar sign / even number / street / town, example sentence 駅の近くの三丁目に新しい店ができました。, reading えきのちかくのさんちょうめにあたらしいみせができました。, translation A new shop opened in block three near the station., notes/support surface 丁目 / 丁寧 / 包丁, audio kanji-reading-丁-ちょう, stroke-order media 4E01_丁-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "丁",
+        "displayWord": "丁",
+        "primaryReading": "ちょう",
+        "meaningJP": "city block / town division / counter",
+        "kanjiMeanings": "city block / town division / counter / 4th calendar sign / even number / street / town",
+        "studyWordKanji": "",
+        "onReading": "チ、 チョウ、 チン、 テイ、 トウ",
+        "kunReading": "ひのと",
+        "notes": "<ruby>丁目<rt>ちょうめ</rt></ruby> - city block ／ <ruby>丁寧<rt>ていねい</rt></ruby> - polite / careful ／ <ruby>包丁<rt>ほうちょう</rt></ruby> - kitchen knife",
+        "exampleSentence": "駅の近くの三丁目に新しい店ができました。 ／ えきのちかくのさんちょうめにあたらしいみせができました。 ／ A new shop opened in block three near the station.",
+        "audio": "[sound:4E01_丁-kanji-reading-丁-ちょう.wav]",
+        "strokeOrder": "<img src=\"4E01_丁-stroke-order.gif\" alt=\"Stroke order for 丁\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0004774700/",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 丁|ちょう: Kanjipedia lists 音 チョウ and meanings for the ちょう reading including page/cooking counter uses, a town-division unit, and even dice number, plus ひのと as the fourth heavenly stem. This supports exported PrimaryReading ちょう, MeaningJP city block / town division / counter, and KanjiMeanings city block / town division / counter / 4th calendar sign / even number / street / town for the individual kanji 丁 after removing the imprecise ward gloss. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "駅の近くの三丁目に新しい店ができました。",
+        "reading": "えきのちかくのさんちょうめにあたらしいみせができました。",
+        "translation": "A new shop opened in block three near the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 丁|ちょう: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0006",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0001",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "ちょう",
+        "normalizedCardReading": "ちょう",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E01_丁/manifest.json",
+        "audio": {
+          "path": "audio/4E01_丁-kanji-reading-丁-ちょう.wav",
+          "source": "voicevox-nemo",
+          "text": "丁",
+          "reading": "ちょう",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E01_丁-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E01_丁-stroke-order.gif",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E01_丁-stroke-order.gif\" alt=\"Stroke order for 丁\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 丁|ちょう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    },
+    "fixSummary": "During this reset batch, corrected the learner-facing meaning from block / ward / counter for streets to city block / town division / counter and blocked the imprecise ward gloss from broader KanjiMeanings before Platinum promotion."
   },
   {
     "kanji": "丑",
-    "status": "needs_revalidation",
-    "previousStatus": "platinum",
+    "status": "platinum",
+    "readingIncludes": [
+      "うし"
+    ],
+    "meaningIncludes": [
+      "ox",
+      "zodiac ox"
+    ],
+    "kanjiMeaningsIncludes": [
+      "ox",
+      "zodiac ox",
+      "1-3AM",
+      "second sign of Chinese zodiac",
+      "sign of the ox or cow"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "丑年",
+      "土用丑の日",
+      "丑三つ時"
+    ],
+    "exampleIncludes": [
+      "祖父は丑年生まれだとよく話しています。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0004720900",
+        "detail": "Japanese-source review for 丑|うし: Kanjipedia lists 訓 うし and meaning うし as the second zodiac sign, the animal ox/cow, north-northeast direction, and the time around 2 AM. This supports exported PrimaryReading うし, MeaningJP ox / zodiac ox, and KanjiMeanings ox / zodiac ox / 1-3AM / second sign of Chinese zodiac / sign of the ox or cow for the individual kanji 丑. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses うし because this individual-kanji card is anchored in the zodiac ox meaning and support words 丑年, 土用丑の日, and 丑三つ時 all reinforce the learner-facing kun reading; チュウ remains visible as source on-reading only.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 丑|うし: single-kanji anchor; Kanji and DisplayWord 丑; StudyWordKanji blank; PrimaryReading うし; MeaningJP ox / zodiac ox; KanjiMeanings ox / zodiac ox / 1-3AM / second sign of Chinese zodiac / sign of the ox or cow; notes 丑年 - year of the ox ／ 土用丑の日 - midsummer day of the ox ／ 丑三つ時 - dead of night; example 祖父は丑年生まれだとよく話しています。; audio field includes kanji-reading-丑-うし; stroke-order field includes 4E11_丑-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E11_丑/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 丑: exact audio media fragment kanji-reading-丑-うし; audio/4E11_丑-kanji-reading-丑-うし.wav; stroke-order media 4E11_丑-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E11_丑/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 丑|うし: exact kanji-reading audio kanji-reading-丑-うし; audio/4E11_丑-kanji-reading-丑-うし.wav; exported PrimaryReading うし."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E11_丑/manifest.json",
+        "detail": "Visual stroke-order review recorded for 丑: stroke-order media 4E11_丑-stroke-order.gif shows target 丑; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 丑; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 丑|うし: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 丑|うし with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading うし, MeaningJP ox / zodiac ox, KanjiMeanings ox / zodiac ox / 1-3AM / second sign of Chinese zodiac / sign of the ox or cow, example sentence 祖父は丑年生まれだとよく話しています。, reading そふはうしどしうまれだとよくはなしています。, translation My grandfather often says he was born in the year of the ox., notes/support surface 丑年 / 土用丑の日 / 丑三つ時, audio kanji-reading-丑-うし, stroke-order media 4E11_丑-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "丑",
+        "displayWord": "丑",
+        "primaryReading": "うし",
+        "meaningJP": "ox / zodiac ox",
+        "kanjiMeanings": "ox / zodiac ox / 1-3AM / second sign of Chinese zodiac / sign of the ox or cow",
+        "studyWordKanji": "",
+        "onReading": "チュウ",
+        "kunReading": "うし",
+        "notes": "<ruby>丑年<rt>うしどし</rt></ruby> - year of the ox ／ <ruby>土用丑<rt>どよううし</rt></ruby>の<ruby>日<rt>ひ</rt></ruby> - midsummer day of the ox ／ <ruby>丑三<rt>うしみ</rt></ruby>つ<ruby>時<rt>どき</rt></ruby> - dead of night",
+        "exampleSentence": "祖父は丑年生まれだとよく話しています。 ／ そふはうしどしうまれだとよくはなしています。 ／ My grandfather often says he was born in the year of the ox.",
+        "audio": "[sound:4E11_丑-kanji-reading-丑-うし.wav]",
+        "strokeOrder": "<img src=\"4E11_丑-stroke-order.gif\" alt=\"Stroke order for 丑\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0004720900",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 丑|うし: Kanjipedia lists 訓 うし and meaning うし as the second zodiac sign, the animal ox/cow, north-northeast direction, and the time around 2 AM. This supports exported PrimaryReading うし, MeaningJP ox / zodiac ox, and KanjiMeanings ox / zodiac ox / 1-3AM / second sign of Chinese zodiac / sign of the ox or cow for the individual kanji 丑. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "祖父は丑年生まれだとよく話しています。",
+        "reading": "そふはうしどしうまれだとよくはなしています。",
+        "translation": "My grandfather often says he was born in the year of the ox.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 丑|うし: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0001",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0002",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "うし",
+        "normalizedCardReading": "うし",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E11_丑/manifest.json",
+        "audio": {
+          "path": "audio/4E11_丑-kanji-reading-丑-うし.wav",
+          "source": "voicevox-nemo",
+          "text": "丑",
+          "reading": "うし",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E11_丑-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E11_丑-stroke-order.gif",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E11_丑-stroke-order.gif\" alt=\"Stroke order for 丑\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 丑|うし after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
   },
   {
     "kanji": "且",
-    "status": "needs_revalidation",
-    "previousStatus": "platinum",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "かつ"
+    ],
+    "meaningIncludes": [
+      "and",
+      "besides"
+    ],
+    "kanjiMeaningsIncludes": [
+      "and",
+      "moreover",
+      "also",
+      "furthermore"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "且つ",
+      "尚且つ"
+    ],
+    "exampleIncludes": [
+      "この案は安く、且つ効果も高いです。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0000986700",
+        "detail": "Japanese-source review for 且|かつ: Kanjipedia lists 訓 かつ and meanings for かつ, furthermore/moreover, and one thing while another thing is also true, with 必要且つ十分な条件 as usage. This supports exported PrimaryReading かつ, MeaningJP and / besides, and KanjiMeanings and / moreover / also / furthermore for the individual kanji 且 after replacing the weak 且来 support note with clean 且つ / 尚且つ support. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses かつ because the N1 card teaches the source-supported connective/adverbial function visible in 且つ and 尚且つ; rarer source senses remain non-primary broader context.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 且|かつ: single-kanji anchor; Kanji and DisplayWord 且; StudyWordKanji blank; PrimaryReading かつ; MeaningJP and / besides; KanjiMeanings and / moreover / also / furthermore; notes 且つ - and / besides ／ 尚且つ - furthermore; example この案は安く、且つ効果も高いです。; audio field includes kanji-reading-且-かつ; stroke-order field includes 4E14_且-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E14_且/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 且: exact audio media fragment kanji-reading-且-かつ; audio/4E14_且-kanji-reading-且-かつ.wav; stroke-order media 4E14_且-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E14_且/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 且|かつ: exact kanji-reading audio kanji-reading-且-かつ; audio/4E14_且-kanji-reading-且-かつ.wav; exported PrimaryReading かつ."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E14_且/manifest.json",
+        "detail": "Visual stroke-order review recorded for 且: stroke-order media 4E14_且-stroke-order.gif shows target 且; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 且; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 且|かつ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 且|かつ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading かつ, MeaningJP and / besides, KanjiMeanings and / moreover / also / furthermore, example sentence この案は安く、且つ効果も高いです。, reading このあんはやすく、かつこうかもたかいです。, translation This plan is inexpensive and also highly effective., notes/support surface 且つ / 尚且つ, audio kanji-reading-且-かつ, stroke-order media 4E14_且-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "且",
+        "displayWord": "且",
+        "primaryReading": "かつ",
+        "meaningJP": "and / besides",
+        "kanjiMeanings": "and / moreover / also / furthermore",
+        "studyWordKanji": "",
+        "onReading": "ショ、 ショウ、 ソ",
+        "kunReading": "か.つ",
+        "notes": "<ruby>且<rt>か</rt></ruby>つ - and / besides ／ <ruby>尚且<rt>なおか</rt></ruby>つ - furthermore",
+        "exampleSentence": "この案は安く、且つ効果も高いです。 ／ このあんはやすく、かつこうかもたかいです。 ／ This plan is inexpensive and also highly effective.",
+        "audio": "[sound:4E14_且-kanji-reading-且-かつ.wav]",
+        "strokeOrder": "<img src=\"4E14_且-stroke-order.gif\" alt=\"Stroke order for 且\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0000986700",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 且|かつ: Kanjipedia lists 訓 かつ and meanings for かつ, furthermore/moreover, and one thing while another thing is also true, with 必要且つ十分な条件 as usage. This supports exported PrimaryReading かつ, MeaningJP and / besides, and KanjiMeanings and / moreover / also / furthermore for the individual kanji 且 after replacing the weak 且来 support note with clean 且つ / 尚且つ support. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "nihongo_sou_matome_kanji",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "nihongo_sou_matome",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "high_confidence",
+        "releaseBlockedBySourceConfidence": false,
+        "sourceConfidenceNote": "Computed from active external source assignments. Additional independent and Japanese-published source evidence is still required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "この案は安く、且つ効果も高いです。",
+        "reading": "このあんはやすく、かつこうかもたかいです。",
+        "translation": "This plan is inexpensive and also highly effective.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 且|かつ: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0002",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0003",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "unknown-token",
+          "missing-token-reading",
+          "kanji-card-tokenizer-coverage-gap",
+          "artifact-warning"
+        ],
+        "normalizedTokenReading": null,
+        "normalizedCardReading": "かつ",
+        "readingAlignment": {
+          "comparable": false,
+          "matches": false
+        },
+        "tokenizerKnown": false,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer coverage gap reviewed as assistive-only evidence; governed Japanese source, generated on/kun surface, and reviewer judgment support the curated primary reading, so no tracked card change is required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E14_且/manifest.json",
+        "audio": {
+          "path": "audio/4E14_且-kanji-reading-且-かつ.wav",
+          "source": "voicevox-nemo",
+          "text": "且",
+          "reading": "かつ",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E14_且-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E14_且-stroke-order.gif",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E14_且-stroke-order.gif\" alt=\"Stroke order for 且\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 且|かつ after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    },
+    "fixSummary": "During this reset batch, removed the weak 且来 support note and rejected a longer support phrase after it produced broken generated ruby; live rebuilt card now keeps clean 且つ / 尚且つ support."
   },
   {
     "kanji": "丘",
-    "status": "needs_revalidation",
-    "previousStatus": "platinum",
+    "status": "platinum",
+    "readingIncludes": [
+      "おか"
+    ],
+    "meaningIncludes": [
+      "hill"
+    ],
+    "kanjiMeaningsIncludes": [
+      "hill",
+      "knoll"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "丘",
+      "丘陵",
+      "丘の上"
+    ],
+    "exampleIncludes": [
+      "丘の上から町全体がよく見えました。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0001369600",
+        "detail": "Japanese-source review for 丘|おか: Kanjipedia lists 訓 おか and meaning おか as a small elevated landform, with 丘陵 as support vocabulary. This supports exported PrimaryReading おか, MeaningJP hill, and KanjiMeanings hill / knoll for the individual kanji 丘. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses おか because it is the direct learner-facing kun reading for hill and is reinforced by 丘, 丘陵, and 丘の上 support; キュウ remains visible for compound support.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 丘|おか: single-kanji anchor; Kanji and DisplayWord 丘; StudyWordKanji blank; PrimaryReading おか; MeaningJP hill; KanjiMeanings hill / knoll; notes 丘 - hill ／ 丘陵 - hills / rolling land ／ 丘の上 - on the hill; example 丘の上から町全体がよく見えました。; audio field includes kanji-reading-丘-おか; stroke-order field includes 4E18_丘-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E18_丘/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 丘: exact audio media fragment kanji-reading-丘-おか; audio/4E18_丘-kanji-reading-丘-おか.wav; stroke-order media 4E18_丘-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E18_丘/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 丘|おか: exact kanji-reading audio kanji-reading-丘-おか; audio/4E18_丘-kanji-reading-丘-おか.wav; exported PrimaryReading おか."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E18_丘/manifest.json",
+        "detail": "Visual stroke-order review recorded for 丘: stroke-order media 4E18_丘-stroke-order.gif shows target 丘; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 丘; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 丘|おか: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 丘|おか with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading おか, MeaningJP hill, KanjiMeanings hill / knoll, example sentence 丘の上から町全体がよく見えました。, reading おかのうえからまちぜんたいがよくみえました。, translation I could see the whole town clearly from the hill., notes/support surface 丘 / 丘陵 / 丘の上, audio kanji-reading-丘-おか, stroke-order media 4E18_丘-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "丘",
+        "displayWord": "丘",
+        "primaryReading": "おか",
+        "meaningJP": "hill",
+        "kanjiMeanings": "hill / knoll",
+        "studyWordKanji": "",
+        "onReading": "キュウ",
+        "kunReading": "おか",
+        "notes": "<ruby>丘<rt>おか</rt></ruby> - hill ／ <ruby>丘陵<rt>きゅうりょう</rt></ruby> - hills / rolling land ／ <ruby>丘<rt>おか</rt></ruby>の<ruby>上<rt>うえ</rt></ruby> - on the hill",
+        "exampleSentence": "丘の上から町全体がよく見えました。 ／ おかのうえからまちぜんたいがよくみえました。 ／ I could see the whole town clearly from the hill.",
+        "audio": "[sound:4E18_丘-kanji-reading-丘-おか.wav]",
+        "strokeOrder": "<img src=\"4E18_丘-stroke-order.gif\" alt=\"Stroke order for 丘\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0001369600",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 丘|おか: Kanjipedia lists 訓 おか and meaning おか as a small elevated landform, with 丘陵 as support vocabulary. This supports exported PrimaryReading おか, MeaningJP hill, and KanjiMeanings hill / knoll for the individual kanji 丘. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "丘の上から町全体がよく見えました。",
+        "reading": "おかのうえからまちぜんたいがよくみえました。",
+        "translation": "I could see the whole town clearly from the hill.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 丘|おか: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0003",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0004",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "おか",
+        "normalizedCardReading": "おか",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E18_丘/manifest.json",
+        "audio": {
+          "path": "audio/4E18_丘-kanji-reading-丘-おか.wav",
+          "source": "voicevox-nemo",
+          "text": "丘",
+          "reading": "おか",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E18_丘-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E18_丘-stroke-order.gif",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E18_丘-stroke-order.gif\" alt=\"Stroke order for 丘\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 丘|おか after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
   },
   {
     "kanji": "丙",
-    "status": "needs_revalidation",
-    "previousStatus": "platinum",
+    "status": "platinum",
+    "readingIncludes": [
+      "へい"
+    ],
+    "meaningIncludes": [
+      "third rank"
+    ],
+    "kanjiMeaningsIncludes": [
+      "third",
+      "third rank",
+      "3rd",
+      "3rd calendar sign",
+      "third class"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "丙",
+      "甲乙丙",
+      "丙種"
+    ],
+    "exampleIncludes": [
+      "資料では三つ目の区分が丙と書かれていました。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0006192100",
+        "detail": "Japanese-source review for 丙|へい: Kanjipedia lists 音 ヘイ and meanings for ひのえ as the third heavenly stem/calendar sign and the third item in an ordered set, with 丙種 as support vocabulary. This supports exported PrimaryReading へい, MeaningJP third rank, and KanjiMeanings third / third rank / 3rd / 3rd calendar sign / third class for the individual kanji 丙. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses へい because the card teaches the ordered-rank/class reading visible in 丙種 and 甲乙丙; ひのえ remains visible as the calendar-stem kun reading but is not the primary learner-facing support in this card.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 丙|へい: single-kanji anchor; Kanji and DisplayWord 丙; StudyWordKanji blank; PrimaryReading へい; MeaningJP third rank; KanjiMeanings third / third rank / 3rd / 3rd calendar sign / third class; notes 丙 - third rank ／ 甲乙丙 - first, second, and third grades ／ 丙種 - class C; example 資料では三つ目の区分が丙と書かれていました。; audio field includes kanji-reading-丙-へい; stroke-order field includes 4E19_丙-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E19_丙/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 丙: exact audio media fragment kanji-reading-丙-へい; audio/4E19_丙-kanji-reading-丙-へい.wav; stroke-order media 4E19_丙-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E19_丙/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 丙|へい: exact kanji-reading audio kanji-reading-丙-へい; audio/4E19_丙-kanji-reading-丙-へい.wav; exported PrimaryReading へい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E19_丙/manifest.json",
+        "detail": "Visual stroke-order review recorded for 丙: stroke-order media 4E19_丙-stroke-order.gif shows target 丙; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 丙; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 丙|へい: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 丙|へい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading へい, MeaningJP third rank, KanjiMeanings third / third rank / 3rd / 3rd calendar sign / third class, example sentence 資料では三つ目の区分が丙と書かれていました。, reading しりょうではみっつめのくぶんがへいとかかれていました。, translation In the document, the third category was labeled hei., notes/support surface 丙 / 甲乙丙 / 丙種, audio kanji-reading-丙-へい, stroke-order media 4E19_丙-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "丙",
+        "displayWord": "丙",
+        "primaryReading": "へい",
+        "meaningJP": "third rank",
+        "kanjiMeanings": "third / third rank / 3rd / 3rd calendar sign / third class",
+        "studyWordKanji": "",
+        "onReading": "ヘイ",
+        "kunReading": "ひのえ",
+        "notes": "<ruby>丙<rt>へい</rt></ruby> - third rank ／ <ruby>甲乙丙<rt>こうおつへい</rt></ruby> - first, second, and third grades ／ <ruby>丙種<rt>へいしゅ</rt></ruby> - class C",
+        "exampleSentence": "資料では三つ目の区分が丙と書かれていました。 ／ しりょうではみっつめのくぶんがへいとかかれていました。 ／ In the document, the third category was labeled hei.",
+        "audio": "[sound:4E19_丙-kanji-reading-丙-へい.wav]",
+        "strokeOrder": "<img src=\"4E19_丙-stroke-order.gif\" alt=\"Stroke order for 丙\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0006192100",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 丙|へい: Kanjipedia lists 音 ヘイ and meanings for ひのえ as the third heavenly stem/calendar sign and the third item in an ordered set, with 丙種 as support vocabulary. This supports exported PrimaryReading へい, MeaningJP third rank, and KanjiMeanings third / third rank / 3rd / 3rd calendar sign / third class for the individual kanji 丙. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "資料では三つ目の区分が丙と書かれていました。",
+        "reading": "しりょうではみっつめのくぶんがへいとかかれていました。",
+        "translation": "In the document, the third category was labeled hei.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 丙|へい: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0008",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0005",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "ひのえ",
+        "normalizedCardReading": "へい",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer preferred an alternate bare-kanji/name reading; governed Japanese source, generated on/kun surface, and reviewer judgment support the curated learner-facing primary reading, so no tracked card change is required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E19_丙/manifest.json",
+        "audio": {
+          "path": "audio/4E19_丙-kanji-reading-丙-へい.wav",
+          "source": "voicevox-nemo",
+          "text": "丙",
+          "reading": "へい",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E19_丙-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E19_丙-stroke-order.gif",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E19_丙-stroke-order.gif\" alt=\"Stroke order for 丙\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 丙|へい after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
   },
   {
     "kanji": "丞",
-    "status": "needs_revalidation",
-    "previousStatus": "platinum",
+    "status": "platinum",
+    "readingIncludes": [
+      "じょう"
+    ],
+    "meaningIncludes": [
+      "assistant",
+      "help"
+    ],
+    "kanjiMeaningsIncludes": [
+      "assistant",
+      "help"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "丞相",
+      "右丞",
+      "左丞"
+    ],
+    "exampleIncludes": [
+      "歴史の授業で古代中国の丞相について学びました。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0003349900",
+        "detail": "Japanese-source review for 丞|じょう: Kanjipedia lists 音 ショウ・ジョウ, 訓 たすける, and meanings to help/assist plus じょう as the third official in ritsuryo offices, with 丞相 as support vocabulary. This supports exported PrimaryReading じょう, MeaningJP assistant / help, and KanjiMeanings assistant / help for the individual kanji 丞. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses じょう because the N1 card teaches the official/assistant sense visible in 丞相, 右丞, and 左丞; たすける remains source-supported but is not the exported primary support reading.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 丞|じょう: single-kanji anchor; Kanji and DisplayWord 丞; StudyWordKanji blank; PrimaryReading じょう; MeaningJP assistant / help; KanjiMeanings assistant / help; notes 丞相 - chancellor ／ 右丞 - right assistant minister ／ 左丞 - left assistant minister; example 歴史の授業で古代中国の丞相について学びました。; audio field includes kanji-reading-丞-じょう; stroke-order field includes 4E1E_丞-stroke-order.svg."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E1E_丞/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 丞: exact audio media fragment kanji-reading-丞-じょう; audio/4E1E_丞-kanji-reading-丞-じょう.wav; stroke-order media 4E1E_丞-stroke-order.svg; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E1E_丞/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 丞|じょう: exact kanji-reading audio kanji-reading-丞-じょう; audio/4E1E_丞-kanji-reading-丞-じょう.wav; exported PrimaryReading じょう."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E1E_丞/manifest.json",
+        "detail": "Visual stroke-order review recorded for 丞: stroke-order media 4E1E_丞-stroke-order.svg shows target 丞; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 丞; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 丞|じょう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 丞|じょう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading じょう, MeaningJP assistant / help, KanjiMeanings assistant / help, example sentence 歴史の授業で古代中国の丞相について学びました。, reading れきしのじゅぎょうでこだいちゅうごくのじょうしょうについてまなびました。, translation In history class, we learned about the chancellors of ancient China., notes/support surface 丞相 / 右丞 / 左丞, audio kanji-reading-丞-じょう, stroke-order media 4E1E_丞-stroke-order.svg, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review / kanji-card-tokenizer-reading-variant were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "丞",
+        "displayWord": "丞",
+        "primaryReading": "じょう",
+        "meaningJP": "assistant / help",
+        "kanjiMeanings": "assistant / help",
+        "studyWordKanji": "",
+        "onReading": "ショウ、 ジョウ",
+        "kunReading": "すく.う、 たす.ける",
+        "notes": "<ruby>丞相<rt>じょうしょう</rt></ruby> - chancellor ／ <ruby>右丞<rt>うじょう</rt></ruby> - right assistant minister ／ <ruby>左丞<rt>さじょう</rt></ruby> - left assistant minister",
+        "exampleSentence": "歴史の授業で古代中国の丞相について学びました。 ／ れきしのじゅぎょうでこだいちゅうごくのじょうしょうについてまなびました。 ／ In history class, we learned about the chancellors of ancient China.",
+        "audio": "[sound:4E1E_丞-kanji-reading-丞-じょう.wav]",
+        "strokeOrder": "<img src=\"4E1E_丞-stroke-order.svg\" alt=\"Stroke order for 丞\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0003349900",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 丞|じょう: Kanjipedia lists 音 ショウ・ジョウ, 訓 たすける, and meanings to help/assist plus じょう as the third official in ritsuryo offices, with 丞相 as support vocabulary. This supports exported PrimaryReading じょう, MeaningJP assistant / help, and KanjiMeanings assistant / help for the individual kanji 丞. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "歴史の授業で古代中国の丞相について学びました。",
+        "reading": "れきしのじゅぎょうでこだいちゅうごくのじょうしょうについてまなびました。",
+        "translation": "In history class, we learned about the chancellors of ancient China.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 丞|じょう: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0004",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0006",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "すすむ",
+        "normalizedCardReading": "じょう",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer preferred an alternate bare-kanji/name reading; governed Japanese source, generated on/kun surface, and reviewer judgment support the curated learner-facing primary reading, so no tracked card change is required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E1E_丞/manifest.json",
+        "audio": {
+          "path": "audio/4E1E_丞-kanji-reading-丞-じょう.wav",
+          "source": "voicevox-nemo",
+          "text": "丞",
+          "reading": "じょう",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E1E_丞-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E1E_丞-stroke-order.svg",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E1E_丞-stroke-order.svg\" alt=\"Stroke order for 丞\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 丞|じょう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    }
   },
   {
     "kanji": "丹",
-    "status": "needs_revalidation",
-    "previousStatus": "fixed_then_platinum",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "に"
+    ],
+    "meaningIncludes": [
+      "red",
+      "vermilion"
+    ],
+    "kanjiMeaningsIncludes": [
+      "red",
+      "vermilion",
+      "pills",
+      "sincerity"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "丹色",
+      "丹念",
+      "牡丹"
+    ],
+    "exampleIncludes": [
+      "神社の門は丹色に美しく塗られていました。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0004584200",
+        "detail": "Japanese-source review for 丹|に: Kanjipedia lists 訓 に・あか・まごころ, meaning red/vermilion color, sincerity, and well-kneaded medicine/pills, with 丹念 and 丹色-style support. This supports exported PrimaryReading に, MeaningJP red / vermilion, and KanjiMeanings red / vermilion / pills / sincerity for the individual kanji 丹 after blocking low-value red lead and rust-colored noise. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses に because the card teaches the red/vermilion color sense visible in 丹色; タン remains visible for compounds such as 丹念 and 牡丹.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 丹|に: single-kanji anchor; Kanji and DisplayWord 丹; StudyWordKanji blank; PrimaryReading に; MeaningJP red / vermilion; KanjiMeanings red / vermilion / pills / sincerity; notes 丹色 - vermilion color ／ 丹念 - careful / painstaking ／ 牡丹 - peony; example 神社の門は丹色に美しく塗られていました。; audio field includes kanji-reading-丹-に; stroke-order field includes 4E39_丹-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E39_丹/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 丹: exact audio media fragment kanji-reading-丹-に; audio/4E39_丹-kanji-reading-丹-に.wav; stroke-order media 4E39_丹-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E39_丹/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 丹|に: exact kanji-reading audio kanji-reading-丹-に; audio/4E39_丹-kanji-reading-丹-に.wav; exported PrimaryReading に."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E39_丹/manifest.json",
+        "detail": "Visual stroke-order review recorded for 丹: stroke-order media 4E39_丹-stroke-order.gif shows target 丹; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 丹; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 丹|に: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 丹|に with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading に, MeaningJP red / vermilion, KanjiMeanings red / vermilion / pills / sincerity, example sentence 神社の門は丹色に美しく塗られていました。, reading じんじゃのもんはにいろにうつくしくぬられていました。, translation The shrine gate was beautifully painted vermilion., notes/support surface 丹色 / 丹念 / 牡丹, audio kanji-reading-丹-に, stroke-order media 4E39_丹-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "丹",
+        "displayWord": "丹",
+        "primaryReading": "に",
+        "meaningJP": "red / vermilion",
+        "kanjiMeanings": "red / vermilion / pills / sincerity",
+        "studyWordKanji": "",
+        "onReading": "タン",
+        "kunReading": "に",
+        "notes": "<ruby>丹色<rt>にいろ</rt></ruby> - vermilion color ／ <ruby>丹念<rt>たんねん</rt></ruby> - careful / painstaking ／ <ruby>牡丹<rt>ぼたん</rt></ruby> - peony",
+        "exampleSentence": "神社の門は丹色に美しく塗られていました。 ／ じんじゃのもんはにいろにうつくしくぬられていました。 ／ The shrine gate was beautifully painted vermilion.",
+        "audio": "[sound:4E39_丹-kanji-reading-丹-に.wav]",
+        "strokeOrder": "<img src=\"4E39_丹-stroke-order.gif\" alt=\"Stroke order for 丹\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0004584200",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 丹|に: Kanjipedia lists 訓 に・あか・まごころ, meaning red/vermilion color, sincerity, and well-kneaded medicine/pills, with 丹念 and 丹色-style support. This supports exported PrimaryReading に, MeaningJP red / vermilion, and KanjiMeanings red / vermilion / pills / sincerity for the individual kanji 丹 after blocking low-value red lead and rust-colored noise. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "神社の門は丹色に美しく塗られていました。",
+        "reading": "じんじゃのもんはにいろにうつくしくぬられていました。",
+        "translation": "The shrine gate was beautifully painted vermilion.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 丹|に: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0005",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0007",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "に",
+        "normalizedCardReading": "に",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E39_丹/manifest.json",
+        "audio": {
+          "path": "audio/4E39_丹-kanji-reading-丹-に.wav",
+          "source": "voicevox-nemo",
+          "text": "丹",
+          "reading": "に",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E39_丹-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E39_丹-stroke-order.gif",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E39_丹-stroke-order.gif\" alt=\"Stroke order for 丹\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 丹|に after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    },
+    "fixSummary": "Preserved the existing tracked fix that blocks low-value broad gloss noise from the KanjiMeanings field; live rebuilt card keeps source-backed red / vermilion / pills / sincerity."
   },
   {
     "kanji": "乃",
-    "status": "needs_revalidation",
-    "previousStatus": "fixed_then_platinum",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ない"
+    ],
+    "meaningIncludes": [
+      "namely",
+      "connective marker"
+    ],
+    "kanjiMeaningsIncludes": [
+      "namely",
+      "connective marker"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "乃至",
+      "乃ち",
+      "乃木坂"
+    ],
+    "exampleIncludes": [
+      "応募資格は十八歳乃至三十歳とされています。"
+    ],
     "reviewedAt": "2026-06-01",
-    "reviewer": "codex-platinum-reset",
-    "decisionReason": "N1 Platinum reset to zero at user direction after loss of trust in the prior structural/product review. This entry is non-certifying history only; the card must be re-reviewed from square zero against live generated data, governed Japanese source evidence, NLP/audio/stroke support lanes, example quality, verification limitations, and product fit before any active Platinum status can return.",
-    "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
-    "previousReviewedAt": "2026-05-31",
-    "previousRevalidatedAt": "2026-05-31"
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kanjipedia https://www.kanjipedia.jp/kanji/0004473200/",
+        "detail": "Japanese-source review for 乃|ない: Kanjipedia lists 音 ダイ・ナイ, 訓 すなわち・なんじ・の, and meanings centered on すなわち as a connective marker, with 乃至(ナイシ) as support vocabulary; it also lists the separate なんじ and の-sound functions. This supports exported PrimaryReading ない, MeaningJP namely / connective marker, and KanjiMeanings namely / connective marker for the individual kanji 乃 after removing unsupported from / of primary meaning and blocked broad gloss noise. This is card-field verification only, not JLPT placement evidence or release readiness."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ない because the N1 card keeps the individual-kanji anchor while using the source-supported on-reading visible in 乃至 as a connective support word; unsupported bare from/of meanings stay blocked instead of letting a support word override the kanji anchor.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-01",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, source-origin independence, example sentence, notes/support surface, assistive NLP review packet, audio, stroke-order media, and verification limitations under the current kanji platinum standard; structural Platinum only, not Obsidian proof or release readiness.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "out/build/exports/jlpt-n1.tsv after npm run deck:ready -- --levels=1",
+        "detail": "Generated card surface inspected for 乃|ない: single-kanji anchor; Kanji and DisplayWord 乃; StudyWordKanji blank; PrimaryReading ない; MeaningJP namely / connective marker; KanjiMeanings namely / connective marker; notes 乃至 - from ... to / or ／ 乃ち - namely ／ 乃木坂 - Nogizaka; example 応募資格は十八歳乃至三十歳とされています。; audio field includes kanji-reading-乃-ない; stroke-order field includes 4E43_乃-stroke-order.gif."
+      },
+      {
+        "type": "media-audit",
+        "source": "data/media/kanji/4E/4E43_乃/manifest.json; out/build/package/package-summary.json",
+        "detail": "Managed media provenance inspected for 乃: exact audio media fragment kanji-reading-乃-ない; audio/4E43_乃-kanji-reading-乃-ない.wav; stroke-order media 4E43_乃-stroke-order.gif; package-summary source paths point to managed data/media/kanji assets; no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "data/media/kanji/4E/4E43_乃/manifest.json and exported Audio field",
+        "detail": "Audio artifact reviewed for 乃|ない: exact kanji-reading audio kanji-reading-乃-ない; audio/4E43_乃-kanji-reading-乃-ない.wav; exported PrimaryReading ない."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and data/media/kanji/4E/4E43_乃/manifest.json",
+        "detail": "Visual stroke-order review recorded for 乃: stroke-order media 4E43_乃-stroke-order.gif shows target 乃; visual target checked; source provenance governed through managed media policy."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression gate checked 乃; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Final product judgment for 乃|ない: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, source-origin independence checked, support-only example usage checked, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Assistive NLP packet reviewed; it did not certify source truth, write templates, or replace human promotion."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard structural Platinum review",
+        "detail": "Current-standard review revalidated 乃|ない with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ない, MeaningJP namely / connective marker, KanjiMeanings namely / connective marker, example sentence 応募資格は十八歳乃至三十歳とされています。, reading おうぼしかくはじゅうはっさいないしさんじゅっさいとされています。, translation The application eligibility is listed as ages eighteen to thirty., notes/support surface 乃至 / 乃ち / 乃木坂, audio kanji-reading-乃-ない, stroke-order media 4E43_乃-stroke-order.gif, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. Assistive NLP signal kinds routine-tokenization-review / unknown-token / missing-token-reading / kanji-card-tokenizer-coverage-gap / artifact-warning were reviewed as non-certifying support only."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-platinum-card-review",
+      "batch": {
+        "id": "n1-structural-platinum-reset-batch-001",
+        "level": 1,
+        "scope": "exact eight-card reset batch after N1 Obsidian removal and Platinum restart",
+        "reviewedAt": "2026-06-01",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --untracked-files=all",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=8",
+        "npm run media:review:audio -- --levels=1 --kanji=丁,丑,且,丘,丙,丞,丹,乃 --limit=8",
+        "npm run data:audit:stroke-order -- --json"
+      ],
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "乃",
+        "displayWord": "乃",
+        "primaryReading": "ない",
+        "meaningJP": "namely / connective marker",
+        "kanjiMeanings": "namely / connective marker",
+        "studyWordKanji": "",
+        "onReading": "アイ、 ダイ、 ナイ、 ノ",
+        "kunReading": "すなわ.ち、 なんじ、 の",
+        "notes": "<ruby>乃至<rt>ないし</rt></ruby> - from ... to / or ／ <ruby>乃<rt>すなわ</rt></ruby>ち - namely ／ <ruby>乃木坂<rt>のぎざか</rt></ruby> - Nogizaka",
+        "exampleSentence": "応募資格は十八歳乃至三十歳とされています。 ／ おうぼしかくはじゅうはっさいないしさんじゅっさいとされています。 ／ The application eligibility is listed as ages eighteen to thirty.",
+        "audio": "[sound:4E43_乃-kanji-reading-乃-ない.wav]",
+        "strokeOrder": "<img src=\"4E43_乃-stroke-order.gif\" alt=\"Stroke order for 乃\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0004473200/",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 乃|ない: Kanjipedia lists 音 ダイ・ナイ, 訓 すなわち・なんじ・の, and meanings centered on すなわち as a connective marker, with 乃至(ナイシ) as support vocabulary; it also lists the separate なんじ and の-sound functions. This supports exported PrimaryReading ない, MeaningJP namely / connective marker, and KanjiMeanings namely / connective marker for the individual kanji 乃 after removing unsupported from / of primary meaning and blocked broad gloss noise. This is card-field verification only, not JLPT placement evidence or release readiness.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence or release readiness."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but they still share too few independent evidence lineages. Additional independent and Japanese-published source evidence is required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 structural Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "応募資格は十八歳乃至三十歳とされています。",
+        "reading": "おうぼしかくはじゅうはっさいないしさんじゅっさいとされています。",
+        "translation": "The application eligibility is listed as ages eighteen to thirty.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 乃|ない: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0007",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0008",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "unknown-token",
+          "missing-token-reading",
+          "kanji-card-tokenizer-coverage-gap",
+          "artifact-warning"
+        ],
+        "normalizedTokenReading": null,
+        "normalizedCardReading": "ない",
+        "readingAlignment": {
+          "comparable": false,
+          "matches": false
+        },
+        "tokenizerKnown": false,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer coverage gap reviewed as assistive-only evidence; governed Japanese source, generated on/kun surface, and reviewer judgment support the curated primary reading, so no tracked card change is required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/4E/4E43_乃/manifest.json",
+        "audio": {
+          "path": "audio/4E43_乃-kanji-reading-乃-ない.wav",
+          "source": "voicevox-nemo",
+          "text": "乃",
+          "reading": "ない",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/4E43_乃-stroke-order.png",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/4E43_乃-stroke-order.gif",
+          "animationSource": "managed-stroke-order-source",
+          "exportedField": "<img src=\"4E43_乃-stroke-order.gif\" alt=\"Stroke order for 乃\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 乃|ない after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the structural Platinum card review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this structural Platinum-only batch."
+      }
+    },
+    "fixSummary": "Preserved the existing tracked fix that removed unsupported from / of primary meaning, blocked broad gloss noise, and rebuilt the live card as namely / connective marker."
   }
 ]

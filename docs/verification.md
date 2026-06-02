@@ -13,6 +13,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 - Obsidian proof records substantive current-version rereview.
 - GitHub CodeQL scans JavaScript/TypeScript source and GitHub Actions workflow code in CI; there is no local npm equivalent for that hosted code-scanning upload gate.
 - Tagged release workflows create GitHub artifact attestations for release-bundle provenance and SBOM binding; there is no local npm equivalent for the hosted Sigstore-backed attestation upload gate.
+- [../test/hostileInputSecurity.test.js](../test/hostileInputSecurity.test.js) keeps adversarial parser, Anki HTML, media path, generated-output cleanup, Docker-helper, and supply-chain mutation fixtures explicit inside `npm test`.
 
 ## Standard gate bundle
 

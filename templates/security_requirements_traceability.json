@@ -422,7 +422,7 @@
     {
       "id": "SEC-REQ-012",
       "priority": "P2",
-      "status": "planned",
+      "status": "implemented",
       "title": "Hostile-input regression coverage is explicit",
       "sourceMappings": [
         "NIST SSDF PW.8",
@@ -434,9 +434,22 @@
       "implementationFiles": [
         "docs/software-development-life-cycle-audit.md",
         "docs/threat-model.md",
-        "docs/risk-register.md"
+        "docs/risk-register.md",
+        "src/utils/text.js",
+        "src/utils/fs.js",
+        "src/services/exportService.js",
+        "src/services/wordInventoryExpansionCandidateService.js",
+        "src/services/mediaStore.js",
+        "scripts/manageVoicevoxContainer.js",
+        "scripts/auditSupplyChain.js"
       ],
       "evidenceFiles": [
+        "test/hostileInputSecurity.test.js",
+        "test/exportService.test.js",
+        "test/textUtils.test.js",
+        "test/wordInventoryExpansionCandidateService.test.js",
+        "test/mediaStore.test.js",
+        "test/supplyChainPolicy.test.js",
         "test/repositoryGovernance.test.js"
       ],
       "verificationCommands": [

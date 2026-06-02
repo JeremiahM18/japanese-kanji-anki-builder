@@ -86,7 +86,7 @@ Known limitations and expected fail-closed lanes now have a single register with
 
 Current artifact: [risk-register.md](risk-register.md).
 
-Remaining limitation: open or blocked risks are not accepted release posture. The register must be updated as P0 hosted settings and P2/P3 automation change.
+Remaining limitation: open or blocked risks are not accepted release posture. The register must be updated as P0 hosted settings and P3 automation change.
 
 ### P1: Incident Response And Vulnerability Remediation Runbook
 
@@ -119,16 +119,20 @@ Remaining limitation: the gate validates traceability completeness and reports b
 
 ### P2: Expand Negative Security Testing
 
-The repo has strong unit and governance tests, but dedicated hostile-input testing is still thin.
+Dedicated hostile-input coverage now groups adversarial cases across the major local attack surfaces.
 
-Recommended additions:
+Current artifact: [../test/hostileInputSecurity.test.js](../test/hostileInputSecurity.test.js).
 
-- parser fuzz or property tests for TSV/CSV/JSON/XML import boundaries
-- Anki HTML sanitization adversarial fixtures
-- source worksheet malformed-row corpus
-- zip/path traversal fixtures for generated packages and media imports
-- Docker-helper argument abuse fixtures
-- dependency/script policy mutation fixtures
+Current coverage:
+
+- TSV/CSV/JSON word candidate source rows with quoted delimiters, formula-like payloads, HTML/script text, JavaScript URL text, and slash-reading expansion
+- Anki HTML rendering fixtures for script, image, SVG/animation, event-handler, and JavaScript URL text
+- managed media path traversal and absolute-path rejection
+- generated-output cleanup path guard rejection outside governed roots
+- VOICEVOX Docker helper unknown-option and invalid-port abuse
+- dependency spec and GitHub Actions pin mutation abuse in a temp repository
+
+Remaining limitation: these are deterministic regression fixtures, not coverage-guided fuzzing, and they do not replace manual Anki import, media listening, mobile, screen-reader, hosted GitHub, or release-attestation verification.
 
 ### P2: Add A Formal Security Training And Reviewer Checklist
 
@@ -175,10 +179,9 @@ Recommended additions:
 4. Create `docs/incident-response.md`.
 5. Create `docs/recovery-and-rollback.md`.
 6. Add security requirements traceability data and a validation script.
-7. Add hostile-input and fuzz-style regression fixtures.
-8. Add security training/reviewer checklist.
-9. Add SDLC metrics reporting.
-10. Add dependency license compliance automation.
+7. Add security training/reviewer checklist.
+8. Add SDLC metrics reporting.
+9. Add dependency license compliance automation.
 
 ## Verification Used For This Audit
 

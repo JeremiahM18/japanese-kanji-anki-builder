@@ -1,0 +1,229 @@
+# Software Development Life Cycle Audit
+
+## Purpose
+
+This audit maps the repository's current software development life cycle controls against practical secure-development frameworks and identifies the missing or incomplete controls that should be addressed next.
+
+It is a current-state audit, not a release-ready claim. Re-run the listed verification commands and refresh this file when SDLC controls, CI workflows, release policy, security posture, or repository settings change.
+
+## Scope
+
+Covered:
+
+- repository development process
+- local development security posture
+- CI, release, and supply-chain controls
+- product QA and deck-governance workflows
+- documentation, contribution, and review process
+- missing SDLC controls visible from tracked files and live local commands
+
+Not fully provable from local files:
+
+- actual GitHub repository settings
+- actual protected-branch enforcement in GitHub
+- actual GitHub secret scanning, push protection, private vulnerability reporting, and CodeQL alert settings
+- hosted release artifact attestation verification after a real tag
+- human training completion
+- manual incident-response and recovery performance
+
+## Framework Basis
+
+This audit uses:
+
+- [NIST SP 800-218 SSDF](https://csrc.nist.gov/pubs/sp/800/218/final): secure development practices that can be integrated into any SDLC.
+- [OWASP SAMM](https://owaspsamm.org/model/): Governance, Design, Implementation, Verification, and Operations maturity functions.
+- [SLSA build levels](https://slsa.dev/spec/v1.0/levels): build provenance and tamper-resistance maturity.
+- [Microsoft Security Development Lifecycle](https://learn.microsoft.com/en-us/compliance/assurance/assurance-microsoft-security-development-lifecycle): requirements, design, implementation, verification, release, training, and response.
+
+## Current Strengths
+
+| SDLC area | Current evidence |
+| --- | --- |
+| Contribution process | [../CONTRIBUTING.md](../CONTRIBUTING.md) defines focused branches, documentation updates, validation, PR standards, and review bar. |
+| Documentation governance | [documentation-standard.md](documentation-standard.md) defines purpose, scope, authority boundary, source of truth, verification, failure semantics, and update triggers. |
+| Product requirements and exit criteria | [product-exit-criteria.md](product-exit-criteria.md), [release-qa-checklist.md](release-qa-checklist.md), and [platinum-obsidian-review-contract.md](platinum-obsidian-review-contract.md) define deck quality gates and manual QA boundaries. |
+| Branch policy as code | [../.github/branch-protection.main.json](../.github/branch-protection.main.json), [branch-protection.md](branch-protection.md), and `npm run security:branch-protection` align required checks and protected-path expectations. |
+| Code-owner review | [../.github/CODEOWNERS](../.github/CODEOWNERS) covers workflows, scripts, services, tests, security, dependency manifests, and core docs. |
+| CI verification | [../.github/workflows/ci.yml](../.github/workflows/ci.yml) runs lint, typecheck, tests, smoke checks, release gate, source-governance parity, proof-ledger parity, dependency review, advisory audit, secret audit, SBOM validation, and supply-chain audit. |
+| Static analysis | [../.github/workflows/codeql.yml](../.github/workflows/codeql.yml) runs pinned CodeQL for JavaScript/TypeScript and GitHub Actions. |
+| Dependency and supply-chain controls | [supply-chain-security.md](supply-chain-security.md), `npm run supply-chain:audit`, `npm run security:advisories`, GitHub dependency review, action pinning, lifecycle-script allowlisting, and lockfile-derived SBOM validation are in place. |
+| Release provenance | [../.github/workflows/release.yml](../.github/workflows/release.yml) writes a CycloneDX SBOM, checksums release artifacts, and creates provenance and SBOM attestations for tagged release bundles. |
+| Vulnerability disclosure | [../SECURITY.md](../SECURITY.md) defines scope, private reporting preference, report content, and maintainer handling. |
+| Local runtime hardening | [../SECURITY.md](../SECURITY.md) and `scripts/manageVoicevoxContainer.js` enforce local-only VOICEVOX binding and Docker runtime hardening. |
+
+## Missing Or Incomplete Controls
+
+### P0: Verify Hosted GitHub Settings
+
+Tracked files define the desired settings, but the local repo cannot prove GitHub has them enabled.
+
+Missing external confirmations:
+
+- branch protection on `main` matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json)
+- required status checks are enforced
+- GitHub secret scanning is enabled
+- push protection is enabled
+- private vulnerability reporting is enabled
+- CodeQL code-scanning alerts are visible and triaged
+- dependency review is active on pull requests
+- artifact attestation verification works on a real tagged release
+
+Recommended next artifact: `docs/github-repository-settings-checklist.md` with screenshots or date-stamped manual verification fields.
+
+### P1: Add A Formal Threat Model
+
+[../SECURITY.md](../SECURITY.md) has a concise threat model, but there is no fuller model with assets, trust boundaries, data flows, abuse cases, mitigations, and accepted residual risks.
+
+Missing coverage:
+
+- local Express server data flow
+- ignored local `data/`, `downloads/`, and `out/` trust boundary
+- Anki HTML rendering boundary
+- Docker and VOICEVOX runtime boundary
+- source-import and OCR input boundary
+- release artifact and attestation boundary
+- assistive NLP/model runtime boundary
+
+Recommended next artifact: `docs/threat-model.md`.
+
+### P1: Add A Risk And Exception Register
+
+The repo contains known limitations and expected fail-closed lanes, but there is no single risk register with owner, severity, decision, next review date, and evidence.
+
+Missing coverage:
+
+- accepted risk records
+- temporary waivers or exceptions
+- source-access blockers
+- external setting verification gaps
+- single-source-family word posture
+- manual QA blockers
+- expected release-gate failures versus true regressions
+
+Recommended next artifact: `docs/risk-register.md`.
+
+### P1: Add Incident Response And Vulnerability Remediation Runbooks
+
+[../SECURITY.md](../SECURITY.md) explains reporting and maintainer handling, but it does not define the operational response path after a report lands.
+
+Missing coverage:
+
+- severity classification
+- triage SLA
+- containment steps
+- patch and release flow
+- advisory or disclosure decision
+- evidence capture
+- post-incident review
+- remediation verification
+
+Recommended next artifact: `docs/incident-response.md`.
+
+### P1: Add Rollback, Recovery, And Artifact Verification Runbooks
+
+Release docs define gates, but there is no concrete recovery playbook for a bad release, bad deck artifact, compromised dependency, or broken local runtime.
+
+Missing coverage:
+
+- revoke or supersede a tagged release
+- verify downloaded artifacts against checksums and attestations
+- rebuild from a known commit
+- rollback local generated outputs
+- recover or rehydrate ignored local data from trusted sources
+- handle compromised or incorrect media/source inputs
+
+Recommended next artifact: `docs/recovery-and-rollback.md`.
+
+### P2: Add Security Requirements Traceability
+
+Security expectations exist across docs and tests, but they are not tied into a traceability matrix from requirement to implementation to verification.
+
+Missing coverage:
+
+- requirement id
+- source/framework mapping
+- affected component
+- implementation file
+- automated gate
+- manual QA requirement
+- release blocker status
+
+Recommended next artifact: `templates/security_requirements_traceability.json` plus an audit script.
+
+### P2: Expand Negative Security Testing
+
+The repo has strong unit and governance tests, but dedicated hostile-input testing is still thin.
+
+Recommended additions:
+
+- parser fuzz or property tests for TSV/CSV/JSON/XML import boundaries
+- Anki HTML sanitization adversarial fixtures
+- source worksheet malformed-row corpus
+- zip/path traversal fixtures for generated packages and media imports
+- Docker-helper argument abuse fixtures
+- dependency/script policy mutation fixtures
+
+### P2: Add A Formal Security Training And Reviewer Checklist
+
+[../CONTRIBUTING.md](../CONTRIBUTING.md) defines review expectations, but there is no role-based security training or reviewer readiness checklist.
+
+Recommended coverage:
+
+- secure coding basics
+- source-use and copyright/provenance rules
+- Anki HTML and generated-output safety
+- supply-chain update procedure
+- incident-response basics
+- AI/NLP assistive-only boundaries
+
+### P2: Add SDLC Metrics
+
+There are many gates, but there is no small metrics surface showing SDLC health over time.
+
+Recommended metrics:
+
+- time to remediate vulnerabilities
+- number of accepted risks and overdue reviews
+- CI gate pass/fail trend
+- release-gate blockers by category
+- manual QA completion by release scope
+- dependency update freshness
+- threat model review age
+
+### P3: Add License Compliance Automation
+
+The repo has NOTICE and source-use governance, but dependency license review is not yet automated.
+
+Recommended additions:
+
+- dependency license allowlist or report
+- generated release-bundle license summary
+- CI gate for unexpected dependency-license changes
+
+## Recommended Implementation Order
+
+1. Create `docs/github-repository-settings-checklist.md`.
+2. Create `docs/threat-model.md`.
+3. Create `docs/risk-register.md`.
+4. Create `docs/incident-response.md`.
+5. Create `docs/recovery-and-rollback.md`.
+6. Add security requirements traceability data and a validation script.
+7. Add hostile-input and fuzz-style regression fixtures.
+8. Add security training/reviewer checklist.
+9. Add SDLC metrics reporting.
+10. Add dependency license compliance automation.
+
+## Verification Used For This Audit
+
+Local verification during the audit:
+
+```bash
+git status --short
+git log -9 --oneline
+rg --files -g "*.md" -g "*.yml" -g "*.yaml" -g "*.json" .github docs templates
+rg -n "threat|incident|response|postmortem|rollback|risk|requirements|privacy|training|owner|CODEOWNERS|release|attest|SBOM|fuzz|secret|dependency|branch protection|vulnerability|disclosure|architecture|design" README.md SECURITY.md docs .github package.json
+npm run voicevox:status
+npm run doctor:voicevox
+```
+
+The final VOICEVOX status was running, local-only, and runtime-hardened. `doctor:voicevox` reported the engine reachable and the pinned release voice ready.

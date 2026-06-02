@@ -329,11 +329,11 @@ test("documentation standard defines enterprise doc schemas and README routing",
     assert.match(documentationMap, /\[docs\/documentation-standard\.md\]\(docs\/documentation-standard\.md\)/);
     assert.match(standard, /# Documentation Standard/);
     assert.match(standard, /## Research Basis/);
-    assert.match(standard, /https:\/\/developers\.google\.com\/style/);
-    assert.match(standard, /https:\/\/google\.github\.io\/styleguide\/docguide\/READMEs\.html/);
-    assert.match(standard, /https:\/\/learn\.microsoft\.com\/en-us\/style-guide\/welcome\//);
-    assert.match(standard, /https:\/\/support\.apple\.com\/guide\/applestyleguide\/welcome\/web/);
-    assert.match(standard, /https:\/\/docs\.oracle\.com\/en\/database\/oracle\/oracle-database\/19\/rnrdm\/database-release-notes\.pdf/);
+    assert.equal(standard.includes("https://developers.google.com/style"), true);
+    assert.equal(standard.includes("https://google.github.io/styleguide/docguide/READMEs.html"), true);
+    assert.equal(standard.includes("https://learn.microsoft.com/en-us/style-guide/welcome/"), true);
+    assert.equal(standard.includes("https://support.apple.com/guide/applestyleguide/welcome/web"), true);
+    assert.equal(standard.includes("https://docs.oracle.com/en/database/oracle/oracle-database/19/rnrdm/database-release-notes.pdf"), true);
 
     for (const heading of [
         "## Universal Schema",

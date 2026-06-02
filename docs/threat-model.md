@@ -100,8 +100,8 @@ Authoritative checks are:
 
 ## Residual Risks
 
-- Hosted `main` branch protection and private vulnerability reporting are currently failing live P0 checks.
-- Owner-auth-only GitHub alert settings are unverified until `GH_TOKEN` or `GITHUB_TOKEN` with security/settings read access is used.
+- Hosted `main` branch protection and private vulnerability reporting are currently verified by authenticated owner audit, but they remain drift-prone hosted settings and must be rechecked before release-trust claims.
+- Authenticated hosted audit now verifies branch protection, secret scanning, push protection, private vulnerability reporting, and CodeQL alert visibility. Dependabot alert visibility still requires owner credentials that can read Dependabot alerts.
 - Release attestation creation is present, but attestation verification evidence is not automated or proven.
 - Manual Anki import, mobile, screen-reader, listening, and visual media QA cannot be replaced by automated tests.
 - Source-evidence confidence and source-use posture remain separate from generated card correctness.

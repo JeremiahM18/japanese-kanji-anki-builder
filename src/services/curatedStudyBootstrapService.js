@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 
+const { writeFileAtomicSync } = require("../utils/fs");
 const {
     isStarterDerivedEntry,
     mergeCuratedStudyData,
@@ -19,6 +20,23 @@ function readJsonObject(filePath) {
     return parsed;
 }
 
+function readJsonObjectIfExists(filePath) {
+    try {
+        return {
+            exists: true,
+            value: readJsonObject(filePath),
+        };
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            return {
+                exists: false,
+                value: {},
+            };
+        }
+        throw error;
+    }
+}
+
 function bootstrapCuratedStudyData({
     targetPath,
     starterPath,
@@ -30,8 +48,9 @@ function bootstrapCuratedStudyData({
     const starterEntries = normalizeCuratedStudyData(
         resolvedStarterPaths.reduce((mergedEntries, entryPath) => mergeCuratedStudyData(mergedEntries, readJsonObject(entryPath)), {})
     );
-    const targetExists = fs.existsSync(targetPath);
-    const existingEntries = targetExists ? readJsonObject(targetPath) : {};
+    const existingTarget = readJsonObjectIfExists(targetPath);
+    const targetExists = existingTarget.exists;
+    const existingEntries = existingTarget.value;
     const nextEntries = refreshStarter
         ? normalizeCuratedStudyData(refreshStarterEntries(starterEntries, existingEntries))
         : merge
@@ -39,7 +58,7 @@ function bootstrapCuratedStudyData({
             : starterEntries;
 
     if (!targetExists || merge || refreshStarter) {
-        fs.writeFileSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
+        writeFileAtomicSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
     }
 
     return {
@@ -60,5 +79,6 @@ module.exports = {
     bootstrapCuratedStudyData,
     isStarterDerivedEntry,
     readJsonObject,
+    readJsonObjectIfExists,
     refreshStarterEntries,
 };

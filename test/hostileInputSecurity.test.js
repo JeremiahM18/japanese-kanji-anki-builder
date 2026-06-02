@@ -153,9 +153,10 @@ test("media and generated-output path guards reject traversal and absolute paths
         assert.throws(() => mediaManifestSchema.parse(manifest), /Invalid managed media asset relative path/);
 
         const safeOutPath = path.join(repoRoot, "out", "hostile-input", "report.json");
-        assert.equal(assertSafeGeneratedPath(safeOutPath), path.resolve(safeOutPath));
+        const allowedRoots = [path.join(repoRoot, "out")];
+        assert.equal(assertSafeGeneratedPath(safeOutPath, { allowedRoots }), path.resolve(safeOutPath));
         assert.throws(
-            () => assertSafeGeneratedPath(path.join(repoRoot, "package.json")),
+            () => assertSafeGeneratedPath(path.join(repoRoot, "package.json"), { allowedRoots }),
             /outside governed generated-output roots/
         );
         assert.throws(

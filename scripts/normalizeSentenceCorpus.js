@@ -1,8 +1,8 @@
-const fs = require("node:fs");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { normalizeSentenceCorpus } = require("../src/datasets/sentenceCorpus");
+const { readFileIfExistsSync, writeFileAtomicSync } = require("../src/utils/fs");
 
 function parseArgs(argv) {
     const options = {
@@ -27,8 +27,7 @@ function parseArgs(argv) {
     return options;
 }
 
-function readJsonArray(filePath) {
-    const text = fs.readFileSync(filePath, "utf-8");
+function parseJsonArray(text, filePath) {
     const parsed = JSON.parse(text);
 
     if (!Array.isArray(parsed)) {
@@ -58,7 +57,8 @@ function main() {
     const inputPath = options.input || config.sentenceCorpusPath;
     const outputPath = options.output || inputPath;
 
-    if (!fs.existsSync(inputPath)) {
+    const rawText = readFileIfExistsSync(inputPath, "utf-8");
+    if (rawText === null) {
         if (options.check) {
             console.log(JSON.stringify(buildMissingSummary(inputPath, outputPath, "check"), null, 2));
             return;
@@ -67,12 +67,10 @@ function main() {
         throw new Error(`Missing sentence corpus input at ${inputPath}`);
     }
 
-    const rawEntries = readJsonArray(inputPath);
+    const rawEntries = parseJsonArray(rawText, inputPath);
     const normalizedEntries = normalizeSentenceCorpus(rawEntries);
     const normalizedText = `${JSON.stringify(normalizedEntries, null, 2)}\n`;
-    const currentOutputText = fs.existsSync(outputPath)
-        ? fs.readFileSync(outputPath, "utf-8")
-        : null;
+    const currentOutputText = readFileIfExistsSync(outputPath, "utf-8");
 
     const summary = {
         inputPath,
@@ -95,7 +93,7 @@ function main() {
         return;
     }
 
-    fs.writeFileSync(outputPath, normalizedText, "utf-8");
+    writeFileAtomicSync(outputPath, normalizedText, "utf-8");
     console.log(JSON.stringify(summary, null, 2));
 }
 

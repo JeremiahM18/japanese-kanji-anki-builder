@@ -5,12 +5,14 @@ const os = require("node:os");
 const path = require("node:path");
 
 const {
+    buildKanjiAudioSourceFileName,
     buildWordAudioSourceFileName,
     buildVoicevoxSpeakerLabel,
     formatVoicevoxGenerationSummary,
     generateVoicevoxAudioForWordList,
     generateVoicevoxAudioForKanjiList,
     normalizeKanaReading,
+    resolveAudioSourceOutputPath,
     selectPreferredAudioReading,
     writeAudioSourceSidecar,
 } = require("../src/services/audioGenerationService");
@@ -127,6 +129,29 @@ test("buildWordAudioSourceFileName creates a stable host-word-reading stem", () 
         }),
         "時-時間-じかん.wav"
     );
+});
+
+test("audio source output paths are normalized and contained", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        assert.equal(buildKanjiAudioSourceFileName("日"), "日.wav");
+        assert.equal(buildKanjiAudioSourceFileName("../日"), ".._日.wav");
+        assert.equal(
+            resolveAudioSourceOutputPath(rootDir, "日.wav"),
+            path.join(rootDir, "日.wav")
+        );
+        assert.throws(
+            () => resolveAudioSourceOutputPath(rootDir, "../escape.wav"),
+            /outside audio source directory/
+        );
+        assert.throws(
+            () => buildKanjiAudioSourceFileName(" / "),
+            /empty after normalization/
+        );
+    } finally {
+        cleanupTempDir(rootDir);
+    }
 });
 
 test("writeAudioSourceSidecar stores provenance next to generated audio", () => {

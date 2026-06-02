@@ -11,6 +11,7 @@ const {
     hasHostedAttestationVerification,
     hasHostedDependencyReview,
     getLatestWorkflowRun,
+    listBranchProtectionPolicyGaps,
     parseArgs,
 } = require("../scripts/auditGithubRepositorySettings");
 
@@ -23,6 +24,48 @@ function contentEndpoint(text) {
         body: {
             encoding: "base64",
             content: Buffer.from(text, "utf-8").toString("base64"),
+        },
+    });
+}
+
+const branchProtectionPolicy = Object.freeze({
+    requiredSettings: {
+        requirePullRequestBeforeMerging: true,
+        requiredApprovingReviewCount: 1,
+        requireCodeOwnerReviews: true,
+        dismissStaleApprovals: true,
+        requireConversationResolution: true,
+        requireStatusChecksBeforeMerging: true,
+        requireBranchesUpToDateBeforeMerging: true,
+        requireLinearHistory: true,
+        doNotAllowBypassing: true,
+        allowForcePushes: false,
+        allowDeletions: false,
+    },
+    requiredStatusChecks: [
+        "Dependency Review",
+        "Release Gate Ubuntu Node 22",
+    ],
+});
+
+function protectedBranchEndpoint(overrides = {}) {
+    return endpoint({
+        body: {
+            required_status_checks: {
+                strict: true,
+                contexts: ["Dependency Review", "Release Gate Ubuntu Node 22"],
+            },
+            required_pull_request_reviews: {
+                dismiss_stale_reviews: true,
+                require_code_owner_reviews: true,
+                required_approving_review_count: 1,
+            },
+            required_conversation_resolution: { enabled: true },
+            required_linear_history: { enabled: true },
+            enforce_admins: { enabled: true },
+            allow_force_pushes: { enabled: false },
+            allow_deletions: { enabled: false },
+            ...overrides,
         },
     });
 }
@@ -97,6 +140,22 @@ test("hosted workflow content helpers detect dependency review and attestation p
     assert.equal(hasHostedAttestationVerification(releaseWorkflow), true);
 });
 
+test("listBranchProtectionPolicyGaps compares hosted branch protection to tracked policy", () => {
+    assert.deepEqual(listBranchProtectionPolicyGaps(protectedBranchEndpoint(), branchProtectionPolicy), []);
+    assert.deepEqual(
+        listBranchProtectionPolicyGaps(protectedBranchEndpoint({
+            required_status_checks: {
+                strict: false,
+                contexts: ["Dependency Review"],
+            },
+        }), branchProtectionPolicy),
+        [
+            "requireBranchesUpToDateBeforeMerging expected true but hosted value is false",
+            "missing required status check: Release Gate Ubuntu Node 22",
+        ]
+    );
+});
+
 test("evaluateGithubSettingsAudit fails closed on unprotected main and auth-only gaps", () => {
     const audit = evaluateGithubSettingsAudit({
         repo: "owner/repo",
@@ -157,16 +216,88 @@ test("evaluateGithubSettingsAudit fails closed on unprotected main and auth-only
     assert.match(formatGithubSettingsAudit(audit), /Branch protected: no/u);
 });
 
+test("evaluateGithubSettingsAudit fails closed on open hosted security alerts", () => {
+    const audit = evaluateGithubSettingsAudit({
+        repo: "owner/repo",
+        branch: "main",
+        authenticated: true,
+        checkedAt: "2026-06-02T00:00:00.000Z",
+        branchProtectionPolicy,
+        endpoints: {
+            repository: endpoint({
+                body: {
+                    private: false,
+                    default_branch: "main",
+                    security_and_analysis: {
+                        secret_scanning: { status: "enabled" },
+                        secret_scanning_push_protection: { status: "enabled" },
+                    },
+                },
+            }),
+            branch: endpoint({ body: { protected: true } }),
+            branchProtection: protectedBranchEndpoint(),
+            codeScanningAlerts: endpoint({ body: [{ number: 1 }, { number: 2 }] }),
+            secretScanningAlerts: endpoint({ body: [{ number: 3 }] }),
+            dependabotAlerts: endpoint({ body: [{ number: 4 }] }),
+            privateVulnerabilityReporting: endpoint({ body: { enabled: true } }),
+            actionsRuns: endpoint({ body: { workflow_runs: [] } }),
+            releaseWorkflowRuns: endpoint({ body: { workflow_runs: [{ conclusion: "success" }] } }),
+            ciWorkflow: endpoint({ body: { state: "active" } }),
+            codeqlWorkflow: endpoint({ body: { state: "active" } }),
+            releaseWorkflow: endpoint({ body: { state: "active" } }),
+            ciWorkflowContent: contentEndpoint([
+                "on:",
+                "  pull_request:",
+                "jobs:",
+                "  dependency_review:",
+                "    name: Dependency Review",
+                "    steps:",
+                "      - uses: actions/dependency-review-action@reviewedsha",
+                "        with:",
+                "          fail-on-severity: moderate",
+            ].join("\n")),
+            releaseWorkflowContent: contentEndpoint([
+                "jobs:",
+                "  release_bundle:",
+                "    steps:",
+                "      - name: Attest release bundle provenance",
+                "        uses: actions/attest@reviewedsha",
+                "      - name: Attest release bundle SBOM",
+                "        uses: actions/attest@reviewedsha",
+                "      - name: Verify release bundle attestation",
+                "        run: gh attestation verify release-artifacts.sha256",
+                "      - run: echo release-artifacts.sha256",
+            ].join("\n")),
+        },
+    });
+
+    assert.equal(audit.status, "fail");
+    assert.equal(audit.findings.some((finding) => finding.key === "code_scanning_open_alerts"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "secret_scanning_open_alerts"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "dependabot_open_alerts"), true);
+    assert.match(formatGithubSettingsAudit(audit), /Open CodeQL alerts: 2/u);
+});
+
 test("evaluateGithubSettingsAudit can pass when every hosted signal is clean", () => {
     const audit = evaluateGithubSettingsAudit({
         repo: "owner/repo",
         branch: "main",
         authenticated: true,
         checkedAt: "2026-06-02T00:00:00.000Z",
+        branchProtectionPolicy,
         endpoints: {
-            repository: endpoint({ body: { private: false, default_branch: "main" } }),
+            repository: endpoint({
+                body: {
+                    private: false,
+                    default_branch: "main",
+                    security_and_analysis: {
+                        secret_scanning: { status: "enabled" },
+                        secret_scanning_push_protection: { status: "enabled" },
+                    },
+                },
+            }),
             branch: endpoint({ body: { protected: true } }),
-            branchProtection: endpoint(),
+            branchProtection: protectedBranchEndpoint(),
             codeScanningAlerts: endpoint({ body: [] }),
             secretScanningAlerts: endpoint({ body: [] }),
             dependabotAlerts: endpoint({ body: [] }),
@@ -205,6 +336,9 @@ test("evaluateGithubSettingsAudit can pass when every hosted signal is clean", (
     assert.equal(audit.status, "pass");
     assert.deepEqual(audit.findings, []);
     assert.equal(audit.summary.openCodeScanningAlerts, 0);
+    assert.equal(audit.summary.branchProtectionMatchesPolicy, true);
+    assert.equal(audit.summary.secretScanningEnabled, true);
+    assert.equal(audit.summary.secretScanningPushProtectionEnabled, true);
 });
 
 test("getLatestWorkflowRun selects the named workflow from recent runs", () => {

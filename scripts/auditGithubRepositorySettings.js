@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 
+const fs = require("node:fs");
+const path = require("node:path");
+
 const DEFAULT_REPO = "JeremiahM18/japanese-kanji-anki-builder";
 const DEFAULT_BRANCH = "main";
+const DEFAULT_BRANCH_POLICY_PATH = path.join(".github", "branch-protection.main.json");
 
 function parseArgs(argv = []) {
     const options = {
@@ -43,6 +47,10 @@ function buildHeaders(env = process.env) {
         headers.Authorization = `Bearer ${token}`;
     }
     return headers;
+}
+
+function loadBranchProtectionPolicy({ cwd = process.cwd(), policyPath = DEFAULT_BRANCH_POLICY_PATH } = {}) {
+    return JSON.parse(fs.readFileSync(path.resolve(cwd, policyPath), "utf-8"));
 }
 
 function buildAuditEndpoints(repo, branch) {
@@ -91,6 +99,7 @@ async function buildGithubSettingsAudit({
     branch = DEFAULT_BRANCH,
     env = process.env,
     fetchImpl = fetch,
+    branchProtectionPolicy = loadBranchProtectionPolicy(),
 } = {}) {
     const headers = buildHeaders(env);
     const endpoints = buildAuditEndpoints(repo, branch);
@@ -104,6 +113,7 @@ async function buildGithubSettingsAudit({
         branch,
         authenticated: Boolean(headers.Authorization),
         checkedAt: new Date().toISOString(),
+        branchProtectionPolicy,
         endpoints: endpointResults,
     });
 }
@@ -162,18 +172,73 @@ function hasHostedAttestationVerification(releaseWorkflowText) {
     return Boolean(releaseWorkflowText && /\bgh\s+attestation\s+verify\b/iu.test(releaseWorkflowText));
 }
 
+function listBranchProtectionPolicyGaps(branchProtectionResult, policy) {
+    if (!branchProtectionResult?.ok || !policy?.requiredSettings) {
+        return [];
+    }
+
+    const body = branchProtectionResult.body || {};
+    const settings = policy.requiredSettings || {};
+    const expectedChecks = policy.requiredStatusChecks || [];
+    const actualChecks = body.required_status_checks?.contexts || [];
+    const expectedCheckSet = new Set(expectedChecks);
+    const actualCheckSet = new Set(actualChecks);
+    const gaps = [];
+
+    const expectations = [
+        ["requirePullRequestBeforeMerging", Boolean(body.required_pull_request_reviews)],
+        ["requiredApprovingReviewCount", body.required_pull_request_reviews?.required_approving_review_count],
+        ["requireCodeOwnerReviews", body.required_pull_request_reviews?.require_code_owner_reviews === true],
+        ["dismissStaleApprovals", body.required_pull_request_reviews?.dismiss_stale_reviews === true],
+        ["requireConversationResolution", body.required_conversation_resolution?.enabled === true],
+        ["requireStatusChecksBeforeMerging", Boolean(body.required_status_checks)],
+        ["requireBranchesUpToDateBeforeMerging", body.required_status_checks?.strict === true],
+        ["requireLinearHistory", body.required_linear_history?.enabled === true],
+        ["doNotAllowBypassing", body.enforce_admins?.enabled === true],
+        ["allowForcePushes", body.allow_force_pushes?.enabled === true],
+        ["allowDeletions", body.allow_deletions?.enabled === true],
+    ];
+
+    for (const [key, actual] of expectations) {
+        if (Object.hasOwn(settings, key) && actual !== settings[key]) {
+            gaps.push(`${key} expected ${settings[key]} but hosted value is ${actual}`);
+        }
+    }
+
+    for (const check of expectedChecks) {
+        if (!actualCheckSet.has(check)) {
+            gaps.push(`missing required status check: ${check}`);
+        }
+    }
+    for (const check of actualChecks) {
+        if (!expectedCheckSet.has(check)) {
+            gaps.push(`unexpected required status check: ${check}`);
+        }
+    }
+
+    return gaps;
+}
+
 function evaluateGithubSettingsAudit(audit) {
     const findings = [];
     const ciWorkflowText = decodeGitHubContent(audit.endpoints.ciWorkflowContent);
     const releaseWorkflowText = decodeGitHubContent(audit.endpoints.releaseWorkflowContent);
+    const branchProtectionPolicyGaps = listBranchProtectionPolicyGaps(
+        audit.endpoints.branchProtection,
+        audit.branchProtectionPolicy
+    );
+    const repositorySecurityAndAnalysis = audit.endpoints.repository?.body?.security_and_analysis || {};
     const summary = {
         repositoryPublic: audit.endpoints.repository?.body?.private === false,
         defaultBranch: audit.endpoints.repository?.body?.default_branch || null,
         branchProtected: audit.endpoints.branch?.body?.protected === true,
         branchProtectionReadable: audit.endpoints.branchProtection?.ok === true,
+        branchProtectionMatchesPolicy: branchProtectionPolicyGaps.length === 0,
         openCodeScanningAlerts: countAlerts(audit.endpoints.codeScanningAlerts),
         openSecretScanningAlerts: countAlerts(audit.endpoints.secretScanningAlerts),
         openDependabotAlerts: countAlerts(audit.endpoints.dependabotAlerts),
+        secretScanningEnabled: repositorySecurityAndAnalysis.secret_scanning?.status === "enabled",
+        secretScanningPushProtectionEnabled: repositorySecurityAndAnalysis.secret_scanning_push_protection?.status === "enabled",
         privateVulnerabilityReportingReadable: audit.endpoints.privateVulnerabilityReporting?.ok === true,
         privateVulnerabilityReportingEnabled: audit.endpoints.privateVulnerabilityReporting?.body?.enabled === true,
         ciWorkflowActive: audit.endpoints.ciWorkflow?.body?.state === "active",
@@ -203,6 +268,30 @@ function evaluateGithubSettingsAudit(audit) {
         });
     }
 
+    if (branchProtectionPolicyGaps.length > 0) {
+        findings.push({
+            severity: "high",
+            key: "branch_protection_policy_mismatch",
+            message: `Hosted branch protection does not match the tracked policy: ${branchProtectionPolicyGaps.join("; ")}.`,
+        });
+    }
+
+    if (!summary.secretScanningEnabled) {
+        findings.push({
+            severity: "high",
+            key: "secret_scanning_disabled",
+            message: "GitHub secret scanning is not enabled in the live repository settings.",
+        });
+    }
+
+    if (!summary.secretScanningPushProtectionEnabled) {
+        findings.push({
+            severity: "high",
+            key: "push_protection_disabled",
+            message: "GitHub secret scanning push protection is not enabled in the live repository settings.",
+        });
+    }
+
     for (const key of [
         "branchProtection",
         "codeScanningAlerts",
@@ -215,6 +304,21 @@ function evaluateGithubSettingsAudit(audit) {
                 severity: endpoint?.statusCode === 401 ? "high" : "medium",
                 key: `${key}_unverified`,
                 message: `${key} could not be fully verified from the API (status ${endpoint?.statusCode || "unknown"}).`,
+            });
+        }
+    }
+
+    for (const [summaryKey, findingKey, severity, label] of [
+        ["openCodeScanningAlerts", "code_scanning_open_alerts", "high", "Code scanning"],
+        ["openSecretScanningAlerts", "secret_scanning_open_alerts", "critical", "Secret scanning"],
+        ["openDependabotAlerts", "dependabot_open_alerts", "high", "Dependabot"],
+    ]) {
+        const count = summary[summaryKey];
+        if (Number.isInteger(count) && count > 0) {
+            findings.push({
+                severity,
+                key: findingKey,
+                message: `${label} has ${count} open alert${count === 1 ? "" : "s"} in the live GitHub repository.`,
             });
         }
     }
@@ -287,13 +391,19 @@ function formatGithubSettingsAudit(audit) {
         `Branch: ${audit.branch}`,
         `Authenticated API: ${audit.authenticated ? "yes" : "no"}`,
         `Branch protected: ${audit.summary.branchProtected ? "yes" : "no"}`,
+        `Branch protection matches policy: ${audit.summary.branchProtectionMatchesPolicy ? "yes" : "no"}`,
         `CI workflow active: ${audit.summary.ciWorkflowActive ? "yes" : "no"}`,
         `CodeQL workflow active: ${audit.summary.codeqlWorkflowActive ? "yes" : "no"}`,
         `Release workflow active: ${audit.summary.releaseWorkflowActive ? "yes" : "no"}`,
         `Dependency Review configured: ${audit.summary.dependencyReviewConfigured ? "yes" : "no"}`,
         `Release attestations created: ${audit.summary.releaseWorkflowCreatesAttestations ? "yes" : "no"}`,
         `Artifact attestation verification automated: ${audit.summary.artifactAttestationVerificationAutomated ? "yes" : "no"}`,
+        `Secret scanning enabled: ${audit.summary.secretScanningEnabled ? "yes" : "no"}`,
+        `Push protection enabled: ${audit.summary.secretScanningPushProtectionEnabled ? "yes" : "no"}`,
         `Private vulnerability reporting enabled: ${audit.summary.privateVulnerabilityReportingEnabled ? "yes" : "no"}`,
+        `Open CodeQL alerts: ${audit.summary.openCodeScanningAlerts ?? "unknown"}`,
+        `Open secret scanning alerts: ${audit.summary.openSecretScanningAlerts ?? "unknown"}`,
+        `Open Dependabot alerts: ${audit.summary.openDependabotAlerts ?? "unknown"}`,
         `Latest CI conclusion: ${audit.summary.latestCiConclusion || "unknown"}`,
         `Latest CodeQL conclusion: ${audit.summary.latestCodeqlConclusion || "unknown"}`,
         `Latest Release conclusion: ${audit.summary.latestReleaseConclusion || "unknown"}`,
@@ -342,6 +452,8 @@ module.exports = {
     hasHostedAttestationCreation,
     hasHostedAttestationVerification,
     hasHostedDependencyReview,
+    listBranchProtectionPolicyGaps,
+    loadBranchProtectionPolicy,
     parseArgs,
     readEndpoint,
 };

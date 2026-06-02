@@ -9,7 +9,7 @@ const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildKanjiDeckInference } = require("./exportService");
 const { normalizeTokenForFileName } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { ensureDir } = require("../utils/fs");
+const { ensureDir, isPathInside } = require("../utils/fs");
 const { isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 
 function normalizeKanaReading(value) {
@@ -80,6 +80,7 @@ function buildVoicevoxSpeakerLabel(speakers, speakerId) {
 
 function writeAudioSourceSidecar({
     outputPath,
+    audioSourceDir = path.dirname(outputPath),
     source,
     voice,
     locale = "ja-JP",
@@ -88,7 +89,10 @@ function writeAudioSourceSidecar({
     reading,
     notes = "",
 }) {
-    const sidecarPath = outputPath.replace(/\.[^.]+$/, ".json");
+    const sidecarPath = resolveAudioSourceOutputPath(
+        audioSourceDir,
+        `${path.basename(outputPath, path.extname(outputPath))}.json`
+    );
     const payload = {
         version: 1,
         source,
@@ -126,6 +130,23 @@ function buildWordAudioSourceFileName({ hostKanji, written, reading }) {
         normalizeTokenForFileName(reading),
     ].filter(Boolean);
     return `${parts.join("-")}.wav`;
+}
+
+function buildKanjiAudioSourceFileName(kanji) {
+    const token = normalizeTokenForFileName(kanji);
+    if (!token) {
+        throw new Error("Kanji audio filename is empty after normalization.");
+    }
+    return `${token}.wav`;
+}
+
+function resolveAudioSourceOutputPath(audioSourceDir, fileName) {
+    const rootDir = path.resolve(audioSourceDir);
+    const outputPath = path.resolve(rootDir, fileName);
+    if (!isPathInside(outputPath, rootDir)) {
+        throw new Error(`Refusing to write audio outside audio source directory: ${outputPath}`);
+    }
+    return outputPath;
 }
 
 async function generateVoicevoxAudioForKanjiList({
@@ -173,7 +194,7 @@ async function generateVoicevoxAudioForKanjiList({
     };
 
     await mapWithConcurrency(kanjiList, concurrency || config.exportConcurrency, async (kanji) => {
-        const outputPath = path.join(config.audioSourceDir, `${kanji}.wav`);
+        const outputPath = resolveAudioSourceOutputPath(config.audioSourceDir, buildKanjiAudioSourceFileName(kanji));
         if (!overwrite && fs.existsSync(outputPath)) {
             summary.skippedExisting += 1;
             summary.results.push({ kanji, status: "skipped", outputPath, reason: "existing-file" });
@@ -211,6 +232,7 @@ async function generateVoicevoxAudioForKanjiList({
             fs.writeFileSync(outputPath, audioBuffer);
             writeAudioSourceSidecar({
                 outputPath,
+                audioSourceDir: config.audioSourceDir,
                 source: sourceId,
                 voice: resolvedVoiceLabel,
                 locale,
@@ -279,7 +301,7 @@ async function generateVoicevoxAudioForWordList({
     };
 
     await mapWithConcurrency(words, concurrency || config.exportConcurrency, async (entry) => {
-        const outputPath = path.join(config.audioSourceDir, buildWordAudioSourceFileName(entry));
+        const outputPath = resolveAudioSourceOutputPath(config.audioSourceDir, buildWordAudioSourceFileName(entry));
         if (!overwrite && fs.existsSync(outputPath)) {
             summary.skippedExisting += 1;
             summary.results.push({ word: entry.written, reading: entry.reading, status: "skipped", outputPath, reason: "existing-file" });
@@ -299,6 +321,7 @@ async function generateVoicevoxAudioForWordList({
             fs.writeFileSync(outputPath, audioBuffer);
             writeAudioSourceSidecar({
                 outputPath,
+                audioSourceDir: config.audioSourceDir,
                 source: sourceId,
                 voice: resolvedVoiceLabel,
                 locale,
@@ -369,6 +392,7 @@ function formatVoicevoxGenerationSummary(summary, options = {}) {
 }
 
 module.exports = {
+    buildKanjiAudioSourceFileName,
     buildWordAudioSourceFileName,
     buildVoicevoxSpeakerLabel,
     cleanVoiceLabel,
@@ -379,6 +403,7 @@ module.exports = {
     isKanaOnly,
     katakanaToHiragana,
     normalizeKanaReading,
+    resolveAudioSourceOutputPath,
     selectPreferredAudioReading,
     writeAudioSourceSidecar,
 };

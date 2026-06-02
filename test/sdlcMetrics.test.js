@@ -17,9 +17,9 @@ test("SDLC metrics report validates current tracked security posture", () => {
     const report = buildSdlcMetricsReport({ cwd: repoRoot, asOfDate: "2026-06-02" });
 
     assert.equal(report.passed, true);
-    assert.equal(report.risk.total, 11);
-    assert.equal(report.risk.highCriticalOpenOrBlocked, 6);
-    assert.deepEqual(report.risk.externalBlockedRecords, ["SEC-P0-001", "SEC-P0-002", "SEC-P0-003"]);
+    assert.equal(report.risk.total, 12);
+    assert.equal(report.risk.highCriticalOpenOrBlocked, 5);
+    assert.deepEqual(report.risk.externalBlockedRecords, ["SEC-P0-003"]);
     assert.equal(report.risk.overdueReviews, 0);
     assert.equal(report.requirements.total, 14);
     assert.equal(report.requirements.planned, 0);
@@ -36,8 +36,8 @@ test("SDLC metrics report preserves blocker visibility in human-readable output"
 
     assert.match(text, /SDLC security metrics/);
     assert.match(text, /Status: pass/);
-    assert.match(text, /high\/critical open or blocked: 6 \(SEC-P0-001, SEC-P0-002, SEC-P0-003, SEC-P0-004, GOV-SRC-001, PROD-REL-001\)/);
-    assert.match(text, /external blocked: 3 \(SEC-P0-001, SEC-P0-002, SEC-P0-003\)/);
+    assert.match(text, /high\/critical open or blocked: 5 \(SEC-P0-003, SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001\)/);
+    assert.match(text, /external blocked: 1 \(SEC-P0-003\)/);
     assert.match(text, /planned: 0/);
     assert.match(text, /partially implemented: 1/);
     assert.match(text, /SDLC-MET-004: pass; requirements\.partialOrExternal=4; target <=4/);

@@ -87,7 +87,7 @@ Secret prevention has two layers. Enable GitHub secret scanning and push protect
 
 Static analysis runs through `.github/workflows/codeql.yml`. It scans JavaScript/TypeScript source and GitHub Actions workflow code with CodeQL extended security and quality queries. The only allowed workflow write permission is `security-events: write` in the CodeQL analysis job so findings can be uploaded to GitHub code scanning.
 
-Release provenance runs through GitHub artifact attestations in `.github/workflows/release.yml`. The release bundle job attests the uploaded release paths and attaches the generated CycloneDX SBOM as an SBOM attestation; consumers should verify those attestations with the GitHub CLI before trusting a downloaded release bundle.
+Release provenance runs through GitHub artifact attestations in `.github/workflows/release.yml`. The release bundle job attests the uploaded release paths, attaches the generated CycloneDX SBOM as an SBOM attestation, and verifies representative release bundle attestations with the GitHub CLI before upload. Consumers should still verify those attestations with the GitHub CLI before trusting a downloaded release bundle.
 
 External actions are pinned to full commit SHAs resolved from their reviewed major-version tags. To update a pin, verify the new tag target with `git ls-remote`, update `.github/workflows/*.yml`, and rerun `npm run supply-chain:audit`.
 

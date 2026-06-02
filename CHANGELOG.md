@@ -20,6 +20,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 - Verified and remediated hosted GitHub owner settings for `main`: branch protection now matches the tracked policy, secret scanning and push protection are enabled, and private vulnerability reporting is enabled; the live gate still fails on open CodeQL alerts, Dependabot alert visibility, and missing attestation verification.
 - Strengthened `security:github-settings` so it validates hosted branch protection against the tracked policy, fails on disabled secret scanning or push protection, and fails on nonzero open CodeQL, secret-scanning, or Dependabot alert counts.
+- Added tracked release-bundle attestation verification with `gh attestation verify`, signer-workflow, source-ref, and source-digest constraints before tagged release bundle upload.
 - Remediated live CodeQL alert patterns in tracked code by hardening audio output path containment, ruby parsing, tracked-file secret scanning, atomic file writes, documentation URL assertions, and duplicate regex character classes.
 - Added a live GitHub repository settings audit for hosted branch protection, security-alert visibility, private vulnerability reporting, Dependency Review, release attestation creation, and attestation-verification evidence.
 - Added formal DevSecOps P1 security operations docs: threat model, risk and exception register, incident response runbook, and recovery/rollback runbook.

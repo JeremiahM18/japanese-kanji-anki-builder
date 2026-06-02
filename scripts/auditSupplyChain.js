@@ -18,6 +18,10 @@ const ACTION_ALLOWLIST = Object.freeze({
         version: "v4",
         sha: "ea165f8d65b6e75b540449e92b4886f43607fa02",
     },
+    "actions/dependency-review-action": {
+        version: "v5.0.0",
+        sha: "a1d282b36b6f3519aa1f3fc636f609c47dddb294",
+    },
 });
 
 const LIFECYCLE_SCRIPT_ALLOWLIST = Object.freeze({

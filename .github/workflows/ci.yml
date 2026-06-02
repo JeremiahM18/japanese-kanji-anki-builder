@@ -15,6 +15,50 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  dependency_review:
+    name: Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Check out repository
+        # actions/checkout@v4.2.2 pinned from refs/tags/v4.2.2 on 2026-05-26.
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Run dependency review
+        # actions/dependency-review-action@v5.0.0 pinned from refs/tags/v5.0.0 on 2026-06-02.
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
+        with:
+          fail-on-severity: moderate
+
+  security_advisory:
+    name: Advisory Audit Ubuntu Node 22
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        # actions/checkout@v4.2.2 pinned from refs/tags/v4.2.2 on 2026-05-26.
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Set up Node.js
+        # actions/setup-node@v4 pinned from refs/tags/v4 on 2026-05-22.
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Audit supply-chain policy
+        run: npm run supply-chain:audit
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm advisory audit
+        run: npm run security:advisories
+
   verify:
     name: Verify Ubuntu Node ${{ matrix.node-version }}
     runs-on: ubuntu-latest

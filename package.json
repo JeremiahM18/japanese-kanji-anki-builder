@@ -14,6 +14,7 @@
     "test": "node scripts/runNodeTests.js",
     "typecheck": "tsc --noEmit -p jsconfig.json",
     "supply-chain:audit": "node scripts/auditSupplyChain.js",
+    "security:advisories": "npm audit --audit-level=moderate",
     "bench:export": "node scripts/benchmarkExport.js",
     "bench:obsidian-proof-etl": "node scripts/benchmarkObsidianProofEtl.js",
     "bench:obsidian-proof-etl:gate": "node scripts/benchmarkObsidianProofEtl.js --budget=default",

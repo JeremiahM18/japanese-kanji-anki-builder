@@ -146,6 +146,8 @@ test("CODEOWNERS covers critical repository governance paths", () => {
 test("branch protection baseline names the required GitHub checks", () => {
     const branchProtection = readRepoFile(path.join("docs", "branch-protection.md"));
     const requiredChecks = [
+        "Dependency Review",
+        "Advisory Audit Ubuntu Node 22",
         "Verify Ubuntu Node 18",
         "Verify Ubuntu Node 20",
         "Verify Ubuntu Node 22",
@@ -262,6 +264,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("Source-evidence imports dry-run `data:import:jlpt:source-input -- --source=<source-id>` before any `--write`"), true);
     assert.equal(template.includes("`release:gate` run when packaging, CI, or toolchain behavior changed"), true);
     assert.equal(template.includes("`supply-chain:audit` run when dependency manifests, npm scripts, workflows, or release artifact boundaries changed"), true);
+    assert.equal(template.includes("`security:advisories` run when dependency manifests or lockfiles changed"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });
 

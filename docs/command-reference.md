@@ -10,6 +10,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run lint` | Run ESLint |
 | `npm run typecheck` | Run the staged JSDoc typecheck gate |
 | `npm run supply-chain:audit` | Verify lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, workflow permissions, and release artifact boundaries |
+| `npm run security:advisories` | Run the internet-backed npm advisory audit gate at `moderate` severity or higher |
 | `npm run bench:export` | Measure export-service performance for local regression investigation |
 | `npm run bench:obsidian-proof-etl` | Measure tracked Obsidian proof ledger validation, compatibility-view generation, and SQLite mirror generation |
 | `npm run bench:obsidian-proof-etl:gate` | Manual local Obsidian proof ETL performance guardrail; not a CI gate unless explicitly wired |

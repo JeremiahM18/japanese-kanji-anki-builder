@@ -18,6 +18,8 @@ Enable these protections on `main`:
 
 Mark these checks as required on `main`:
 
+- `Dependency Review`
+- `Advisory Audit Ubuntu Node 22`
 - `Verify Ubuntu Node 18`
 - `Verify Ubuntu Node 20`
 - `Verify Ubuntu Node 22`

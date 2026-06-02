@@ -26,6 +26,14 @@ The command is deterministic and uses only repository files. It checks:
 
 Run `npm audit --json` separately when an internet-backed advisory check is needed. Advisory data changes over time, so it is not the deterministic repository policy gate.
 
+Run:
+
+```bash
+npm run security:advisories
+```
+
+This command is the internet-backed advisory gate. CI and tagged release workflows run it after `npm ci`, and the protected-branch baseline requires the advisory job before merge. Pull requests also run GitHub dependency review at `moderate` severity or higher so vulnerable package changes are rejected before they enter `main`.
+
 ## Dependency Boundary
 
 `package-lock.json` is the install source of truth. New dependencies should be added intentionally, reviewed as product/runtime or dev-only dependencies, and committed with the lockfile change.
@@ -64,6 +72,7 @@ Current reviewed action pins:
 | `actions/setup-node` | `v4` | `49933ea5288caeca8642d1e84afbd3f7d6820020` |
 | `actions/setup-python` | `v5` | `a26af69be951a213d495a4c3e4e4022e16d87065` |
 | `actions/upload-artifact` | `v4` | `ea165f8d65b6e75b540449e92b4886f43607fa02` |
+| `actions/dependency-review-action` | `v5.0.0` | `a1d282b36b6f3519aa1f3fc636f609c47dddb294` |
 
 ## Script Boundary
 

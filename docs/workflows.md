@@ -17,7 +17,7 @@ npm run deck:readiness
 
 - `doctor` checks datasets, local files, media folders, managed media, tooling, and next steps.
 - `voicevox:status`, `voicevox:start`, and `voicevox:stop` manage the local Docker container named `voicevox-nemo`.
-- `voicevox:start:fresh` recreates the container with `-p 127.0.0.1:50021:50121`, `no-new-privileges`, `cap-drop ALL`, `--restart no`, Docker `--init`, and bounded memory, CPU, and process counts when an old local container exists without the required governed shape.
+- `voicevox:start:fresh` recreates the container with `-p 127.0.0.1:50021:50121`, `no-new-privileges`, `cap-drop ALL`, only `SETUID`/`SETGID` restored for `gosu`, `--restart no`, Docker `--init`, and bounded memory, CPU, and process counts when an old local container exists without the required governed shape.
 - `doctor:voicevox` verifies the local VOICEVOX Nemo engine and pinned release speaker.
 - `deck:readiness` reports per-level deck readiness.
 

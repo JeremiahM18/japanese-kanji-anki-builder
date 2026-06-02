@@ -10,7 +10,7 @@ This project is a local deck-build tool, not a hosted public service. The main b
 
 - The Express server is a local development surface. It has no authentication layer and is not designed for internet or untrusted LAN exposure.
 - `SERVER_HOST` defaults to `127.0.0.1`. Set `SERVER_HOST=0.0.0.0` only for a deliberate, temporary, trusted-network workflow.
-- The governed VOICEVOX Docker helper should bind host `127.0.0.1:50021` to container port `50121` and run with explicit runtime hardening: `no-new-privileges`, `cap-drop ALL`, `--restart no`, Docker `--init`, and bounded memory, CPU, and process counts. Broad host-port publishing or missing hardening is treated as stale container shape.
+- The governed VOICEVOX Docker helper should bind host `127.0.0.1:50021` to container port `50121` and run with explicit runtime hardening: `no-new-privileges`, `cap-drop ALL` with only `SETUID` and `SETGID` restored for the image entrypoint's `gosu` user switch, `--restart no`, Docker `--init`, and bounded memory, CPU, and process counts. Broad host-port publishing or missing hardening is treated as stale container shape.
 - Files under ignored workspace directories such as `data/`, `downloads/`, and `out/` are local inputs or generated outputs. Treat externally sourced dictionaries, sentence corpora, media, and audio as untrusted until their import path, parser behavior, provenance, and generated surfaces have been reviewed.
 - Anki note fields render HTML. Exporters must escape text from external or semi-trusted sources and preserve only the known exporter-owned markup needed for ruby, pitch contours, audio, and stroke-order media.
 - Do not commit `.env`, local datasets, generated media, model bundles, credentials, or private source files.

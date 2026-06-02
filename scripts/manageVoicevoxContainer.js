@@ -9,6 +9,7 @@ const DEFAULT_CONTAINER_PORT = 50121;
 const DEFAULT_MEMORY_LIMIT = "4g";
 const DEFAULT_CPUS = 4;
 const DEFAULT_PIDS_LIMIT = 512;
+const REQUIRED_CAP_ADD = Object.freeze(["SETUID", "SETGID"]);
 
 function parseArgs(argv = []) {
     const args = [...argv];
@@ -168,12 +169,23 @@ function getPublishedHostBindings(container, containerPort = DEFAULT_CONTAINER_P
         ),
     ];
 
+    const seen = new Set();
     return bindings
         .map((binding) => ({
             hostIp: binding?.HostIp || "",
             hostPort: binding?.HostPort || "",
         }))
-        .filter((binding) => binding.hostPort.length > 0);
+        .filter((binding) => {
+            if (binding.hostPort.length === 0) {
+                return false;
+            }
+            const key = `${binding.hostIp}:${binding.hostPort}`;
+            if (seen.has(key)) {
+                return false;
+            }
+            seen.add(key);
+            return true;
+        });
 }
 
 function hasExpectedPortMapping(container, hostPort = DEFAULT_HOST_PORT, containerPort = DEFAULT_CONTAINER_PORT, hostIp = DEFAULT_HOST_IP) {
@@ -193,6 +205,7 @@ function getRuntimeHardeningIssues(container, {
     const issues = [];
     const securityOptions = new Set(hostConfig.SecurityOpt || []);
     const capDrop = new Set(hostConfig.CapDrop || []);
+    const capAdd = new Set((hostConfig.CapAdd || []).map(normalizeLinuxCapability));
     const expectedMemoryBytes = parseMemoryLimitBytes(memory);
     const expectedNanoCpus = Math.trunc(cpus * 1_000_000_000);
 
@@ -201,6 +214,11 @@ function getRuntimeHardeningIssues(container, {
     }
     if (!capDrop.has("ALL")) {
         issues.push("missing cap-drop ALL");
+    }
+    for (const requiredCapability of REQUIRED_CAP_ADD) {
+        if (!capAdd.has(requiredCapability)) {
+            issues.push(`missing cap-add ${requiredCapability}`);
+        }
     }
     const restartPolicyName = hostConfig.RestartPolicy?.Name || "";
     if (restartPolicyName !== "no") {
@@ -220,6 +238,10 @@ function getRuntimeHardeningIssues(container, {
     }
 
     return issues;
+}
+
+function normalizeLinuxCapability(value) {
+    return String(value || "").replace(/^CAP_/u, "").toUpperCase();
 }
 
 function hasExpectedRuntimeHardening(container, options = {}) {
@@ -350,6 +372,10 @@ function buildDockerRunArgs(options) {
         "no-new-privileges",
         "--cap-drop",
         "ALL",
+        "--cap-add",
+        "SETUID",
+        "--cap-add",
+        "SETGID",
         "--init",
         "--memory",
         options.memory,

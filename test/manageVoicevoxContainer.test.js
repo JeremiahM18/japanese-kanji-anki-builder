@@ -26,6 +26,7 @@ function containerFixture({ running = false, ports = null, portBindings = null, 
             PortBindings: portBindings,
             SecurityOpt: hardened ? ["no-new-privileges"] : [],
             CapDrop: hardened ? ["ALL"] : [],
+            CapAdd: hardened ? ["CAP_SETUID", "CAP_SETGID"] : [],
             RestartPolicy: { Name: hardened ? "no" : "always" },
             Init: hardened,
             Memory: hardened ? 4 * 1024 * 1024 * 1024 : 0,
@@ -87,6 +88,19 @@ test("hasExpectedPortMapping accepts stopped containers with preserved host port
     });
 });
 
+test("getPublishedHostBindings de-duplicates matching Docker inspect port sources", () => {
+    const container = containerFixture({
+        ports: {
+            "50121/tcp": [{ HostIp: "127.0.0.1", HostPort: "50021" }],
+        },
+        portBindings: {
+            "50121/tcp": [{ HostIp: "127.0.0.1", HostPort: "50021" }],
+        },
+    });
+
+    assert.deepEqual(getPublishedHostBindings(container, 50121), [{ hostIp: "127.0.0.1", hostPort: "50021" }]);
+});
+
 test("buildStartPlan refuses a stale container unless recreation is explicit", () => {
     const container = containerFixture({ running: false, ports: {} });
     assert.deepEqual(buildStartPlan(container), {
@@ -127,11 +141,11 @@ test("buildStartPlan refuses containers missing runtime hardening unless recreat
     assert.match(getRuntimeHardeningIssues(container).join("; "), /missing no-new-privileges/);
     assert.deepEqual(buildStartPlan(container), {
         action: "needs_recreate",
-        reason: "container exists without required runtime hardening (missing no-new-privileges; missing cap-drop ALL; unexpected restart policy always; missing Docker init process; memory limit is 0, expected 4294967296; CPU limit is 0, expected 4000000000; pids limit is 0, expected 512)",
+        reason: "container exists without required runtime hardening (missing no-new-privileges; missing cap-drop ALL; missing cap-add SETUID; missing cap-add SETGID; unexpected restart policy always; missing Docker init process; memory limit is 0, expected 4294967296; CPU limit is 0, expected 4000000000; pids limit is 0, expected 512)",
     });
     assert.deepEqual(buildStartPlan(container, { recreate: true }), {
         action: "recreate",
-        reason: "container exists without required runtime hardening (missing no-new-privileges; missing cap-drop ALL; unexpected restart policy always; missing Docker init process; memory limit is 0, expected 4294967296; CPU limit is 0, expected 4000000000; pids limit is 0, expected 512)",
+        reason: "container exists without required runtime hardening (missing no-new-privileges; missing cap-drop ALL; missing cap-add SETUID; missing cap-add SETGID; unexpected restart policy always; missing Docker init process; memory limit is 0, expected 4294967296; CPU limit is 0, expected 4000000000; pids limit is 0, expected 512)",
     });
 });
 
@@ -168,6 +182,10 @@ test("buildDockerRunArgs creates a hardened localhost-only container", () => {
             "no-new-privileges",
             "--cap-drop",
             "ALL",
+            "--cap-add",
+            "SETUID",
+            "--cap-add",
+            "SETGID",
             "--init",
             "--memory",
             "4g",

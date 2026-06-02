@@ -45,6 +45,9 @@ jobs:
       - name: Audit tracked files for secrets
         run: npm run security:secrets
 
+      - name: Validate CycloneDX SBOM generation
+        run: npm run security:sbom
+
       - name: Install dependencies
         run: npm ci
 
@@ -99,6 +102,9 @@ jobs:
       - name: Audit tracked files for secrets
         run: npm run security:secrets
 
+      - name: Validate CycloneDX SBOM generation
+        run: npm run security:sbom
+
       - name: Install dependencies
         run: npm ci
 
@@ -111,9 +117,12 @@ jobs:
       - name: Run release gate
         run: npm run release:gate -- --root-dir=.release-gate --keep-temp-dir --require-apkg-tools
 
+      - name: Generate CycloneDX SBOM
+        run: npm run security:sbom:write
+
       - name: Generate artifact checksums
         run: |
-          find .release-smoke/out .release-gate/out -type f -print0 \
+          find .release-smoke/out .release-gate/out out/security/sbom.cdx.json -type f -print0 \
             | sort -z \
             | xargs -0 sha256sum > release-artifacts.sha256
 
@@ -131,5 +140,6 @@ jobs:
             docs/branch-protection.md
             docs/release-process.md
             docs/release-qa-checklist.md
+            out/security/sbom.cdx.json
             release-artifacts.sha256
           if-no-files-found: error

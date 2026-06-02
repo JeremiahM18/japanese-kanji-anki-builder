@@ -54,7 +54,7 @@ Treat ignored workspace inputs under `data/`, `downloads/`, and `out/` as local,
 
 See [SECURITY.md](SECURITY.md) for the disclosure policy and threat model. See [docs/supply-chain-security.md](docs/supply-chain-security.md) for dependency, workflow, script, and release-artifact trust boundaries.
 
-Security CI includes dependency review, npm advisory auditing, tracked secret scanning, branch-protection policy checks, and pinned CodeQL analysis for JavaScript/TypeScript plus GitHub Actions workflow code.
+Security CI includes dependency review, npm advisory auditing, tracked secret scanning, lockfile-derived CycloneDX SBOM validation, branch-protection policy checks, and pinned CodeQL analysis for JavaScript/TypeScript plus GitHub Actions workflow code.
 
 ## Review Tiers
 

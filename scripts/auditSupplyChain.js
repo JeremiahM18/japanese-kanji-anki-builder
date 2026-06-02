@@ -54,6 +54,7 @@ const REQUIRED_RELEASE_BUNDLE_PATHS = Object.freeze([
     "docs/branch-protection.md",
     "docs/release-process.md",
     "docs/release-qa-checklist.md",
+    "out/security/sbom.cdx.json",
     "release-artifacts.sha256",
 ]);
 
@@ -377,9 +378,9 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
         "release_bundle must depend on release_verify before publishing bundle artifacts."
     );
     assertCondition(
-        releaseWorkflowText.includes("find .release-smoke/out .release-gate/out -type f -print0"),
+        releaseWorkflowText.includes("find .release-smoke/out .release-gate/out out/security/sbom.cdx.json -type f -print0"),
         errors,
-        "release workflow must checksum only the deterministic smoke and release-gate output trees."
+        "release workflow must checksum only the deterministic smoke, release-gate, and SBOM output paths."
     );
     assertCondition(
         releaseWorkflowText.includes("sort -z"),

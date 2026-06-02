@@ -23,6 +23,7 @@ npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection
 npm run security:secrets
+npm run security:sbom
 npm run perf:memory:matrix
 npm run data:audit:jlpt
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25

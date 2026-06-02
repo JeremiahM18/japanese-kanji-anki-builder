@@ -13,6 +13,8 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run security:advisories` | Run the internet-backed npm advisory audit gate at `moderate` severity or higher |
 | `npm run security:branch-protection` | Verify tracked branch-protection policy, documentation, and CI required-check names stay aligned |
 | `npm run security:secrets` | Scan tracked files for high-confidence token and private-key patterns |
+| `npm run security:sbom` | Validate deterministic CycloneDX SBOM generation from `package-lock.json` without writing an artifact |
+| `npm run security:sbom:write` | Write the release CycloneDX SBOM to `out/security/sbom.cdx.json` |
 | `npm run bench:export` | Measure export-service performance for local regression investigation |
 | `npm run bench:obsidian-proof-etl` | Measure tracked Obsidian proof ledger validation, compatibility-view generation, and SQLite mirror generation |
 | `npm run bench:obsidian-proof-etl:gate` | Manual local Obsidian proof ETL performance guardrail; not a CI gate unless explicitly wired |

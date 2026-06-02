@@ -34,6 +34,14 @@ npm run security:advisories
 
 This command is the internet-backed advisory gate. CI and tagged release workflows run it after `npm ci`, and the protected-branch baseline requires the advisory job before merge. Pull requests also run GitHub dependency review at `moderate` severity or higher so vulnerable package changes are rejected before they enter `main`.
 
+Run:
+
+```bash
+npm run security:sbom
+```
+
+This command builds a deterministic CycloneDX `1.6` SBOM model from `package-lock.json` and validates component count, npm package URLs, dependency graph references, and lockfile-derived hashes without writing an artifact. Tagged release bundles run `npm run security:sbom:write`, include `out/security/sbom.cdx.json`, and checksum that SBOM alongside smoke and release-gate outputs.
+
 ## Dependency Boundary
 
 `package-lock.json` is the install source of truth. New dependencies should be added intentionally, reviewed as product/runtime or dev-only dependencies, and committed with the lockfile change.
@@ -94,6 +102,7 @@ The release bundle may include only:
 
 - deterministic smoke artifacts from `.release-smoke/out`
 - release-gate verification artifacts from `.release-gate/out`
+- the generated CycloneDX SBOM at `out/security/sbom.cdx.json`
 - `CHANGELOG.md`
 - `NOTICE.md`
 - `docs/compatibility-matrix.md`

@@ -17,6 +17,8 @@
     "security:advisories": "npm audit --audit-level=moderate",
     "security:branch-protection": "node scripts/auditBranchProtection.js",
     "security:secrets": "node scripts/auditSecrets.js",
+    "security:sbom": "node scripts/generateCycloneDxSbom.js",
+    "security:sbom:write": "node scripts/generateCycloneDxSbom.js --out=out/security/sbom.cdx.json",
     "bench:export": "node scripts/benchmarkExport.js",
     "bench:obsidian-proof-etl": "node scripts/benchmarkObsidianProofEtl.js",
     "bench:obsidian-proof-etl:gate": "node scripts/benchmarkObsidianProofEtl.js --budget=default",

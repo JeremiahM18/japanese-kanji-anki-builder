@@ -15,6 +15,7 @@ This project is a local deck-build tool, not a hosted public service. The main b
 - Anki note fields render HTML. Exporters must escape text from external or semi-trusted sources and preserve only the known exporter-owned markup needed for ruby, pitch contours, audio, and stroke-order media.
 - Do not commit `.env`, local datasets, generated media, model bundles, credentials, or private source files.
 - Run `npm run security:secrets` before committing changes that add credentials-adjacent configuration, scripts, fixtures, docs, or workflow content. This tracked-file scanner catches high-confidence token and private-key patterns; it complements GitHub secret scanning and push protection, which should be enabled in repository settings.
+- Run `npm run security:sbom` before committing dependency, lockfile, release-bundle, or supply-chain workflow changes so the lockfile-derived CycloneDX SBOM remains valid. Tagged release bundles write the SBOM with `npm run security:sbom:write`.
 - Treat CodeQL alerts from the protected JavaScript/TypeScript and GitHub Actions analysis checks as release blockers until triaged, fixed, or explicitly accepted with documented rationale.
 
 ## Reporting A Vulnerability
@@ -44,6 +45,7 @@ git diff --check
 npm run lint
 npm run typecheck
 npm run security:secrets
+npm run security:sbom
 npm test
 ```
 

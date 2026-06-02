@@ -65,7 +65,7 @@ Missing external confirmations:
 
 Current artifact: [github-repository-settings-checklist.md](github-repository-settings-checklist.md).
 
-Current live finding from 2026-06-02: authenticated owner audit verifies that hosted `main` is protected and matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json), required status checks are enforced, secret scanning is enabled, push protection is enabled, private vulnerability reporting is enabled, Dependency Review is configured, and release attestation creation is present. The gate still fails because CodeQL has `19` open alerts, Dependabot alert visibility returns `403` with the current GitHub CLI OAuth scopes, and hosted workflow content does not prove artifact attestation verification after release creation.
+Current live finding from 2026-06-02: authenticated owner audit verifies that hosted `main` is protected and matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json), required status checks are enforced, secret scanning is enabled, push protection is enabled, private vulnerability reporting is enabled, Dependency Review is configured, and release attestation creation is present. The gate still fails because CodeQL has `19` open alerts, Dependabot alert visibility returns `403` with the current GitHub CLI OAuth scopes, and hosted workflow content does not yet prove artifact attestation verification after release creation. Tracked release workflow remediation now includes `gh attestation verify` with signer-workflow, source-ref, and source-digest constraints, but it still needs hosted merge/tag evidence.
 
 ### P1: Formal Threat Model
 
@@ -97,7 +97,7 @@ Release docs define gates. The recovery runbook now gives concrete response path
 
 Current artifact: [recovery-and-rollback.md](recovery-and-rollback.md).
 
-Remaining limitation: P0 still found no automated/proven hosted artifact-attestation verification evidence for current releases.
+Remaining limitation: P0 now has tracked workflow automation for artifact-attestation verification, but no hosted tag run has proven it yet.
 
 ### P2: Add Security Requirements Traceability
 

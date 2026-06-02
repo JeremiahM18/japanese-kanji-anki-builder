@@ -187,6 +187,20 @@ jobs:
             release-artifacts.sha256
           sbom-path: out/security/sbom.cdx.json
 
+      - name: Verify release bundle attestations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          signer_workflow="github.com/${{ github.repository }}/.github/workflows/release.yml"
+          for artifact in release-artifacts.sha256 out/security/sbom.cdx.json out/security/dependency-licenses.json; do
+            gh attestation verify "$artifact" \
+              --repo "${{ github.repository }}" \
+              --signer-workflow "$signer_workflow" \
+              --source-ref "${{ github.ref }}" \
+              --source-digest "${{ github.sha }}"
+          done
+
       - name: Upload tagged release bundle
         # actions/upload-artifact@v4 pinned from refs/tags/v4 on 2026-05-22.
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

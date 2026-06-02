@@ -57,6 +57,8 @@ test("release workflow is tag-driven and publishes release artifacts", () => {
     assert.equal(workflow.includes("npm run security:requirements"), true);
     assert.equal(workflow.includes("out/security/dependency-licenses.json"), true);
     assert.equal(workflow.includes("release-artifacts.sha256"), true);
+    assert.equal(workflow.includes("Verify release bundle attestations"), true);
+    assert.equal(workflow.includes("gh attestation verify"), true);
     assert.equal(workflow.includes("docs/release-process.md"), true);
 });
 

@@ -417,6 +417,15 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
         errors,
         "release workflow must bind the generated CycloneDX SBOM into the SBOM attestation."
     );
+    assertCondition(
+        releaseWorkflowText.includes("Verify release bundle attestations")
+            && releaseWorkflowText.includes("gh attestation verify")
+            && releaseWorkflowText.includes("--signer-workflow")
+            && releaseWorkflowText.includes("--source-ref")
+            && releaseWorkflowText.includes("--source-digest"),
+        errors,
+        "release workflow must verify release bundle attestations with signer workflow, source ref, and source digest constraints."
+    );
 
     for (const releasePath of REQUIRED_RELEASE_BUNDLE_PATHS) {
         assertCondition(

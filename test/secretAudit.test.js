@@ -27,7 +27,7 @@ test("secret audit detects high-confidence token and key patterns", () => {
         "normal content",
         joinToken(["ghp", "_", "a".repeat(36)]),
         joinToken(["AKIA", "A".repeat(16)]),
-        "-----BEGIN PRIVATE KEY-----",
+        joinToken(["-----BEGIN ", "PRIVATE KEY-----"]),
     ].join("\n");
 
     const findings = scanTextForSecrets({ relativePath: "fixture.txt", text });

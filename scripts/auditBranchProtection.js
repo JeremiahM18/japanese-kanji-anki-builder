@@ -3,7 +3,10 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const POLICY_PATH = path.join(".github", "branch-protection.main.json");
-const CI_WORKFLOW_PATH = path.join(".github", "workflows", "ci.yml");
+const CHECK_WORKFLOW_PATHS = Object.freeze([
+    path.join(".github", "workflows", "ci.yml"),
+    path.join(".github", "workflows", "codeql.yml"),
+]);
 
 const DOC_SETTING_PHRASES = Object.freeze({
     requirePullRequestBeforeMerging: "require a pull request before merging",
@@ -184,11 +187,11 @@ function buildBranchProtectionAuditReport({ cwd = process.cwd() } = {}) {
     const errors = [];
     const policy = readJson(cwd, POLICY_PATH);
     const branchDoc = readText(cwd, path.join("docs", "branch-protection.md"));
-    const workflowText = readText(cwd, CI_WORKFLOW_PATH);
+    const workflowTexts = CHECK_WORKFLOW_PATHS.map((workflowPath) => readText(cwd, workflowPath));
     const packageJson = readJson(cwd, "package.json");
     const requiredStatusChecks = policy.requiredStatusChecks || [];
     const documentedStatusChecks = extractRequiredStatusChecksFromDoc(branchDoc);
-    const ciCheckNames = extractCiCheckNames(workflowText);
+    const ciCheckNames = workflowTexts.flatMap((workflowText) => extractCiCheckNames(workflowText));
 
     assertCondition(policy.branch === "main", errors, `${POLICY_PATH} must target main.`);
     assertCondition(
@@ -199,7 +202,7 @@ function buildBranchProtectionAuditReport({ cwd = process.cwd() } = {}) {
 
     assertUnique(requiredStatusChecks, errors, `${POLICY_PATH} requiredStatusChecks`);
     assertUnique(documentedStatusChecks, errors, "docs/branch-protection.md required status checks");
-    assertUnique(ciCheckNames, errors, `${CI_WORKFLOW_PATH} job names`);
+    assertUnique(ciCheckNames, errors, ".github/workflows required-check job names");
 
     for (const [settingName, phrase] of Object.entries(DOC_SETTING_PHRASES)) {
         const expectedValue = policy.requiredSettings?.[settingName];
@@ -218,7 +221,7 @@ function buildBranchProtectionAuditReport({ cwd = process.cwd() } = {}) {
         assertCondition(
             ciCheckNames.includes(check),
             errors,
-            `${CI_WORKFLOW_PATH} does not define required status check job: ${check}`
+            `.github/workflows does not define required status check job: ${check}`
         );
     }
 

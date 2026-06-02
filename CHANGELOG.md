@@ -18,6 +18,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Security
 
+- Added pinned CodeQL code scanning for JavaScript/TypeScript and GitHub Actions workflow analysis, with exact required branch-protection checks and a scoped `security-events: write` exception for code-scanning uploads.
 - Added `security:secrets`, a tracked-file secret audit for high-confidence token and private-key patterns, and wired it into CI/release before dependency installation.
 - Added tracked branch-protection policy-as-code with `security:branch-protection`, covering required main-branch protections, required CI checks, docs alignment, and release/CI governance.
 - Added mandatory npm advisory and GitHub dependency-review gates: CI now runs a protected `Advisory Audit Ubuntu Node 22` job, pull requests run pinned `actions/dependency-review-action` at `moderate` severity or higher, and tagged release workflows run `security:advisories` before artifact generation.

@@ -22,6 +22,14 @@ const ACTION_ALLOWLIST = Object.freeze({
         version: "v5.0.0",
         sha: "a1d282b36b6f3519aa1f3fc636f609c47dddb294",
     },
+    "github/codeql-action/analyze": {
+        version: "v4.36.1",
+        sha: "87557b9c84dde89fdd9b10e88954ac2f4248e463",
+    },
+    "github/codeql-action/init": {
+        version: "v4.36.1",
+        sha: "87557b9c84dde89fdd9b10e88954ac2f4248e463",
+    },
 });
 
 const LIFECYCLE_SCRIPT_ALLOWLIST = Object.freeze({
@@ -32,6 +40,7 @@ const LIFECYCLE_SCRIPT_ALLOWLIST = Object.freeze({
 });
 
 const WORKFLOW_FILES = Object.freeze([
+    path.join(".github", "workflows", "codeql.yml"),
     path.join(".github", "workflows", "ci.yml"),
     path.join(".github", "workflows", "release.yml"),
 ]);
@@ -57,6 +66,10 @@ const FORBIDDEN_WORKFLOW_TOKENS = Object.freeze([
     "security-events: write",
     "write-all",
 ]);
+
+const WORKFLOW_PERMISSION_EXCEPTIONS = Object.freeze({
+    ".github/workflows/codeql.yml": Object.freeze(["security-events: write"]),
+});
 
 const FORBIDDEN_SCRIPT_SPEC_RE = /^(?:git\+|git:|github:|file:|link:|workspace:|http:|https:|npm:)/iu;
 const PINNED_SHA_RE = /^[a-f0-9]{40}$/u;
@@ -89,6 +102,14 @@ function assertCondition(condition, errors, message) {
     if (!condition) {
         errors.push(message);
     }
+}
+
+function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+}
+
+function countOccurrences(text, value) {
+    return (text.match(new RegExp(escapeRegExp(value), "gu")) || []).length;
 }
 
 function collectDependencySpecs(lockPackage) {
@@ -282,6 +303,7 @@ function auditWorkflowFile({ relativePath, text }) {
     const errors = [];
     const warnings = [];
     const uses = collectWorkflowUses(text);
+    const permissionExceptions = new Set(WORKFLOW_PERMISSION_EXCEPTIONS[relativePath] || []);
 
     assertCondition(
         /permissions:\s*\r?\n\s+contents:\s+read/u.test(text),
@@ -289,10 +311,27 @@ function auditWorkflowFile({ relativePath, text }) {
         `${relativePath} must keep top-level permissions limited to contents: read.`
     );
     for (const forbidden of FORBIDDEN_WORKFLOW_TOKENS) {
+        if (permissionExceptions.has(forbidden)) {
+            continue;
+        }
         assertCondition(
             !text.includes(forbidden),
             errors,
             `${relativePath} must not request broad workflow permission ${forbidden}.`
+        );
+    }
+    for (const permissionException of permissionExceptions) {
+        assertCondition(
+            countOccurrences(text, permissionException) === 1,
+            errors,
+            `${relativePath} may request ${permissionException} exactly once for its reviewed security workflow job.`
+        );
+    }
+    if (permissionExceptions.has("security-events: write")) {
+        assertCondition(
+            /^\s{4}permissions:\s*\r?\n\s{6}actions:\s+read\r?\n\s{6}contents:\s+read\r?\n\s{6}security-events:\s+write/mu.test(text),
+            errors,
+            `${relativePath} must scope security-events: write to the CodeQL job alongside read-only actions and contents permissions.`
         );
     }
     assertSupplyChainAuditBeforeEveryInstall(text, relativePath, errors);

@@ -66,6 +66,8 @@ Branch protection policy is tracked in `.github/branch-protection.main.json`. `n
 
 Secret prevention has two layers. Enable GitHub secret scanning and push protection in repository settings so secrets are blocked before they enter history. The tracked `npm run security:secrets` gate scans committed files for high-confidence token and private-key patterns and runs before install in CI and release workflows.
 
+Static analysis runs through `.github/workflows/codeql.yml`. It scans JavaScript/TypeScript source and GitHub Actions workflow code with CodeQL extended security and quality queries. The only allowed workflow write permission is `security-events: write` in the CodeQL analysis job so findings can be uploaded to GitHub code scanning.
+
 External actions are pinned to full commit SHAs resolved from their reviewed major-version tags. To update a pin, verify the new tag target with `git ls-remote`, update `.github/workflows/*.yml`, and rerun `npm run supply-chain:audit`.
 
 Current reviewed action pins:
@@ -77,6 +79,8 @@ Current reviewed action pins:
 | `actions/setup-python` | `v5` | `a26af69be951a213d495a4c3e4e4022e16d87065` |
 | `actions/upload-artifact` | `v4` | `ea165f8d65b6e75b540449e92b4886f43607fa02` |
 | `actions/dependency-review-action` | `v5.0.0` | `a1d282b36b6f3519aa1f3fc636f609c47dddb294` |
+| `github/codeql-action/init` | `v4.36.1` | `87557b9c84dde89fdd9b10e88954ac2f4248e463` |
+| `github/codeql-action/analyze` | `v4.36.1` | `87557b9c84dde89fdd9b10e88954ac2f4248e463` |
 
 ## Script Boundary
 

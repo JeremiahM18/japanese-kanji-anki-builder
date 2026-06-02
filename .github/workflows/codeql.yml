@@ -1,0 +1,49 @@
+name: CodeQL
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "24 9 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: CodeQL Analysis (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - javascript-typescript
+          - actions
+
+    steps:
+      - name: Check out repository
+        # actions/checkout@v4.2.2 pinned from refs/tags/v4.2.2 on 2026-05-26.
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Initialize CodeQL
+        # github/codeql-action@v4.36.1 pinned from refs/tags/v4 on 2026-06-02.
+        uses: github/codeql-action/init@87557b9c84dde89fdd9b10e88954ac2f4248e463
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+
+      - name: Perform CodeQL Analysis
+        # github/codeql-action@v4.36.1 pinned from refs/tags/v4 on 2026-06-02.
+        uses: github/codeql-action/analyze@87557b9c84dde89fdd9b10e88954ac2f4248e463

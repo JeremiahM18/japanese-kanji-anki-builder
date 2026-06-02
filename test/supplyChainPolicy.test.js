@@ -21,7 +21,8 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
         report.package.lifecycleScripts.map((entry) => entry.key).sort(),
         Object.keys(LIFECYCLE_SCRIPT_ALLOWLIST).sort()
     );
-    assert.equal(report.workflows.length, 2);
+    assert.equal(report.workflows.length, 3);
+    assert.equal(report.workflows.some((workflow) => workflow.relativePath === ".github/workflows/codeql.yml"), true);
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("release-artifacts.sha256"));
 });
 

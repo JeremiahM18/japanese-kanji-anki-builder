@@ -257,6 +257,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`security:advisories` run when dependency manifests or lockfiles changed"), true);
     assert.equal(template.includes("`security:branch-protection` run when CI job names, required checks, branch policy, or protected-branch docs changed"), true);
     assert.equal(template.includes("`security:secrets` run when configuration, scripts, fixtures, docs, or workflows could introduce credentials"), true);
+    assert.equal(template.includes("CodeQL is expected to pass when source code or GitHub Actions workflows changed"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });
 

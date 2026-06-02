@@ -35,7 +35,7 @@ Do not commit, paste, or log the token.
 
 ## 2026-06-02 Live Result
 
-Authenticated owner audit was run on 2026-06-02 after enabling branch protection and private vulnerability reporting. The hosted `main` branch now matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, and private vulnerability reporting is enabled. The gate still fails because live CodeQL has open alerts, Dependabot alert visibility returns `403`, and hosted release workflow content does not yet prove post-creation attestation verification. A tracked workflow remediation has been added locally and must reach hosted `main` before the hosted audit can verify it.
+Authenticated owner audit was run on 2026-06-02 after enabling branch protection and private vulnerability reporting. The hosted `main` branch now matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, and private vulnerability reporting is enabled. The gate still fails because live CodeQL has open alerts, Dependabot alert visibility returns `403`, and hosted release workflow content does not yet prove post-creation attestation verification. Tracked workflow and CodeQL-pattern remediations have been added locally and must reach hosted `main` before the hosted audit can verify them.
 
 | Setting | Live result | Status |
 | --- | --- | --- |
@@ -102,7 +102,7 @@ Release Gate Ubuntu Node 22
 
 Remaining:
 
-1. Remediate, dismiss with documented rationale, or otherwise close the `19` live CodeQL alerts; rerun hosted CodeQL and `npm run security:github-settings` until open CodeQL alerts are `0`.
+1. Merge the tracked CodeQL-pattern remediations, rerun hosted CodeQL, and keep `npm run security:github-settings` failing until open CodeQL alerts are `0`, or dismiss specific alerts only with documented rationale.
 2. Refresh owner-auth credentials or use a fine-grained token that can read Dependabot alerts, then rerun `npm run security:github-settings` until Dependabot alert state is verified.
 3. Merge the tracked release-workflow attestation verification step to hosted `main`, then rerun `npm run security:github-settings` and a tagged release workflow until attestation verification is proven in hosted evidence.
 

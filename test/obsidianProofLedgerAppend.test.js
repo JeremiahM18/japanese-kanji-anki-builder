@@ -165,6 +165,50 @@ test("append write appends canonical JSONL and runs reconciliation", () => {
     assert.match(fs.readFileSync(ledgerPath, "utf8"), /kanji-n3-obsidian-append-fixture-01/);
 });
 
+test("append write preserves JSONL boundaries when existing ledger lacks final newline", () => {
+    const rootDir = makeWorkspace();
+    const ledgerPath = path.join(rootDir, "templates", "obsidian_proof_ledger", "kanji_n3.jsonl");
+    fs.writeFileSync(ledgerPath, JSON.stringify(buildProofEvent()), "utf8");
+    const secondEvent = buildProofEvent({
+        proofId: "kanji-n3-obsidian-append-fixture-02",
+        target: {
+            deckKind: "kanji",
+            level: 3,
+            written: "幸",
+            reading: "しあわせ",
+            cardReviewed: "幸|しあわせ",
+        },
+        proof: {
+            ...buildProofEvent().proof,
+            cardReviewed: "幸|しあわせ",
+            sentenceQualityReview: {
+                example: "家族の幸せを願っています。",
+                reading: "かぞくのしあわせをねがっています。",
+                translation: "I wish for my family's happiness.",
+                naturalJapanese: true,
+                learnerUseful: true,
+                levelAppropriate: true,
+                supportOnly: true,
+                reviewerJudgment: "Fixture reviewer checked naturalness, usefulness, level fit, reading, and translation.",
+            },
+        },
+    });
+    const eventsPath = writeDraft(rootDir, [secondEvent]);
+
+    const report = runObsidianProofLedgerAppend({
+        cwd: rootDir,
+        eventsPath,
+        write: true,
+    });
+    const ledgerLines = fs.readFileSync(ledgerPath, "utf8").trimEnd().split("\n");
+
+    assert.equal(report.passed, true);
+    assert.equal(report.reconciliation.totals.canonicalLedgerProofs, 2);
+    assert.equal(ledgerLines.length, 2);
+    assert.match(ledgerLines[0], /kanji-n3-obsidian-append-fixture-01/);
+    assert.match(ledgerLines[1], /kanji-n3-obsidian-append-fixture-02/);
+});
+
 test("append rejects duplicate existing proof targets", () => {
     const rootDir = makeWorkspace();
     const eventsPath = writeDraft(rootDir, [buildProofEvent()]);

@@ -243,6 +243,97 @@ test("syncMediaForKanjiList skips acquisition when managed media is already comp
 });
 
 
+test("syncMediaForKanjiList does not skip acquisition for a different requested reading", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const mediaId = buildKanjiMediaId("日");
+        const baseDir = path.join(mediaRootDir, "kanji", "65", mediaId);
+        fs.mkdirSync(path.join(baseDir, "images"), { recursive: true });
+        fs.mkdirSync(path.join(baseDir, "animations"), { recursive: true });
+        fs.mkdirSync(path.join(baseDir, "audio"), { recursive: true });
+        fs.writeFileSync(path.join(baseDir, "images", mediaId + "-stroke-order.png"), "image");
+        fs.writeFileSync(path.join(baseDir, "animations", mediaId + "-stroke-order.gif"), "animation");
+        fs.writeFileSync(path.join(baseDir, "audio", mediaId + "-kanji-reading-日-にち.wav"), "audio");
+        fs.writeFileSync(path.join(baseDir, "manifest.json"), JSON.stringify({
+            kanji: "日",
+            version: 1,
+            updatedAt: "2026-01-01T00:00:00.000Z",
+            assets: {
+                strokeOrderImage: {
+                    kind: "image",
+                    path: "images/" + mediaId + "-stroke-order.png",
+                    mimeType: "image/png",
+                    source: "local-filesystem",
+                },
+                strokeOrderAnimation: {
+                    kind: "animation",
+                    path: "animations/" + mediaId + "-stroke-order.gif",
+                    mimeType: "image/gif",
+                    source: "remote-stroke-order-animation",
+                },
+                audio: [{
+                    kind: "audio",
+                    path: "audio/" + mediaId + "-kanji-reading-日-にち.wav",
+                    mimeType: "audio/wav",
+                    source: "voicevox-nemo",
+                    category: "kanji-reading",
+                    text: "日",
+                    reading: "にち",
+                    locale: "ja-JP",
+                }],
+            },
+        }, null, 2), "utf-8");
+
+        const existingComplete = await buildExistingCompleteSyncResult({
+            kanji: "日",
+            mediaRootDir,
+            audioMetadata: { reading: "ひ" },
+        });
+        assert.equal(existingComplete, null);
+
+        const calls = [];
+        const result = await syncMediaForKanjiList({
+            kanjiList: ["日"],
+            mediaRootDir,
+            strokeOrderService: {
+                async syncKanji(kanji) {
+                    calls.push("stroke:" + kanji);
+                    return {
+                        manifest: {
+                            assets: {
+                                strokeOrderImage: { source: "local-filesystem" },
+                                strokeOrderAnimation: { source: "remote-stroke-order-animation" },
+                            },
+                        },
+                    };
+                },
+            },
+            audioService: {
+                async syncKanji(kanji, metadata) {
+                    calls.push("audio:" + kanji + ":" + metadata.reading);
+                    return {
+                        manifest: {
+                            assets: {
+                                audio: [{ source: "voicevox-nemo", reading: metadata.reading }],
+                            },
+                        },
+                    };
+                },
+            },
+            audioMetadata: { reading: "ひ" },
+        });
+
+        assert.deepEqual(calls, ["stroke:日", "audio:日:ひ"]);
+        assert.equal(result.summary.audio.hits, 1);
+        assert.equal(result.summary.errors.length, 0);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+
 test("syncMediaForKanjiList skips audio work cleanly when no audio service is configured", async () => {
     const calls = [];
     const result = await syncMediaForKanjiList({

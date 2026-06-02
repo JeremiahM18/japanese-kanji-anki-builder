@@ -419,9 +419,10 @@ test("buildInferenceForKanji uses bare-kanji breakdown reading when display word
         curatedStudyData: {
             婆: {
                 displayWord: { written: "お婆さん", pron: "おばあさん" },
-                breakdownDisplayWord: { written: "婆", pron: "ばあ" },
-                englishMeaning: "old woman / grandmother",
-                notes: "お婆さん （おばあさん） - old woman / grandmother ／ 婆 （ばあ） - old woman",
+                breakdownDisplayWord: { written: "婆", pron: "ばば" },
+                englishMeaning: "old woman / elderly woman",
+                blockedMeanings: ["wet nurse"],
+                notes: "婆 （ばば） - old woman / elderly woman ／ お婆さん （おばあさん） - grandmother / elderly woman",
             },
         },
         inferenceEngine: {
@@ -432,9 +433,9 @@ test("buildInferenceForKanji uses bare-kanji breakdown reading when display word
                 return {
                     displayWord: { written: "お婆さん", pron: "おばあさん" },
                     bestWord: { written: "お婆さん", pron: "おばあさん" },
-                    englishMeaning: "old woman / grandmother",
-                    meaningJP: "お婆さん （おばあさん） ／ old woman / grandmother",
-                    notes: "お婆さん （おばあさん） - old woman / grandmother ／ 婆 （ばあ） - old woman",
+                    englishMeaning: "old woman / elderly woman",
+                    meaningJP: "お婆さん （おばあさん） ／ old woman / elderly woman",
+                    notes: "婆 （ばば） - old woman / elderly woman ／ お婆さん （おばあさん） - grandmother / elderly woman",
                     sentenceCandidates: [],
                 };
             },
@@ -459,10 +460,10 @@ test("buildInferenceForKanji uses bare-kanji breakdown reading when display word
                         strokeOrderImage: null,
                         strokeOrderAnimation: { path: "animations/5A46_婆-stroke-order.gif" },
                         audio: [{
-                            path: "audio/5A46_婆-kanji-reading-婆-ばあ.wav",
+                            path: "audio/5A46_婆-kanji-reading-婆-ばば.wav",
                             category: "kanji-reading",
                             text: "婆",
-                            reading: "ばあ",
+                            reading: "ばば",
                             locale: "ja-JP",
                         }],
                     },
@@ -473,8 +474,8 @@ test("buildInferenceForKanji uses bare-kanji breakdown reading when display word
     });
 
     assert.equal(inference.displayWordText, "婆");
-    assert.equal(inference.primaryReading, "ばあ");
-    assert.equal(inference.audioPath, "audio/5A46_婆-kanji-reading-婆-ばあ.wav");
+    assert.equal(inference.primaryReading, "ばば");
+    assert.equal(inference.audioPath, "audio/5A46_婆-kanji-reading-婆-ばば.wav");
 });
 
 test("buildInferenceForKanji lets explicit bare-kanji breakdown readings override bare display readings", async () => {

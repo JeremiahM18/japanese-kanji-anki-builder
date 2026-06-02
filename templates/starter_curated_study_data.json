@@ -15818,7 +15818,7 @@
     }
   },
   "奉": {
-    "englishMeaning": "offer / dedicate",
+    "englishMeaning": "offer / dedicate / serve",
     "displayWord": {
       "written": "奉仕",
       "pron": "ほうし"
@@ -15836,6 +15836,10 @@
       "奉納"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "observance",
+      "present"
+    ],
     "blockedSentencePhrases": [],
     "notes": "奉仕 （ほうし） - service / volunteering ／ 奉る （たてまつる） - to offer / present respectfully ／ 奉納 （ほうのう） - dedication / offering",
     "alternativeNotes": [],
@@ -15869,6 +15873,9 @@
       "奔る"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "bustle"
+    ],
     "blockedSentencePhrases": [],
     "notes": "奔走 （ほんそう） - rushing around / making every effort ／ 奔流 （ほんりゅう） - torrent ／ 奔る （はしる） - to race / run",
     "alternativeNotes": [],
@@ -15884,7 +15891,7 @@
     }
   },
   "奎": {
-    "englishMeaning": "star name / literary brilliance",
+    "englishMeaning": "star name / literary constellation",
     "displayWord": {
       "written": "奎星",
       "pron": "けいせい"
@@ -15902,8 +15909,13 @@
       "奎"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "god of literature",
+      "literary brilliance",
+      "star"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "奎星 （けいせい） - star of literature ／ 奎宿 （けいしゅく） - one of the lunar mansions ／ 奎 （けい） - literary brilliance / star name",
+    "notes": "奎星 （けいせい） - literary star ／ 奎宿 （けいしゅく） - one of the lunar mansions ／ 奎 （けい） - star name / literary constellation",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "古い文章では奎星が学問の象徴として語られます。",
@@ -16085,7 +16097,7 @@
     }
   },
   "奮": {
-    "englishMeaning": "stirred up / strive",
+    "englishMeaning": "rouse / exert oneself",
     "displayWord": {
       "written": "興奮",
       "pron": "こうふん"
@@ -16103,12 +16115,16 @@
       "奮う"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "flourish",
+      "strive"
+    ],
     "blockedSentencePhrases": [],
     "notes": "興奮 （こうふん） - excitement ／ 奮闘 （ふんとう） - hard struggle ／ 奮う （ふるう） - to muster / exert oneself",
     "alternativeNotes": [],
     "exampleSentence": {
-      "japanese": "試合の前で少し興奮していました。",
-      "reading": "しあいのまえですこしこうふんしていました。",
+      "japanese": "試合の前に少し興奮していました。",
+      "reading": "しあいのまえにすこしこうふんしていました。",
       "english": "I was a little excited before the match.",
       "source": "starter-curated",
       "tags": [
@@ -16223,8 +16239,8 @@
   "如": {
     "englishMeaning": "as if / like",
     "displayWord": {
-      "written": "如く",
-      "pron": "ごとく"
+      "written": "如し",
+      "pron": "ごとし"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -16234,13 +16250,17 @@
     ],
     "jlpt": 1,
     "preferredWords": [
+      "如し",
       "如く",
-      "如実",
-      "如何"
+      "如実"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "best",
+      "better"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "如く （ごとく） - like / as if ／ 如実 （にょじつ） - vivid / realistic ／ 如何 （いかが） - how / in what way",
+    "notes": "如し （ごとし） - like / as if ／ 如く （ごとく） - like / as if ／ 如実 （にょじつ） - vivid / realistic",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "彼の言葉は予言の如く現実になった。",
@@ -16272,6 +16292,9 @@
       "妃殿下"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "princess"
+    ],
     "blockedSentencePhrases": [],
     "notes": "王妃 （おうひ） - queen / consort ／ 皇妃 （こうひ） - imperial consort ／ 妃殿下 （ひでんか） - Her Highness the Princess",
     "alternativeNotes": [],
@@ -16305,6 +16328,9 @@
       "妄信"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "without authority"
+    ],
     "blockedSentencePhrases": [],
     "notes": "妄想 （もうそう） - delusion / fantasy ／ 妄言 （もうげん） - wild remark ／ 妄信 （もうしん） - blind faith",
     "alternativeNotes": [],
@@ -16371,6 +16397,11 @@
       "奇妙"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "miracle",
+      "mystery",
+      "queer"
+    ],
     "blockedSentencePhrases": [],
     "notes": "微妙 （びみょう） - subtle / delicate ／ 妙に （みょうに） - strangely / unusually ／ 奇妙 （きみょう） - strange",
     "alternativeNotes": [],
@@ -16404,6 +16435,9 @@
       "妥結"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "depravity"
+    ],
     "blockedSentencePhrases": [],
     "notes": "妥当 （だとう） - appropriate / valid ／ 妥協 （だきょう） - compromise ／ 妥結 （だけつ） - settlement / agreement",
     "alternativeNotes": [],
@@ -16648,7 +16682,7 @@
     }
   },
   "姫": {
-    "englishMeaning": "princess / young lady",
+    "englishMeaning": "princess / noble woman / female honorific",
     "displayWord": {
       "written": "姫",
       "pron": "ひめ"
@@ -16663,11 +16697,15 @@
     "preferredWords": [
       "姫",
       "王姫",
+      "歌姫",
       "お姫様"
+    ],
+    "blockedMeanings": [
+      "young lady"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "姫 （ひめ） - princess / young lady ／ 王姫 （おうき） - princess ／ お姫様 （おひめさま） - princess",
+    "notes": "姫 （ひめ） - princess / noble woman ／ 王姫 （おうき） - princess ／ 歌姫 （うたひめ） - diva / female singer",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "子どものころはお姫様の物語が好きでした。",
@@ -16877,14 +16915,14 @@
     }
   },
   "婆": {
-    "englishMeaning": "old woman / grandmother",
+    "englishMeaning": "old woman / elderly woman",
     "displayWord": {
       "written": "お婆さん",
       "pron": "おばあさん"
     },
     "breakdownDisplayWord": {
       "written": "婆",
-      "pron": "ばあ"
+      "pron": "ばば"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -16894,13 +16932,17 @@
     ],
     "jlpt": 1,
     "preferredWords": [
+      "婆",
       "お婆さん",
       "老婆",
       "婆さん"
     ],
+    "blockedMeanings": [
+      "wet nurse"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
-    "notes": "お婆さん （おばあさん） - grandmother / elderly woman ／ 老婆 （ろうば） - old woman ／ 婆さん （ばあさん） - old woman / grandma",
+    "notes": "婆 （ばば） - old woman / elderly woman ／ お婆さん （おばあさん） - grandmother / elderly woman ／ 老婆 （ろうば） - old woman",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "近所のお婆さんはいつも花の世話をしています。",
@@ -16981,7 +17023,7 @@
     }
   },
   "婿": {
-    "englishMeaning": "groom / son-in-law",
+    "englishMeaning": "son-in-law",
     "displayWord": {
       "written": "花婿",
       "pron": "はなむこ"

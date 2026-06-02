@@ -1,5 +1,5 @@
 const { buildJlptBuckets } = require("../datasets/sentenceCorpusCoverage");
-const { selectBestAudioAsset } = require("./audioService");
+const { findReusableManagedAudioAsset } = require("./audioService");
 const {
     managedAssetExists,
     readManifestIfExists,
@@ -93,7 +93,7 @@ async function buildExistingCompleteSyncResult({ kanji, mediaRootDir, audioMetad
 
     const strokeOrderImage = manifest.assets?.strokeOrderImage || null;
     const strokeOrderAnimation = manifest.assets?.strokeOrderAnimation || null;
-    const audioAsset = selectBestAudioAsset(manifest.assets?.audio || [], {
+    const audioAsset = findReusableManagedAudioAsset(manifest.assets?.audio || [], {
         category: "kanji-reading",
         text: kanji,
         reading: audioMetadata.reading,

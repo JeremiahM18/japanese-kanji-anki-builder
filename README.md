@@ -48,7 +48,7 @@ Native `.apkg` commands require the Python packaging toolchain. If packaging is 
 
 This repository is a local deck-build tool, not a hosted public service. The Express server has no authentication layer and is intended for local development only. It binds to `127.0.0.1` by default. Set `SERVER_HOST=0.0.0.0` only for a deliberate, temporary, trusted-network workflow.
 
-VOICEVOX should also stay local. The governed Docker helper expects host `127.0.0.1:50021` mapped to Nemo container port `50121`.
+VOICEVOX should also stay local. The governed Docker helper expects host `127.0.0.1:50021` mapped to Nemo container port `50121` and recreates stale containers that are missing the required runtime hardening: `no-new-privileges`, `cap-drop ALL`, `--restart no`, Docker `--init`, and explicit memory, CPU, and process-count limits.
 
 Treat ignored workspace inputs under `data/`, `downloads/`, and `out/` as local, review-required material. Do not import untrusted dictionaries, sentence corpora, media, or audio without checking the parser/import path and resulting card surfaces.
 

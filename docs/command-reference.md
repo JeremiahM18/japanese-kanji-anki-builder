@@ -38,9 +38,9 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm start` | Start the local Express server; equivalent to `npm run start` |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |
 | `npm run doctor:voicevox` | Verify local governed VOICEVOX setup |
-| `npm run voicevox:status` | Inspect the local VOICEVOX Docker container and required host-to-container port mapping |
-| `npm run voicevox:start` | Start the governed local VOICEVOX Docker container when it already has the required port mapping |
-| `npm run voicevox:start:fresh` | Recreate the local VOICEVOX Docker container with local host `127.0.0.1:50021` mapped to container `50121` when the old container shape is wrong |
+| `npm run voicevox:status` | Inspect the local VOICEVOX Docker container, required host-to-container port mapping, and Docker runtime hardening |
+| `npm run voicevox:start` | Start the governed local VOICEVOX Docker container when it already has the required port mapping and runtime hardening |
+| `npm run voicevox:start:fresh` | Recreate the local VOICEVOX Docker container with local host `127.0.0.1:50021` mapped to container `50121` plus required runtime hardening when the old container shape is wrong |
 | `npm run voicevox:stop` | Stop the local VOICEVOX Docker container after governed audio work |
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |

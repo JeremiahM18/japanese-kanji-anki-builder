@@ -16,6 +16,7 @@
     "supply-chain:audit": "node scripts/auditSupplyChain.js",
     "security:advisories": "npm audit --audit-level=moderate",
     "security:branch-protection": "node scripts/auditBranchProtection.js",
+    "security:github-settings": "node scripts/auditGithubRepositorySettings.js",
     "security:secrets": "node scripts/auditSecrets.js",
     "security:sbom": "node scripts/generateCycloneDxSbom.js",
     "security:sbom:write": "node scripts/generateCycloneDxSbom.js --out=out/security/sbom.cdx.json",

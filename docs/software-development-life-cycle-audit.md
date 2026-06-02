@@ -68,7 +68,9 @@ Missing external confirmations:
 - dependency review is active on pull requests
 - artifact attestation verification works on a real tagged release
 
-Recommended next artifact: `docs/github-repository-settings-checklist.md` with screenshots or date-stamped manual verification fields.
+Current artifact: [github-repository-settings-checklist.md](github-repository-settings-checklist.md).
+
+Current live finding from 2026-06-02: `main` is not protected in the hosted GitHub repository, private vulnerability reporting is disabled, and hosted workflow content does not prove artifact attestation verification after release creation. Hosted workflow content does prove pull-request Dependency Review and release attestation creation. Owner-auth-only settings returned `401 Unauthorized` without `GH_TOKEN`/`GITHUB_TOKEN`, so secret scanning, push protection, CodeQL alert state, Dependabot alert state, and detailed branch-protection settings remain unverified until an authenticated audit runs.
 
 ### P1: Add A Formal Threat Model
 

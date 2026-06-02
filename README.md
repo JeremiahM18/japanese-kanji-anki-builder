@@ -369,6 +369,7 @@ Full operating rules live in [docs/nlp-model-governance.md](docs/nlp-model-gover
 | Full command list | [docs/command-reference.md](docs/command-reference.md) |
 | Verification gates | [docs/verification.md](docs/verification.md) |
 | SDLC gap audit | [docs/software-development-life-cycle-audit.md](docs/software-development-life-cycle-audit.md) |
+| Hosted GitHub security settings | [docs/github-repository-settings-checklist.md](docs/github-repository-settings-checklist.md) |
 | Release bar | [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/release-process.md](docs/release-process.md), [docs/release-qa-checklist.md](docs/release-qa-checklist.md) |
 | Platinum and Obsidian operating contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
 | Card-quality review policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |

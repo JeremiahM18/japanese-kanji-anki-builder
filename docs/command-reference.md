@@ -12,6 +12,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run supply-chain:audit` | Verify lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, workflow permissions, and release artifact boundaries |
 | `npm run security:advisories` | Run the internet-backed npm advisory audit gate at `moderate` severity or higher |
 | `npm run security:branch-protection` | Verify tracked branch-protection policy, documentation, and CI required-check names stay aligned |
+| `npm run security:github-settings` | Live-check hosted GitHub repository security settings and fail on unprotected or unverified P0 settings |
 | `npm run security:secrets` | Scan tracked files for high-confidence token and private-key patterns |
 | `npm run security:sbom` | Validate deterministic CycloneDX SBOM generation from `package-lock.json` without writing an artifact |
 | `npm run security:sbom:write` | Write the release CycloneDX SBOM to `out/security/sbom.cdx.json` |

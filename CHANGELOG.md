@@ -18,6 +18,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Security
 
+- Added a live GitHub repository settings audit for hosted branch protection, security-alert visibility, private vulnerability reporting, Dependency Review, release attestation creation, and attestation-verification evidence.
 - Hardened the governed VOICEVOX Docker helper beyond localhost binding: managed containers now require `no-new-privileges`, `cap-drop ALL` with only `SETUID`/`SETGID` restored for the image entrypoint, `--restart no`, Docker `--init`, and explicit memory, CPU, and process-count limits, with stale containers requiring intentional recreation.
 - Added tagged release artifact attestations: release bundles now generate provenance and SBOM attestations with a job-scoped GitHub OIDC permission exception.
 - Added deterministic CycloneDX SBOM generation from `package-lock.json`; CI validates the SBOM model, and tagged release bundles write, checksum, and upload `out/security/sbom.cdx.json`.

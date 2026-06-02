@@ -62,6 +62,8 @@ permissions:
 
 Do not add `contents: write`, `id-token: write`, broad write permissions, or release-publishing permissions without a separate threat-model update.
 
+Branch protection policy is tracked in `.github/branch-protection.main.json`. `npm run security:branch-protection` verifies that the policy, docs, and CI job names stay aligned before install and release jobs continue.
+
 External actions are pinned to full commit SHAs resolved from their reviewed major-version tags. To update a pin, verify the new tag target with `git ls-remote`, update `.github/workflows/*.yml`, and rerun `npm run supply-chain:audit`.
 
 Current reviewed action pins:

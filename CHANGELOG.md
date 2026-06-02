@@ -18,6 +18,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Security
 
+- Added tracked branch-protection policy-as-code with `security:branch-protection`, covering required main-branch protections, required CI checks, docs alignment, and release/CI governance.
 - Added mandatory npm advisory and GitHub dependency-review gates: CI now runs a protected `Advisory Audit Ubuntu Node 22` job, pull requests run pinned `actions/dependency-review-action` at `moderate` severity or higher, and tagged release workflows run `security:advisories` before artifact generation.
 - Added a deterministic supply-chain audit gate for lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, minimal workflow permissions, and release-artifact boundaries; CI and tagged release jobs now run it before `npm ci`.
 - Hardened local network defaults: the Express dev server now binds to `127.0.0.1` unless `SERVER_HOST` explicitly opts into another host, and the governed VOICEVOX Docker helper now requires/recreates a local-only `127.0.0.1:50021:50121` port binding instead of accepting a broad host-port publish.

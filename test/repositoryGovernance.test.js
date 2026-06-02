@@ -145,20 +145,8 @@ test("CODEOWNERS covers critical repository governance paths", () => {
 
 test("branch protection baseline names the required GitHub checks", () => {
     const branchProtection = readRepoFile(path.join("docs", "branch-protection.md"));
-    const requiredChecks = [
-        "Dependency Review",
-        "Advisory Audit Ubuntu Node 22",
-        "Verify Ubuntu Node 18",
-        "Verify Ubuntu Node 20",
-        "Verify Ubuntu Node 22",
-        "Smoke ubuntu-latest Node 18",
-        "Smoke ubuntu-latest Node 22",
-        "Smoke windows-latest Node 18",
-        "Smoke windows-latest Node 22",
-        "Smoke macos-latest Node 18",
-        "Smoke macos-latest Node 22",
-        "Release Gate Ubuntu Node 22",
-    ];
+    const policy = JSON.parse(readRepoFile(path.join(".github", "branch-protection.main.json")));
+    const requiredChecks = policy.requiredStatusChecks;
 
     for (const check of requiredChecks) {
         assert.equal(branchProtection.includes(`- \`${check}\``), true, `Missing required check in branch protection doc: ${check}`);
@@ -166,6 +154,8 @@ test("branch protection baseline names the required GitHub checks", () => {
 
     assert.equal(branchProtection.includes("require review from code owners"), true);
     assert.equal(branchProtection.includes("require conversation resolution before merge"), true);
+    assert.equal(branchProtection.includes("require branches to be up to date before merging"), true);
+    assert.equal(branchProtection.includes("do not allow bypassing required protections"), true);
 });
 
 test("CI workflow uses tracked-input governance checks and documents local-data gates", () => {
@@ -265,6 +255,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`release:gate` run when packaging, CI, or toolchain behavior changed"), true);
     assert.equal(template.includes("`supply-chain:audit` run when dependency manifests, npm scripts, workflows, or release artifact boundaries changed"), true);
     assert.equal(template.includes("`security:advisories` run when dependency manifests or lockfiles changed"), true);
+    assert.equal(template.includes("`security:branch-protection` run when CI job names, required checks, branch policy, or protected-branch docs changed"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });
 

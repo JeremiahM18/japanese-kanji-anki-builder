@@ -2,6 +2,8 @@
 
 This document defines required `main` branch protection settings in GitHub.
 
+The tracked policy source is [../.github/branch-protection.main.json](../.github/branch-protection.main.json). Run `npm run security:branch-protection` after changing CI job names, required checks, protected-branch settings, or this document.
+
 ## Required repository settings
 
 Enable these protections on `main`:
@@ -10,7 +12,11 @@ Enable these protections on `main`:
 - require at least 1 approval
 - require review from code owners
 - dismiss stale approvals when new commits are pushed
+- require status checks before merging
+- require branches to be up to date before merging
 - require conversation resolution before merge
+- require linear history
+- do not allow bypassing required protections
 - block force pushes
 - block branch deletion
 

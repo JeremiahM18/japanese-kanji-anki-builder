@@ -1,0 +1,44 @@
+{
+  "branch": "main",
+  "policyVersion": "2026-06-02",
+  "requiredSettings": {
+    "requirePullRequestBeforeMerging": true,
+    "requiredApprovingReviewCount": 1,
+    "requireCodeOwnerReviews": true,
+    "dismissStaleApprovals": true,
+    "requireConversationResolution": true,
+    "requireStatusChecksBeforeMerging": true,
+    "requireBranchesUpToDateBeforeMerging": true,
+    "requireLinearHistory": true,
+    "doNotAllowBypassing": true,
+    "allowForcePushes": false,
+    "allowDeletions": false
+  },
+  "requiredStatusChecks": [
+    "Dependency Review",
+    "Advisory Audit Ubuntu Node 22",
+    "Verify Ubuntu Node 18",
+    "Verify Ubuntu Node 20",
+    "Verify Ubuntu Node 22",
+    "Smoke ubuntu-latest Node 18",
+    "Smoke ubuntu-latest Node 22",
+    "Smoke windows-latest Node 18",
+    "Smoke windows-latest Node 22",
+    "Smoke macos-latest Node 18",
+    "Smoke macos-latest Node 22",
+    "Release Gate Ubuntu Node 22"
+  ],
+  "protectedPathsNeedCodeOwnerReview": [
+    ".github/",
+    "src/config/",
+    "src/services/",
+    "scripts/",
+    "test/",
+    "README.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "package.json",
+    "package-lock.json",
+    "data/README.md"
+  ]
+}

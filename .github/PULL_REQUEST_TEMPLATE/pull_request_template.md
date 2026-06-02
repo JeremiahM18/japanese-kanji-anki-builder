@@ -33,6 +33,7 @@
 - [ ] Lint, typecheck, and tests pass locally
 - [ ] `supply-chain:audit` run when dependency manifests, npm scripts, workflows, or release artifact boundaries changed
 - [ ] `security:advisories` run when dependency manifests or lockfiles changed
+- [ ] `security:branch-protection` run when CI job names, required checks, branch policy, or protected-branch docs changed
 - [ ] CI is expected to pass
 - [ ] `data:audit:jlpt`, read-only `data:audit:jlpt:sources -- --governance-strict --limit=25`, and relevant strict `data:audit:jlpt:source-inputs -- --source=<source-id> --strict` run when JLPT taxonomy, source-evidence inputs, starter curation, golden review placement, or deck-membership logic changed
 - [ ] `nlp:governance-gate` run when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed

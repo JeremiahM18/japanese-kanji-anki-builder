@@ -214,11 +214,19 @@ function assertNoDuplicateExistingEvents({ cwd, ledgerDir, events }) {
 function appendJsonlEvents(filePath, events = []) {
     ensureDir(path.dirname(filePath));
     const serialized = events.map((event) => JSON.stringify(event)).join("\n");
-    const prefix = fs.existsSync(filePath) && fs.statSync(filePath).size > 0
-        && !fs.readFileSync(filePath, "utf8").endsWith("\n")
-        ? "\n"
-        : "";
-    fs.appendFileSync(filePath, `${prefix}${serialized}\n`, "utf8");
+    const fileDescriptor = fs.openSync(filePath, "a+");
+    try {
+        const { size } = fs.fstatSync(fileDescriptor);
+        let prefix = "";
+        if (size > 0) {
+            const lastByte = Buffer.alloc(1);
+            fs.readSync(fileDescriptor, lastByte, 0, 1, size - 1);
+            prefix = lastByte[0] === 0x0a ? "" : "\n";
+        }
+        fs.writeSync(fileDescriptor, `${prefix}${serialized}\n`, undefined, "utf8");
+    } finally {
+        fs.closeSync(fileDescriptor);
+    }
 }
 
 function summarizeBatches(events = []) {

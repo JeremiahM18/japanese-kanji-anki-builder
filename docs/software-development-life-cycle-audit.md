@@ -72,69 +72,37 @@ Current artifact: [github-repository-settings-checklist.md](github-repository-se
 
 Current live finding from 2026-06-02: `main` is not protected in the hosted GitHub repository, private vulnerability reporting is disabled, and hosted workflow content does not prove artifact attestation verification after release creation. Hosted workflow content does prove pull-request Dependency Review and release attestation creation. Owner-auth-only settings returned `401 Unauthorized` without `GH_TOKEN`/`GITHUB_TOKEN`, so secret scanning, push protection, CodeQL alert state, Dependabot alert state, and detailed branch-protection settings remain unverified until an authenticated audit runs.
 
-### P1: Add A Formal Threat Model
+### P1: Formal Threat Model
 
-[../SECURITY.md](../SECURITY.md) has a concise threat model, but there is no fuller model with assets, trust boundaries, data flows, abuse cases, mitigations, and accepted residual risks.
+[../SECURITY.md](../SECURITY.md) has a concise threat model. The fuller model now records assets, actors, trust boundaries, data flows, abuse cases, mitigations, residual risks, verification commands, and update triggers.
 
-Missing coverage:
+Current artifact: [threat-model.md](threat-model.md).
 
-- local Express server data flow
-- ignored local `data/`, `downloads/`, and `out/` trust boundary
-- Anki HTML rendering boundary
-- Docker and VOICEVOX runtime boundary
-- source-import and OCR input boundary
-- release artifact and attestation boundary
-- assistive NLP/model runtime boundary
+Remaining limitation: a written threat model does not prove manual QA, hosted GitHub settings, release attestation verification, or source truth. Those remain owned by their live gates and runbooks.
 
-Recommended next artifact: `docs/threat-model.md`.
+### P1: Risk And Exception Register
 
-### P1: Add A Risk And Exception Register
+Known limitations and expected fail-closed lanes now have a single register with owner, severity, decision, next review date, evidence, and required next action.
 
-The repo contains known limitations and expected fail-closed lanes, but there is no single risk register with owner, severity, decision, next review date, and evidence.
+Current artifact: [risk-register.md](risk-register.md).
 
-Missing coverage:
+Remaining limitation: open or blocked risks are not accepted release posture. The register must be updated as P0 hosted settings and P2/P3 automation change.
 
-- accepted risk records
-- temporary waivers or exceptions
-- source-access blockers
-- external setting verification gaps
-- single-source-family word posture
-- manual QA blockers
-- expected release-gate failures versus true regressions
+### P1: Incident Response And Vulnerability Remediation Runbook
 
-Recommended next artifact: `docs/risk-register.md`.
+[../SECURITY.md](../SECURITY.md) explains reporting and maintainer handling. The runbook now defines severity classification, intake, triage, containment, verification, communication, disclosure, and post-incident review.
 
-### P1: Add Incident Response And Vulnerability Remediation Runbooks
+Current artifact: [incident-response.md](incident-response.md).
 
-[../SECURITY.md](../SECURITY.md) explains reporting and maintainer handling, but it does not define the operational response path after a report lands.
+Remaining limitation: the runbook has not been exercised by a real incident or tabletop review.
 
-Missing coverage:
+### P1: Rollback, Recovery, And Artifact Verification Runbook
 
-- severity classification
-- triage SLA
-- containment steps
-- patch and release flow
-- advisory or disclosure decision
-- evidence capture
-- post-incident review
-- remediation verification
+Release docs define gates. The recovery runbook now gives concrete response paths for bad releases, bad deck artifacts, compromised dependencies, source-input mistakes, local runtime failures, generated-output recovery, and artifact checksum/attestation verification.
 
-Recommended next artifact: `docs/incident-response.md`.
+Current artifact: [recovery-and-rollback.md](recovery-and-rollback.md).
 
-### P1: Add Rollback, Recovery, And Artifact Verification Runbooks
-
-Release docs define gates, but there is no concrete recovery playbook for a bad release, bad deck artifact, compromised dependency, or broken local runtime.
-
-Missing coverage:
-
-- revoke or supersede a tagged release
-- verify downloaded artifacts against checksums and attestations
-- rebuild from a known commit
-- rollback local generated outputs
-- recover or rehydrate ignored local data from trusted sources
-- handle compromised or incorrect media/source inputs
-
-Recommended next artifact: `docs/recovery-and-rollback.md`.
+Remaining limitation: P0 still found no automated/proven hosted artifact-attestation verification evidence for current releases.
 
 ### P2: Add Security Requirements Traceability
 

@@ -370,6 +370,10 @@ Full operating rules live in [docs/nlp-model-governance.md](docs/nlp-model-gover
 | Verification gates | [docs/verification.md](docs/verification.md) |
 | SDLC gap audit | [docs/software-development-life-cycle-audit.md](docs/software-development-life-cycle-audit.md) |
 | Hosted GitHub security settings | [docs/github-repository-settings-checklist.md](docs/github-repository-settings-checklist.md) |
+| Threat model | [docs/threat-model.md](docs/threat-model.md) |
+| Risk and exception register | [docs/risk-register.md](docs/risk-register.md) |
+| Incident response | [docs/incident-response.md](docs/incident-response.md) |
+| Recovery and rollback | [docs/recovery-and-rollback.md](docs/recovery-and-rollback.md) |
 | Release bar | [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/release-process.md](docs/release-process.md), [docs/release-qa-checklist.md](docs/release-qa-checklist.md) |
 | Platinum and Obsidian operating contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
 | Card-quality review policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |

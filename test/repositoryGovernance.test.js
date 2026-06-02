@@ -348,6 +348,48 @@ test("documentation standard defines enterprise doc schemas and README routing",
     assert.doesNotMatch(readme, /staged consumer switch/);
 });
 
+test("security operations docs are routed and carry executable governance fields", () => {
+    const readme = readRepoFile("README.md");
+    const documentationMap = extractReadmeSection(readme, "Documentation Map");
+    const requiredDocs = [
+        {
+            path: "docs/threat-model.md",
+            link: "[docs/threat-model.md](docs/threat-model.md)",
+            phrases: ["## Purpose", "## Scope", "## Authority Boundary", "## Verification", "## Update Triggers"],
+        },
+        {
+            path: "docs/risk-register.md",
+            link: "[docs/risk-register.md](docs/risk-register.md)",
+            phrases: ["## Purpose", "## Scope", "## Authority Boundary", "## Register", "## Verification", "## Update Triggers"],
+        },
+        {
+            path: "docs/incident-response.md",
+            link: "[docs/incident-response.md](docs/incident-response.md)",
+            phrases: ["## Purpose", "## Scope", "## Authority Boundary", "## Severity Classification", "## Triage", "## Post-Incident Review"],
+        },
+        {
+            path: "docs/recovery-and-rollback.md",
+            link: "[docs/recovery-and-rollback.md](docs/recovery-and-rollback.md)",
+            phrases: ["## Purpose", "## Scope", "## Authority Boundary", "## Release Artifact Recovery", "## Recovery Exit Criteria"],
+        },
+    ];
+
+    for (const doc of requiredDocs) {
+        const text = readRepoFile(doc.path);
+        assert.match(documentationMap, new RegExp(doc.link.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&"), "u"));
+        for (const phrase of doc.phrases) {
+            assert.equal(text.includes(phrase), true, `${doc.path} missing ${phrase}`);
+        }
+        assert.equal(text.includes("git status --short"), true, `${doc.path} must name starting-state verification.`);
+    }
+
+    const sdlcAudit = readRepoFile(path.join("docs", "software-development-life-cycle-audit.md"));
+    assert.match(sdlcAudit, /\[threat-model\.md\]\(threat-model\.md\)/);
+    assert.match(sdlcAudit, /\[risk-register\.md\]\(risk-register\.md\)/);
+    assert.match(sdlcAudit, /\[incident-response\.md\]\(incident-response\.md\)/);
+    assert.match(sdlcAudit, /\[recovery-and-rollback\.md\]\(recovery-and-rollback\.md\)/);
+});
+
 test("README source-evidence lane table matches the governed source manifest", () => {
     const readme = readRepoFile("README.md");
     const evidence = JSON.parse(readRepoFile(path.join("templates", "jlpt_kanji_source_evidence.json")));

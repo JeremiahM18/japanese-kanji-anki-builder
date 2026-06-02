@@ -35,6 +35,7 @@
 - [ ] `security:advisories` run when dependency manifests or lockfiles changed
 - [ ] `security:branch-protection` run when CI job names, required checks, branch policy, or protected-branch docs changed
 - [ ] `security:requirements` run when security requirements, risk records, runbooks, release blockers, workflows, or verification commands changed
+- [ ] `security:sdlc-metrics` run when training checklist, SDLC metrics, risk register, security requirements, workflows, or security governance docs changed
 - [ ] `security:secrets` run when configuration, scripts, fixtures, docs, or workflows could introduce credentials
 - [ ] `security:sbom` run when dependency manifests, lockfiles, release-bundle paths, or supply-chain workflows changed
 - [ ] CodeQL is expected to pass when source code or GitHub Actions workflows changed

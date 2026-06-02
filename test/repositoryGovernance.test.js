@@ -164,6 +164,7 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
 
     assert.equal(workflow.includes("npm run data:audit:jlpt:sources -- --governance-strict --limit=25"), true);
     assert.equal(workflow.includes("npm run security:requirements"), true);
+    assert.equal(workflow.includes("npm run security:sdlc-metrics"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:validate"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4"), true);
@@ -184,7 +185,7 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.equal(workflow.includes("npm run deck:platinum:governance-gate"), false);
     assert.equal(workflow.includes("hashFiles('data/"), false);
     assert.match(workflow, /deck:platinum:governance-gate is intentionally local-data release QA/);
-    assert.match(readme, /Clean CI runs `security:requirements`, `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3,2`, `data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`, `data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set`/);
+    assert.match(readme, /Clean CI runs `security:requirements`, `security:sdlc-metrics`, `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3,2`, `data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`, `data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set`/);
@@ -258,6 +259,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`security:advisories` run when dependency manifests or lockfiles changed"), true);
     assert.equal(template.includes("`security:branch-protection` run when CI job names, required checks, branch policy, or protected-branch docs changed"), true);
     assert.equal(template.includes("`security:requirements` run when security requirements, risk records, runbooks, release blockers, workflows, or verification commands changed"), true);
+    assert.equal(template.includes("`security:sdlc-metrics` run when training checklist, SDLC metrics, risk register, security requirements, workflows, or security governance docs changed"), true);
     assert.equal(template.includes("`security:secrets` run when configuration, scripts, fixtures, docs, or workflows could introduce credentials"), true);
     assert.equal(template.includes("`security:sbom` run when dependency manifests, lockfiles, release-bundle paths, or supply-chain workflows changed"), true);
     assert.equal(template.includes("CodeQL is expected to pass when source code or GitHub Actions workflows changed"), true);
@@ -365,6 +367,11 @@ test("security operations docs are routed and carry executable governance fields
             phrases: ["## Purpose", "## Scope", "## Authority Boundary", "## Register", "## Verification", "## Update Triggers"],
         },
         {
+            path: "docs/security-training-checklist.md",
+            link: "[docs/security-training-checklist.md](docs/security-training-checklist.md)",
+            phrases: ["## Purpose", "## Scope", "## Authority Boundary", "## Required Training Areas", "## Reviewer Readiness Checklist", "## Verification"],
+        },
+        {
             path: "docs/incident-response.md",
             link: "[docs/incident-response.md](docs/incident-response.md)",
             phrases: ["## Purpose", "## Scope", "## Authority Boundary", "## Severity Classification", "## Triage", "## Post-Incident Review"],
@@ -388,6 +395,7 @@ test("security operations docs are routed and carry executable governance fields
     const sdlcAudit = readRepoFile(path.join("docs", "software-development-life-cycle-audit.md"));
     assert.match(sdlcAudit, /\[threat-model\.md\]\(threat-model\.md\)/);
     assert.match(sdlcAudit, /\[risk-register\.md\]\(risk-register\.md\)/);
+    assert.match(sdlcAudit, /\[security-training-checklist\.md\]\(security-training-checklist\.md\)/);
     assert.match(sdlcAudit, /\[incident-response\.md\]\(incident-response\.md\)/);
     assert.match(sdlcAudit, /\[recovery-and-rollback\.md\]\(recovery-and-rollback\.md\)/);
 });

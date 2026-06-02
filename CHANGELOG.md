@@ -21,6 +21,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Added a live GitHub repository settings audit for hosted branch protection, security-alert visibility, private vulnerability reporting, Dependency Review, release attestation creation, and attestation-verification evidence.
 - Added formal DevSecOps P1 security operations docs: threat model, risk and exception register, incident response runbook, and recovery/rollback runbook.
 - Added a tracked security requirements traceability matrix and `security:requirements` gate wired into CI and tagged release workflows.
+- Added a formal security training checklist plus tracked SDLC security metrics contract and `security:sdlc-metrics` gate wired into CI and tagged release workflows.
 - Added explicit hostile-input security regression tests for Anki HTML rendering, word candidate source parsing, managed media paths, generated-output cleanup guards, VOICEVOX Docker helper arguments, and supply-chain mutation abuse.
 - Hardened the governed VOICEVOX Docker helper beyond localhost binding: managed containers now require `no-new-privileges`, `cap-drop ALL` with only `SETUID`/`SETGID` restored for the image entrypoint, `--restart no`, Docker `--init`, and explicit memory, CPU, and process-count limits, with stale containers requiring intentional recreation.
 - Added tagged release artifact attestations: release bundles now generate provenance and SBOM attestations with a job-scoped GitHub OIDC permission exception.

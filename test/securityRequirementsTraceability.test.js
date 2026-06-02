@@ -30,9 +30,9 @@ test("security requirements traceability matrix validates tracked controls", () 
     assert.equal(report.counts.releaseBlockers, 10);
     assert.equal(report.counts.manualQaRequired, 12);
     assert.equal(report.counts.statuses["external-blocked"], 3);
-    assert.equal(report.counts.statuses.implemented, 8);
+    assert.equal(report.counts.statuses.implemented, 9);
     assert.equal(report.counts.statuses["partially-implemented"], 1);
-    assert.equal(report.counts.statuses.planned, 1);
+    assert.equal(report.counts.statuses.planned || 0, 0);
     assert.deepEqual(report.failures, []);
 });
 
@@ -46,7 +46,7 @@ test("security requirements traceability report preserves blocker visibility", (
     assert.match(text, /SEC-REQ-001: external-blocked/);
     assert.match(text, /SEC-REQ-007: partially-implemented/);
     assert.match(text, /SEC-REQ-012: implemented/);
-    assert.match(text, /SEC-REQ-013: planned/);
+    assert.match(text, /SEC-REQ-013: implemented/);
 });
 
 test("security requirements traceability catches duplicate IDs and missing links", () => {

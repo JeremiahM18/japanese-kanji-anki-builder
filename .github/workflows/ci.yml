@@ -59,6 +59,9 @@ jobs:
       - name: Audit security requirements traceability
         run: npm run security:requirements
 
+      - name: Audit SDLC security metrics
+        run: npm run security:sdlc-metrics
+
       - name: Audit tracked files for secrets
         run: npm run security:secrets
 

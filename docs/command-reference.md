@@ -14,6 +14,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run security:branch-protection` | Verify tracked branch-protection policy, documentation, and CI required-check names stay aligned |
 | `npm run security:github-settings` | Live-check hosted GitHub repository security settings and fail on unprotected or unverified P0 settings |
 | `npm run security:requirements` | Validate the tracked security requirements traceability matrix, including implementation files, evidence files, verification commands, manual QA posture, risk-record links, and release-blocker counts |
+| `npm run security:sdlc-metrics` | Validate the tracked SDLC security metrics contract, reviewer training checklist coverage, risk-register review posture, and requirements backlog visibility |
 | `npm run security:secrets` | Scan tracked files for high-confidence token and private-key patterns |
 | `npm run security:sbom` | Validate deterministic CycloneDX SBOM generation from `package-lock.json` without writing an artifact |
 | `npm run security:sbom:write` | Write the release CycloneDX SBOM to `out/security/sbom.cdx.json` |

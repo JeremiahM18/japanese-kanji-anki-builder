@@ -44,7 +44,7 @@ This audit uses:
 | Product requirements and exit criteria | [product-exit-criteria.md](product-exit-criteria.md), [release-qa-checklist.md](release-qa-checklist.md), and [platinum-obsidian-review-contract.md](platinum-obsidian-review-contract.md) define deck quality gates and manual QA boundaries. |
 | Branch policy as code | [../.github/branch-protection.main.json](../.github/branch-protection.main.json), [branch-protection.md](branch-protection.md), and `npm run security:branch-protection` align required checks and protected-path expectations. |
 | Code-owner review | [../.github/CODEOWNERS](../.github/CODEOWNERS) covers workflows, scripts, services, tests, security, dependency manifests, and core docs. |
-| CI verification | [../.github/workflows/ci.yml](../.github/workflows/ci.yml) runs lint, typecheck, tests, smoke checks, release gate, source-governance parity, proof-ledger parity, dependency review, advisory audit, secret audit, SBOM validation, and supply-chain audit. |
+| CI verification | [../.github/workflows/ci.yml](../.github/workflows/ci.yml) runs lint, typecheck, tests, smoke checks, release gate, source-governance parity, proof-ledger parity, dependency review, advisory audit, secret audit, SBOM validation, SDLC metrics, and supply-chain audit. |
 | Static analysis | [../.github/workflows/codeql.yml](../.github/workflows/codeql.yml) runs pinned CodeQL for JavaScript/TypeScript and GitHub Actions. |
 | Dependency and supply-chain controls | [supply-chain-security.md](supply-chain-security.md), `npm run supply-chain:audit`, `npm run security:advisories`, GitHub dependency review, action pinning, lifecycle-script allowlisting, and lockfile-derived SBOM validation are in place. |
 | Release provenance | [../.github/workflows/release.yml](../.github/workflows/release.yml) writes a CycloneDX SBOM, checksums release artifacts, and creates provenance and SBOM attestations for tagged release bundles. |
@@ -136,30 +136,26 @@ Remaining limitation: these are deterministic regression fixtures, not coverage-
 
 ### P2: Add A Formal Security Training And Reviewer Checklist
 
-[../CONTRIBUTING.md](../CONTRIBUTING.md) defines review expectations, but there is no role-based security training or reviewer readiness checklist.
+[../CONTRIBUTING.md](../CONTRIBUTING.md) defines review expectations. The formal checklist now defines security reviewer roles, renewal cadence, required topic IDs, readiness checks, private completion-evidence expectations, and update triggers.
 
-Recommended coverage:
+Current artifact: [security-training-checklist.md](security-training-checklist.md).
 
-- secure coding basics
-- source-use and copyright/provenance rules
-- Anki HTML and generated-output safety
-- supply-chain update procedure
-- incident-response basics
-- AI/NLP assistive-only boundaries
+Remaining limitation: the tracked checklist does not prove private training completion or personnel records. It defines the standard and evidence shape only.
 
 ### P2: Add SDLC Metrics
 
-There are many gates, but there is no small metrics surface showing SDLC health over time.
+SDLC security metrics now have a tracked contract and CI/release gate.
 
-Recommended metrics:
+Current artifacts:
 
-- time to remediate vulnerabilities
-- number of accepted risks and overdue reviews
-- CI gate pass/fail trend
-- release-gate blockers by category
-- manual QA completion by release scope
-- dependency update freshness
-- threat model review age
+- [../templates/sdlc_metrics.json](../templates/sdlc_metrics.json)
+- [../scripts/reportSdlcMetrics.js](../scripts/reportSdlcMetrics.js)
+
+Current command: `npm run security:sdlc-metrics`.
+
+Current metrics cover unresolved high/critical risk visibility, overdue risk reviews, planned security-requirements backlog, external/partial requirement blockers, training topic coverage, and checklist section coverage.
+
+Remaining limitation: these metrics expose current SDLC health and review cadence. They do not close hosted GitHub blockers, prove private training completion, prove release manual QA, or certify product release readiness.
 
 ### P3: Add License Compliance Automation
 
@@ -179,9 +175,7 @@ Recommended additions:
 4. Create `docs/incident-response.md`.
 5. Create `docs/recovery-and-rollback.md`.
 6. Add security requirements traceability data and a validation script.
-7. Add security training/reviewer checklist.
-8. Add SDLC metrics reporting.
-9. Add dependency license compliance automation.
+7. Add dependency license compliance automation.
 
 ## Verification Used For This Audit
 
@@ -194,6 +188,7 @@ rg --files -g "*.md" -g "*.yml" -g "*.yaml" -g "*.json" .github docs templates
 rg -n "threat|incident|response|postmortem|rollback|risk|requirements|privacy|training|owner|CODEOWNERS|release|attest|SBOM|fuzz|secret|dependency|branch protection|vulnerability|disclosure|architecture|design" README.md SECURITY.md docs .github package.json
 npm run voicevox:status
 npm run doctor:voicevox
+npm run security:sdlc-metrics
 ```
 
 The final VOICEVOX status was running, local-only, and runtime-hardened. `doctor:voicevox` reported the engine reachable and the pinned release voice ready.

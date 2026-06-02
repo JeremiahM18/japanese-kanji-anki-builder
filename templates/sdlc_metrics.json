@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "authority": {
+    "sourceOfTruth": "tracked-sdlc-security-metrics",
+    "generatedArtifact": false,
+    "boundary": [
+      "This contract validates SDLC security metric definitions, reviewer-readiness checklist routing, current risk-register posture, and security-requirements posture.",
+      "It exposes current open, blocked, planned, and partially implemented governance work; it does not close hosted GitHub blockers, prove private training completion, prove manual QA, or certify release readiness.",
+      "Metric thresholds are governance thresholds for visibility and review cadence, not permission to ignore release blockers."
+    ]
+  },
+  "trainingChecklist": {
+    "path": "docs/security-training-checklist.md",
+    "reviewCadenceDays": 90,
+    "requiredSections": [
+      "## Purpose",
+      "## Scope",
+      "## Authority Boundary",
+      "## Reviewer Roles",
+      "## Required Training Areas",
+      "## Reviewer Readiness Checklist",
+      "## Evidence And Cadence",
+      "## Verification",
+      "## Update Triggers"
+    ],
+    "requiredTopicIds": [
+      "secure-coding-basics",
+      "anki-html-and-generated-output",
+      "parser-and-hostile-inputs",
+      "supply-chain-updates",
+      "release-artifact-trust",
+      "source-use-provenance",
+      "card-certification-boundaries",
+      "incident-response",
+      "ai-nlp-boundaries"
+    ],
+    "requiredRoles": [
+      "Security reviewer",
+      "Source-governance reviewer",
+      "Product/release reviewer",
+      "NLP governance reviewer"
+    ]
+  },
+  "metrics": [
+    {
+      "id": "SDLC-MET-001",
+      "title": "High-or-critical unresolved risks stay visible",
+      "measure": "risk.highCriticalOpenOrBlocked",
+      "threshold": {
+        "max": 6
+      },
+      "evidenceFiles": [
+        "docs/risk-register.md"
+      ],
+      "reviewAction": "Review every High or Critical Open/Blocked external risk before release-trust claims."
+    },
+    {
+      "id": "SDLC-MET-002",
+      "title": "Risk reviews are not overdue",
+      "measure": "risk.overdueReviews",
+      "threshold": {
+        "max": 0
+      },
+      "evidenceFiles": [
+        "docs/risk-register.md"
+      ],
+      "reviewAction": "Update owner decision, next action, and next-review date before the gate can pass."
+    },
+    {
+      "id": "SDLC-MET-003",
+      "title": "Security requirements have no planned P2 backlog",
+      "measure": "requirements.planned",
+      "threshold": {
+        "max": 0
+      },
+      "evidenceFiles": [
+        "templates/security_requirements_traceability.json"
+      ],
+      "reviewAction": "Implement, re-scope, or explicitly defer any planned security requirement."
+    },
+    {
+      "id": "SDLC-MET-004",
+      "title": "Security requirements partial/external blockers stay visible",
+      "measure": "requirements.partialOrExternal",
+      "threshold": {
+        "max": 4
+      },
+      "evidenceFiles": [
+        "templates/security_requirements_traceability.json",
+        "docs/github-repository-settings-checklist.md"
+      ],
+      "reviewAction": "Keep hosted GitHub and release-attestation verification blockers visible until owner-authenticated evidence closes them."
+    },
+    {
+      "id": "SDLC-MET-005",
+      "title": "Training checklist required topics are present",
+      "measure": "training.missingRequiredTopics",
+      "threshold": {
+        "max": 0
+      },
+      "evidenceFiles": [
+        "docs/security-training-checklist.md"
+      ],
+      "reviewAction": "Restore required role/topic coverage before relying on the checklist."
+    },
+    {
+      "id": "SDLC-MET-006",
+      "title": "Training checklist required sections are present",
+      "measure": "training.missingRequiredSections",
+      "threshold": {
+        "max": 0
+      },
+      "evidenceFiles": [
+        "docs/security-training-checklist.md"
+      ],
+      "reviewAction": "Restore required sections before relying on the checklist."
+    }
+  ],
+  "verificationCommands": [
+    "npm run security:sdlc-metrics",
+    "npm run security:requirements",
+    "npm test"
+  ],
+  "updateTriggers": [
+    "Risk records are added, mitigated, accepted, blocked, reopened, or reach their next-review date.",
+    "Security requirements, release blockers, manual QA requirements, hosted settings, or attestation posture changes.",
+    "Reviewer roles, training topics, training cadence, incident-response expectations, or recovery expectations change.",
+    "CI, release, dependency, parser, generated-output, source-governance, NLP, or card-certification controls change."
+  ]
+}

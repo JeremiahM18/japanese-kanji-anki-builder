@@ -45,6 +45,8 @@ Security fixes should be verified from live repository evidence, kept focused, d
 git diff --check
 npm run lint
 npm run typecheck
+npm run security:requirements
+npm run security:sdlc-metrics
 npm run security:secrets
 npm run security:sbom
 npm test

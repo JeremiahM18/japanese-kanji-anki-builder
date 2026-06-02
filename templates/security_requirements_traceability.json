@@ -465,7 +465,7 @@
     {
       "id": "SEC-REQ-013",
       "priority": "P2",
-      "status": "planned",
+      "status": "implemented",
       "title": "Security reviewer training and SDLC metrics are tracked",
       "sourceMappings": [
         "NIST SSDF PO.2",
@@ -475,13 +475,22 @@
       "component": "training-and-sdlc-metrics",
       "requirement": "Security reviewer readiness, training expectations, and SDLC health metrics must be documented and validated so security posture can be reviewed over time.",
       "implementationFiles": [
+        "docs/security-training-checklist.md",
         "docs/software-development-life-cycle-audit.md",
-        "docs/risk-register.md"
+        "docs/risk-register.md",
+        "templates/sdlc_metrics.json",
+        "scripts/reportSdlcMetrics.js",
+        "src/datasets/sdlcMetrics.js",
+        "src/services/sdlcMetricsService.js"
       ],
       "evidenceFiles": [
+        "test/sdlcMetrics.test.js",
+        "test/securityRequirementsTraceability.test.js",
         "test/repositoryGovernance.test.js"
       ],
       "verificationCommands": [
+        "npm run security:sdlc-metrics",
+        "npm run security:requirements",
         "npm test"
       ],
       "manualQaRequired": true,

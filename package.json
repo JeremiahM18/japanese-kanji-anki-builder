@@ -18,6 +18,7 @@
     "security:branch-protection": "node scripts/auditBranchProtection.js",
     "security:github-settings": "node scripts/auditGithubRepositorySettings.js",
     "security:requirements": "node scripts/auditSecurityRequirementsTraceability.js",
+    "security:sdlc-metrics": "node scripts/reportSdlcMetrics.js",
     "security:secrets": "node scripts/auditSecrets.js",
     "security:sbom": "node scripts/generateCycloneDxSbom.js",
     "security:sbom:write": "node scripts/generateCycloneDxSbom.js --out=out/security/sbom.cdx.json",

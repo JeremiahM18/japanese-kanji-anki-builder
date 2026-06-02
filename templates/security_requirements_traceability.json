@@ -1,0 +1,482 @@
+{
+  "version": 1,
+  "authority": {
+    "sourceOfTruth": "tracked-security-requirements-traceability",
+    "generatedArtifact": false,
+    "boundary": [
+      "This matrix maps security requirements to source frameworks, repository controls, verification commands, manual review, risk records, and release-blocker status.",
+      "It validates traceability completeness; it does not prove hosted GitHub settings, manual QA, source truth, or release readiness by itself.",
+      "Open and external-blocked requirements remain visible even when the traceability audit passes structurally."
+    ]
+  },
+  "updateTriggers": [
+    "Security requirements, threat model, risk register, incident response, recovery, release, dependency, workflow, parser, Docker, NLP, source-governance, or generated-artifact controls change.",
+    "A risk-register record is opened, mitigated, accepted, or superseded.",
+    "A new security gate, manual QA requirement, or hosted setting becomes part of release posture."
+  ],
+  "requirements": [
+    {
+      "id": "SEC-REQ-001",
+      "priority": "P0",
+      "status": "external-blocked",
+      "title": "Hosted main branch protections are enforced",
+      "sourceMappings": [
+        "NIST SSDF PO.1",
+        "OWASP SAMM Governance",
+        "Microsoft SDL Release"
+      ],
+      "component": "hosted-github-governance",
+      "requirement": "The hosted main branch must enforce the tracked protected-branch policy, required checks, reviews, CODEOWNERS review, no force pushes, and no bypass posture before release trust depends on main.",
+      "implementationFiles": [
+        ".github/branch-protection.main.json",
+        "docs/branch-protection.md",
+        "docs/github-repository-settings-checklist.md",
+        "scripts/auditGithubRepositorySettings.js"
+      ],
+      "evidenceFiles": [
+        "test/branchProtectionPolicy.test.js",
+        "test/githubRepositorySettingsAudit.test.js"
+      ],
+      "verificationCommands": [
+        "npm run security:branch-protection",
+        "npm run security:github-settings"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Enable and inspect the live GitHub branch protection or ruleset settings with owner/admin access.",
+        "Rerun the hosted settings audit with an authenticated token and record the result in the checklist."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "SEC-P0-001",
+        "SEC-P0-003"
+      ]
+    },
+    {
+      "id": "SEC-REQ-002",
+      "priority": "P0",
+      "status": "external-blocked",
+      "title": "Confidential vulnerability intake is available",
+      "sourceMappings": [
+        "NIST SSDF RV.1",
+        "OWASP SAMM Operations",
+        "Microsoft SDL Response"
+      ],
+      "component": "vulnerability-disclosure",
+      "requirement": "The repository must provide a confidential vulnerability intake path and document fallback handling when private vulnerability reporting is unavailable.",
+      "implementationFiles": [
+        "SECURITY.md",
+        "docs/incident-response.md",
+        "docs/github-repository-settings-checklist.md"
+      ],
+      "evidenceFiles": [
+        "scripts/auditGithubRepositorySettings.js",
+        "test/githubRepositorySettingsAudit.test.js"
+      ],
+      "verificationCommands": [
+        "npm run security:github-settings"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Enable GitHub private vulnerability reporting or record an approved private intake alternative.",
+        "Confirm public issues do not request exploit details."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "SEC-P0-002"
+      ]
+    },
+    {
+      "id": "SEC-REQ-003",
+      "priority": "P1",
+      "status": "implemented",
+      "title": "Local services are local by default",
+      "sourceMappings": [
+        "NIST SSDF PW.9",
+        "OWASP SAMM Design",
+        "Microsoft SDL Design"
+      ],
+      "component": "local-runtime",
+      "requirement": "The Express server and VOICEVOX runtime must default to localhost/trusted local use and document any broad binding as deliberate and temporary.",
+      "implementationFiles": [
+        "src/config.js",
+        "scripts/manageVoicevoxContainer.js",
+        "SECURITY.md",
+        "docs/threat-model.md"
+      ],
+      "evidenceFiles": [
+        "test/config.test.js",
+        "test/voicevoxDoctorService.test.js"
+      ],
+      "verificationCommands": [
+        "npm test",
+        "npm run voicevox:status",
+        "npm run doctor:voicevox"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "When SERVER_HOST is set outside localhost, verify the network is trusted and the workflow is temporary.",
+        "When Docker runtime changes, inspect VOICEVOX status and doctor output."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "SEC-LOCAL-001",
+        "SEC-LOCAL-002"
+      ]
+    },
+    {
+      "id": "SEC-REQ-004",
+      "priority": "P1",
+      "status": "implemented",
+      "title": "External text is escaped before Anki HTML rendering",
+      "sourceMappings": [
+        "NIST SSDF PW.5",
+        "OWASP SAMM Implementation",
+        "Microsoft SDL Implementation"
+      ],
+      "component": "anki-export",
+      "requirement": "Text from external or semi-trusted sources must be escaped before entering HTML-rendered Anki fields, while exporter-owned ruby, pitch, audio, and stroke-order markup stays controlled.",
+      "implementationFiles": [
+        "src/utils/text.js",
+        "src/services/exportService.js",
+        "src/services/wordExportService.js",
+        "src/services/trackedSourceArtifactService.js",
+        "SECURITY.md",
+        "docs/threat-model.md"
+      ],
+      "evidenceFiles": [
+        "test/exportService.test.js",
+        "test/wordExportService.test.js",
+        "test/trackedSourceArtifactService.test.js"
+      ],
+      "verificationCommands": [
+        "npm test"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Manual Anki import QA remains required before release-ready claims."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": []
+    },
+    {
+      "id": "SEC-REQ-005",
+      "priority": "P1",
+      "status": "implemented",
+      "title": "Supply-chain inputs are pinned, audited, and minimally privileged",
+      "sourceMappings": [
+        "NIST SSDF PW.4",
+        "NIST SSDF PS.3",
+        "OWASP SAMM Implementation",
+        "SLSA Build"
+      ],
+      "component": "dependency-and-workflow-supply-chain",
+      "requirement": "Dependencies must be lockfile-backed registry packages with integrity hashes, reviewed lifecycle scripts, pinned GitHub Actions, minimal workflow permissions, advisory checks, dependency review, and deterministic SBOM generation.",
+      "implementationFiles": [
+        "package.json",
+        "package-lock.json",
+        "scripts/auditSupplyChain.js",
+        "scripts/generateCycloneDxSbom.js",
+        "docs/supply-chain-security.md",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ],
+      "evidenceFiles": [
+        "test/supplyChainPolicy.test.js",
+        "test/sbomGeneration.test.js"
+      ],
+      "verificationCommands": [
+        "npm run supply-chain:audit",
+        "npm run security:advisories",
+        "npm run security:sbom"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Review any new lifecycle-script package with a specific reason before accepting it.",
+        "Review dependency license posture when P3 license automation flags a change."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "SEC-SUP-001"
+      ]
+    },
+    {
+      "id": "SEC-REQ-006",
+      "priority": "P0",
+      "status": "external-blocked",
+      "title": "Hosted security alert settings are visible and triaged",
+      "sourceMappings": [
+        "NIST SSDF RV.1",
+        "OWASP SAMM Verification",
+        "Microsoft SDL Verification"
+      ],
+      "component": "hosted-security-alerts",
+      "requirement": "Secret scanning, push protection, CodeQL alerts, and Dependabot alerts must be enabled or explicitly triaged from owner-authenticated hosted evidence.",
+      "implementationFiles": [
+        ".github/workflows/codeql.yml",
+        ".github/workflows/ci.yml",
+        "docs/github-repository-settings-checklist.md",
+        "scripts/auditGithubRepositorySettings.js"
+      ],
+      "evidenceFiles": [
+        "test/githubRepositorySettingsAudit.test.js",
+        "test/secretAudit.test.js"
+      ],
+      "verificationCommands": [
+        "npm run security:github-settings",
+        "npm run security:secrets",
+        "npm run security:advisories"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Run the hosted settings audit with owner-authenticated security/settings access.",
+        "Triage any open CodeQL, secret scanning, or dependency alert before release claims."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "SEC-P0-003"
+      ]
+    },
+    {
+      "id": "SEC-REQ-007",
+      "priority": "P1",
+      "status": "partially-implemented",
+      "title": "Release artifacts are checksummed, SBOM-backed, attested, and verified before trust",
+      "sourceMappings": [
+        "NIST SSDF PS.3",
+        "SLSA Provenance",
+        "OWASP SAMM Operations"
+      ],
+      "component": "release-artifact-trust",
+      "requirement": "Release bundles must include deterministic artifacts, checksums, CycloneDX SBOM, provenance/SBOM attestations, and recorded attestation verification before external trust claims.",
+      "implementationFiles": [
+        ".github/workflows/release.yml",
+        "docs/release-process.md",
+        "docs/recovery-and-rollback.md",
+        "docs/github-repository-settings-checklist.md",
+        "scripts/auditSupplyChain.js"
+      ],
+      "evidenceFiles": [
+        "test/supplyChainPolicy.test.js",
+        "test/releasePolicy.test.js",
+        "test/githubRepositorySettingsAudit.test.js"
+      ],
+      "verificationCommands": [
+        "npm run supply-chain:audit",
+        "npm run security:sbom",
+        "npm run release:gate",
+        "npm run security:github-settings"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Verify downloaded release artifacts against release-artifacts.sha256.",
+        "Run or record gh attestation verify for each trusted release artifact."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "SEC-P0-004"
+      ]
+    },
+    {
+      "id": "SEC-REQ-008",
+      "priority": "P1",
+      "status": "implemented",
+      "title": "Source evidence and source-use boundaries are governed",
+      "sourceMappings": [
+        "NIST SSDF PO.3",
+        "OWASP SAMM Governance",
+        "Microsoft SDL Requirements"
+      ],
+      "component": "source-governance",
+      "requirement": "External source use must preserve permitted storage boundaries, source-input integrity pins, voting/non-voting lane separation, source-access gaps, and dry-run-first import behavior.",
+      "implementationFiles": [
+        "templates/jlpt_kanji_source_evidence.json",
+        "templates/jlpt_kanji_source_inputs.json",
+        "docs/source-evidence-batching.md",
+        "docs/source-acquisition-register.md",
+        "docs/product-exit-criteria.md"
+      ],
+      "evidenceFiles": [
+        "test/repositoryGovernance.test.js",
+        "test/jlptKanjiSourceEvidence.test.js",
+        "test/pinJlptKanjiSourceInputScript.test.js",
+        "test/tanosJlptKanjiSourceService.test.js"
+      ],
+      "verificationCommands": [
+        "npm run data:audit:jlpt:sources -- --governance-strict --limit=25",
+        "npm run data:audit:jlpt:source-inputs -- --source=tanos_legacy_direct --strict",
+        "npm test"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Do not promote manual-citation-only or source-access-gap rows without exact permitted assignment evidence."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "GOV-SRC-001"
+      ]
+    },
+    {
+      "id": "SEC-REQ-009",
+      "priority": "P1",
+      "status": "implemented",
+      "title": "Card certification authority boundaries stay separated",
+      "sourceMappings": [
+        "NIST SSDF PW.8",
+        "OWASP SAMM Verification"
+      ],
+      "component": "card-quality-governance",
+      "requirement": "Gold, Platinum, Obsidian, source-governance, NLP support, generated artifacts, media QA, and release readiness must remain separate authority lanes.",
+      "implementationFiles": [
+        "docs/platinum-obsidian-review-contract.md",
+        "docs/obsidian-batch-workflow.md",
+        "docs/platinum-review-policy.md",
+        "docs/product-exit-criteria.md",
+        "templates/obsidian_proof_ledger/kanji_n2.jsonl"
+      ],
+      "evidenceFiles": [
+        "test/platinumTrackedReviewSets.test.js",
+        "test/obsidianProofLedger.test.js",
+        "test/obsidianProofProviderParity.test.js",
+        "test/platinumGovernanceGateService.test.js"
+      ],
+      "verificationCommands": [
+        "npm run data:obsidian:proof:validate",
+        "npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2",
+        "npm test"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Do not record Obsidian proof until current-standard actual card-data rereview is complete for the live card."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": []
+    },
+    {
+      "id": "SEC-REQ-010",
+      "priority": "P1",
+      "status": "implemented",
+      "title": "NLP output remains assistive-only",
+      "sourceMappings": [
+        "NIST AI RMF Govern",
+        "OWASP SAMM Governance"
+      ],
+      "component": "assistive-nlp",
+      "requirement": "Model, tokenizer, embedding, review-packet, and draft-proposal outputs may support review but must not certify cards, source truth, or release readiness.",
+      "implementationFiles": [
+        "docs/nlp-model-governance.md",
+        "docs/threat-model.md",
+        "templates/nlp_model_manifest.json",
+        "src/services/nlpGovernanceGateService.js"
+      ],
+      "evidenceFiles": [
+        "test/nlpGovernanceGateService.test.js",
+        "test/nlpModelGovernanceService.test.js",
+        "test/nlpReviewPacketService.test.js"
+      ],
+      "verificationCommands": [
+        "npm run nlp:governance-gate",
+        "npm test"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Reviewers must treat NLP signals as attention context only and perform the underlying card/source review separately."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "NLP-001"
+      ]
+    },
+    {
+      "id": "SEC-REQ-011",
+      "priority": "P1",
+      "status": "implemented",
+      "title": "Incidents and recovery have runbooks",
+      "sourceMappings": [
+        "NIST SSDF RV.2",
+        "OWASP SAMM Operations",
+        "Microsoft SDL Response"
+      ],
+      "component": "security-operations",
+      "requirement": "Security incidents, vulnerability remediation, bad release recovery, bad artifact recovery, dependency recovery, and local runtime recovery must have executable runbooks.",
+      "implementationFiles": [
+        "docs/incident-response.md",
+        "docs/recovery-and-rollback.md",
+        "docs/risk-register.md",
+        "SECURITY.md"
+      ],
+      "evidenceFiles": [
+        "test/repositoryGovernance.test.js"
+      ],
+      "verificationCommands": [
+        "npm run security:secrets",
+        "npm test"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Run tabletop or real-incident review before calling response performance proven."
+      ],
+      "releaseBlocker": false,
+      "riskRecords": []
+    },
+    {
+      "id": "SEC-REQ-012",
+      "priority": "P2",
+      "status": "planned",
+      "title": "Hostile-input regression coverage is explicit",
+      "sourceMappings": [
+        "NIST SSDF PW.8",
+        "OWASP SAMM Verification",
+        "Microsoft SDL Verification"
+      ],
+      "component": "hostile-input-tests",
+      "requirement": "Parser, import, generated HTML, media path, package boundary, Docker-helper argument, and dependency-policy abuse cases should have dedicated hostile-input or fuzz-style regression tests.",
+      "implementationFiles": [
+        "docs/software-development-life-cycle-audit.md",
+        "docs/threat-model.md",
+        "docs/risk-register.md"
+      ],
+      "evidenceFiles": [
+        "test/repositoryGovernance.test.js"
+      ],
+      "verificationCommands": [
+        "npm test"
+      ],
+      "manualQaRequired": false,
+      "manualReview": [],
+      "releaseBlocker": false,
+      "riskRecords": [
+        "SEC-DATA-001"
+      ]
+    },
+    {
+      "id": "SEC-REQ-013",
+      "priority": "P2",
+      "status": "planned",
+      "title": "Security reviewer training and SDLC metrics are tracked",
+      "sourceMappings": [
+        "NIST SSDF PO.2",
+        "OWASP SAMM Governance",
+        "Microsoft SDL Training"
+      ],
+      "component": "training-and-sdlc-metrics",
+      "requirement": "Security reviewer readiness, training expectations, and SDLC health metrics must be documented and validated so security posture can be reviewed over time.",
+      "implementationFiles": [
+        "docs/software-development-life-cycle-audit.md",
+        "docs/risk-register.md"
+      ],
+      "evidenceFiles": [
+        "test/repositoryGovernance.test.js"
+      ],
+      "verificationCommands": [
+        "npm test"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Review training completion and SDLC metrics before release governance claims rely on them."
+      ],
+      "releaseBlocker": false,
+      "riskRecords": []
+    }
+  ]
+}

@@ -106,19 +106,16 @@ Remaining limitation: P0 still found no automated/proven hosted artifact-attesta
 
 ### P2: Add Security Requirements Traceability
 
-Security expectations exist across docs and tests, but they are not tied into a traceability matrix from requirement to implementation to verification.
+Security expectations now have a tracked traceability matrix from requirement to implementation to verification.
 
-Missing coverage:
+Current artifacts:
 
-- requirement id
-- source/framework mapping
-- affected component
-- implementation file
-- automated gate
-- manual QA requirement
-- release blocker status
+- [../templates/security_requirements_traceability.json](../templates/security_requirements_traceability.json)
+- [../scripts/auditSecurityRequirementsTraceability.js](../scripts/auditSecurityRequirementsTraceability.js)
 
-Recommended next artifact: `templates/security_requirements_traceability.json` plus an audit script.
+Current command: `npm run security:requirements`.
+
+Remaining limitation: the gate validates traceability completeness and reports blocker counts. It does not remediate external-hosted blockers, prove manual QA, or certify release readiness.
 
 ### P2: Expand Negative Security Testing
 

@@ -56,6 +56,9 @@ jobs:
       - name: Audit branch protection policy
         run: npm run security:branch-protection
 
+      - name: Audit security requirements traceability
+        run: npm run security:requirements
+
       - name: Audit tracked files for secrets
         run: npm run security:secrets
 

@@ -176,18 +176,22 @@
         "package.json",
         "package-lock.json",
         "scripts/auditSupplyChain.js",
+        "scripts/auditDependencyLicenses.js",
         "scripts/generateCycloneDxSbom.js",
+        "templates/dependency_license_policy.json",
         "docs/supply-chain-security.md",
         ".github/workflows/ci.yml",
         ".github/workflows/release.yml"
       ],
       "evidenceFiles": [
         "test/supplyChainPolicy.test.js",
+        "test/dependencyLicenseAudit.test.js",
         "test/sbomGeneration.test.js"
       ],
       "verificationCommands": [
         "npm run supply-chain:audit",
         "npm run security:advisories",
+        "npm run security:licenses",
         "npm run security:sbom"
       ],
       "manualQaRequired": true,
@@ -254,15 +258,19 @@
         "docs/release-process.md",
         "docs/recovery-and-rollback.md",
         "docs/github-repository-settings-checklist.md",
+        "scripts/auditDependencyLicenses.js",
         "scripts/auditSupplyChain.js"
       ],
       "evidenceFiles": [
+        "test/dependencyLicenseAudit.test.js",
         "test/supplyChainPolicy.test.js",
         "test/releasePolicy.test.js",
         "test/githubRepositorySettingsAudit.test.js"
       ],
       "verificationCommands": [
         "npm run supply-chain:audit",
+        "npm run security:licenses",
+        "npm run security:licenses:write",
         "npm run security:sbom",
         "npm run release:gate",
         "npm run security:github-settings"
@@ -499,6 +507,53 @@
       ],
       "releaseBlocker": false,
       "riskRecords": []
+    },
+    {
+      "id": "SEC-REQ-014",
+      "priority": "P3",
+      "status": "implemented",
+      "title": "Dependency license compliance is automated",
+      "sourceMappings": [
+        "NIST SSDF PS.3",
+        "OWASP SAMM Implementation",
+        "SLSA Build"
+      ],
+      "component": "dependency-license-compliance",
+      "requirement": "Dependency license expressions in package-lock.json must be allowlisted or covered by a current reviewed exception; missing, denied, unreviewed, or overdue exception licenses fail closed, and tagged release bundles must include a generated dependency-license summary.",
+      "implementationFiles": [
+        "package.json",
+        "package-lock.json",
+        "templates/dependency_license_policy.json",
+        "scripts/auditDependencyLicenses.js",
+        "scripts/auditSupplyChain.js",
+        "src/datasets/dependencyLicensePolicy.js",
+        "src/services/dependencyLicenseAuditService.js",
+        "docs/supply-chain-security.md",
+        "docs/release-process.md",
+        ".github/workflows/ci.yml",
+        ".github/workflows/release.yml"
+      ],
+      "evidenceFiles": [
+        "test/dependencyLicenseAudit.test.js",
+        "test/supplyChainPolicy.test.js",
+        "test/securityRequirementsTraceability.test.js",
+        "test/releasePolicy.test.js"
+      ],
+      "verificationCommands": [
+        "npm run security:licenses",
+        "npm run security:licenses:write",
+        "npm run supply-chain:audit",
+        "npm test"
+      ],
+      "manualQaRequired": true,
+      "manualReview": [
+        "Review any new license expression, denied-pattern match, missing package-license metadata, or non-permissive dependency exception before accepting the lockfile.",
+        "Review NOTICE and attribution obligations before external release claims rely on the dependency-license summary."
+      ],
+      "releaseBlocker": true,
+      "riskRecords": [
+        "SEC-SUP-001"
+      ]
     }
   ]
 }

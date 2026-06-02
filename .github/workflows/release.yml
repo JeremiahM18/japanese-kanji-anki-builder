@@ -39,6 +39,9 @@ jobs:
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
+      - name: Audit dependency licenses
+        run: npm run security:licenses
+
       - name: Audit branch protection policy
         run: npm run security:branch-protection
 
@@ -107,6 +110,9 @@ jobs:
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
+      - name: Audit dependency licenses
+        run: npm run security:licenses
+
       - name: Audit branch protection policy
         run: npm run security:branch-protection
 
@@ -137,9 +143,12 @@ jobs:
       - name: Generate CycloneDX SBOM
         run: npm run security:sbom:write
 
+      - name: Generate dependency license summary
+        run: npm run security:licenses:write
+
       - name: Generate artifact checksums
         run: |
-          find .release-smoke/out .release-gate/out out/security/sbom.cdx.json -type f -print0 \
+          find .release-smoke/out .release-gate/out out/security/sbom.cdx.json out/security/dependency-licenses.json -type f -print0 \
             | sort -z \
             | xargs -0 sha256sum > release-artifacts.sha256
 
@@ -157,6 +166,7 @@ jobs:
             docs/release-process.md
             docs/release-qa-checklist.md
             out/security/sbom.cdx.json
+            out/security/dependency-licenses.json
             release-artifacts.sha256
 
       - name: Attest release bundle SBOM
@@ -173,6 +183,7 @@ jobs:
             docs/release-process.md
             docs/release-qa-checklist.md
             out/security/sbom.cdx.json
+            out/security/dependency-licenses.json
             release-artifacts.sha256
           sbom-path: out/security/sbom.cdx.json
 
@@ -191,5 +202,6 @@ jobs:
             docs/release-process.md
             docs/release-qa-checklist.md
             out/security/sbom.cdx.json
+            out/security/dependency-licenses.json
             release-artifacts.sha256
           if-no-files-found: error

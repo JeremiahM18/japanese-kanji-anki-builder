@@ -58,7 +58,7 @@ Open, blocked, unverified, or overdue risks are not release-ready claims.
 | SEC-P0-002 | High | Blocked external | Repository owner | Private vulnerability reporting is disabled, weakening confidential intake. | [github-repository-settings-checklist.md](github-repository-settings-checklist.md) | Enable GitHub private vulnerability reporting or record an approved private intake alternative in [../SECURITY.md](../SECURITY.md). | 2026-06-16 |
 | SEC-P0-003 | High | Blocked external | Repository owner | Secret scanning, push protection, CodeQL alert state, Dependabot alert state, and detailed branch-protection settings are unverified without owner-auth API access. | `npm run security:github-settings` returns `401 Unauthorized` for owner-auth-only endpoints without `GH_TOKEN`/`GITHUB_TOKEN`. | Run the audit with a token that has repository security/settings read access; update the hosted settings checklist from the output. | 2026-06-16 |
 | SEC-P0-004 | High | Open | Repository owner | Release attestation creation is present, but attestation verification is not automated or proven after release creation. | [github-repository-settings-checklist.md](github-repository-settings-checklist.md), [release-process.md](release-process.md) | Add a recorded `gh attestation verify` release step or post-release verification record before trusting a tagged bundle. | 2026-06-16 |
-| SEC-SUP-001 | Medium | Accepted | Repository owner | Native dependency install scripts are allowed for specific packages and could expand attack surface if versions drift. | [supply-chain-security.md](supply-chain-security.md), `npm run supply-chain:audit` | Keep lifecycle-script allowlist exact by package and version; reassess every new native dependency or version change. | 2026-07-02 |
+| SEC-SUP-001 | Medium | Accepted | Repository owner | Native dependency install scripts and reviewed dependency-license exceptions are allowed for specific packages and could expand attack surface or attribution obligations if versions drift. | [supply-chain-security.md](supply-chain-security.md), `npm run supply-chain:audit`, `npm run security:licenses` | Keep lifecycle-script allowlist exact by package and version; keep reviewed license exceptions current by package, reason, owner, and next-review date; reassess every new native dependency, version change, or license-expression change. | 2026-07-02 |
 | SEC-LOCAL-001 | Medium | Accepted | Repository owner | Local Express server has no authentication and is safe only under localhost/trusted-network assumptions. | [../SECURITY.md](../SECURITY.md), [threat-model.md](threat-model.md) | Keep `SERVER_HOST` default at `127.0.0.1`; document any deliberate broad binding as temporary and trusted-network only. | 2026-07-02 |
 | SEC-LOCAL-002 | Medium | Mitigated | Repository owner | VOICEVOX runtime could expose a broad host bind or weak container posture. | [../SECURITY.md](../SECURITY.md), `npm run voicevox:status`, `npm run doctor:voicevox` | Keep helper-enforced localhost bind, capability drop, no-new-privileges, and resource limits; rerun doctor after Docker/runtime changes. | 2026-07-02 |
 | SEC-DATA-001 | High | Mitigated | Repository owner | Dedicated hostile-input and fuzz-style coverage was thin for parsers, generated HTML, media paths, generated-output cleanup, Docker-helper arguments, and package boundaries. | [software-development-life-cycle-audit.md](software-development-life-cycle-audit.md), [../test/hostileInputSecurity.test.js](../test/hostileInputSecurity.test.js) | Keep adversarial fixtures in tracked tests and add new cases whenever parser, renderer, media, Docker, or dependency-policy surfaces change. | 2026-07-02 |
@@ -82,6 +82,7 @@ git status --short --untracked-files=all
 npm run security:github-settings
 npm run supply-chain:audit
 npm run security:branch-protection
+npm run security:licenses
 npm run security:secrets
 npm run lint
 npm test
@@ -97,4 +98,4 @@ Update this register when:
 - a risk is mitigated, accepted, reopened, or becomes overdue
 - a dependency exception, workflow permission exception, source-use exception, or release blocker changes
 - incident response, post-incident review, or recovery work creates a new residual risk
-- P3 automation changes the risk posture
+- dependency-license policy automation changes the risk posture

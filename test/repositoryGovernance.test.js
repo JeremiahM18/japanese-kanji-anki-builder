@@ -163,6 +163,7 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     const readme = readRepoFile("README.md");
 
     assert.equal(workflow.includes("npm run data:audit:jlpt:sources -- --governance-strict --limit=25"), true);
+    assert.equal(workflow.includes("npm run security:licenses"), true);
     assert.equal(workflow.includes("npm run security:requirements"), true);
     assert.equal(workflow.includes("npm run security:sdlc-metrics"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:validate"), true);
@@ -185,7 +186,7 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.equal(workflow.includes("npm run deck:platinum:governance-gate"), false);
     assert.equal(workflow.includes("hashFiles('data/"), false);
     assert.match(workflow, /deck:platinum:governance-gate is intentionally local-data release QA/);
-    assert.match(readme, /Clean CI runs `security:requirements`, `security:sdlc-metrics`, `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3,2`, `data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`, `data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set`/);
+    assert.match(readme, /Clean CI runs `security:licenses`, `security:requirements`, `security:sdlc-metrics`, `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3,2`, `data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`, `data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set`/);
@@ -258,6 +259,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`supply-chain:audit` run when dependency manifests, npm scripts, workflows, or release artifact boundaries changed"), true);
     assert.equal(template.includes("`security:advisories` run when dependency manifests or lockfiles changed"), true);
     assert.equal(template.includes("`security:branch-protection` run when CI job names, required checks, branch policy, or protected-branch docs changed"), true);
+    assert.equal(template.includes("`security:licenses` run when dependency manifests, lockfiles, dependency-license policy, release-bundle paths, or supply-chain workflows changed"), true);
     assert.equal(template.includes("`security:requirements` run when security requirements, risk records, runbooks, release blockers, workflows, or verification commands changed"), true);
     assert.equal(template.includes("`security:sdlc-metrics` run when training checklist, SDLC metrics, risk register, security requirements, workflows, or security governance docs changed"), true);
     assert.equal(template.includes("`security:secrets` run when configuration, scripts, fixtures, docs, or workflows could introduce credentials"), true);

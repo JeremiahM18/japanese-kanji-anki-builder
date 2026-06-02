@@ -44,10 +44,10 @@ This audit uses:
 | Product requirements and exit criteria | [product-exit-criteria.md](product-exit-criteria.md), [release-qa-checklist.md](release-qa-checklist.md), and [platinum-obsidian-review-contract.md](platinum-obsidian-review-contract.md) define deck quality gates and manual QA boundaries. |
 | Branch policy as code | [../.github/branch-protection.main.json](../.github/branch-protection.main.json), [branch-protection.md](branch-protection.md), and `npm run security:branch-protection` align required checks and protected-path expectations. |
 | Code-owner review | [../.github/CODEOWNERS](../.github/CODEOWNERS) covers workflows, scripts, services, tests, security, dependency manifests, and core docs. |
-| CI verification | [../.github/workflows/ci.yml](../.github/workflows/ci.yml) runs lint, typecheck, tests, smoke checks, release gate, source-governance parity, proof-ledger parity, dependency review, advisory audit, secret audit, SBOM validation, SDLC metrics, and supply-chain audit. |
+| CI verification | [../.github/workflows/ci.yml](../.github/workflows/ci.yml) runs lint, typecheck, tests, smoke checks, release gate, source-governance parity, proof-ledger parity, dependency review, advisory audit, dependency-license audit, secret audit, SBOM validation, SDLC metrics, and supply-chain audit. |
 | Static analysis | [../.github/workflows/codeql.yml](../.github/workflows/codeql.yml) runs pinned CodeQL for JavaScript/TypeScript and GitHub Actions. |
-| Dependency and supply-chain controls | [supply-chain-security.md](supply-chain-security.md), `npm run supply-chain:audit`, `npm run security:advisories`, GitHub dependency review, action pinning, lifecycle-script allowlisting, and lockfile-derived SBOM validation are in place. |
-| Release provenance | [../.github/workflows/release.yml](../.github/workflows/release.yml) writes a CycloneDX SBOM, checksums release artifacts, and creates provenance and SBOM attestations for tagged release bundles. |
+| Dependency and supply-chain controls | [supply-chain-security.md](supply-chain-security.md), `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:advisories`, GitHub dependency review, action pinning, lifecycle-script allowlisting, dependency-license allowlisting/reviewed exceptions, and lockfile-derived SBOM validation are in place. |
+| Release provenance | [../.github/workflows/release.yml](../.github/workflows/release.yml) writes a CycloneDX SBOM, writes a dependency-license summary, checksums release artifacts, and creates provenance and SBOM attestations for tagged release bundles. |
 | Vulnerability disclosure | [../SECURITY.md](../SECURITY.md) defines scope, private reporting preference, report content, and maintainer handling. |
 | Local runtime hardening | [../SECURITY.md](../SECURITY.md) and `scripts/manageVoicevoxContainer.js` enforce local-only VOICEVOX binding and Docker runtime hardening. |
 
@@ -86,7 +86,7 @@ Known limitations and expected fail-closed lanes now have a single register with
 
 Current artifact: [risk-register.md](risk-register.md).
 
-Remaining limitation: open or blocked risks are not accepted release posture. The register must be updated as P0 hosted settings and P3 automation change.
+Remaining limitation: open or blocked risks are not accepted release posture. The register must be updated as P0 hosted settings, dependency exceptions, or release evidence change.
 
 ### P1: Incident Response And Vulnerability Remediation Runbook
 
@@ -159,15 +159,23 @@ Remaining limitation: these metrics expose current SDLC health and review cadenc
 
 ### P3: Add License Compliance Automation
 
-The repo has NOTICE and source-use governance, but dependency license review is not yet automated.
+Dependency license compliance now has a tracked policy, deterministic audit command, CI/release workflow gate, and tagged release summary.
 
-Recommended additions:
+Current artifacts:
 
-- dependency license allowlist or report
-- generated release-bundle license summary
-- CI gate for unexpected dependency-license changes
+- [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json)
+- [../scripts/auditDependencyLicenses.js](../scripts/auditDependencyLicenses.js)
+- [../src/datasets/dependencyLicensePolicy.js](../src/datasets/dependencyLicensePolicy.js)
+- [../src/services/dependencyLicenseAuditService.js](../src/services/dependencyLicenseAuditService.js)
+- [../test/dependencyLicenseAudit.test.js](../test/dependencyLicenseAudit.test.js)
 
-## Recommended Implementation Order
+Current commands: `npm run security:licenses` and `npm run security:licenses:write`.
+
+Current posture from 2026-06-02 tracked lockfile review: `286` dependency packages, `272` allowlisted package entries, and `14` reviewed exception package entries for optional `sharp`/`libvips` binary packages. Missing, denied, unreviewed, or overdue reviewed-exception licenses fail closed.
+
+Remaining limitation: the license audit validates package-lock metadata and tracked exception currency. It is not legal advice, does not prove upstream license-text completeness, and does not replace manual NOTICE or attribution review before external release claims.
+
+## Implementation Record
 
 1. Create `docs/github-repository-settings-checklist.md`.
 2. Create `docs/threat-model.md`.
@@ -188,6 +196,7 @@ rg --files -g "*.md" -g "*.yml" -g "*.yaml" -g "*.json" .github docs templates
 rg -n "threat|incident|response|postmortem|rollback|risk|requirements|privacy|training|owner|CODEOWNERS|release|attest|SBOM|fuzz|secret|dependency|branch protection|vulnerability|disclosure|architecture|design" README.md SECURITY.md docs .github package.json
 npm run voicevox:status
 npm run doctor:voicevox
+npm run security:licenses
 npm run security:sdlc-metrics
 ```
 

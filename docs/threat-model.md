@@ -18,7 +18,7 @@ Covered:
 - Anki HTML-rendered note fields
 - VOICEVOX Docker runtime and generated audio
 - assistive NLP/model runtime and generated NLP artifacts
-- CI, CodeQL, dependency review, SBOM, release bundle, and GitHub artifact attestations
+- CI, CodeQL, dependency review, dependency-license compliance, SBOM, release bundle, and GitHub artifact attestations
 
 Not covered:
 
@@ -38,6 +38,7 @@ Authoritative checks are:
 - `npm run supply-chain:audit`
 - `npm run security:advisories`
 - `npm run security:branch-protection`
+- `npm run security:licenses`
 - `npm run security:secrets`
 - `npm run security:sbom`
 - `npm run lint`
@@ -50,7 +51,7 @@ Authoritative checks are:
 | Asset | Security concern | Source of truth |
 | --- | --- | --- |
 | Repository code and scripts | Unauthorized or unsafe behavior in build, import, export, Docker, and release paths | `src/`, `scripts/`, `test/` |
-| Package manifests and lockfile | Malicious, vulnerable, unlicensed, or unexpected dependency changes | [../package.json](../package.json), [../package-lock.json](../package-lock.json) |
+| Package manifests and lockfile | Malicious, vulnerable, unlicensed, or unexpected dependency changes | [../package.json](../package.json), [../package-lock.json](../package-lock.json), [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) |
 | GitHub workflows | Broad permissions, unpinned actions, missing checks, weak release provenance | [../.github/workflows](../.github/workflows), [supply-chain-security.md](supply-chain-security.md) |
 | Generated deck content | HTML injection, wrong card data, untrusted media, stale review proof | tracked templates, review manifests, generated-output gates |
 | Ignored local inputs | Untrusted dictionaries, corpora, PDFs, OCR, worksheets, media, and model files | local workstation plus source-input manifests |
@@ -77,8 +78,8 @@ Authoritative checks are:
 | Ignored local inputs to tracked outputs | source worksheets, dictionaries, corpora, media, OCR, generated rows | source-input audits, provenance manifests, tracked contracts, no hidden CI reads from root `data/*` |
 | External text to Anki HTML | meanings, examples, notes, filenames, media refs | exporter escaping, allowed markup ownership, HTML regression tests |
 | Docker host to VOICEVOX container | local audio synthesis requests and generated files | localhost binding, `no-new-privileges`, capability drop, resource limits, status/doctor commands |
-| npm registry to local install | package tarballs and metadata | lockfile integrity, registry restriction, install-script allowlist, npm advisory audit |
-| GitHub Actions to release artifacts | smoke/gate outputs, SBOM, checksum manifest, docs | pinned actions, minimal permissions, release boundary audit, attestations |
+| npm registry to local install | package tarballs and metadata | lockfile integrity, registry restriction, install-script allowlist, dependency-license policy, npm advisory audit |
+| GitHub Actions to release artifacts | smoke/gate outputs, SBOM, dependency-license summary, checksum manifest, docs | pinned actions, minimal permissions, release boundary audit, attestations |
 | Maintainer to public disclosure | vulnerability details and patch status | private reporting preference, incident runbook, disclosure decision record |
 | NLP artifacts to review workflows | tokenization, embeddings, draft suggestions, review packets | NLP governance gate, assistive-only docs, no certification authority |
 
@@ -90,7 +91,7 @@ Authoritative checks are:
 | External text injects HTML into Anki fields | Stored script or unsafe markup renders in Anki card fields | exporter escaping tests; known-safe exporter-owned markup only | Anki rendering behavior can change; manual import QA remains required |
 | Malformed XML, TSV, CSV, JSON, PDF, or OCR input corrupts source governance | Wrong source evidence, broken import, or unsafe parser behavior | source-input preflights, parser tests, entity expansion disabled where implemented, dry-run-first import scripts | P2 hostile-input corpus must expand coverage |
 | Local ignored `data/*` becomes hidden CI truth | CI passes while real local generated rows are unverified or stale | tracked CI source-boundary tests reject root `data/*` reads; local-data gates stay explicit | Prepared workstations can still contain stale data; reviewers must run current local gates |
-| Dependency update introduces vulnerable or malicious code | Build or runtime compromise | lockfile integrity, registry-only policy, install-script allowlist, dependency review, `npm audit`, CodeQL | npm advisory data and dependency review are time-sensitive external services |
+| Dependency update introduces vulnerable, malicious, or unreviewed-license code | Build/runtime compromise or unexpected redistribution obligations | lockfile integrity, registry-only policy, install-script allowlist, dependency-license audit, dependency review, `npm audit`, CodeQL | npm advisory data and dependency review are time-sensitive external services; license metadata still needs manual legal/NOTICE review for release claims |
 | GitHub workflow requests excessive permission | Token abuse, artifact tampering, or unwanted publishing | top-level read-only permissions; scoped CodeQL and attestation exceptions; action SHA pinning; supply-chain audit | Hosted branch protection is currently not enforced until P0 remediation happens |
 | Release bundle is tampered with or misunderstood | Users trust an unverified APKG, TSV, SBOM, or report | checksum manifest, SBOM, provenance/SBOM attestations, release process docs | P0 found attestation verification evidence is not yet automated/proven |
 | VOICEVOX container runs with broad network or broad Linux capabilities | Local runtime escape or unexpected network exposure | managed helper enforces local bind and Docker runtime hardening; doctor/status commands | Docker itself and image supply chain remain external dependencies |
@@ -116,6 +117,7 @@ npm run security:github-settings
 npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection
+npm run security:licenses
 npm run security:secrets
 npm run security:sbom
 npm run lint
@@ -131,6 +133,6 @@ Update this model when:
 
 - a new network listener, route, parser, importer, Docker behavior, model runtime, or generated artifact boundary is added
 - workflow permissions, required checks, release artifacts, or attestation behavior changes
-- a dependency class or install-script exception changes
+- a dependency class, install-script exception, or dependency-license exception changes
 - a security incident, accepted risk, or post-incident review changes assumptions
 - source-governance, Platinum, Obsidian, or release-readiness authority boundaries change

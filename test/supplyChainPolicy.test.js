@@ -25,6 +25,7 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
     assert.equal(report.workflows.some((workflow) => workflow.relativePath === ".github/workflows/codeql.yml"), true);
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("release-artifacts.sha256"));
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("out/security/sbom.cdx.json"));
+    assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("out/security/dependency-licenses.json"));
 });
 
 test("supply-chain audit pins GitHub Actions to reviewed commit SHAs", () => {

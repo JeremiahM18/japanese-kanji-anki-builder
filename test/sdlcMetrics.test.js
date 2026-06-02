@@ -21,7 +21,7 @@ test("SDLC metrics report validates current tracked security posture", () => {
     assert.equal(report.risk.highCriticalOpenOrBlocked, 6);
     assert.deepEqual(report.risk.externalBlockedRecords, ["SEC-P0-001", "SEC-P0-002", "SEC-P0-003"]);
     assert.equal(report.risk.overdueReviews, 0);
-    assert.equal(report.requirements.total, 13);
+    assert.equal(report.requirements.total, 14);
     assert.equal(report.requirements.planned, 0);
     assert.equal(report.requirements.partialOrExternal, 4);
     assert.equal(report.training.missingRequiredSections.length, 0);

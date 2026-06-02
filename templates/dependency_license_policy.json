@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "authority": {
+    "sourceOfTruth": "tracked-dependency-license-policy",
+    "generatedArtifact": false,
+    "boundary": [
+      "This policy validates dependency license expressions recorded in package-lock.json and the reviewed exception list for current dependencies.",
+      "It does not provide legal advice, prove upstream license text completeness, or replace release attribution review.",
+      "Unexpected, missing, denied, or overdue reviewed-exception licenses fail closed until reviewed."
+    ]
+  },
+  "allowedLicenseExpressions": [
+    {
+      "expression": "0BSD",
+      "category": "permissive"
+    },
+    {
+      "expression": "Apache-2.0",
+      "category": "permissive"
+    },
+    {
+      "expression": "BSD-2-Clause",
+      "category": "permissive"
+    },
+    {
+      "expression": "BSD-3-Clause",
+      "category": "permissive"
+    },
+    {
+      "expression": "BlueOak-1.0.0",
+      "category": "permissive"
+    },
+    {
+      "expression": "ISC",
+      "category": "permissive"
+    },
+    {
+      "expression": "MIT",
+      "category": "permissive"
+    },
+    {
+      "expression": "(MIT OR CC0-1.0)",
+      "category": "permissive-or-public-domain"
+    },
+    {
+      "expression": "Python-2.0",
+      "category": "permissive"
+    }
+  ],
+  "reviewedLicenseExceptions": [
+    {
+      "licenseExpression": "LGPL-3.0-or-later",
+      "packageNamePrefix": "@img/sharp-libvips-",
+      "reason": "Optional platform libvips binary packages pulled by sharp. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
+      "owner": "Repository owner",
+      "reviewedAt": "2026-06-02",
+      "nextReview": "2026-07-02"
+    },
+    {
+      "licenseExpression": "Apache-2.0 AND LGPL-3.0-or-later",
+      "packageNamePrefix": "@img/sharp-win32-",
+      "reason": "Optional Windows sharp binary packages with libvips linkage. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
+      "owner": "Repository owner",
+      "reviewedAt": "2026-06-02",
+      "nextReview": "2026-07-02"
+    },
+    {
+      "licenseExpression": "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
+      "packageName": "@img/sharp-wasm32",
+      "reason": "Optional sharp WebAssembly binary package with mixed permissive/LGPL terms. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
+      "owner": "Repository owner",
+      "reviewedAt": "2026-06-02",
+      "nextReview": "2026-07-02"
+    }
+  ],
+  "deniedLicensePatterns": [
+    "AGPL",
+    "BUSL",
+    "Commons Clause",
+    "GPL-",
+    "SSPL",
+    "UNLICENSED"
+  ],
+  "releaseSummaryPath": "out/security/dependency-licenses.json",
+  "updateTriggers": [
+    "package.json or package-lock.json changes.",
+    "A dependency license expression is added, removed, or changes.",
+    "A reviewed license exception reaches its next-review date.",
+    "Release artifact paths, NOTICE, SBOM, or dependency policy changes.",
+    "Legal guidance changes the accepted or denied license posture."
+  ]
+}

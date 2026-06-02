@@ -53,7 +53,9 @@ test("release workflow is tag-driven and publishes release artifacts", () => {
     assert.equal(workflow.includes('- "v*"'), true);
     assert.equal(workflow.includes("Release Verify Ubuntu Node 22"), true);
     assert.equal(workflow.includes("Release Bundle Ubuntu Node 22"), true);
+    assert.equal(workflow.includes("npm run security:licenses"), true);
     assert.equal(workflow.includes("npm run security:requirements"), true);
+    assert.equal(workflow.includes("out/security/dependency-licenses.json"), true);
     assert.equal(workflow.includes("release-artifacts.sha256"), true);
     assert.equal(workflow.includes("docs/release-process.md"), true);
 });
@@ -65,7 +67,9 @@ test("release process doc aligns tag naming with package version", () => {
     assert.equal(releaseProcess.includes("Create Git tags as `v<package.json version>`"), true);
     assert.equal(releaseProcess.includes("Keep `## [Unreleased]` release-facing and concise."), true);
     assert.equal(releaseProcess.includes("npm run supply-chain:audit"), true);
+    assert.equal(releaseProcess.includes("npm run security:licenses"), true);
     assert.equal(releaseProcess.includes("npm run security:requirements"), true);
+    assert.equal(releaseProcess.includes("out/security/dependency-licenses.json"), true);
     assert.equal(releaseProcess.includes("supply-chain-security.md"), true);
     assert.equal(releaseProcess.includes("CHANGELOG.md"), true);
     assert.equal(releaseProcess.includes("release-qa-checklist.md"), true);

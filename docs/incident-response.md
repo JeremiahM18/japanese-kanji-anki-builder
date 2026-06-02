@@ -60,6 +60,7 @@ npm run security:github-settings
 npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection
+npm run security:licenses
 npm run security:secrets
 npm run security:sbom
 ```
@@ -100,6 +101,7 @@ npm run typecheck
 npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection
+npm run security:licenses
 npm run security:secrets
 npm run security:sbom
 npm test
@@ -112,8 +114,8 @@ Add affected-area gates:
 | Express server or routes | focused route tests plus `npm test` |
 | Parser/importer/source input | hostile fixture test, source-input preflight, relevant source audit |
 | Anki HTML/export | exporter escaping test, smoke export, affected deck gate |
-| Dependency or lockfile | `npm run security:advisories`, `npm run supply-chain:audit`, P3 license gate when available |
-| GitHub workflow or release path | `npm run security:branch-protection`, `npm run supply-chain:audit`, `npm run security:sbom`, release gate |
+| Dependency or lockfile | `npm run security:advisories`, `npm run supply-chain:audit`, `npm run security:licenses` |
+| GitHub workflow or release path | `npm run security:branch-protection`, `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, release gate |
 | VOICEVOX/Docker | `npm run voicevox:status`, `npm run doctor:voicevox`, affected audio tests |
 | NLP governance | `npm run nlp:governance-gate` |
 | Product deck or media claim | product/readiness gates plus manual QA evidence |

@@ -19,6 +19,7 @@ The command is deterministic and uses only repository files. It checks:
 - all resolved tarballs carry integrity hashes.
 - direct dependencies are lockfile-backed registry dependencies, not git, file, workspace, URL, or npm-alias specs.
 - dependency lifecycle scripts match the reviewed allowlist.
+- dependency license expressions match the reviewed allowlist or current exception policy.
 - GitHub Actions are pinned to reviewed commit SHAs.
 - workflows keep permissions to `contents: read`.
 - every workflow job audits supply-chain policy before `npm ci`.
@@ -37,10 +38,18 @@ This command is the internet-backed advisory gate. CI and tagged release workflo
 Run:
 
 ```bash
+npm run security:licenses
+```
+
+This command validates dependency license expressions from `package-lock.json` against [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). Missing licenses, denied license patterns, unreviewed license expressions, and overdue reviewed exceptions fail closed. Tagged release bundles run `npm run security:licenses:write`, include `out/security/dependency-licenses.json`, and checksum that summary alongside smoke, release-gate, and SBOM outputs.
+
+Run:
+
+```bash
 npm run security:sbom
 ```
 
-This command builds a deterministic CycloneDX `1.6` SBOM model from `package-lock.json` and validates component count, npm package URLs, dependency graph references, and lockfile-derived hashes without writing an artifact. Tagged release bundles run `npm run security:sbom:write`, include `out/security/sbom.cdx.json`, and checksum that SBOM alongside smoke and release-gate outputs.
+This command builds a deterministic CycloneDX `1.6` SBOM model from `package-lock.json` and validates component count, npm package URLs, dependency graph references, and lockfile-derived hashes without writing an artifact. Tagged release bundles run `npm run security:sbom:write`, include `out/security/sbom.cdx.json`, and checksum that SBOM alongside smoke, release-gate, and dependency-license outputs.
 
 ## Dependency Boundary
 
@@ -56,6 +65,8 @@ Lifecycle scripts are high-signal supply-chain risk. The current reviewed allowl
 | `sharp@0.34.5` | Native image runtime pulled by the assistive Transformers.js stack. |
 
 Any new or changed lifecycle-script package must be reviewed before the install step is trusted. The audit gate fails until the allowlist is updated with a specific reason.
+
+Dependency license compliance is governed by [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). The current allowlist is permissive license expressions already present in the lockfile. The current reviewed exceptions are optional `sharp`/`libvips` binary packages with `LGPL-3.0-or-later` or mixed Apache/LGPL/MIT expressions; each exception has owner, reason, reviewed date, and next-review date. The license gate is not legal advice and does not replace manual NOTICE or attribution review before external release claims.
 
 The NLP dependency stack is assistive-only. It may generate review context, but it must not certify cards, approve source truth, or bypass Gold, Platinum, Obsidian, release, import, listening, or accessibility gates.
 
@@ -106,6 +117,7 @@ The release bundle may include only:
 - deterministic smoke artifacts from `.release-smoke/out`
 - release-gate verification artifacts from `.release-gate/out`
 - the generated CycloneDX SBOM at `out/security/sbom.cdx.json`
+- the generated dependency-license summary at `out/security/dependency-licenses.json`
 - `CHANGELOG.md`
 - `NOTICE.md`
 - `docs/compatibility-matrix.md`

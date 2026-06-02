@@ -65,6 +65,7 @@ Verification commands:
 npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection
+npm run security:licenses
 npm run security:secrets
 npm run security:sbom
 npm test
@@ -116,12 +117,13 @@ Use this when a dependency update, advisory, lockfile drift, or install-script c
 ```bash
 npm run supply-chain:audit
 npm run security:advisories
+npm run security:licenses
 npm run security:sbom
 ```
 
 3. If the dependency is unsafe, revert or replace it through a focused commit. Do not hand-edit `node_modules`.
-4. If a lifecycle-script exception is still needed, update [supply-chain-security.md](supply-chain-security.md), tests, and [risk-register.md](risk-register.md) with a specific reason.
-5. Re-run lint, typecheck, tests, supply-chain, advisory, and SBOM gates.
+4. If a lifecycle-script or dependency-license exception is still needed, update [supply-chain-security.md](supply-chain-security.md), [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json), tests, and [risk-register.md](risk-register.md) with a specific reason.
+5. Re-run lint, typecheck, tests, supply-chain, license, advisory, and SBOM gates.
 
 ## Source-Input Recovery
 
@@ -217,8 +219,8 @@ Run the affected recovery commands when the change also modifies release, depend
 
 Update this runbook when:
 
-- release workflow, release artifact list, checksum, SBOM, or attestation behavior changes
-- dependency policy or install-script exceptions change
+- release workflow, release artifact list, checksum, SBOM, dependency-license summary, or attestation behavior changes
+- dependency policy, install-script exceptions, or dependency-license exceptions change
 - source-input import, source-access, OCR, or source-evidence workflows change
 - generated-output cleanup or package boundaries change
 - incident response or post-incident review finds a missing recovery step

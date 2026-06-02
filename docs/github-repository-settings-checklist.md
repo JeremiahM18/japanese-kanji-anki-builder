@@ -35,44 +35,49 @@ Do not commit, paste, or log the token.
 
 ## 2026-06-02 Live Result
 
-The unauthenticated GitHub API verified public repository metadata, workflow visibility, hosted workflow content, branch protection summary, and private vulnerability reporting status. Owner-auth-only security alert endpoints returned `401 Unauthorized`, so those settings remain unverified until an authenticated check is run.
+Authenticated owner audit was run on 2026-06-02 after enabling branch protection and private vulnerability reporting. The hosted `main` branch now matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, and private vulnerability reporting is enabled. The gate still fails because live CodeQL has open alerts, Dependabot alert visibility returns `403`, and hosted release workflow content does not prove post-creation attestation verification.
 
 | Setting | Live result | Status |
 | --- | --- | --- |
 | Repository identity | `JeremiahM18/japanese-kanji-anki-builder` | Verified |
 | Visibility | Public | Verified |
 | Default branch | `main` | Verified |
-| `main` protected | `false` from `GET /repos/JeremiahM18/japanese-kanji-anki-builder/branches/main` | Failing |
-| Required status checks enforced | `protection.enabled=false`; contexts/checks empty in public branch response | Failing |
-| CI workflow | `.github/workflows/ci.yml` active; recent hosted run for `fef3faa` succeeded | Verified |
-| CodeQL workflow | `.github/workflows/codeql.yml` active; recent hosted run for `fef3faa` succeeded | Verified |
+| `main` protected | `true` from authenticated branch and protection endpoints | Verified |
+| Required status checks enforced | `14` required checks match [../.github/branch-protection.main.json](../.github/branch-protection.main.json); strict/up-to-date checks enabled | Verified |
+| Pull request review policy | Requires PR, `1` approval, CODEOWNERS review, stale approval dismissal, conversation resolution, linear history, and admin enforcement | Verified |
+| Force pushes and deletion | Disabled on `main` | Verified |
+| Secret scanning | `security_and_analysis.secret_scanning.status=enabled` | Verified |
+| Push protection | `security_and_analysis.secret_scanning_push_protection.status=enabled` | Verified |
+| CI workflow | `.github/workflows/ci.yml` active; latest hosted CI conclusion `success` | Verified |
+| CodeQL workflow | `.github/workflows/codeql.yml` active; latest hosted CodeQL conclusion `success` | Verified with open alerts |
 | Release workflow | `.github/workflows/release.yml` active | Verified |
 | Dependency Review | Hosted `.github/workflows/ci.yml` contains `actions/dependency-review-action` on pull requests with `fail-on-severity: moderate` | Verified |
 | Release attestation creation | Hosted `.github/workflows/release.yml` contains provenance and SBOM attestation steps for the release bundle | Verified |
 | Artifact attestation verification | Hosted workflow content does not prove `gh attestation verify` or equivalent post-release verification | Failing |
-| Branch protection detail endpoint | `401 Unauthorized` without owner-auth token | Unverified |
-| Code scanning open alerts | `401 Unauthorized` without owner-auth token | Unverified |
-| Secret scanning alerts | `401 Unauthorized` without owner-auth token | Unverified |
-| Dependabot alerts | `401 Unauthorized` without owner-auth token | Unverified |
-| Private vulnerability reporting | `enabled:false` from `GET /repos/JeremiahM18/japanese-kanji-anki-builder/private-vulnerability-reporting` | Failing |
-| Latest release workflow conclusion | No recent release workflow conclusion was available from the unauthenticated workflow-runs endpoint | Unverified |
+| Branch protection detail endpoint | Authenticated endpoint returned `200` and matched tracked policy | Verified |
+| Code scanning open alerts | Authenticated endpoint returned `19` open CodeQL alerts | Failing |
+| Secret scanning alerts | Authenticated endpoint returned `0` open secret-scanning alerts | Verified |
+| Dependabot alerts | Authenticated endpoint returned `403` with current GitHub CLI OAuth scopes | Unverified |
+| Private vulnerability reporting | `enabled:true` from `GET /repos/JeremiahM18/japanese-kanji-anki-builder/private-vulnerability-reporting` | Verified |
+| Latest release workflow conclusion | No recent release workflow conclusion was available from the workflow-runs endpoint | Unverified |
 
-Important local/hosted drift: local `main` includes commits after hosted `fef3faa`; do not treat hosted workflow evidence as proof for unpushed local commits.
+Important local/hosted drift: hosted `main` was at `5d5b71e4` when the authenticated audit ran. Do not treat hosted workflow evidence as proof for uncommitted or unpushed local changes.
 
 ## Required Remediation
 
-1. Push the current protected-flow changes through the intended remote workflow when ready.
-2. Enable branch protection or a ruleset for `main`.
-3. Require pull requests before merging.
-4. Require at least one approving review.
-5. Require CODEOWNERS review.
-6. Dismiss stale approvals.
-7. Require conversation resolution.
-8. Require branch up-to-date before merge.
-9. Require linear history.
-10. Block force pushes and branch deletion.
-11. Do not allow bypassing.
-12. Require these checks:
+Completed on 2026-06-02:
+
+1. Enabled branch protection for `main`.
+2. Required pull requests before merging.
+3. Required at least one approving review.
+4. Required CODEOWNERS review.
+5. Dismissed stale approvals.
+6. Required conversation resolution.
+7. Required branch up-to-date before merge.
+8. Required linear history.
+9. Blocked force pushes and branch deletion.
+10. Enforced protections for administrators.
+11. Required these checks:
 
 ```text
 Dependency Review
@@ -91,17 +96,23 @@ Smoke macos-latest Node 22
 Release Gate Ubuntu Node 22
 ```
 
-13. Enable GitHub secret scanning.
-14. Enable push protection.
-15. Enable private vulnerability reporting.
-16. Confirm CodeQL alerts are visible and no open alert is untriaged.
-17. Confirm Dependabot/dependency alerts are visible and no open alert is untriaged.
-18. Add or record post-release artifact attestation verification, such as `gh attestation verify`, before trusting the bundle.
+12. Enabled GitHub secret scanning.
+13. Enabled push protection.
+14. Enabled private vulnerability reporting.
+
+Remaining:
+
+1. Remediate, dismiss with documented rationale, or otherwise close the `19` live CodeQL alerts; rerun hosted CodeQL and `npm run security:github-settings` until open CodeQL alerts are `0`.
+2. Refresh owner-auth credentials or use a fine-grained token that can read Dependabot alerts, then rerun `npm run security:github-settings` until Dependabot alert state is verified.
+3. Add automated post-creation artifact attestation verification, such as `gh attestation verify`, before trusting a tagged release bundle.
 
 ## Failure Semantics
 
 - `main_branch_unprotected` is a blocker for enterprise-level hosted governance.
 - `private_vulnerability_reporting_disabled` is a blocker for enterprise-level vulnerability intake.
+- `branch_protection_policy_mismatch` is a blocker because hosted protection no longer matches the tracked policy.
+- `secret_scanning_disabled` and `push_protection_disabled` are blockers for hosted secret prevention.
+- `code_scanning_open_alerts`, `secret_scanning_open_alerts`, and `dependabot_open_alerts` are blockers until triaged, fixed, or explicitly accepted with documented rationale.
 - `artifact_attestation_verification_unverified` is a blocker for trusting release attestations as consumed evidence.
 - `*_unverified` means the local audit could not prove the hosted setting. It is not a pass.
 - A successful CI or CodeQL run proves workflow execution for that commit only. It does not prove branch protection, secret scanning, push protection, private vulnerability reporting, or release attestation verification.

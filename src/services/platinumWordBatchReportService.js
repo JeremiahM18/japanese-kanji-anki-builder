@@ -38,7 +38,7 @@ function stripMarkup(value) {
 function normalizeComparable(value) {
     return katakanaToHiragana(stripMarkup(value))
         .replace(/[「」『』（）()[\]{}]/g, "")
-        .replace(/[、。，，,・.．\s:：/-]/g, "")
+        .replace(/[、。，,・.．\s:：/-]/g, "")
         .toLowerCase();
 }
 

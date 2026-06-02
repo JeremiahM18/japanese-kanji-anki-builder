@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { invokeCliMain, assertNoUnknownArgs, collectUnknownArg } = require("../src/utils/cliArgs");
+const { writeFileAtomicSync } = require("../src/utils/fs");
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const {
@@ -73,7 +74,7 @@ function main() {
     const contract = loadJlptLevelContract(contractPath);
     const { syncedDataset, updates } = syncJlptInventoryToContract(dataset, contract);
 
-    fs.writeFileSync(config.jlptJsonPath, `${JSON.stringify(syncedDataset, null, 2)}\n`, "utf-8");
+    writeFileAtomicSync(config.jlptJsonPath, `${JSON.stringify(syncedDataset, null, 2)}\n`, "utf-8");
 
     const audit = auditJlptInventoryAgainstContract(
         loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null }),

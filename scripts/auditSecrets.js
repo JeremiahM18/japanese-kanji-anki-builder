@@ -112,12 +112,16 @@ function scanTextForSecrets({ relativePath, text }) {
 
 function scanTrackedFile({ cwd, relativePath }) {
     const absolutePath = path.join(cwd, relativePath);
-    const stat = fs.statSync(absolutePath);
-    if (!stat.isFile()) {
-        return [];
+    let buffer;
+    try {
+        buffer = fs.readFileSync(absolutePath);
+    } catch (error) {
+        if (error?.code === "ENOENT" || error?.code === "EISDIR") {
+            return [];
+        }
+        throw error;
     }
 
-    const buffer = fs.readFileSync(absolutePath);
     if (isProbablyBinary(buffer)) {
         return [];
     }

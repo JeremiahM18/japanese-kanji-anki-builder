@@ -8,7 +8,9 @@ const {
     assertSafeGeneratedPath,
     getDefaultGeneratedPathRoots,
     isPathInside,
+    readFileIfExistsSync,
     removeGeneratedPathSync,
+    writeFileAtomicSync,
 } = require("../src/utils/fs");
 
 function makeTempDir() {
@@ -60,6 +62,38 @@ test("removeGeneratedPathSync removes generated paths and rejects workspace file
             () => removeGeneratedPathSync(path.join(process.cwd(), "README.md"), { force: true }),
             /outside governed generated-output roots/
         );
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("writeFileAtomicSync writes through a sibling temp file", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const nestedFile = path.join(rootDir, "nested", "artifact.json");
+
+        writeFileAtomicSync(nestedFile, "{\"ok\":true}\n", "utf-8");
+
+        assert.equal(fs.readFileSync(nestedFile, "utf-8"), "{\"ok\":true}\n");
+        assert.deepEqual(
+            fs.readdirSync(path.dirname(nestedFile)).filter((entry) => entry.includes(".tmp")),
+            []
+        );
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("readFileIfExistsSync returns null only for missing files", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const filePath = path.join(rootDir, "present.txt");
+        fs.writeFileSync(filePath, "present", "utf-8");
+
+        assert.equal(readFileIfExistsSync(filePath, "utf-8"), "present");
+        assert.equal(readFileIfExistsSync(path.join(rootDir, "missing.txt"), "utf-8"), null);
     } finally {
         cleanupTempDir(rootDir);
     }

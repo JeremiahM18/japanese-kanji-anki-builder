@@ -19,9 +19,9 @@ Covered:
 
 Not fully provable from local files:
 
-- actual GitHub repository settings
-- actual protected-branch enforcement in GitHub
-- actual GitHub secret scanning, push protection, private vulnerability reporting, and CodeQL alert settings
+- current GitHub repository settings unless the authenticated hosted audit is rerun
+- current protected-branch enforcement in GitHub unless the authenticated hosted audit is rerun
+- current GitHub secret scanning, push protection, private vulnerability reporting, CodeQL alert, and Dependabot alert settings unless the authenticated hosted audit is rerun
 - hosted release artifact attestation verification after a real tag
 - human training completion
 - manual incident-response and recovery performance
@@ -59,18 +59,13 @@ Tracked files define the desired settings, but the local repo cannot prove GitHu
 
 Missing external confirmations:
 
-- branch protection on `main` matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json)
-- required status checks are enforced
-- GitHub secret scanning is enabled
-- push protection is enabled
-- private vulnerability reporting is enabled
-- CodeQL code-scanning alerts are visible and triaged
-- dependency review is active on pull requests
+- CodeQL code-scanning alerts are fully remediated, dismissed with documented rationale, or otherwise closed
+- Dependabot alerts are visible and no open alert is untriaged
 - artifact attestation verification works on a real tagged release
 
 Current artifact: [github-repository-settings-checklist.md](github-repository-settings-checklist.md).
 
-Current live finding from 2026-06-02: `main` is not protected in the hosted GitHub repository, private vulnerability reporting is disabled, and hosted workflow content does not prove artifact attestation verification after release creation. Hosted workflow content does prove pull-request Dependency Review and release attestation creation. Owner-auth-only settings returned `401 Unauthorized` without `GH_TOKEN`/`GITHUB_TOKEN`, so secret scanning, push protection, CodeQL alert state, Dependabot alert state, and detailed branch-protection settings remain unverified until an authenticated audit runs.
+Current live finding from 2026-06-02: authenticated owner audit verifies that hosted `main` is protected and matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json), required status checks are enforced, secret scanning is enabled, push protection is enabled, private vulnerability reporting is enabled, Dependency Review is configured, and release attestation creation is present. The gate still fails because CodeQL has `19` open alerts, Dependabot alert visibility returns `403` with the current GitHub CLI OAuth scopes, and hosted workflow content does not prove artifact attestation verification after release creation.
 
 ### P1: Formal Threat Model
 

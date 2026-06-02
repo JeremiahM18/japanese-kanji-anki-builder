@@ -1,10 +1,9 @@
-const fs = require("node:fs");
-
 const {
     normalizeWordStudyData,
     refreshStarterEntries,
 } = require("../datasets/wordStudyData");
-const { readJsonObject } = require("./curatedStudyBootstrapService");
+const { readJsonObject, readJsonObjectIfExists } = require("./curatedStudyBootstrapService");
+const { writeFileAtomicSync } = require("../utils/fs");
 
 function bootstrapWordStudyData({
     targetPath,
@@ -13,8 +12,9 @@ function bootstrapWordStudyData({
     refreshStarter = false,
 }) {
     const starterEntries = normalizeWordStudyData(readJsonObject(starterPath));
-    const targetExists = fs.existsSync(targetPath);
-    const existingEntries = targetExists ? readJsonObject(targetPath) : {};
+    const existingTarget = readJsonObjectIfExists(targetPath);
+    const targetExists = existingTarget.exists;
+    const existingEntries = existingTarget.value;
     const nextEntries = refreshStarter
         ? normalizeWordStudyData(refreshStarterEntries(starterEntries, existingEntries))
         : merge
@@ -22,7 +22,7 @@ function bootstrapWordStudyData({
         : starterEntries;
 
     if (!targetExists || merge || refreshStarter) {
-        fs.writeFileSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
+        writeFileAtomicSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
     }
 
     return {

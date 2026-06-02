@@ -4,8 +4,39 @@ const os = require("node:os");
 const path = require("node:path");
 
 function ensureDir(dirPath) {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
+    fs.mkdirSync(dirPath, { recursive: true });
+}
+
+function readFileIfExistsSync(filePath, options) {
+    try {
+        return fs.readFileSync(filePath, options);
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            return null;
+        }
+        throw error;
+    }
+}
+
+function writeFileAtomicSync(filePath, data, options) {
+    const resolvedTarget = path.resolve(filePath);
+    const targetDir = path.dirname(resolvedTarget);
+    ensureDir(targetDir);
+
+    const tempPath = path.join(
+        targetDir,
+        `.${path.basename(resolvedTarget)}.${process.pid}.${Date.now()}.tmp`
+    );
+
+    try {
+        fs.writeFileSync(tempPath, data, options);
+        fs.renameSync(tempPath, resolvedTarget);
+    } finally {
+        try {
+            fs.rmSync(tempPath, { force: true });
+        } catch {
+            // Best-effort cleanup only; the rename may already have consumed it.
+        }
     }
 }
 
@@ -81,6 +112,8 @@ module.exports = {
     ensureDir,
     getDefaultGeneratedPathRoots,
     isPathInside,
+    readFileIfExistsSync,
     removeGeneratedPath,
     removeGeneratedPathSync,
+    writeFileAtomicSync,
 };

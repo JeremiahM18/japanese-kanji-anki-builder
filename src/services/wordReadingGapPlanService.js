@@ -175,10 +175,10 @@ function buildCandidateLevelSummary(candidate, { jlptOnlyJson = {}, targetLevel 
 
 function getRubyReadingsForKanji(readingBreakdown, targetKanji) {
   const readings = [];
-  const rubyPattern = /<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g;
+  const rubyPattern = /<ruby>([^<>]*)<rt>([^<>]*)<\/rt><\/ruby>/g;
   let match;
   while ((match = rubyPattern.exec(String(readingBreakdown || ''))) !== null) {
-    const written = String(match[1] || '').replace(/<[^>]+>/g, '');
+    const written = String(match[1] || '');
     if (written.includes(targetKanji)) {
       readings.push(normalizeReadingToken(match[2]));
     }

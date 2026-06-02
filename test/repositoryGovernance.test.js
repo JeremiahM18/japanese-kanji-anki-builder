@@ -256,6 +256,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`supply-chain:audit` run when dependency manifests, npm scripts, workflows, or release artifact boundaries changed"), true);
     assert.equal(template.includes("`security:advisories` run when dependency manifests or lockfiles changed"), true);
     assert.equal(template.includes("`security:branch-protection` run when CI job names, required checks, branch policy, or protected-branch docs changed"), true);
+    assert.equal(template.includes("`security:secrets` run when configuration, scripts, fixtures, docs, or workflows could introduce credentials"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });
 
@@ -499,6 +500,7 @@ test("JLPT runtime dataset readers use the governed JLPT JSON loader", () => {
 
 test("child process execution stays explicit and allowlisted", () => {
     const expectedFiles = [
+        "scripts/auditSecrets.js",
         "scripts/manageVoicevoxContainer.js",
         "scripts/reportJlptKanjiSourceOcrIntake.js",
         "scripts/runKanjiNlpSignalSupport.js",

@@ -64,6 +64,8 @@ Do not add `contents: write`, `id-token: write`, broad write permissions, or rel
 
 Branch protection policy is tracked in `.github/branch-protection.main.json`. `npm run security:branch-protection` verifies that the policy, docs, and CI job names stay aligned before install and release jobs continue.
 
+Secret prevention has two layers. Enable GitHub secret scanning and push protection in repository settings so secrets are blocked before they enter history. The tracked `npm run security:secrets` gate scans committed files for high-confidence token and private-key patterns and runs before install in CI and release workflows.
+
 External actions are pinned to full commit SHAs resolved from their reviewed major-version tags. To update a pin, verify the new tag target with `git ls-remote`, update `.github/workflows/*.yml`, and rerun `npm run supply-chain:audit`.
 
 Current reviewed action pins:

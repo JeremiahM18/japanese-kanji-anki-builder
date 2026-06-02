@@ -14,6 +14,7 @@ This project is a local deck-build tool, not a hosted public service. The main b
 - Files under ignored workspace directories such as `data/`, `downloads/`, and `out/` are local inputs or generated outputs. Treat externally sourced dictionaries, sentence corpora, media, and audio as untrusted until their import path, parser behavior, provenance, and generated surfaces have been reviewed.
 - Anki note fields render HTML. Exporters must escape text from external or semi-trusted sources and preserve only the known exporter-owned markup needed for ruby, pitch contours, audio, and stroke-order media.
 - Do not commit `.env`, local datasets, generated media, model bundles, credentials, or private source files.
+- Run `npm run security:secrets` before committing changes that add credentials-adjacent configuration, scripts, fixtures, docs, or workflow content. This tracked-file scanner catches high-confidence token and private-key patterns; it complements GitHub secret scanning and push protection, which should be enabled in repository settings.
 
 ## Reporting A Vulnerability
 
@@ -41,6 +42,7 @@ Security fixes should be verified from live repository evidence, kept focused, d
 git diff --check
 npm run lint
 npm run typecheck
+npm run security:secrets
 npm test
 ```
 

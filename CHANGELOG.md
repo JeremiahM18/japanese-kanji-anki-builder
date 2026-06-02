@@ -18,6 +18,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Security
 
+- Added tagged release artifact attestations: release bundles now generate provenance and SBOM attestations with a job-scoped GitHub OIDC permission exception.
 - Added deterministic CycloneDX SBOM generation from `package-lock.json`; CI validates the SBOM model, and tagged release bundles write, checksum, and upload `out/security/sbom.cdx.json`.
 - Added pinned CodeQL code scanning for JavaScript/TypeScript and GitHub Actions workflow analysis, with exact required branch-protection checks and a scoped `security-events: write` exception for code-scanning uploads.
 - Added `security:secrets`, a tracked-file secret audit for high-confidence token and private-key patterns, and wired it into CI/release before dependency installation.

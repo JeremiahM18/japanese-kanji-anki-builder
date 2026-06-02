@@ -12,6 +12,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 - Platinum gates check current structural evidence.
 - Obsidian proof records substantive current-version rereview.
 - GitHub CodeQL scans JavaScript/TypeScript source and GitHub Actions workflow code in CI; there is no local npm equivalent for that hosted code-scanning upload gate.
+- Tagged release workflows create GitHub artifact attestations for release-bundle provenance and SBOM binding; there is no local npm equivalent for the hosted Sigstore-backed attestation upload gate.
 
 ## Standard gate bundle
 

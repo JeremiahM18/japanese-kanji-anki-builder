@@ -75,6 +75,11 @@ jobs:
     timeout-minutes: 20
     needs:
       - release_verify
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
     steps:
       - name: Check out repository
         # actions/checkout@v4.2.2 pinned from refs/tags/v4.2.2 on 2026-05-26.
@@ -125,6 +130,39 @@ jobs:
           find .release-smoke/out .release-gate/out out/security/sbom.cdx.json -type f -print0 \
             | sort -z \
             | xargs -0 sha256sum > release-artifacts.sha256
+
+      - name: Attest release bundle provenance
+        # actions/attest@v4.1.0 pinned from refs/tags/v4 on 2026-06-02.
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26
+        with:
+          subject-path: |
+            .release-smoke/out/**
+            .release-gate/out/**
+            CHANGELOG.md
+            NOTICE.md
+            docs/compatibility-matrix.md
+            docs/branch-protection.md
+            docs/release-process.md
+            docs/release-qa-checklist.md
+            out/security/sbom.cdx.json
+            release-artifacts.sha256
+
+      - name: Attest release bundle SBOM
+        # actions/attest@v4.1.0 pinned from refs/tags/v4 on 2026-06-02.
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26
+        with:
+          subject-path: |
+            .release-smoke/out/**
+            .release-gate/out/**
+            CHANGELOG.md
+            NOTICE.md
+            docs/compatibility-matrix.md
+            docs/branch-protection.md
+            docs/release-process.md
+            docs/release-qa-checklist.md
+            out/security/sbom.cdx.json
+            release-artifacts.sha256
+          sbom-path: out/security/sbom.cdx.json
 
       - name: Upload tagged release bundle
         # actions/upload-artifact@v4 pinned from refs/tags/v4 on 2026-05-22.

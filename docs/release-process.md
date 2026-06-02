@@ -19,7 +19,8 @@ This document defines tagged release procedure.
 5. Confirm [NOTICE.md](../NOTICE.md) reflects required shipped attribution.
 6. Push the release commit to `main` through the protected pull-request flow.
 7. Create and push the matching `v*` tag.
-8. Let [.github/workflows/release.yml](../.github/workflows/release.yml) produce the tagged release artifacts.
+8. Let [.github/workflows/release.yml](../.github/workflows/release.yml) produce the tagged release artifacts, CycloneDX SBOM, checksum manifest, provenance attestation, and SBOM attestation.
+9. Verify downloaded release artifacts against `release-artifacts.sha256` and the GitHub artifact attestations before distributing release claims outside the repository.
 
 ## Gate boundaries
 

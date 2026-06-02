@@ -56,6 +56,8 @@ See [SECURITY.md](SECURITY.md) for the disclosure policy and threat model. See [
 
 Security CI includes dependency review, npm advisory auditing, tracked secret scanning, lockfile-derived CycloneDX SBOM validation, branch-protection policy checks, and pinned CodeQL analysis for JavaScript/TypeScript plus GitHub Actions workflow code.
 
+Tagged release bundles include a checksum manifest, generated CycloneDX SBOM, and GitHub artifact attestations for provenance and SBOM binding.
+
 ## Review Tiers
 
 These tier names are product gates, not marketing labels. Kanji and word decks run them separately.

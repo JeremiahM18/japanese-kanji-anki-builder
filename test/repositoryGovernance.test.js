@@ -259,6 +259,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`security:secrets` run when configuration, scripts, fixtures, docs, or workflows could introduce credentials"), true);
     assert.equal(template.includes("`security:sbom` run when dependency manifests, lockfiles, release-bundle paths, or supply-chain workflows changed"), true);
     assert.equal(template.includes("CodeQL is expected to pass when source code or GitHub Actions workflows changed"), true);
+    assert.equal(template.includes("Release provenance and SBOM attestations are expected when tagged release-bundle workflow paths changed"), true);
     assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
 });
 

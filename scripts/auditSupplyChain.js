@@ -22,6 +22,10 @@ const ACTION_ALLOWLIST = Object.freeze({
         version: "v5.0.0",
         sha: "a1d282b36b6f3519aa1f3fc636f609c47dddb294",
     },
+    "actions/attest": {
+        version: "v4.1.0",
+        sha: "59d89421af93a897026c735860bf21b6eb4f7b26",
+    },
     "github/codeql-action/analyze": {
         version: "v4.36.1",
         sha: "87557b9c84dde89fdd9b10e88954ac2f4248e463",
@@ -61,6 +65,8 @@ const REQUIRED_RELEASE_BUNDLE_PATHS = Object.freeze([
 const FORBIDDEN_WORKFLOW_TOKENS = Object.freeze([
     "contents: write",
     "id-token: write",
+    "attestations: write",
+    "artifact-metadata: write",
     "pull-requests: write",
     "actions: write",
     "packages: write",
@@ -70,6 +76,7 @@ const FORBIDDEN_WORKFLOW_TOKENS = Object.freeze([
 
 const WORKFLOW_PERMISSION_EXCEPTIONS = Object.freeze({
     ".github/workflows/codeql.yml": Object.freeze(["security-events: write"]),
+    ".github/workflows/release.yml": Object.freeze(["id-token: write", "attestations: write", "artifact-metadata: write"]),
 });
 
 const FORBIDDEN_SCRIPT_SPEC_RE = /^(?:git\+|git:|github:|file:|link:|workspace:|http:|https:|npm:)/iu;
@@ -335,6 +342,13 @@ function auditWorkflowFile({ relativePath, text }) {
             `${relativePath} must scope security-events: write to the CodeQL job alongside read-only actions and contents permissions.`
         );
     }
+    if (permissionExceptions.has("id-token: write")) {
+        assertCondition(
+            /^\s{4}permissions:\s*\r?\n\s{6}contents:\s+read\r?\n\s{6}id-token:\s+write\r?\n\s{6}attestations:\s+write\r?\n\s{6}artifact-metadata:\s+write/mu.test(text),
+            errors,
+            `${relativePath} must scope id-token and attestation write permissions to the release bundle job.`
+        );
+    }
     assertSupplyChainAuditBeforeEveryInstall(text, relativePath, errors);
 
     for (const useValue of uses) {
@@ -391,6 +405,16 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
         releaseWorkflowText.includes("xargs -0 sha256sum > release-artifacts.sha256"),
         errors,
         "release workflow must emit release-artifacts.sha256 from null-delimited sha256sum input."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("Attest release bundle provenance") && releaseWorkflowText.includes("Attest release bundle SBOM"),
+        errors,
+        "release workflow must create provenance and SBOM attestations for tagged release artifacts."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("sbom-path: out/security/sbom.cdx.json"),
+        errors,
+        "release workflow must bind the generated CycloneDX SBOM into the SBOM attestation."
     );
 
     for (const releasePath of REQUIRED_RELEASE_BUNDLE_PATHS) {

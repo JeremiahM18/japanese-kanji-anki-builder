@@ -17,6 +17,10 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Added a release QA evidence packet template and fail-closed `product:release-qa:evidence` validator for APKG import, managed media, manual Anki import, mobile, accessibility, listening QA, accepted source-governance posture while source depth is incomplete, and known blocker evidence.
 - Added explicit N4 and N3 tracked-source kanji preflight and TSV npm aliases so level release checks do not depend on memorized script arguments or an all-level gate that intentionally fails on uncontracted higher levels.
 
+### Changed
+
+- Raised the project runtime floor from Node 18 to Node 20 and updated CI, branch-protection policy, hosted required checks, and compatibility docs to verify Node 20/22 only.
+
 ### Security
 
 - Verified and remediated hosted GitHub owner settings for `main`: branch protection now matches the tracked policy, secret scanning, push protection, private vulnerability reporting, Dependency Graph, vulnerability alerts, and Dependabot security updates are enabled; hosted CodeQL, secret-scanning, and Dependabot open alert counts are `0`; the live gate still fails on unproven hosted attestation verification.

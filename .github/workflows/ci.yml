@@ -85,7 +85,6 @@ jobs:
       fail-fast: false
       matrix:
         node-version:
-          - 18
           - 20
           - 22
 
@@ -188,7 +187,7 @@ jobs:
           - windows-2025-vs2026
           - macos-latest
         node-version:
-          - 18
+          - 20
           - 22
 
     steps:

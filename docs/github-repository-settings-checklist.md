@@ -45,7 +45,7 @@ Authenticated owner audit was rerun on 2026-06-03 against hosted `main` at `addc
 | Visibility | Public | Verified |
 | Default branch | `main` | Verified |
 | `main` protected | `true` from authenticated branch and protection endpoints | Verified |
-| Required status checks enforced | `14` required checks match [../.github/branch-protection.main.json](../.github/branch-protection.main.json); strict/up-to-date checks enabled | Verified |
+| Required status checks enforced | `13` required checks match [../.github/branch-protection.main.json](../.github/branch-protection.main.json); strict/up-to-date checks enabled | Verified |
 | Pull request review policy | Requires PR, `0` approvals for the current single-maintainer repository shape, no required CODEOWNERS review until a second write-access reviewer exists, stale approval dismissal, conversation resolution, linear history, and admin enforcement | Verified |
 | Force pushes and deletion | Disabled on `main` | Verified |
 | Secret scanning | `security_and_analysis.secret_scanning.status=enabled` | Verified |
@@ -89,14 +89,13 @@ Dependency Review
 Advisory Audit Ubuntu Node 22
 CodeQL Analysis (actions)
 CodeQL Analysis (javascript-typescript)
-Verify Ubuntu Node 18
 Verify Ubuntu Node 20
 Verify Ubuntu Node 22
-Smoke ubuntu-latest Node 18
+Smoke ubuntu-latest Node 20
 Smoke ubuntu-latest Node 22
-Smoke windows-2025-vs2026 Node 18
+Smoke windows-2025-vs2026 Node 20
 Smoke windows-2025-vs2026 Node 22
-Smoke macos-latest Node 18
+Smoke macos-latest Node 20
 Smoke macos-latest Node 22
 Release Gate Ubuntu Node 22
 ```

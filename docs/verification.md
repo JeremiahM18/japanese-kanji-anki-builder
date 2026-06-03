@@ -27,6 +27,7 @@ npm run security:branch-protection
 npm run security:github-settings:auth
 npm run security:licenses
 npm run security:requirements
+npm run security:release-trust:pre
 npm run security:release-trust
 npm run security:sdlc-metrics
 npm run security:secrets

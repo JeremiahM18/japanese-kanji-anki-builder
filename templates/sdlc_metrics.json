@@ -7,8 +7,25 @@
       "This contract validates SDLC security metric definitions, reviewer-readiness checklist routing, current risk-register posture, and security-requirements posture.",
       "It exposes current open, blocked, planned, and partially implemented governance work; it does not close hosted GitHub blockers, prove private training completion, prove manual QA, or certify release readiness.",
       "Metric thresholds are governance thresholds for visibility and review cadence, not permission to ignore release blockers.",
-      "Use security:release-trust for the fail-closed release-trust mode; it requires zero unresolved high/critical release-blocker risks and zero unimplemented release-blocker requirements."
+      "Use security:release-trust for the fail-closed release-trust mode; it requires zero unresolved high/critical release-blocker risks and zero unimplemented release-blocker requirements.",
+      "Use security:release-trust:pre only before a tagged release workflow creates hosted attestation evidence; it defers explicitly listed post-release proof records but still fails on every other active release blocker."
     ]
+  },
+  "releaseTrust": {
+    "preRelease": {
+      "deferredRiskRecords": [
+        {
+          "id": "SEC-P0-004",
+          "reason": "Attestation verification proof requires the tagged release workflow to create and verify hosted attestations before the owner-authenticated hosted audit can close the risk."
+        }
+      ],
+      "deferredRequirementRecords": [
+        {
+          "id": "SEC-REQ-007",
+          "reason": "Release artifact trust is only partially implemented until a hosted tagged release workflow proves checksum, SBOM, provenance, and attestation verification evidence."
+        }
+      ]
+    }
   },
   "trainingChecklist": {
     "path": "docs/security-training-checklist.md",
@@ -119,6 +136,7 @@
   ],
   "verificationCommands": [
     "npm run security:sdlc-metrics",
+    "npm run security:release-trust:pre",
     "npm run security:release-trust",
     "npm run security:requirements",
     "npm test"

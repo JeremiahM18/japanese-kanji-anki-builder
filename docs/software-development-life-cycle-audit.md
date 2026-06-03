@@ -151,11 +151,11 @@ Current artifacts:
 - [../templates/sdlc_metrics.json](../templates/sdlc_metrics.json)
 - [../scripts/reportSdlcMetrics.js](../scripts/reportSdlcMetrics.js)
 
-Current commands: `npm run security:sdlc-metrics` for visibility and `npm run security:release-trust` for fail-closed release-trust claims.
+Current commands: `npm run security:sdlc-metrics` for visibility, `npm run security:release-trust:pre` for tagged-workflow pre-attestation trust, and `npm run security:release-trust` for full fail-closed release-trust claims.
 
 Current metrics cover unresolved high/critical risk visibility, overdue risk reviews, planned security-requirements backlog, external/partial requirement blockers, training topic coverage, and checklist section coverage.
 
-Remaining limitation: visibility metrics expose current SDLC health and review cadence. Release-trust mode fails while high/critical release-blocker risks or unimplemented release-blocker requirements remain, but it still does not close hosted GitHub blockers, prove private training completion, prove release manual QA, or certify product release readiness.
+Remaining limitation: visibility metrics expose current SDLC health and review cadence. Pre-release trust mode defers only configured post-release attestation-proof records; it still fails on other active release blockers. Full release-trust mode fails while any high/critical release-blocker risk or unimplemented release-blocker requirement remains, but it still does not close hosted GitHub blockers, prove private training completion, prove release manual QA, or certify product release readiness.
 
 ### P2: Add Release QA Evidence Packet
 

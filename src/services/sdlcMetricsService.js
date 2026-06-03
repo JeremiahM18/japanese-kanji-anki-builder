@@ -7,6 +7,7 @@ const { loadSecurityRequirementsTraceability } = require("../datasets/securityRe
 const HIGH_CRITICAL_SEVERITIES = new Set(["critical", "high"]);
 const UNRESOLVED_DECISIONS = new Set(["open", "blocked external"]);
 const IMPLEMENTED_STATUS = "implemented";
+const RELEASE_TRUST_MODES = new Set(["visibility", "pre", "full"]);
 
 function readText(cwd, relativePath) {
     return fs.readFileSync(path.join(cwd, relativePath), "utf-8");
@@ -142,21 +143,61 @@ function summarizeSecurityRequirements(matrix) {
     };
 }
 
-function summarizeReleaseTrust({ riskRecords, requirements }) {
+function normalizeReleaseTrustMode({ releaseTrust = false, releaseTrustMode = undefined } = {}) {
+    if (releaseTrustMode) {
+        if (!RELEASE_TRUST_MODES.has(releaseTrustMode)) {
+            throw new Error(`Unsupported release trust mode: ${releaseTrustMode}`);
+        }
+        return releaseTrustMode;
+    }
+    return releaseTrust ? "full" : "visibility";
+}
+
+function getDeferredIds(entries = []) {
+    return new Set(
+        (Array.isArray(entries) ? entries : [])
+            .map((entry) => String(entry?.id || "").trim())
+            .filter(Boolean)
+    );
+}
+
+function summarizeReleaseTrust({
+    riskRecords,
+    requirements,
+    deferredRiskRecords = [],
+    deferredRequirementRecords = [],
+} = {}) {
     const releaseBlockerRiskRecordIds = new Set(requirements.releaseBlockerRiskRecords || []);
-    const highCriticalReleaseBlockerRisks = riskRecords.filter((record) => (
+    const deferredRiskIds = getDeferredIds(deferredRiskRecords);
+    const deferredRequirementIds = getDeferredIds(deferredRequirementRecords);
+    const allHighCriticalReleaseBlockerRisks = riskRecords.filter((record) => (
         releaseBlockerRiskRecordIds.has(record.id)
         && HIGH_CRITICAL_SEVERITIES.has(normalizeSeverity(record.severity))
         && UNRESOLVED_DECISIONS.has(normalizeDecision(record.decision))
     ));
-    const unimplementedReleaseBlockerRequirements = requirements.unimplementedReleaseBlockerRecords || [];
+    const deferredHighCriticalReleaseBlockerRiskRecords = allHighCriticalReleaseBlockerRisks
+        .filter((record) => deferredRiskIds.has(record.id))
+        .map((record) => record.id);
+    const highCriticalReleaseBlockerRiskRecords = allHighCriticalReleaseBlockerRisks
+        .filter((record) => !deferredRiskIds.has(record.id))
+        .map((record) => record.id);
+    const allUnimplementedReleaseBlockerRequirements = requirements.unimplementedReleaseBlockerRecords || [];
+    const deferredUnimplementedReleaseBlockerRequirementRecords =
+        allUnimplementedReleaseBlockerRequirements.filter((id) => deferredRequirementIds.has(id));
+    const unimplementedReleaseBlockerRequirementRecords =
+        allUnimplementedReleaseBlockerRequirements.filter((id) => !deferredRequirementIds.has(id));
 
     return {
-        highCriticalReleaseBlockerRisks: highCriticalReleaseBlockerRisks.length,
-        highCriticalReleaseBlockerRiskRecords: highCriticalReleaseBlockerRisks.map((record) => record.id),
-        unimplementedReleaseBlockerRequirements: unimplementedReleaseBlockerRequirements.length,
-        unimplementedReleaseBlockerRequirementRecords: unimplementedReleaseBlockerRequirements,
-        passed: highCriticalReleaseBlockerRisks.length === 0 && unimplementedReleaseBlockerRequirements.length === 0,
+        highCriticalReleaseBlockerRisks: highCriticalReleaseBlockerRiskRecords.length,
+        highCriticalReleaseBlockerRiskRecords,
+        deferredHighCriticalReleaseBlockerRisks: deferredHighCriticalReleaseBlockerRiskRecords.length,
+        deferredHighCriticalReleaseBlockerRiskRecords,
+        unimplementedReleaseBlockerRequirements: unimplementedReleaseBlockerRequirementRecords.length,
+        unimplementedReleaseBlockerRequirementRecords,
+        deferredUnimplementedReleaseBlockerRequirements: deferredUnimplementedReleaseBlockerRequirementRecords.length,
+        deferredUnimplementedReleaseBlockerRequirementRecords,
+        passed: highCriticalReleaseBlockerRiskRecords.length === 0
+            && unimplementedReleaseBlockerRequirementRecords.length === 0,
     };
 }
 
@@ -285,7 +326,9 @@ function buildSdlcMetricsReport({
     metricsPath = undefined,
     asOfDate = formatAsOfDate(new Date()),
     releaseTrust = false,
+    releaseTrustMode = undefined,
 } = {}) {
+    const normalizedReleaseTrustMode = normalizeReleaseTrustMode({ releaseTrust, releaseTrustMode });
     const resolvedMetricsPath = resolveSdlcMetricsPath(cwd, metricsPath);
     const matrix = loadSdlcMetrics({ metricsPath: resolvedMetricsPath });
     const packageJson = JSON.parse(readText(cwd, "package.json"));
@@ -296,7 +339,17 @@ function buildSdlcMetricsReport({
         : "";
     const risk = summarizeRiskRegister(riskRecords, { asOfDate });
     const requirements = summarizeSecurityRequirements(securityRequirements);
-    const releaseTrustSummary = summarizeReleaseTrust({ riskRecords, requirements });
+    const preReleaseTrustConfig = matrix.releaseTrust?.preRelease || {};
+    const releaseTrustSummary = summarizeReleaseTrust({
+        riskRecords,
+        requirements,
+        deferredRiskRecords: normalizedReleaseTrustMode === "pre"
+            ? preReleaseTrustConfig.deferredRiskRecords
+            : [],
+        deferredRequirementRecords: normalizedReleaseTrustMode === "pre"
+            ? preReleaseTrustConfig.deferredRequirementRecords
+            : [],
+    });
     const training = summarizeTrainingChecklist({
         checklistText,
         checklistConfig: matrix.trainingChecklist || {},
@@ -329,9 +382,14 @@ function buildSdlcMetricsReport({
         training,
         metricResults,
         staticFailures,
-        mode: releaseTrust ? "release-trust" : "visibility",
+        mode: normalizedReleaseTrustMode === "pre"
+            ? "pre-release-trust"
+            : normalizedReleaseTrustMode === "full"
+                ? "release-trust"
+                : "visibility",
         releaseTrust: {
-            enforced: releaseTrust,
+            enforced: normalizedReleaseTrustMode !== "visibility",
+            phase: normalizedReleaseTrustMode,
             ...releaseTrustSummary,
         },
     };
@@ -390,8 +448,11 @@ function formatSdlcMetricsReport(report) {
     lines.push("");
     lines.push("Release trust posture:");
     lines.push(`- enforced: ${report.releaseTrust.enforced ? "yes" : "no"}`);
+    lines.push(`- phase: ${report.releaseTrust.phase}`);
     lines.push(`- high/critical release-blocker risks: ${report.releaseTrust.highCriticalReleaseBlockerRisks}${report.releaseTrust.highCriticalReleaseBlockerRiskRecords.length ? ` (${report.releaseTrust.highCriticalReleaseBlockerRiskRecords.join(", ")})` : ""}`);
+    lines.push(`- pre-release deferred high/critical risks: ${report.releaseTrust.deferredHighCriticalReleaseBlockerRisks || 0}${report.releaseTrust.deferredHighCriticalReleaseBlockerRiskRecords?.length ? ` (${report.releaseTrust.deferredHighCriticalReleaseBlockerRiskRecords.join(", ")})` : ""}`);
     lines.push(`- unimplemented release-blocker requirements: ${report.releaseTrust.unimplementedReleaseBlockerRequirements}${report.releaseTrust.unimplementedReleaseBlockerRequirementRecords.length ? ` (${report.releaseTrust.unimplementedReleaseBlockerRequirementRecords.join(", ")})` : ""}`);
+    lines.push(`- pre-release deferred unimplemented requirements: ${report.releaseTrust.deferredUnimplementedReleaseBlockerRequirements || 0}${report.releaseTrust.deferredUnimplementedReleaseBlockerRequirementRecords?.length ? ` (${report.releaseTrust.deferredUnimplementedReleaseBlockerRequirementRecords.join(", ")})` : ""}`);
 
     lines.push("");
     lines.push("Training checklist:");
@@ -424,6 +485,7 @@ module.exports = {
     collectSdlcMetricsFailures,
     formatAsOfDate,
     formatSdlcMetricsReport,
+    normalizeReleaseTrustMode,
     parseRiskRegister,
     summarizeReleaseTrust,
     summarizeRiskRegister,

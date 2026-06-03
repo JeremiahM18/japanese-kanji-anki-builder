@@ -16,7 +16,7 @@ test("branch protection policy, docs, and CI checks stay aligned", () => {
     assert.deepEqual(report.errors, []);
     assert.equal(report.ok, true);
     assert.equal(report.branch, "main");
-    assert.equal(report.requiredStatusChecks.length, 14);
+    assert.equal(report.requiredStatusChecks.length, 13);
     assert.equal(report.requiredStatusChecks.includes("CodeQL Analysis (actions)"), true);
     assert.equal(report.requiredStatusChecks.includes("CodeQL Analysis (javascript-typescript)"), true);
     assert.equal(report.requiredSettings.requiredApprovingReviewCount, 0);
@@ -54,6 +54,6 @@ test("branch protection audit report is readable for local verification", () => 
 
     assert.match(text, /Branch protection audit/);
     assert.match(text, /Status: pass/);
-    assert.match(text, /Required status checks: 14/);
+    assert.match(text, /Required status checks: 13/);
     assert.match(text, /Dependency Review/);
 });

@@ -34,7 +34,7 @@ This document identifies expected risks and controls. It does not prove the live
 
 Authoritative checks are:
 
-- `npm run security:github-settings`
+- `npm run security:github-settings:auth`
 - `npm run supply-chain:audit`
 - `npm run security:advisories`
 - `npm run security:branch-protection`
@@ -113,7 +113,7 @@ Run the focused security bundle after changing this model or a named control:
 
 ```bash
 git status --short --untracked-files=all
-npm run security:github-settings
+npm run security:github-settings:auth
 npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection

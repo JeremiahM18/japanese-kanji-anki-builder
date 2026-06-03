@@ -38,7 +38,7 @@ Before changing files:
 ```bash
 git status --short --untracked-files=all
 git log -5 --oneline
-npm run security:github-settings
+npm run security:github-settings:auth
 ```
 
 Capture:

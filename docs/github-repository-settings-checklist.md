@@ -21,24 +21,19 @@ Local desired policy:
 ## Live Verification Command
 
 ```bash
-npm run security:github-settings
+npm run security:github-settings:auth
 ```
 
-Use an authenticated token for full verification:
+The wrapper first uses `GH_TOKEN` or `GITHUB_TOKEN`. If neither is set, it runs `gh auth token` through GitHub CLI and passes the token to the audit without printing it.
+
+Use the lower-level audit directly only when the environment already injects the token:
 
 ```powershell
 $env:GH_TOKEN="<token with repository security/settings read access>"
 npm run security:github-settings
 ```
 
-If GitHub CLI is already authenticated, this keeps the token out of terminal output:
-
-```powershell
-$env:GH_TOKEN = gh auth token
-npm run security:github-settings
-```
-
-Do not commit, paste, or log the token.
+Do not commit, paste, or log a token.
 
 ## 2026-06-02 Live Result
 
@@ -114,8 +109,8 @@ Release Gate Ubuntu Node 22
 
 Remaining:
 
-1. Merge the tracked CodeQL-pattern remediations, rerun hosted CodeQL, and keep `npm run security:github-settings` failing until open CodeQL alerts are `0`, or dismiss specific alerts only with documented rationale.
-2. Merge the tracked release-workflow attestation verification step to hosted `main`, run a tagged release workflow, then rerun `npm run security:github-settings` until attestation verification is configured in hosted workflow content and proven by a successful hosted release run.
+1. Merge the tracked CodeQL-pattern remediations, rerun hosted CodeQL, and keep `npm run security:github-settings:auth` failing until open CodeQL alerts are `0`, or dismiss specific alerts only with documented rationale.
+2. Merge the tracked release-workflow attestation verification step to hosted `main`, run a tagged release workflow, then rerun `npm run security:github-settings:auth` until attestation verification is configured in hosted workflow content and proven by a successful hosted release run.
 
 ## Failure Semantics
 

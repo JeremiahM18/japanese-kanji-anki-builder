@@ -14,6 +14,11 @@ const {
     listBranchProtectionPolicyGaps,
     parseArgs,
 } = require("../scripts/auditGithubRepositorySettings");
+const {
+    buildAuthenticatedAuditEnv,
+    formatAuthenticatedGithubSettingsAudit,
+    resolveGithubAuditToken,
+} = require("../scripts/auditGithubRepositorySettingsWithGhAuth");
 
 function endpoint({ ok = true, statusCode = 200, body = {} } = {}) {
     return { ok, statusCode, body };
@@ -87,6 +92,97 @@ test("parseArgs defaults to the governed GitHub repository", () => {
 test("buildHeaders uses a token without exposing one when absent", () => {
     assert.equal(buildHeaders({}).Authorization, undefined);
     assert.equal(buildHeaders({ GH_TOKEN: "token-value" }).Authorization, "Bearer token-value");
+});
+
+test("authenticated GitHub settings wrapper prefers environment tokens", () => {
+    let ghCalls = 0;
+    const auth = resolveGithubAuditToken({
+        env: { GH_TOKEN: " gh-token-from-env ", GITHUB_TOKEN: "github-token-from-env" },
+        spawnSyncImpl: () => {
+            ghCalls += 1;
+            return { status: 0, stdout: "gh-cli-token" };
+        },
+    });
+
+    assert.deepEqual(auth, {
+        token: "gh-token-from-env",
+        source: "GH_TOKEN",
+    });
+    assert.equal(ghCalls, 0);
+    assert.deepEqual(buildAuthenticatedAuditEnv({ FOO: "bar" }, "token-value"), {
+        FOO: "bar",
+        GH_TOKEN: "token-value",
+    });
+});
+
+test("authenticated GitHub settings wrapper falls back to gh auth token without printing the token", () => {
+    const auth = resolveGithubAuditToken({
+        env: {},
+        spawnSyncImpl: (command, args, options) => {
+            assert.equal(command, "gh");
+            assert.deepEqual(args, ["auth", "token"]);
+            assert.equal(options.windowsHide, true);
+            return { status: 0, stdout: "gh-cli-token\n" };
+        },
+    });
+    const formatted = formatAuthenticatedGithubSettingsAudit({
+        repo: "owner/repo",
+        branch: "main",
+        authenticated: true,
+        status: "pass",
+        authenticationSource: auth.source,
+        summary: {
+            branchProtected: true,
+            branchProtectionMatchesPolicy: true,
+            ciWorkflowActive: true,
+            codeqlWorkflowActive: true,
+            releaseWorkflowActive: true,
+            dependencyReviewConfigured: true,
+            vulnerabilityAlertsEnabled: true,
+            dependencyGraphSbomReadable: true,
+            dependencyGraphSbomPackages: 1,
+            dependabotSecurityUpdatesEnabled: true,
+            dependabotSecurityUpdatesPaused: false,
+            releaseWorkflowCreatesAttestations: true,
+            artifactAttestationVerificationAutomated: true,
+            artifactAttestationVerificationProven: true,
+            repositorySecurityAndAnalysisReadable: true,
+            secretScanningEnabled: true,
+            secretScanningPushProtectionEnabled: true,
+            privateVulnerabilityReportingEnabled: true,
+            openCodeScanningAlerts: 0,
+            openSecretScanningAlerts: 0,
+            openDependabotAlerts: 0,
+            latestCiConclusion: "success",
+            latestCodeqlConclusion: "success",
+            latestReleaseConclusion: "success",
+        },
+        findings: [],
+    });
+
+    assert.deepEqual(auth, {
+        token: "gh-cli-token",
+        source: "gh auth token",
+    });
+    assert.match(formatted, /Authentication source: gh auth token/u);
+    assert.doesNotMatch(formatted, /gh-cli-token/u);
+});
+
+test("authenticated GitHub settings wrapper gives actionable auth guidance", () => {
+    assert.throws(
+        () => resolveGithubAuditToken({
+            env: {},
+            spawnSyncImpl: () => ({ status: 1, stdout: "", stderr: "not logged in" }),
+        }),
+        /gh auth status/u
+    );
+    assert.throws(
+        () => resolveGithubAuditToken({
+            env: {},
+            spawnSyncImpl: () => ({ error: new Error("missing gh") }),
+        }),
+        /gh auth login/u
+    );
 });
 
 test("buildAuditEndpoints covers hosted P0 settings", () => {

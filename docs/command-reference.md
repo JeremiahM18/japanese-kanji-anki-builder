@@ -13,6 +13,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run security:advisories` | Run the internet-backed npm advisory audit gate at `moderate` severity or higher |
 | `npm run security:branch-protection` | Verify tracked branch-protection policy, documentation, and CI required-check names stay aligned |
 | `npm run security:github-settings` | Live-check hosted GitHub repository security settings and fail on unprotected or unverified P0 settings |
+| `npm run security:github-settings:auth` | Run the hosted GitHub settings audit with `GH_TOKEN`/`GITHUB_TOKEN`, or safely obtain the token from authenticated GitHub CLI |
 | `npm run security:licenses` | Validate dependency license expressions against the tracked allowlist and current reviewed exceptions without writing an artifact |
 | `npm run security:licenses:write` | Write the release dependency-license summary to `out/security/dependency-licenses.json` after the license audit passes |
 | `npm run security:requirements` | Validate the tracked security requirements traceability matrix, including implementation files, evidence files, verification commands, manual QA posture, risk-record links, and release-blocker counts |

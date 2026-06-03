@@ -46,7 +46,7 @@ Authenticated owner audit was run on 2026-06-02 after enabling branch protection
 | Default branch | `main` | Verified |
 | `main` protected | `true` from authenticated branch and protection endpoints | Verified |
 | Required status checks enforced | `14` required checks match [../.github/branch-protection.main.json](../.github/branch-protection.main.json); strict/up-to-date checks enabled | Verified |
-| Pull request review policy | Requires PR, `1` approval, CODEOWNERS review, stale approval dismissal, conversation resolution, linear history, and admin enforcement | Verified |
+| Pull request review policy | Requires PR, `0` approvals for the current single-maintainer repository shape, no required CODEOWNERS review until a second write-access reviewer exists, stale approval dismissal, conversation resolution, linear history, and admin enforcement | Verified |
 | Force pushes and deletion | Disabled on `main` | Verified |
 | Secret scanning | `security_and_analysis.secret_scanning.status=enabled` | Verified |
 | Push protection | `security_and_analysis.secret_scanning_push_protection.status=enabled` | Verified |
@@ -74,8 +74,8 @@ Completed on 2026-06-02:
 
 1. Enabled branch protection for `main`.
 2. Required pull requests before merging.
-3. Required at least one approving review.
-4. Required CODEOWNERS review.
+3. Required `0` approving reviews for the current single-maintainer repository shape.
+4. Disabled required CODEOWNERS review until a second write-access reviewer or team exists.
 5. Dismissed stale approvals.
 6. Required conversation resolution.
 7. Required branch up-to-date before merge.

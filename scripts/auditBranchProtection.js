@@ -10,8 +10,8 @@ const CHECK_WORKFLOW_PATHS = Object.freeze([
 
 const DOC_SETTING_PHRASES = Object.freeze({
     requirePullRequestBeforeMerging: "require a pull request before merging",
-    requiredApprovingReviewCount: "require at least 1 approval",
-    requireCodeOwnerReviews: "require review from code owners",
+    requiredApprovingReviewCount: "require `0` approving reviews",
+    requireCodeOwnerReviews: "do not require code-owner review",
     dismissStaleApprovals: "dismiss stale approvals when new commits are pushed",
     requireConversationResolution: "require conversation resolution before merge",
     requireStatusChecksBeforeMerging: "require status checks before merging",
@@ -207,9 +207,7 @@ function buildBranchProtectionAuditReport({ cwd = process.cwd() } = {}) {
     for (const [settingName, phrase] of Object.entries(DOC_SETTING_PHRASES)) {
         const expectedValue = policy.requiredSettings?.[settingName];
         assertCondition(expectedValue !== undefined, errors, `${POLICY_PATH} missing required setting ${settingName}.`);
-        if (expectedValue === true || expectedValue === 1 || expectedValue === false) {
-            assertCondition(branchDoc.includes(phrase), errors, `docs/branch-protection.md must document setting: ${phrase}`);
-        }
+        assertCondition(branchDoc.includes(phrase), errors, `docs/branch-protection.md must document setting: ${phrase}`);
     }
 
     for (const check of requiredStatusChecks) {

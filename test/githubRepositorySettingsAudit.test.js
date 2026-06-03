@@ -36,8 +36,8 @@ function contentEndpoint(text) {
 const branchProtectionPolicy = Object.freeze({
     requiredSettings: {
         requirePullRequestBeforeMerging: true,
-        requiredApprovingReviewCount: 1,
-        requireCodeOwnerReviews: true,
+        requiredApprovingReviewCount: 0,
+        requireCodeOwnerReviews: false,
         dismissStaleApprovals: true,
         requireConversationResolution: true,
         requireStatusChecksBeforeMerging: true,
@@ -62,8 +62,8 @@ function protectedBranchEndpoint(overrides = {}) {
             },
             required_pull_request_reviews: {
                 dismiss_stale_reviews: true,
-                require_code_owner_reviews: true,
-                required_approving_review_count: 1,
+                require_code_owner_reviews: false,
+                required_approving_review_count: 0,
             },
             required_conversation_resolution: { enabled: true },
             required_linear_history: { enabled: true },

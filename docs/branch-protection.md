@@ -9,8 +9,8 @@ The tracked policy source is [../.github/branch-protection.main.json](../.github
 Enable these protections on `main`:
 
 - require a pull request before merging
-- require at least 1 approval
-- require review from code owners
+- require `0` approving reviews for the current single-maintainer repository shape
+- do not require code-owner review while the only maintainer account is also the pull request author
 - dismiss stale approvals when new commits are pushed
 - require status checks before merging
 - require branches to be up to date before merging
@@ -41,6 +41,6 @@ Mark these checks as required on `main`:
 
 ## Ownership expectation
 
-Changes to workflow, packaging, dependency manifests, supply-chain policy, shared schema, services, test harnesses, or contributor process files require code-owner review before merge.
+Changes to workflow, packaging, dependency manifests, supply-chain policy, shared schema, services, test harnesses, or contributor process files remain covered by [.github/CODEOWNERS](../.github/CODEOWNERS), but CODEOWNER approval is not a hosted merge requirement while the repository has only one GitHub maintainer account. Re-enable required code-owner review and at least one approval only after a second write-access reviewer or team exists.
 
 Changes that affect JLPT taxonomy, starter curation, Gold regression placement, source-evidence inputs, or deck-membership logic also require `npm run data:audit:jlpt`, the read-only `npm run data:audit:jlpt:sources -- --governance-strict --limit=25` transparency audit, and the relevant strict `npm run data:audit:jlpt:source-inputs -- --source=<source-id> --strict` preflight before merge. Source-evidence input imports must also dry-run `npm run data:import:jlpt:source-input -- --source=<source-id>` before any `--write` update to the tracked manifest.

@@ -329,11 +329,15 @@ test("documentation standard defines enterprise doc schemas and README routing",
     assert.match(documentationMap, /\[docs\/documentation-standard\.md\]\(docs\/documentation-standard\.md\)/);
     assert.match(standard, /# Documentation Standard/);
     assert.match(standard, /## Research Basis/);
-    assert.equal(standard.includes("https://developers.google.com/style"), true);
-    assert.equal(standard.includes("https://google.github.io/styleguide/docguide/READMEs.html"), true);
-    assert.equal(standard.includes("https://learn.microsoft.com/en-us/style-guide/welcome/"), true);
-    assert.equal(standard.includes("https://support.apple.com/guide/applestyleguide/welcome/web"), true);
-    assert.equal(standard.includes("https://docs.oracle.com/en/database/oracle/oracle-database/19/rnrdm/database-release-notes.pdf"), true);
+    const researchBasisLines = standard.split(/\r?\n/u);
+    for (const line of [
+        "- [Google developer documentation style guide](https://developers.google.com/style) and [Google README guidance](https://google.github.io/styleguide/docguide/READMEs.html): project-specific style first, clear technical docs, accessible/global writing, descriptive links, and README files that explain purpose, status, usage, ownership/contact, and links to deeper docs.",
+        "- [Microsoft Writing Style Guide](https://learn.microsoft.com/en-us/style-guide/welcome/) and [Microsoft Learn contributor guidance](https://learn.microsoft.com/en-us/contribute/content/style-quick-start): task-focused writing, concise/scannable sections, everyday language, code examples where useful, and explicit contribution/update process.",
+        "- [Apple Style Guide](https://support.apple.com/guide/applestyleguide/welcome/web): consistent voice across documentation, reference material, training, UI text, inclusive language, international style, and technical notation consistency.",
+        "- [Oracle Database Release Notes](https://docs.oracle.com/en/database/oracle/oracle-database/19/rnrdm/database-release-notes.pdf): release-grade structure that states audience, accessibility, related resources, conventions, purpose, platform scope, compatibility/security posture, known issues, unsupported products, and late-breaking limitations.",
+    ]) {
+        assert.equal(researchBasisLines.some((actualLine) => actualLine === line), true, `Documentation standard missing research basis line: ${line}`);
+    }
 
     for (const heading of [
         "## Universal Schema",

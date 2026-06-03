@@ -213,7 +213,7 @@ test("supply-chain audit catches dependency and workflow mutation abuse", () => 
 
         assert.equal(report.ok, false);
         assert.match(errors, /Direct dependency express must come from the npm registry/);
-        assert.match(errors, /must pin actions\/checkout@v4\.2\.2 to the reviewed SHA/);
+        assert.match(errors, /must pin actions\/checkout@v6\.0\.3 to the reviewed SHA/);
     } finally {
         fs.rmSync(tempRepo, { recursive: true, force: true });
     }

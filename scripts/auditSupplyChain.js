@@ -3,20 +3,20 @@ const path = require("node:path");
 
 const ACTION_ALLOWLIST = Object.freeze({
     "actions/checkout": {
-        version: "v4.2.2",
-        sha: "11bd71901bbe5b1630ceea73d27597364c9af683",
+        version: "v6.0.3",
+        sha: "df4cb1c069e1874edd31b4311f1884172cec0e10",
     },
     "actions/setup-node": {
-        version: "v4",
-        sha: "49933ea5288caeca8642d1e84afbd3f7d6820020",
+        version: "v6.4.0",
+        sha: "48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
     },
     "actions/setup-python": {
-        version: "v5",
-        sha: "a26af69be951a213d495a4c3e4e4022e16d87065",
+        version: "v6.2.0",
+        sha: "a309ff8b426b58ec0e2a45f0f869d46889d02405",
     },
     "actions/upload-artifact": {
-        version: "v4",
-        sha: "ea165f8d65b6e75b540449e92b4886f43607fa02",
+        version: "v7.0.1",
+        sha: "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
     },
     "actions/dependency-review-action": {
         version: "v5.0.0",

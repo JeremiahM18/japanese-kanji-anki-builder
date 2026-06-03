@@ -42,7 +42,7 @@ Do not commit, paste, or log the token.
 
 ## 2026-06-02 Live Result
 
-Authenticated owner audit was run on 2026-06-02 after enabling branch protection, private vulnerability reporting, vulnerability alerts, Dependency Graph, and Dependabot security updates. The hosted `main` branch now matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, and open Dependabot alerts are `0`. The gate still fails because live CodeQL has open alerts and hosted release workflow content does not yet prove post-creation attestation verification. Tracked workflow and CodeQL-pattern remediations have been added locally and must reach hosted `main` before the hosted audit can verify them.
+Authenticated owner audit was run on 2026-06-02 after enabling branch protection, private vulnerability reporting, vulnerability alerts, Dependency Graph, and Dependabot security updates. The hosted `main` branch now matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, and open Dependabot alerts are `0`. The gate still fails because live CodeQL has open alerts and hosted release workflow content does not yet prove post-creation attestation verification. Tracked workflow and CodeQL-pattern remediations have been added locally and must reach hosted `main` before the hosted audit can verify them. After the workflow content reaches hosted `main`, attestation verification is still only configured until a successful hosted release workflow run proves it.
 
 | Setting | Live result | Status |
 | --- | --- | --- |
@@ -62,7 +62,8 @@ Authenticated owner audit was run on 2026-06-02 after enabling branch protection
 | Vulnerability alerts / Dependency Graph | `GET /vulnerability-alerts` returned `204`; Dependency Graph SBOM endpoint returned `289` packages | Verified |
 | Dependabot security updates | `GET /automated-security-fixes` returned `enabled:true` and `paused:false` | Verified |
 | Release attestation creation | Hosted `.github/workflows/release.yml` contains provenance and SBOM attestation steps for the release bundle | Verified |
-| Artifact attestation verification | Hosted workflow content does not yet prove `gh attestation verify`; tracked local workflow now includes attestation verification with signer workflow, source ref, and source digest constraints | Failing until hosted workflow updates |
+| Artifact attestation verification configured | Hosted workflow content does not yet prove `gh attestation verify` with `--repo`, `--signer-workflow`, `--source-ref`, and `--source-digest`; tracked local workflow now includes these constraints | Failing until hosted workflow updates |
+| Artifact attestation verification proven | No successful hosted release workflow run exists yet to prove the verification step after attestation creation | Failing until tagged release workflow succeeds |
 | Branch protection detail endpoint | Authenticated endpoint returned `200` and matched tracked policy | Verified |
 | Code scanning open alerts | Authenticated endpoint returned `19` open CodeQL alerts | Failing |
 | Secret scanning alerts | Authenticated endpoint returned `0` open secret-scanning alerts | Verified |
@@ -114,7 +115,7 @@ Release Gate Ubuntu Node 22
 Remaining:
 
 1. Merge the tracked CodeQL-pattern remediations, rerun hosted CodeQL, and keep `npm run security:github-settings` failing until open CodeQL alerts are `0`, or dismiss specific alerts only with documented rationale.
-2. Merge the tracked release-workflow attestation verification step to hosted `main`, then rerun `npm run security:github-settings` and a tagged release workflow until attestation verification is proven in hosted evidence.
+2. Merge the tracked release-workflow attestation verification step to hosted `main`, run a tagged release workflow, then rerun `npm run security:github-settings` until attestation verification is configured in hosted workflow content and proven by a successful hosted release run.
 
 ## Failure Semantics
 
@@ -125,6 +126,7 @@ Remaining:
 - `secret_scanning_disabled` and `push_protection_disabled` are blockers for hosted secret prevention.
 - `vulnerability_alerts_disabled`, `dependency_graph_sbom_unreadable`, `dependabot_security_updates_disabled`, and `dependabot_security_updates_paused` are blockers for hosted dependency security posture.
 - `code_scanning_open_alerts`, `secret_scanning_open_alerts`, and `dependabot_open_alerts` are blockers until triaged, fixed, or explicitly accepted with documented rationale.
-- `artifact_attestation_verification_unverified` is a blocker for trusting release attestations as consumed evidence.
+- `artifact_attestation_verification_unverified` is a blocker because hosted workflow content does not configure constrained `gh attestation verify` after attestation creation.
+- `artifact_attestation_verification_unproven` is a blocker because hosted workflow content configures verification but no successful hosted release workflow run has proven the step yet.
 - `*_unverified` means the local audit could not prove the hosted setting. It is not a pass.
 - A successful CI or CodeQL run proves workflow execution for that commit only. It does not prove branch protection, secret scanning, push protection, private vulnerability reporting, or release attestation verification.

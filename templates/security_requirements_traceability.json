@@ -277,7 +277,8 @@
       "manualQaRequired": true,
       "manualReview": [
         "Verify downloaded release artifacts against release-artifacts.sha256.",
-        "Run or record gh attestation verify for each trusted release artifact."
+        "Run or record gh attestation verify for each trusted release artifact.",
+        "Rerun owner-authenticated security:github-settings after a successful hosted release workflow run proves configured attestation verification."
       ],
       "releaseBlocker": true,
       "riskRecords": [

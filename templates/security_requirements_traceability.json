@@ -515,6 +515,8 @@
       ],
       "verificationCommands": [
         "npm run security:sdlc-metrics",
+        "npm run security:release-trust:pre",
+        "npm run security:release-trust",
         "npm run security:requirements",
         "npm test"
       ],

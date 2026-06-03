@@ -22,6 +22,7 @@
     "security:licenses:write": "node scripts/auditDependencyLicenses.js --out=out/security/dependency-licenses.json",
     "security:requirements": "node scripts/auditSecurityRequirementsTraceability.js",
     "security:release-trust": "node scripts/reportSdlcMetrics.js --release-trust",
+    "security:release-trust:pre": "node scripts/reportSdlcMetrics.js --release-trust=pre",
     "security:sdlc-metrics": "node scripts/reportSdlcMetrics.js",
     "security:secrets": "node scripts/auditSecrets.js",
     "security:sbom": "node scripts/generateCycloneDxSbom.js",

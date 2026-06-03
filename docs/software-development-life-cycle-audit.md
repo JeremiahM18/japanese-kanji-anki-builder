@@ -26,6 +26,10 @@ Not fully provable from local files:
 - human training completion
 - manual incident-response and recovery performance
 
+## Authority Boundary
+
+This audit records the current tracked SDLC posture and the latest recorded verification evidence. It does not replace live hosted audits, private training records, manual incident exercises, release QA evidence packets, source-governance evidence-depth work, or product release certification.
+
 ## Framework Basis
 
 This audit uses:
@@ -59,7 +63,7 @@ Tracked files define the desired settings, but the local repo cannot prove GitHu
 
 Missing external confirmations:
 
-- CodeQL code-scanning alerts are fully remediated, dismissed with documented rationale, or otherwise closed
+- a fresh owner-authenticated hosted audit after any repository setting, workflow, required-check, or security-alert drift
 - artifact attestation verification works on a real tagged release
 
 Current artifacts:
@@ -70,7 +74,7 @@ Current artifacts:
 
 Current command: `npm run security:github-settings:auth`.
 
-Current live finding from 2026-06-02: authenticated owner audit verifies that hosted `main` is protected and matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json), required status checks are enforced, secret scanning is enabled, push protection is enabled, private vulnerability reporting is enabled, Dependency Review is configured, vulnerability alerts and Dependency Graph are enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, open Dependabot alerts are `0`, and release attestation creation is present. The gate still fails because CodeQL has `19` open alerts and hosted workflow content does not yet prove artifact attestation verification after release creation. Tracked release workflow remediation now includes `gh attestation verify` with signer-workflow, source-ref, and source-digest constraints, and tracked CodeQL-pattern remediation now includes the proof-ledger JSONL append path, but both still need hosted merge and rerun evidence.
+Current live finding recorded on 2026-06-03: authenticated owner audit verifies that hosted `main` is protected and matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json), required status checks are enforced, secret scanning is enabled, push protection is enabled, private vulnerability reporting is enabled, Dependency Review is configured, vulnerability alerts and Dependency Graph are enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, open CodeQL alerts are `0`, open secret-scanning alerts are `0`, open Dependabot alerts are `0`, latest hosted CI and CodeQL conclusions are `success`, release attestation creation is present, and hosted workflow content configures constrained artifact attestation verification. The gate still fails only because no successful hosted tagged release workflow run has proven the attestation verification step after attestation creation.
 
 ### P1: Formal Threat Model
 
@@ -217,3 +221,7 @@ npm run security:release-trust
 ```
 
 The final VOICEVOX status was running, local-only, and runtime-hardened. `doctor:voicevox` reported the engine reachable and the pinned release voice ready.
+
+## Update Triggers
+
+Update this audit when SDLC controls, branch policy, CI/release workflows, hosted security posture, CodeQL or Dependabot alert posture, risk records, security requirements, training checklist, incident/recovery runbooks, release QA evidence, dependency policy, or source-governance posture changes.

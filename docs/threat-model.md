@@ -101,7 +101,7 @@ Authoritative checks are:
 ## Residual Risks
 
 - Hosted `main` branch protection and private vulnerability reporting are currently verified by authenticated owner audit, but they remain drift-prone hosted settings and must be rechecked before release-trust claims.
-- Authenticated hosted audit now verifies branch protection, secret scanning, push protection, private vulnerability reporting, Dependency Graph, Dependabot security updates, Dependabot alert visibility, and CodeQL alert visibility. CodeQL still has open hosted alerts until the tracked remediation reaches hosted `main` and reruns cleanly.
+- Authenticated hosted audit now verifies branch protection, secret scanning, push protection, private vulnerability reporting, Dependency Graph, Dependabot security updates, Dependabot alert visibility, secret-scanning alert visibility, and CodeQL alert visibility. The 2026-06-03 recorded hosted audit reports open CodeQL, secret-scanning, and Dependabot alerts as `0`; those hosted counts remain drift-prone and must be rerun before release-trust claims.
 - Release attestation creation and tracked verification automation are present, but hosted tag-run verification evidence is not yet proven.
 - Manual Anki import, mobile, screen-reader, listening, and visual media QA cannot be replaced by automated tests.
 - Source-evidence confidence and source-use posture remain separate from generated card correctness.

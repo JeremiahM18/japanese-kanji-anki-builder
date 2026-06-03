@@ -210,7 +210,7 @@
     {
       "id": "SEC-REQ-006",
       "priority": "P0",
-      "status": "partially-implemented",
+      "status": "implemented",
       "title": "Hosted security alert settings are visible and triaged",
       "sourceMappings": [
         "NIST SSDF RV.1",
@@ -239,7 +239,7 @@
       "manualQaRequired": true,
       "manualReview": [
         "Run the hosted settings audit with owner-authenticated security/settings access.",
-        "Triage any open CodeQL, secret scanning, or dependency alert before release claims."
+        "Reopen SEC-P0-005 and triage any open CodeQL, secret scanning, or dependency alert before release claims."
       ],
       "releaseBlocker": true,
       "riskRecords": [

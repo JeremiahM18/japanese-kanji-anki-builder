@@ -172,7 +172,14 @@ function hasHostedAttestationCreation(releaseWorkflowText) {
 }
 
 function hasHostedAttestationVerification(releaseWorkflowText) {
-    return Boolean(releaseWorkflowText && /\bgh\s+attestation\s+verify\b/iu.test(releaseWorkflowText));
+    return Boolean(
+        releaseWorkflowText
+        && /\bgh\s+attestation\s+verify\b/iu.test(releaseWorkflowText)
+        && releaseWorkflowText.includes("--repo")
+        && releaseWorkflowText.includes("--signer-workflow")
+        && releaseWorkflowText.includes("--source-ref")
+        && releaseWorkflowText.includes("--source-digest")
+    );
 }
 
 function listBranchProtectionPolicyGaps(branchProtectionResult, policy) {
@@ -235,6 +242,7 @@ function evaluateGithubSettingsAudit(audit) {
         repositorySecurityAndAnalysis !== null
         && typeof repositorySecurityAndAnalysis === "object";
     const summary = {
+        latestReleaseRun: getLatestRunFromEndpoint(audit.endpoints.releaseWorkflowRuns),
         repositoryPublic: audit.endpoints.repository?.body?.private === false,
         defaultBranch: audit.endpoints.repository?.body?.default_branch || null,
         branchProtected: audit.endpoints.branch?.body?.protected === true,
@@ -263,10 +271,14 @@ function evaluateGithubSettingsAudit(audit) {
         dependencyReviewConfigured: hasHostedDependencyReview(ciWorkflowText),
         releaseWorkflowCreatesAttestations: hasHostedAttestationCreation(releaseWorkflowText),
         artifactAttestationVerificationAutomated: hasHostedAttestationVerification(releaseWorkflowText),
+        artifactAttestationVerificationProven: false,
         latestCiConclusion: getLatestWorkflowRun("CI", audit.endpoints.actionsRuns)?.conclusion || null,
         latestCodeqlConclusion: getLatestWorkflowRun("CodeQL", audit.endpoints.actionsRuns)?.conclusion || null,
         latestReleaseConclusion: getLatestRunFromEndpoint(audit.endpoints.releaseWorkflowRuns)?.conclusion || null,
     };
+    summary.artifactAttestationVerificationProven =
+        summary.artifactAttestationVerificationAutomated
+        && summary.latestReleaseRun?.conclusion === "success";
 
     if (!summary.branchProtected) {
         findings.push({
@@ -433,6 +445,12 @@ function evaluateGithubSettingsAudit(audit) {
                 key: "artifact_attestation_verification_unverified",
                 message: "Hosted workflow content does not prove artifact attestations are verified after release creation.",
             });
+        } else if (!summary.artifactAttestationVerificationProven) {
+            findings.push({
+                severity: "high",
+                key: "artifact_attestation_verification_unproven",
+                message: "Hosted workflow content configures attestation verification, but no successful hosted release workflow run proves it yet.",
+            });
         }
     }
 
@@ -465,6 +483,7 @@ function formatGithubSettingsAudit(audit) {
         `Dependabot security updates paused: ${audit.summary.dependabotSecurityUpdatesPaused ? "yes" : "no"}`,
         `Release attestations created: ${audit.summary.releaseWorkflowCreatesAttestations ? "yes" : "no"}`,
         `Artifact attestation verification automated: ${audit.summary.artifactAttestationVerificationAutomated ? "yes" : "no"}`,
+        `Artifact attestation verification proven: ${audit.summary.artifactAttestationVerificationProven ? "yes" : "no"}`,
         `Repository security settings readable: ${audit.summary.repositorySecurityAndAnalysisReadable ? "yes" : "no"}`,
         `Secret scanning enabled: ${audit.summary.secretScanningEnabled ? "yes" : "no"}`,
         `Push protection enabled: ${audit.summary.secretScanningPushProtectionEnabled ? "yes" : "no"}`,

@@ -133,7 +133,7 @@ test("hosted workflow content helpers detect dependency review and attestation p
         "      - name: Attest release bundle SBOM",
         "        uses: actions/attest@reviewedsha",
         "      - name: Verify release bundle attestation",
-        "        run: gh attestation verify release-artifacts.sha256",
+        "        run: gh attestation verify release-artifacts.sha256 --repo owner/repo --signer-workflow github.com/owner/repo/.github/workflows/release.yml --source-ref refs/tags/v1.0.0 --source-digest abc123",
         "      - run: echo release-artifacts.sha256",
     ].join("\n");
 
@@ -279,7 +279,7 @@ test("evaluateGithubSettingsAudit fails closed on open hosted security alerts", 
                 "      - name: Attest release bundle SBOM",
                 "        uses: actions/attest@reviewedsha",
                 "      - name: Verify release bundle attestation",
-                "        run: gh attestation verify release-artifacts.sha256",
+                "        run: gh attestation verify release-artifacts.sha256 --repo owner/repo --signer-workflow github.com/owner/repo/.github/workflows/release.yml --source-ref refs/tags/v1.0.0 --source-digest abc123",
                 "      - run: echo release-artifacts.sha256",
             ].join("\n")),
         },
@@ -290,6 +290,71 @@ test("evaluateGithubSettingsAudit fails closed on open hosted security alerts", 
     assert.equal(audit.findings.some((finding) => finding.key === "secret_scanning_open_alerts"), true);
     assert.equal(audit.findings.some((finding) => finding.key === "dependabot_open_alerts"), true);
     assert.match(formatGithubSettingsAudit(audit), /Open CodeQL alerts: 2/u);
+});
+
+test("evaluateGithubSettingsAudit requires a successful hosted release run to prove attestation verification", () => {
+    const audit = evaluateGithubSettingsAudit({
+        repo: "owner/repo",
+        branch: "main",
+        authenticated: true,
+        checkedAt: "2026-06-02T00:00:00.000Z",
+        branchProtectionPolicy,
+        endpoints: {
+            repository: endpoint({
+                body: {
+                    private: false,
+                    default_branch: "main",
+                    security_and_analysis: {
+                        secret_scanning: { status: "enabled" },
+                        secret_scanning_push_protection: { status: "enabled" },
+                    },
+                },
+            }),
+            branch: endpoint({ body: { protected: true } }),
+            branchProtection: protectedBranchEndpoint(),
+            codeScanningAlerts: endpoint({ body: [] }),
+            secretScanningAlerts: endpoint({ body: [] }),
+            dependabotAlerts: endpoint({ body: [] }),
+            vulnerabilityAlerts: endpoint({ statusCode: 204, body: null }),
+            automatedSecurityFixes: endpoint({ body: { enabled: true, paused: false } }),
+            dependencyGraphSbom: endpoint({ body: { sbom: { packages: [{ name: "root" }] } } }),
+            privateVulnerabilityReporting: endpoint({ body: { enabled: true } }),
+            actionsRuns: endpoint({ body: { workflow_runs: [] } }),
+            releaseWorkflowRuns: endpoint({ body: { workflow_runs: [] } }),
+            ciWorkflow: endpoint({ body: { state: "active" } }),
+            codeqlWorkflow: endpoint({ body: { state: "active" } }),
+            releaseWorkflow: endpoint({ body: { state: "active" } }),
+            ciWorkflowContent: contentEndpoint([
+                "on:",
+                "  pull_request:",
+                "jobs:",
+                "  dependency_review:",
+                "    name: Dependency Review",
+                "    steps:",
+                "      - uses: actions/dependency-review-action@reviewedsha",
+                "        with:",
+                "          fail-on-severity: moderate",
+            ].join("\n")),
+            releaseWorkflowContent: contentEndpoint([
+                "jobs:",
+                "  release_bundle:",
+                "    steps:",
+                "      - name: Attest release bundle provenance",
+                "        uses: actions/attest@reviewedsha",
+                "      - name: Attest release bundle SBOM",
+                "        uses: actions/attest@reviewedsha",
+                "      - name: Verify release bundle attestation",
+                "        run: gh attestation verify release-artifacts.sha256 --repo owner/repo --signer-workflow github.com/owner/repo/.github/workflows/release.yml --source-ref refs/tags/v1.0.0 --source-digest abc123",
+                "      - run: echo release-artifacts.sha256",
+            ].join("\n")),
+        },
+    });
+
+    assert.equal(audit.status, "fail");
+    assert.equal(audit.summary.artifactAttestationVerificationAutomated, true);
+    assert.equal(audit.summary.artifactAttestationVerificationProven, false);
+    assert.equal(audit.findings.some((finding) => finding.key === "artifact_attestation_verification_unproven"), true);
+    assert.match(formatGithubSettingsAudit(audit), /Artifact attestation verification proven: no/u);
 });
 
 test("evaluateGithubSettingsAudit fails closed when hosted security controls are disabled", () => {
@@ -344,7 +409,7 @@ test("evaluateGithubSettingsAudit fails closed when hosted security controls are
                 "      - name: Attest release bundle SBOM",
                 "        uses: actions/attest@reviewedsha",
                 "      - name: Verify release bundle attestation",
-                "        run: gh attestation verify release-artifacts.sha256",
+                "        run: gh attestation verify release-artifacts.sha256 --repo owner/repo --signer-workflow github.com/owner/repo/.github/workflows/release.yml --source-ref refs/tags/v1.0.0 --source-digest abc123",
                 "      - run: echo release-artifacts.sha256",
             ].join("\n")),
         },
@@ -417,7 +482,7 @@ test("evaluateGithubSettingsAudit can pass when every hosted signal is clean", (
                 "      - name: Attest release bundle SBOM",
                 "        uses: actions/attest@reviewedsha",
                 "      - name: Verify release bundle attestation",
-                "        run: gh attestation verify release-artifacts.sha256",
+                "        run: gh attestation verify release-artifacts.sha256 --repo owner/repo --signer-workflow github.com/owner/repo/.github/workflows/release.yml --source-ref refs/tags/v1.0.0 --source-digest abc123",
                 "      - run: echo release-artifacts.sha256",
             ].join("\n")),
         },

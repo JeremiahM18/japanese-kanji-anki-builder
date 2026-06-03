@@ -34,7 +34,7 @@ test("branch protection audit expands matrix job names", () => {
         "      matrix:",
         "        os:",
         "          - ubuntu-latest",
-        "          - windows-latest",
+        "          - windows-2025-vs2026",
         "        node-version:",
         "          - 20",
         "          - 22",
@@ -43,8 +43,8 @@ test("branch protection audit expands matrix job names", () => {
     assert.deepEqual(extractCiCheckNames(workflowText), [
         "Example ubuntu-latest Node 20",
         "Example ubuntu-latest Node 22",
-        "Example windows-latest Node 20",
-        "Example windows-latest Node 22",
+        "Example windows-2025-vs2026 Node 20",
+        "Example windows-2025-vs2026 Node 22",
     ]);
 });
 

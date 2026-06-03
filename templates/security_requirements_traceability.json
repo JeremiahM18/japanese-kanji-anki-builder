@@ -31,7 +31,8 @@
         ".github/branch-protection.main.json",
         "docs/branch-protection.md",
         "docs/github-repository-settings-checklist.md",
-        "scripts/auditGithubRepositorySettings.js"
+        "scripts/auditGithubRepositorySettings.js",
+        "scripts/auditGithubRepositorySettingsWithGhAuth.js"
       ],
       "evidenceFiles": [
         "test/branchProtectionPolicy.test.js",
@@ -39,7 +40,8 @@
       ],
       "verificationCommands": [
         "npm run security:branch-protection",
-        "npm run security:github-settings"
+        "npm run security:github-settings",
+        "npm run security:github-settings:auth"
       ],
       "manualQaRequired": true,
       "manualReview": [
@@ -70,10 +72,12 @@
       ],
       "evidenceFiles": [
         "scripts/auditGithubRepositorySettings.js",
+        "scripts/auditGithubRepositorySettingsWithGhAuth.js",
         "test/githubRepositorySettingsAudit.test.js"
       ],
       "verificationCommands": [
-        "npm run security:github-settings"
+        "npm run security:github-settings",
+        "npm run security:github-settings:auth"
       ],
       "manualQaRequired": true,
       "manualReview": [
@@ -219,7 +223,8 @@
         ".github/workflows/codeql.yml",
         ".github/workflows/ci.yml",
         "docs/github-repository-settings-checklist.md",
-        "scripts/auditGithubRepositorySettings.js"
+        "scripts/auditGithubRepositorySettings.js",
+        "scripts/auditGithubRepositorySettingsWithGhAuth.js"
       ],
       "evidenceFiles": [
         "test/githubRepositorySettingsAudit.test.js",
@@ -227,6 +232,7 @@
       ],
       "verificationCommands": [
         "npm run security:github-settings",
+        "npm run security:github-settings:auth",
         "npm run security:secrets",
         "npm run security:advisories"
       ],
@@ -257,6 +263,7 @@
         "docs/release-process.md",
         "docs/recovery-and-rollback.md",
         "docs/github-repository-settings-checklist.md",
+        "scripts/auditGithubRepositorySettingsWithGhAuth.js",
         "scripts/auditDependencyLicenses.js",
         "scripts/auditSupplyChain.js"
       ],
@@ -272,13 +279,14 @@
         "npm run security:licenses:write",
         "npm run security:sbom",
         "npm run release:gate",
-        "npm run security:github-settings"
+        "npm run security:github-settings",
+        "npm run security:github-settings:auth"
       ],
       "manualQaRequired": true,
       "manualReview": [
         "Verify downloaded release artifacts against release-artifacts.sha256.",
         "Run or record gh attestation verify for each trusted release artifact.",
-        "Rerun owner-authenticated security:github-settings after a successful hosted release workflow run proves configured attestation verification."
+        "Rerun owner-authenticated security:github-settings:auth after a successful hosted release workflow run proves configured attestation verification."
       ],
       "releaseBlocker": true,
       "riskRecords": [

@@ -24,6 +24,7 @@ npm run typecheck
 npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection
+npm run security:github-settings:auth
 npm run security:licenses
 npm run security:requirements
 npm run security:release-trust

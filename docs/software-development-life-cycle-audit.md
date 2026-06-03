@@ -62,7 +62,13 @@ Missing external confirmations:
 - CodeQL code-scanning alerts are fully remediated, dismissed with documented rationale, or otherwise closed
 - artifact attestation verification works on a real tagged release
 
-Current artifact: [github-repository-settings-checklist.md](github-repository-settings-checklist.md).
+Current artifacts:
+
+- [github-repository-settings-checklist.md](github-repository-settings-checklist.md)
+- [../scripts/auditGithubRepositorySettings.js](../scripts/auditGithubRepositorySettings.js)
+- [../scripts/auditGithubRepositorySettingsWithGhAuth.js](../scripts/auditGithubRepositorySettingsWithGhAuth.js)
+
+Current command: `npm run security:github-settings:auth`.
 
 Current live finding from 2026-06-02: authenticated owner audit verifies that hosted `main` is protected and matches [../.github/branch-protection.main.json](../.github/branch-protection.main.json), required status checks are enforced, secret scanning is enabled, push protection is enabled, private vulnerability reporting is enabled, Dependency Review is configured, vulnerability alerts and Dependency Graph are enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, open Dependabot alerts are `0`, and release attestation creation is present. The gate still fails because CodeQL has `19` open alerts and hosted workflow content does not yet prove artifact attestation verification after release creation. Tracked release workflow remediation now includes `gh attestation verify` with signer-workflow, source-ref, and source-digest constraints, and tracked CodeQL-pattern remediation now includes the proof-ledger JSONL append path, but both still need hosted merge and rerun evidence.
 

@@ -561,6 +561,7 @@ test("JLPT runtime dataset readers use the governed JLPT JSON loader", () => {
 
 test("child process execution stays explicit and allowlisted", () => {
     const expectedFiles = [
+        "scripts/auditGithubRepositorySettingsWithGhAuth.js",
         "scripts/auditSecrets.js",
         "scripts/manageVoicevoxContainer.js",
         "scripts/reportJlptKanjiSourceOcrIntake.js",

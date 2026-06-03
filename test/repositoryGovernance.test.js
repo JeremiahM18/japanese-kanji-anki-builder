@@ -37,6 +37,21 @@ function extractReadmeSection(readme, heading) {
         : readme.slice(bodyStart, bodyStart + nextHeading);
 }
 
+function assertMarkdownSectionOrder(documentText, headings, description) {
+    let previousIndex = -1;
+
+    for (const heading of headings) {
+        const headingText = `## ${heading}`;
+        const currentIndex = documentText.indexOf(headingText);
+        assert.notEqual(currentIndex, -1, `${description} missing section: ${headingText}`);
+        assert.ok(
+            currentIndex > previousIndex,
+            `${description} section ${headingText} is out of order.`
+        );
+        previousIndex = currentIndex;
+    }
+}
+
 function extractMarkdownTableRows(sectionText) {
     return sectionText
         .split(/\r?\n/)
@@ -326,7 +341,33 @@ test("documentation standard defines enterprise doc schemas and README routing",
     const readme = readRepoFile("README.md");
     const standard = readRepoFile(path.join("docs", "documentation-standard.md"));
     const documentationMap = extractReadmeSection(readme, "Documentation Map");
+    const readmePurpose = extractReadmeSection(readme, "Purpose");
+    const readmeAuthorityBoundary = extractReadmeSection(readme, "Authority Boundary");
+    const readmeFailureSemantics = extractReadmeSection(readme, "Failure Semantics");
+    const readmeUpdateTriggers = extractReadmeSection(readme, "Update Triggers");
 
+    assertMarkdownSectionOrder(readme, [
+        "Purpose",
+        "Scope",
+        "Authority Boundary",
+        "Quick Start",
+        "Security Posture",
+        "Review Tiers",
+        "Current Baseline",
+        "Pipeline At A Glance",
+        "Deck Model At A Glance",
+        "Source Of Truth",
+        "JLPT Kanji Source Evidence At A Glance",
+        "Product Rules",
+        "Failure Semantics",
+        "Core Workflows",
+        "Verification And Release",
+        "Assistive NLP Review Engine",
+        "Documentation Map",
+        "Update Triggers",
+        "Local Data And Outputs",
+    ], "README");
+    assert.match(readme.slice(0, readme.indexOf("## Purpose")), /# Japanese Kanji Anki Builder[\s\S]*Run this first:[\s\S]*npm run doctor/);
     assert.match(documentationMap, /\[docs\/documentation-standard\.md\]\(docs\/documentation-standard\.md\)/);
     assert.match(standard, /# Documentation Standard/);
     assert.match(standard, /## Research Basis/);
@@ -356,6 +397,15 @@ test("documentation standard defines enterprise doc schemas and README routing",
     }
 
     assert.match(standard, /Do not use generated TSV, APKG output, SQLite mirrors, or local ignored files as tracked source truth/);
+    assert.match(readmePurpose, /controlled output, not casual scrape-and-export deck generation/);
+    assert.match(readmeAuthorityBoundary, /orientation and routing document/);
+    assert.match(readmeAuthorityBoundary, /does not certify release readiness/);
+    assert.match(readmeAuthorityBoundary, /Treat every count and status here as an orientation snapshot/);
+    assert.match(readmeFailureSemantics, /Expected backlog failures must stay visible and scoped/);
+    assert.match(readmeFailureSemantics, /Blockers require a fix, a rerun, or an explicit accepted-risk record/);
+    assert.match(readmeFailureSemantics, /Diagnostic passes do not certify unrelated lanes/);
+    assert.match(readmeUpdateTriggers, /Update this README in the same commit/);
+    assert.match(readmeUpdateTriggers, /Do not preserve stale status language/);
     assert.doesNotMatch(readme, /staged consumer switch/);
 });
 

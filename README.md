@@ -10,7 +10,7 @@ npm run doctor
 
 Kanji cards and word cards are separate learning products. A kanji card teaches one target kanji. A word card teaches one exact written form and reading, such as `学校|がっこう`.
 
-## About
+## Purpose
 
 This repository is built for controlled output, not casual scrape-and-export deck generation.
 
@@ -26,6 +26,12 @@ This repository is built for controlled output, not casual scrape-and-export dec
 - Curated learner-facing readings, meanings, examples, notes, pitch accent, audio, and stroke-order media.
 - Governed source evidence for JLPT kanji taxonomy and word-card field review.
 - Offline-safe preview, review, build, package, audit, and release-gate commands.
+
+## Authority Boundary
+
+This README is an orientation and routing document. It does not certify release readiness, current hosted GitHub settings, source-evidence completion, APKG import, mobile behavior, accessibility, listening quality, managed-media QA, or ignored local input quality by itself.
+
+Current truth comes from the tracked contracts, live commands, generated reports, hosted audits, and manual evidence packets named in the relevant section. Treat every count and status here as an orientation snapshot; rerun the named commands before merge, release, source-governance, or deck-quality decisions.
 
 ## Quick Start
 
@@ -245,6 +251,14 @@ Review layers:
 - Kanji Platinum entries before `kanji-platinum-v3-evidence-lanes`, and word Platinum entries before `word-platinum-v3-evidence-lanes`, are legacy history until revalidated.
 - Use the [Obsidian batch workflow](docs/obsidian-batch-workflow.md) for review batches. Run status, batch, generated-surface refresh, NLP support, human review, canonical JSONL proof append via `data:obsidian:proof:append`, structural/reading verification, and progress checks during the work; run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian.
 
+## Failure Semantics
+
+Expected backlog failures must stay visible and scoped. Incomplete N1 current-standard Platinum/Obsidian coverage, incomplete N3/N2/N1 word readiness, source-evidence depth gaps, missing release QA evidence, and unproven post-attestation release verification are not clean states, but they are different from regressions in completed scopes.
+
+Blockers require a fix, a rerun, or an explicit accepted-risk record before release-facing claims. Examples include a fail-closed certification failure for a completed denominator, a hosted security alert that is open without accepted-risk documentation, a source lane promoted beyond its permitted evidence posture, a local-data-only gate reported as CI truth, or manual APKG/mobile/accessibility/listening QA being treated as proven by automated tests.
+
+Diagnostic passes do not certify unrelated lanes. Source-use governance, NLP governance, generated-row readiness, Gold regression, Platinum coverage, Obsidian proof, media completeness, hosted security posture, release trust, and manual product QA each keep their own denominator and command evidence.
+
 ## Core Workflows
 
 Use [docs/workflows.md](docs/workflows.md) for complete workflow details.
@@ -384,6 +398,12 @@ Full operating rules live in [docs/nlp-model-governance.md](docs/nlp-model-gover
 | Source-evidence workflow | [docs/source-evidence-batching.md](docs/source-evidence-batching.md), [docs/source-acquisition-register.md](docs/source-acquisition-register.md) |
 | Dependency and artifact trust boundaries | [docs/supply-chain-security.md](docs/supply-chain-security.md) |
 | Platform compatibility | [docs/compatibility-matrix.md](docs/compatibility-matrix.md) |
+
+## Update Triggers
+
+Update this README in the same commit when product counts, review-tier posture, gate names, source-evidence lane status, release blockers, security posture, workflow entry points, local-data boundaries, source-of-truth paths, or documentation-map entries change.
+
+README changes that alter release-facing posture also require the relevant deeper doc and [CHANGELOG.md](CHANGELOG.md) line to move with them. Do not preserve stale status language here if the live command, tracked manifest, hosted audit, or manual evidence packet no longer supports it.
 
 ## Local Data And Outputs
 

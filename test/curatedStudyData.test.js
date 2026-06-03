@@ -173,6 +173,31 @@ test("resolveTrackedStarterPaths includes sorted starter batch extensions after 
     assert.deepEqual(result, [starterPath, batchAPath, batchBPath]);
 });
 
+test("tracked starter curated data files do not duplicate kanji keys", () => {
+    const repoRoot = path.resolve(__dirname, "..");
+    const starterPath = path.join(repoRoot, "templates", "starter_curated_study_data.json");
+    const trackedStarterPaths = resolveTrackedStarterPaths({ starterPath });
+    const seenByKanji = new Map();
+    const duplicateMessages = [];
+
+    for (const entryPath of trackedStarterPaths) {
+        const relativePath = path.relative(repoRoot, entryPath).replaceAll(path.sep, "/");
+        const entries = JSON.parse(fs.readFileSync(entryPath, "utf-8"));
+
+        for (const kanji of Object.keys(entries)) {
+            const priorPath = seenByKanji.get(kanji);
+            if (priorPath) {
+                duplicateMessages.push(`${kanji}: ${priorPath}, ${relativePath}`);
+                continue;
+            }
+
+            seenByKanji.set(kanji, relativePath);
+        }
+    }
+
+    assert.deepEqual(duplicateMessages, []);
+});
+
 test("loadCuratedStudyData merges multiple tracked starter files before local overrides", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "curated-study-"));
     const filePath = path.join(dir, "curated_study_data.json");

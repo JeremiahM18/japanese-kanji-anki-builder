@@ -46,4 +46,4 @@
 - [ ] `nlp:governance-gate` run when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed
 - [ ] Source-evidence imports dry-run `data:import:jlpt:source-input -- --source=<source-id>` before any `--write`
 - [ ] `release:gate` run when packaging, CI, or toolchain behavior changed
-- [ ] CODEOWNERS review requested when touching protected paths
+- [ ] CODEOWNERS-covered paths checked against the current single-maintainer policy

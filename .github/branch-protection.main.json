@@ -3,8 +3,8 @@
   "policyVersion": "2026-06-02",
   "requiredSettings": {
     "requirePullRequestBeforeMerging": true,
-    "requiredApprovingReviewCount": 1,
-    "requireCodeOwnerReviews": true,
+    "requiredApprovingReviewCount": 0,
+    "requireCodeOwnerReviews": false,
     "dismissStaleApprovals": true,
     "requireConversationResolution": true,
     "requireStatusChecksBeforeMerging": true,

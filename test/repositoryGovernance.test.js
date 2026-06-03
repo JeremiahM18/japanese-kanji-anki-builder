@@ -152,7 +152,8 @@ test("branch protection baseline names the required GitHub checks", () => {
         assert.equal(branchProtection.includes(`- \`${check}\``), true, `Missing required check in branch protection doc: ${check}`);
     }
 
-    assert.equal(branchProtection.includes("require review from code owners"), true);
+    assert.equal(branchProtection.includes("require `0` approving reviews"), true);
+    assert.equal(branchProtection.includes("do not require code-owner review"), true);
     assert.equal(branchProtection.includes("require conversation resolution before merge"), true);
     assert.equal(branchProtection.includes("require branches to be up to date before merging"), true);
     assert.equal(branchProtection.includes("do not allow bypassing required protections"), true);
@@ -266,7 +267,7 @@ test("pull request template calls out release-gate and code-owner expectations",
     assert.equal(template.includes("`security:sbom` run when dependency manifests, lockfiles, release-bundle paths, or supply-chain workflows changed"), true);
     assert.equal(template.includes("CodeQL is expected to pass when source code or GitHub Actions workflows changed"), true);
     assert.equal(template.includes("Release provenance and SBOM attestations are expected when tagged release-bundle workflow paths changed"), true);
-    assert.equal(template.includes("CODEOWNERS review requested when touching protected paths"), true);
+    assert.equal(template.includes("CODEOWNERS-covered paths checked against the current single-maintainer policy"), true);
 });
 
 test("README presents the review tier model before status snapshots", () => {

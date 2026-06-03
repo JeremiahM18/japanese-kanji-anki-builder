@@ -19,6 +19,8 @@ test("branch protection policy, docs, and CI checks stay aligned", () => {
     assert.equal(report.requiredStatusChecks.length, 14);
     assert.equal(report.requiredStatusChecks.includes("CodeQL Analysis (actions)"), true);
     assert.equal(report.requiredStatusChecks.includes("CodeQL Analysis (javascript-typescript)"), true);
+    assert.equal(report.requiredSettings.requiredApprovingReviewCount, 0);
+    assert.equal(report.requiredSettings.requireCodeOwnerReviews, false);
     assert.equal(report.requiredSettings.requireBranchesUpToDateBeforeMerging, true);
     assert.equal(report.requiredSettings.doNotAllowBypassing, true);
 });

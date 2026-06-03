@@ -26,7 +26,7 @@
         "Microsoft SDL Release"
       ],
       "component": "hosted-github-governance",
-      "requirement": "The hosted main branch must enforce the tracked protected-branch policy, required checks, reviews, CODEOWNERS review, no force pushes, and no bypass posture before release trust depends on main.",
+      "requirement": "The hosted main branch must enforce the tracked protected-branch policy, required checks, single-maintainer pull-request posture, no force pushes, and no bypass posture before release trust depends on main.",
       "implementationFiles": [
         ".github/branch-protection.main.json",
         "docs/branch-protection.md",

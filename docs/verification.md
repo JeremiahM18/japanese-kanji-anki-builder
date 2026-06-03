@@ -82,7 +82,7 @@ It does not certify tracked-source kanji TSVs, `.apkg` files, managed media pack
 
 `product:artifacts:kanji:all` runs the same tracked-source kanji TSV gate across N5 through N1. Today N5, N4, and N3 pass and write TSV artifacts; N2 and N1 fail closed on missing governed card-field source contracts. That failure is expected until each level has a source-derived field contract in the existing governance lane.
 
-`product:release-qa:evidence` validates the release-specific packet copied from [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json). It fails until APKG import, managed-media provenance, manual Anki import, mobile QA, screen-reader/accessibility, listening QA, source-governance posture, and empty known blockers are recorded for the named release candidate.
+`product:release-qa:evidence` validates the release-specific packet copied from [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json). It fails until APKG import, managed-media provenance, manual Anki import, mobile QA, screen-reader/accessibility, listening QA, source-governance posture, accepted `GOV-SRC-001` posture when source evidence depth remains incomplete, and empty known blockers are recorded for the named release candidate.
 
 `product:artifacts:kanji:release-qa` checks whether each selected kanji level has a passing tracked-source TSV artifact and then blocks release until APKG approval, managed stroke-order/audio media QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded. It intentionally cannot convert a green TSV gate into release readiness.
 

@@ -18,7 +18,7 @@ test("SDLC metrics report validates current tracked security posture", () => {
 
     assert.equal(report.passed, true);
     assert.equal(report.risk.total, 12);
-    assert.equal(report.risk.highCriticalOpenOrBlocked, 4);
+    assert.equal(report.risk.highCriticalOpenOrBlocked, 3);
     assert.deepEqual(report.risk.externalBlockedRecords, []);
     assert.equal(report.risk.overdueReviews, 0);
     assert.equal(report.requirements.total, 14);
@@ -28,8 +28,8 @@ test("SDLC metrics report validates current tracked security posture", () => {
     assert.deepEqual(report.requirements.unimplementedReleaseBlockerRecords, ["SEC-REQ-006", "SEC-REQ-007"]);
     assert.equal(report.releaseTrust.enforced, false);
     assert.equal(report.releaseTrust.phase, "visibility");
-    assert.equal(report.releaseTrust.highCriticalReleaseBlockerRisks, 4);
-    assert.deepEqual(report.releaseTrust.highCriticalReleaseBlockerRiskRecords, ["SEC-P0-004", "SEC-P0-005", "GOV-SRC-001", "PROD-REL-001"]);
+    assert.equal(report.releaseTrust.highCriticalReleaseBlockerRisks, 3);
+    assert.deepEqual(report.releaseTrust.highCriticalReleaseBlockerRiskRecords, ["SEC-P0-004", "SEC-P0-005", "PROD-REL-001"]);
     assert.equal(report.training.missingRequiredSections.length, 0);
     assert.equal(report.training.missingRequiredTopics.length, 0);
     assert.equal(report.training.missingRequiredRoles.length, 0);
@@ -43,14 +43,14 @@ test("SDLC metrics report preserves blocker visibility in human-readable output"
     assert.match(text, /SDLC security metrics/);
     assert.match(text, /Status: pass/);
     assert.match(text, /Mode: visibility/);
-    assert.match(text, /high\/critical open or blocked: 4 \(SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001\)/);
+    assert.match(text, /high\/critical open or blocked: 3 \(SEC-P0-004, SEC-P0-005, PROD-REL-001\)/);
     assert.match(text, /external blocked: 0/);
     assert.match(text, /planned: 0/);
     assert.match(text, /partially implemented: 2/);
     assert.match(text, /Release trust posture:/);
     assert.match(text, /enforced: no/);
     assert.match(text, /phase: visibility/);
-    assert.match(text, /high\/critical release-blocker risks: 4 \(SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001\)/);
+    assert.match(text, /high\/critical release-blocker risks: 3 \(SEC-P0-004, SEC-P0-005, PROD-REL-001\)/);
     assert.match(text, /SDLC-MET-004: pass; requirements\.partialOrExternal=2; target <=4/);
 });
 
@@ -62,12 +62,12 @@ test("SDLC pre-release trust mode defers only hosted post-attestation proof", ()
     assert.equal(report.mode, "pre-release-trust");
     assert.equal(report.releaseTrust.enforced, true);
     assert.equal(report.releaseTrust.phase, "pre");
-    assert.deepEqual(report.releaseTrust.highCriticalReleaseBlockerRiskRecords, ["SEC-P0-005", "GOV-SRC-001", "PROD-REL-001"]);
+    assert.deepEqual(report.releaseTrust.highCriticalReleaseBlockerRiskRecords, ["SEC-P0-005", "PROD-REL-001"]);
     assert.deepEqual(report.releaseTrust.deferredHighCriticalReleaseBlockerRiskRecords, ["SEC-P0-004"]);
     assert.deepEqual(report.releaseTrust.unimplementedReleaseBlockerRequirementRecords, ["SEC-REQ-006"]);
     assert.deepEqual(report.releaseTrust.deferredUnimplementedReleaseBlockerRequirementRecords, ["SEC-REQ-007"]);
     assert.deepEqual(report.failures, [
-        "release trust has unresolved high/critical release-blocker risks: SEC-P0-005, GOV-SRC-001, PROD-REL-001",
+        "release trust has unresolved high/critical release-blocker risks: SEC-P0-005, PROD-REL-001",
         "release trust has unimplemented release-blocker requirements: SEC-REQ-006",
     ]);
     assert.match(text, /Mode: pre-release-trust/);
@@ -83,10 +83,10 @@ test("SDLC release-trust mode fails closed on unresolved release blockers", () =
     assert.equal(report.mode, "release-trust");
     assert.equal(report.releaseTrust.enforced, true);
     assert.equal(report.releaseTrust.phase, "full");
-    assert.equal(report.releaseTrust.highCriticalReleaseBlockerRisks, 4);
+    assert.equal(report.releaseTrust.highCriticalReleaseBlockerRisks, 3);
     assert.equal(report.releaseTrust.unimplementedReleaseBlockerRequirements, 2);
     assert.deepEqual(report.failures, [
-        "release trust has unresolved high/critical release-blocker risks: SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001",
+        "release trust has unresolved high/critical release-blocker risks: SEC-P0-004, SEC-P0-005, PROD-REL-001",
         "release trust has unimplemented release-blocker requirements: SEC-REQ-006, SEC-REQ-007",
     ]);
     assert.match(text, /Status: fail/);

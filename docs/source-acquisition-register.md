@@ -2,7 +2,7 @@
 
 This register tracks source-access and source-use work for JLPT kanji evidence. It is not a deck-readiness claim and does not store copied source content.
 
-Last verified: 2026-05-28 from live repo audits and source-use review.
+Last verified: 2026-06-02 from live repo audits, source-use review, and the current free/public source-access pause decision.
 
 ## Rules
 
@@ -39,6 +39,18 @@ Last verified: 2026-05-28 from live repo audits and source-use review.
 | Expected audit posture | Source-use governance may pass while evidence depth still fails. That is expected until more independent lineage and Japanese-published exact assignment evidence are reviewed. |
 | Resume criteria | Resume broad Sou work only after exact kanji table/list pages, exact assignment pages, official correction-list target rows, or publisher-permitted equivalent evidence are available. Small targeted rows may continue when they already have exact assignment proof. |
 | Source-use boundary | Do not commit copied textbook lists, passages, OCR text, questions, answers, scans, or raw table content. Track only minimal reviewed facts allowed by the manual-citation policy. |
+
+## Current Free/Public Source Pause
+
+| Field | Decision |
+| --- | --- |
+| Date | 2026-06-02 |
+| Scope | Free/public JLPT kanji source expansion for active manual-citation and source-access-gap lanes. |
+| Decision | Pause broad free/public source expansion. Current release posture may accept the residual source-depth gap only through `GOV-SRC-001`, while all source-access-gap and manual-citation-only lanes remain non-voting unless exact permitted assignment evidence exists. |
+| Why | The available free/public surfaces have been expanded as far as current access and permitted-use boundaries allow. More source-depth progress now needs exact source access, targeted citations from permitted assignment surfaces, paid/private source intake, or publisher permission. |
+| Live audit evidence | `npm run data:audit:jlpt:source-access` reported `1765` source-review rows needing governed review, with `nihongo_sou_matome_kanji` still `pause_broad_review_until_exact_access`; `npm run data:audit:jlpt:sources -- --governance-strict --limit=25` reported source-use governance passing and evidence-depth failing. |
+| Release boundary | A release QA evidence packet must record `sourceEvidenceDepthComplete: false`, `freePublicSourceExpansionPaused: true`, `acceptedRiskRecord: GOV-SRC-001`, passing source-governance review evidence, and exact commands before release-ready claims rely on this accepted posture. |
+| Reopen criteria | Reopen the risk as `Open` if any `source_access_gap`, manual-citation-only, generated TSV, NLP, Obsidian compatibility view, appearance-only, vocabulary-only, grammar, or can-do surface is promoted into source truth without exact permitted assignment evidence. |
 
 ## Reviewed Source-Use Decisions
 

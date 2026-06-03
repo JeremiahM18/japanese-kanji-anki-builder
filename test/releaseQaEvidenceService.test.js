@@ -52,10 +52,17 @@ function passingPacket() {
         manualEvidence: REQUIRED_MANUAL_EVIDENCE_IDS.map((id) => reviewedEvidence({ id })),
         sourceGovernance: {
             status: "passed",
+            reviewer: "Source-governance reviewer",
+            reviewedAt: "2026-06-02",
+            evidence: "Source-access audit rerun; source-use governance passed, source-depth remains incomplete, and paused lanes remained non-voting under accepted GOV-SRC-001 posture.",
+            sourceEvidenceDepthComplete: false,
+            freePublicSourceExpansionPaused: true,
+            acceptedRiskRecord: "GOV-SRC-001",
             nonVotingLanesRemainNonVoting: true,
             sourceAccessGapsPromoted: false,
             manualCitationOnlyPromoted: false,
             commands: [
+                "npm run data:audit:jlpt:source-access",
                 "npm run data:audit:jlpt:sources -- --governance-strict --limit=25",
                 "npm run product:artifacts:kanji:all",
             ],
@@ -103,6 +110,29 @@ test("release QA evidence report requires all manual evidence and explicit empty
     assert.equal(report.passed, false);
     assert.equal(report.failures.includes("manualEvidence is missing required entry: listening-qa."), true);
     assert.equal(report.failures.includes("knownBlockers must be an array and must be empty before release-ready claims."), true);
+});
+
+test("release QA evidence report requires accepted source-governance posture when source depth is incomplete", () => {
+    const packet = passingPacket();
+    packet.sourceGovernance.acceptedRiskRecord = "";
+    packet.sourceGovernance.freePublicSourceExpansionPaused = false;
+    packet.sourceGovernance.commands = ["npm run product:artifacts:kanji:all"];
+
+    const report = buildReleaseQaEvidenceReport({ packet });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.includes("sourceGovernance.acceptedRiskRecord must be GOV-SRC-001 when source evidence depth is incomplete."),
+        true
+    );
+    assert.equal(
+        report.failures.includes("sourceGovernance.freePublicSourceExpansionPaused must be true when source evidence depth is incomplete."),
+        true
+    );
+    assert.equal(
+        report.failures.includes("sourceGovernance.commands must include npm run data:audit:jlpt:source-access."),
+        true
+    );
 });
 
 test("release QA evidence loader and CLI parsing support packet path overrides", () => {

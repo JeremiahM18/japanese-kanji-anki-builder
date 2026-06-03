@@ -37,7 +37,7 @@ Replace every `pending` entry with release-specific evidence, then run:
 npm run product:release-qa:evidence
 ```
 
-The packet must name the release candidate, deck kind, JLPT levels, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, and known blockers. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists.
+The packet must name the release candidate, deck kind, JLPT levels, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, accepted source-governance risk posture when applicable, and known blockers. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists. While source evidence depth remains incomplete, the packet must record `sourceEvidenceDepthComplete: false`, `freePublicSourceExpansionPaused: true`, `acceptedRiskRecord: GOV-SRC-001`, `npm run data:audit:jlpt:source-access`, and `npm run data:audit:jlpt:sources -- --governance-strict --limit=25`.
 
 ## Product readiness checks
 

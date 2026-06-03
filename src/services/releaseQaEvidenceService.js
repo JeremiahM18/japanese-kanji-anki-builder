@@ -8,6 +8,10 @@ const DEFAULT_RELEASE_QA_EVIDENCE_PACKET_PATH = path.join(
 );
 
 const VALID_EVIDENCE_STATUSES = new Set(["passed", "blocked", "pending", "not-applicable"]);
+const REQUIRED_SOURCE_GOVERNANCE_COMMANDS = Object.freeze([
+    "npm run data:audit:jlpt:source-access",
+    "npm run data:audit:jlpt:sources -- --governance-strict --limit=25",
+]);
 const REQUIRED_MANUAL_EVIDENCE_IDS = Object.freeze([
     "apkg-import",
     "managed-media-provenance",
@@ -76,8 +80,22 @@ function validateEvidenceEntry(entry, { section, requirePassed = false } = {}) {
 
 function validateSourceGovernance(sourceGovernance = {}) {
     const failures = [];
-    if (sourceGovernance.status !== "passed") {
+    const status = normalizeText(sourceGovernance.status);
+    const commands = Array.isArray(sourceGovernance.commands) ? sourceGovernance.commands : [];
+
+    if (status !== "passed") {
         failures.push("sourceGovernance.status must be passed before release-ready claims.");
+    }
+    if (status === "passed") {
+        if (!normalizeText(sourceGovernance.reviewer)) {
+            failures.push("sourceGovernance passed without reviewer.");
+        }
+        if (!isIsoDate(sourceGovernance.reviewedAt)) {
+            failures.push("sourceGovernance passed without YYYY-MM-DD reviewedAt.");
+        }
+        if (!normalizeText(sourceGovernance.evidence)) {
+            failures.push("sourceGovernance passed without evidence.");
+        }
     }
     if (sourceGovernance.nonVotingLanesRemainNonVoting !== true) {
         failures.push("sourceGovernance.nonVotingLanesRemainNonVoting must be true.");
@@ -88,8 +106,21 @@ function validateSourceGovernance(sourceGovernance = {}) {
     if (sourceGovernance.manualCitationOnlyPromoted !== false) {
         failures.push("sourceGovernance.manualCitationOnlyPromoted must be false.");
     }
-    if (!Array.isArray(sourceGovernance.commands) || sourceGovernance.commands.length === 0) {
+    if (sourceGovernance.sourceEvidenceDepthComplete !== true) {
+        if (sourceGovernance.freePublicSourceExpansionPaused !== true) {
+            failures.push("sourceGovernance.freePublicSourceExpansionPaused must be true when source evidence depth is incomplete.");
+        }
+        if (normalizeText(sourceGovernance.acceptedRiskRecord) !== "GOV-SRC-001") {
+            failures.push("sourceGovernance.acceptedRiskRecord must be GOV-SRC-001 when source evidence depth is incomplete.");
+        }
+    }
+    if (commands.length === 0) {
         failures.push("sourceGovernance.commands must list the exact source-governance commands used.");
+    }
+    for (const requiredCommand of REQUIRED_SOURCE_GOVERNANCE_COMMANDS) {
+        if (!commands.includes(requiredCommand)) {
+            failures.push(`sourceGovernance.commands must include ${requiredCommand}.`);
+        }
     }
     return failures;
 }
@@ -183,6 +214,7 @@ function formatReleaseQaEvidenceReport(report = {}) {
 module.exports = {
     DEFAULT_RELEASE_QA_EVIDENCE_PACKET_PATH,
     REQUIRED_MANUAL_EVIDENCE_IDS,
+    REQUIRED_SOURCE_GOVERNANCE_COMMANDS,
     buildReleaseQaEvidenceReport,
     formatReleaseQaEvidenceReport,
     loadReleaseQaEvidencePacket,

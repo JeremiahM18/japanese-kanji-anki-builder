@@ -16,6 +16,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run security:licenses` | Validate dependency license expressions against the tracked allowlist and current reviewed exceptions without writing an artifact |
 | `npm run security:licenses:write` | Write the release dependency-license summary to `out/security/dependency-licenses.json` after the license audit passes |
 | `npm run security:requirements` | Validate the tracked security requirements traceability matrix, including implementation files, evidence files, verification commands, manual QA posture, risk-record links, and release-blocker counts |
+| `npm run security:release-trust` | Fail closed unless unresolved high/critical release-blocker risks and unimplemented release-blocker requirements are both zero |
 | `npm run security:sdlc-metrics` | Validate the tracked SDLC security metrics contract, reviewer training checklist coverage, risk-register review posture, and requirements backlog visibility |
 | `npm run security:secrets` | Scan tracked files for high-confidence token and private-key patterns |
 | `npm run security:sbom` | Validate deterministic CycloneDX SBOM generation from `package-lock.json` without writing an artifact |

@@ -6,7 +6,8 @@
     "boundary": [
       "This contract validates SDLC security metric definitions, reviewer-readiness checklist routing, current risk-register posture, and security-requirements posture.",
       "It exposes current open, blocked, planned, and partially implemented governance work; it does not close hosted GitHub blockers, prove private training completion, prove manual QA, or certify release readiness.",
-      "Metric thresholds are governance thresholds for visibility and review cadence, not permission to ignore release blockers."
+      "Metric thresholds are governance thresholds for visibility and review cadence, not permission to ignore release blockers.",
+      "Use security:release-trust for the fail-closed release-trust mode; it requires zero unresolved high/critical release-blocker risks and zero unimplemented release-blocker requirements."
     ]
   },
   "trainingChecklist": {
@@ -118,6 +119,7 @@
   ],
   "verificationCommands": [
     "npm run security:sdlc-metrics",
+    "npm run security:release-trust",
     "npm run security:requirements",
     "npm test"
   ],

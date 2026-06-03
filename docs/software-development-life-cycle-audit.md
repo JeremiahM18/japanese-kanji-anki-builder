@@ -145,11 +145,11 @@ Current artifacts:
 - [../templates/sdlc_metrics.json](../templates/sdlc_metrics.json)
 - [../scripts/reportSdlcMetrics.js](../scripts/reportSdlcMetrics.js)
 
-Current command: `npm run security:sdlc-metrics`.
+Current commands: `npm run security:sdlc-metrics` for visibility and `npm run security:release-trust` for fail-closed release-trust claims.
 
 Current metrics cover unresolved high/critical risk visibility, overdue risk reviews, planned security-requirements backlog, external/partial requirement blockers, training topic coverage, and checklist section coverage.
 
-Remaining limitation: these metrics expose current SDLC health and review cadence. They do not close hosted GitHub blockers, prove private training completion, prove release manual QA, or certify product release readiness.
+Remaining limitation: visibility metrics expose current SDLC health and review cadence. Release-trust mode fails while high/critical release-blocker risks or unimplemented release-blocker requirements remain, but it still does not close hosted GitHub blockers, prove private training completion, prove release manual QA, or certify product release readiness.
 
 ### P3: Add License Compliance Automation
 
@@ -192,6 +192,7 @@ npm run voicevox:status
 npm run doctor:voicevox
 npm run security:licenses
 npm run security:sdlc-metrics
+npm run security:release-trust
 ```
 
 The final VOICEVOX status was running, local-only, and runtime-hardened. `doctor:voicevox` reported the engine reachable and the pinned release voice ready.

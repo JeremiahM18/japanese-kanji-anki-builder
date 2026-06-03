@@ -51,6 +51,9 @@ jobs:
       - name: Audit SDLC security metrics
         run: npm run security:sdlc-metrics
 
+      - name: Audit release trust posture
+        run: npm run security:release-trust
+
       - name: Audit tracked files for secrets
         run: npm run security:secrets
 
@@ -121,6 +124,9 @@ jobs:
 
       - name: Audit SDLC security metrics
         run: npm run security:sdlc-metrics
+
+      - name: Audit release trust posture
+        run: npm run security:release-trust
 
       - name: Audit tracked files for secrets
         run: npm run security:secrets

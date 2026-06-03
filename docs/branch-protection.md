@@ -33,8 +33,8 @@ Mark these checks as required on `main`:
 - `Verify Ubuntu Node 22`
 - `Smoke ubuntu-latest Node 18`
 - `Smoke ubuntu-latest Node 22`
-- `Smoke windows-latest Node 18`
-- `Smoke windows-latest Node 22`
+- `Smoke windows-2025-vs2026 Node 18`
+- `Smoke windows-2025-vs2026 Node 22`
 - `Smoke macos-latest Node 18`
 - `Smoke macos-latest Node 22`
 - `Release Gate Ubuntu Node 22`

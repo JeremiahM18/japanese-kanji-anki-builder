@@ -3,7 +3,7 @@ const {
     refreshStarterEntries,
 } = require("../datasets/wordStudyData");
 const { readJsonObject, readJsonObjectIfExists } = require("./curatedStudyBootstrapService");
-const { writeFileAtomicSync } = require("../utils/fs");
+const { writeFileAtomicSync, writeFileIfMissingSync } = require("../utils/fs");
 
 function bootstrapWordStudyData({
     targetPath,
@@ -21,8 +21,12 @@ function bootstrapWordStudyData({
         ? normalizeWordStudyData({ ...existingEntries, ...starterEntries })
         : starterEntries;
 
-    if (!targetExists || merge || refreshStarter) {
+    let changed = false;
+    if (merge || refreshStarter) {
         writeFileAtomicSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
+        changed = true;
+    } else {
+        changed = writeFileIfMissingSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
     }
 
     return {
@@ -33,8 +37,8 @@ function bootstrapWordStudyData({
         refreshStarter,
         starterEntries: Object.keys(starterEntries).length,
         existingEntries: Object.keys(existingEntries).length,
-        writtenEntries: targetExists && !merge && !refreshStarter ? Object.keys(existingEntries).length : Object.keys(nextEntries).length,
-        changed: !targetExists || merge || refreshStarter,
+        writtenEntries: changed ? Object.keys(nextEntries).length : Object.keys(existingEntries).length,
+        changed,
     };
 }
 

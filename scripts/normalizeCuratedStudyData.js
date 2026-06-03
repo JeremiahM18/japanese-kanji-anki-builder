@@ -55,14 +55,15 @@ function main() {
     const rawData = JSON.parse(rawText);
     const normalizedData = normalizeCuratedStudyData(rawData);
     const normalizedText = `${JSON.stringify(normalizedData, null, 2)}\n`;
-    const currentOutputText = readFileIfExistsSync(outputPath, "utf-8");
+    const currentOutputText = options.check ? readFileIfExistsSync(outputPath, "utf-8") : null;
+    const changed = options.check ? currentOutputText !== normalizedText : true;
 
     const summary = {
         inputPath,
         outputPath,
         inputEntries: Object.keys(rawData || {}).length,
         outputEntries: Object.keys(normalizedData).length,
-        changed: currentOutputText !== normalizedText,
+        changed,
         mode: options.check ? "check" : "write",
         missingInput: false,
     };

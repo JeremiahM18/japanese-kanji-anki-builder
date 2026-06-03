@@ -9,8 +9,11 @@ const { createInferenceEngine } = require("../inference/inferenceEngine");
 const { buildKanjiDeckInference } = require("./exportService");
 const { normalizeTokenForFileName } = require("./audioService");
 const { mapWithConcurrency } = require("../utils/concurrency");
-const { ensureDir, isPathInside } = require("../utils/fs");
+const { ensureDir, isPathInside, writeFileAtomicSync } = require("../utils/fs");
 const { isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
+
+const MAX_VOICEVOX_AUDIO_BYTES = 25 * 1024 * 1024;
+const MAX_AUDIO_SIDECAR_FIELD_CHARS = 500;
 
 function normalizeKanaReading(value) {
     return katakanaToHiragana(String(value || ""))
@@ -78,6 +81,53 @@ function buildVoicevoxSpeakerLabel(speakers, speakerId) {
     return `VOICEVOX speaker ${speakerId}`;
 }
 
+function normalizeAudioSidecarField(value) {
+    return String(value ?? "")
+        .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/gu, "")
+        .trim()
+        .slice(0, MAX_AUDIO_SIDECAR_FIELD_CHARS);
+}
+
+function buildAudioSourceSidecarPayload({
+    source,
+    voice,
+    locale = "ja-JP",
+    category = "kanji-reading",
+    text,
+    reading,
+    notes = "",
+}) {
+    return {
+        version: 1,
+        source: normalizeAudioSidecarField(source),
+        voice: normalizeAudioSidecarField(voice),
+        locale: normalizeAudioSidecarField(locale),
+        category: normalizeAudioSidecarField(category),
+        text: normalizeAudioSidecarField(text),
+        reading: normalizeAudioSidecarField(reading),
+        notes: normalizeAudioSidecarField(notes),
+    };
+}
+
+function buildManagedVoicevoxAudioBuffer(value) {
+    const buffer = Buffer.isBuffer(value)
+        ? Buffer.from(value)
+        : value instanceof Uint8Array
+            ? Buffer.from(value.buffer, value.byteOffset, value.byteLength)
+            : null;
+    if (!buffer || buffer.length === 0) {
+        throw new Error("VOICEVOX synthesis returned empty or non-binary audio.");
+    }
+    if (buffer.length > MAX_VOICEVOX_AUDIO_BYTES) {
+        throw new Error(`VOICEVOX synthesis returned audio larger than ${MAX_VOICEVOX_AUDIO_BYTES} bytes.`);
+    }
+    return buffer;
+}
+
+function writeManagedVoicevoxAudio(outputPath, audioBuffer) {
+    writeFileAtomicSync(outputPath, buildManagedVoicevoxAudioBuffer(audioBuffer));
+}
+
 function writeAudioSourceSidecar({
     outputPath,
     audioSourceDir = path.dirname(outputPath),
@@ -93,8 +143,7 @@ function writeAudioSourceSidecar({
         audioSourceDir,
         `${path.basename(outputPath, path.extname(outputPath))}.json`
     );
-    const payload = {
-        version: 1,
+    const payload = buildAudioSourceSidecarPayload({
         source,
         voice,
         locale,
@@ -102,9 +151,9 @@ function writeAudioSourceSidecar({
         text,
         reading,
         notes,
-    };
+    });
 
-    fs.writeFileSync(sidecarPath, `${JSON.stringify(payload, null, 2)}\n`, "utf-8");
+    writeFileAtomicSync(sidecarPath, `${JSON.stringify(payload, null, 2)}\n`, "utf-8");
 }
 
 function formatVoicevoxSpeakerTable(speakers) {
@@ -229,7 +278,7 @@ async function generateVoicevoxAudioForKanjiList({
                 text: preferredReading.text,
                 speakerId,
             });
-            fs.writeFileSync(outputPath, audioBuffer);
+            writeManagedVoicevoxAudio(outputPath, audioBuffer);
             writeAudioSourceSidecar({
                 outputPath,
                 audioSourceDir: config.audioSourceDir,
@@ -318,7 +367,7 @@ async function generateVoicevoxAudioForWordList({
                 text: normalizedReading,
                 speakerId,
             });
-            fs.writeFileSync(outputPath, audioBuffer);
+            writeManagedVoicevoxAudio(outputPath, audioBuffer);
             writeAudioSourceSidecar({
                 outputPath,
                 audioSourceDir: config.audioSourceDir,

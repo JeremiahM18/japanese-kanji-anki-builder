@@ -11,6 +11,7 @@ const {
     readFileIfExistsSync,
     removeGeneratedPathSync,
     writeFileAtomicSync,
+    writeFileIfMissingSync,
 } = require("../src/utils/fs");
 
 function makeTempDir() {
@@ -80,6 +81,20 @@ test("writeFileAtomicSync writes through a sibling temp file", () => {
             fs.readdirSync(path.dirname(nestedFile)).filter((entry) => entry.includes(".tmp")),
             []
         );
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("writeFileIfMissingSync creates once without overwriting existing files", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const nestedFile = path.join(rootDir, "nested", "artifact.json");
+
+        assert.equal(writeFileIfMissingSync(nestedFile, "{\"created\":true}\n", "utf-8"), true);
+        assert.equal(writeFileIfMissingSync(nestedFile, "{\"created\":false}\n", "utf-8"), false);
+        assert.equal(fs.readFileSync(nestedFile, "utf-8"), "{\"created\":true}\n");
     } finally {
         cleanupTempDir(rootDir);
     }

@@ -70,7 +70,8 @@ function main() {
     const rawEntries = parseJsonArray(rawText, inputPath);
     const normalizedEntries = normalizeSentenceCorpus(rawEntries);
     const normalizedText = `${JSON.stringify(normalizedEntries, null, 2)}\n`;
-    const currentOutputText = readFileIfExistsSync(outputPath, "utf-8");
+    const currentOutputText = options.check ? readFileIfExistsSync(outputPath, "utf-8") : null;
+    const changed = options.check ? currentOutputText !== normalizedText : true;
 
     const summary = {
         inputPath,
@@ -78,7 +79,7 @@ function main() {
         inputEntries: rawEntries.length,
         outputEntries: normalizedEntries.length,
         removedEntries: rawEntries.length - normalizedEntries.length,
-        changed: currentOutputText !== normalizedText,
+        changed,
         mode: options.check ? "check" : "write",
         missingInput: false,
     };

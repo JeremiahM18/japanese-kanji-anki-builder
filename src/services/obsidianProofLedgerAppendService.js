@@ -17,6 +17,7 @@ const {
 const {
     ensureDir,
     isPathInside,
+    writeFileIfMissingSync,
 } = require("../utils/fs");
 
 function toPosixPath(value) {
@@ -28,7 +29,16 @@ function normalizeText(value) {
 }
 
 function readJsonArray(filePath, label) {
-    const parsed = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    let text;
+    try {
+        text = fs.readFileSync(filePath, "utf8");
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            throw new Error(`Missing ${label}: ${filePath}`);
+        }
+        throw error;
+    }
+    const parsed = JSON.parse(text);
     if (!Array.isArray(parsed)) {
         throw new Error(`Expected JSON array in ${label}: ${filePath}`);
     }
@@ -85,15 +95,21 @@ function assertSafeDraftEventInputPath({ cwd, eventPath, ledgerDir }) {
     if (isPathInside(resolved, resolvedLedgerDir)) {
         throw new Error(`Draft Obsidian proof input must not live inside the canonical ledger directory: ${resolved}`);
     }
-    if (!fs.existsSync(resolved)) {
-        throw new Error(`Missing Obsidian proof draft input: ${resolved}`);
-    }
     return resolved;
 }
 
 function readDraftProofEvents({ cwd, eventsPath, ledgerDir }) {
     const inputPath = assertSafeDraftEventInputPath({ cwd, eventPath: eventsPath, ledgerDir });
-    const draftValues = parseDraftEventsText(fs.readFileSync(inputPath, "utf8"), { filePath: inputPath });
+    let draftText;
+    try {
+        draftText = fs.readFileSync(inputPath, "utf8");
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            throw new Error(`Missing Obsidian proof draft input: ${inputPath}`);
+        }
+        throw error;
+    }
+    const draftValues = parseDraftEventsText(draftText, { filePath: inputPath });
     if (draftValues.length === 0) {
         throw new Error(`Draft Obsidian proof input contained no events: ${inputPath}`);
     }
@@ -138,9 +154,6 @@ function assertSafeLedgerOutputPath({ cwd, ledgerDir, ledgerRelativePath }) {
 function buildReviewSetTargetIndex({ cwd, deckKind, level }) {
     const sourceReviewSetPath = getReviewSetRelativePath({ deckKind, level });
     const resolvedSourceReviewSetPath = path.resolve(cwd, sourceReviewSetPath);
-    if (!fs.existsSync(resolvedSourceReviewSetPath)) {
-        throw new Error(`Missing tracked review set for Obsidian proof append: ${resolvedSourceReviewSetPath}`);
-    }
     const entries = readJsonArray(resolvedSourceReviewSetPath, "tracked review set");
     const targetKeys = new Set();
     for (const entry of entries) {
@@ -214,19 +227,10 @@ function assertNoDuplicateExistingEvents({ cwd, ledgerDir, events }) {
 function appendJsonlEvents(filePath, events = []) {
     ensureDir(path.dirname(filePath));
     const serialized = events.map((event) => JSON.stringify(event)).join("\n");
-    const fileDescriptor = fs.openSync(filePath, "a+");
-    try {
-        const { size } = fs.fstatSync(fileDescriptor);
-        let prefix = "";
-        if (size > 0) {
-            const lastByte = Buffer.alloc(1);
-            fs.readSync(fileDescriptor, lastByte, 0, 1, size - 1);
-            prefix = lastByte[0] === 0x0a ? "" : "\n";
-        }
-        fs.writeSync(fileDescriptor, `${prefix}${serialized}\n`, undefined, "utf8");
-    } finally {
-        fs.closeSync(fileDescriptor);
+    if (writeFileIfMissingSync(filePath, `${serialized}\n`, "utf8")) {
+        return;
     }
+    fs.appendFileSync(filePath, `\n${serialized}\n`, "utf8");
 }
 
 function summarizeBatches(events = []) {

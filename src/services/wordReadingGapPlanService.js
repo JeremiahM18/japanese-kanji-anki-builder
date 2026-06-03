@@ -175,13 +175,28 @@ function buildCandidateLevelSummary(candidate, { jlptOnlyJson = {}, targetLevel 
 
 function getRubyReadingsForKanji(readingBreakdown, targetKanji) {
   const readings = [];
-  const rubyPattern = /<ruby>([^<>]*)<rt>([^<>]*)<\/rt><\/ruby>/g;
-  let match;
-  while ((match = rubyPattern.exec(String(readingBreakdown || ''))) !== null) {
-    const written = String(match[1] || '');
-    if (written.includes(targetKanji)) {
-      readings.push(normalizeReadingToken(match[2]));
+  const source = String(readingBreakdown || '');
+  let searchStart = 0;
+  while (searchStart < source.length) {
+    const rubyStart = source.indexOf('<ruby>', searchStart);
+    if (rubyStart === -1) {
+      break;
     }
+    const writtenStart = rubyStart + '<ruby>'.length;
+    const rtStart = source.indexOf('<rt>', writtenStart);
+    const rtEnd = rtStart === -1 ? -1 : source.indexOf('</rt>', rtStart + '<rt>'.length);
+    const rubyEnd = rtEnd === -1 ? -1 : source.indexOf('</ruby>', rtEnd + '</rt>'.length);
+    if (rtStart === -1 || rtEnd === -1 || rubyEnd === -1) {
+      searchStart = writtenStart;
+      continue;
+    }
+
+    const written = source.slice(writtenStart, rtStart);
+    const reading = source.slice(rtStart + '<rt>'.length, rtEnd);
+    if (!written.includes('<') && !written.includes('>') && !reading.includes('<') && !reading.includes('>') && written.includes(targetKanji)) {
+      readings.push(normalizeReadingToken(reading));
+    }
+    searchStart = rubyEnd + '</ruby>'.length;
   }
   return readings.filter(Boolean);
 }

@@ -40,6 +40,29 @@ function writeFileAtomicSync(filePath, data, options) {
     }
 }
 
+function buildWriteOptions(options, flag) {
+    if (typeof options === "string") {
+        return { encoding: options, flag };
+    }
+    return { ...(options || {}), flag };
+}
+
+function writeFileIfMissingSync(filePath, data, options) {
+    const resolvedTarget = path.resolve(filePath);
+    const targetDir = path.dirname(resolvedTarget);
+    ensureDir(targetDir);
+
+    try {
+        fs.writeFileSync(resolvedTarget, data, buildWriteOptions(options, "wx"));
+        return true;
+    } catch (error) {
+        if (error?.code === "EEXIST") {
+            return false;
+        }
+        throw error;
+    }
+}
+
 function normalizeForPathComparison(filePath) {
     const resolved = path.resolve(filePath);
     return process.platform === "win32" ? resolved.toLowerCase() : resolved;
@@ -115,5 +138,6 @@ module.exports = {
     readFileIfExistsSync,
     removeGeneratedPath,
     removeGeneratedPathSync,
+    writeFileIfMissingSync,
     writeFileAtomicSync,
 };

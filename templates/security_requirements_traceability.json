@@ -18,7 +18,7 @@
     {
       "id": "SEC-REQ-001",
       "priority": "P0",
-      "status": "external-blocked",
+      "status": "implemented",
       "title": "Hosted main branch protections are enforced",
       "sourceMappings": [
         "NIST SSDF PO.1",
@@ -48,14 +48,13 @@
       ],
       "releaseBlocker": true,
       "riskRecords": [
-        "SEC-P0-001",
-        "SEC-P0-003"
+        "SEC-P0-001"
       ]
     },
     {
       "id": "SEC-REQ-002",
       "priority": "P0",
-      "status": "external-blocked",
+      "status": "implemented",
       "title": "Confidential vulnerability intake is available",
       "sourceMappings": [
         "NIST SSDF RV.1",
@@ -207,7 +206,7 @@
     {
       "id": "SEC-REQ-006",
       "priority": "P0",
-      "status": "external-blocked",
+      "status": "partially-implemented",
       "title": "Hosted security alert settings are visible and triaged",
       "sourceMappings": [
         "NIST SSDF RV.1",
@@ -215,7 +214,7 @@
         "Microsoft SDL Verification"
       ],
       "component": "hosted-security-alerts",
-      "requirement": "Secret scanning, push protection, CodeQL alerts, and Dependabot alerts must be enabled or explicitly triaged from owner-authenticated hosted evidence.",
+      "requirement": "Secret scanning, push protection, Dependency Graph, Dependabot security updates, CodeQL alerts, and Dependabot alerts must be enabled, visible, or explicitly triaged from owner-authenticated hosted evidence.",
       "implementationFiles": [
         ".github/workflows/codeql.yml",
         ".github/workflows/ci.yml",
@@ -238,7 +237,7 @@
       ],
       "releaseBlocker": true,
       "riskRecords": [
-        "SEC-P0-003"
+        "SEC-P0-005"
       ]
     },
     {

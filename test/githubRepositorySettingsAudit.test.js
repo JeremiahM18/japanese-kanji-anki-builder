@@ -98,6 +98,9 @@ test("buildAuditEndpoints covers hosted P0 settings", () => {
         "codeScanningAlerts",
         "secretScanningAlerts",
         "dependabotAlerts",
+        "vulnerabilityAlerts",
+        "automatedSecurityFixes",
+        "dependencyGraphSbom",
         "privateVulnerabilityReporting",
         "actionsRuns",
         "releaseWorkflowRuns",
@@ -169,6 +172,9 @@ test("evaluateGithubSettingsAudit fails closed on unprotected main and auth-only
             codeScanningAlerts: endpoint({ ok: false, statusCode: 401 }),
             secretScanningAlerts: endpoint({ ok: false, statusCode: 401 }),
             dependabotAlerts: endpoint({ ok: false, statusCode: 401 }),
+            vulnerabilityAlerts: endpoint({ ok: false, statusCode: 401 }),
+            automatedSecurityFixes: endpoint({ ok: false, statusCode: 401 }),
+            dependencyGraphSbom: endpoint({ ok: false, statusCode: 401 }),
             privateVulnerabilityReporting: endpoint({ body: { enabled: false } }),
             actionsRuns: endpoint({
                 body: {
@@ -208,11 +214,16 @@ test("evaluateGithubSettingsAudit fails closed on unprotected main and auth-only
 
     assert.equal(audit.status, "fail");
     assert.equal(audit.summary.branchProtected, false);
+    assert.equal(audit.summary.repositorySecurityAndAnalysisReadable, false);
     assert.equal(audit.summary.latestCiConclusion, "success");
     assert.equal(audit.findings.some((finding) => finding.key === "main_branch_unprotected"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "repository_security_analysis_unverified"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "secret_scanning_disabled"), false);
+    assert.equal(audit.findings.some((finding) => finding.key === "push_protection_disabled"), false);
     assert.equal(audit.findings.some((finding) => finding.key === "secretScanningAlerts_unverified"), true);
     assert.equal(audit.findings.some((finding) => finding.key === "private_vulnerability_reporting_disabled"), true);
     assert.equal(audit.findings.some((finding) => finding.key === "artifact_attestation_verification_unverified"), true);
+    assert.match(formatGithubSettingsAudit(audit), /Repository security settings readable: no/u);
     assert.match(formatGithubSettingsAudit(audit), /Branch protected: no/u);
 });
 
@@ -239,6 +250,9 @@ test("evaluateGithubSettingsAudit fails closed on open hosted security alerts", 
             codeScanningAlerts: endpoint({ body: [{ number: 1 }, { number: 2 }] }),
             secretScanningAlerts: endpoint({ body: [{ number: 3 }] }),
             dependabotAlerts: endpoint({ body: [{ number: 4 }] }),
+            vulnerabilityAlerts: endpoint({ statusCode: 204, body: null }),
+            automatedSecurityFixes: endpoint({ body: { enabled: true, paused: false } }),
+            dependencyGraphSbom: endpoint({ body: { sbom: { packages: [{ name: "root" }] } } }),
             privateVulnerabilityReporting: endpoint({ body: { enabled: true } }),
             actionsRuns: endpoint({ body: { workflow_runs: [] } }),
             releaseWorkflowRuns: endpoint({ body: { workflow_runs: [{ conclusion: "success" }] } }),
@@ -278,6 +292,79 @@ test("evaluateGithubSettingsAudit fails closed on open hosted security alerts", 
     assert.match(formatGithubSettingsAudit(audit), /Open CodeQL alerts: 2/u);
 });
 
+test("evaluateGithubSettingsAudit fails closed when hosted security controls are disabled", () => {
+    const audit = evaluateGithubSettingsAudit({
+        repo: "owner/repo",
+        branch: "main",
+        authenticated: true,
+        checkedAt: "2026-06-02T00:00:00.000Z",
+        branchProtectionPolicy,
+        endpoints: {
+            repository: endpoint({
+                body: {
+                    private: false,
+                    default_branch: "main",
+                    security_and_analysis: {
+                        secret_scanning: { status: "disabled" },
+                        secret_scanning_push_protection: { status: "disabled" },
+                    },
+                },
+            }),
+            branch: endpoint({ body: { protected: true } }),
+            branchProtection: protectedBranchEndpoint(),
+            codeScanningAlerts: endpoint({ body: [] }),
+            secretScanningAlerts: endpoint({ body: [] }),
+            dependabotAlerts: endpoint({ body: [] }),
+            vulnerabilityAlerts: endpoint({ ok: false, statusCode: 404 }),
+            automatedSecurityFixes: endpoint({ body: { enabled: false, paused: false } }),
+            dependencyGraphSbom: endpoint({ body: { sbom: { packages: null } } }),
+            privateVulnerabilityReporting: endpoint({ body: { enabled: true } }),
+            actionsRuns: endpoint({ body: { workflow_runs: [] } }),
+            releaseWorkflowRuns: endpoint({ body: { workflow_runs: [{ conclusion: "success" }] } }),
+            ciWorkflow: endpoint({ body: { state: "active" } }),
+            codeqlWorkflow: endpoint({ body: { state: "active" } }),
+            releaseWorkflow: endpoint({ body: { state: "active" } }),
+            ciWorkflowContent: contentEndpoint([
+                "on:",
+                "  pull_request:",
+                "jobs:",
+                "  dependency_review:",
+                "    name: Dependency Review",
+                "    steps:",
+                "      - uses: actions/dependency-review-action@reviewedsha",
+                "        with:",
+                "          fail-on-severity: moderate",
+            ].join("\n")),
+            releaseWorkflowContent: contentEndpoint([
+                "jobs:",
+                "  release_bundle:",
+                "    steps:",
+                "      - name: Attest release bundle provenance",
+                "        uses: actions/attest@reviewedsha",
+                "      - name: Attest release bundle SBOM",
+                "        uses: actions/attest@reviewedsha",
+                "      - name: Verify release bundle attestation",
+                "        run: gh attestation verify release-artifacts.sha256",
+                "      - run: echo release-artifacts.sha256",
+            ].join("\n")),
+        },
+    });
+
+    assert.equal(audit.status, "fail");
+    assert.equal(audit.summary.repositorySecurityAndAnalysisReadable, true);
+    assert.equal(audit.summary.secretScanningEnabled, false);
+    assert.equal(audit.summary.secretScanningPushProtectionEnabled, false);
+    assert.equal(audit.summary.vulnerabilityAlertsEnabled, false);
+    assert.equal(audit.summary.dependencyGraphSbomReadable, false);
+    assert.equal(audit.summary.dependabotSecurityUpdatesEnabled, false);
+    assert.equal(audit.findings.some((finding) => finding.key === "secret_scanning_disabled"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "push_protection_disabled"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "repository_security_analysis_unverified"), false);
+    assert.equal(audit.findings.some((finding) => finding.key === "vulnerabilityAlerts_unverified"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "dependency_graph_sbom_unreadable"), true);
+    assert.equal(audit.findings.some((finding) => finding.key === "dependabot_security_updates_disabled"), true);
+});
+
 test("evaluateGithubSettingsAudit can pass when every hosted signal is clean", () => {
     const audit = evaluateGithubSettingsAudit({
         repo: "owner/repo",
@@ -301,6 +388,9 @@ test("evaluateGithubSettingsAudit can pass when every hosted signal is clean", (
             codeScanningAlerts: endpoint({ body: [] }),
             secretScanningAlerts: endpoint({ body: [] }),
             dependabotAlerts: endpoint({ body: [] }),
+            vulnerabilityAlerts: endpoint({ statusCode: 204, body: null }),
+            automatedSecurityFixes: endpoint({ body: { enabled: true, paused: false } }),
+            dependencyGraphSbom: endpoint({ body: { sbom: { packages: [{ name: "root" }, { name: "dep" }] } } }),
             privateVulnerabilityReporting: endpoint({ body: { enabled: true } }),
             actionsRuns: endpoint({ body: { workflow_runs: [] } }),
             releaseWorkflowRuns: endpoint({ body: { workflow_runs: [{ conclusion: "success" }] } }),
@@ -339,6 +429,11 @@ test("evaluateGithubSettingsAudit can pass when every hosted signal is clean", (
     assert.equal(audit.summary.branchProtectionMatchesPolicy, true);
     assert.equal(audit.summary.secretScanningEnabled, true);
     assert.equal(audit.summary.secretScanningPushProtectionEnabled, true);
+    assert.equal(audit.summary.vulnerabilityAlertsEnabled, true);
+    assert.equal(audit.summary.dependencyGraphSbomReadable, true);
+    assert.equal(audit.summary.dependencyGraphSbomPackages, 2);
+    assert.equal(audit.summary.dependabotSecurityUpdatesEnabled, true);
+    assert.equal(audit.summary.dependabotSecurityUpdatesPaused, false);
 });
 
 test("getLatestWorkflowRun selects the named workflow from recent runs", () => {

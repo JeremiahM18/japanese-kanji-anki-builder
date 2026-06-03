@@ -63,6 +63,9 @@ function buildAuditEndpoints(repo, branch) {
         { key: "codeScanningAlerts", url: `${base}/code-scanning/alerts?state=open&per_page=100` },
         { key: "secretScanningAlerts", url: `${base}/secret-scanning/alerts?state=open&per_page=100` },
         { key: "dependabotAlerts", url: `${base}/dependabot/alerts?state=open&per_page=100` },
+        { key: "vulnerabilityAlerts", url: `${base}/vulnerability-alerts` },
+        { key: "automatedSecurityFixes", url: `${base}/automated-security-fixes` },
+        { key: "dependencyGraphSbom", url: `${base}/dependency-graph/sbom` },
         { key: "privateVulnerabilityReporting", url: `${base}/private-vulnerability-reporting` },
         { key: "actionsRuns", url: `${base}/actions/runs?per_page=20` },
         { key: "releaseWorkflowRuns", url: `${base}/actions/workflows/release.yml/runs?per_page=10` },
@@ -227,7 +230,10 @@ function evaluateGithubSettingsAudit(audit) {
         audit.endpoints.branchProtection,
         audit.branchProtectionPolicy
     );
-    const repositorySecurityAndAnalysis = audit.endpoints.repository?.body?.security_and_analysis || {};
+    const repositorySecurityAndAnalysis = audit.endpoints.repository?.body?.security_and_analysis;
+    const repositorySecurityAndAnalysisReadable =
+        repositorySecurityAndAnalysis !== null
+        && typeof repositorySecurityAndAnalysis === "object";
     const summary = {
         repositoryPublic: audit.endpoints.repository?.body?.private === false,
         defaultBranch: audit.endpoints.repository?.body?.default_branch || null,
@@ -237,8 +243,18 @@ function evaluateGithubSettingsAudit(audit) {
         openCodeScanningAlerts: countAlerts(audit.endpoints.codeScanningAlerts),
         openSecretScanningAlerts: countAlerts(audit.endpoints.secretScanningAlerts),
         openDependabotAlerts: countAlerts(audit.endpoints.dependabotAlerts),
-        secretScanningEnabled: repositorySecurityAndAnalysis.secret_scanning?.status === "enabled",
-        secretScanningPushProtectionEnabled: repositorySecurityAndAnalysis.secret_scanning_push_protection?.status === "enabled",
+        vulnerabilityAlertsEnabled: audit.endpoints.vulnerabilityAlerts?.ok === true
+            && audit.endpoints.vulnerabilityAlerts?.statusCode === 204,
+        dependencyGraphSbomReadable: audit.endpoints.dependencyGraphSbom?.ok === true
+            && Array.isArray(audit.endpoints.dependencyGraphSbom?.body?.sbom?.packages),
+        dependencyGraphSbomPackages: Array.isArray(audit.endpoints.dependencyGraphSbom?.body?.sbom?.packages)
+            ? audit.endpoints.dependencyGraphSbom.body.sbom.packages.length
+            : null,
+        dependabotSecurityUpdatesEnabled: audit.endpoints.automatedSecurityFixes?.body?.enabled === true,
+        dependabotSecurityUpdatesPaused: audit.endpoints.automatedSecurityFixes?.body?.paused === true,
+        repositorySecurityAndAnalysisReadable,
+        secretScanningEnabled: repositorySecurityAndAnalysis?.secret_scanning?.status === "enabled",
+        secretScanningPushProtectionEnabled: repositorySecurityAndAnalysis?.secret_scanning_push_protection?.status === "enabled",
         privateVulnerabilityReportingReadable: audit.endpoints.privateVulnerabilityReporting?.ok === true,
         privateVulnerabilityReportingEnabled: audit.endpoints.privateVulnerabilityReporting?.body?.enabled === true,
         ciWorkflowActive: audit.endpoints.ciWorkflow?.body?.state === "active",
@@ -276,7 +292,13 @@ function evaluateGithubSettingsAudit(audit) {
         });
     }
 
-    if (!summary.secretScanningEnabled) {
+    if (!summary.repositorySecurityAndAnalysisReadable) {
+        findings.push({
+            severity: "high",
+            key: "repository_security_analysis_unverified",
+            message: "GitHub repository security_and_analysis settings were not returned by the repository API.",
+        });
+    } else if (!summary.secretScanningEnabled) {
         findings.push({
             severity: "high",
             key: "secret_scanning_disabled",
@@ -284,7 +306,7 @@ function evaluateGithubSettingsAudit(audit) {
         });
     }
 
-    if (!summary.secretScanningPushProtectionEnabled) {
+    if (summary.repositorySecurityAndAnalysisReadable && !summary.secretScanningPushProtectionEnabled) {
         findings.push({
             severity: "high",
             key: "push_protection_disabled",
@@ -292,11 +314,51 @@ function evaluateGithubSettingsAudit(audit) {
         });
     }
 
+    if (audit.endpoints.vulnerabilityAlerts?.ok) {
+        if (!summary.vulnerabilityAlertsEnabled) {
+            findings.push({
+                severity: "high",
+                key: "vulnerability_alerts_disabled",
+                message: "GitHub vulnerability alerts and Dependency Graph are not enabled in the live repository settings.",
+            });
+        }
+    }
+
+    if (audit.endpoints.dependencyGraphSbom?.ok) {
+        if (!summary.dependencyGraphSbomReadable) {
+            findings.push({
+                severity: "high",
+                key: "dependency_graph_sbom_unreadable",
+                message: "GitHub Dependency Graph SBOM endpoint did not return a readable package list.",
+            });
+        }
+    }
+
+    if (audit.endpoints.automatedSecurityFixes?.ok) {
+        if (!summary.dependabotSecurityUpdatesEnabled) {
+            findings.push({
+                severity: "high",
+                key: "dependabot_security_updates_disabled",
+                message: "Dependabot security updates are not enabled in the live repository settings.",
+            });
+        }
+        if (summary.dependabotSecurityUpdatesPaused) {
+            findings.push({
+                severity: "high",
+                key: "dependabot_security_updates_paused",
+                message: "Dependabot security updates are enabled but paused in the live repository settings.",
+            });
+        }
+    }
+
     for (const key of [
         "branchProtection",
         "codeScanningAlerts",
         "secretScanningAlerts",
         "dependabotAlerts",
+        "vulnerabilityAlerts",
+        "dependencyGraphSbom",
+        "automatedSecurityFixes",
     ]) {
         const endpoint = audit.endpoints[key];
         if (!endpoint?.ok) {
@@ -396,8 +458,14 @@ function formatGithubSettingsAudit(audit) {
         `CodeQL workflow active: ${audit.summary.codeqlWorkflowActive ? "yes" : "no"}`,
         `Release workflow active: ${audit.summary.releaseWorkflowActive ? "yes" : "no"}`,
         `Dependency Review configured: ${audit.summary.dependencyReviewConfigured ? "yes" : "no"}`,
+        `Vulnerability alerts enabled: ${audit.summary.vulnerabilityAlertsEnabled ? "yes" : "no"}`,
+        `Dependency Graph SBOM readable: ${audit.summary.dependencyGraphSbomReadable ? "yes" : "no"}`,
+        `Dependency Graph SBOM packages: ${audit.summary.dependencyGraphSbomPackages ?? "unknown"}`,
+        `Dependabot security updates enabled: ${audit.summary.dependabotSecurityUpdatesEnabled ? "yes" : "no"}`,
+        `Dependabot security updates paused: ${audit.summary.dependabotSecurityUpdatesPaused ? "yes" : "no"}`,
         `Release attestations created: ${audit.summary.releaseWorkflowCreatesAttestations ? "yes" : "no"}`,
         `Artifact attestation verification automated: ${audit.summary.artifactAttestationVerificationAutomated ? "yes" : "no"}`,
+        `Repository security settings readable: ${audit.summary.repositorySecurityAndAnalysisReadable ? "yes" : "no"}`,
         `Secret scanning enabled: ${audit.summary.secretScanningEnabled ? "yes" : "no"}`,
         `Push protection enabled: ${audit.summary.secretScanningPushProtectionEnabled ? "yes" : "no"}`,
         `Private vulnerability reporting enabled: ${audit.summary.privateVulnerabilityReportingEnabled ? "yes" : "no"}`,

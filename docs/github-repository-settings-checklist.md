@@ -31,11 +31,18 @@ $env:GH_TOKEN="<token with repository security/settings read access>"
 npm run security:github-settings
 ```
 
+If GitHub CLI is already authenticated, this keeps the token out of terminal output:
+
+```powershell
+$env:GH_TOKEN = gh auth token
+npm run security:github-settings
+```
+
 Do not commit, paste, or log the token.
 
 ## 2026-06-02 Live Result
 
-Authenticated owner audit was run on 2026-06-02 after enabling branch protection and private vulnerability reporting. The hosted `main` branch now matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, and private vulnerability reporting is enabled. The gate still fails because live CodeQL has open alerts, Dependabot alert visibility returns `403`, and hosted release workflow content does not yet prove post-creation attestation verification. Tracked workflow and CodeQL-pattern remediations have been added locally and must reach hosted `main` before the hosted audit can verify them.
+Authenticated owner audit was run on 2026-06-02 after enabling branch protection, private vulnerability reporting, vulnerability alerts, Dependency Graph, and Dependabot security updates. The hosted `main` branch now matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, and open Dependabot alerts are `0`. The gate still fails because live CodeQL has open alerts and hosted release workflow content does not yet prove post-creation attestation verification. Tracked workflow and CodeQL-pattern remediations have been added locally and must reach hosted `main` before the hosted audit can verify them.
 
 | Setting | Live result | Status |
 | --- | --- | --- |
@@ -52,12 +59,14 @@ Authenticated owner audit was run on 2026-06-02 after enabling branch protection
 | CodeQL workflow | `.github/workflows/codeql.yml` active; latest hosted CodeQL conclusion `success` | Verified with open alerts |
 | Release workflow | `.github/workflows/release.yml` active | Verified |
 | Dependency Review | Hosted `.github/workflows/ci.yml` contains `actions/dependency-review-action` on pull requests with `fail-on-severity: moderate` | Verified |
+| Vulnerability alerts / Dependency Graph | `GET /vulnerability-alerts` returned `204`; Dependency Graph SBOM endpoint returned `289` packages | Verified |
+| Dependabot security updates | `GET /automated-security-fixes` returned `enabled:true` and `paused:false` | Verified |
 | Release attestation creation | Hosted `.github/workflows/release.yml` contains provenance and SBOM attestation steps for the release bundle | Verified |
 | Artifact attestation verification | Hosted workflow content does not yet prove `gh attestation verify`; tracked local workflow now includes attestation verification with signer workflow, source ref, and source digest constraints | Failing until hosted workflow updates |
 | Branch protection detail endpoint | Authenticated endpoint returned `200` and matched tracked policy | Verified |
 | Code scanning open alerts | Authenticated endpoint returned `19` open CodeQL alerts | Failing |
 | Secret scanning alerts | Authenticated endpoint returned `0` open secret-scanning alerts | Verified |
-| Dependabot alerts | Authenticated endpoint returned `403` with current GitHub CLI OAuth scopes | Unverified |
+| Dependabot alerts | Authenticated endpoint returned `0` open alerts | Verified |
 | Private vulnerability reporting | `enabled:true` from `GET /repos/JeremiahM18/japanese-kanji-anki-builder/private-vulnerability-reporting` | Verified |
 | Latest release workflow conclusion | No recent release workflow conclusion was available from the workflow-runs endpoint | Unverified |
 
@@ -99,19 +108,22 @@ Release Gate Ubuntu Node 22
 12. Enabled GitHub secret scanning.
 13. Enabled push protection.
 14. Enabled private vulnerability reporting.
+15. Enabled vulnerability alerts and Dependency Graph.
+16. Enabled Dependabot security updates.
 
 Remaining:
 
 1. Merge the tracked CodeQL-pattern remediations, rerun hosted CodeQL, and keep `npm run security:github-settings` failing until open CodeQL alerts are `0`, or dismiss specific alerts only with documented rationale.
-2. Refresh owner-auth credentials or use a fine-grained token that can read Dependabot alerts, then rerun `npm run security:github-settings` until Dependabot alert state is verified.
-3. Merge the tracked release-workflow attestation verification step to hosted `main`, then rerun `npm run security:github-settings` and a tagged release workflow until attestation verification is proven in hosted evidence.
+2. Merge the tracked release-workflow attestation verification step to hosted `main`, then rerun `npm run security:github-settings` and a tagged release workflow until attestation verification is proven in hosted evidence.
 
 ## Failure Semantics
 
 - `main_branch_unprotected` is a blocker for enterprise-level hosted governance.
 - `private_vulnerability_reporting_disabled` is a blocker for enterprise-level vulnerability intake.
 - `branch_protection_policy_mismatch` is a blocker because hosted protection no longer matches the tracked policy.
+- `repository_security_analysis_unverified` means the repository API did not return the `security_and_analysis` settings object; rerun with owner-authenticated access before claiming secret scanning or push protection status.
 - `secret_scanning_disabled` and `push_protection_disabled` are blockers for hosted secret prevention.
+- `vulnerability_alerts_disabled`, `dependency_graph_sbom_unreadable`, `dependabot_security_updates_disabled`, and `dependabot_security_updates_paused` are blockers for hosted dependency security posture.
 - `code_scanning_open_alerts`, `secret_scanning_open_alerts`, and `dependabot_open_alerts` are blockers until triaged, fixed, or explicitly accepted with documented rationale.
 - `artifact_attestation_verification_unverified` is a blocker for trusting release attestations as consumed evidence.
 - `*_unverified` means the local audit could not prove the hosted setting. It is not a pass.

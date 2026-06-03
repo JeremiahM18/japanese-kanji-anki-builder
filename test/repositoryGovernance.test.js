@@ -126,16 +126,16 @@ function countReviewedAssignmentsForSource(evidence, sourceId) {
 test("CODEOWNERS covers critical repository governance paths", () => {
     const codeowners = readRepoFile(path.join(".github", "CODEOWNERS"));
     const requiredEntries = [
-        "* @cover",
-        "/.github/workflows/ @cover",
-        "/src/services/ @cover",
-        "/scripts/ @cover",
-        "/test/ @cover",
-        "/README.md @cover",
-        "/CONTRIBUTING.md @cover",
-        "/SECURITY.md @cover",
-        "/package.json @cover",
-        "/package-lock.json @cover",
+        "* @JeremiahM18",
+        "/.github/workflows/ @JeremiahM18",
+        "/src/services/ @JeremiahM18",
+        "/scripts/ @JeremiahM18",
+        "/test/ @JeremiahM18",
+        "/README.md @JeremiahM18",
+        "/CONTRIBUTING.md @JeremiahM18",
+        "/SECURITY.md @JeremiahM18",
+        "/package.json @JeremiahM18",
+        "/package-lock.json @JeremiahM18",
     ];
 
     for (const entry of requiredEntries) {

@@ -73628,5 +73628,2435 @@
         "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
       }
     }
+  },
+  {
+    "kanji": "寡",
+    "status": "platinum",
+    "readingIncludes": [
+      "か"
+    ],
+    "meaningIncludes": [
+      "few"
+    ],
+    "kanjiMeaningsIncludes": [
+      "few",
+      "little",
+      "minority",
+      "widow"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "寡黙"
+    ],
+    "exampleIncludes": [
+      "祖父は寡黙ですが、とても優しい人です。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000710500",
+        "detail": "Japanese-source review for 寡|か: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000710500; source page title verified as 寡 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数11 1841 3249 カ すく ない ・やもめ ①すくない。「寡占」「寡黙」「衆寡」 多・衆 ②ひとり者。やもめ。つれあいをなくした人。「寡夫」「寡婦」 鰥(カン) ③力や徳が少ない。また、自分や自分の主君を謙遜(ケンソン)していう語。「寡学」「寡君」「寡徳」 参考 一般に「やもめ」は夫をなくした女性で、妻をなくした男性は「やもお」と呼ぶが、「やもめ」「おとこやもめ」と呼ぶこともある。 簡寡(カンカ)・鰥寡(カンカ)・孤寡(コカ)・衆寡(シュウカ)・女寡(ジョカ)・多寡(タカ)・豊寡(ホウカ); meaning excerpt reviewed as か行 ー か 寡 画数：(14) 部首： 部首内画数11 1841 3249 カ すく ない ・やもめ ①すくない。「寡占」「寡黙」「衆寡」 多・衆 ②ひとり者。やもめ。つれあいをなくした人。「寡夫」「寡婦」. Reviewer mapped this Japanese-source field evidence to PrimaryReading か, MeaningJP few, KanjiMeanings few / little / minority / widow, and support surface 寡黙 for the individual kanji 寡. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 寡|か: PrimaryReading か; MeaningJP few; KanjiMeanings few / little / minority / widow; support surface 寡黙; example sentence 祖父は寡黙ですが、とても優しい人です。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses か because Kanjipedia lists it as a source-supported target-kanji reading for 寡. 寡黙 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (カ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 寡|か: single-kanji anchor; Kanji and DisplayWord 寡; StudyWordKanji blank; PrimaryReading か; MeaningJP few / little; KanjiMeanings few / little / minority / widow; notes <ruby>寡黙<rt>かもく</rt></ruby> - taciturn ／ <ruby>寡少<rt>かしょう</rt></ruby> - small in number ／ <ruby>寡婦<rt>かふ</rt></ruby> - widow; example 祖父は寡黙ですが、とても優しい人です。 ／ そふはかもくですが、とてもやさしいひとです。 ／ My grandfather is taciturn, but he is a very kind person.; audio field includes kanji-reading-寡-か; stroke-order field includes 寡-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 寡: exact audio media fragment kanji-reading-寡-か; stroke-order media target 寡; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 寡|か: exact kanji-reading audio filename includes kanji-reading-寡-か; exported PrimaryReading か; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 寡: exported stroke-order field targets 寡; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 寡; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 寡|か: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 寡|か: PrimaryReading か; MeaningJP few; KanjiMeanings few / little / minority / widow; support surface 寡黙; example sentence 祖父は寡黙ですが、とても優しい人です。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 寡|か with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading か, MeaningJP few / little, KanjiMeanings few / little / minority / widow, example sentence 祖父は寡黙ですが、とても優しい人です。, reading そふはかもくですが、とてもやさしいひとです。, translation My grandfather is taciturn, but he is a very kind person., notes/support surface 寡黙, audio kanji-reading-寡-か, stroke-order media 寡-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 寡|か: PrimaryReading か; MeaningJP few; KanjiMeanings few / little / minority / widow; support surface 寡黙; example sentence 祖父は寡黙ですが、とても優しい人です。."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 寡|か: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "寡",
+        "displayWord": "寡",
+        "primaryReading": "か",
+        "meaningJP": "few / little",
+        "kanjiMeanings": "few / little / minority / widow",
+        "studyWordKanji": "",
+        "onReading": "カ",
+        "kunReading": "",
+        "notes": "<ruby>寡黙<rt>かもく</rt></ruby> - taciturn ／ <ruby>寡少<rt>かしょう</rt></ruby> - small in number ／ <ruby>寡婦<rt>かふ</rt></ruby> - widow",
+        "exampleSentence": "祖父は寡黙ですが、とても優しい人です。 ／ そふはかもくですが、とてもやさしいひとです。 ／ My grandfather is taciturn, but he is a very kind person.",
+        "audio": "[sound:5BE1_寡-kanji-reading-寡-か.wav]",
+        "strokeOrder": "<img src=\"5BE1_寡-stroke-order.gif\" alt=\"Stroke order for 寡\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0000710500",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 寡|か: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000710500; source page title verified as 寡 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数11 1841 3249 カ すく ない ・やもめ ①すくない。「寡占」「寡黙」「衆寡」 多・衆 ②ひとり者。やもめ。つれあいをなくした人。「寡夫」「寡婦」 鰥(カン) ③力や徳が少ない。また、自分や自分の主君を謙遜(ケンソン)していう語。「寡学」「寡君」「寡徳」 参考 一般に「やもめ」は夫をなくした女性で、妻をなくした男性は「やもお」と呼ぶが、「やもめ」「おとこやもめ」と呼ぶこともある。 簡寡(カンカ)・鰥寡(カンカ)・孤寡(コカ)・衆寡(シュウカ)・女寡(ジョカ)・多寡(タカ)・豊寡(ホウカ); meaning excerpt reviewed as か行 ー か 寡 画数：(14) 部首： 部首内画数11 1841 3249 カ すく ない ・やもめ ①すくない。「寡占」「寡黙」「衆寡」 多・衆 ②ひとり者。やもめ。つれあいをなくした人。「寡夫」「寡婦」. Reviewer mapped this Japanese-source field evidence to PrimaryReading か, MeaningJP few, KanjiMeanings few / little / minority / widow, and support surface 寡黙 for the individual kanji 寡. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 寡|か: PrimaryReading か; MeaningJP few; KanjiMeanings few / little / minority / widow; support surface 寡黙; example sentence 祖父は寡黙ですが、とても優しい人です。.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "祖父は寡黙ですが、とても優しい人です。",
+        "reading": "そふはかもくですが、とてもやさしいひとです。",
+        "translation": "My grandfather is taciturn, but he is a very kind person.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 寡|か: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0024",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0257",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "unknown-token",
+          "missing-token-reading",
+          "kanji-card-tokenizer-coverage-gap",
+          "artifact-warning"
+        ],
+        "normalizedTokenReading": "",
+        "normalizedCardReading": "か",
+        "readingAlignment": {
+          "comparable": false,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5B/5BE1_寡/manifest.json",
+        "audio": {
+          "path": "audio/5BE1_寡-kanji-reading-寡-か.wav",
+          "source": "voicevox-nemo",
+          "text": "寡",
+          "reading": "か",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5BE1_寡-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5BE1_寡-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5BE1_寡-stroke-order.gif\" alt=\"Stroke order for 寡\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 寡|か after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
+  },
+  {
+    "kanji": "寧",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ねい"
+    ],
+    "meaningIncludes": [
+      "careful",
+      "rather"
+    ],
+    "kanjiMeaningsIncludes": [
+      "careful",
+      "rather",
+      "peaceful",
+      "preferably",
+      "quiet",
+      "tranquility"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "丁寧",
+      "寧ろ",
+      "安寧"
+    ],
+    "exampleIncludes": [
+      "店員さんが商品の説明を丁寧にしてくれました。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0005471300",
+        "detail": "Japanese-source review for 寧|ねい: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0005471300; source page title verified as 寧 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数11 3911 472B ネイ デイ・ニョウ やす い ・ねんご ろ ・むし ろ ・なん ぞ ・いずく んぞ ①やすらか。やすんじる。「寧日」「安寧」 ②ねんごろ。「丁寧」 ③むしろ。どちらかといえば。選択の助字。 ④なんぞ。いずくんぞ。反語の助字。 安寧(アンネイ)・晏寧(アンネイ)・帰寧(キネイ)・康寧(コウネイ)・小寧(ショウネイ)・静寧(セイネイ)・丁寧(テイネイ); meaning excerpt reviewed as な行 ー ね 寧 画数：(14) 部首： 部首内画数11 3911 472B ネイ デイ・ニョウ やす い ・ねんご ろ ・むし ろ ・なん ぞ ・いずく んぞ. Reviewer mapped this Japanese-source field evidence to PrimaryReading ねい, MeaningJP careful / rather, KanjiMeanings careful / rather / peaceful / preferably / quiet / peace / tranquility, and support surface 丁寧 / 寧ろ / 安寧 for the individual kanji 寧. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい. Protected-field mapping for 寧|ねい: PrimaryReading ねい; MeaningJP careful / rather; KanjiMeanings careful / rather / peaceful / preferably / quiet / tranquility; support surface 丁寧 / 寧ろ / 安寧; example sentence 店員さんが商品の説明を丁寧にしてくれました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses ねい because Kanjipedia lists it as a source-supported target-kanji reading for 寧. 丁寧 / 寧ろ / 安寧 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (ネイ; むし.ろ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 寧|ねい: single-kanji anchor; Kanji and DisplayWord 寧; StudyWordKanji blank; PrimaryReading ねい; MeaningJP careful / rather; KanjiMeanings careful / rather / peaceful / preferably / quiet / peace / tranquility; notes <ruby>丁寧<rt>ていねい</rt></ruby> - polite / careful ／ <ruby>寧<rt>むし</rt></ruby>ろ - rather ／ <ruby>安寧<rt>あんねい</rt></ruby> - peace / peace / tranquility; example 店員さんが商品の説明を丁寧にしてくれました。 ／ てんいんさんがしょうひんのせつめいをていねいにしてくれました。 ／ The clerk explained the product very carefully.; audio field includes kanji-reading-寧-ねい; stroke-order field includes 寧-stroke-order. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 寧: exact audio media fragment kanji-reading-寧-ねい; stroke-order media target 寧; package media reports full N1 coverage with no silent fallback accepted. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 寧|ねい: exact kanji-reading audio filename includes kanji-reading-寧-ねい; exported PrimaryReading ねい; managed package provenance present. Listening naturalness QA is not claimed here. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 寧: exported stroke-order field targets 寧; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 寧; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 寧|ねい: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい. Protected-field mapping for 寧|ねい: PrimaryReading ねい; MeaningJP careful / rather; KanjiMeanings careful / rather / peaceful / preferably / quiet / tranquility; support surface 丁寧 / 寧ろ / 安寧; example sentence 店員さんが商品の説明を丁寧にしてくれました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 寧|ねい with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ねい, MeaningJP careful / rather, KanjiMeanings careful / rather / peaceful / preferably / quiet / peace / tranquility, example sentence 店員さんが商品の説明を丁寧にしてくれました。, reading てんいんさんがしょうひんのせつめいをていねいにしてくれました。, translation The clerk explained the product very carefully., notes/support surface 丁寧 / 寧ろ / 安寧, audio kanji-reading-寧-ねい, stroke-order media 寧-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい. Protected-field mapping for 寧|ねい: PrimaryReading ねい; MeaningJP careful / rather; KanjiMeanings careful / rather / peaceful / preferably / quiet / tranquility; support surface 丁寧 / 寧ろ / 安寧; example sentence 店員さんが商品の説明を丁寧にしてくれました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "fixSummary": "Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい.",
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 寧|ねい: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "寧",
+        "displayWord": "寧",
+        "primaryReading": "ねい",
+        "meaningJP": "careful / rather",
+        "kanjiMeanings": "careful / rather / peaceful / preferably / quiet / tranquility",
+        "studyWordKanji": "",
+        "onReading": "ネイ",
+        "kunReading": "むし.ろ",
+        "notes": "<ruby>丁寧<rt>ていねい</rt></ruby> - polite / careful ／ <ruby>寧<rt>むし</rt></ruby>ろ - rather ／ <ruby>安寧<rt>あんねい</rt></ruby> - peace / tranquility",
+        "exampleSentence": "店員さんが商品の説明を丁寧にしてくれました。 ／ てんいんさんがしょうひんのせつめいをていねいにしてくれました。 ／ The clerk explained the product very carefully.",
+        "audio": "[sound:5BE7_寧-kanji-reading-寧-ねい.wav]",
+        "strokeOrder": "<img src=\"5BE7_寧-stroke-order.gif\" alt=\"Stroke order for 寧\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0005471300",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 寧|ねい: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0005471300; source page title verified as 寧 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数11 3911 472B ネイ デイ・ニョウ やす い ・ねんご ろ ・むし ろ ・なん ぞ ・いずく んぞ ①やすらか。やすんじる。「寧日」「安寧」 ②ねんごろ。「丁寧」 ③むしろ。どちらかといえば。選択の助字。 ④なんぞ。いずくんぞ。反語の助字。 安寧(アンネイ)・晏寧(アンネイ)・帰寧(キネイ)・康寧(コウネイ)・小寧(ショウネイ)・静寧(セイネイ)・丁寧(テイネイ); meaning excerpt reviewed as な行 ー ね 寧 画数：(14) 部首： 部首内画数11 3911 472B ネイ デイ・ニョウ やす い ・ねんご ろ ・むし ろ ・なん ぞ ・いずく んぞ. Reviewer mapped this Japanese-source field evidence to PrimaryReading ねい, MeaningJP careful / rather, KanjiMeanings careful / rather / peaceful / preferably / quiet / peace / tranquility, and support surface 丁寧 / 寧ろ / 安寧 for the individual kanji 寧. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Platinum: Replaced the unsupported 寧静 support item with Kanjipedia-listed 安寧 before Platinum promotion; retained 丁寧 / 寧ろ support and the source-listed primary reading ねい. Protected-field mapping for 寧|ねい: PrimaryReading ねい; MeaningJP careful / rather; KanjiMeanings careful / rather / peaceful / preferably / quiet / tranquility; support surface 丁寧 / 寧ろ / 安寧; example sentence 店員さんが商品の説明を丁寧にしてくれました。.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "店員さんが商品の説明を丁寧にしてくれました。",
+        "reading": "てんいんさんがしょうひんのせつめいをていねいにしてくれました。",
+        "translation": "The clerk explained the product very carefully.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 寧|ねい: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0192",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0258",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "やすし",
+        "normalizedCardReading": "ねい",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5B/5BE7_寧/manifest.json",
+        "audio": {
+          "path": "audio/5BE7_寧-kanji-reading-寧-ねい.wav",
+          "source": "voicevox-nemo",
+          "text": "寧",
+          "reading": "ねい",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5BE7_寧-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5BE7_寧-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5BE7_寧-stroke-order.gif\" alt=\"Stroke order for 寧\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 寧|ねい after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
+  },
+  {
+    "kanji": "審",
+    "status": "platinum",
+    "readingIncludes": [
+      "しん"
+    ],
+    "meaningIncludes": [
+      "examine",
+      "judge"
+    ],
+    "kanjiMeaningsIncludes": [
+      "examine",
+      "judge",
+      "hearing",
+      "trial"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "審査",
+      "審判"
+    ],
+    "exampleIncludes": [
+      "応募作品は来週から専門家によって審査されます。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003661400",
+        "detail": "Japanese-source review for 審|しん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0003661400; source page title verified as 審 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数12 3119 3F33 シン つまび らか ①つまびらか。あきらか。「審問」「不審」 ②つまびらかにする。はっきりさせる。「審議」「審査」 ③「審理」「審判員」の略。「結審」「塁審」 球審(キュウシン)・結審(ケッシン)・誤審(ゴシン)・主審(シュシン)・詳審(ショウシン)・線審(センシン)・陪審(バイシン)・不審(フシン)・予審(ヨシン)・塁審(ルイシン) 出典『角川新字源 改訂新版』（ＫＡＤＯＫＡＷＡ）; meaning excerpt reviewed as さ行 ー し 審 画数：(15) 部首： 部首内画数12 3119 3F33 シン つまび らか ①つまびらか。あきらか。「審問」「不審」 ②つまびらかにする。はっきりさせる。「審議」「審査」 ③「審理」「審判員」の略。「結審」「塁審」. Reviewer mapped this Japanese-source field evidence to PrimaryReading しん, MeaningJP examine / judge, KanjiMeanings examine / judge / hearing / trial, and support surface 審査 / 審判 for the individual kanji 審. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 審|しん: PrimaryReading しん; MeaningJP examine / judge; KanjiMeanings examine / judge / hearing / trial; support surface 審査 / 審判; example sentence 応募作品は来週から専門家によって審査されます。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses しん because Kanjipedia lists it as a source-supported target-kanji reading for 審. 審査 / 審判 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (シン; つぶさ.に、 つまび.らか) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 審|しん: single-kanji anchor; Kanji and DisplayWord 審; StudyWordKanji blank; PrimaryReading しん; MeaningJP examine / judge; KanjiMeanings examine / judge / hearing / trial; notes <ruby>審査<rt>しんさ</rt></ruby> - screening / review ／ <ruby>審判<rt>しんぱん</rt></ruby> - judgment / referee ／ <ruby>審議<rt>しんぎ</rt></ruby> - deliberation; example 応募作品は来週から専門家によって審査されます。 ／ おうぼさくひんはらいしゅうからせんもんかによってしんさされます。 ／ The submitted works will be reviewed by specialists starting next week.; audio field includes kanji-reading-審-しん; stroke-order field includes 審-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 審: exact audio media fragment kanji-reading-審-しん; stroke-order media target 審; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 審|しん: exact kanji-reading audio filename includes kanji-reading-審-しん; exported PrimaryReading しん; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 審: exported stroke-order field targets 審; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 審; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 審|しん: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 審|しん: PrimaryReading しん; MeaningJP examine / judge; KanjiMeanings examine / judge / hearing / trial; support surface 審査 / 審判; example sentence 応募作品は来週から専門家によって審査されます。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 審|しん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading しん, MeaningJP examine / judge, KanjiMeanings examine / judge / hearing / trial, example sentence 応募作品は来週から専門家によって審査されます。, reading おうぼさくひんはらいしゅうからせんもんかによってしんさされます。, translation The submitted works will be reviewed by specialists starting next week., notes/support surface 審査 / 審判, audio kanji-reading-審-しん, stroke-order media 審-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 審|しん: PrimaryReading しん; MeaningJP examine / judge; KanjiMeanings examine / judge / hearing / trial; support surface 審査 / 審判; example sentence 応募作品は来週から専門家によって審査されます。."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 審|しん: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "審",
+        "displayWord": "審",
+        "primaryReading": "しん",
+        "meaningJP": "examine / judge",
+        "kanjiMeanings": "examine / judge / hearing / trial",
+        "studyWordKanji": "",
+        "onReading": "シン",
+        "kunReading": "つぶさ.に、 つまび.らか",
+        "notes": "<ruby>審査<rt>しんさ</rt></ruby> - screening / review ／ <ruby>審判<rt>しんぱん</rt></ruby> - judgment / referee ／ <ruby>審議<rt>しんぎ</rt></ruby> - deliberation",
+        "exampleSentence": "応募作品は来週から専門家によって審査されます。 ／ おうぼさくひんはらいしゅうからせんもんかによってしんさされます。 ／ The submitted works will be reviewed by specialists starting next week.",
+        "audio": "[sound:5BE9_審-kanji-reading-審-しん.wav]",
+        "strokeOrder": "<img src=\"5BE9_審-stroke-order.gif\" alt=\"Stroke order for 審\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0003661400",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 審|しん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0003661400; source page title verified as 審 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数12 3119 3F33 シン つまび らか ①つまびらか。あきらか。「審問」「不審」 ②つまびらかにする。はっきりさせる。「審議」「審査」 ③「審理」「審判員」の略。「結審」「塁審」 球審(キュウシン)・結審(ケッシン)・誤審(ゴシン)・主審(シュシン)・詳審(ショウシン)・線審(センシン)・陪審(バイシン)・不審(フシン)・予審(ヨシン)・塁審(ルイシン) 出典『角川新字源 改訂新版』（ＫＡＤＯＫＡＷＡ）; meaning excerpt reviewed as さ行 ー し 審 画数：(15) 部首： 部首内画数12 3119 3F33 シン つまび らか ①つまびらか。あきらか。「審問」「不審」 ②つまびらかにする。はっきりさせる。「審議」「審査」 ③「審理」「審判員」の略。「結審」「塁審」. Reviewer mapped this Japanese-source field evidence to PrimaryReading しん, MeaningJP examine / judge, KanjiMeanings examine / judge / hearing / trial, and support surface 審査 / 審判 for the individual kanji 審. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 審|しん: PrimaryReading しん; MeaningJP examine / judge; KanjiMeanings examine / judge / hearing / trial; support surface 審査 / 審判; example sentence 応募作品は来週から専門家によって審査されます。.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "応募作品は来週から専門家によって審査されます。",
+        "reading": "おうぼさくひんはらいしゅうからせんもんかによってしんさされます。",
+        "translation": "The submitted works will be reviewed by specialists starting next week.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 審|しん: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0140",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0259",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "しん",
+        "normalizedCardReading": "しん",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5B/5BE9_審/manifest.json",
+        "audio": {
+          "path": "audio/5BE9_審-kanji-reading-審-しん.wav",
+          "source": "voicevox-nemo",
+          "text": "審",
+          "reading": "しん",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5BE9_審-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5BE9_審-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5BE9_審-stroke-order.gif\" alt=\"Stroke order for 審\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 審|しん after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
+  },
+  {
+    "kanji": "寮",
+    "status": "platinum",
+    "readingIncludes": [
+      "りょう"
+    ],
+    "meaningIncludes": [
+      "dormitory"
+    ],
+    "kanjiMeaningsIncludes": [
+      "dormitory",
+      "hostel"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "学生寮",
+      "社員寮",
+      "寮生活"
+    ],
+    "exampleIncludes": [
+      "大学一年生のときは学生寮で暮らしていました。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0007182900",
+        "detail": "Japanese-source review for 寮|りょう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007182900; source page title verified as 寮 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数12 4632 4E40 リョウ つかさ ①共同宿舎。寄宿舎。「寮舎」「寮母」「学生寮」 ②しもやしき。別荘。また、数奇屋。あずまや。「茶寮」 ③つかさ。役人。「寮佐」 ④律令(リツリョウ)制で省の下に属した役所。 学寮(ガクリョウ)・僧寮(ソウリョウ)・茶寮(チャリョウ)・(サリョウ) 出典『角川新字源 改訂新版』（ＫＡＤＯＫＡＷＡ） 形声。宀と、音符尞(レウ)とから成る。役所の意を表す。; meaning excerpt reviewed as ら行 ー り 寮 画数：(15) 部首： 部首内画数12 4632 4E40 リョウ つかさ ①共同宿舎。寄宿舎。「寮舎」「寮母」「学生寮」 ②しもやしき。別荘。また、数奇屋。あずまや。「茶寮」 ③つかさ。役人。「寮佐」 ④律令(リツリョウ)制で省の下に属した役所。. Reviewer mapped this Japanese-source field evidence to PrimaryReading りょう, MeaningJP dormitory, KanjiMeanings dormitory / hostel, and support surface 学生寮 / 社員寮 / 寮生活 for the individual kanji 寮. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 寮|りょう: PrimaryReading りょう; MeaningJP dormitory; KanjiMeanings dormitory / hostel; support surface 学生寮 / 社員寮 / 寮生活; example sentence 大学一年生のときは学生寮で暮らしていました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses りょう because Kanjipedia lists it as a source-supported target-kanji reading for 寮. 学生寮 / 社員寮 / 寮生活 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (リョウ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 寮|りょう: single-kanji anchor; Kanji and DisplayWord 寮; StudyWordKanji blank; PrimaryReading りょう; MeaningJP dormitory; KanjiMeanings dormitory / hostel; notes <ruby>学生寮<rt>がくせいりょう</rt></ruby> - student dormitory ／ <ruby>社員寮<rt>しゃいんりょう</rt></ruby> - company dormitory ／ <ruby>寮生活<rt>りょうせいかつ</rt></ruby> - dorm life; example 大学一年生のときは学生寮で暮らしていました。 ／ だいがくいちねんせいのときはがくせいりょうでくらしていました。 ／ I lived in a student dormitory during my first year of university.; audio field includes kanji-reading-寮-りょう; stroke-order field includes 寮-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 寮: exact audio media fragment kanji-reading-寮-りょう; stroke-order media target 寮; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 寮|りょう: exact kanji-reading audio filename includes kanji-reading-寮-りょう; exported PrimaryReading りょう; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 寮: exported stroke-order field targets 寮; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 寮; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 寮|りょう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 寮|りょう: PrimaryReading りょう; MeaningJP dormitory; KanjiMeanings dormitory / hostel; support surface 学生寮 / 社員寮 / 寮生活; example sentence 大学一年生のときは学生寮で暮らしていました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 寮|りょう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading りょう, MeaningJP dormitory, KanjiMeanings dormitory / hostel, example sentence 大学一年生のときは学生寮で暮らしていました。, reading だいがくいちねんせいのときはがくせいりょうでくらしていました。, translation I lived in a student dormitory during my first year of university., notes/support surface 学生寮 / 社員寮 / 寮生活, audio kanji-reading-寮-りょう, stroke-order media 寮-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 寮|りょう: PrimaryReading りょう; MeaningJP dormitory; KanjiMeanings dormitory / hostel; support surface 学生寮 / 社員寮 / 寮生活; example sentence 大学一年生のときは学生寮で暮らしていました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 寮|りょう: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "寮",
+        "displayWord": "寮",
+        "primaryReading": "りょう",
+        "meaningJP": "dormitory",
+        "kanjiMeanings": "dormitory / hostel",
+        "studyWordKanji": "",
+        "onReading": "リョウ",
+        "kunReading": "",
+        "notes": "<ruby>学生寮<rt>がくせいりょう</rt></ruby> - student dormitory ／ <ruby>社員寮<rt>しゃいんりょう</rt></ruby> - company dormitory ／ <ruby>寮生活<rt>りょうせいかつ</rt></ruby> - dorm life",
+        "exampleSentence": "大学一年生のときは学生寮で暮らしていました。 ／ だいがくいちねんせいのときはがくせいりょうでくらしていました。 ／ I lived in a student dormitory during my first year of university.",
+        "audio": "[sound:5BEE_寮-kanji-reading-寮-りょう.wav]",
+        "strokeOrder": "<img src=\"5BEE_寮-stroke-order.gif\" alt=\"Stroke order for 寮\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0007182900",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 寮|りょう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007182900; source page title verified as 寮 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数12 4632 4E40 リョウ つかさ ①共同宿舎。寄宿舎。「寮舎」「寮母」「学生寮」 ②しもやしき。別荘。また、数奇屋。あずまや。「茶寮」 ③つかさ。役人。「寮佐」 ④律令(リツリョウ)制で省の下に属した役所。 学寮(ガクリョウ)・僧寮(ソウリョウ)・茶寮(チャリョウ)・(サリョウ) 出典『角川新字源 改訂新版』（ＫＡＤＯＫＡＷＡ） 形声。宀と、音符尞(レウ)とから成る。役所の意を表す。; meaning excerpt reviewed as ら行 ー り 寮 画数：(15) 部首： 部首内画数12 4632 4E40 リョウ つかさ ①共同宿舎。寄宿舎。「寮舎」「寮母」「学生寮」 ②しもやしき。別荘。また、数奇屋。あずまや。「茶寮」 ③つかさ。役人。「寮佐」 ④律令(リツリョウ)制で省の下に属した役所。. Reviewer mapped this Japanese-source field evidence to PrimaryReading りょう, MeaningJP dormitory, KanjiMeanings dormitory / hostel, and support surface 学生寮 / 社員寮 / 寮生活 for the individual kanji 寮. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 寮|りょう: PrimaryReading りょう; MeaningJP dormitory; KanjiMeanings dormitory / hostel; support surface 学生寮 / 社員寮 / 寮生活; example sentence 大学一年生のときは学生寮で暮らしていました。.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "nihongo_sou_matome_kanji",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "nihongo_sou_matome",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "大学一年生のときは学生寮で暮らしていました。",
+        "reading": "だいがくいちねんせいのときはがくせいりょうでくらしていました。",
+        "translation": "I lived in a student dormitory during my first year of university.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 寮|りょう: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0251",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0260",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "りょう",
+        "normalizedCardReading": "りょう",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5B/5BEE_寮/manifest.json",
+        "audio": {
+          "path": "audio/5BEE_寮-kanji-reading-寮-りょう.wav",
+          "source": "voicevox-nemo",
+          "text": "寮",
+          "reading": "りょう",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5BEE_寮-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5BEE_寮-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5BEE_寮-stroke-order.gif\" alt=\"Stroke order for 寮\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 寮|りょう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
+  },
+  {
+    "kanji": "寸",
+    "status": "platinum",
+    "readingIncludes": [
+      "すん"
+    ],
+    "meaningIncludes": [
+      "inch",
+      "small amount"
+    ],
+    "kanjiMeaningsIncludes": [
+      "inch",
+      "small amount",
+      "a little",
+      "measurement",
+      "small",
+      "tenth of a shaku"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "寸法",
+      "寸前"
+    ],
+    "exampleIncludes": [
+      "棚を作る前に板の寸法を正確に測りました。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003811900",
+        "detail": "Japanese-source review for 寸|すん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0003811900; source page title verified as 寸 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数0 3203 4023 スン ソン わず か ・き ①尺貫法の長さの単位。尺の一〇分の一。約三・〇三(センチメートル)。 ②長さ。「寸法」「原寸」 ③わずか。ほんのすこし。ちょっと。「寸暇」「寸志」「寸時」 ④き。馬のたけを測る単位。「一寸(ひとき)」 参考 「寸」の草書体が平仮名の「す」になった。 原寸(ゲンスン)・尺寸(シャクスン)・(セキスン)・方寸(ホウスン); meaning excerpt reviewed as さ行 ー す 寸 画数：(3) 部首： 部首内画数0 3203 4023 スン ソン わず か ・き. Reviewer mapped this Japanese-source field evidence to PrimaryReading すん, MeaningJP inch / small amount, KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku, and support surface 寸法 / 寸前 for the individual kanji 寸. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 寸|すん: PrimaryReading すん; MeaningJP inch / small amount; KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku; support surface 寸法 / 寸前; example sentence 棚を作る前に板の寸法を正確に測りました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses すん because Kanjipedia lists it as a source-supported target-kanji reading for 寸. 寸法 / 寸前 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (スン) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 寸|すん: single-kanji anchor; Kanji and DisplayWord 寸; StudyWordKanji blank; PrimaryReading すん; MeaningJP inch / small amount; KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku; notes <ruby>寸法<rt>すんぽう</rt></ruby> - measurement / dimensions ／ <ruby>一寸<rt>ちょっと</rt></ruby> - a little ／ <ruby>寸前<rt>すんぜん</rt></ruby> - just before; example 棚を作る前に板の寸法を正確に測りました。 ／ たなをつくるまえにいたのすんぽうをせいかくにはかりました。 ／ I measured the board dimensions accurately before making the shelf.; audio field includes kanji-reading-寸-すん; stroke-order field includes 寸-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 寸: exact audio media fragment kanji-reading-寸-すん; stroke-order media target 寸; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 寸|すん: exact kanji-reading audio filename includes kanji-reading-寸-すん; exported PrimaryReading すん; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 寸: exported stroke-order field targets 寸; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 寸; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 寸|すん: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 寸|すん: PrimaryReading すん; MeaningJP inch / small amount; KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku; support surface 寸法 / 寸前; example sentence 棚を作る前に板の寸法を正確に測りました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 寸|すん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading すん, MeaningJP inch / small amount, KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku, example sentence 棚を作る前に板の寸法を正確に測りました。, reading たなをつくるまえにいたのすんぽうをせいかくにはかりました。, translation I measured the board dimensions accurately before making the shelf., notes/support surface 寸法 / 寸前, audio kanji-reading-寸-すん, stroke-order media 寸-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 寸|すん: PrimaryReading すん; MeaningJP inch / small amount; KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku; support surface 寸法 / 寸前; example sentence 棚を作る前に板の寸法を正確に測りました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 寸|すん: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "寸",
+        "displayWord": "寸",
+        "primaryReading": "すん",
+        "meaningJP": "inch / small amount",
+        "kanjiMeanings": "inch / small amount / a little / measurement / small / tenth of a shaku",
+        "studyWordKanji": "",
+        "onReading": "スン",
+        "kunReading": "",
+        "notes": "<ruby>寸法<rt>すんぽう</rt></ruby> - measurement / dimensions ／ <ruby>一寸<rt>ちょっと</rt></ruby> - a little ／ <ruby>寸前<rt>すんぜん</rt></ruby> - just before",
+        "exampleSentence": "棚を作る前に板の寸法を正確に測りました。 ／ たなをつくるまえにいたのすんぽうをせいかくにはかりました。 ／ I measured the board dimensions accurately before making the shelf.",
+        "audio": "[sound:5BF8_寸-kanji-reading-寸-すん.wav]",
+        "strokeOrder": "<img src=\"5BF8_寸-stroke-order.gif\" alt=\"Stroke order for 寸\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0003811900",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 寸|すん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0003811900; source page title verified as 寸 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数0 3203 4023 スン ソン わず か ・き ①尺貫法の長さの単位。尺の一〇分の一。約三・〇三(センチメートル)。 ②長さ。「寸法」「原寸」 ③わずか。ほんのすこし。ちょっと。「寸暇」「寸志」「寸時」 ④き。馬のたけを測る単位。「一寸(ひとき)」 参考 「寸」の草書体が平仮名の「す」になった。 原寸(ゲンスン)・尺寸(シャクスン)・(セキスン)・方寸(ホウスン); meaning excerpt reviewed as さ行 ー す 寸 画数：(3) 部首： 部首内画数0 3203 4023 スン ソン わず か ・き. Reviewer mapped this Japanese-source field evidence to PrimaryReading すん, MeaningJP inch / small amount, KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku, and support surface 寸法 / 寸前 for the individual kanji 寸. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 寸|すん: PrimaryReading すん; MeaningJP inch / small amount; KanjiMeanings inch / small amount / a little / measurement / small / tenth of a shaku; support surface 寸法 / 寸前; example sentence 棚を作る前に板の寸法を正確に測りました。.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "棚を作る前に板の寸法を正確に測りました。",
+        "reading": "たなをつくるまえにいたのすんぽうをせいかくにはかりました。",
+        "translation": "I measured the board dimensions accurately before making the shelf.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 寸|すん: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0145",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0261",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review"
+        ],
+        "normalizedTokenReading": "すん",
+        "normalizedCardReading": "すん",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": true
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer reading matches the live card reading; no tracked card change required."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5B/5BF8_寸/manifest.json",
+        "audio": {
+          "path": "audio/5BF8_寸-kanji-reading-寸-すん.wav",
+          "source": "voicevox-nemo",
+          "text": "寸",
+          "reading": "すん",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5BF8_寸-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5BF8_寸-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5BF8_寸-stroke-order.gif\" alt=\"Stroke order for 寸\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 寸|すん after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
+  },
+  {
+    "kanji": "射",
+    "status": "platinum",
+    "readingIncludes": [
+      "さす"
+    ],
+    "meaningIncludes": [
+      "to shine",
+      "to strike"
+    ],
+    "kanjiMeaningsIncludes": [
+      "shoot",
+      "shine",
+      "archery",
+      "onto",
+      "shine into"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "射す",
+      "放射"
+    ],
+    "exampleIncludes": [
+      "午後になると西日が部屋の奥まで射します。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0002974700",
+        "detail": "Japanese-source review for 射|さす: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002974700; source page title verified as 射 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数7 2845 3C4D シャ セキ・ヤ い る う つ ・さ す ・あ てる ①いる。弓で矢をいる。「射芸」「射手」 ②うつ。銃砲で弾をうつ。「射撃」「射程」 ③液体や気体を勢いよく出す。「射出」「注射」「発射」 ④さす。光がはいる。「日射」 ⑤ねらう。あてる。「射倖(シャコウ)」 照射(ショウシャ)・掃射(ソウシャ)・注射(チュウシャ)・投射(トウシャ)・発射(ハッシャ)・反射(ハンシャ)・輻射(フクシャ)・噴射(フンシャ)・放射(ホウシャ)・乱射(ランシャ) <div class=\"hArea\"; meaning excerpt reviewed as さ行 ー し 射 画数：(10) 部首： 部首内画数7 2845 3C4D シャ セキ・ヤ い る う つ ・さ す ・あ てる. Reviewer mapped this Japanese-source field evidence to PrimaryReading さす, MeaningJP to shine / to strike, KanjiMeanings shoot / shine / archery / onto / shine into, and support surface 射す / 放射 for the individual kanji 射. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 射|さす: PrimaryReading さす; MeaningJP to shine / to strike; KanjiMeanings shoot / shine / archery / onto / shine into; support surface 射す / 放射; example sentence 午後になると西日が部屋の奥まで射します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses さす because Kanjipedia lists it as a source-supported target-kanji reading for 射. 射す / 放射 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (シャ; い.る、 う.つ、 さ.す) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 射|さす: single-kanji anchor; Kanji and DisplayWord 射; StudyWordKanji blank; PrimaryReading さす; MeaningJP to shine / to strike; KanjiMeanings shoot / shine / archery / onto / shine into; notes <ruby>放射<rt>ほうしゃ</rt></ruby> - radiation / emission ／ <ruby>射<rt>さ</rt></ruby>す - to shine / to strike ／ <ruby>発射<rt>はっしゃ</rt></ruby> - launching / firing; example 午後になると西日が部屋の奥まで射します。 ／ ごごになるとにしびがへやのおくまでさします。 ／ In the afternoon, the western sun shines deep into the room.; audio field includes kanji-reading-射-さす; stroke-order field includes 射-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 射: exact audio media fragment kanji-reading-射-さす; stroke-order media target 射; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 射|さす: exact kanji-reading audio filename includes kanji-reading-射-さす; exported PrimaryReading さす; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 射: exported stroke-order field targets 射; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 射; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 射|さす: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 射|さす: PrimaryReading さす; MeaningJP to shine / to strike; KanjiMeanings shoot / shine / archery / onto / shine into; support surface 射す / 放射; example sentence 午後になると西日が部屋の奥まで射します。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 射|さす with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading さす, MeaningJP to shine / to strike, KanjiMeanings shoot / shine / archery / onto / shine into, example sentence 午後になると西日が部屋の奥まで射します。, reading ごごになるとにしびがへやのおくまでさします。, translation In the afternoon, the western sun shines deep into the room., notes/support surface 射す / 放射, audio kanji-reading-射-さす, stroke-order media 射-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 射|さす: PrimaryReading さす; MeaningJP to shine / to strike; KanjiMeanings shoot / shine / archery / onto / shine into; support surface 射す / 放射; example sentence 午後になると西日が部屋の奥まで射します。."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 射|さす: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "射",
+        "displayWord": "射",
+        "primaryReading": "さす",
+        "meaningJP": "to shine / to strike",
+        "kanjiMeanings": "shoot / shine / archery / onto / shine into",
+        "studyWordKanji": "",
+        "onReading": "シャ",
+        "kunReading": "い.る、 う.つ、 さ.す",
+        "notes": "<ruby>放射<rt>ほうしゃ</rt></ruby> - radiation / emission ／ <ruby>射<rt>さ</rt></ruby>す - to shine / to strike ／ <ruby>発射<rt>はっしゃ</rt></ruby> - launching / firing",
+        "exampleSentence": "午後になると西日が部屋の奥まで射します。 ／ ごごになるとにしびがへやのおくまでさします。 ／ In the afternoon, the western sun shines deep into the room.",
+        "audio": "[sound:5C04_射-kanji-reading-射-さす.wav]",
+        "strokeOrder": "<img src=\"5C04_射-stroke-order.gif\" alt=\"Stroke order for 射\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0002974700",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 射|さす: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002974700; source page title verified as 射 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数7 2845 3C4D シャ セキ・ヤ い る う つ ・さ す ・あ てる ①いる。弓で矢をいる。「射芸」「射手」 ②うつ。銃砲で弾をうつ。「射撃」「射程」 ③液体や気体を勢いよく出す。「射出」「注射」「発射」 ④さす。光がはいる。「日射」 ⑤ねらう。あてる。「射倖(シャコウ)」 照射(ショウシャ)・掃射(ソウシャ)・注射(チュウシャ)・投射(トウシャ)・発射(ハッシャ)・反射(ハンシャ)・輻射(フクシャ)・噴射(フンシャ)・放射(ホウシャ)・乱射(ランシャ) <div class=\"hArea\"; meaning excerpt reviewed as さ行 ー し 射 画数：(10) 部首： 部首内画数7 2845 3C4D シャ セキ・ヤ い る う つ ・さ す ・あ てる. Reviewer mapped this Japanese-source field evidence to PrimaryReading さす, MeaningJP to shine / to strike, KanjiMeanings shoot / shine / archery / onto / shine into, and support surface 射す / 放射 for the individual kanji 射. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 射|さす: PrimaryReading さす; MeaningJP to shine / to strike; KanjiMeanings shoot / shine / archery / onto / shine into; support surface 射す / 放射; example sentence 午後になると西日が部屋の奥まで射します。.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "午後になると西日が部屋の奥まで射します。",
+        "reading": "ごごになるとにしびがへやのおくまでさします。",
+        "translation": "In the afternoon, the western sun shines deep into the room.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 射|さす: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0111",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0262",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "い",
+        "normalizedCardReading": "さす",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5C/5C04_射/manifest.json",
+        "audio": {
+          "path": "audio/5C04_射-kanji-reading-射-さす.wav",
+          "source": "voicevox-nemo",
+          "text": "射",
+          "reading": "さす",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5C04_射-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5C04_射-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5C04_射-stroke-order.gif\" alt=\"Stroke order for 射\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 射|さす after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
+  },
+  {
+    "kanji": "尉",
+    "status": "platinum",
+    "readingIncludes": [
+      "い"
+    ],
+    "meaningIncludes": [
+      "military officer"
+    ],
+    "kanjiMeaningsIncludes": [
+      "military officer",
+      "jailer",
+      "old man",
+      "rank"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "大尉"
+    ],
+    "exampleIncludes": [
+      "小説の主人公は若い大尉として登場します。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0000145000",
+        "detail": "Japanese-source review for 尉|い: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000145000; source page title verified as 尉 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数8 1651 3053 イ じょう ①軍隊で階級の一つ。「尉官」 ②じょう。律令(リツリョウ)制で衛門府(エモンフ)・兵衛府(ヒョウエフ)の三等官。 衛尉(エイイ)・准尉(ジュンイ)・少尉(ショウイ)・大尉(タイイ)・(ダイイ)・中尉(チュウイ)・廷尉(テイイ)・都尉(トイ) 出典『角川新字源 改訂新版』（ＫＡＤＯＫＡＷＡ） 象形。火のしを手にして布を押さえのばす形にかたどる。「熨(ヰ、ウツ)」の原字。ひい; meaning excerpt reviewed as あ行 ー い 尉 画数：(11) 部首： 部首内画数8 1651 3053 イ じょう ①軍隊で階級の一つ。「尉官」 ②じょう。律令(リツリョウ)制で衛門府(エモンフ)・兵衛府(ヒョウエフ)の三等官。. Reviewer mapped this Japanese-source field evidence to PrimaryReading い, MeaningJP military officer, KanjiMeanings military officer / jailer / old man / rank, and support surface 大尉 for the individual kanji 尉. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 尉|い: PrimaryReading い; MeaningJP military officer; KanjiMeanings military officer / jailer / old man / rank; support surface 大尉; example sentence 小説の主人公は若い大尉として登場します。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses い because Kanjipedia lists it as a source-supported target-kanji reading for 尉. 大尉 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (イ、 ジョウ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 尉|い: single-kanji anchor; Kanji and DisplayWord 尉; StudyWordKanji blank; PrimaryReading い; MeaningJP military officer; KanjiMeanings military officer / jailer / old man / rank; notes <ruby>大尉<rt>たいい</rt></ruby> - captain ／ <ruby>中尉<rt>ちゅうい</rt></ruby> - first lieutenant ／ <ruby>少尉<rt>しょうい</rt></ruby> - second lieutenant; example 小説の主人公は若い大尉として登場します。 ／ しょうせつのしゅじんこうはわかいたいいとしてとうじょうします。 ／ The main character in the novel appears as a young captain.; audio field includes kanji-reading-尉-い; stroke-order field includes 尉-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 尉: exact audio media fragment kanji-reading-尉-い; stroke-order media target 尉; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 尉|い: exact kanji-reading audio filename includes kanji-reading-尉-い; exported PrimaryReading い; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 尉: exported stroke-order field targets 尉; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 尉; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 尉|い: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 尉|い: PrimaryReading い; MeaningJP military officer; KanjiMeanings military officer / jailer / old man / rank; support surface 大尉; example sentence 小説の主人公は若い大尉として登場します。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 尉|い with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading い, MeaningJP military officer, KanjiMeanings military officer / jailer / old man / rank, example sentence 小説の主人公は若い大尉として登場します。, reading しょうせつのしゅじんこうはわかいたいいとしてとうじょうします。, translation The main character in the novel appears as a young captain., notes/support surface 大尉, audio kanji-reading-尉-い, stroke-order media 尉-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 尉|い: PrimaryReading い; MeaningJP military officer; KanjiMeanings military officer / jailer / old man / rank; support surface 大尉; example sentence 小説の主人公は若い大尉として登場します。."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 尉|い: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "尉",
+        "displayWord": "尉",
+        "primaryReading": "い",
+        "meaningJP": "military officer",
+        "kanjiMeanings": "military officer / jailer / old man / rank",
+        "studyWordKanji": "",
+        "onReading": "イ、 ジョウ",
+        "kunReading": "",
+        "notes": "<ruby>大尉<rt>たいい</rt></ruby> - captain ／ <ruby>中尉<rt>ちゅうい</rt></ruby> - first lieutenant ／ <ruby>少尉<rt>しょうい</rt></ruby> - second lieutenant",
+        "exampleSentence": "小説の主人公は若い大尉として登場します。 ／ しょうせつのしゅじんこうはわかいたいいとしてとうじょうします。 ／ The main character in the novel appears as a young captain.",
+        "audio": "[sound:5C09_尉-kanji-reading-尉-い.wav]",
+        "strokeOrder": "<img src=\"5C09_尉-stroke-order.gif\" alt=\"Stroke order for 尉\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0000145000",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 尉|い: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0000145000; source page title verified as 尉 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数8 1651 3053 イ じょう ①軍隊で階級の一つ。「尉官」 ②じょう。律令(リツリョウ)制で衛門府(エモンフ)・兵衛府(ヒョウエフ)の三等官。 衛尉(エイイ)・准尉(ジュンイ)・少尉(ショウイ)・大尉(タイイ)・(ダイイ)・中尉(チュウイ)・廷尉(テイイ)・都尉(トイ) 出典『角川新字源 改訂新版』（ＫＡＤＯＫＡＷＡ） 象形。火のしを手にして布を押さえのばす形にかたどる。「熨(ヰ、ウツ)」の原字。ひい; meaning excerpt reviewed as あ行 ー い 尉 画数：(11) 部首： 部首内画数8 1651 3053 イ じょう ①軍隊で階級の一つ。「尉官」 ②じょう。律令(リツリョウ)制で衛門府(エモンフ)・兵衛府(ヒョウエフ)の三等官。. Reviewer mapped this Japanese-source field evidence to PrimaryReading い, MeaningJP military officer, KanjiMeanings military officer / jailer / old man / rank, and support surface 大尉 for the individual kanji 尉. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 尉|い: PrimaryReading い; MeaningJP military officer; KanjiMeanings military officer / jailer / old man / rank; support surface 大尉; example sentence 小説の主人公は若い大尉として登場します。.",
+        "sourceOriginIds": [
+          "ask_hajimete_jlpt_kanji",
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "ask_hajimete_jlpt_kanji",
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "小説の主人公は若い大尉として登場します。",
+        "reading": "しょうせつのしゅじんこうはわかいたいいとしてとうじょうします。",
+        "translation": "The main character in the novel appears as a young captain.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 尉|い: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0005",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0263",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "じょう",
+        "normalizedCardReading": "い",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5C/5C09_尉/manifest.json",
+        "audio": {
+          "path": "audio/5C09_尉-kanji-reading-尉-い.wav",
+          "source": "voicevox-nemo",
+          "text": "尉",
+          "reading": "い",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5C09_尉-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5C09_尉-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5C09_尉-stroke-order.gif\" alt=\"Stroke order for 尉\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 尉|い after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
+  },
+  {
+    "kanji": "尋",
+    "status": "platinum",
+    "readingIncludes": [
+      "たずねる"
+    ],
+    "meaningIncludes": [
+      "ask",
+      "visit"
+    ],
+    "kanjiMeaningsIncludes": [
+      "ask",
+      "search",
+      "inquire",
+      "fathom",
+      "look for"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "尋ねる",
+      "尋常"
+    ],
+    "exampleIncludes": [
+      "道に迷ったので近くの人に駅への行き方を尋ねました。"
+    ],
+    "reviewedAt": "2026-06-03",
+    "reviewer": "codex-platinum-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0003706700",
+        "detail": "Japanese-source review for 尋|たずねる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0003706700; source page title verified as 尋 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数9 3150 3F52 ジン たず ねる つね・ひろ 画数(12) 部首： 部首内画数:9; meaning excerpt reviewed as さ行 ー し 尋 画数：(12) 部首： 部首内画数9 3150 3F52 ジン たず ねる つね・ひろ. Reviewer mapped this Japanese-source field evidence to PrimaryReading たずねる, MeaningJP ask / visit, KanjiMeanings ask / search / inquire / fathom / look for, and support surface 尋ねる / 尋常 for the individual kanji 尋. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 尋|たずねる: PrimaryReading たずねる; MeaningJP ask / visit; KanjiMeanings ask / search / inquire / fathom / look for; support surface 尋ねる / 尋常; example sentence 道に迷ったので近くの人に駅への行き方を尋ねました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "Uses たずねる because Kanjipedia lists it as a source-supported target-kanji reading for 尋. 尋ねる / 尋常 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (ジン; たず.ねる、 ひろ) for separate contexts.",
+    "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-03",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji platinum standard.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --json",
+        "detail": "Generated card surface inspected for 尋|たずねる: single-kanji anchor; Kanji and DisplayWord 尋; StudyWordKanji blank; PrimaryReading たずねる; MeaningJP to ask / visit; KanjiMeanings ask / search / inquire / fathom / look for; notes <ruby>尋<rt>たず</rt></ruby>ねる - to ask / visit ／ <ruby>尋常<rt>じんじょう</rt></ruby> - ordinary ／ <ruby>探<rt>さが</rt></ruby>し<ruby>尋<rt>たず</rt></ruby>ねる - to search for; example 道に迷ったので近くの人に駅への行き方を尋ねました。 ／ みちにまよったのでちかくのひとにえきへのいきかたをたずねました。 ／ I got lost, so I asked a nearby person how to get to the station.; audio field includes kanji-reading-尋-たずねる; stroke-order field includes 尋-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 尋: exact audio media fragment kanji-reading-尋-たずねる; stroke-order media target 尋; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
+        "detail": "Audio field identity reviewed for 尋|たずねる: exact kanji-reading audio filename includes kanji-reading-尋-たずねる; exported PrimaryReading たずねる; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 尋: exported stroke-order field targets 尋; managed stroke-order media source/provenance present. Stroke sequence visual QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate golden regression command checked 尋; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 card-quality Platinum batch 33 review",
+        "detail": "Final product judgment for 尋|たずねる: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 尋|たずねる: PrimaryReading たずねる; MeaningJP ask / visit; KanjiMeanings ask / search / inquire / fathom / look for; support surface 尋ねる / 尋常; example sentence 道に迷ったので近くの人に駅への行き方を尋ねました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard card-quality Platinum batch 33",
+        "detail": "Current-standard review revalidated 尋|たずねる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading たずねる, MeaningJP to ask / visit, KanjiMeanings ask / search / inquire / fathom / look for, example sentence 道に迷ったので近くの人に駅への行き方を尋ねました。, reading みちにまよったのでちかくのひとにえきへのいきかたをたずねました。, translation I got lost, so I asked a nearby person how to get to the station., notes/support surface 尋ねる / 尋常, audio kanji-reading-尋-たずねる, stroke-order media 尋-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard card-quality Platinum evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 尋|たずねる: PrimaryReading たずねる; MeaningJP ask / visit; KanjiMeanings ask / search / inquire / fathom / look for; support surface 尋ねる / 尋常; example sentence 道に迷ったので近くの人に駅への行き方を尋ねました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "platinumReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-card-quality-platinum-review",
+      "batch": {
+        "id": "n1-card-quality-platinum-batch-033",
+        "level": 1,
+        "scope": "missing-current-standard queue current batch 32; one governed batch of 8",
+        "reviewedAt": "2026-06-03",
+        "reviewer": "codex-platinum-review"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "npm run deck:kanji:review-status",
+        "npm run deck:ready -- --levels=1",
+        "npm run deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard --json",
+        "npm run deck:platinum:batch -- --level=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --queue=missing-current-standard --json",
+        "npm run deck:review:n1 (selected batch entries passed; full command has unrelated existing failures)",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=264",
+        "npm run media:review:audio -- --levels=1 --kanji=寡,寧,審,寮,寸,射,尉,尋 --limit=8",
+        "npm run data:audit:audio -- --json",
+        "npm run data:audit:stroke-order -- --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 寡 寧 審 寮 寸 射 尉 尋"
+      ],
+      "actualCardDataReview": {
+        "actualCardDataReviewed": true,
+        "reviewStandard": "kanji-platinum-v3-evidence-lanes",
+        "checklist": [
+          "target kanji identity and deck fit",
+          "DisplayWord",
+          "PrimaryReading and reading rationale",
+          "MeaningJP",
+          "KanjiMeanings",
+          "notes and support vocabulary",
+          "example sentence, reading, and translation",
+          "example naturalness, learner usefulness, level fit, release quality, and support-only status",
+          "governed Japanese-source field evidence",
+          "source-origin independence",
+          "exact primary-reading audio identity",
+          "stroke-order media target and provenance",
+          "NLP support packet and tokenization signals",
+          "verification limitations",
+          "learner usefulness and product fit"
+        ],
+        "reviewerDecision": "Actual live card data reviewed for 尋|たずねる: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Platinum promotion."
+      },
+      "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
+        "kanji": "尋",
+        "displayWord": "尋",
+        "primaryReading": "たずねる",
+        "meaningJP": "to ask / visit",
+        "kanjiMeanings": "ask / search / inquire / fathom / look for",
+        "studyWordKanji": "",
+        "onReading": "ジン",
+        "kunReading": "たず.ねる、 ひろ",
+        "notes": "<ruby>尋<rt>たず</rt></ruby>ねる - to ask / visit ／ <ruby>尋常<rt>じんじょう</rt></ruby> - ordinary ／ <ruby>探<rt>さが</rt></ruby>し<ruby>尋<rt>たず</rt></ruby>ねる - to search for",
+        "exampleSentence": "道に迷ったので近くの人に駅への行き方を尋ねました。 ／ みちにまよったのでちかくのひとにえきへのいきかたをたずねました。 ／ I got lost, so I asked a nearby person how to get to the station.",
+        "audio": "[sound:5C0B_尋-kanji-reading-尋-たずねる.wav]",
+        "strokeOrder": "<img src=\"5C0B_尋-stroke-order.gif\" alt=\"Stroke order for 尋\" />",
+        "hardChecks": {
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
+        },
+        "hardChecksPassed": true
+      },
+      "sourceFieldReview": {
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0003706700",
+        "allowedUse": [
+          "kanji-field-verification",
+          "single-kanji-word-field-verification"
+        ],
+        "licenseUseStatus": "restricted",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        },
+        "sourceEvidenceDetail": "Japanese-source review for 尋|たずねる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0003706700; source page title verified as 尋 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数9 3150 3F52 ジン たず ねる つね・ひろ 画数(12) 部首： 部首内画数:9; meaning excerpt reviewed as さ行 ー し 尋 画数：(12) 部首： 部首内画数9 3150 3F52 ジン たず ねる つね・ひろ. Reviewer mapped this Japanese-source field evidence to PrimaryReading たずねる, MeaningJP ask / visit, KanjiMeanings ask / search / inquire / fathom / look for, and support surface 尋ねる / 尋常 for the individual kanji 尋. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 尋|たずねる: PrimaryReading たずねる; MeaningJP ask / visit; KanjiMeanings ask / search / inquire / fathom / look for; support surface 尋ねる / 尋常; example sentence 道に迷ったので近くの人に駅への行き方を尋ねました。.",
+        "sourceOriginIds": [
+          "kanjidic2_legacy",
+          "tanos_legacy_direct"
+        ],
+        "sourceOriginGroups": [
+          "edrdg_kanjidic2",
+          "tanos"
+        ],
+        "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
+        "independentFromPlacementOrigins": true,
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+      },
+      "levelPlacementReview": {
+        "currentContractLevel": "N1",
+        "sourceConsensusLevel": "N1",
+        "sourceAgreementScore": 1,
+        "sourceConfidence": "weak_evidence",
+        "releaseBlockedBySourceConfidence": true,
+        "sourceConfidenceNote": "Computed from active external source assignments, but this Platinum card-field review does not upgrade source-confidence or release readiness. Additional independent and Japanese-published source evidence remains required before source-confidence or deck-movement claims.",
+        "reviewerDecision": "Keep this card only as current N1 card-quality Platinum in the existing governed contract. Do not describe this as N1 release readiness, deck movement authority, or upgraded source-evidence confidence."
+      },
+      "exampleSentenceReview": {
+        "sentence": "道に迷ったので近くの人に駅への行き方を尋ねました。",
+        "reading": "みちにまよったのでちかくのひとにえきへのいきかたをたずねました。",
+        "translation": "I got lost, so I asked a nearby person how to get to the station.",
+        "naturalJapanese": true,
+        "learnerUseful": true,
+        "learnerFriendly": true,
+        "levelAppropriate": true,
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 尋|たずねる: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
+      },
+      "nlpReview": {
+        "packetArtifact": "out/nlp-review-packets/kanji-n1-review-packets.json",
+        "tokenizationArtifact": "out/nlp-tokenization/kanji-n1-kuromoji.json",
+        "packetId": "nlp-review-kanji-n1-0143",
+        "packetFound": true,
+        "priority": "routine",
+        "suggestionCount": 0,
+        "tokenizationSignalId": "n1-kanji-0264",
+        "tokenizationSignalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "normalizedTokenReading": "ひろ",
+        "normalizedCardReading": "たずねる",
+        "readingAlignment": {
+          "comparable": true,
+          "matches": false
+        },
+        "tokenizerKnown": true,
+        "authority": {
+          "outputAuthority": "assistive_only",
+          "promotionPolicy": "human_review_required",
+          "writesTrackedTemplates": false,
+          "certifiesCards": false,
+          "claimsReleaseReadiness": false
+        },
+        "nlpNonCertifying": true,
+        "reviewerDecision": "Tokenizer signal reviewed as assistive-only; no tracked card change required because source, generated card, and human review evidence control Platinum promotion."
+      },
+      "mediaReview": {
+        "manifest": "data/media/kanji/5C/5C0B_尋/manifest.json",
+        "audio": {
+          "path": "audio/5C0B_尋-kanji-reading-尋-たずねる.wav",
+          "source": "voicevox-nemo",
+          "text": "尋",
+          "reading": "たずねる",
+          "voice": "女声1 / ノーマル",
+          "locale": "ja-JP",
+          "exactPrimaryReading": true,
+          "exists": true
+        },
+        "strokeOrder": {
+          "imagePath": "images/5C0B_尋-stroke-order.svg",
+          "imageSource": "local-filesystem",
+          "animationPath": "animations/5C0B_尋-stroke-order.gif",
+          "animationSource": "remote-stroke-order-animation",
+          "exportedField": "<img src=\"5C0B_尋-stroke-order.gif\" alt=\"Stroke order for 尋\" />",
+          "targetVerified": true,
+          "imageExists": true,
+          "animationExists": true
+        },
+        "releaseQaBoundary": "Platinum verifies exact media identity and target/provenance binding. Listening naturalness, APKG import, mobile, and screen-reader QA remain release tasks and are not claimed here."
+      },
+      "limitationDecision": {
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 尋|たずねる after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-platinum-rereview-rubric-v1",
+        "rubricResult": "ready_for_substantive_review",
+        "structuralPlatinum": true,
+        "cardQualityPlatinum": true,
+        "substantiveProofRecorded": false,
+        "obsidianProofEligibleFromThisAudit": false,
+        "reviewerDecision": "This audit completes the current-standard card-quality Platinum review only. Obsidian proof must still be recorded separately only after an explicit non-mechanical rereview event is performed."
+      },
+      "trackedSourceContractBoundary": {
+        "notAttemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
+        "result": "blocked_until_obsidian_rereview_binding_exists",
+        "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this card-quality Platinum batch."
+      }
+    }
   }
 ]

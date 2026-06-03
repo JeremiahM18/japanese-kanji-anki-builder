@@ -8,7 +8,7 @@ This document defines tagged release procedure.
 - Add a dated section to [CHANGELOG.md](../CHANGELOG.md) for every released version.
 - Keep `## [Unreleased]` at the top of the changelog while work is in flight.
 - Keep `## [Unreleased]` release-facing and concise. Detailed per-card and per-batch review history belongs in git commit messages, tracked review manifests, and gate output, not in the tagged release bundle.
-- Create Git tags as `v<package.json version>`, for example `v1.0.0`.
+- Create Git tags as `v<package.json version>`, for example `v0.1.0`.
 
 ## Release checklist
 

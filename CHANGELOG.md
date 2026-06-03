@@ -20,6 +20,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 ### Changed
 
 - Raised the project runtime floor from Node 18 to Node 20 and updated CI, branch-protection policy, hosted required checks, and compatibility docs to verify Node 20/22 only.
+- Corrected the package metadata baseline from `1.0.0` to `0.1.0` because no matching git tag exists and product release readiness remains unclaimed.
 
 ### Security
 
@@ -68,7 +69,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Corrected the N3 kanji `額|がく` support note and primary meaning lane so `がく` is centered on amount/frame while forehead remains in broader/support lanes before recording Obsidian proof.
 - Corrected the N4 word card support note for `自業自得|じごうじとく` so the higher-level constituent `得` is consistently identified as a JLPT N2 support kanji before Obsidian proof is counted.
 
-## [1.0.0] - 2026-03-31
+## [0.1.0] - 2026-03-31
 
 ### Added
 

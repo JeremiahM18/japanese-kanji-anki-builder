@@ -18,12 +18,12 @@ test("SDLC metrics report validates current tracked security posture", () => {
 
     assert.equal(report.passed, true);
     assert.equal(report.risk.total, 12);
-    assert.equal(report.risk.highCriticalOpenOrBlocked, 5);
-    assert.deepEqual(report.risk.externalBlockedRecords, ["SEC-P0-003"]);
+    assert.equal(report.risk.highCriticalOpenOrBlocked, 4);
+    assert.deepEqual(report.risk.externalBlockedRecords, []);
     assert.equal(report.risk.overdueReviews, 0);
     assert.equal(report.requirements.total, 14);
     assert.equal(report.requirements.planned, 0);
-    assert.equal(report.requirements.partialOrExternal, 4);
+    assert.equal(report.requirements.partialOrExternal, 2);
     assert.equal(report.training.missingRequiredSections.length, 0);
     assert.equal(report.training.missingRequiredTopics.length, 0);
     assert.equal(report.training.missingRequiredRoles.length, 0);
@@ -36,11 +36,11 @@ test("SDLC metrics report preserves blocker visibility in human-readable output"
 
     assert.match(text, /SDLC security metrics/);
     assert.match(text, /Status: pass/);
-    assert.match(text, /high\/critical open or blocked: 5 \(SEC-P0-003, SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001\)/);
-    assert.match(text, /external blocked: 1 \(SEC-P0-003\)/);
+    assert.match(text, /high\/critical open or blocked: 4 \(SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001\)/);
+    assert.match(text, /external blocked: 0/);
     assert.match(text, /planned: 0/);
-    assert.match(text, /partially implemented: 1/);
-    assert.match(text, /SDLC-MET-004: pass; requirements\.partialOrExternal=4; target <=4/);
+    assert.match(text, /partially implemented: 2/);
+    assert.match(text, /SDLC-MET-004: pass; requirements\.partialOrExternal=2; target <=4/);
 });
 
 test("SDLC metrics parser identifies unresolved and overdue risk posture", () => {

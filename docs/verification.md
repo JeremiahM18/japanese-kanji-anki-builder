@@ -63,6 +63,7 @@ npm run product:artifacts:kanji:n3:preflight
 npm run product:artifacts:kanji:n3
 npm run product:artifacts:kanji:all
 npm run product:artifacts:kanji:release-qa
+npm run product:release-qa:evidence
 npm run product:readiness:n5
 npm run release:gate
 ```
@@ -78,6 +79,8 @@ It does not certify tracked-source kanji TSVs, `.apkg` files, managed media pack
 `product:artifacts:kanji:n5`, `product:artifacts:kanji:n4`, and `product:artifacts:kanji:n3` build fresh source-derived kanji TSVs from tracked contracts only: JLPT level, KANJIDIC2 reading-reference, level-specific card-field source provenance, and component/radical data. They validate the kanji note schema header, row count, required learner-facing fields, primary-reading reference membership, and deterministic repeated output. They do not read ignored local `data/`, use network inference, package `.apkg` files, or certify media/manual QA.
 
 `product:artifacts:kanji:all` runs the same tracked-source kanji TSV gate across N5 through N1. Today N5, N4, and N3 pass and write TSV artifacts; N2 and N1 fail closed on missing governed card-field source contracts. That failure is expected until each level has a source-derived field contract in the existing governance lane.
+
+`product:release-qa:evidence` validates the release-specific packet copied from [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json). It fails until APKG import, managed-media provenance, manual Anki import, mobile QA, screen-reader/accessibility, listening QA, source-governance posture, and empty known blockers are recorded for the named release candidate.
 
 `product:artifacts:kanji:release-qa` checks whether each selected kanji level has a passing tracked-source TSV artifact and then blocks release until APKG approval, managed stroke-order/audio media QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded. It intentionally cannot convert a green TSV gate into release readiness.
 

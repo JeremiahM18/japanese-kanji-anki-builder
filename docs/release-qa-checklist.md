@@ -19,12 +19,25 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - `npm run product:artifacts:kanji:n3` when N3 kanji ships
 - `npm run product:artifacts:kanji:all` before cross-level kanji release claims
 - `npm run product:artifacts:kanji:release-qa` before any kanji release-ready claim
+- `npm run product:release-qa:evidence` after the release-specific evidence packet is complete
 - `npm run product:readiness:n5` when N5 ships
 - `npm run nlp:governance-gate` when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed
 - `npm run ci:smoke`
 - `npm run release:gate`
 
 `release:gate` is smoke-fixture validation. It does not replace level-specific product checks.
+
+## Release QA evidence packet
+
+Copy [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json) to `out/release-qa/release-qa-evidence.json` for the release candidate being reviewed.
+
+Replace every `pending` entry with release-specific evidence, then run:
+
+```bash
+npm run product:release-qa:evidence
+```
+
+The packet must name the release candidate, deck kind, JLPT levels, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, and known blockers. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists.
 
 ## Product readiness checks
 

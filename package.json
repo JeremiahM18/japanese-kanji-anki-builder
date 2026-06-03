@@ -211,6 +211,7 @@
     "product:artifacts:kanji:n3": "node scripts/trackedSourceArtifacts.js --level=3 --surface=kanji",
     "product:artifacts:kanji:all": "node scripts/trackedSourceArtifacts.js --levels=5,4,3,2,1 --surface=kanji",
     "product:artifacts:kanji:release-qa": "node scripts/trackedSourceArtifacts.js --levels=5,4,3,2,1 --surface=kanji-release-qa",
+    "product:release-qa:evidence": "node scripts/validateReleaseQaEvidence.js",
     "product:readiness:n5": "node scripts/productReadiness.js --level=5",
     "deck:review:n3": "node scripts/reviewGoldenLevel.js --level=3",
     "deck:platinum:n5": "node scripts/reviewPlatinumKanjiLevel.js --level=5 --require-all",

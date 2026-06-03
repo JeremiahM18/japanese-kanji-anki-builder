@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "authority": {
+    "sourceOfTruth": "tracked-release-qa-evidence-packet",
+    "generatedArtifact": false,
+    "boundary": [
+      "This packet records release-specific automated evidence, manual product QA evidence, and source-governance posture.",
+      "A completed packet is release evidence only for the named release candidate, deck kind, and JLPT levels.",
+      "It does not replace Platinum, Obsidian, hosted security, source-access, release-trust, or attestation gates."
+    ]
+  },
+  "scope": {
+    "releaseCandidateId": "vX.Y.Z-or-internal-milestone",
+    "deckKinds": [
+      "kanji"
+    ],
+    "levels": [
+      5
+    ],
+    "notes": "Copy this template to out/release-qa/release-qa-evidence.json and replace every pending entry with release-specific evidence."
+  },
+  "automatedEvidence": [
+    {
+      "id": "release-trust",
+      "command": "npm run security:release-trust",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": ""
+    },
+    {
+      "id": "release-gate",
+      "command": "npm run release:gate",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": ""
+    },
+    {
+      "id": "product-release-qa-gate",
+      "command": "npm run product:artifacts:kanji:release-qa",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": ""
+    }
+  ],
+  "manualEvidence": [
+    {
+      "id": "apkg-import",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": "",
+      "notes": "Record exact APKG path, checksum, Anki version, platform, import result, and sampled cards."
+    },
+    {
+      "id": "managed-media-provenance",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": "",
+      "notes": "Record managed stroke-order and audio provenance checks plus packaged media identity."
+    },
+    {
+      "id": "manual-anki-import",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": "",
+      "notes": "Record desktop Anki rendering review, field layout, examples, notes, and media rendering."
+    },
+    {
+      "id": "mobile-qa",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": "",
+      "notes": "Record AnkiDroid or AnkiMobile review when layout/media behavior is in scope."
+    },
+    {
+      "id": "screen-reader-accessibility",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": "",
+      "notes": "Record accessibility review command output and manual screen-reader or no-color/zoom findings."
+    },
+    {
+      "id": "listening-qa",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "evidence": "",
+      "notes": "Record sampled audio files, reading identity, clipping/noise findings, and any rejected media."
+    }
+  ],
+  "sourceGovernance": {
+    "status": "pending",
+    "nonVotingLanesRemainNonVoting": true,
+    "sourceAccessGapsPromoted": false,
+    "manualCitationOnlyPromoted": false,
+    "commands": [
+      "npm run data:audit:jlpt:sources -- --governance-strict --limit=25",
+      "npm run product:artifacts:kanji:all"
+    ],
+    "notes": "No source-access-gap, manual-citation-only, NLP, generated TSV, or Obsidian compatibility view may be promoted into source truth."
+  },
+  "knownBlockers": [
+    "Replace this template blocker with an empty array before release-ready claims."
+  ]
+}

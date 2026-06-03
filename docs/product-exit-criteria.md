@@ -127,6 +127,7 @@ npm run product:artifacts:kanji:n3:preflight
 npm run product:artifacts:kanji:n3
 npm run product:artifacts:kanji:all
 npm run product:artifacts:kanji:release-qa
+npm run product:release-qa:evidence
 npm run product:readiness:n5
 npm run release:gate
 ```
@@ -137,7 +138,7 @@ npm run release:gate
 
 `product:artifacts:kanji:n5`, `product:artifacts:kanji:n4`, and `product:artifacts:kanji:n3` build and validate fresh source-derived kanji TSVs from tracked contracts only. They write artifacts under ignored `out/product-readiness`, validate the kanji note schema header, row count, required learner-facing fields, primary-reading reference membership, and deterministic repeated output, and do not read ignored local `data/` inputs or use network inference.
 
-`product:artifacts:kanji:all` runs the tracked-source kanji TSV artifact gate across N5 through N1. Current expected posture is N5/N4/N3 passing and N2/N1 blocked on missing governed card-field source contracts. `product:artifacts:kanji:release-qa` then blocks release until APKG approval, managed media QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded.
+`product:artifacts:kanji:all` runs the tracked-source kanji TSV artifact gate across N5 through N1. Current expected posture is N5/N4/N3 passing and N2/N1 blocked on missing governed card-field source contracts. `product:artifacts:kanji:release-qa` then blocks release until APKG approval, managed media QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded. `product:release-qa:evidence` validates the completed release-specific evidence packet and fails unless all manual QA entries are passed, source-governance non-voting lanes remain non-voting, and known blockers are empty.
 
 `data:audit:jlpt:sources` is a read-only taxonomy transparency audit. It computes external source consensus from active voting sources, then compares the current operational contract against that consensus. It reports current contract level, source consensus level, agreement count, publisher-independence count, independent evidence-lineage count, computed textbook consensus, confidence reasons, disagreement sources, confidence, missing/disagreement work-queue counts, source-governance blockers, and whether the current contract matches consensus. It does not move kanji, move words, or change readiness. Use `--governance-strict` while evidence depth is incomplete so CI fails on source-use and storage-governance regressions without pretending taxonomy confidence is complete. Re-run word placement audits after taxonomy confidence is governed and any kanji contract change is proposed.
 
@@ -183,3 +184,4 @@ Manual review is required for:
 - zoom / resized text behavior
 - mobile readability
 - editorial judgment
+- release-specific QA evidence packet completion

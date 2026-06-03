@@ -14,6 +14,7 @@ const { isKanaOnly, katakanaToHiragana } = require("../utils/japanese");
 
 const MAX_VOICEVOX_AUDIO_BYTES = 25 * 1024 * 1024;
 const MAX_AUDIO_SIDECAR_FIELD_CHARS = 500;
+const WAV_HEADER_BYTES = 44;
 
 function normalizeKanaReading(value) {
     return katakanaToHiragana(String(value || ""))
@@ -121,11 +122,54 @@ function buildManagedVoicevoxAudioBuffer(value) {
     if (buffer.length > MAX_VOICEVOX_AUDIO_BYTES) {
         throw new Error(`VOICEVOX synthesis returned audio larger than ${MAX_VOICEVOX_AUDIO_BYTES} bytes.`);
     }
+    if (!isRiffWaveAudio(buffer)) {
+        throw new Error("VOICEVOX synthesis returned audio that is not a valid RIFF/WAVE payload.");
+    }
     return buffer;
 }
 
+function isRiffWaveAudio(buffer) {
+    if (!Buffer.isBuffer(buffer) || buffer.length < WAV_HEADER_BYTES) {
+        return false;
+    }
+    if (buffer.toString("ascii", 0, 4) !== "RIFF" || buffer.toString("ascii", 8, 12) !== "WAVE") {
+        return false;
+    }
+
+    const riffSize = buffer.readUInt32LE(4);
+    if (riffSize < 36 || riffSize > buffer.length - 8) {
+        return false;
+    }
+
+    return hasBoundedWavChunk(buffer, "fmt ") && hasBoundedWavChunk(buffer, "data");
+}
+
+function hasBoundedWavChunk(buffer, chunkId) {
+    let offset = 12;
+    while (offset + 8 <= buffer.length) {
+        const currentChunkId = buffer.toString("ascii", offset, offset + 4);
+        const chunkSize = buffer.readUInt32LE(offset + 4);
+        const chunkDataStart = offset + 8;
+        const chunkDataEnd = chunkDataStart + chunkSize;
+        if (chunkDataEnd > buffer.length) {
+            return false;
+        }
+        if (currentChunkId === chunkId) {
+            return true;
+        }
+        offset = chunkDataEnd + (chunkSize % 2);
+    }
+    return false;
+}
+
 function writeManagedVoicevoxAudio(outputPath, audioBuffer) {
-    writeFileAtomicSync(outputPath, buildManagedVoicevoxAudioBuffer(audioBuffer));
+    const resolvedOutputPath = path.resolve(outputPath);
+    if (path.extname(resolvedOutputPath).toLowerCase() !== ".wav") {
+        throw new Error(`Refusing to write VOICEVOX audio to non-wav path: ${resolvedOutputPath}`);
+    }
+
+    // VOICEVOX output is written only after path containment and WAV payload checks.
+    writeFileAtomicSync(resolvedOutputPath, buildManagedVoicevoxAudioBuffer(audioBuffer));
 }
 
 function writeAudioSourceSidecar({
@@ -442,6 +486,7 @@ function formatVoicevoxGenerationSummary(summary, options = {}) {
 
 module.exports = {
     buildKanjiAudioSourceFileName,
+    buildManagedVoicevoxAudioBuffer,
     buildWordAudioSourceFileName,
     buildVoicevoxSpeakerLabel,
     cleanVoiceLabel,

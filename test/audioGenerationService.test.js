@@ -6,6 +6,7 @@ const path = require("node:path");
 
 const {
     buildKanjiAudioSourceFileName,
+    buildManagedVoicevoxAudioBuffer,
     buildWordAudioSourceFileName,
     buildVoicevoxSpeakerLabel,
     formatVoicevoxGenerationSummary,
@@ -23,6 +24,25 @@ function makeTempDir() {
 
 function cleanupTempDir(dir) {
     fs.rmSync(dir, { recursive: true, force: true });
+}
+
+function makeTinyWavBuffer(payload = "voicevox") {
+    const data = Buffer.from(payload, "utf-8");
+    const header = Buffer.alloc(44);
+    header.write("RIFF", 0, "ascii");
+    header.writeUInt32LE(36 + data.length, 4);
+    header.write("WAVE", 8, "ascii");
+    header.write("fmt ", 12, "ascii");
+    header.writeUInt32LE(16, 16);
+    header.writeUInt16LE(1, 20);
+    header.writeUInt16LE(1, 22);
+    header.writeUInt32LE(8000, 24);
+    header.writeUInt32LE(8000, 28);
+    header.writeUInt16LE(1, 32);
+    header.writeUInt16LE(8, 34);
+    header.write("data", 36, "ascii");
+    header.writeUInt32LE(data.length, 40);
+    return Buffer.concat([header, data]);
 }
 
 test("normalizeKanaReading converts katakana and strips dictionary punctuation", () => {
@@ -154,6 +174,22 @@ test("audio source output paths are normalized and contained", () => {
     }
 });
 
+test("managed VOICEVOX audio accepts only bounded RIFF/WAVE payloads", () => {
+    const valid = makeTinyWavBuffer("10005:ひ");
+    assert.equal(buildManagedVoicevoxAudioBuffer(valid).subarray(44).toString("utf-8"), "10005:ひ");
+
+    assert.throws(
+        () => buildManagedVoicevoxAudioBuffer(Buffer.from("10005:ひ")),
+        /not a valid RIFF\/WAVE payload/
+    );
+
+    const truncated = valid.subarray(0, 20);
+    assert.throws(
+        () => buildManagedVoicevoxAudioBuffer(truncated),
+        /not a valid RIFF\/WAVE payload/
+    );
+});
+
 test("writeAudioSourceSidecar stores provenance next to generated audio", () => {
     const rootDir = makeTempDir();
 
@@ -233,7 +269,7 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
                     return [{ name: "女声1", styles: [{ id: 10005, name: "ノーマル" }] }];
                 },
                 async synthesize({ text, speakerId }) {
-                    return Buffer.from(`${speakerId}:${text}`);
+                    return makeTinyWavBuffer(`${speakerId}:${text}`);
                 },
             },
         });
@@ -241,8 +277,8 @@ test("generateVoicevoxAudioForKanjiList writes wav files with bounded concurrenc
         assert.equal(summary.generated, 2);
         assert.equal(summary.failed, 0);
         assert.equal(fs.existsSync(path.join(rootDir, "audio", "日.wav")), true);
-        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "日.wav"), "utf-8"), "10005:ひ");
-        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "学.wav"), "utf-8"), "10005:まなぶ");
+        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "日.wav")).subarray(44).toString("utf-8"), "10005:ひ");
+        assert.equal(fs.readFileSync(path.join(rootDir, "audio", "学.wav")).subarray(44).toString("utf-8"), "10005:まなぶ");
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
         assert.equal(sidecar.source, "voicevox");
         assert.equal(sidecar.voice, "女声1 / ノーマル");
@@ -293,7 +329,7 @@ test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name wh
                     throw new Error("engine unavailable");
                 },
                 async synthesize({ text, speakerId }) {
-                    return Buffer.from(`${speakerId}:${text}`);
+                    return makeTinyWavBuffer(`${speakerId}:${text}`);
                 },
             },
         });
@@ -302,6 +338,54 @@ test("generateVoicevoxAudioForKanjiList falls back to the policy speaker name wh
         const sidecar = JSON.parse(fs.readFileSync(path.join(rootDir, "audio", "日.json"), "utf-8"));
         assert.equal(sidecar.voice, "女声1");
         assert.equal(sidecar.reading, "ひ");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("generateVoicevoxAudioForKanjiList rejects non-wav synthesis output before writing", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const summary = await generateVoicevoxAudioForKanjiList({
+            kanjiList: ["日"],
+            config: {
+                audioSourceDir: path.join(rootDir, "audio"),
+                exportConcurrency: 1,
+                kanjiApiBaseUrl: "https://kanjiapi.dev",
+                cacheDir: path.join(rootDir, "cache"),
+                fetchTimeoutMs: 1000,
+                sentenceCorpusPath: path.join(rootDir, "sentence.json"),
+                curatedStudyDataPath: path.join(rootDir, "curated.json"),
+                voicevoxEngineUrl: "http://127.0.0.1:50021",
+            },
+            speakerId: 10005,
+            sentenceCorpus: [],
+            curatedStudyData: {},
+            kanjiApiClient: {
+                async getKanji() {
+                    return { kun_readings: ["ひ"], on_readings: ["ニチ"] };
+                },
+                async getWords() {
+                    return [];
+                },
+            },
+            inferenceEngine: {
+                inferKanjiStudyData() {
+                    return { primaryReading: "ひ", displayWord: { written: "日", pron: "ひ" } };
+                },
+            },
+            voicevoxClient: {
+                async synthesize() {
+                    return Buffer.from("network bytes that are not wav");
+                },
+            },
+        });
+
+        assert.equal(summary.generated, 0);
+        assert.equal(summary.failed, 1);
+        assert.match(summary.results[0].error, /not a valid RIFF\/WAVE payload/);
+        assert.equal(fs.existsSync(path.join(rootDir, "audio", "日.wav")), false);
     } finally {
         cleanupTempDir(rootDir);
     }
@@ -329,7 +413,7 @@ test("generateVoicevoxAudioForWordList writes governed word-reading audio sideca
                     return [{ name: "女声1", styles: [{ id: 10005, name: "ノーマル" }] }];
                 },
                 async synthesize({ text, speakerId }) {
-                    return Buffer.from(`${speakerId}:${text}`);
+                    return makeTinyWavBuffer(`${speakerId}:${text}`);
                 },
             },
         });
@@ -371,7 +455,7 @@ test("generateVoicevoxAudioForWordList preserves katakana display readings while
                 },
                 async synthesize({ text, speakerId }) {
                     synthesized.push({ text, speakerId });
-                    return Buffer.from(`${speakerId}:${text}`);
+                    return makeTinyWavBuffer(`${speakerId}:${text}`);
                 },
             },
         });

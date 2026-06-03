@@ -37,7 +37,7 @@ Do not commit, paste, or log a token.
 
 ## 2026-06-03 Live Result
 
-Authenticated owner audit was run on 2026-06-03 after the CodeQL-pattern remediations, release attestation verification workflow update, Node24 action-pin update, and Windows 2025 smoke-runner policy update reached hosted `main` at `ae8b3439`. The hosted `main` branch matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, open CodeQL alerts are `0`, open secret-scanning alerts are `0`, open Dependabot alerts are `0`, and the latest hosted CI and CodeQL conclusions are `success`. The gate still fails only because hosted workflow content configures attestation verification but no successful hosted release workflow run has proven the verification step yet.
+Authenticated owner audit was rerun on 2026-06-03 against hosted `main` at `addccc85`. The hosted `main` branch matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, open CodeQL alerts are `0`, open secret-scanning alerts are `0`, open Dependabot alerts are `0`, and the latest hosted CI and CodeQL conclusions are `success`. The gate still fails only because hosted workflow content configures attestation verification but no successful hosted Release workflow run has proven the verification step yet.
 
 | Setting | Live result | Status |
 | --- | --- | --- |
@@ -66,7 +66,7 @@ Authenticated owner audit was run on 2026-06-03 after the CodeQL-pattern remedia
 | Private vulnerability reporting | `enabled:true` from `GET /repos/JeremiahM18/japanese-kanji-anki-builder/private-vulnerability-reporting` | Verified |
 | Latest release workflow conclusion | No recent release workflow conclusion was available from the workflow-runs endpoint | Unverified |
 
-Hosted evidence boundary: hosted `main` was at `ae8b3439` when the authenticated audit ran. Do not treat local, pull-request-only, or unpushed workflow changes as hosted proof.
+Hosted evidence boundary: hosted `main` was at `addccc85` when the authenticated audit ran. Do not treat local, pull-request-only, or unpushed workflow changes as hosted proof.
 
 ## Required Remediation
 
@@ -117,7 +117,7 @@ Completed on 2026-06-03:
 
 Remaining:
 
-1. Run a tagged release workflow, then rerun `npm run security:github-settings:auth` until attestation verification is both configured in hosted workflow content and proven by a successful hosted release run.
+1. Run a tagged Release workflow, then rerun `npm run security:github-settings:auth` until attestation verification is both configured in hosted workflow content and proven by a successful hosted Release run.
 
 ## Failure Semantics
 

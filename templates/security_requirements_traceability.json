@@ -156,9 +156,7 @@
         "Manual Anki import QA remains required before release-ready claims."
       ],
       "releaseBlocker": true,
-      "riskRecords": [
-        "PROD-REL-001"
-      ]
+      "riskRecords": []
     },
     {
       "id": "SEC-REQ-005",
@@ -342,25 +340,34 @@
         "docs/obsidian-batch-workflow.md",
         "docs/platinum-review-policy.md",
         "docs/product-exit-criteria.md",
+        "docs/release-qa-checklist.md",
+        "scripts/validateReleaseQaEvidence.js",
+        "src/services/releaseQaEvidenceService.js",
+        "templates/release_qa_evidence_packet.template.json",
         "templates/obsidian_proof_ledger/kanji_n2.jsonl"
       ],
       "evidenceFiles": [
         "test/platinumTrackedReviewSets.test.js",
         "test/obsidianProofLedger.test.js",
         "test/obsidianProofProviderParity.test.js",
-        "test/platinumGovernanceGateService.test.js"
+        "test/platinumGovernanceGateService.test.js",
+        "test/releaseQaEvidenceService.test.js"
       ],
       "verificationCommands": [
         "npm run data:obsidian:proof:validate",
         "npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2",
+        "npm run product:release-qa:evidence",
         "npm test"
       ],
       "manualQaRequired": true,
       "manualReview": [
-        "Do not record Obsidian proof until current-standard actual card-data rereview is complete for the live card."
+        "Do not record Obsidian proof until current-standard actual card-data rereview is complete for the live card.",
+        "Complete a release QA evidence packet before claiming APKG, mobile, accessibility, listening, or media QA readiness."
       ],
       "releaseBlocker": true,
-      "riskRecords": []
+      "riskRecords": [
+        "PROD-REL-001"
+      ]
     },
     {
       "id": "SEC-REQ-010",

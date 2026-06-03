@@ -151,6 +151,20 @@ Current metrics cover unresolved high/critical risk visibility, overdue risk rev
 
 Remaining limitation: visibility metrics expose current SDLC health and review cadence. Release-trust mode fails while high/critical release-blocker risks or unimplemented release-blocker requirements remain, but it still does not close hosted GitHub blockers, prove private training completion, prove release manual QA, or certify product release readiness.
 
+### P2: Add Release QA Evidence Packet
+
+Release QA now has a tracked template and fail-closed validator so automation success cannot be mistaken for APKG import, mobile, accessibility, listening, media, or source-governance evidence.
+
+Current artifacts:
+
+- [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json)
+- [../scripts/validateReleaseQaEvidence.js](../scripts/validateReleaseQaEvidence.js)
+- [../src/services/releaseQaEvidenceService.js](../src/services/releaseQaEvidenceService.js)
+
+Current command: `npm run product:release-qa:evidence`.
+
+Remaining limitation: this command validates that release-specific evidence was recorded in the packet. It does not perform the APKG import, mobile review, screen-reader review, listening review, or source-access work by itself.
+
 ### P3: Add License Compliance Automation
 
 Dependency license compliance now has a tracked policy, deterministic audit command, CI/release workflow gate, and tagged release summary.
@@ -178,6 +192,7 @@ Remaining limitation: the license audit validates package-lock metadata and trac
 5. Create `docs/recovery-and-rollback.md`.
 6. Add security requirements traceability data and a validation script.
 7. Add dependency license compliance automation.
+8. Add release QA evidence packet automation.
 
 ## Verification Used For This Audit
 

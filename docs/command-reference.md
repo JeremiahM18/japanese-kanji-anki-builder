@@ -39,6 +39,7 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run product:artifacts:kanji:n3` | Build and validate the source-derived tracked-source N3 kanji TSV artifact |
 | `npm run product:artifacts:kanji:all` | Run the tracked-source kanji TSV artifact gate across N5 through N1, failing closed where source contracts are incomplete |
 | `npm run product:artifacts:kanji:release-qa` | Gate tracked-source kanji TSV, APKG, managed-media, and manual QA readiness across N5 through N1 |
+| `npm run product:release-qa:evidence` | Validate the release-specific QA evidence packet for APKG import, managed media, Anki import, mobile, accessibility, listening QA, source-governance posture, and known blockers |
 | `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
 | `npm run dev` | Start the local development server with `nodemon` |
 | `npm start` | Start the local Express server; equivalent to `npm run start` |

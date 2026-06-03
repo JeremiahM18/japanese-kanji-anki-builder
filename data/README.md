@@ -1,6 +1,18 @@
 # Local Data Guide
 
+## Purpose
+
 This folder holds the local datasets and media that make the repo usable on a real workstation. These files are ignored by git on purpose: they are machine-local inputs, cached media, and editorial working data rather than source-controlled product code.
+
+## Scope
+
+Covered: ignored local JLPT data, local curation overlays, managed media folders, source media imports, audio/stroke-order provider guidance, and local-data bootstrap commands.
+
+Not covered: tracked product truth, release readiness, source-governance voting evidence, private source acquisition policy, or generated release artifacts.
+
+## Authority Boundary
+
+Tracked contracts under `templates/` are the repository source of truth. Files under `data/` are local workstation inputs unless a tracked contract explicitly promotes a fact. This guide explains how to keep local data useful; it does not certify generated rows, Platinum, Obsidian, media QA, source truth, or release readiness.
 
 ## What belongs here
 
@@ -56,7 +68,7 @@ Guidance:
 
 The canonical repo-side JLPT taxonomy contract lives in [../templates/jlpt_level_contract.json](../templates/jlpt_level_contract.json). The local `kanji_jlpt_only.json` file is still required at runtime, but it is now treated as a workstation copy that must align to that tracked contract.
 
-Tracked kanji source contracts now cover N5 and N4 release-source availability without reading this ignored `data/` folder: [../templates/kanji_component_contract.json](../templates/kanji_component_contract.json), [../templates/kanji_reading_reference_contract.json](../templates/kanji_reading_reference_contract.json), [../templates/kanji_card_field_source_contract.json](../templates/kanji_card_field_source_contract.json), and [../templates/kanji_card_field_source_contracts](../templates/kanji_card_field_source_contracts). N3/N2/N1 remain blocked until their governed card-field source contracts exist. These contracts do not replace local generated-row Platinum gates; they keep clean CI and source availability separate from workstation runtime inputs.
+Tracked kanji source contracts now cover N5, N4, and N3 release-source availability without reading this ignored `data/` folder: [../templates/kanji_component_contract.json](../templates/kanji_component_contract.json), [../templates/kanji_reading_reference_contract.json](../templates/kanji_reading_reference_contract.json), [../templates/kanji_card_field_source_contract.json](../templates/kanji_card_field_source_contract.json), and [../templates/kanji_card_field_source_contracts](../templates/kanji_card_field_source_contracts). N2/N1 remain blocked until their governed card-field source contracts exist. These contracts do not replace local generated-row Platinum gates; they keep clean CI and source availability separate from workstation runtime inputs.
 
 The canonical repo-side JLPT word-level contract lives in [../templates/jlpt_word_level_contract.json](../templates/jlpt_word_level_contract.json). It governs the tracked N5/N4 word surfaces and the current Silver N3/N2/N1 starter surfaces. Higher word levels remain incomplete Silver expansion lanes until their candidate-discovery, reading-gap triage, Gold, Platinum, and Obsidian work is populated.
 
@@ -238,6 +250,24 @@ Optional JSON body fields:
 - `reading` to prefer a specific spoken form
 - `voice` to record voice provenance in the manifest
 - `locale` to record locale metadata in the manifest
+
+## Verification
+
+Run the focused command for the local surface you changed:
+
+```bash
+npm run data:verify:jlpt
+npm run data:audit:jlpt
+npm run data:audit:jlpt:words
+npm run data:audit:audio -- --json
+npm run data:audit:stroke-order -- --json
+```
+
+Run deck, word, media, source, or release gates from [../docs/verification.md](../docs/verification.md) before using local data to support a product or release claim.
+
+## Update Triggers
+
+Update this guide when ignored local data paths, bootstrap commands, tracked source contracts, audio policy, stroke-order policy, media naming rules, VOICEVOX requirements, or local-data verification commands change.
 
 ## Notes
 

@@ -4,6 +4,16 @@
 
 This repository is maintained with production-style standards even though it is a personal project. Contributions should favor determinism, readability, testability, and operational clarity over quick patches.
 
+## Scope
+
+This guide covers contributor workflow, local validation expectations, repository-governance docs, pull request quality, and data/media handling for tracked repository changes.
+
+It does not prove that a specific pull request is safe, that hosted GitHub settings are enabled, that manual release QA is complete, or that ignored local data is current.
+
+## Authority Boundary
+
+The authoritative signals are the actual diff, the required local commands, hosted CI, protected-branch policy, CODEOWNERS coverage, and the relevant product/security docs. This guide sets the process bar; it does not waive failing gates or replace release, source-governance, Platinum, Obsidian, or manual QA evidence.
+
 ## Core Expectations
 
 - Keep behavior deterministic whenever possible.
@@ -50,7 +60,7 @@ npm run product:artifacts:kanji:preflight
 npm run product:artifacts:kanji:release-qa
 ```
 
-Use `product:artifacts:kanji:all` before cross-level kanji claims. It is expected to fail closed while N3/N2/N1 lack governed card-field source contracts.
+Use `product:artifacts:kanji:all` before cross-level kanji claims. It is expected to pass for N5/N4/N3 and fail closed while N2/N1 lack governed card-field source contracts.
 
 If your change affects assistive NLP manifests, runtimes, model artifacts, generated NLP artifact contracts, or NLP governance docs, also run:
 
@@ -120,3 +130,20 @@ Reviews should prioritize:
 - operational/documentation gaps
 
 Style-only feedback is secondary to behavior, safety, and maintainability.
+
+## Verification
+
+Run after changing this guide:
+
+```bash
+git diff --check
+npm run security:branch-protection
+npm run security:requirements
+npm run security:sdlc-metrics
+```
+
+Run the affected product, source, security, or release commands when the change also updates workflow requirements or gate expectations.
+
+## Update Triggers
+
+Update this guide when branch policy, CODEOWNERS scope, CI job names, release gates, security gates, product artifact gates, source-governance commands, media workflows, or documentation standards change.

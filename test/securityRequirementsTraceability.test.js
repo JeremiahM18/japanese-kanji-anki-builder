@@ -30,8 +30,8 @@ test("security requirements traceability matrix validates tracked controls", () 
     assert.equal(report.counts.releaseBlockers, 11);
     assert.equal(report.counts.manualQaRequired, 13);
     assert.equal(report.counts.statuses["external-blocked"] || 0, 0);
-    assert.equal(report.counts.statuses.implemented, 12);
-    assert.equal(report.counts.statuses["partially-implemented"], 2);
+    assert.equal(report.counts.statuses.implemented, 13);
+    assert.equal(report.counts.statuses["partially-implemented"], 1);
     assert.equal(report.counts.statuses.planned || 0, 0);
     assert.deepEqual(report.failures, []);
 });

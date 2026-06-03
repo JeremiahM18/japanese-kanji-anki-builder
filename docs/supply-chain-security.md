@@ -1,8 +1,20 @@
 # Supply Chain Security
 
+## Purpose
+
 This document defines the dependency, CI, script, and release-artifact trust boundaries for the repository.
 
 The project remains a JavaScript program. Supply-chain hardening must not become a TypeScript migration or a broad rewrite of working build lanes.
+
+## Scope
+
+Covered: npm dependency and lockfile policy, lifecycle-script review, dependency license policy, SBOM generation, GitHub Actions permissions and pins, CodeQL workflow boundaries, release artifact bundle contents, and supply-chain maintenance cadence.
+
+Not covered: legal advice, private training completion, manual product QA, source-governance source truth, hosted alert closure beyond authenticated audits, or release readiness beyond the named gates.
+
+## Authority Boundary
+
+The tracked source of truth is `package.json`, `package-lock.json`, workflow YAML, [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json), the release workflow, and the audit commands named below. Green supply-chain checks prove supply-chain hygiene only; they do not certify deck content, source truth, hosted attestation proof, APKG import, listening, accessibility, or mobile QA.
 
 ## Local audit command
 
@@ -75,7 +87,7 @@ As of 2026-06-03, the recurring supply-chain maintenance items are:
 - Keep the lifecycle-script package allowlist above exact by package and version; any package-lock change that adds, removes, or changes `fsevents`, `onnxruntime-node`, `protobufjs`, `sharp`, or another install-script package must be reviewed before trusting install output.
 - Keep reviewed license exceptions in [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) current by package, reason, owner, `reviewedAt`, and `nextReview`. The current sharp/libvips exception review is due on 2026-07-02.
 - Rerun `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, `npm run security:advisories`, and `npm run security:secrets` after dependency, workflow, release-artifact, NOTICE, or policy changes.
-- Treat green maintenance checks as supply-chain hygiene only. They do not close open hosted CodeQL, source-governance, release-trust, attestation-proof, APKG import, mobile, accessibility, listening, or manual QA blockers.
+- Treat green maintenance checks as supply-chain hygiene only. They do not close hosted alert regressions, source-governance, release-trust, attestation-proof, APKG import, mobile, accessibility, listening, or manual QA blockers.
 
 The NLP dependency stack is assistive-only. It may generate review context, but it must not certify cards, approve source truth, or bypass Gold, Platinum, Obsidian, release, import, listening, or accessibility gates.
 
@@ -136,3 +148,22 @@ The release bundle may include only:
 - `release-artifacts.sha256`
 
 It must not upload ignored local inputs such as `data/`, `downloads/`, `.env`, or `node_modules`. Product deck readiness still requires the product-specific gates, manual Anki import QA, listening QA, accessibility QA, and current review proof described in the release docs.
+
+## Verification
+
+Run after changing this document or the dependency/workflow/release-artifact boundary it describes:
+
+```bash
+git diff --check
+npm run supply-chain:audit
+npm run security:advisories
+npm run security:licenses
+npm run security:sbom
+npm run security:secrets
+```
+
+Run `npm run security:github-settings:auth` when hosted branch protection, CodeQL, alert visibility, dependency security, or release attestation settings are part of the claim.
+
+## Update Triggers
+
+Update this document when dependencies, lifecycle-script packages, license exceptions, workflow permissions, action pins, CodeQL workflow behavior, release artifact paths, SBOM/license output, checksum behavior, or supply-chain audit rules change.

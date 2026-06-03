@@ -1,8 +1,20 @@
 # Documentation Standard
 
+## Purpose
+
 This is the repository standard for README, CHANGELOG, and docs work. Use it before changing documentation, release language, status snapshots, workflow runbooks, command references, security notes, or provenance claims.
 
 The goal is not prettier prose. The goal is governed, replayable documentation that lets a future reviewer know what is true, what is local-only, what is generated, what is blocked, and which command proves the claim.
+
+## Scope
+
+This standard applies to tracked repository documentation, including README, CHANGELOG, SECURITY, contribution docs, runbooks, command references, release docs, source-governance docs, security docs, and local-data guidance.
+
+It does not govern private local notes, ignored source worksheets, generated `out/` reports, or external documentation except where tracked docs quote or depend on them.
+
+## Authority Boundary
+
+This file defines the documentation bar. It does not prove that any status claim in another file is current; changed docs still need live command output, tracked manifest evidence, or explicitly historical framing.
 
 ## Research Basis
 
@@ -141,6 +153,22 @@ After editing docs:
 4. Run `git diff --check`.
 5. Keep documentation commits focused and avoid mixing unrelated generated artifacts.
 6. Keep CHANGELOG release-facing and concise; do not turn it into a per-card or per-batch review log.
+
+## Verification
+
+Run after changing this standard:
+
+```bash
+git diff --check
+npm run security:requirements
+npm run security:sdlc-metrics
+```
+
+Run the affected docs, security, release, source, or product gates when this standard changes their required wording, command expectations, or authority boundaries.
+
+## Update Triggers
+
+Update this standard when README requirements, documentation authority boundaries, release/status claim rules, command-reference rules, legal/provenance handling, security/release documentation requirements, or documentation verification expectations change.
 
 ## No-Go Rules
 

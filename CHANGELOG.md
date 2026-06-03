@@ -19,7 +19,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Security
 
-- Verified and remediated hosted GitHub owner settings for `main`: branch protection now matches the tracked policy, secret scanning, push protection, private vulnerability reporting, Dependency Graph, vulnerability alerts, and Dependabot security updates are enabled; the live gate still fails on open CodeQL alerts and missing hosted attestation verification.
+- Verified and remediated hosted GitHub owner settings for `main`: branch protection now matches the tracked policy, secret scanning, push protection, private vulnerability reporting, Dependency Graph, vulnerability alerts, and Dependabot security updates are enabled; hosted CodeQL, secret-scanning, and Dependabot open alert counts are `0`; the live gate still fails on unproven hosted attestation verification.
 - Strengthened `security:github-settings` so it validates hosted branch protection against the tracked policy, fails on disabled secret scanning, push protection, vulnerability alerts, unreadable Dependency Graph SBOM, disabled or paused Dependabot security updates, and nonzero open CodeQL, secret-scanning, or Dependabot alert counts.
 - Added `security:github-settings:auth`, an authenticated hosted audit wrapper that uses `GH_TOKEN`, `GITHUB_TOKEN`, or GitHub CLI token lookup without printing the token.
 - Split release trust into strict `security:release-trust` and tagged-workflow `security:release-trust:pre` so hosted attestation proof is not required before the release workflow can create the attestations it must later prove.

@@ -24,6 +24,11 @@ test("SDLC metrics report validates current tracked security posture", () => {
     assert.equal(report.requirements.total, 14);
     assert.equal(report.requirements.planned, 0);
     assert.equal(report.requirements.partialOrExternal, 2);
+    assert.equal(report.requirements.unimplementedReleaseBlockers, 2);
+    assert.deepEqual(report.requirements.unimplementedReleaseBlockerRecords, ["SEC-REQ-006", "SEC-REQ-007"]);
+    assert.equal(report.releaseTrust.enforced, false);
+    assert.equal(report.releaseTrust.highCriticalReleaseBlockerRisks, 4);
+    assert.deepEqual(report.releaseTrust.highCriticalReleaseBlockerRiskRecords, ["SEC-P0-004", "SEC-P0-005", "GOV-SRC-001", "PROD-REL-001"]);
     assert.equal(report.training.missingRequiredSections.length, 0);
     assert.equal(report.training.missingRequiredTopics.length, 0);
     assert.equal(report.training.missingRequiredRoles.length, 0);
@@ -36,11 +41,32 @@ test("SDLC metrics report preserves blocker visibility in human-readable output"
 
     assert.match(text, /SDLC security metrics/);
     assert.match(text, /Status: pass/);
+    assert.match(text, /Mode: visibility/);
     assert.match(text, /high\/critical open or blocked: 4 \(SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001\)/);
     assert.match(text, /external blocked: 0/);
     assert.match(text, /planned: 0/);
     assert.match(text, /partially implemented: 2/);
+    assert.match(text, /Release trust posture:/);
+    assert.match(text, /enforced: no/);
+    assert.match(text, /high\/critical release-blocker risks: 4 \(SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001\)/);
     assert.match(text, /SDLC-MET-004: pass; requirements\.partialOrExternal=2; target <=4/);
+});
+
+test("SDLC release-trust mode fails closed on unresolved release blockers", () => {
+    const report = buildSdlcMetricsReport({ cwd: repoRoot, asOfDate: "2026-06-02", releaseTrust: true });
+    const text = formatSdlcMetricsReport(report);
+
+    assert.equal(report.passed, false);
+    assert.equal(report.mode, "release-trust");
+    assert.equal(report.releaseTrust.enforced, true);
+    assert.equal(report.releaseTrust.highCriticalReleaseBlockerRisks, 4);
+    assert.equal(report.releaseTrust.unimplementedReleaseBlockerRequirements, 2);
+    assert.deepEqual(report.failures, [
+        "release trust has unresolved high/critical release-blocker risks: SEC-P0-004, SEC-P0-005, GOV-SRC-001, PROD-REL-001",
+        "release trust has unimplemented release-blocker requirements: SEC-REQ-006, SEC-REQ-007",
+    ]);
+    assert.match(text, /Status: fail/);
+    assert.match(text, /Mode: release-trust/);
 });
 
 test("SDLC metrics parser identifies unresolved and overdue risk posture", () => {
@@ -82,12 +108,14 @@ test("SDLC metrics CLI parsing supports JSON, path override, and as-of date", ()
         json: false,
         metricsPath: undefined,
         asOfDate: undefined,
+        releaseTrust: false,
         unknownArgs: [],
     });
-    assert.deepEqual(parseArgs(["--json", "--metrics=custom.json", "--as-of=2026-06-02"]), {
+    assert.deepEqual(parseArgs(["--json", "--release-trust", "--metrics=custom.json", "--as-of=2026-06-02"]), {
         json: true,
         metricsPath: "custom.json",
         asOfDate: "2026-06-02",
+        releaseTrust: true,
         unknownArgs: [],
     });
     assert.throws(() => formatAsOfDate("not-a-date"), /Invalid SDLC metrics as-of date/);

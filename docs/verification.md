@@ -26,6 +26,7 @@ npm run security:advisories
 npm run security:branch-protection
 npm run security:licenses
 npm run security:requirements
+npm run security:release-trust
 npm run security:sdlc-metrics
 npm run security:secrets
 npm run security:sbom

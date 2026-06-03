@@ -156,7 +156,9 @@
         "Manual Anki import QA remains required before release-ready claims."
       ],
       "releaseBlocker": true,
-      "riskRecords": []
+      "riskRecords": [
+        "PROD-REL-001"
+      ]
     },
     {
       "id": "SEC-REQ-005",

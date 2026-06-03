@@ -10,12 +10,15 @@ function parseArgs(argv = []) {
         json: false,
         metricsPath: undefined,
         asOfDate: undefined,
+        releaseTrust: false,
         unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
             parsed.json = true;
+        } else if (arg === "--release-trust") {
+            parsed.releaseTrust = true;
         } else if (arg.startsWith("--metrics=")) {
             parsed.metricsPath = arg.slice("--metrics=".length);
         } else if (arg.startsWith("--as-of=")) {
@@ -37,6 +40,7 @@ function main(argv = process.argv.slice(2)) {
     const report = buildSdlcMetricsReport({
         metricsPath: args.metricsPath,
         asOfDate: args.asOfDate || formatAsOfDate(new Date()),
+        releaseTrust: args.releaseTrust,
     });
 
     if (args.json) {

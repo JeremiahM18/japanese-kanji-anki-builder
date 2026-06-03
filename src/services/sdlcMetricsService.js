@@ -6,6 +6,7 @@ const { loadSecurityRequirementsTraceability } = require("../datasets/securityRe
 
 const HIGH_CRITICAL_SEVERITIES = new Set(["critical", "high"]);
 const UNRESOLVED_DECISIONS = new Set(["open", "blocked external"]);
+const IMPLEMENTED_STATUS = "implemented";
 
 function readText(cwd, relativePath) {
     return fs.readFileSync(path.join(cwd, relativePath), "utf-8");
@@ -115,6 +116,11 @@ function summarizeRiskRegister(riskRecords, { asOfDate }) {
 
 function summarizeSecurityRequirements(matrix) {
     const requirements = Array.isArray(matrix?.requirements) ? matrix.requirements : [];
+    const releaseBlockers = requirements.filter((requirement) => requirement.releaseBlocker);
+    const unimplementedReleaseBlockers = releaseBlockers.filter((requirement) => requirement.status !== IMPLEMENTED_STATUS);
+    const releaseBlockerRiskRecords = [...new Set(releaseBlockers.flatMap((requirement) => (
+        Array.isArray(requirement.riskRecords) ? requirement.riskRecords : []
+    )))].sort();
     const byStatus = requirements.reduce((counts, requirement) => {
         const status = requirement.status || "unknown";
         counts[status] = (counts[status] || 0) + 1;
@@ -123,13 +129,34 @@ function summarizeSecurityRequirements(matrix) {
 
     return {
         total: requirements.length,
-        releaseBlockers: requirements.filter((requirement) => requirement.releaseBlocker).length,
+        releaseBlockers: releaseBlockers.length,
         manualQaRequired: requirements.filter((requirement) => requirement.manualQaRequired).length,
         planned: byStatus.planned || 0,
         externalBlocked: byStatus["external-blocked"] || 0,
         partiallyImplemented: byStatus["partially-implemented"] || 0,
         partialOrExternal: (byStatus["external-blocked"] || 0) + (byStatus["partially-implemented"] || 0),
+        unimplementedReleaseBlockers: unimplementedReleaseBlockers.length,
+        unimplementedReleaseBlockerRecords: unimplementedReleaseBlockers.map((requirement) => requirement.id),
+        releaseBlockerRiskRecords,
         byStatus,
+    };
+}
+
+function summarizeReleaseTrust({ riskRecords, requirements }) {
+    const releaseBlockerRiskRecordIds = new Set(requirements.releaseBlockerRiskRecords || []);
+    const highCriticalReleaseBlockerRisks = riskRecords.filter((record) => (
+        releaseBlockerRiskRecordIds.has(record.id)
+        && HIGH_CRITICAL_SEVERITIES.has(normalizeSeverity(record.severity))
+        && UNRESOLVED_DECISIONS.has(normalizeDecision(record.decision))
+    ));
+    const unimplementedReleaseBlockerRequirements = requirements.unimplementedReleaseBlockerRecords || [];
+
+    return {
+        highCriticalReleaseBlockerRisks: highCriticalReleaseBlockerRisks.length,
+        highCriticalReleaseBlockerRiskRecords: highCriticalReleaseBlockerRisks.map((record) => record.id),
+        unimplementedReleaseBlockerRequirements: unimplementedReleaseBlockerRequirements.length,
+        unimplementedReleaseBlockerRequirementRecords: unimplementedReleaseBlockerRequirements,
+        passed: highCriticalReleaseBlockerRisks.length === 0 && unimplementedReleaseBlockerRequirements.length === 0,
     };
 }
 
@@ -235,19 +262,29 @@ function collectStaticConfigFailures({ cwd, matrix, packageScripts }) {
 }
 
 function collectSdlcMetricsFailures({ report }) {
-    return [
+    const failures = [
         ...report.staticFailures,
         ...report.training.missingRequiredSections.map((section) => `training checklist missing required section: ${section}`),
         ...report.training.missingRequiredTopics.map((topic) => `training checklist missing required topic: ${topic}`),
         ...report.training.missingRequiredRoles.map((role) => `training checklist missing required role: ${role}`),
         ...report.metricResults.flatMap((metric) => metric.failures),
     ];
+    if (report.releaseTrust?.enforced) {
+        if (report.releaseTrust.highCriticalReleaseBlockerRisks > 0) {
+            failures.push(`release trust has unresolved high/critical release-blocker risks: ${report.releaseTrust.highCriticalReleaseBlockerRiskRecords.join(", ")}`);
+        }
+        if (report.releaseTrust.unimplementedReleaseBlockerRequirements > 0) {
+            failures.push(`release trust has unimplemented release-blocker requirements: ${report.releaseTrust.unimplementedReleaseBlockerRequirementRecords.join(", ")}`);
+        }
+    }
+    return failures;
 }
 
 function buildSdlcMetricsReport({
     cwd = process.cwd(),
     metricsPath = undefined,
     asOfDate = formatAsOfDate(new Date()),
+    releaseTrust = false,
 } = {}) {
     const resolvedMetricsPath = resolveSdlcMetricsPath(cwd, metricsPath);
     const matrix = loadSdlcMetrics({ metricsPath: resolvedMetricsPath });
@@ -259,6 +296,7 @@ function buildSdlcMetricsReport({
         : "";
     const risk = summarizeRiskRegister(riskRecords, { asOfDate });
     const requirements = summarizeSecurityRequirements(securityRequirements);
+    const releaseTrustSummary = summarizeReleaseTrust({ riskRecords, requirements });
     const training = summarizeTrainingChecklist({
         checklistText,
         checklistConfig: matrix.trainingChecklist || {},
@@ -291,6 +329,11 @@ function buildSdlcMetricsReport({
         training,
         metricResults,
         staticFailures,
+        mode: releaseTrust ? "release-trust" : "visibility",
+        releaseTrust: {
+            enforced: releaseTrust,
+            ...releaseTrustSummary,
+        },
     };
     const failures = collectSdlcMetricsFailures({ report });
 
@@ -316,6 +359,7 @@ function formatSdlcMetricsReport(report) {
     const lines = [
         "SDLC security metrics",
         `Status: ${report.passed ? "pass" : "fail"}`,
+        `Mode: ${report.mode}`,
         `As of: ${report.asOfDate}`,
         `Metrics contract: ${report.metricsPath}`,
         "",
@@ -341,6 +385,13 @@ function formatSdlcMetricsReport(report) {
     lines.push(`- planned: ${report.requirements.planned}`);
     lines.push(`- external blocked: ${report.requirements.externalBlocked}`);
     lines.push(`- partially implemented: ${report.requirements.partiallyImplemented}`);
+    lines.push(`- unimplemented release blockers: ${report.requirements.unimplementedReleaseBlockers}${report.requirements.unimplementedReleaseBlockerRecords.length ? ` (${report.requirements.unimplementedReleaseBlockerRecords.join(", ")})` : ""}`);
+
+    lines.push("");
+    lines.push("Release trust posture:");
+    lines.push(`- enforced: ${report.releaseTrust.enforced ? "yes" : "no"}`);
+    lines.push(`- high/critical release-blocker risks: ${report.releaseTrust.highCriticalReleaseBlockerRisks}${report.releaseTrust.highCriticalReleaseBlockerRiskRecords.length ? ` (${report.releaseTrust.highCriticalReleaseBlockerRiskRecords.join(", ")})` : ""}`);
+    lines.push(`- unimplemented release-blocker requirements: ${report.releaseTrust.unimplementedReleaseBlockerRequirements}${report.releaseTrust.unimplementedReleaseBlockerRequirementRecords.length ? ` (${report.releaseTrust.unimplementedReleaseBlockerRequirementRecords.join(", ")})` : ""}`);
 
     lines.push("");
     lines.push("Training checklist:");
@@ -374,6 +425,7 @@ module.exports = {
     formatAsOfDate,
     formatSdlcMetricsReport,
     parseRiskRegister,
+    summarizeReleaseTrust,
     summarizeRiskRegister,
     summarizeSecurityRequirements,
     summarizeTrainingChecklist,

@@ -138,10 +138,6 @@ function buildSecretAuditReport({ cwd = process.cwd(), files = null } = {}) {
 
     for (const relativePath of trackedFiles) {
         try {
-            const absolutePath = path.join(cwd, relativePath);
-            if (!fs.existsSync(absolutePath)) {
-                continue;
-            }
             findings.push(...scanTrackedFile({ cwd, relativePath }));
         } catch (error) {
             findings.push({

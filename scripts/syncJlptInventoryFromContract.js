@@ -1,4 +1,3 @@
-const fs = require("node:fs");
 const path = require("node:path");
 
 const { invokeCliMain, assertNoUnknownArgs, collectUnknownArg } = require("../src/utils/cliArgs");
@@ -56,6 +55,13 @@ function formatSyncReport({ datasetPath, contractPath, updates, audit }) {
     return `${lines.join("\n")}\n`;
 }
 
+function remapMissingFileError(error, message) {
+    if (error?.code === "ENOENT") {
+        throw new Error(message);
+    }
+    throw error;
+}
+
 function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("syncJlptInventoryFromContract", options.unknownArgs);
@@ -63,15 +69,18 @@ function main() {
     const config = loadConfig();
     const contractPath = path.join(process.cwd(), "templates", "jlpt_level_contract.json");
 
-    if (!fs.existsSync(config.jlptJsonPath)) {
-        throw new Error(`Missing JLPT JSON file at ${config.jlptJsonPath}`);
+    let dataset;
+    let contract;
+    try {
+        dataset = loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null });
+    } catch (error) {
+        remapMissingFileError(error, `Missing JLPT JSON file at ${config.jlptJsonPath}`);
     }
-    if (!fs.existsSync(contractPath)) {
-        throw new Error(`Missing JLPT level contract at ${contractPath}`);
+    try {
+        contract = loadJlptLevelContract(contractPath);
+    } catch (error) {
+        remapMissingFileError(error, `Missing JLPT level contract at ${contractPath}`);
     }
-
-    const dataset = loadJlptOnlyJson(config.jlptJsonPath, { contractPath: null });
-    const contract = loadJlptLevelContract(contractPath);
     const { syncedDataset, updates } = syncJlptInventoryToContract(dataset, contract);
 
     writeFileAtomicSync(config.jlptJsonPath, `${JSON.stringify(syncedDataset, null, 2)}\n`, "utf-8");

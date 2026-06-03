@@ -35,10 +35,13 @@ function stripMarkup(value) {
         .trim();
 }
 
+const COMPARABLE_IGNORED_CHARS = new Set(Array.from("「」『』（）()[]{}、。，,・.．:：/-"));
+
 function normalizeComparable(value) {
     return katakanaToHiragana(stripMarkup(value))
-        .replace(/[「」『』（）()[\]{}]/g, "")
-        .replace(/[、。，,・.．\s:：/-]/g, "")
+        .split("")
+        .filter((char) => !COMPARABLE_IGNORED_CHARS.has(char) && !/\s/u.test(char))
+        .join("")
         .toLowerCase();
 }
 

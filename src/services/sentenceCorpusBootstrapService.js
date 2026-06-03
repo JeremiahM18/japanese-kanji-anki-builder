@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 
 const { normalizeSentenceCorpus } = require("../datasets/sentenceCorpus");
-const { writeFileAtomicSync } = require("../utils/fs");
+const { writeFileAtomicSync, writeFileIfMissingSync } = require("../utils/fs");
 
 function readJsonArray(filePath) {
     const text = fs.readFileSync(filePath, "utf-8");
@@ -44,8 +44,12 @@ function bootstrapSentenceCorpus({
         ? normalizeSentenceCorpus([...existingEntries, ...starterEntries])
         : starterEntries;
 
-    if (!targetExists || merge) {
+    let changed = false;
+    if (merge) {
         writeFileAtomicSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
+        changed = true;
+    } else {
+        changed = writeFileIfMissingSync(targetPath, `${JSON.stringify(nextEntries, null, 2)}\n`, "utf-8");
     }
 
     return {
@@ -55,8 +59,8 @@ function bootstrapSentenceCorpus({
         merge,
         starterEntries: starterEntries.length,
         existingEntries: existingEntries.length,
-        writtenEntries: targetExists && !merge ? existingEntries.length : nextEntries.length,
-        changed: !targetExists || merge,
+        writtenEntries: changed ? nextEntries.length : existingEntries.length,
+        changed,
     };
 }
 

@@ -76,7 +76,7 @@ The packet must name the release candidate, deck kind, JLPT levels, automated re
 
 ## Kanji deck manual spot review
 
-- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Current-standard Platinum coverage is complete for N5/N4/N3/N2; N1 is only partially trusted at `264/1230`, with `966` rows still requiring fresh Platinum review before any version-1 lock. N1 deck readiness is mechanical/media readiness only until Platinum and proof gates catch up.
+- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Current-standard Platinum coverage is complete for N5/N4/N3/N2; N1 is only partially trusted at `288/1230`, with `942` rows still requiring fresh Platinum review before any version-1 lock. N1 deck readiness is mechanical/media readiness only until Platinum and proof gates catch up.
 - Import additional unverified kanji decks separately from core decks only when `deck:kanji:additional:ready` reports selected physical additional cards. The current governed build selects `0` additional cards; in that state, confirm the empty generated surface and suppression report instead of looking for learner cards to review.
 - Confirm Platinum-reviewed cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces.
 - Confirm any kanji `verificationLimitations` are non-core, visibly labeled on the affected card surface, and reflected in `deck:kanji:review-status` counts.

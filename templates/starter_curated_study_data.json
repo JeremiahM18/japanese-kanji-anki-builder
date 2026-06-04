@@ -19399,7 +19399,7 @@
     }
   },
   "尚": {
-    "englishMeaning": "furthermore / esteem",
+    "englishMeaning": "furthermore / still",
     "displayWord": {
       "written": "尚更",
       "pron": "なおさら"
@@ -19432,7 +19432,7 @@
     }
   },
   "尭": {
-    "englishMeaning": "high / eminent",
+    "englishMeaning": "legendary wise ruler Yao / high / eminent",
     "displayWord": {
       "written": "尭天",
       "pron": "ぎょうてん"
@@ -19448,6 +19448,9 @@
       "尭天",
       "尭舜",
       "尭"
+    ],
+    "blockedMeanings": [
+      "far"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -19481,6 +19484,12 @@
       "就職",
       "就任",
       "就寝"
+    ],
+    "blockedMeanings": [
+      "depart",
+      "per",
+      "settle",
+      "study"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -19581,6 +19590,9 @@
       "尽力",
       "尽きる"
     ],
+    "blockedMeanings": [
+      "befriend"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "尽くす （つくす） - to devote / exhaust ／ 尽力 （じんりょく） - making every effort ／ 尽きる （つきる） - to run out",
@@ -19613,6 +19625,9 @@
       "尾",
       "尾行",
       "末尾"
+    ],
+    "blockedMeanings": [
+      "lower slope of mountain"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -19739,8 +19754,8 @@
   "屈": {
     "englishMeaning": "bend / yield",
     "displayWord": {
-      "written": "屈する",
-      "pron": "くっする"
+      "written": "屈",
+      "pron": "くつ"
     },
     "breakdownOverrides": [],
     "source": "starter-curated",
@@ -19956,6 +19971,11 @@
       "履く",
       "履歴"
     ],
+    "blockedMeanings": [
+      "boots",
+      "complete",
+      "put on (the feet)"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "履歴書 （りれきしょ） - resume ／ 履く （はく） - to wear on the feet ／ 履歴 （りれき） - personal history / record",
@@ -19988,6 +20008,11 @@
       "駐屯地",
       "屯する",
       "屯田"
+    ],
+    "blockedMeanings": [
+      "barracks",
+      "camp",
+      "police station"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -20052,6 +20077,11 @@
       "分岐",
       "岐路",
       "岐れる"
+    ],
+    "blockedMeanings": [
+      "arena",
+      "scene",
+      "theater"
     ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
@@ -20155,6 +20185,9 @@
       "岳",
       "岳人"
     ],
+    "blockedMeanings": [
+      "point"
+    ],
     "blockedWords": [],
     "blockedSentencePhrases": [],
     "notes": "山岳 （さんがく） - mountain / alpine ／ 岳 （たけ） - peak ／ 岳人 （がくじん） - mountaineer",
@@ -20214,7 +20247,7 @@
     }
   },
   "峠": {
-    "englishMeaning": "mountain pass / peak point",
+    "englishMeaning": "mountain pass / critical point",
     "displayWord": {
       "written": "峠",
       "pron": "とうげ"
@@ -20232,6 +20265,12 @@
       "峠を越す"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "peak point",
+      "(kokuji)",
+      "crest",
+      "mountain peak"
+    ],
     "blockedSentencePhrases": [],
     "notes": "峠 （とうげ） - mountain pass ／ 峠道 （とうげみち） - mountain road ／ 峠を越す （とうげをこす） - to pass the critical point",
     "alternativeNotes": [],
@@ -20445,7 +20484,7 @@
     }
   },
   "崚": {
-    "englishMeaning": "high mountain ridge",
+    "englishMeaning": "high / steep",
     "displayWord": {
       "written": "崚層",
       "pron": "りょうそう"
@@ -20462,8 +20501,11 @@
       "崚"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "mountains towering in a row"
+    ],
     "blockedSentencePhrases": [],
-    "notes": "崚層 （りょうそう） - towering / rugged mountain form ／ 崚 （りょう） - lofty ridge",
+    "notes": "崚層 （りょうそう） - high and steep mountain form ／ 崚 （りょう） - high / steep",
     "alternativeNotes": [],
     "exampleSentence": {
       "japanese": "写真には崚層とした岩山が映っていました。",
@@ -20477,7 +20519,7 @@
     }
   },
   "崩": {
-    "englishMeaning": "collapse / crumble",
+    "englishMeaning": "collapse / crumble / break down / imperial death",
     "displayWord": {
       "written": "崩れる",
       "pron": "くずれる"
@@ -20495,6 +20537,11 @@
       "崩壊"
     ],
     "blockedWords": [],
+    "blockedMeanings": [
+      "demolish",
+      "die",
+      "level"
+    ],
     "blockedSentencePhrases": [],
     "notes": "崩れる （くずれる） - to collapse ／ 崩す （くずす） - to break down ／ 崩壊 （ほうかい） - collapse",
     "alternativeNotes": [],

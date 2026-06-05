@@ -161,7 +161,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=8
 ```
 
-The default queue is `substantive-rereview`. Use `--queue=missing-current-standard` only when the task is actual card-data compatibility coverage, not Obsidian proof.
+The default queue is `substantive-rereview`. Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage, not Obsidian proof. For word structural review, use `npm run deck:words:sapphire:batch -- --level=<level> --limit=8 --queue=missing-current-standard`.
 
 3. Generate or refresh the word deck surface.
 
@@ -200,22 +200,16 @@ npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>
 
 7. Verify the batch.
 
-Use the level-specific Platinum alias when it exists:
+Use the level-specific native Sapphire alias for structural coverage:
 
 ```bash
-npm run deck:words:platinum:n<level>
+npm run deck:words:sapphire:n<level>
 ```
 
 For example, N4 is:
 
 ```bash
-npm run deck:words:platinum:n4
-```
-
-For a future word level without an npm alias, use the script directly after that level's Platinum manifest exists:
-
-```bash
-node scripts/reviewPlatinumWordLevel.js --level=<level> --require-all
+npm run deck:words:sapphire:n4
 ```
 
 Then re-check Obsidian progress and the next queue:
@@ -296,7 +290,7 @@ Current transition state:
 
 - `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:rereview-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched kanji proof consumers. They use the scoped proof-provider path so N5/N4/N3/N2 kanji proof comes from canonical JSONL. N1 currently has no trusted scoped canonical ledger, `320/1230` trusted current-standard native Sapphire entries, and `910` remaining actual card-data Sapphire gaps; fresh N1 Obsidian proof must only be recorded after real card-level Sapphire review creates trusted current-standard entries. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2 Obsidian proof is complete at the full generated denominator; N1 kanji proof must not be claimed as complete Obsidian certification until the generated denominator is fully covered and gates pass.
 
-- `deck:words:obsidian:rereview-status`, `deck:words:obsidian:certify-status`, their older Platinum compatibility aliases, `deck:words:platinum:batch`, `deck:words:platinum:n<level>`, and `deck:platinum:governance-gate` word inputs are the switched word consumers. For migrated N5/N4 word proof they default to `ledger-if-available` and can be audited with `--proof-provider=ledger` or `--proof-provider=ledger-if-available`. `--proof-provider=inline` is now only a negative-control legacy audit for those migrated word levels because tracked inline proof has been removed.
+- `deck:words:obsidian:rereview-status`, `deck:words:obsidian:certify-status`, their older Platinum compatibility aliases, `deck:words:platinum:batch`, `deck:words:platinum:n<level>`, and `deck:platinum:governance-gate` word inputs are the switched word proof consumers. Native `deck:words:sapphire:n<level>` commands own word structural/card-quality coverage. For migrated N5/N4 word proof, legacy proof consumers default to `ledger-if-available` and can be audited with `--proof-provider=ledger` or `--proof-provider=ledger-if-available`. `--proof-provider=inline` is now only a negative-control legacy audit for those migrated word levels because tracked inline proof has been removed.
 
 Do not treat the word proof-ledger migration as new Obsidian review. It is a representation migration for already-certified N5/N4 word proof. Word proof has separate exact written-reading identity binding, evidence checklist, and release-quality sentence review requirements.
 

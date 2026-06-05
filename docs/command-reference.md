@@ -96,14 +96,20 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:platinum:n1` | Legacy read-only N1 kanji compatibility gate retained as a migration input; native N1 Sapphire is `320/1230` under `deck:sapphire:n1` |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
-| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word review packet for the selected queue; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
+| `npm run deck:words:sapphire:batch -- --level=5 --limit=8 --queue=missing-current-standard` | Build a read-only word Sapphire structural/card-quality review packet for generated rows missing current-standard Sapphire coverage |
+| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Legacy read-only word compatibility/proof packet; use `deck:words:sapphire:batch` for native word structural Sapphire |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
-| `npm run deck:words:platinum:n5` | Run the N5 word Sapphire/Platinum-compatibility gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:words:platinum:n4` | Run the N4 word Sapphire/Platinum-compatibility gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Sapphire/Platinum-compatibility pass versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
+| `npm run deck:words:sapphire:n5` | Run the native N5 word Sapphire gate; current coverage is `287/287` active generated rows, with deferred/removed tracked separately |
+| `npm run deck:words:sapphire:n4` | Run the native N4 word Sapphire gate; current coverage is `700/700` |
+| `npm run deck:words:sapphire:n3` | Run the native N3 word Sapphire gate; currently fails closed because the manifest is empty and `269` generated rows are missing Sapphire |
+| `npm run deck:words:sapphire:n2` | Run the native N2 word Sapphire gate; currently fails closed because the manifest is empty and `28` generated rows are missing Sapphire |
+| `npm run deck:words:sapphire:n1` | Run the native N1 word Sapphire gate; currently fails closed because the manifest is empty and `26` generated rows are missing Sapphire |
+| `npm run deck:words:platinum:n5` | Legacy N5 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n5` for native word Sapphire |
+| `npm run deck:words:platinum:n4` | Legacy N4 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n4` for native word Sapphire |
+| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify legacy word Platinum compatibility structural pass versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider, while native `deck:words:sapphire:*` owns word Sapphire coverage |
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
-| `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active word Sapphire/Platinum-compatibility source-family independence posture |
+| `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word source-family independence posture; command name remains legacy |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |

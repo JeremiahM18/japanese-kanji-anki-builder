@@ -300,8 +300,9 @@ test("README presents the review tier model before status snapshots", () => {
     }
     assert.match(tierSection, /Kanji and word decks run them separately/);
     assert.match(tierSection, /Deck Ready.*mechanical artifact states, not trust tiers/s);
-    assert.match(tierSection, /Core kanji now uses native `templates\/sapphire_n\*_review_set\.json` and `deck:sapphire:\*`/);
-    assert.match(tierSection, /word and additional surfaces still retain compatibility command names/);
+    assert.match(tierSection, /Core kanji uses native `templates\/sapphire_n\*_review_set\.json` and `deck:sapphire:\*`/);
+    assert.match(tierSection, /words use native `templates\/sapphire_n\*_word_review_set\.json` and `deck:words:sapphire:\*`/);
+    assert.match(tierSection, /additional surfaces still retain compatibility command names/);
     assert.match(tierSection, /Expert content certification: Sapphire is already satisfied and a dedicated Platinum schema/);
 });
 
@@ -311,7 +312,7 @@ test("CLAUDE N5/N4 word freeze guard requires fail-closed frozen-row proof check
     const commandSection = claude.slice(claude.indexOf("N4 word guard checks:"));
     const requiredFreezeCommands = [
         "npm run deck:words:review:n4",
-        "npm run deck:words:platinum:n4",
+        "npm run deck:words:sapphire:n4",
         "npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4",
         "npm run deck:words:obsidian:certify-status -- --levels=5,4",
     ];
@@ -323,7 +324,7 @@ test("CLAUDE N5/N4 word freeze guard requires fail-closed frozen-row proof check
     );
     assert.match(
         freezeSection,
-        /Gold protected snippets, current-standard Sapphire\/Platinum-compatibility protected snippets, or strict Obsidian certification proof/i,
+        /Gold protected snippets, current-standard native Sapphire protected snippets, or strict Obsidian certification proof/i,
         "CLAUDE.md must name the frozen-row proof surfaces that readiness misses."
     );
 

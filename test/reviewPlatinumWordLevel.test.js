@@ -3,6 +3,8 @@ const assert = require("node:assert/strict");
 
 const { buildWordExportOptions, parseArgs, parseWordTsvForPlatinum } = require("../scripts/reviewPlatinumWordLevel");
 const { parseArgs: parseBatchReportArgs } = require("../scripts/platinumWordBatchReport");
+const { parseArgs: parseSapphireArgs } = require("../scripts/reviewSapphireWordLevel");
+const { parseArgs: parseSapphireBatchReportArgs } = require("../scripts/sapphireWordBatchReport");
 const { parseArgs: parseRereviewStatusArgs } = require("../scripts/reportObsidianWordRereviewStatus");
 const { parseArgs: parseCertificationStatusArgs } = require("../scripts/reportObsidianWordCertificationStatus");
 const { parseArgs: parseSourcePostureArgs } = require("../scripts/reportPlatinumWordSourcePosture");
@@ -64,6 +66,43 @@ test("platinumWordBatchReport parseArgs accepts explicit proof provider audits",
     const options = parseBatchReportArgs(["--level=N5", "--proof-provider=ledger"]);
 
     assert.equal(options.proofProvider, "ledger");
+});
+
+test("parseArgs accepts first-class Sapphire word review options", () => {
+    const options = parseSapphireArgs(["--level=5", "--json", "--require-all", "--allow-empty"]);
+
+    assert.deepEqual(options, {
+        allowEmpty: true,
+        json: true,
+        level: 5,
+        requireCurrentReviewStandard: true,
+        requireAllRows: true,
+        unknownArgs: [],
+    });
+});
+
+test("sapphireWordBatchReport defaults to missing current-standard structure", () => {
+    const options = parseSapphireBatchReportArgs(["--level=N5"]);
+
+    assert.equal(options.limit, 8);
+    assert.equal(options.queue, "missing-current-standard");
+    assert.deepEqual(options.words, []);
+});
+
+test("sapphireWordBatchReport parseArgs accepts scoped read-only batch options", () => {
+    const options = parseSapphireBatchReportArgs(["--level=N5", "--words=今日:きょう,八日|ようか", "--limit=2", "--queue=substantive-rereview", "--json", "--oops"]);
+
+    assert.deepEqual(options, {
+        json: true,
+        level: 5,
+        limit: 2,
+        queue: "substantive-rereview",
+        unknownArgs: ["--oops"],
+        words: [
+            { word: "今日", reading: "きょう" },
+            { word: "八日", reading: "ようか" },
+        ],
+    });
 });
 
 test("obsidian word proof status parseArgs accepts scoped read-only status options", () => {

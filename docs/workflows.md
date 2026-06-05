@@ -50,8 +50,8 @@ npm run deck:preview -- --kanji=日,本,学
 npm run deck:sapphire:batch -- --level=5 --limit=12
 npm run deck:sapphire:batch -- --level=5 --kanji=父,生,男
 npm run deck:sapphire:promote -- --level=5 --input=<reviewed-json>
-npm run deck:words:platinum:batch -- --level=5 --limit=8
-npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
+npm run deck:words:sapphire:batch -- --level=5 --limit=8
+npm run deck:words:sapphire:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:review:n5
 npm run deck:review:n4
@@ -64,14 +64,14 @@ npm run deck:review:coverage -- --level=1
 npm run deck:sapphire:n5
 npm run deck:words:review:n5
 npm run deck:words:review:n4
-node scripts/reviewPlatinumWordLevel.js --level=5
+npm run deck:words:sapphire:n5
 ```
 
 Tier names: Silver means generated surface, Gold means regression protection, Sapphire means current-standard structural/card-quality certification, Platinum means the future stronger content-certification lane after Sapphire, and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
 
-`deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:platinum:batch` remains the read-only word compatibility report until the word lane has its own Sapphire migration. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps.
+`deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:sapphire:batch` is the read-only word Sapphire pre-review report. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps.
 
-The `npm run deck:sapphire:n5` and `npm run deck:words:platinum:n5` commands are full-level structural gates. They fail unless every generated N5 card has an active current-standard card-quality entry. Future Platinum content certification is a stronger lane after Sapphire.
+The `npm run deck:sapphire:n5` and `npm run deck:words:sapphire:n5` commands are full-level structural gates. They fail unless every generated N5 card has an active current-standard card-quality entry. Future Platinum content certification is a stronger lane after Sapphire.
 
 ## Run Obsidian batches
 
@@ -145,7 +145,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=8
 ```
 
-Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage for core kanji, or current-standard structural compatibility coverage for legacy word surfaces, rather than Obsidian proof.
+Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage. For word structural work, use `deck:words:sapphire:batch`; keep the `deck:words:platinum:batch` queue here for Obsidian/proof-provider compatibility work.
 
 3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
 
@@ -160,15 +160,15 @@ Word NLP is broader than kanji NLP: it runs model/runtime checks, tokenization, 
 
 5. Record Obsidian proof only after the live generated word row is actually rereviewed. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
 
-6. Verify the batch. Use the npm Platinum alias when it exists; for a future word level without an alias, use `node scripts/reviewPlatinumWordLevel.js --level=<level> --require-all` after that level's Platinum manifest exists.
+6. Verify the batch. Use the native word Sapphire alias for structural coverage, then rerun the Obsidian status queue for proof posture.
 
 ```bash
-npm run deck:words:platinum:n<level>
+npm run deck:words:sapphire:n<level>
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=8
 ```
 
-Replace `n<level>` with the actual npm alias when one exists, such as `deck:words:platinum:n4`.
+Replace `n<level>` with the actual npm alias when one exists, such as `deck:words:sapphire:n4`.
 
 7. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
 
@@ -292,7 +292,7 @@ It filters for written-reading rows that contain target-level kanji, are not alr
 - `known-jlpt` allows harder known JLPT kanji but reports them for review.
 - `any` allows outside-JLPT kanji but reports them for review.
 
-Expansion candidates are not product truth. Every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, Gold regression, Sapphire/Platinum-compatibility evidence, and readiness validation.
+Expansion candidates are not product truth. Every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, Gold regression, native Sapphire evidence, and readiness validation.
 
 Rows that contain known JLPT kanji but no current-level kanji are reported separately as cross-level routing rows. They are not current-level promotion candidates and do not make the current level active by themselves. Physical movement still requires explicit target-level contract and starter-data review.
 

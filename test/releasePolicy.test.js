@@ -120,3 +120,15 @@ test("platinum review npm scripts are full-level release gates", () => {
         assert.match(command, /--require-all(?:\s|$)/, `${name} must require full generated-level platinum coverage`);
     }
 });
+
+test("sapphire review npm scripts are full-level structural gates", () => {
+    const packageJson = JSON.parse(readRepoFile("package.json"));
+    const sapphireScripts = Object.entries(packageJson.scripts)
+        .filter(([name, command]) => name.includes("sapphire") && command.includes("reviewSapphire"));
+
+    assert.ok(sapphireScripts.length > 0, "Expected package.json to expose sapphire review scripts");
+
+    for (const [name, command] of sapphireScripts) {
+        assert.match(command, /--require-all(?:\s|$)/, `${name} must require full generated-level sapphire coverage`);
+    }
+});

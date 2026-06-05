@@ -74,7 +74,7 @@ The binding tier contract is [docs/review-tier-governance.md](docs/review-tier-g
 | --- | --- | --- |
 | Silver | A generated card surface exists for the product. | Reviewed content, source truth, release quality, or learner usefulness. |
 | Gold | Gold regression protects reviewed generated output from drift. | Source truth, release approval, or substantive current-version rereview. |
-| Sapphire | Structural/card-quality certification: the live generated card passed the governed card contract for its product, with source-lane separation, internal checks, media identity, NLP support where required, explicit limitations, and a keep/fix/defer/remove decision. Core kanji now uses native `templates/sapphire_n*_review_set.json` and `deck:sapphire:*`; word and additional surfaces still retain compatibility command names until their own migrations are implemented. | Expert content certification, Obsidian proof, native/fluent audit, release readiness, or permission to shrink another lane's denominator. |
+| Sapphire | Structural/card-quality certification: the live generated card passed the governed card contract for its product, with source-lane separation, internal checks, media identity, NLP support where required, explicit limitations, and a keep/fix/defer/remove decision. Core kanji uses native `templates/sapphire_n*_review_set.json` and `deck:sapphire:*`; words use native `templates/sapphire_n*_word_review_set.json` and `deck:words:sapphire:*`; additional surfaces still retain compatibility command names until migrated. | Expert content certification, Obsidian proof, native/fluent audit, release readiness, or permission to shrink another lane's denominator. |
 | Platinum | Expert content certification: Sapphire is already satisfied and a dedicated Platinum schema records the stronger human content judgment for learner value, reading and meaning choice, example usefulness, level fit, source interpretation, and limitation decisions. | Obsidian proof, release readiness, manual QA, or future audits not recorded in the schema. |
 | Obsidian | Explicit non-mechanical current-version rereview proof exists for the live card. Kanji proof must include structured rereview provenance and actual example-sentence review evidence. Word proof must include structured rereview provenance, exact word-reading identity binding, a full word-card evidence checklist, and actual example-sentence review evidence. | A later fluent/native audit unless that provenance is separately recorded. |
 
@@ -113,13 +113,13 @@ For scoped canonical kanji proof levels (N5/N4/N3/N2), switched kanji proof cons
 
 | Surface | Current state | Main gates |
 | --- | --- | --- |
-| N5 word | `287` canonical rows plus `20` source-only phrase exclusions. Gold, readiness, tracked-source artifact, Platinum, and strict word Obsidian proof pass at `287/287`. Manual import QA, accessibility, and listening checks are still required before release-ready product claims. | `deck:words:platinum:n5`, `deck:words:obsidian:rereview-status -- --levels=5,4`, `deck:words:obsidian:certify-status -- --levels=5` |
-| N4 word | `700` canonical rows. The generated card surface builds at `700/700` with word audio, pitch, required back-side fields, examples, reading breakdowns, support labels, Gold, Sapphire/Platinum-compatibility, and strict Obsidian proof complete. Live readiness is `ready_with_deferred_variants`; reading coverage is `76.7%` (`579/755`). Manual import QA, accessibility, and listening checks are still required before release-ready product claims. | `deck:words:ready -- --levels=5,4`, `deck:words:review:n4`, `deck:words:platinum:n4`, `deck:words:obsidian:certify-status -- --levels=4` |
+| N5 word | `287` canonical rows plus `20` source-only phrase exclusions. Gold, readiness, tracked-source artifact, native Sapphire structural/card-quality coverage, and strict word Obsidian proof pass at `287/287`. Manual import QA, accessibility, and listening checks are still required before release-ready product claims. | `deck:words:sapphire:n5`, `deck:words:obsidian:rereview-status -- --levels=5,4`, `deck:words:obsidian:certify-status -- --levels=5` |
+| N4 word | `700` canonical rows. The generated card surface builds at `700/700` with word audio, pitch, required back-side fields, examples, reading breakdowns, support labels, Gold, native Sapphire structural/card-quality coverage, and strict Obsidian proof complete. Live readiness is `ready_with_deferred_variants`; reading coverage is `76.7%` (`579/755`). Manual import QA, accessibility, and listening checks are still required before release-ready product claims. | `deck:words:ready -- --levels=5,4`, `deck:words:review:n4`, `deck:words:sapphire:n4`, `deck:words:obsidian:certify-status -- --levels=4` |
 | N3 word | `269` canonical Silver rows build at `269/269`; single-level readiness is incomplete; cumulative reading coverage is `19.1%` (`235/1232`). Gold, Sapphire, future Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=3`, `deck:words:completion:n3`, `deck:words:reading-audit:n3` |
 | N2 word | `28` canonical Silver rows build at `28/28`; single-level readiness is incomplete; cumulative reading coverage is `4.6%` (`49/1061`). Gold, Sapphire, future Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=2`, `deck:words:completion:n2`, `deck:words:reading-audit:n2` |
 | N1 word | `26` canonical Silver rows build at `26/26`; single-level readiness is incomplete; cumulative reading coverage is `1.2%` (`41/3284`). Gold, Sapphire, future Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=1`, `deck:words:completion:n1`, `deck:words:reading-audit:n1` |
 
-Word Sapphire/Platinum-compatibility coverage currently uses `word-platinum-v3-evidence-lanes`. Current N5/N4 generated word denominator is `987` rows. Card-quality compatibility coverage is `987/987`, strict Obsidian proof is `987/987`, `0` compatibility entries need Obsidian, and `0` generated N5/N4 word rows are blocked/failing current-standard coverage.
+Word Sapphire coverage currently uses `word-sapphire-v1-evidence-lanes`. Current N5/N4 generated word denominator is `987` rows. Native Sapphire card-quality coverage is `987/987`, strict Obsidian proof is `987/987`, `0` Sapphire entries need Obsidian, and `0` generated N5/N4 word rows are blocked/failing current-standard coverage. Legacy `templates/platinum_n*_word_review_set.json` files remain compatibility/proof-provider inputs and do not claim future Platinum content certification.
 
 For migrated N5/N4 word proof, the word Obsidian status/certification commands and their older Platinum compatibility aliases read scoped canonical JSONL Obsidian proof from `templates/obsidian_proof_ledger/word_n5.jsonl` and `templates/obsidian_proof_ledger/word_n4.jsonl` through the proof-provider path by default. The tracked N5/N4 word review sets no longer carry inline word `rereviewProvenance`; reconciliation binds the canonical ledger proof back to those tracked entries.
 
@@ -129,7 +129,7 @@ Single-source entries carry `word_source_independence_not_proven`. Source-family
 
 ### Cross-Product Gates
 
-- `deck:words:obsidian:rereview-status -- --levels=5,4` uses generated word rows as the denominator and defaults to canonical JSONL proof for migrated N5/N4 word ledgers. N5 word `287/287` and N4 word `700/700` Obsidian remain separate from `987/987` Sapphire/Platinum-compatibility coverage.
+- `deck:words:obsidian:rereview-status -- --levels=5,4` uses generated word rows as the denominator and defaults to canonical JSONL proof for migrated N5/N4 word ledgers. This legacy proof consumer still reports the structural column as Platinum compatibility while native `deck:words:sapphire:*` owns Sapphire coverage. N5 word `287/287` and N4 word `700/700` Obsidian remain separate from `987/987` native Sapphire coverage and legacy proof-provider compatibility coverage.
 - `deck:words:obsidian:certify-status -- --levels=5,4` is the fail-closed word Obsidian gate. It currently passes for the full N5/N4 word square-zero certification denominator.
 - `deck:platinum:governance-gate` exercises real generated N5/N4 kanji and word rows when ignored local inputs are present. It currently passes with governance warnings for word single-source-family posture, bulk-template or missing card-specific revalidation summaries, marker-only example-quality automation, and zero active verification limitations. Migrated kanji and word Obsidian proof inputs read through the scoped proof-provider path.
 - JLPT kanji source evidence is governed separately from deck readiness. The source audit currently passes source-use governance with `--governance-strict` while evidence-depth work remains incomplete.
@@ -146,7 +146,7 @@ flowchart TD
     C --> E["Word deck rows"]
     D --> F["TSV exports + optional APKG packaging"]
     E --> F
-    F --> G["Gold regression + Sapphire or compatibility structural gate<br/>Obsidian proof + release gates"]
+    F --> G["Gold regression + Sapphire structural gate<br/>Obsidian proof + release gates"]
 ```
 
 ## Deck Model At A Glance
@@ -180,7 +180,8 @@ Tracked contracts define release behavior:
 | Platinum policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |
 | Sapphire kanji review sets | `templates/sapphire_n*_review_set.json` |
 | Legacy Platinum kanji migration inputs | `templates/platinum_n*_review_set.json` |
-| Platinum word review sets | [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json) |
+| Sapphire word review sets | `templates/sapphire_n*_word_review_set.json` |
+| Legacy Platinum word compatibility/proof inputs | [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json) |
 | Platinum card-source roles | [templates/platinum_card_source_manifest.json](templates/platinum_card_source_manifest.json) |
 | Word source manifest | [templates/word_source_manifest.json](templates/word_source_manifest.json) |
 | Word expansion signal config | [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json) |
@@ -249,11 +250,11 @@ Word decks:
 Review layers:
 
 - Gold regression protects reviewed generated output from drift. It does not mean release approval.
-- Sapphire gates current structural/card-quality requirements against live generated rows. Core kanji uses native `deck:sapphire:*`; word and additional surfaces still retain compatibility names until migrated.
+- Sapphire gates current structural/card-quality requirements against live generated rows. Core kanji uses native `deck:sapphire:*`; words use native `deck:words:sapphire:*`; additional surfaces still retain compatibility names until migrated.
 - Future Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
 - Obsidian certification requires explicit non-mechanical current-version rereview proof.
-- Legacy Platinum-named kanji manifests are retained as read-only migration inputs and do not certify future Platinum content. Word Platinum-named manifests still store compatibility structural coverage until the word lane is migrated.
-- Core-kanji Sapphire entries before `kanji-sapphire-v1-evidence-lanes`, and word Platinum entries before `word-platinum-v3-evidence-lanes`, are legacy history until revalidated.
+- Legacy Platinum-named kanji manifests are retained as read-only migration inputs and do not certify future Platinum content. Word Platinum-named manifests remain compatibility/proof-provider inputs and do not certify future Platinum content.
+- Core-kanji Sapphire entries before `kanji-sapphire-v1-evidence-lanes`, and word Sapphire entries before `word-sapphire-v1-evidence-lanes`, are legacy history until revalidated.
 - Use the [Obsidian batch workflow](docs/obsidian-batch-workflow.md) for review batches. Run status, batch, generated-surface refresh, NLP support, human review, canonical JSONL proof append via `data:obsidian:proof:append`, structural/reading verification, and progress checks during the work; run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian.
 
 ## Failure Semantics
@@ -367,7 +368,7 @@ flowchart LR
     H --> I["Draft proposal packets"]
     N --> I
     I --> J["Human promotion into tracked templates"]
-    J --> O["Gold + Sapphire or compatibility structural + Obsidian gates"]
+    J --> O["Gold + Sapphire structural + Obsidian gates"]
 ```
 
 Primary NLP commands:

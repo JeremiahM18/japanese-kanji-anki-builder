@@ -100,9 +100,9 @@ Do not widen scope just because higher levels exist.
 
 Current posture:
 
-- N5 word work is stabilized through Gold, Platinum, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
-- N4 word work is stabilized through Gold, Platinum, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
-- N3/N2/N1 word work has Silver generated surfaces only until their Gold, Platinum, and Obsidian lanes are populated
+- N5 word work is stabilized through Gold, Sapphire/Platinum-compatibility, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
+- N4 word work is stabilized through Gold, Sapphire/Platinum-compatibility, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
+- N3/N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, future Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
 
@@ -110,24 +110,28 @@ For word-deck expansion:
 - prefer useful, common, learner-friendly cards over raw coverage gain
 - keep reading coverage, labels, examples, audio, pitch accent, and card-back fields governed from the first batch
 
-## Gold, Platinum, and Obsidian
+## Gold, Sapphire, Platinum, and Obsidian
 
 Keep the review layers separate.
 
+- Read [docs/review-tier-governance.md](docs/review-tier-governance.md) before making tier claims.
 - Gold regression protects generated card output from drift. It checks reviewed learner-facing fields against the current governed contract.
 - Gold regression does not mean a card deserves to ship in version 1.
-- Platinum is the current structural and card-quality gate.
-- Platinum requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
+- Sapphire is the current structural and card-quality gate.
+- Current `platinum` commands and manifests are compatibility names for Sapphire until a deliberate schema and CLI migration is implemented.
+- Future Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
+- Sapphire/Platinum-compatibility requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
 - Obsidian requires explicit non-mechanical current-version rereview proof.
-- A card can be Gold-reviewed and still fail Platinum.
+- Deck Ready is mechanical artifact readiness only. It is not Silver, Gold, Sapphire, Platinum, Obsidian, source truth, release readiness, APKG import QA, accessibility QA, mobile QA, or listening QA.
+- A card can be Gold-reviewed and still fail Sapphire.
 - A level can be Gold-reviewed and still not be release-ready.
-- Do not use Gold coverage as a substitute for Platinum.
-- Do not use Platinum coverage as a substitute for Gold regression or Obsidian proof.
+- Do not use Gold coverage as a substitute for Sapphire.
+- Do not use Sapphire or compatibility Platinum coverage as a substitute for future Platinum content certification, Gold regression, or Obsidian proof.
 - For Obsidian batch work, follow [docs/obsidian-batch-workflow.md](docs/obsidian-batch-workflow.md): run status and batch commands as the work queue, refresh the generated surface, run the governed NLP support lane, perform the human review, run structural/reading verification, then run the fail-closed certification command only when the selected scope should be complete.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 word rows are stabilized at the Gold regression, Platinum structural, and strict Obsidian levels. The current generated-row denominator is `987/987` strict Obsidian proof across N5/N4, with N5 at `287/287` and N4 at `700/700`.
+N5 and N4 word rows are stabilized at the Gold regression, Sapphire/Platinum-compatibility, and strict Obsidian levels. The current generated-row denominator is `987/987` strict Obsidian proof across N5/N4, with N5 at `287/287` and N4 at `700/700`.
 
 That means:
 
@@ -135,7 +139,7 @@ That means:
 - do not churn word rows just to move a metric once the active triage backlog is cleared
 - use `npm run deck:words:ready -- --levels=5 --require-no-active-triage` as the normal N5 word guard before and after changes that could affect the shared word-deck pipeline
 - use `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` as the normal N4 word guard before and after changes that could affect the shared word-deck pipeline
-- readiness alone is not sufficient for frozen N4 word rows; it does not validate Gold protected snippets, current-standard Platinum protected snippets, or strict Obsidian certification proof
+- readiness alone is not sufficient for frozen N4 word rows; it does not validate Gold protected snippets, current-standard Sapphire/Platinum-compatibility protected snippets, or strict Obsidian certification proof
 - when a change can affect generated word-card fields, kanji breakdown text, shared curated meanings, review snapshots, the proof-provider path, or N4 frozen-row certification, run the N4 frozen-row proof bundle serially:
   - `npm run deck:words:review:n4`
   - `npm run deck:words:platinum:n4`

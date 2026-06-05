@@ -2,7 +2,7 @@
 
 This document collects the common local workflows for setup, preview, build, media, word expansion, and output review.
 
-The commands here are operational tools. They do not replace Gold regression, Platinum gates, Obsidian proof, release QA, or manual Anki import review. For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
+The commands here are operational tools. They do not replace Gold regression, Sapphire/Platinum-compatibility gates, future Platinum content certification, Obsidian proof, Deck Ready boundaries, release QA, or manual Anki import review. For tier meaning, use [review-tier-governance.md](review-tier-governance.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
 
 ## Setup
 
@@ -66,11 +66,11 @@ npm run deck:words:review:n4
 node scripts/reviewPlatinumWordLevel.js --level=5
 ```
 
-Tier names: Silver means generated surface, Gold means regression protection, Platinum means current-standard card-quality gate, and Obsidian means explicit non-mechanical current-version rereview proof.
+Tier names: Silver means generated surface, Gold means regression protection, Sapphire means current-standard structural/card-quality certification, Platinum means the future stronger content-certification lane after Sapphire, and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
 
-`deck:platinum:batch` and `deck:words:platinum:batch` are read-only pre-review reports. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard Platinum coverage gaps.
+`deck:platinum:batch` and `deck:words:platinum:batch` are read-only pre-review reports for the current Sapphire/Platinum-compatibility command family. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard compatibility coverage gaps.
 
-The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Platinum gates. They fail unless every generated N5 card has an active current-standard card-quality entry.
+The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Sapphire/Platinum-compatibility gates. They fail unless every generated N5 card has an active current-standard card-quality entry.
 
 ## Run Obsidian batches
 
@@ -92,7 +92,7 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 npm run deck:platinum:batch -- --level=<level> --limit=12
 ```
 
-The default queue is `substantive-rereview`. It includes current-standard Platinum entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is actual card-data Platinum coverage rather than Obsidian proof.
+The default queue is `substantive-rereview`. It includes current-standard Sapphire/Platinum-compatibility entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is actual card-data compatibility coverage rather than Obsidian proof.
 
 3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support lane before or during review:
 
@@ -144,7 +144,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=8
 ```
 
-Use `--queue=missing-current-standard` only when the task is actual card-data Platinum coverage rather than Obsidian proof.
+Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire/Platinum-compatibility coverage rather than Obsidian proof.
 
 3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
 
@@ -291,7 +291,7 @@ It filters for written-reading rows that contain target-level kanji, are not alr
 - `known-jlpt` allows harder known JLPT kanji but reports them for review.
 - `any` allows outside-JLPT kanji but reports them for review.
 
-Expansion candidates are not product truth. Every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, Gold regression, Platinum evidence, and readiness validation.
+Expansion candidates are not product truth. Every promoted word still needs source/commonness review, level-fit review, examples, reading breakdowns, kanji labels, audio, pitch policy compliance, Gold regression, Sapphire/Platinum-compatibility evidence, and readiness validation.
 
 Rows that contain known JLPT kanji but no current-level kanji are reported separately as cross-level routing rows. They are not current-level promotion candidates and do not make the current level active by themselves. Physical movement still requires explicit target-level contract and starter-data review.
 
@@ -315,7 +315,7 @@ It has three separate signals:
 
 The configured source TSVs under `downloads/` are ignored local inputs. The signal source config pins their source URL, source label, SHA-256, byte size, and parsed row count.
 
-The signal is deliberately not a release claim. It does not replace Gold regression, Platinum gates, Obsidian proof, APKG import QA, accessibility checks, media/listening QA, or readiness gates.
+The signal is deliberately not a release claim. It does not replace Gold regression, Sapphire/Platinum-compatibility gates, future Platinum content certification, Obsidian proof, APKG import QA, accessibility checks, media/listening QA, or readiness gates.
 
 ## Stroke order
 
@@ -338,7 +338,7 @@ True animation coverage requires real looping animation assets. Static images an
 
 Stroke-order release provenance is governed by [../templates/stroke_order_source_policy.json](../templates/stroke_order_source_policy.json). The automated gate verifies approved source policy, managed manifests, and target-bound review evidence. It does not prove stroke-sequence correctness by itself.
 
-Platinum evidence must state that the stroke-order media was visually checked for the target kanji.
+Sapphire/Platinum-compatibility evidence must state that the stroke-order media was visually checked for the target kanji.
 
 ## Audio
 

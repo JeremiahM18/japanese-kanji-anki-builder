@@ -1,13 +1,18 @@
 # Platinum And Obsidian Review Contract
 
-This is the front-door contract for every Platinum or Obsidian review pass in this repository. Read this before touching `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
+This is the front-door contract for every Sapphire/Platinum-compatibility, future Platinum, or Obsidian review pass in this repository. Read this before touching `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
+
+For program-wide tier meaning, read [review-tier-governance.md](review-tier-governance.md) first. Current `platinum` file and command names are compatibility names for the Sapphire structural/card-quality lane until a deliberate schema and CLI migration is implemented.
 
 This file does not replace the schemas, validators, tests, or detailed runbooks. It states the operating standard those files enforce.
 
 ## Non-Negotiables
 
-- Platinum is actual card-data review, not structure-only cleanup.
+- Sapphire is structural/card-quality certification, not a softer name for "almost reviewed."
+- Current `platinum` commands and manifests are compatibility names for Sapphire until migration; do not treat them as future Platinum content certification.
+- Future Platinum must inherit Sapphire and add stronger expert content-review evidence under a dedicated schema.
 - Obsidian is separate non-mechanical rereview proof, not a synonym for Platinum.
+- Deck Ready, Word Deck Ready, APKG readiness, and package staging are mechanical artifact states, not content trust tiers.
 - NLP is required review support where the lane defines it, but NLP never approves cards, writes tracked templates, certifies Obsidian, or claims release readiness.
 - Kanji and word lanes are separate products. Do not borrow proof, status, counts, or source decisions across them.
 - Generated rows, source evidence, internal checks, reviewer judgment, media identity, NLP support, Obsidian proof, and release readiness are separate lanes.
@@ -20,12 +25,14 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 
 ## Evidence Boundaries
 
-Gold protects generated output against drift. It does not prove source truth, Platinum quality, Obsidian proof, or release readiness.
+Gold protects generated output against drift. It does not prove source truth, Sapphire quality, Platinum content certification, Obsidian proof, or release readiness.
 
-Platinum proves the live generated card currently passes the active Platinum standard for its product:
+Sapphire proves the live generated card currently passes the active structural/card-quality compatibility standard for its product:
 
 - Kanji: `kanji-platinum-v3-evidence-lanes`.
 - Word: `word-platinum-v3-evidence-lanes`.
+
+Future Platinum content certification is intentionally not inferred from these compatibility names. It requires its own schema/gate when implemented.
 
 Obsidian proves explicit, non-mechanical current-version rereview was performed for the live card and recorded in the canonical proof path.
 
@@ -33,9 +40,9 @@ Obsidian proves explicit, non-mechanical current-version rereview was performed 
 
 Generated TSVs, Gold fixtures, local caches, ignored `data/` or `out/` files, batch reports, clean structure, `revalidatedAt`, and `current-standard-review` prose are not Obsidian proof.
 
-## Platinum Batch Standard
+## Sapphire/Platinum-Compatibility Batch Standard
 
-Every Platinum batch starts from live repo state:
+Every Sapphire/Platinum-compatibility batch starts from live repo state:
 
 ```bash
 git status --short --untracked-files=all
@@ -49,9 +56,9 @@ npm run deck:platinum:batch -- --level=<level> --limit=<batch-size> --queue=miss
 npm run deck:words:platinum:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
 ```
 
-A Platinum pass must inspect the actual live generated card data, not just the manifest shape.
+A Sapphire/Platinum-compatibility pass must inspect the actual live generated card data, not just the manifest shape.
 
-Kanji Platinum review must check:
+Kanji Sapphire/Platinum-compatibility review must check:
 
 - target kanji identity and deck fit
 - `DisplayWord`
@@ -68,7 +75,7 @@ Kanji Platinum review must check:
 - verification limitations
 - learner usefulness and product fit
 
-Word Platinum review must check:
+Word Sapphire/Platinum-compatibility review must check:
 
 - exact written form and reading identity
 - deck fit, current-level anchor, support-kanji labels, and placement rationale
@@ -107,7 +114,7 @@ The reviewer must inspect relevant NLP review packets, tokenization signals, dra
 
 ## Obsidian Batch Standard
 
-Obsidian starts after the live card has structurally valid current-standard Platinum coverage. Use the Obsidian queue, not the missing-structure queue:
+Obsidian starts after the live card has structurally valid current-standard Sapphire/Platinum-compatibility coverage. Use the Obsidian queue, not the missing-structure queue:
 
 ```bash
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
@@ -146,7 +153,7 @@ The proof event must bind the exact card identity, review standard, reviewer, re
 
 Run the smallest complete verification set for the lane and scope. Do not substitute one gate for another.
 
-Platinum batch verification normally includes:
+Sapphire/Platinum-compatibility batch verification normally includes:
 
 ```bash
 npm run deck:platinum:n<level>
@@ -227,7 +234,7 @@ Do not:
 - use generated output, Gold, local cache, or source-governance placement evidence as Japanese-source card-field proof
 - use Platinum as Obsidian proof
 - stage ignored proof drafts from `out/obsidian-proof/drafts`
-- shrink an Obsidian denominator because Platinum is incomplete
+- shrink an Obsidian denominator because Sapphire/Platinum-compatibility coverage is incomplete
 - call a level release-ready because one lane passed
 - continue a batch after discovering a real core-field uncertainty without fixing, deferring, or removing the card
 

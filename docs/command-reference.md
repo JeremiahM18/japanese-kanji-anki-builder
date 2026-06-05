@@ -57,12 +57,12 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
-| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` | Classify kanji Platinum pass versus Obsidian proof; N5/N4/N3/N2 complete proof reads canonical JSONL through the scoped proof provider |
+| `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` | Classify kanji Sapphire/Platinum-compatibility pass versus Obsidian proof; N5/N4/N3/N2 complete proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3,2` | Fail-closed kanji Obsidian certification status for the completed N5/N4/N3/N2 scope |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
-| `npm run deck:kanji:review-status` | Report core/additional kanji generated, Gold, Platinum, revalidation backlog, and duplicate-claim status |
+| `npm run deck:kanji:review-status` | Report core/additional kanji generated, Gold, Sapphire/Platinum-compatibility coverage, revalidation backlog, and duplicate-claim status |
 | `npm run deck:review:n5` | Run the N5 kanji Gold regression benchmark |
 | `npm run deck:review:n4` | Run the N4 kanji Gold regression benchmark |
 | `npm run deck:review:n3` | Run the N3 kanji Gold regression benchmark |
@@ -73,30 +73,30 @@ For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian 
 | `npm run deck:kanji:additional:review:n3` | Run the additional-unverified N3 kanji Gold regression benchmark |
 | `npm run deck:kanji:additional:review:n2` | Run the additional-unverified N2 kanji Gold regression benchmark |
 | `npm run deck:kanji:additional:review:n1` | Run the additional-unverified N1 kanji Gold regression benchmark |
-| `npm run deck:kanji:additional:platinum:n5` | Run the additional-unverified N5 kanji Platinum gate |
-| `npm run deck:kanji:additional:platinum:n4` | Run the additional-unverified N4 kanji Platinum gate |
-| `npm run deck:kanji:additional:platinum:n3` | Run the additional-unverified N3 kanji Platinum gate |
-| `npm run deck:kanji:additional:platinum:n2` | Run the additional-unverified N2 kanji Platinum gate |
-| `npm run deck:kanji:additional:platinum:n1` | Run the additional-unverified N1 kanji Platinum gate |
+| `npm run deck:kanji:additional:platinum:n5` | Run the additional-unverified N5 kanji Sapphire/Platinum-compatibility gate |
+| `npm run deck:kanji:additional:platinum:n4` | Run the additional-unverified N4 kanji Sapphire/Platinum-compatibility gate |
+| `npm run deck:kanji:additional:platinum:n3` | Run the additional-unverified N3 kanji Sapphire/Platinum-compatibility gate |
+| `npm run deck:kanji:additional:platinum:n2` | Run the additional-unverified N2 kanji Sapphire/Platinum-compatibility gate |
+| `npm run deck:kanji:additional:platinum:n1` | Run the additional-unverified N1 kanji Sapphire/Platinum-compatibility gate |
 | `npm run deck:review:coverage` | Audit Gold regression coverage |
 | `npm run deck:review:accessibility` | Report automated accessibility checklist status for kanji or word decks |
 | `npm run deck:platinum:rereview-status -- --levels=5,4,3,2` | Compatibility kanji rereview-status alias; proof-provider input now defaults to ledger-if-available, but new workflows should use `deck:kanji:obsidian:rereview-status` |
 | `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows before release claims that depend on those rows; migrated kanji and word Obsidian proof inputs default to ledger-if-available |
-| `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; proof-provider input defaults to ledger-if-available and current canonical Obsidian proof covers the full N2 denominator |
-| `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; the trusted N1 Platinum scope is currently `312/1230`, so the full-level gate fails closed until all generated N1 rows have fresh governed current-standard entries |
+| `npm run deck:platinum:n5` | Run the N5 kanji Sapphire/Platinum-compatibility gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:platinum:n4` | Run the N4 kanji Sapphire/Platinum-compatibility gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:platinum:n3` | Run the N3 kanji Sapphire/Platinum-compatibility gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:platinum:n2` | Run the N2 kanji Sapphire/Platinum-compatibility gate; proof-provider input defaults to ledger-if-available and current canonical Obsidian proof covers the full N2 denominator |
+| `npm run deck:platinum:n1` | Run the N1 kanji Sapphire/Platinum-compatibility gate; the trusted N1 compatibility scope is currently `312/1230`, so the full-level gate fails closed until all generated N1 rows have fresh governed current-standard entries |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word review packet for the selected queue; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
-| `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate; migrated proof-provider input defaults to canonical JSONL |
-| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum pass versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
+| `npm run deck:words:platinum:n5` | Run the N5 word Sapphire/Platinum-compatibility gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:words:platinum:n4` | Run the N4 word Sapphire/Platinum-compatibility gate; migrated proof-provider input defaults to canonical JSONL |
+| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Sapphire/Platinum-compatibility pass versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
-| `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active word Platinum source-family independence posture |
+| `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active word Sapphire/Platinum-compatibility source-family independence posture |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |

@@ -295,10 +295,12 @@ test("README presents the review tier model before status snapshots", () => {
     assert.notEqual(baselineIndex, -1, "README must keep the Current Baseline section.");
     assert.ok(tierIndex < baselineIndex, "Review Tiers should appear before Current Baseline so the status counts have context.");
 
-    for (const tier of ["Silver", "Gold", "Platinum", "Obsidian"]) {
+    for (const tier of ["Silver", "Gold", "Sapphire", "Platinum", "Obsidian"]) {
         assert.match(tierSection, new RegExp(`\\| ${tier} \\|`), `README Review Tiers missing ${tier}.`);
     }
     assert.match(tierSection, /Kanji and word decks run them separately/);
+    assert.match(tierSection, /Deck Ready.*mechanical artifact states, not trust tiers/s);
+    assert.match(tierSection, /Current `platinum` command names are compatibility names for this lane/);
 });
 
 test("CLAUDE N5/N4 word freeze guard requires fail-closed frozen-row proof checks", () => {
@@ -319,7 +321,7 @@ test("CLAUDE N5/N4 word freeze guard requires fail-closed frozen-row proof check
     );
     assert.match(
         freezeSection,
-        /Gold protected snippets, current-standard Platinum protected snippets, or strict Obsidian certification proof/i,
+        /Gold protected snippets, current-standard Sapphire\/Platinum-compatibility protected snippets, or strict Obsidian certification proof/i,
         "CLAUDE.md must name the frozen-row proof surfaces that readiness misses."
     );
 
@@ -369,6 +371,7 @@ test("documentation standard defines enterprise doc schemas and README routing",
     ], "README");
     assert.match(readme.slice(0, readme.indexOf("## Purpose")), /# Japanese Kanji Anki Builder[\s\S]*Run this first:[\s\S]*npm run doctor/);
     assert.match(documentationMap, /\[docs\/documentation-standard\.md\]\(docs\/documentation-standard\.md\)/);
+    assert.match(documentationMap, /\[docs\/review-tier-governance\.md\]\(docs\/review-tier-governance\.md\)/);
     assert.match(standard, /# Documentation Standard/);
     assert.match(standard, /## Research Basis/);
     const researchBasisLines = standard.split(/\r?\n/u);
@@ -397,6 +400,7 @@ test("documentation standard defines enterprise doc schemas and README routing",
     }
 
     assert.match(standard, /Do not use generated TSV, APKG output, SQLite mirrors, or local ignored files as tracked source truth/);
+    assert.match(standard, /Sapphire structural\/card-quality certification, future Platinum content certification, Obsidian proof/);
     assert.match(readmePurpose, /controlled output, not casual scrape-and-export deck generation/);
     assert.match(readmeAuthorityBoundary, /orientation and routing document/);
     assert.match(readmeAuthorityBoundary, /does not certify release readiness/);

@@ -10,6 +10,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Added
 
+- Added program-wide review tier governance for Silver, Gold, Sapphire, Platinum, and Obsidian, with Deck Ready explicitly scoped as mechanical artifact readiness outside the trust ladder and current `platinum` command names documented as Sapphire/Platinum-compatibility during migration.
 - Added a governed KANJIDIC2/EDRDG kanji on/kun reading-reference contract covering the tracked JLPT kanji inventory, with source-use limits, raw source identity, attribution, loader/audit tests, and tracked-source kanji preflight integration.
 - Added governed N5, N4, and N3 kanji card-field source contracts derived from current-standard Platinum Japanese-source evidence, with manual field-bound citation limits, source-origin independence context, loader/audit tests, and tracked-source kanji preflight certification for N5/N4/N3 source availability.
 - Completed the governed N2 kanji structural Platinum lane and canonical N2 kanji Obsidian proof ledger at `349/349` with `0` remaining and `0` blocked/failing, while keeping release readiness unclaimed.

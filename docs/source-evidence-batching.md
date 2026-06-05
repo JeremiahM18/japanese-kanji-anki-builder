@@ -185,7 +185,7 @@ npm run deck:words:ready
 npm run deck:review:n5
 npm run deck:words:review:n5
 npm run deck:sapphire:n5
-npm run deck:words:platinum:n5
+npm run deck:words:sapphire:n5
 npm run deck:kanji:obsidian:certify-status -- --levels=<levels>
 npm run deck:words:obsidian:certify-status -- --levels=<levels>
 npm run product:artifacts:n5

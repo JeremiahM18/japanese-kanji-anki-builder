@@ -1,15 +1,15 @@
 # Platinum And Obsidian Review Contract
 
-This is the front-door contract for every Sapphire, compatibility-named structural, future Platinum, or Obsidian review pass in this repository. Read this before touching `templates/sapphire_n*_review_set.json`, legacy `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
+This is the front-door contract for every Sapphire, compatibility-named structural, future Platinum, or Obsidian review pass in this repository. Read this before touching `templates/sapphire_n*_review_set.json`, `templates/sapphire_n*_word_review_set.json`, legacy `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
 
-For program-wide tier meaning, read [review-tier-governance.md](review-tier-governance.md) first. Core kanji now uses native Sapphire files and commands; word and additional surfaces still retain compatibility names until their own deliberate migrations are implemented.
+For program-wide tier meaning, read [review-tier-governance.md](review-tier-governance.md) first. Core kanji and words use native Sapphire files and commands; additional surfaces still retain compatibility names until their own deliberate migration is implemented.
 
 This file does not replace the schemas, validators, tests, or detailed runbooks. It states the operating standard those files enforce.
 
 ## Non-Negotiables
 
 - Sapphire is structural/card-quality certification, not a softer name for "almost reviewed."
-- Core-kanji Sapphire commands and manifests are the structural lane; legacy `platinum` commands and manifests are read-only compatibility inputs unless the specific surface has not yet migrated. Do not treat either as future Platinum content certification.
+- Core-kanji and word Sapphire commands and manifests are the structural lane; legacy `platinum` commands and manifests are read-only compatibility inputs unless the specific surface has not yet migrated. Do not treat either as future Platinum content certification.
 - Future Platinum must inherit Sapphire and add stronger expert content-review evidence under a dedicated schema.
 - Obsidian is separate non-mechanical rereview proof, not a synonym for Platinum.
 - Deck Ready, Word Deck Ready, APKG readiness, and package staging are mechanical artifact states, not content trust tiers.
@@ -17,7 +17,7 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 - Kanji and word lanes are separate products. Do not borrow proof, status, counts, or source decisions across them.
 - Generated rows, source evidence, internal checks, reviewer judgment, media identity, NLP support, Obsidian proof, and release readiness are separate lanes.
 - Scoped media review commands are card-level evidence only. Full-level media completeness must be verified with `deck:ready -- --levels=<level>` and the relevant media policy audits.
-- If a real core-kanji card field is corrected during Sapphire review, the outcome is `fixed_then_sapphire`, and the entry must include `fixSummary`. Compatibility-named word/additional surfaces still use their current `fixed_then_platinum` status until migrated.
+- If a real core-kanji or word card field is corrected during Sapphire review, the outcome is `fixed_then_sapphire`, and the entry must include `fixSummary`. Compatibility-named additional surfaces still use their current `fixed_then_platinum` status until migrated.
 - If core truth remains uncertain, defer or remove the card. Do not hide uncertainty in prose.
 - Do not lower N2 through N5 standards to match N1. Raise N1 to the governed standard already enforced elsewhere.
 - Do not claim a batch is complete until the actual card data was reviewed and the relevant gates were run.
@@ -30,7 +30,7 @@ Gold protects generated output against drift. It does not prove source truth, Sa
 Sapphire proves the live generated card currently passes the active structural/card-quality compatibility standard for its product:
 
 - Core kanji: `kanji-sapphire-v1-evidence-lanes`.
-- Word: `word-platinum-v3-evidence-lanes`.
+- Word: `word-sapphire-v1-evidence-lanes`.
 
 Future Platinum content certification is intentionally not inferred from these compatibility names. It requires its own schema/gate when implemented.
 
@@ -53,12 +53,12 @@ Use the appropriate selector/report command for the lane, then review the select
 
 ```bash
 npm run deck:sapphire:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
-npm run deck:words:platinum:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
+npm run deck:words:sapphire:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
 ```
 
 Use `deck:platinum:batch -- --queue=missing-current-standard` only as a legacy migration-input inspection command when a native Sapphire manifest is not available. Native core-kanji structural work uses `deck:sapphire:batch`.
 
-Use `deck:sapphire:batch` for core-kanji Sapphire work. Use the `platinum`-named batch commands only for legacy compatibility surfaces or Obsidian/substantive proof preparation.
+Use `deck:sapphire:batch` for core-kanji Sapphire work and `deck:words:sapphire:batch` for word Sapphire work. Use the `platinum`-named batch commands only for legacy compatibility surfaces or Obsidian/substantive proof preparation.
 
 A Sapphire or compatibility-structural pass must inspect the actual live generated card data, not just the manifest shape.
 
@@ -79,7 +79,7 @@ Core-kanji Sapphire review must check:
 - verification limitations
 - learner usefulness and product fit
 
-Word Sapphire/Platinum-compatibility review must check:
+Word Sapphire review must check:
 
 - exact written form and reading identity
 - deck fit, current-level anchor, support-kanji labels, and placement rationale
@@ -130,7 +130,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
 ```
 
-The reviewer must rereview the actual live card data again, including source evidence, examples, media identity, limitations, and any NLP support. Obsidian proof is not inferred from the Platinum entry.
+The reviewer must rereview the actual live card data again, including source evidence, examples, media identity, limitations, and any NLP support. Obsidian proof is not inferred from the Sapphire entry or any legacy compatibility entry.
 
 Canonical Obsidian proof is tracked JSONL under:
 
@@ -164,7 +164,7 @@ npm run deck:sapphire:n<level>
 node --test test/sapphireTrackedReviewSets.test.js
 ```
 
-For word levels with an npm alias, run `npm run deck:words:platinum:n<level>` until the word lane has its own Sapphire migration. For future word levels without an alias, run `node scripts/reviewPlatinumWordLevel.js --level=<level> --require-all` after that level's compatibility manifest exists.
+For word levels with an npm alias, run `npm run deck:words:sapphire:n<level>`. Native word Sapphire commands fail closed for empty or incomplete manifests; legacy `deck:words:platinum:n<level>` commands are compatibility/proof-provider inputs, not the new structural lane.
 
 When a batch report makes a media-readiness claim for a level, also run:
 

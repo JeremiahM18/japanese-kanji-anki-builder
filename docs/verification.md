@@ -9,7 +9,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 - [../test/repositoryGovernance.test.js](../test/repositoryGovernance.test.js) protects source-of-truth boundaries, README/source-lane consistency, CI contract names, supply-chain policy, CODEOWNERS coverage, and source-evidence routing.
 - The tracked [../examples/n5-mini](../examples/n5-mini) fixture locks exact generated TSV rows against the live note schemas so schema or export drift is visible immediately.
 - Gold regression protects generated card output from drift.
-- Sapphire/Platinum-compatibility gates check current structural/card-quality evidence. Future Platinum content certification is a separate stronger lane.
+- Native Sapphire gates and compatibility structural gates check current structural/card-quality evidence. Future Platinum content certification is a separate stronger lane after Sapphire.
 - Obsidian proof records substantive current-version rereview.
 - GitHub CodeQL scans JavaScript/TypeScript source and GitHub Actions workflow code in CI; there is no local npm equivalent for that hosted code-scanning upload gate.
 - Tagged release workflows create GitHub artifact attestations for release-bundle provenance and SBOM binding; there is no local npm equivalent for the hosted Sigstore-backed attestation upload gate.
@@ -88,7 +88,7 @@ It does not certify tracked-source kanji TSVs, `.apkg` files, managed media pack
 
 Use `-- --require-certifiable` when the tracked source contracts are expected to be complete and the command should fail closed on any missing governed source lane.
 
-Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Sapphire/Platinum-compatibility gates; the tracked KANJIDIC2 contract is reading-reference evidence only, and the tracked N5/N4/N3 card-field source contracts are source-provenance evidence only.
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Sapphire gates; the tracked KANJIDIC2 contract is reading-reference evidence only, and the tracked N5/N4/N3 card-field source contracts are source-provenance evidence only.
 
 `product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, tracked-source N5 kanji TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
 
@@ -110,7 +110,7 @@ Add `--worklist` to append an all-level source-lane batch packet, or `--worklist
 
 `deck:kanji:partition-plan` converts the source-level delta audit into a read-only kanji product plan: five core logical decks plus five `additional_unverified_Nx` logical decks. It does not move contracts, generate decks, import evidence, or change readiness.
 
-`deck:kanji:review-status` reports generated, Gold, active Sapphire/Platinum-compatibility coverage, non-certifying revalidation backlog/history, and structured verification-limitation counts for the five core kanji decks and five `additional_unverified_Nx` decks. It also fails on unresolved duplicate additional source claims.
+`deck:kanji:review-status` reports generated, Gold, active native Sapphire coverage where migrated, legacy compatibility fallback where not migrated, non-certifying revalidation backlog/history, and structured verification-limitation counts for the five core kanji decks and five `additional_unverified_Nx` decks. It also fails on unresolved duplicate additional source claims.
 
 `deck:kanji:additional:ready` builds the additional-kanji source-claim diagnostic and any selected optional additional-unverified TSV/APKG output. It does not move the core JLPT contract or certify source-evidence confidence.
 

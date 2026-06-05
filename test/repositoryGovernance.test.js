@@ -300,7 +300,9 @@ test("README presents the review tier model before status snapshots", () => {
     }
     assert.match(tierSection, /Kanji and word decks run them separately/);
     assert.match(tierSection, /Deck Ready.*mechanical artifact states, not trust tiers/s);
-    assert.match(tierSection, /Current `platinum` command names are compatibility names for this lane/);
+    assert.match(tierSection, /Core kanji now uses native `templates\/sapphire_n\*_review_set\.json` and `deck:sapphire:\*`/);
+    assert.match(tierSection, /word and additional surfaces still retain compatibility command names/);
+    assert.match(tierSection, /Expert content certification: Sapphire is already satisfied and a dedicated Platinum schema/);
 });
 
 test("CLAUDE N5/N4 word freeze guard requires fail-closed frozen-row proof checks", () => {

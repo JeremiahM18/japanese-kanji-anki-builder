@@ -9,6 +9,7 @@ const {
     formatKanjiDeckReviewStatus,
 } = require("../src/services/kanjiDeckReviewStatusService");
 const { CURRENT_KANJI_PLATINUM_REVIEW_STANDARD } = require("../src/services/platinumKanjiReviewService");
+const { CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD } = require("../src/services/sapphireKanjiReviewService");
 
 function writeJson(filePath, value) {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -167,10 +168,95 @@ test("buildKanjiDeckReviewStatus reports core and additional review coverage", (
         assert.match(formatKanjiDeckReviewStatus(report), /duplicate kanji: 1/);
         assert.match(formatKanjiDeckReviewStatus(report), /core N4 retained; no additional duplicate selected/);
         assert.match(formatKanjiDeckReviewStatus(report), /Verification Limitations:/);
-        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 limitation\(s\) on 1 active Platinum card\(s\)/);
+        assert.match(formatKanjiDeckReviewStatus(report), /core_N5: 1 limitation\(s\) on 1 active legacy Platinum compatibility card\(s\)/);
         assert.match(formatKanjiDeckReviewStatus(report), /Current Std/);
         assert.match(formatKanjiDeckReviewStatus(report), /Revalidation Backlog\/History:/);
         assert.match(formatKanjiDeckReviewStatus(report), /core_N1: 1 non-certifying review-history card\(s\) need current-standard revalidation/);
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildKanjiDeckReviewStatus prefers Sapphire manifests for core kanji rows", () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "kanji-review-status-sapphire-"));
+
+    try {
+        writeJson(path.join(tempRoot, "templates", "golden_n5_review_set.json"), [{ kanji: "一" }]);
+        writeJson(path.join(tempRoot, "templates", "platinum_n5_review_set.json"), []);
+        writeJson(path.join(tempRoot, "templates", "sapphire_n5_review_set.json"), [{
+            kanji: "一",
+            status: "sapphire",
+            reviewStandard: CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
+            reviewedAt: "2026-06-05",
+            revalidatedAt: "2026-06-05",
+            reviewer: "fixture-review",
+            revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji Sapphire standard.",
+            readingIncludes: ["いち"],
+            meaningIncludes: ["one"],
+            kanjiMeaningsIncludes: ["one"],
+            levelIncludes: ["N5"],
+            exampleIncludes: ["一つください。"],
+            notesIncludes: ["一"],
+            primaryReadingRationale: "Fixture primary reading.",
+            sourceEvidence: [{
+                type: "japanese-source",
+                source: "fixture Japanese source",
+                detail: "Fixture Japanese source verified 一 card-field truth.",
+            }],
+            internalChecks: [
+                { type: "generated-surface", source: "fixture", detail: "Generated surface checked." },
+                { type: "golden-regression", source: "fixture", detail: "Golden regression checked." },
+                { type: "media-audit", source: "fixture", detail: "Media audit checked." },
+                { type: "audio-review", source: "fixture", detail: "Audio identity checked." },
+                { type: "stroke-order-review", source: "fixture", detail: "Stroke-order identity checked." },
+            ],
+            reviewEvidence: [
+                { type: "manual-review", source: "fixture", detail: "Manual review checked." },
+                { type: "current-standard-review", source: "fixture", detail: "Current-standard review checked." },
+            ],
+            qualityGates: {
+                belongsInKanjiDeck: true,
+                individualKanjiAnchor: true,
+                displayWordIsTargetKanji: true,
+                japaneseVerified: true,
+                primaryReadingVerified: true,
+                primaryMeaningVerified: true,
+                broaderMeaningsVerified: true,
+                exampleReleaseQuality: true,
+                exampleSupportOnly: true,
+                studyWordSuppressed: true,
+                levelPlacementVerified: true,
+                audioExactPrimaryReading: true,
+                audioArtifactVerified: true,
+                strokeOrderVerified: true,
+                strokeOrderTargetVerified: true,
+                noSilentFallback: true,
+            },
+            sapphireReviewAudit: {
+                schemaVersion: 1,
+                auditType: "fixture-sapphire-card-quality-review",
+                migrationBoundary: {
+                    legacyCommandNamesPreserved: true,
+                    authority: "Fixture Sapphire manifest for status preference test.",
+                },
+            },
+        }]);
+        writeTsv(path.join(tempRoot, "out", "build", "exports", "jlpt-n5.tsv"), ["一"]);
+
+        const report = buildKanjiDeckReviewStatus({
+            rootDir: tempRoot,
+            coreOutDir: path.join(tempRoot, "out", "build"),
+            levels: [5],
+            contract: { kanjiLevels: { 一: 5 } },
+            deltaReport: { byLevel: {} },
+        });
+        const coreN5 = report.rows.find((row) => row.deckId === "core_N5");
+
+        assert.equal(coreN5.structuralLane, "Sapphire");
+        assert.equal(coreN5.structuralCount, 1);
+        assert.equal(coreN5.currentStandardStructuralCount, 1);
+        assert.equal(coreN5.platinumCount, 1);
+        assert.match(formatKanjiDeckReviewStatus(report), /\| core_N5 \| N5 \| 1\/1 \| 1\/1 \| 1\/1 \| 1\/1/);
     } finally {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }

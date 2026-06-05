@@ -74,7 +74,7 @@ The binding tier contract is [docs/review-tier-governance.md](docs/review-tier-g
 | --- | --- | --- |
 | Silver | A generated card surface exists for the product. | Reviewed content, source truth, release quality, or learner usefulness. |
 | Gold | Gold regression protects reviewed generated output from drift. | Source truth, release approval, or substantive current-version rereview. |
-| Sapphire | Structural/card-quality certification: the live generated card passed the governed card contract for its product, with source-lane separation, internal checks, media identity, NLP support where required, explicit limitations, and a keep/fix/defer/remove decision. Current `platinum` command names are compatibility names for this lane until the schema/CLI migration is implemented. | Expert content certification, Obsidian proof, native/fluent audit, release readiness, or permission to shrink another lane's denominator. |
+| Sapphire | Structural/card-quality certification: the live generated card passed the governed card contract for its product, with source-lane separation, internal checks, media identity, NLP support where required, explicit limitations, and a keep/fix/defer/remove decision. Core kanji now uses native `templates/sapphire_n*_review_set.json` and `deck:sapphire:*`; word and additional surfaces still retain compatibility command names until their own migrations are implemented. | Expert content certification, Obsidian proof, native/fluent audit, release readiness, or permission to shrink another lane's denominator. |
 | Platinum | Expert content certification: Sapphire is already satisfied and a dedicated Platinum schema records the stronger human content judgment for learner value, reading and meaning choice, example usefulness, level fit, source interpretation, and limitation decisions. | Obsidian proof, release readiness, manual QA, or future audits not recorded in the schema. |
 | Obsidian | Explicit non-mechanical current-version rereview proof exists for the live card. Kanji proof must include structured rereview provenance and actual example-sentence review evidence. Word proof must include structured rereview provenance, exact word-reading identity binding, a full word-card evidence checklist, and actual example-sentence review evidence. | A later fluent/native audit unless that provenance is separately recorded. |
 
@@ -84,24 +84,24 @@ The binding tier contract is [docs/review-tier-governance.md](docs/review-tier-g
 
 Run live commands for release decisions. This section is an orientation snapshot, not the release gate. Commits that change review counts, proof posture, or readiness posture must update the affected README, docs, and changelog lines in the same commit.
 
-All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obsidian certified; N1 is currently a trusted-reset lane with fresh governed Sapphire/Platinum-compatibility batching restarted and no Obsidian certification counted. Existing current-standard `platinum` and `fixed_then_platinum` entries remain valid compatibility coverage; introducing Sapphire language does not invalidate completed work or automatically claim future Platinum content certification.
+All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obsidian certified; N1 is currently a trusted-reset lane with native governed Sapphire batching restarted and no Obsidian certification counted. Existing core-kanji structural work has been migrated into Sapphire manifests as Sapphire-only coverage; legacy `platinum_n*_review_set.json` manifests remain temporary read-only migration inputs and do not claim future Platinum content certification.
 
 ### Kanji Product
 
 | Surface | Current state | Main gates |
 | --- | --- | --- |
-| N5 kanji | `80/80` generated, Gold, Sapphire/Platinum-compatibility, and Obsidian. | `deck:platinum:n5`, `deck:kanji:obsidian:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
-| N4 kanji | `212/212` generated, Gold, Sapphire/Platinum-compatibility, and Obsidian. | `deck:platinum:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
-| N3 kanji | `341/341` generated, Gold, current-standard Sapphire/Platinum-compatibility card-quality coverage, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:platinum:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
-| N2 kanji | `349/349` generated, Gold, current-standard Sapphire/Platinum-compatibility card-quality coverage, and Obsidian certified with `0` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:platinum:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2`, `deck:kanji:obsidian:certify-status -- --levels=2` |
-| N1 kanji | `1230/1230` generated and Gold; trusted current-standard Sapphire/Platinum-compatibility card-quality coverage is `312/1230`, trusted Obsidian proof remains `0/1230`, and `918` generated rows still require fresh actual card-data review before any Obsidian proof is recorded. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:platinum:n1`, `deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard` |
+| N5 kanji | `80/80` generated, Gold, native Sapphire, and Obsidian. | `deck:sapphire:n5`, `deck:kanji:obsidian:certify-status -- --levels=5`, `deck:ready -- --levels=5` |
+| N4 kanji | `212/212` generated, Gold, native Sapphire, and Obsidian. | `deck:sapphire:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
+| N3 kanji | `341/341` generated, Gold, current-standard native Sapphire card-quality coverage, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:sapphire:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
+| N2 kanji | `349/349` generated, Gold, current-standard native Sapphire card-quality coverage, and Obsidian certified with `0` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:sapphire:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2`, `deck:kanji:obsidian:certify-status -- --levels=2` |
+| N1 kanji | `1230/1230` generated and Gold; trusted current-standard native Sapphire card-quality coverage is `320/1230`, trusted Obsidian proof remains `0/1230`, and `910` generated rows still require fresh actual card-data Sapphire review before any Obsidian proof is recorded. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:sapphire:n1`, `deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard`, `deck:sapphire:promote -- --level=1 --input=<reviewed-json>` |
 | Additional kanji diagnostic | `0` physical additional cards. `398` additional source claims are governed and suppressed because they collide with `387` core-retained source-claim kanji; unresolved duplicates are `0`. | `deck:kanji:additional:ready`, `deck:kanji:review-status` |
 
-`deck:ready` currently reports N5 through N1 kanji as ready with `100.0%` of mechanical readiness checks passing for sentence, curated, stroke-order, required media, readings, meanings, examples, and contextual notes. For N1, this is not content trust, Sapphire/Platinum-compatibility coverage, Obsidian certification, or release approval.
+`deck:ready` currently reports N5 through N1 kanji as ready with `100.0%` of mechanical readiness checks passing for sentence, curated, stroke-order, required media, readings, meanings, examples, and contextual notes. For N1, this is not content trust, Sapphire coverage, Obsidian certification, future Platinum content certification, or release approval.
 
 Full-level media completeness is owned by `deck:ready -- --levels=<level>` plus the media policy audits. `media:review:audio` is only scoped card-level audio identity/listening evidence for the cards under review; it must never be reported as full-level media coverage or used to shrink the media denominator.
 
-Kanji Sapphire/Platinum-compatibility coverage currently uses `kanji-platinum-v3-evidence-lanes`. Only current-standard `platinum` and `fixed_then_platinum` entries count as active compatibility coverage after actual card-data review. Legacy or unversioned history is non-certifying backlog until revalidated under the current standard.
+Core kanji Sapphire coverage currently uses `kanji-sapphire-v1-evidence-lanes`. Only current-standard `sapphire` and `fixed_then_sapphire` entries count as active core-kanji structural/card-quality coverage after actual card-data review. Legacy `platinum` manifests are retained as read-only migration inputs and do not satisfy future Platinum content certification.
 
 `deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` currently reports N5/N4/N3/N2 kanji as `982/982` Platinum, `982/982` Obsidian, `0/982` needing Obsidian, and `0/982` blocked/failing.
 
@@ -146,7 +146,7 @@ flowchart TD
     C --> E["Word deck rows"]
     D --> F["TSV exports + optional APKG packaging"]
     E --> F
-    F --> G["Gold regression + Sapphire/Platinum gate<br/>Obsidian proof + release gates"]
+    F --> G["Gold regression + Sapphire or compatibility structural gate<br/>Obsidian proof + release gates"]
 ```
 
 ## Deck Model At A Glance
@@ -178,7 +178,8 @@ Tracked contracts define release behavior:
 | Review tier governance | [docs/review-tier-governance.md](docs/review-tier-governance.md) |
 | Platinum and Obsidian review contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
 | Platinum policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |
-| Platinum kanji review sets | `templates/platinum_n*_review_set.json` |
+| Sapphire kanji review sets | `templates/sapphire_n*_review_set.json` |
+| Legacy Platinum kanji migration inputs | `templates/platinum_n*_review_set.json` |
 | Platinum word review sets | [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json) |
 | Platinum card-source roles | [templates/platinum_card_source_manifest.json](templates/platinum_card_source_manifest.json) |
 | Word source manifest | [templates/word_source_manifest.json](templates/word_source_manifest.json) |
@@ -248,20 +249,20 @@ Word decks:
 Review layers:
 
 - Gold regression protects reviewed generated output from drift. It does not mean release approval.
-- Sapphire gates current structural/card-quality requirements against live generated rows. Current `platinum` command names remain compatibility names for this lane.
+- Sapphire gates current structural/card-quality requirements against live generated rows. Core kanji uses native `deck:sapphire:*`; word and additional surfaces still retain compatibility names until migrated.
 - Future Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
 - Obsidian certification requires explicit non-mechanical current-version rereview proof.
-- Platinum-named manifests are in progress and currently store Sapphire/Platinum-compatibility coverage. Only active `platinum` and `fixed_then_platinum` entries can count as reviewed compatibility coverage.
-- Kanji Platinum entries before `kanji-platinum-v3-evidence-lanes`, and word Platinum entries before `word-platinum-v3-evidence-lanes`, are legacy history until revalidated.
+- Legacy Platinum-named kanji manifests are retained as read-only migration inputs and do not certify future Platinum content. Word Platinum-named manifests still store compatibility structural coverage until the word lane is migrated.
+- Core-kanji Sapphire entries before `kanji-sapphire-v1-evidence-lanes`, and word Platinum entries before `word-platinum-v3-evidence-lanes`, are legacy history until revalidated.
 - Use the [Obsidian batch workflow](docs/obsidian-batch-workflow.md) for review batches. Run status, batch, generated-surface refresh, NLP support, human review, canonical JSONL proof append via `data:obsidian:proof:append`, structural/reading verification, and progress checks during the work; run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian.
 
 ## Failure Semantics
 
-Expected backlog failures must stay visible and scoped. Incomplete N1 current-standard Sapphire/Platinum-compatibility and Obsidian coverage, incomplete N3/N2/N1 word readiness, source-evidence depth gaps, missing release QA evidence, and unproven post-attestation release verification are not clean states, but they are different from regressions in completed scopes.
+Expected backlog failures must stay visible and scoped. Incomplete N1 current-standard Sapphire and Obsidian coverage, incomplete N3/N2/N1 word readiness, source-evidence depth gaps, missing release QA evidence, and unproven post-attestation release verification are not clean states, but they are different from regressions in completed scopes.
 
 Blockers require a fix, a rerun, or an explicit accepted-risk record before release-facing claims. Examples include a fail-closed certification failure for a completed denominator, a hosted security alert that is open without accepted-risk documentation, a source lane promoted beyond its permitted evidence posture, a local-data-only gate reported as CI truth, or manual APKG/mobile/accessibility/listening QA being treated as proven by automated tests.
 
-Diagnostic passes do not certify unrelated lanes. Source-use governance, NLP governance, generated-row readiness, Gold regression, Sapphire/Platinum-compatibility coverage, future Platinum content certification, Obsidian proof, media completeness, hosted security posture, release trust, and manual product QA each keep their own denominator and command evidence.
+Diagnostic passes do not certify unrelated lanes. Source-use governance, NLP governance, generated-row readiness, Gold regression, Sapphire or compatibility structural coverage, future Platinum content certification, Obsidian proof, media completeness, hosted security posture, release trust, and manual product QA each keep their own denominator and command evidence.
 
 ## Core Workflows
 
@@ -313,7 +314,7 @@ Clean CI runs `security:licenses`, `security:requirements`, `security:sdlc-metri
 
 Clean CI does not run `deck:platinum:governance-gate` or generated-row Obsidian proof-provider parity because those commands exercise ignored local `data/*` real generated-row inputs. Run them in a local-data workspace before release claims that depend on current generated kanji or word rows.
 
-Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. The tracked KANJIDIC2 reading contract is a `kanji-reading-reference` lane only; exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in the local generated-row Sapphire/Platinum-compatibility gates. The tracked N5/N4/N3 kanji card-field source contracts are a `kanji-field-verification` lane extracted from current-standard Sapphire/Platinum-compatibility `japanese-source` evidence; they are not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness by themselves.
+Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. The tracked KANJIDIC2 reading contract is a `kanji-reading-reference` lane only; exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Sapphire gates. The tracked N5/N4/N3 kanji card-field source contracts are a `kanji-field-verification` lane extracted from current-standard Sapphire `japanese-source` evidence; they are not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness by themselves.
 
 Benchmark budget commands are manual/local performance guardrails, not GitHub Actions CI gates. `data:benchmark:jlpt:sources:gate`, `bench:obsidian-proof-etl:gate`, `bench:build:gate`, and `bench:build:cold-apkg:gate` are manual/local performance guardrails for source-evidence, Obsidian proof ETL, hot-cache build, and cold native APKG package-performance changes. `bench:build:gate` runs a warmup before the measured hot-cache build, and `bench:build:cold-apkg:gate` clears the generated APKG cache and gates the cold package phase only; the hot build gate owns total/export/media-sync budgets. Both build gates require a ready local workspace and write benchmark output under the configured benchmark output directory. Before changing timing budgets or claiming a close run is stable, run the benchmark standalone, append `-- --repeat=3` to the relevant command, and keep the same machine, runtime, cache mode, and input boundary. `perf:memory:matrix` is a CI-safe metadata audit, not a timing budget gate, and memory thresholds remain trend-only until repeated samples justify a hard limit.
 
@@ -332,7 +333,7 @@ Repository governance:
 
 ## Assistive NLP Review Engine
 
-NLP is not a new certification path. It is a governed review-amplification layer between generated card output and human promotion. It helps find likely issues, candidate improvements, and review priorities before or during Obsidian rereview. It cannot certify cards, write tracked templates, approve source truth, approve Gold/Sapphire/Platinum/Obsidian, or claim release readiness.
+NLP is not a new certification path. It is a governed review-amplification layer between generated card output and human promotion. It helps find likely issues, candidate improvements, and review priorities before or during Obsidian rereview. It cannot certify cards, write tracked templates, approve source truth, approve Gold/Sapphire/future Platinum/Obsidian, or claim release readiness.
 
 The repository has two deliberately different governed NLP lanes:
 
@@ -366,7 +367,7 @@ flowchart LR
     H --> I["Draft proposal packets"]
     N --> I
     I --> J["Human promotion into tracked templates"]
-    J --> O["Gold + Sapphire/Platinum + Obsidian gates"]
+    J --> O["Gold + Sapphire or compatibility structural + Obsidian gates"]
 ```
 
 Primary NLP commands:
@@ -422,7 +423,7 @@ Expected ignored workspace data:
 
 `data/kanji_jlpt_only.json` is ignored runtime input, not source truth. Deck-facing loaders guard it against the tracked JLPT level contract; audit and sync commands intentionally read it unguarded so they can report or repair drift.
 
-Tracked tests must not make `data/kanji_jlpt_only.json` or any other ignored root `data/*` file a CI source of truth. Local generated-row Sapphire/Platinum-compatibility gates may use these ignored inputs to validate the live workstation build, but tracked CI truth must come from governed contracts or fixtures.
+Tracked tests must not make `data/kanji_jlpt_only.json` or any other ignored root `data/*` file a CI source of truth. Local generated-row Sapphire gates and compatibility structural gates may use these ignored inputs to validate the live workstation build, but tracked CI truth must come from governed contracts or fixtures.
 
 Managed media:
 

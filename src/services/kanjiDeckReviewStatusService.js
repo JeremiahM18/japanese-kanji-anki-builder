@@ -16,6 +16,11 @@ const {
     buildKanjiVerificationLimitationSummary,
     isCurrentStandardPlatinumEntry,
 } = require("./platinumKanjiReviewService");
+const {
+    buildKanjiSapphireReviewStandardSummary,
+    buildKanjiSapphireVerificationLimitationSummary,
+    isCurrentStandardSapphireEntry,
+} = require("./sapphireKanjiReviewService");
 
 function toSortedArray(values = []) {
     return [...values].sort((a, b) => a.localeCompare(b, "ja"));
@@ -37,6 +42,15 @@ function buildActivePlatinumSet(reviewSet = []) {
     return new Set(
         (Array.isArray(reviewSet) ? reviewSet : [])
             .filter(isCurrentStandardPlatinumEntry)
+            .map((entry) => String(entry?.kanji || "").trim())
+            .filter(Boolean)
+    );
+}
+
+function buildActiveSapphireSet(reviewSet = []) {
+    return new Set(
+        (Array.isArray(reviewSet) ? reviewSet : [])
+            .filter(isCurrentStandardSapphireEntry)
             .map((entry) => String(entry?.kanji || "").trim())
             .filter(Boolean)
     );
@@ -73,14 +87,15 @@ function buildReviewStatusRow({
     generated,
     goldenSet,
     platinumSet,
+    structuralLane = "Sapphire",
     reviewStandardSummary = {},
     verificationLimitationSummary = {},
     plannedCount = null,
 } = {}) {
     const missingGolden = difference(generated.kanji, goldenSet);
-    const missingPlatinum = difference(generated.kanji, platinumSet);
+    const missingStructural = difference(generated.kanji, platinumSet);
     const extraGolden = difference(goldenSet, generated.kanji);
-    const extraPlatinum = difference(platinumSet, generated.kanji);
+    const extraStructural = difference(platinumSet, generated.kanji);
     const issues = [];
 
     if (!generated.exists) {
@@ -92,8 +107,8 @@ function buildReviewStatusRow({
     if (extraGolden.length > 0) {
         issues.push(`${extraGolden.length} golden entries are not present in generated TSV`);
     }
-    if (extraPlatinum.length > 0) {
-        issues.push(`${extraPlatinum.length} platinum entries are not present in generated TSV`);
+    if (extraStructural.length > 0) {
+        issues.push(`${extraStructural.length} ${structuralLane.toLowerCase()} entries are not present in generated TSV`);
     }
 
     return {
@@ -107,6 +122,10 @@ function buildReviewStatusRow({
         presentRows: generated.rows,
         presentUnique: generated.unique,
         goldenCount: goldenSet.size,
+        structuralLane,
+        structuralCount: platinumSet.size,
+        currentStandardStructuralCount: reviewStandardSummary.currentStandardCount || 0,
+        legacyOrUnversionedStructuralCount: reviewStandardSummary.legacyOrUnversionedCount || 0,
         platinumCount: platinumSet.size,
         currentStandardPlatinumCount: reviewStandardSummary.currentStandardCount || 0,
         legacyOrUnversionedPlatinumCount: reviewStandardSummary.legacyOrUnversionedCount || 0,
@@ -119,9 +138,11 @@ function buildReviewStatusRow({
         verificationLimitationFieldCounts: verificationLimitationSummary.fieldCounts || {},
         verificationLimitations: verificationLimitationSummary.limitations || [],
         missingGolden,
-        missingPlatinum,
+        missingSapphire: missingStructural,
+        missingPlatinum: missingStructural,
         extraGolden,
-        extraPlatinum,
+        extraSapphire: extraStructural,
+        extraPlatinum: extraStructural,
         issues,
         passed: issues.length === 0,
     };
@@ -140,6 +161,34 @@ function loadReviewSet(rootDir, fileName, {
         throw new Error(`Missing review set: ${filePath}`);
     }
     return readJson(filePath, { readFile });
+}
+
+function loadCoreStructuralReviewSet(rootDir, level, {
+    exists = fs.existsSync,
+    readFile = fs.readFileSync,
+} = {}) {
+    const sapphireFileName = `sapphire_n${level}_review_set.json`;
+    const sapphirePath = path.join(rootDir, "templates", sapphireFileName);
+    if (exists(sapphirePath)) {
+        const reviewSet = loadReviewSet(rootDir, sapphireFileName, { exists, readFile });
+        return {
+            reviewSet,
+            structuralLane: "Sapphire",
+            structuralSet: buildActiveSapphireSet(reviewSet),
+            reviewStandardSummary: buildKanjiSapphireReviewStandardSummary(reviewSet),
+            verificationLimitationSummary: buildKanjiSapphireVerificationLimitationSummary(reviewSet),
+        };
+    }
+
+    const platinumFileName = `platinum_n${level}_review_set.json`;
+    const reviewSet = loadReviewSet(rootDir, platinumFileName, { exists, readFile });
+    return {
+        reviewSet,
+        structuralLane: "legacy Platinum compatibility",
+        structuralSet: buildActivePlatinumSet(reviewSet),
+        reviewStandardSummary: buildKanjiReviewStandardSummary(reviewSet),
+        verificationLimitationSummary: buildKanjiVerificationLimitationSummary(reviewSet),
+    };
 }
 
 function buildAdditionalGeneratedRows({
@@ -171,6 +220,7 @@ function buildAdditionalGeneratedRows({
                 `golden_additional_unverified_n${level}_review_set.json`,
                 { exists, readFile, missingAsEmpty: true }
             )),
+            structuralLane: "legacy Platinum compatibility",
             platinumSet: buildActivePlatinumSet(platinumReviewSet),
             reviewStandardSummary: buildKanjiReviewStandardSummary(platinumReviewSet),
             verificationLimitationSummary: buildKanjiVerificationLimitationSummary(platinumReviewSet),
@@ -259,17 +309,12 @@ function buildKanjiDeckReviewStatus({
 
     const coreRows = normalizedLevels.map((level) => {
         const exportPath = path.join(resolvedCoreOutDir, "exports", `jlpt-n${level}.tsv`);
-        const platinumReviewSet = loadReviewSet(
-            resolvedRoot,
-            `platinum_n${level}_review_set.json`,
-            { exists, readFile }
-        );
+        const structuralReview = loadCoreStructuralReviewSet(resolvedRoot, level, { exists, readFile });
         const goldenSet = buildKanjiSetFromReviewSet(loadReviewSet(
             resolvedRoot,
             `golden_n${level}_review_set.json`,
             { exists, readFile }
         ));
-        const platinumSet = buildActivePlatinumSet(platinumReviewSet);
         return buildReviewStatusRow({
             deckId: `core_N${level}`,
             deckType: "core",
@@ -277,9 +322,10 @@ function buildKanjiDeckReviewStatus({
             exportPath,
             generated: readGeneratedKanjiSet(exportPath, { exists, readFile }),
             goldenSet,
-            platinumSet,
-            reviewStandardSummary: buildKanjiReviewStandardSummary(platinumReviewSet),
-            verificationLimitationSummary: buildKanjiVerificationLimitationSummary(platinumReviewSet),
+            platinumSet: structuralReview.structuralSet,
+            structuralLane: structuralReview.structuralLane,
+            reviewStandardSummary: structuralReview.reviewStandardSummary,
+            verificationLimitationSummary: structuralReview.verificationLimitationSummary,
             plannedCount: contractSets.get(level)?.size || 0,
         });
     });
@@ -307,6 +353,7 @@ function buildKanjiDeckReviewStatus({
         generated: row.generated,
         goldenSet: row.goldenSet,
         platinumSet: row.platinumSet,
+        structuralLane: row.structuralLane,
         reviewStandardSummary: row.reviewStandardSummary,
         verificationLimitationSummary: row.verificationLimitationSummary,
         plannedCount: row.plannedCount,
@@ -361,7 +408,7 @@ function formatKanjiDeckReviewStatus(report = {}) {
         `Additional candidate scope: ${report.candidateScope}`,
         `Disputed rows included: ${report.includeDisputed ? "yes" : "no"}`,
         "",
-        "| Deck | Level | Present | Golden | Platinum | Current Std | Limitations | Missing Golden | Missing Platinum | Structural |",
+        "| Deck | Level | Present | Golden | Sapphire | Current Std | Limitations | Missing Golden | Missing Sapphire | Structural |",
         "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
     ];
 
@@ -371,11 +418,11 @@ function formatKanjiDeckReviewStatus(report = {}) {
             row.levelLabel,
             row.exportExists ? `${row.presentUnique}/${row.presentRows}` : "missing",
             formatRatio(row.goldenCount, row.presentUnique),
-            formatRatio(row.platinumCount, row.presentUnique),
-            formatRatio(row.currentStandardPlatinumCount || 0, row.presentUnique),
+            formatRatio(row.structuralCount ?? row.platinumCount, row.presentUnique),
+            formatRatio(row.currentStandardStructuralCount ?? row.currentStandardPlatinumCount ?? 0, row.presentUnique),
             row.verificationLimitationCount || 0,
             row.missingGolden.length,
-            row.missingPlatinum.length,
+            (row.missingSapphire || row.missingPlatinum || []).length,
             row.passed ? "ok" : "failing",
         ].join(" | ") + " |");
     }
@@ -410,7 +457,7 @@ function formatKanjiDeckReviewStatus(report = {}) {
         for (const row of rowsWithLimitations) {
             lines.push(
                 `- ${row.deckId}: ${row.verificationLimitationCount} limitation(s) `
-                + `on ${row.verificationLimitationKanjiCount} active Platinum card(s)`
+                + `on ${row.verificationLimitationKanjiCount} active ${row.structuralLane || "Sapphire"} card(s)`
             );
             for (const limitation of (row.verificationLimitations || []).slice(0, 12)) {
                 lines.push(`  - ${limitation.kanji}: ${limitation.field} (${limitation.status}) - ${limitation.label}`);
@@ -436,19 +483,20 @@ function formatKanjiDeckReviewStatus(report = {}) {
     }
 
     const incompleteRows = (report.rows || [])
-        .filter((row) => row.missingGolden.length > 0 || row.missingPlatinum.length > 0);
+        .filter((row) => row.missingGolden.length > 0 || (row.missingSapphire || row.missingPlatinum || []).length > 0);
     if (incompleteRows.length > 0) {
         lines.push("", "Review Gaps:");
         for (const row of incompleteRows) {
+            const missingSapphire = row.missingSapphire || row.missingPlatinum || [];
             lines.push(
                 `- ${row.deckId}: missing golden ${row.missingGolden.length}; `
-                + `missing platinum ${row.missingPlatinum.length}`
+                + `missing ${row.structuralLane || "Sapphire"} ${missingSapphire.length}`
             );
             if (row.missingGolden.length > 0) {
                 lines.push(`  - missing golden sample: ${formatSample(row.missingGolden)}`);
             }
-            if (row.missingPlatinum.length > 0) {
-                lines.push(`  - missing platinum sample: ${formatSample(row.missingPlatinum)}`);
+            if (missingSapphire.length > 0) {
+                lines.push(`  - missing ${(row.structuralLane || "Sapphire").toLowerCase()} sample: ${formatSample(missingSapphire)}`);
             }
         }
     }
@@ -465,6 +513,7 @@ function formatKanjiDeckReviewStatus(report = {}) {
 
 module.exports = {
     buildActivePlatinumSet,
+    buildActiveSapphireSet,
     buildKanjiDeckReviewStatus,
     buildKanjiSetFromReviewSet,
     formatKanjiDeckReviewStatus,

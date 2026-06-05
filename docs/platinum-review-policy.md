@@ -1,8 +1,8 @@
 # Platinum Review Policy
 
-This document governs the current `platinum`-named command and manifest family. For program-wide tier meaning, start with [Review Tier Governance](review-tier-governance.md).
+This document governs the current Platinum policy boundary plus compatibility surfaces that still carry `platinum` names. For program-wide tier meaning, start with [Review Tier Governance](review-tier-governance.md).
 
-Current `platinum` command names are compatibility names for the Sapphire structural/card-quality lane until a deliberate schema and CLI migration is implemented. Existing current-standard `platinum` and `fixed_then_platinum` entries remain valid compatibility coverage; introducing Sapphire language does not invalidate completed work or automatically claim future Platinum content certification.
+Core kanji structural/card-quality work now uses first-class Sapphire files, statuses, and commands. Word and additional-unverified surfaces still carry `platinum` command names as compatibility names until their own migrations are implemented. Existing current-standard compatibility entries remain valid migration inputs where no native Sapphire surface exists; they do not automatically claim future Platinum content certification.
 
 Sapphire is the current structural/card-quality gate. It is stricter than Gold regression and separate from Obsidian certification. Future Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
 
@@ -15,14 +15,14 @@ For the binding operating contract that agents must follow before any Platinum o
 | Layer | Purpose | Proves | Does not prove |
 | --- | --- | --- | --- |
 | Gold | Stabilize current generated card output. | The reviewed export fields match the governed card contract and should not regress silently. | Final release quality, source-truth evidence, Obsidian proof, or version 1 approval. |
-| Sapphire | Gate current structural/card-quality requirements. | The card passes the governed product contract against live generated rows, including field-bound source evidence, explicit quality gates, media identity, limitation handling, and reviewer judgment. Current `platinum` command names are compatibility names for this lane. | Future Platinum content certification, Gold regression, Obsidian proof, release readiness, or manual QA. |
+| Sapphire | Gate current structural/card-quality requirements. | The card passes the governed product contract against live generated rows, including field-bound source evidence, explicit quality gates, media identity, limitation handling, and reviewer judgment. Core kanji uses native Sapphire commands; word/additional surfaces still use compatibility names until migrated. | Future Platinum content certification, Gold regression, Obsidian proof, release readiness, or manual QA. |
 | Platinum | Certify stronger expert content review after Sapphire. | The future Platinum schema records higher human content judgment for learner value, reading and meaning choice, example usefulness, level fit, source interpretation, and limitation decisions. | Obsidian proof, release readiness, manual QA, or structure-only cleanup. |
 | Obsidian | Certify substantive current-version rereview. | Explicit non-mechanical rereview proof exists for the live card. | A later fluent/native audit unless that provenance is separately recorded. |
 
 Rules:
 
 - Gold comes first. It protects the generated card surface while product review is still moving.
-- Sapphire/Platinum-compatibility review can keep, fix, defer, or remove cards.
+- Sapphire or compatibility structural review can keep, fix, defer, or remove cards.
 - Obsidian is recorded only after actual current-version rereview proof exists.
 - A card can be Gold-reviewed and still fail Sapphire.
 - A level can be Gold-reviewed and still not be release-ready.
@@ -32,13 +32,13 @@ Rules:
 
 ## Product rule
 
-A card only reaches Sapphire/Platinum-compatibility coverage when it is accurate, useful, learner-friendly, and governed under the current command family. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it. Future Platinum content certification must not be claimed until a dedicated Platinum schema/gate exists and passes.
+A card only reaches Sapphire coverage, or compatibility structural coverage on unmigrated surfaces, when it is accurate, useful, learner-friendly, and governed under the current command family. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it. Future Platinum content certification requires Sapphire first and must not be claimed until a dedicated Platinum schema/gate exists and passes.
 
-Sapphire/Platinum-compatibility evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; human review still owns the judgment that the cited source and final card are correct.
+Sapphire evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; human review still owns the judgment that the cited source and final card are correct.
 
 If a real review attempt cannot verify a non-core or externally unavailable facet, do not silently block forever and do not mark it as verified. Ship only when the card remains accurate and learner-safe, the unresolved facet is visibly labeled or recorded as a known limitation, and the platinum evidence explains the review attempt and limitation. Generated pitch accent guidance is the model precedent: it may ship only with a visible `Generated pitch (unverified)` label and governed provenance, not as dictionary-backed proof. If the unverifiable item is core to the card's written form, reading, meaning, example correctness, or product fit, defer or remove the card instead of promoting it.
 
-For kanji Platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as the target kanji, `DisplayWord`, `PrimaryReading`, `MeaningJP`, `KanjiMeanings`, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Platinum.
+For core-kanji Sapphire, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as the target kanji, `DisplayWord`, `PrimaryReading`, `MeaningJP`, `KanjiMeanings`, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Sapphire.
 
 For word Platinum, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified` or `... limited verification`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as written form, reading, meaning, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Platinum.
 
@@ -46,11 +46,11 @@ For active word cards, `japanese-source` evidence must cite a source registered 
 
 For active word cards, the reviewed deck level must be governed by the written word and learner fit. A card is anchored by kanji from its own deck level; other constituent kanji are support kanji and must be visibly labeled. If the word has no current-level anchor, all-easier-kanji words may ship later only with an explicit learner-fit rationale, and words that depend only on harder support kanji must move, defer, or be removed.
 
-For active kanji cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `kanji-field-verification`. Generated output, Gold regression expectations, tracked starter templates, source-governance manifests, source-claim lists, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. The same source may support both kanji and word product reviews when it directly verifies each card's own fields; the requirement is accuracy and field binding, not source uniqueness across products. This card-field source check is not a JLPT placement proof; placement confidence remains owned by the source-governance layer. Platinum may read JLPT kanji source-governance origin ids only to reject circular field verification against the same source family.
+For active core-kanji Sapphire cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `kanji-field-verification`. Generated output, Gold regression expectations, tracked starter templates, source-governance manifests, source-claim lists, ignored local data, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. The same source may support both kanji and word product reviews when it directly verifies each card's own fields; the requirement is accuracy and field binding, not source uniqueness across products. This card-field source check is not a JLPT placement proof; placement confidence remains owned by the source-governance layer. Sapphire may read JLPT kanji source-governance origin ids only to reject circular field verification against the same source family.
 
 Current word Sapphire/Platinum-compatibility coverage uses the versioned standard `word-platinum-v3-evidence-lanes`. Active word entries count toward current-standard compatibility coverage only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `notesIncludes`, `sourceEvidence`, `internalChecks`, and `reviewEvidence`. Word `sourceEvidence` is reserved for governed external Japanese-source truth evidence and must not contain generated-output checks, Gold regression, media checks, or manual judgment. `internalChecks` carries generated-surface, golden-regression, level-contract, media, audio, pitch-accent, and label checks. `reviewEvidence` carries example review, manual product judgment, and current-standard whole-card revalidation. That current-standard review evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, reading breakdown, level/label surface, exact audio identity, pitch-accent source/render state, media provenance, and verification limitations to the exact written-reading card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, and release-quality. Existing active word entries created before this standard are legacy/unversioned: keep them for historical context, but do not count them as current version 1 structural lock evidence until they are revalidated.
 
-Current kanji Platinum uses the versioned standard `kanji-platinum-v3-evidence-lanes`. Active kanji entries count as Platinum only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `sourceEvidence`, `internalChecks`, and `reviewEvidence`. Kanji `sourceEvidence` is reserved for governed external Japanese-source card-field truth and must not contain generated-output checks, Gold regression, media checks, or manual judgment. `internalChecks` carries generated-surface, golden-regression, media, audio, and stroke-order checks. `reviewEvidence` carries manual product judgment and current-standard whole-card revalidation. That current-standard review evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, audio, stroke-order media, and verification limitations to the exact card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, release-quality, and support-only. Legacy or unversioned kanji review history must be recorded as `needs_revalidation`; it is non-certifying backlog/history and must not use active Platinum statuses until the card is revalidated under the current standard.
+Current core-kanji Sapphire uses the versioned standard `kanji-sapphire-v1-evidence-lanes`. Active core-kanji entries count as Sapphire only when they include `reviewStandard`, `revalidatedAt`, `revalidationSummary`, `sourceEvidence`, `internalChecks`, and `reviewEvidence`. Kanji `sourceEvidence` is reserved for governed external Japanese-source card-field truth and must not contain generated-output checks, Gold regression, media checks, or manual judgment. `internalChecks` carries generated-surface, golden-regression, media, audio, and stroke-order checks. `reviewEvidence` carries manual product judgment and current-standard whole-card revalidation. That current-standard review evidence must explicitly bind the generated surface, Japanese-source field check, example sentence, notes/support surface, audio, stroke-order media, and verification limitations to the exact card. It must also record the example sentence judgment: natural, useful, learner-friendly, level-appropriate, release-quality, and support-only. Legacy core-kanji `platinum_n*_review_set.json` manifests are read-only migration inputs; they are non-certifying future-Platinum history and must not be used as native Sapphire output after migration.
 
 ## Word-Card Platinum Rules
 
@@ -71,9 +71,9 @@ Each Platinum word card must pass all rules below:
 - Evidence lanes explicitly name the shipped written form, reading, meaning, example sentence, level/label claims, exact audio identity, pitch-accent source pattern, and whether pitch is dictionary-verified or generated guidance. `sourceEvidence` proves external Japanese-source card truth only; `internalChecks` and `reviewEvidence` prove generated/release gates and reviewer judgment.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
-## Kanji-Card Platinum Rules
+## Kanji-Card Sapphire Rules
 
-Each Platinum kanji card must pass all rules below:
+Each Sapphire kanji card must pass all rules below:
 
 - The card belongs in the kanji-deck product and in the reviewed JLPT level.
 - The front/`Kanji` field is exactly one target kanji.
@@ -92,7 +92,7 @@ Each Platinum kanji card must pass all rules below:
 - The `japanese-source` evidence cites a governed `kanji-field-verification` source for the exported primary reading, primary meaning, and broader meanings. It does not certify the JLPT placement or source-governance confidence, and it must be independent from any source-claim origin family used by the source-governance layer for that kanji-level claim.
 - The card does not depend on ignored local files, untracked generated content, or silent fallback behavior.
 
-Before adding kanji `rereviewProvenance`, run `deck:platinum:batch` for the target level and use the per-card `reviewRubric` as the square-zero checklist. The rubric is a read-only preflight: it exposes structural blocks, attention risks, and explicit `manual_judgment_required` items for source confirmation, example pedagogy, audio listening, stroke-order visual judgment, and verification limitations. A passing or ready rubric does not itself prove substantive review; provenance may be added only after the reviewer actually checks the card against the rubric and records any limitation instead of silently passing it.
+Before adding kanji Sapphire entries, run `deck:sapphire:batch` for the target level and use the per-card rubric as the square-zero checklist. The rubric is a read-only preflight: it exposes structural blocks, attention risks, and explicit `manual_judgment_required` items for source confirmation, example pedagogy, audio identity, stroke-order target/provenance judgment, and verification limitations. A passing or ready rubric does not itself create Sapphire entries; promote only reviewed Sapphire candidates through `deck:sapphire:promote` after the actual card-data review has happened.
 
 ## Tier names
 
@@ -100,22 +100,22 @@ Use the tier names below in product and release discussion:
 
 - **Silver**: generated learner-facing surface exists and can be inspected.
 - **Gold**: golden regression protects generated output against tracked expectations.
-- **Sapphire**: current-standard structural/card-quality gate passes, including evidence lanes, field bindings, governed source posture, media identity, actual card-data review, and required quality gates. Current `platinum` commands and manifests are compatibility names for this lane.
+- **Sapphire**: current-standard structural/card-quality gate passes, including evidence lanes, field bindings, governed source posture, media identity, actual card-data review, and required quality gates. Core kanji uses native Sapphire files and commands; word/additional surfaces still retain compatibility command names until migrated.
 - **Platinum**: future expert content certification after Sapphire, backed by a dedicated schema and stronger human content-review evidence.
 - **Obsidian**: the card has explicit non-mechanical current-version rereview provenance after the reviewer actually performs the substantive review.
 
 ## Outcomes
 
-Every platinum pass decision must use one explicit outcome:
+Every core-kanji Sapphire pass decision must use one explicit outcome:
 
-- `platinum`: ships as reviewed.
-- `fixed_then_platinum`: source data or examples were improved during review, then the card ships.
+- `sapphire`: ships as reviewed.
+- `fixed_then_sapphire`: source data or examples were improved during review, then the card ships.
 - `deferred`: useful later, but not for the current level or version 1 surface.
 - `removed`: not useful enough, not learner-friendly, or not appropriate for this product.
-- `needs_revalidation`: old review history retained for context; it does not certify platinum and remains backlog until current-standard revalidation is completed.
+- `needs_revalidation`: old review history retained for context; it does not certify Sapphire and remains backlog until current-standard revalidation is completed.
 - `needs_review`: blocked until a decision or fix is made.
 
-Only current-standard `platinum` and `fixed_then_platinum` manifest entries count as Sapphire/Platinum-compatibility coverage until they also carry explicit substantive rereview provenance for Obsidian. `deferred` and `removed` entries must not appear in generated exports. `needs_revalidation` is allowed as non-certifying history and still counts as missing compatibility coverage. `needs_review` always fails the compatibility gate.
+Only current-standard `sapphire` and `fixed_then_sapphire` manifest entries count as core-kanji Sapphire coverage. `deferred` and `removed` entries must not appear in generated exports. `needs_revalidation` is allowed as non-certifying history and still counts as missing Sapphire coverage. `needs_review` always fails the Sapphire gate.
 
 Platinum validates the generated card in its current deck level; it does not itself move a word to another deck. For expansion candidates that are valid but belong elsewhere, use the expansion triage decision `move_candidate` with a target JLPT level, then physically place the word only by updating the target level's `jlpt_word_level_contract` and starter word data and running that target lane's gates.
 
@@ -203,7 +203,7 @@ All gates must be `true`. `fixed_then_platinum` entries must also include `fixSu
 
 Deferred and removed word entries must include `word`, `readingIncludes`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
-Active platinum kanji entries must include:
+Active core-kanji Sapphire entries must include:
 
 - `kanji`
 - `status`
@@ -223,7 +223,7 @@ Active platinum kanji entries must include:
 
 Current-standard active kanji entries must also include:
 
-- `reviewStandard`: exactly `kanji-platinum-v3-evidence-lanes`
+- `reviewStandard`: exactly `kanji-sapphire-v1-evidence-lanes`
 - `revalidatedAt`: `YYYY-MM-DD`
 - `revalidationSummary`: explicit current-standard revalidation summary covering evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations
 - `current-standard-review` review evidence: exact whole-card revalidation evidence covering generated surface, Japanese-source fields, example sentence plus generated reading and translation, natural/useful/learner-friendly/level-appropriate sentence judgment, notes/support surface, exact audio identity, stroke-order media, and either explicit verification limitations or `no active limitations`
@@ -251,9 +251,9 @@ Active kanji `internalChecks` must include all evidence types below:
 Active kanji `reviewEvidence` must include all evidence types below:
 
 - `manual-review`: a final product judgment was made.
-- `current-standard-review`: the whole-card surface was revalidated under `kanji-platinum-v3-evidence-lanes`.
+- `current-standard-review`: the whole-card surface was revalidated under `kanji-sapphire-v1-evidence-lanes`.
 
-Gold kanji regression remains required where applicable, but it is not kanji Platinum source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in kanji `sourceEvidence`.
+Gold kanji regression remains required where applicable, but it is not kanji Sapphire source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in kanji `sourceEvidence`.
 
 Required kanji `qualityGates`:
 
@@ -274,7 +274,7 @@ Required kanji `qualityGates`:
 - `strokeOrderTargetVerified`
 - `noSilentFallback`
 
-All kanji gates must be `true`. `fixed_then_platinum` kanji entries must also include `fixSummary`.
+All kanji gates must be `true`. `fixed_then_sapphire` kanji entries must also include `fixSummary`.
 
 Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
@@ -283,8 +283,9 @@ Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer
 ## Commands
 
 ```bash
-npm run deck:platinum:batch -- --level=5 --limit=12
-npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
+npm run deck:sapphire:batch -- --level=5 --limit=12
+npm run deck:sapphire:batch -- --level=5 --kanji=父,生,男
+npm run deck:sapphire:promote -- --level=5 --input=<reviewed-json>
 npm run deck:kanji:obsidian:rereview-status -- --levels=5,4
 npm run deck:kanji:obsidian:certify-status -- --levels=5,4
 npm run deck:platinum:governance-gate
@@ -294,11 +295,11 @@ npm run deck:words:obsidian:rereview-status -- --levels=5,4
 npm run deck:words:obsidian:certify-status -- --levels=5,4
 npm run deck:words:platinum:source-posture -- --levels=5,4
 npm run deck:words:level-anchor-audit -- --level=5
-npm run deck:platinum:n5
-npm run deck:platinum:n4
-npm run deck:platinum:n3
-npm run deck:platinum:n2
-npm run deck:platinum:n1
+npm run deck:sapphire:n5
+npm run deck:sapphire:n4
+npm run deck:sapphire:n3
+npm run deck:sapphire:n2
+npm run deck:sapphire:n1
 npm run deck:kanji:additional:platinum:n5
 npm run deck:kanji:additional:platinum:n4
 npm run deck:kanji:additional:platinum:n3
@@ -308,11 +309,11 @@ npm run deck:words:platinum:n5
 npm run deck:words:platinum:n4
 ```
 
-`deck:platinum:batch` is a read-only kanji pre-review report. It does not create entries or prove release readiness. By default it queues cards missing explicit substantive rereview proof, not merely cards missing current-standard Platinum entries. Use it before editing a platinum manifest to see generated card fields, hard-rule checks, risk flags, existing platinum status, and the next square-zero rereview queue.
+`deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. It does not create entries or prove release readiness. By default it queues cards missing current-standard Sapphire structure. Use it before editing a Sapphire candidate packet to see generated card fields, hard-rule checks, risk flags, existing Sapphire status, and the next square-zero structural review queue. `deck:sapphire:promote` validates reviewed candidate JSON and writes only with `--write`; it does not create future Platinum certification or Obsidian proof.
 
-`deck:kanji:obsidian:rereview-status` is a read-only kanji Obsidian proof-status report. It separates **Platinum** structural pass from **Obsidian** current-version certification proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_rereview_proof`. Use it to classify before rereviewing rather than globally blocking structurally valid cards or silently overclaiming human rereview provenance.
+`deck:kanji:obsidian:rereview-status` is a read-only kanji Obsidian proof-status report. It separates **Sapphire** structural pass from **Obsidian** current-version certification proof. It must not infer proof from `revalidatedAt` or lane-valid `current-standard-review` text alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_rereview_proof`. Use it to classify before rereviewing rather than globally blocking structurally valid cards or silently overclaiming human rereview provenance.
 
-The generated deck-row count is the certification denominator. Platinum counts are diagnostics only; they must not shrink the square-zero Obsidian queue.
+The generated deck-row count is the certification denominator. Sapphire counts are diagnostics only; they must not shrink the square-zero Obsidian queue.
 
 `deck:kanji:obsidian:certify-status` is the fail-closed kanji Obsidian certification gate. It reuses the rereview-status classifier, then fails if any intended release row is `blocked_or_failing` or `needs_substantive_rereview`. Every failed card is reported with the card, field, expected value, actual state, evidence lane, and reviewer action. Obsidian proof must include structured rereview provenance plus actual example-sentence review evidence for naturalness, learner usefulness, level fit, support-only usage, reading, and translation. Automation can verify the evidence is present and card-bound; the reviewer still owns the language and pedagogy judgment.
 
@@ -326,14 +327,14 @@ The older `deck:platinum:rereview-status`, `deck:words:platinum:rereview-status`
 
 `deck:words:platinum:source-posture` is the read-only word source-family posture report. It is scoped to structurally current-standard word entries only. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. Word source-claim origin independence is marked `word_source_claim_origin_independence_not_evaluated` until a word source-origin manifest exists; do not imply that word placement/source-origin circularity was checked before that data exists. Source-family posture counts are not a rereview selection pool and are not substantive platinum proof.
 
-`deck:platinum:governance-gate` is the local-data real-row governance gate for N5/N4 Sapphire/Platinum-compatibility posture. It reads migrated kanji and word Obsidian proof through the scoped proof-provider path, defaulting to canonical JSONL for migrated levels; unmigrated levels still fall back through the provider path until their own scoped ledger exists. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, zero verification-limitations populations, missing Obsidian proof, and word source-family posture. If an explicitly configured incomplete word level has blocked rows, only rows missing active current-standard compatibility coverage can be allowed; dirty reviewed entries still fail the gate. It does not edit cards or replace level-specific release commands.
+`deck:platinum:governance-gate` is the local-data real-row governance gate for N5/N4 native Sapphire and word structural compatibility posture. It reads migrated kanji and word Obsidian proof through the scoped proof-provider path, defaulting to canonical JSONL for migrated levels; unmigrated levels still fall back through the provider path until their own scoped ledger exists. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, zero verification-limitations populations, missing Obsidian proof, and word source-family posture. If an explicitly configured incomplete word level has blocked rows, only rows missing active current-standard compatibility coverage can be allowed; dirty reviewed entries still fail the gate. It does not edit cards or replace level-specific release commands.
 
-Each kanji Platinum compatibility command requires every generated card for that level and surface to have an active current-standard card-quality entry by default. Core kanji commands fail fast before generated-row construction when `--require-all` is used with an empty or incomplete compatibility manifest, so incomplete N1 gates report the missing current-standard compatibility coverage instead of implying release readiness. N5/N4/N3/N2 are current-standard complete and have complete canonical Obsidian proof. N2 Sapphire/Platinum-compatibility and Obsidian certification still do not imply APKG manual media QA, source-governance completion, future Platinum content certification, or release readiness. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
+Each core-kanji Sapphire command requires every generated card for that level to have an active current-standard Sapphire entry by default. Core kanji commands fail fast before generated-row construction when `--require-all` is used with an empty or incomplete Sapphire manifest, so incomplete N1 gates report the missing current-standard Sapphire coverage instead of implying release readiness. N5/N4/N3/N2 are current-standard complete and have complete canonical Obsidian proof. N2 Sapphire and Obsidian certification still do not imply APKG manual media QA, source-governance completion, future Platinum content certification, or release readiness. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
 Each word Platinum compatibility command requires every generated word card for that level and surface to have an active current-standard card-quality entry by default. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 
 Migrated N5/N4 word Platinum compatibility level gates read tracked review entries through the scoped Obsidian proof-provider path by default. This keeps current-standard compatibility evaluation compatible with canonical JSONL proof while preserving the boundary: a passing compatibility gate is not future Platinum content certification, new Obsidian certification, or release readiness. Use `--proof-provider=ledger` or `--proof-provider=ledger-if-available` for normal migrated-level audits; `--proof-provider=inline` is only a negative-control legacy audit after inline removal.
 
-Additional Platinum compatibility commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji Sapphire/Platinum-compatibility coverage. The npm aliases pass `--allow-empty` because the governed default currently suppresses all already-core source claims from the physical additional decks, leaving `0` selected additional cards. An empty generated additional surface is valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were suppressed rather than silently skipped.
+Additional Platinum compatibility commands apply only to the optional `additional_unverified_Nx` surface. They do not move the core JLPT kanji contract, certify source-evidence confidence, or satisfy core kanji Sapphire coverage. The npm aliases pass `--allow-empty` because the governed default currently suppresses all already-core source claims from the physical additional decks, leaving `0` selected additional cards. An empty generated additional surface is valid only when `deck:kanji:additional:ready` and `deck:kanji:review-status` prove the source claims were suppressed rather than silently skipped.
 
-Core kanji and word Platinum compatibility commands intentionally fail for an empty manifest. Do not use Gold regression coverage as a substitute for Sapphire/Platinum-compatibility coverage, and do not use compatibility coverage as a substitute for future Platinum content certification or Obsidian certification.
+Core kanji Sapphire commands and word Platinum compatibility commands intentionally fail for an empty manifest. Do not use Gold regression coverage as a substitute for Sapphire coverage, and do not use Sapphire or compatibility coverage as a substitute for future Platinum content certification or Obsidian certification.

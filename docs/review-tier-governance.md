@@ -8,7 +8,7 @@ This document defines the program-wide trust ladder for kanji and word deck work
 
 The trust ladder applies to core kanji decks, word decks, optional additional-unverified kanji decks, source-derived artifacts, review manifests, batch reports, release docs, and AI-assisted review work.
 
-It does not rename tracked files or npm commands by itself. Current `platinum` command and manifest names remain compatibility names until a deliberate schema and CLI migration is implemented.
+Core kanji has a first-class Sapphire schema and command family. Word decks and optional additional-unverified kanji still retain compatibility command names until their own deliberate migrations are implemented.
 
 ## Authority Boundary
 
@@ -30,9 +30,16 @@ This document defines tier meaning. It does not certify any current card, level,
 
 Ready proves only that the selected build can produce the expected deck artifacts and required exported media fields for that command scope. Ready must not be used as a synonym for Gold, Sapphire, Platinum, Obsidian, source-governance confidence, release approval, APKG import QA, mobile QA, accessibility QA, or listening QA.
 
-## Current Compatibility Transition
+## Current Native And Compatibility State
 
-The current repository still uses `platinum` names for the structural/card-quality command family:
+Core kanji structural/card-quality work now uses native Sapphire names:
+
+- `templates/sapphire_n*_review_set.json`
+- `npm run deck:sapphire:*`
+- `kanji-sapphire-v1-evidence-lanes`
+- active statuses `sapphire` and `fixed_then_sapphire`
+
+The following names remain compatibility names for unmigrated or legacy surfaces:
 
 - `templates/platinum_*_review_set.json`
 - `templates/platinum_*_word_review_set.json`
@@ -41,16 +48,16 @@ The current repository still uses `platinum` names for the structural/card-quali
 - `kanji-platinum-v3-evidence-lanes`
 - `word-platinum-v3-evidence-lanes`
 
-Under this transition, current-standard `platinum` and `fixed_then_platinum` entries remain valid compatibility coverage. Existing completed work is not invalidated by introducing Sapphire language.
+Under this transition, legacy current-standard `platinum` and `fixed_then_platinum` entries remain valid migration inputs where no native Sapphire surface exists. Existing completed work is not invalidated by introducing Sapphire language, but migrated core-kanji Sapphire work is represented by `sapphire` and `fixed_then_sapphire` and must not be described as future Platinum content certification.
 
-For new documentation, prompts, and reviews, describe the current `platinum` command family as the Sapphire structural/card-quality compatibility gate unless the work is explicitly implementing the future Platinum content-certification schema. Do not claim vNext Platinum content certification from a compatibility-named structural/card-quality pass.
+For new core-kanji documentation, prompts, and reviews, use the native Sapphire command family. For word or additional-unverified surfaces that still carry `platinum` names, describe them as structural/card-quality compatibility gates unless the work is explicitly implementing the future Platinum content-certification schema. Do not claim vNext Platinum content certification from a structural/card-quality pass.
 
 ## Migration Rules
 
 - Do not mass rename manifests, commands, statuses, or historical review entries without a dedicated migration plan, tests, and count-preserving proof.
 - Do not demote existing current-standard compatibility coverage merely because the tier language was clarified.
 - Do not promote existing compatibility coverage to vNext Platinum content certification unless a dedicated Platinum schema/gate exists and the card passes it.
-- Future schema work should add Sapphire-native command aliases before removing any compatibility `platinum` names.
+- Future word/additional schema work should add Sapphire-native command aliases before removing any compatibility `platinum` names.
 - Future Platinum schema work must inherit Sapphire and add stronger content-review evidence instead of reusing structure-only wording.
 - Obsidian remains separate from both Sapphire and Platinum.
 

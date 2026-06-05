@@ -2,7 +2,7 @@
 
 This document collects the common local workflows for setup, preview, build, media, word expansion, and output review.
 
-The commands here are operational tools. They do not replace Gold regression, Sapphire/Platinum-compatibility gates, future Platinum content certification, Obsidian proof, Deck Ready boundaries, release QA, or manual Anki import review. For tier meaning, use [review-tier-governance.md](review-tier-governance.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
+The commands here are operational tools. They do not replace Gold regression, native Sapphire or compatibility structural gates, future Platinum content certification, Obsidian proof, Deck Ready boundaries, release QA, or manual Anki import review. For tier meaning, use [review-tier-governance.md](review-tier-governance.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
 
 ## Setup
 
@@ -47,8 +47,9 @@ Tracked starter files are the baseline. Local ignored files may add workspace ov
 ```bash
 npm run deck:preview -- --level=5 --limit=5
 npm run deck:preview -- --kanji=日,本,学
-npm run deck:platinum:batch -- --level=5 --limit=12
-npm run deck:platinum:batch -- --level=5 --kanji=父,生,男
+npm run deck:sapphire:batch -- --level=5 --limit=12
+npm run deck:sapphire:batch -- --level=5 --kanji=父,生,男
+npm run deck:sapphire:promote -- --level=5 --input=<reviewed-json>
 npm run deck:words:platinum:batch -- --level=5 --limit=8
 npm run deck:words:platinum:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:words:level-anchor-audit -- --level=5
@@ -60,7 +61,7 @@ npm run deck:review:n1
 npm run deck:kanji:review-status
 npm run deck:review:coverage
 npm run deck:review:coverage -- --level=1
-node scripts/reviewPlatinumKanjiLevel.js --level=5
+npm run deck:sapphire:n5
 npm run deck:words:review:n5
 npm run deck:words:review:n4
 node scripts/reviewPlatinumWordLevel.js --level=5
@@ -68,9 +69,9 @@ node scripts/reviewPlatinumWordLevel.js --level=5
 
 Tier names: Silver means generated surface, Gold means regression protection, Sapphire means current-standard structural/card-quality certification, Platinum means the future stronger content-certification lane after Sapphire, and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
 
-`deck:platinum:batch` and `deck:words:platinum:batch` are read-only pre-review reports for the current Sapphire/Platinum-compatibility command family. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard compatibility coverage gaps.
+`deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:platinum:batch` remains the read-only word compatibility report until the word lane has its own Sapphire migration. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps.
 
-The `npm run deck:platinum:n5` and `npm run deck:words:platinum:n5` commands are full-level Sapphire/Platinum-compatibility gates. They fail unless every generated N5 card has an active current-standard card-quality entry.
+The `npm run deck:sapphire:n5` and `npm run deck:words:platinum:n5` commands are full-level structural gates. They fail unless every generated N5 card has an active current-standard card-quality entry. Future Platinum content certification is a stronger lane after Sapphire.
 
 ## Run Obsidian batches
 
@@ -92,7 +93,7 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 npm run deck:platinum:batch -- --level=<level> --limit=12
 ```
 
-The default queue is `substantive-rereview`. It includes current-standard Sapphire/Platinum-compatibility entries until explicit non-mechanical Obsidian proof exists. Use `--queue=missing-current-standard` only when the task is actual card-data compatibility coverage rather than Obsidian proof.
+The default queue is `substantive-rereview`. It includes current-standard Sapphire or compatibility entries until explicit non-mechanical Obsidian proof exists. Use `deck:sapphire:batch -- --queue=missing-current-standard` only when the task is actual card-data Sapphire coverage rather than Obsidian proof.
 
 3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support lane before or during review:
 
@@ -119,7 +120,7 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 npm run deck:platinum:batch -- --level=<level> --limit=12
 ```
 
-Replace `n<level>` with the actual npm alias, such as `deck:platinum:n3` for N3.
+For core-kanji Sapphire structural verification, replace the first command with `npm run deck:sapphire:n<level>`, such as `deck:sapphire:n3` for N3. Keep `deck:platinum:batch` here only for the Obsidian substantive rereview queue.
 
 7. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
 
@@ -144,7 +145,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=8
 ```
 
-Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire/Platinum-compatibility coverage rather than Obsidian proof.
+Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage for core kanji, or current-standard structural compatibility coverage for legacy word surfaces, rather than Obsidian proof.
 
 3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
 
@@ -315,7 +316,7 @@ It has three separate signals:
 
 The configured source TSVs under `downloads/` are ignored local inputs. The signal source config pins their source URL, source label, SHA-256, byte size, and parsed row count.
 
-The signal is deliberately not a release claim. It does not replace Gold regression, Sapphire/Platinum-compatibility gates, future Platinum content certification, Obsidian proof, APKG import QA, accessibility checks, media/listening QA, or readiness gates.
+The signal is deliberately not a release claim. It does not replace Gold regression, native Sapphire or structural compatibility gates, future Platinum content certification, Obsidian proof, APKG import QA, accessibility checks, media/listening QA, or readiness gates.
 
 ## Stroke order
 
@@ -338,7 +339,7 @@ True animation coverage requires real looping animation assets. Static images an
 
 Stroke-order release provenance is governed by [../templates/stroke_order_source_policy.json](../templates/stroke_order_source_policy.json). The automated gate verifies approved source policy, managed manifests, and target-bound review evidence. It does not prove stroke-sequence correctness by itself.
 
-Sapphire/Platinum-compatibility evidence must state that the stroke-order media was visually checked for the target kanji.
+Native Sapphire or structural compatibility evidence must state that the stroke-order media was visually checked for the target kanji.
 
 ## Audio
 

@@ -105,7 +105,7 @@ npm run deck:ready -- --levels=<level>
 npm run product:artifacts:kanji:release-qa
 ```
 
-For card content defects, rerun the applicable Gold, Platinum, Obsidian, source, audio, stroke-order, accessibility, and product gates from [verification.md](verification.md). Do not use green package output as proof that real card data was rereviewed.
+For card content defects, rerun the applicable Gold, Sapphire/Platinum-compatibility, future Platinum, Obsidian, source, audio, stroke-order, accessibility, and product gates from [verification.md](verification.md). Do not use green package output as proof that real card data was rereviewed.
 
 ## Dependency Recovery
 

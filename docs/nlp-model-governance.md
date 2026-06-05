@@ -2,7 +2,7 @@
 
 This document defines the governed deep NLP boundary for Japanese Kanji Builder.
 
-The current deck pipeline remains contract-driven. NLP is not a new certification path. It is a governed review-amplification layer between generated card output and human promotion. NLP models may assist candidate discovery, example reranking, sense-fit audits, duplicate clustering, level-fit audits, review prioritization, and draft-proposal scaffolding. NLP model output is not Gold, Platinum, Obsidian, release readiness, or source truth.
+The current deck pipeline remains contract-driven. NLP is not a new certification path. It is a governed review-amplification layer between generated card output and human promotion. NLP models may assist candidate discovery, example reranking, sense-fit audits, duplicate clustering, level-fit audits, review prioritization, and draft-proposal scaffolding. NLP model output is not Gold, Sapphire, Platinum, Obsidian, Deck Ready, release readiness, or source truth.
 
 ## Obsidian workflow with NLP present
 
@@ -120,7 +120,7 @@ NLP output must stay assistive-only:
 - It may create generated review packets, rankings, warnings, candidate queues, and draft-proposal scaffolds.
 - It must not write tracked templates directly.
 - It must not count as card certification evidence.
-- It must not approve Gold, Platinum, Obsidian, or release readiness.
+- It must not approve Gold, Sapphire, Platinum, Obsidian, Deck Ready, or release readiness.
 - Human review must promote any accepted suggestion into tracked contracts.
 
 ## Activation requirements

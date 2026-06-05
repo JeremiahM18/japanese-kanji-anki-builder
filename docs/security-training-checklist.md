@@ -51,7 +51,7 @@ Each reviewer must be able to explain and apply these topic IDs:
 | supply-chain-updates | Dependencies and workflows | Review lockfile integrity, lifecycle-script allowlists, GitHub Actions pins, workflow permissions, advisory audit, SBOM, and license gates. |
 | release-artifact-trust | Release trust | Verify checksums, SBOM, release-gate output, artifact boundaries, and attestation verification evidence before external trust claims. |
 | source-use-provenance | Source governance | Keep source truth, source-use permission, source-access gaps, citations, and card certification separate. |
-| card-certification-boundaries | Card review authority | Preserve Gold, Platinum, Obsidian, NLP support, source governance, media QA, and release readiness as separate lanes. |
+| card-certification-boundaries | Card review authority | Preserve Gold, Sapphire, future Platinum, Obsidian, NLP support, source governance, Deck Ready, media QA, and release readiness as separate lanes. |
 | incident-response | Response operations | Use the incident-response and recovery runbooks, classify severity, contain, verify, communicate, and record post-incident follow-up. |
 | ai-nlp-boundaries | Assistive AI/NLP | Treat NLP/model outputs as review support only; never allow them to certify cards, source truth, or release readiness. |
 

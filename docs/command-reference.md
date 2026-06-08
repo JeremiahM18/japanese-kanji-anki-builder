@@ -2,7 +2,7 @@
 
 This reference lists the npm commands exposed by the repository and the role each command plays.
 
-For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md). For release gate boundaries, use [release-process.md](release-process.md) and [verification.md](verification.md).
+For lane authority, use [review-system-forward-contract.md](review-system-forward-contract.md). For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md). For release gate boundaries, use [release-process.md](release-process.md) and [verification.md](verification.md).
 
 | Command | Purpose |
 | --- | --- |

@@ -52,7 +52,7 @@ Required README sections:
 
 - Product identity and one-command first action.
 - Scope and local-only security posture.
-- Review tiers before current status snapshots, routed through [review-tier-governance.md](review-tier-governance.md).
+- Review lanes before current status snapshots, routed through [review-system-forward-contract.md](review-system-forward-contract.md) and summarized by [review-tier-governance.md](review-tier-governance.md).
 - Current baseline with a warning that live commands control release decisions.
 - Separate kanji, word, source-governance, NLP, media, release, and local-data boundaries.
 - Source-of-truth table for tracked contracts and governance files.
@@ -102,7 +102,7 @@ Counts, status labels, and readiness language are high-risk claims.
 Rules:
 
 - A status/count claim must come from a named live command, tracked manifest, or generated report that was inspected during the work.
-- The doc must preserve lane separation: Silver generated surface, Gold regression, Sapphire structural/card-quality certification, future Platinum content certification, Obsidian proof, NLP support, JLPT placement evidence, card-field verification, media provenance, tracked-source artifacts, Deck Ready mechanical artifact readiness, release readiness, and manual QA are separate lanes.
+- The doc must preserve lane separation: Candidate pre-trust workflow state, Silver generated surface, Gold regression, Sapphire structural/card-quality certification, future Platinum content certification, Obsidian proof, NLP support, JLPT placement evidence, card-field verification, media provenance, tracked-source artifacts, Deck Ready mechanical artifact readiness, release readiness, and manual QA are separate lanes.
 - Generated/local artifacts can support inspection, but they are not tracked truth unless a tracked contract explicitly names them as promoted evidence.
 - If a count is stale or cannot be verified, remove it or label it as historical/orientation-only.
 - Do not turn an expected fail-closed backlog into an error-free status claim.
@@ -186,7 +186,7 @@ Update this standard when README requirements, documentation authority boundarie
 Use this checklist when documentation changes are part of a release-quality task:
 
 - The doc names its purpose and scope.
-- The doc separates source-governance, card-field, generated/local, NLP, media, Sapphire, future Platinum, Obsidian, Deck Ready, and release lanes.
+- The doc separates source-governance, card-field, generated/local, Candidate, NLP, media, Sapphire, future Platinum, Obsidian, Deck Ready, and release lanes.
 - All count/status claims have a live command or tracked manifest behind them.
 - Commands include exact arguments when those arguments matter.
 - Expected failures are classified.

@@ -1,6 +1,6 @@
 # Platinum Review Policy
 
-This document governs the current Platinum policy boundary plus compatibility surfaces that still carry `platinum` names. For program-wide tier meaning, start with [Review Tier Governance](review-tier-governance.md).
+This document governs the current Platinum policy boundary plus compatibility surfaces that still carry `platinum` names. For program-wide lane authority, start with [Review System Forward Contract](review-system-forward-contract.md), then use [Review Tier Governance](review-tier-governance.md) as the summary.
 
 Core kanji and word structural/card-quality work now use first-class Sapphire files, statuses, and commands. Additional-unverified surfaces still carry `platinum` command names as compatibility names until their own migration is implemented. Existing current-standard compatibility entries remain valid migration inputs where no native Sapphire surface exists; they do not automatically claim future Platinum content certification.
 

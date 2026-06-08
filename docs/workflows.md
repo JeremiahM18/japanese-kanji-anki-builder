@@ -2,7 +2,7 @@
 
 This document collects the common local workflows for setup, preview, build, media, word expansion, and output review.
 
-The commands here are operational tools. They do not replace Gold regression, native Sapphire or compatibility structural gates, future Platinum content certification, Obsidian proof, Deck Ready boundaries, release QA, or manual Anki import review. For tier meaning, use [review-tier-governance.md](review-tier-governance.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
+The commands here are operational tools. They do not replace Candidate triage boundaries, Gold regression, native Sapphire or compatibility structural gates, future Platinum content certification, Obsidian proof, Deck Ready boundaries, release QA, or manual Anki import review. For lane authority, use [review-system-forward-contract.md](review-system-forward-contract.md), then [review-tier-governance.md](review-tier-governance.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
 
 ## Setup
 
@@ -67,7 +67,7 @@ npm run deck:words:review:n4
 npm run deck:words:sapphire:n5
 ```
 
-Tier names: Silver means generated surface, Gold means regression protection, Sapphire means current-standard structural/card-quality certification, Platinum means the future stronger content-certification lane after Sapphire, and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
+Lane names: Candidate means proposed pre-trust work and is not Bronze; Silver means generated surface; Gold means regression protection; Sapphire means current-standard structural/card-quality certification; Platinum means the future stronger content-certification lane after Sapphire; and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
 
 `deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:sapphire:batch` is the read-only word Sapphire pre-review report. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps.
 

@@ -16,10 +16,12 @@ Evaluate each release checkpoint across:
 
 ## Review layers
 
-Silver, Gold, Sapphire, Platinum, Obsidian, and Deck Ready are separate concepts. Deck Ready is a mechanical artifact state, not a trust tier.
+Candidate, Silver, Gold, Sapphire, Platinum, Obsidian, and Deck Ready are separate concepts. Candidate is pre-trust and must not be called Bronze. Deck Ready is a mechanical artifact state, not a trust tier.
 
 | Layer | Role in the product |
 | --- | --- |
+| Candidate | Proposed source, card, expansion, migration, or triage work. It may start investigation, but it does not prove generated surface, review, or release relevance. |
+| Silver | Generated card surface exists and can be inspected. It does not prove reviewed content, source truth, or release quality. |
 | Gold | Protects generated card output from regression. It checks learner-facing fields against the current governed contract. |
 | Sapphire | Gates current structural/card-quality requirements. It requires field-bound source evidence, explicit quality gates, actual card-data review, media identity, limitation handling, and a keep/fix/defer/remove decision. Core kanji uses native Sapphire manifests and `deck:sapphire:*`; words use native Sapphire manifests and `deck:words:sapphire:*`; additional surfaces still retain compatibility command names until migrated. |
 | Platinum | Future expert content certification after Sapphire. It must inherit Sapphire and add stronger human content-review evidence under a dedicated schema. |

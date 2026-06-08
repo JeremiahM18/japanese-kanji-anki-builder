@@ -2,7 +2,7 @@
 
 This is the front-door contract for every Sapphire, compatibility-named structural, future Platinum, or Obsidian review pass in this repository. Read this before touching `templates/sapphire_n*_review_set.json`, `templates/sapphire_n*_word_review_set.json`, legacy `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
 
-For program-wide tier meaning, read [review-tier-governance.md](review-tier-governance.md) first. Core kanji and words use native Sapphire files and commands; additional surfaces still retain compatibility names until their own deliberate migration is implemented.
+For program-wide lane authority, read [review-system-forward-contract.md](review-system-forward-contract.md) first, then [review-tier-governance.md](review-tier-governance.md). Core kanji and words use native Sapphire files and commands; additional surfaces still retain compatibility names until their own deliberate migration is implemented.
 
 This file does not replace the schemas, validators, tests, or detailed runbooks. It states the operating standard those files enforce.
 

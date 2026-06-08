@@ -304,7 +304,7 @@ function buildReport(options = {}) {
     });
 }
 
-test("word rereview status separates structural v3 pass from substantive rereview proof", () => {
+test("word rereview status separates Platinum pass from substantive rereview proof", () => {
     const todayRow = buildRow();
     const japanRow = buildRow({ word: "日本", reading: "にほん" });
     const report = buildReport({
@@ -321,7 +321,7 @@ test("word rereview status separates structural v3 pass from substantive rerevie
     });
 
     assert.equal(report.passed, true);
-    assert.equal(report.counts.current_v3_structural_pass, 2);
+    assert.equal(report.counts.current_v3_platinum_pass, 2);
     assert.equal(report.counts.substantive_current_standard_review_proven, 1);
     assert.equal(report.counts.needs_substantive_rereview, 1);
     assert.equal(report.counts.blocked_or_failing, 0);
@@ -395,7 +395,7 @@ test("word rereview status reports dirty evidence lanes as blocked or failing", 
     });
 
     assert.equal(report.passed, false);
-    assert.equal(report.counts.current_v3_structural_pass, 0);
+    assert.equal(report.counts.current_v3_platinum_pass, 0);
     assert.equal(report.counts.blocked_or_failing, 1);
     assert.match(report.cards[0].reasons.join("\n"), /internalChecks must include evidence type: audio-review/);
 });
@@ -411,9 +411,9 @@ test("word rereview status reports generated rows without current-standard entri
     });
 
     assert.equal(report.passed, false);
-    assert.equal(report.counts.current_v3_structural_pass, 1);
+    assert.equal(report.counts.current_v3_platinum_pass, 1);
     assert.equal(report.counts.blocked_or_failing, 1);
-    assert.match(report.cards.find((card) => card.identity === "明日|あした").reasons.join("\n"), /missing active legacy compatibility entry/);
+    assert.match(report.cards.find((card) => card.identity === "明日|あした").reasons.join("\n"), /missing active platinum entry/);
 });
 
 test("formatted word rereview report is clear and read-only", () => {
@@ -426,9 +426,9 @@ test("formatted word rereview report is clear and read-only", () => {
     const formatted = formatPlatinumWordRereviewStatusReport(summary);
 
     assert.match(formatted, /Word Obsidian Proof Status/);
-    assert.match(formatted, /Legacy compatibility pass/);
+    assert.match(formatted, /\| Scope \| Generated deck rows \| Platinum \|/);
     assert.match(formatted, /Generated deck rows are the certification denominator/);
-    assert.match(formatted, /Legacy entries needing Obsidian/);
+    assert.match(formatted, /Platinum entries needing Obsidian/);
     assert.match(formatted, /Obsidian = explicit non-mechanical current-version certification proof/);
     assert.match(formatted, /exact word-reading card identity binding/);
     assert.match(formatted, /full word-card evidence checklist/);

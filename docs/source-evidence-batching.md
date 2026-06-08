@@ -1,6 +1,6 @@
 # JLPT Kanji Source Evidence Batching
 
-This workflow applies only to the JLPT kanji source-evidence layer. It does not move kanji, move words, update deck content, change Gold regression or native Sapphire coverage, claim Platinum content certification, or alter readiness.
+This workflow applies only to the JLPT kanji source-evidence layer. It does not move kanji, move words, update deck content, change Gold regression or native Sapphire coverage, claim Platinum, or alter readiness.
 
 ## Research Basis
 

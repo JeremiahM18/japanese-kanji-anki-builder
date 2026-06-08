@@ -13,7 +13,7 @@ const GOVERNANCE_MARKERS = Object.freeze({
     CARD_SPECIFIC_REVALIDATION_SUMMARY_MISSING: "card_specific_revalidation_summary_missing",
     EXAMPLE_QUALITY_MANUAL_JUDGMENT_ONLY: "example_quality_manual_judgment_only",
     ZERO_VERIFICATION_LIMITATIONS: "zero_verification_limitations_recorded",
-    ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL: "allowed_incomplete_word_legacy_compatibility_level",
+    ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL: "allowed_incomplete_word_platinum_level",
 });
 
 function normalizeText(value) {
@@ -108,7 +108,7 @@ function isAllowedMissingWordPlatinumCard(card = {}) {
     const reasons = Array.isArray(card.reasons) ? card.reasons : [];
     return card.blockedOrFailing === true
         && reasons.length > 0
-        && reasons.every((reason) => /missing .*legacy compatibility entry|missing current-standard structural entry/i.test(reason));
+        && reasons.every((reason) => /missing .*platinum entry|missing current-standard structural entry/i.test(reason));
 }
 
 function evaluatePlatinumGovernanceGate({
@@ -124,10 +124,10 @@ function evaluatePlatinumGovernanceGate({
 
     for (const report of Array.isArray(kanjiRereviewReports) ? kanjiRereviewReports : []) {
         if ((report.counts?.blocked_or_failing || 0) > 0) {
-            issues.push(`N${report.level} kanji legacy compatibility has blocked/failing generated rows: ${report.counts.blocked_or_failing}`);
+            issues.push(`N${report.level} kanji platinum has blocked/failing generated rows: ${report.counts.blocked_or_failing}`);
         }
         if ((report.counts?.needs_substantive_rereview || 0) > 0) {
-            warnings.push(`N${report.level} kanji ${report.counts.needs_substantive_rereview} legacy compatibility entries still lack Obsidian proof`);
+            warnings.push(`N${report.level} kanji ${report.counts.needs_substantive_rereview} Platinum entries still lack Obsidian proof`);
         }
     }
 
@@ -138,18 +138,18 @@ function evaluatePlatinumGovernanceGate({
         const onlyKnownMissing = blockedCards.every(isAllowedMissingWordPlatinumCard);
 
         if (blockedCount > 0 && (!levelAllowedIncomplete || !onlyKnownMissing)) {
-            issues.push(`N${report.level} word legacy compatibility has unexpected blocked/failing generated rows: ${blockedCount}`);
+            issues.push(`N${report.level} word platinum has unexpected blocked/failing generated rows: ${blockedCount}`);
         } else if (blockedCount > 0) {
-            warnings.push(`${GOVERNANCE_MARKERS.ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL}: N${report.level} word legacy compatibility coverage is incomplete with ${blockedCount} generated rows missing active current-standard structural entries`);
+            warnings.push(`${GOVERNANCE_MARKERS.ALLOWED_INCOMPLETE_WORD_PLATINUM_LEVEL}: N${report.level} word Platinum coverage is incomplete with ${blockedCount} generated rows missing active current-standard structural entries`);
         }
         if ((report.counts?.needs_substantive_rereview || 0) > 0) {
-            warnings.push(`N${report.level} word ${report.counts.needs_substantive_rereview} legacy compatibility entries still lack Obsidian proof`);
+            warnings.push(`N${report.level} word ${report.counts.needs_substantive_rereview} Platinum entries still lack Obsidian proof`);
         }
     }
 
     const sourceTotals = wordSourcePostureSummary.totals || {};
     if ((sourceTotals.missing_governed_source || 0) > 0) {
-        issues.push(`Word legacy compatibility source posture has active entries missing governed source evidence: ${sourceTotals.missing_governed_source}`);
+        issues.push(`Word platinum source posture has active entries missing governed source evidence: ${sourceTotals.missing_governed_source}`);
     }
     if ((sourceTotals.single_source_family || 0) > 0) {
         warnings.push(`word_source_independence_not_proven: ${sourceTotals.single_source_family} structurally current-standard word entries use one source family`);
@@ -176,7 +176,7 @@ function evaluatePlatinumGovernanceGate({
 
 function formatPlatinumGovernanceGateReport(report = {}) {
     const lines = [
-        "Japanese Kanji Builder Legacy Platinum Compatibility Governance Gate",
+        "Japanese Kanji Builder Platinum Governance Gate",
         "",
         `Result: ${report.passed ? "passing" : "failing"}`,
     ];
@@ -199,7 +199,7 @@ function formatPlatinumGovernanceGateReport(report = {}) {
     if (manifestPostures.length > 0) {
         lines.push(
             "",
-            "| Manifest | Legacy compatibility entries | Distinct summaries | Card-specific summaries | Entries with limitations | Limitation count | Example quality automation |",
+            "| Manifest | Platinum entries | Distinct summaries | Card-specific summaries | Entries with limitations | Limitation count | Example quality automation |",
             "| --- | ---: | ---: | ---: | ---: | ---: | --- |"
         );
         for (const posture of manifestPostures) {
@@ -219,7 +219,7 @@ function formatPlatinumGovernanceGateReport(report = {}) {
         "",
         "Scope note:",
         "- This gate exercises local real generated rows when local ignored data is present.",
-        "- Legacy compatibility counts and source-posture counts are diagnostics only; only explicit non-mechanical rereview provenance counts as Obsidian proof.",
+        "- Platinum counts and source-posture counts are diagnostics only; only explicit non-mechanical rereview provenance counts as Obsidian proof.",
         "- It does not promote, defer, reject, or edit cards.",
         "- For explicitly configured incomplete word levels, only rows missing active current-standard structural coverage can be allowed; dirty reviewed entries still fail the gate."
     );

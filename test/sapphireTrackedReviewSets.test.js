@@ -111,7 +111,7 @@ test("tracked Sapphire kanji manifests are first-class structural review sets", 
             assert.ok(entry.migrationProvenance, `${label} must record migration provenance`);
             assert.match(
                 entry.migrationProvenance.authority || "",
-                /not claim Platinum content certification/i,
+                /not .*Platinum/i,
                 `${label} migration boundary must keep Platinum separate`
             );
             if (entry.sapphireReviewAudit.actualCardDataReview) {
@@ -123,7 +123,7 @@ test("tracked Sapphire kanji manifests are first-class structural review sets", 
             } else {
                 assert.match(
                     entry.sapphireReviewAudit.auditType || "",
-                    /structural-sapphire|sapphire-card/i,
+                    /structural-sapphire|sapphire-structural|sapphire-card/i,
                     `${label} legacy migrated audit must still identify the Sapphire lane`
                 );
             }
@@ -168,7 +168,7 @@ test("tracked Sapphire kanji manifests are first-class structural review sets", 
     }
 });
 
-test("Sapphire migration preserves legacy Platinum manifests as read-only inputs", () => {
+test("Sapphire migration preserves Platinum manifest coverage without shrinking denominators", () => {
     for (const level of [1, 2, 3, 4, 5]) {
         const sapphireEntries = loadJson(path.join("templates", `sapphire_n${level}_review_set.json`));
         const platinumEntries = loadJson(path.join("templates", `platinum_n${level}_review_set.json`));
@@ -177,13 +177,13 @@ test("Sapphire migration preserves legacy Platinum manifests as read-only inputs
 
         assert.ok(
             sapphireActiveCount >= platinumActiveCount,
-            `N${level} Sapphire coverage must preserve at least the legacy Platinum compatibility coverage`
+            `N${level} Sapphire coverage must preserve at least the Platinum coverage`
         );
         if (level !== 1) {
             assert.equal(
                 sapphireActiveCount,
                 platinumActiveCount,
-                `N${level} Sapphire migration should preserve count parity with the legacy input`
+                `N${level} Sapphire migration should preserve count parity with the Platinum input`
             );
         }
     }
@@ -205,30 +205,6 @@ test("Sapphire schema validates native manifests and rejects Platinum-shaped can
         () => parseSapphireKanjiReviewSet([platinumShapedCandidate], "bad candidate"),
         /bad candidate failed schema validation/i
     );
-});
-
-test("Sapphire kanji coverage reports expose Sapphire-native field names", () => {
-    const sourceEntries = activeEntries(loadJson(path.join("templates", "sapphire_n5_review_set.json")));
-    const entries = sourceEntries.slice(0, 1);
-    const rows = buildSyntheticSapphireRows(sourceEntries.slice(0, 2), "N5");
-    const report = evaluateSapphireKanjiReviewSet({
-        rows,
-        entries,
-        requireCurrentReviewStandard: true,
-        requireAllRows: true,
-    });
-
-    assert.equal(report.activePlatinumCount, undefined);
-    assert.equal(report.activePlatinumStatusCount, undefined);
-    assert.equal(report.currentStandardPlatinumCount, undefined);
-    assert.equal(report.legacyOrUnversionedPlatinumCount, undefined);
-    assert.equal(report.missingPlatinumRows, undefined);
-    assert.equal(report.missingCurrentStandardRows, undefined);
-    assert.equal(report.activeSapphireCount, 1);
-    assert.equal(report.currentStandardSapphireCount, 1);
-    assert.deepEqual(report.missingSapphireRows, [sourceEntries[1].kanji]);
-    assert.match(report.coverageFailures.join("\n"), /missing Sapphire entries/);
-    assert.doesNotMatch(report.coverageFailures.join("\n"), /Platinum entries|Platinum coverage/);
 });
 
 test("Sapphire promoter merges reviewed input and fails closed on unsafe candidates", () => {

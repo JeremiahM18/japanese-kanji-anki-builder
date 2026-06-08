@@ -101,20 +101,20 @@ function replaceLaneTerms(value) {
         .replaceAll(LEGACY_KANJI_PLATINUM_REVIEW_STANDARD, CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD)
         .replace(/fixed_then_platinum/g, "fixed_then_sapphire")
         .replace(/platinum product review/gi, "Sapphire product review")
-        .replace(/core N([1-5]) current-standard card-quality Platinum batch/g, "core N$1 current-standard Sapphire card-quality batch")
-        .replace(/N([1-5]) card-quality Platinum batch/g, "N$1 Sapphire card-quality batch")
-        .replace(/card-quality Platinum batch/g, "Sapphire card-quality batch")
-        .replace(/card-quality Platinum compatibility review/g, "Sapphire card-quality review")
-        .replace(/card-quality Platinum review/g, "Sapphire card-quality review")
-        .replace(/card-quality Platinum evidence/g, "Sapphire card-quality evidence")
-        .replace(/structural Platinum card review/g, "Sapphire structural/card-quality review")
-        .replace(/structural Platinum evidence/g, "Sapphire structural/card-quality evidence")
-        .replace(/structural Platinum-only/g, "Sapphire structural/card-quality only")
-        .replace(/structural Platinum/g, "Sapphire structural/card-quality")
-        .replace(/current-standard card-quality Platinum evidence/g, "current-standard Sapphire card-quality evidence")
-        .replace(/current-standard card-quality Platinum review/g, "current-standard Sapphire card-quality review")
-        .replace(/current N([1-5]) card-quality Platinum/g, "current N$1 Sapphire card-quality")
-        .replace(/current N([1-5]) structural Platinum/g, "current N$1 Sapphire structural/card-quality")
+        .replace(/core N([1-5]) current-standard card-quality Platinum batch/g, "core N$1 current-standard Sapphire structural batch")
+        .replace(/N([1-5]) card-quality Platinum batch/g, "N$1 Sapphire structural batch")
+        .replace(/card-quality Platinum batch/g, "Sapphire structural batch")
+        .replace(/card-quality Platinum compatibility review/g, "Sapphire structural review")
+        .replace(/card-quality Platinum review/g, "Sapphire structural review")
+        .replace(/card-quality Platinum evidence/g, "Sapphire structural evidence")
+        .replace(/structural Platinum card review/g, "Sapphire structural review")
+        .replace(/structural Platinum evidence/g, "Sapphire structural evidence")
+        .replace(/structural Platinum-only/g, "Sapphire structural only")
+        .replace(/structural Platinum/g, "Sapphire structural")
+        .replace(/current-standard card-quality Platinum evidence/g, "current-standard Sapphire structural evidence")
+        .replace(/current-standard card-quality Platinum review/g, "current-standard Sapphire structural review")
+        .replace(/current N([1-5]) card-quality Platinum/g, "current N$1 Sapphire structural")
+        .replace(/current N([1-5]) structural Platinum/g, "current N$1 Sapphire structural")
         .replace(/this Platinum card-field review/g, "this Sapphire card-field review")
         .replace(/Platinum card-field review/g, "Sapphire card-field review")
         .replace(/Platinum rationale/g, "Sapphire rationale")
@@ -176,7 +176,7 @@ function migrateAudit(audit = {}, { migratedAt, fromReviewSetPath, level } = {})
     }
 
     const migrated = normalizeAuditLaneTerms(JSON.parse(JSON.stringify(audit)));
-    migrated.auditType = replaceLaneTerms(migrated.auditType || "kanji-sapphire-card-quality-review")
+    migrated.auditType = replaceLaneTerms(migrated.auditType || "kanji-sapphire-structural-review")
         .replace(/platinum/g, "sapphire");
     migrated.migrationBoundary = {
         migratedAt,
@@ -184,7 +184,7 @@ function migrateAudit(audit = {}, { migratedAt, fromReviewSetPath, level } = {})
         migrationType: "platinum-compatibility-to-first-class-sapphire",
         level,
         legacyCommandNamesPreserved: true,
-        authority: "Representation migration from the former structural/card-quality Platinum compatibility lane into first-class Sapphire. This is not Platinum content certification, Obsidian proof, or release readiness.",
+        authority: "Representation migration from prior Platinum history into first-class Sapphire structural coverage. This is not Platinum, Obsidian proof, or release readiness.",
     };
 
     if (migrated.batch?.id) {
@@ -319,7 +319,7 @@ function migrateEntry(entry = {}, { level, migratedAt, fromReviewSetPath } = {})
         previousReviewStandard: entry.reviewStandard || "",
         newStatus: migrated.status,
         newReviewStandard: migrated.reviewStandard || "",
-        authority: "Preserves current structural/card-quality review as Sapphire only. Does not claim Platinum content certification, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
+        authority: "Preserves current structural review as Sapphire only. Does not claim Platinum, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
     };
 
     recomputeGeneratedSurfaceChecks(migrated);

@@ -98,7 +98,7 @@ test("normalizeReadingEvidence sees dictionary punctuation and katakana readings
     assert.equal(normalizeReadingEvidence("On: ジ、 Kun: か.く"), "onじkunかく");
 });
 
-test("selectBatchRows defaults to substantive rereview queue in generated deck order", () => {
+test("selectBatchRows defaults to missing current-standard Platinum queue in generated deck order", () => {
     const rows = [
         buildRow({ kanji: "一", displayWord: "一" }),
         buildRow({ kanji: "二", displayWord: "二" }),
@@ -106,7 +106,7 @@ test("selectBatchRows defaults to substantive rereview queue in generated deck o
     ];
     const entries = [buildCurrentStandardEntry("一")];
 
-    assert.deepEqual(selectBatchRows({ rows, entries, limit: 2 }).map((row) => row.kanji), ["一", "二"]);
+    assert.deepEqual(selectBatchRows({ rows, entries, limit: 2 }).map((row) => row.kanji), ["二", "三"]);
 });
 
 test("batch report does not count revalidationSummary prose as rereview proof", () => {
@@ -118,18 +118,19 @@ test("batch report does not count revalidationSummary prose as rereview proof", 
         entries: [entry],
         level: 5,
         limit: 1,
+        queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
     });
 
     assert.equal(report.summary.substantiveRereviewProven, 0);
     assert.equal(report.summary.remainingSubstantiveRereview, 1);
-    assert.equal(report.cards[0].reviewStatus, "current_standard_structural_only");
+    assert.equal(report.cards[0].reviewStatus, "current_standard_platinum_only");
     assert.equal(
         report.cards[0].reviewRubric.items.find((item) => item.id === "substantive_rereview_provenance").status,
         REVIEW_RUBRIC_STATUSES.NOT_PROVEN
     );
 });
 
-test("selectBatchRows can still expose the missing current-standard structure queue explicitly", () => {
+test("selectBatchRows can expose the missing current-standard Platinum queue explicitly", () => {
     const rows = [
         buildRow({ kanji: "一", displayWord: "一" }),
         buildRow({ kanji: "二", displayWord: "二" }),
@@ -172,27 +173,41 @@ test("buildPlatinumKanjiBatchReport summarizes surfaces checks and risks without
     assert.equal(report.summary.generatedRows, 2);
     assert.equal(report.summary.activePlatinum, 1);
     assert.equal(report.summary.remainingPlatinum, 1);
-    assert.equal(report.summary.substantiveRereviewProven, 0);
-    assert.equal(report.summary.remainingSubstantiveRereview, 2);
-    assert.deepEqual(report.cards.map((card) => card.kanji), ["日", "月"]);
-    assert.equal(report.cards[1].hardChecksPassed, true);
+    assert.equal(report.summary.substantiveRereviewProven, undefined);
+    assert.equal(report.summary.remainingSubstantiveRereview, undefined);
+    assert.equal(report.nextSubstantiveRereviewKanji, undefined);
+    assert.deepEqual(report.cards.map((card) => card.kanji), ["月"]);
+    assert.equal(report.cards[0].hardChecksPassed, true);
     assert.equal(report.reviewRubricSummary.version, "kanji-platinum-rereview-rubric-v1");
-    assert.equal(report.cards[0].reviewRubric.result, REVIEW_RUBRIC_RESULTS.READY_FOR_SUBSTANTIVE_REVIEW);
+    assert.equal(report.cards[0].reviewRubric.result, REVIEW_RUBRIC_RESULTS.BLOCKED);
+    assert.equal(report.cards[0].reviewRubric.items.find((item) => item.id === "substantive_rereview_provenance"), undefined);
+    assert.equal(
+        report.cards[0].reviewRubric.items.find((item) => item.id === "example_and_support_usage").status,
+        REVIEW_RUBRIC_STATUSES.ATTENTION
+    );
+    assert.match(report.cards[0].riskFlags.join("\n"), /notes do not visibly include the target kanji/);
+    assert.match(report.cards[0].riskFlags.join("\n"), /MeaningJP has several glosses/);
+    assert.doesNotMatch(formatPlatinumKanjiBatchReport(report), /Obsidian certified|Remaining Obsidian certification/);
+    assert.match(formatPlatinumKanjiBatchReport(report), /Default queue is missing-current-standard Platinum/);
+});
+
+test("explicit substantive-rereview queue is Obsidian proof-status compatibility, not Platinum certification", () => {
+    const report = buildPlatinumKanjiBatchReport({
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry("日")],
+        level: 5,
+        limit: 1,
+        queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+    });
+
+    assert.deepEqual(report.cards.map((card) => card.kanji), ["日"]);
+    assert.equal(report.cards[0].reviewStatus, "current_standard_platinum_only");
     assert.equal(
         report.cards[0].reviewRubric.items.find((item) => item.id === "substantive_rereview_provenance").status,
         REVIEW_RUBRIC_STATUSES.NOT_PROVEN
     );
-    assert.equal(
-        report.cards[0].reviewRubric.items.find((item) => item.id === "source_evidence_lane").status,
-        REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED
-    );
-    assert.equal(
-        report.cards[0].reviewRubric.items.find((item) => item.id === "example_and_support_usage").status,
-        REVIEW_RUBRIC_STATUSES.MANUAL_JUDGMENT_REQUIRED
-    );
-    assert.match(report.cards[0].riskFlags.join("\n"), /square-zero substantive rereview proof is still required/);
-    assert.match(report.cards[1].riskFlags.join("\n"), /notes do not visibly include the target kanji/);
-    assert.match(report.cards[1].riskFlags.join("\n"), /MeaningJP has several glosses/);
+    assert.match(report.cards[0].riskFlags.join("\n"), /explicit Obsidian proof is still required/);
+    assert.match(formatPlatinumKanjiBatchReport(report), /Next explicit Obsidian proof queue/);
 });
 
 test("buildReviewRubric blocks dirty generated cards before provenance work", () => {
@@ -207,7 +222,7 @@ test("buildReviewRubric blocks dirty generated cards before provenance work", ()
         { name: "Audio is exact target plus primary reading", passed: false },
     ];
     const rubric = buildReviewRubric(row, {
-        reviewStatus: "current_standard_structural_only",
+        reviewStatus: "current_standard_platinum_only",
         statuses: ["platinum"],
         currentStandardEntry: buildCurrentStandardEntry("日"),
         hardChecks,
@@ -295,8 +310,7 @@ test("formatPlatinumKanjiBatchReport states that the report is read-only", () =>
     });
 
     const formatted = formatPlatinumKanjiBatchReport(report);
-    assert.match(formatted, /Legacy Platinum N5 Kanji Compatibility Batch Report/);
-    assert.match(formatted, /Lane: Legacy Platinum compatibility/);
+    assert.match(formatted, /Platinum N5 Kanji Batch Report/);
     assert.match(formatted, /Rubric: kanji-platinum-rereview-rubric-v1/);
     assert.match(formatted, /Review rubric: blocked/);
     assert.match(formatted, /manual_judgment_required/);

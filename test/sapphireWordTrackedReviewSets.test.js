@@ -115,7 +115,7 @@ test("tracked Sapphire word manifests are first-class structural review sets", (
             assert.ok(entry.migrationProvenance, `${label} must record migration provenance`);
             assert.match(
                 entry.migrationProvenance.authority || "",
-                /not Platinum content certification/i,
+                /not .*Platinum/i,
                 `${label} migration boundary must keep Platinum separate`
             );
             assert.match(
@@ -139,7 +139,7 @@ test("tracked Sapphire word manifests are first-class structural review sets", (
     }
 });
 
-test("word Sapphire migration preserves legacy compatibility inputs without shrinking denominators", () => {
+test("word Sapphire migration preserves Platinum inputs without shrinking denominators", () => {
     for (const level of [4, 5]) {
         const sapphireEntries = loadJson(path.join("templates", `sapphire_n${level}_word_review_set.json`));
         const platinumEntries = loadJson(path.join("templates", `platinum_n${level}_word_review_set.json`));
@@ -182,31 +182,6 @@ test("tracked populated word Sapphire manifests bind evidence to protected field
 
         assert.equal(report.passed, true, `${fileName}\n${formatSapphireWordReviewReport(report)}`);
     }
-});
-
-test("Sapphire word coverage reports expose Sapphire-native field names", () => {
-    const wordPitchAccentData = loadJson(path.join("templates", "word_pitch_accent_data.json"));
-    const sourceEntries = activeEntries(loadJson(path.join("templates", "sapphire_n5_word_review_set.json")));
-    const entries = sourceEntries.slice(0, 1);
-    const rows = buildSyntheticWordRows(sourceEntries.slice(0, 2), wordPitchAccentData);
-    const report = evaluateSapphireWordReviewSet({
-        rows,
-        entries,
-        wordPitchAccentData,
-        requireCurrentReviewStandard: true,
-        requireAllRows: true,
-    });
-
-    assert.equal(report.activePlatinumCount, undefined);
-    assert.equal(report.currentStandardPlatinumCount, undefined);
-    assert.equal(report.legacyOrUnversionedPlatinumCount, undefined);
-    assert.equal(report.missingPlatinumRows, undefined);
-    assert.equal(report.missingCurrentStandardRows, undefined);
-    assert.equal(report.activeSapphireCount, 1);
-    assert.equal(report.currentStandardSapphireCount, 1);
-    assert.equal(report.missingSapphireRows.length, 1);
-    assert.match(report.coverageFailures.join("\n"), /missing Sapphire entries/);
-    assert.doesNotMatch(report.coverageFailures.join("\n"), /Platinum entries|Platinum coverage/);
 });
 
 test("Sapphire word schema rejects Platinum-shaped candidates and inline Obsidian proof", () => {

@@ -58,7 +58,7 @@ test("platinumWordBatchReport defaults word review batches to eight cards", () =
     const options = parseBatchReportArgs(["--level=N5"]);
 
     assert.equal(options.limit, 8);
-    assert.equal(options.queue, "substantive-rereview");
+    assert.equal(options.queue, "missing-current-standard");
     assert.equal(options.proofProvider, undefined);
 });
 

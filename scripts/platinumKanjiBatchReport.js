@@ -8,7 +8,7 @@ const {
     normalizeObsidianProofProviderMode,
 } = require("../src/services/obsidianProofProviderService");
 const {
-    KANJI_BATCH_QUEUE_MODES,
+    DEFAULT_KANJI_BATCH_QUEUE_MODE,
     buildPlatinumKanjiBatchReport,
     formatPlatinumKanjiBatchReport,
     normalizeQueueMode,
@@ -29,7 +29,7 @@ function parseArgs(argv, {
         level: null,
         limit: 12,
         proofProvider: normalizeObsidianProofProviderMode(defaultProofProvider),
-        queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+        queue: DEFAULT_KANJI_BATCH_QUEUE_MODE,
         unknownArgs: [],
     };
 
@@ -56,7 +56,7 @@ function parseArgs(argv, {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("deck:legacy-platinum:batch", options.unknownArgs);
+    assertNoUnknownArgs("platinumKanjiBatchReport", options.unknownArgs);
 
     if (!Number.isInteger(options.level) || options.level < 1 || options.level > 5) {
         throw new Error("Platinum kanji batch report level must be 1-5.");

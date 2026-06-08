@@ -10,7 +10,7 @@ const {
 function buildLevelReport(overrides = {}) {
     const cards = overrides.cards || [{
         kanji: "日",
-        structuralPassed: true,
+        platinumPassed: true,
         substantiveRereviewProven: true,
         needsSubstantiveRereview: false,
         blockedOrFailing: false,
@@ -18,7 +18,7 @@ function buildLevelReport(overrides = {}) {
         reasons: [],
     }];
     const counts = overrides.counts || {
-        current_v3_structural_pass: cards.filter((card) => card.structuralPassed).length,
+        current_v3_platinum_pass: cards.filter((card) => card.platinumPassed).length,
         substantive_current_standard_review_proven: cards.filter((card) => card.substantiveRereviewProven).length,
         needs_substantive_rereview: cards.filter((card) => card.needsSubstantiveRereview).length,
         blocked_or_failing: cards.filter((card) => card.blockedOrFailing).length,
@@ -42,11 +42,11 @@ test("kanji certification gate passes only when every generated row has Obsidian
     assert.equal(summary.certificationGate.manualJudgmentBoundary, MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE);
 });
 
-test("kanji certification gate fails structural compatibility rows that still need Obsidian proof", () => {
+test("kanji certification gate fails Platinum rows that still need Obsidian proof", () => {
     const summary = buildObsidianKanjiCertificationStatusSummary([buildLevelReport({
         cards: [{
             kanji: "月",
-            structuralPassed: true,
+            platinumPassed: true,
             substantiveRereviewProven: false,
             needsSubstantiveRereview: true,
             blockedOrFailing: false,
@@ -75,11 +75,11 @@ test("kanji certification gate fails structural compatibility rows that still ne
     assert.match(summary.failures[0].reviewerAction, /natural Japanese/);
 });
 
-test("kanji certification gate turns structural blockers into loud actionable failure objects", () => {
+test("kanji certification gate turns Platinum blockers into loud actionable failure objects", () => {
     const summary = buildObsidianKanjiCertificationStatusSummary([buildLevelReport({
         cards: [{
             kanji: "火",
-            structuralPassed: false,
+            platinumPassed: false,
             substantiveRereviewProven: false,
             needsSubstantiveRereview: false,
             blockedOrFailing: true,
@@ -104,7 +104,7 @@ test("formatted kanji certification report includes all failed cards and sentenc
         cards: [
             {
                 kanji: "月",
-                structuralPassed: true,
+                platinumPassed: true,
                 substantiveRereviewProven: false,
                 needsSubstantiveRereview: true,
                 blockedOrFailing: false,
@@ -113,7 +113,7 @@ test("formatted kanji certification report includes all failed cards and sentenc
             },
             {
                 kanji: "火",
-                structuralPassed: false,
+                platinumPassed: false,
                 substantiveRereviewProven: false,
                 needsSubstantiveRereview: false,
                 blockedOrFailing: true,

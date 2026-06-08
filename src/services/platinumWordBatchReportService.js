@@ -22,6 +22,7 @@ const WORD_BATCH_QUEUE_MODES = {
     MISSING_CURRENT_STANDARD: "missing-current-standard",
     SUBSTANTIVE_REREVIEW: "substantive-rereview",
 };
+const DEFAULT_WORD_BATCH_QUEUE_MODE = WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD;
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -212,7 +213,7 @@ function classifyReviewState(state = {}) {
         return "substantive_rereview_proven";
     }
     if (state.hasCurrentStandardPlatinum) {
-        return "current_standard_structural_only";
+        return "current_standard_platinum_only";
     }
     if (state.hasActivePlatinum) {
         return "legacy_unversioned_platinum";
@@ -372,6 +373,7 @@ function buildRiskFlags(row = {}, {
     reviewStatus = "missing_platinum",
     statuses = [],
     pitch = {},
+    queueMode = DEFAULT_WORD_BATCH_QUEUE_MODE,
 } = {}) {
     const flags = [];
     const word = normalizeText(row.word);
@@ -381,9 +383,13 @@ function buildRiskFlags(row = {}, {
         .map((match) => match[0]);
 
     if (reviewStatus === "substantive_rereview_proven") {
-        flags.push("already has substantive current-standard rereview proof; skip unless intentionally replacing prior evidence");
-    } else if (reviewStatus === "current_standard_structural_only") {
-        flags.push("has current-standard structure only; square-zero substantive rereview proof is still required");
+        flags.push(queueMode === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW
+            ? "already has explicit Obsidian proof; skip unless intentionally replacing prior evidence"
+            : "already has current-standard Platinum and separate Obsidian proof; no missing-Platinum work required");
+    } else if (reviewStatus === "current_standard_platinum_only") {
+        flags.push(queueMode === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW
+            ? "has current-standard Platinum only; explicit Obsidian proof is still required"
+            : "already has current-standard Platinum; no missing-Platinum work required");
     } else if (reviewStatus === "active_platinum") {
         flags.push("already has active platinum; re-review only if intentionally replacing prior evidence");
     } else if (reviewStatus === "legacy_unversioned_platinum") {
@@ -424,18 +430,22 @@ function buildRiskFlags(row = {}, {
     return flags;
 }
 
-function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = [], pitch = {} } = {}) {
+function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = [], pitch = {}, queueMode = DEFAULT_WORD_BATCH_QUEUE_MODE } = {}) {
     if (!hardChecksPassed) {
         return "fix generated surface before platinum";
     }
     if (reviewStatus === "substantive_rereview_proven") {
-        return "already substantively rereviewed";
+        return queueMode === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW
+            ? "already has explicit Obsidian proof"
+            : "already current-standard platinum with separate Obsidian proof";
     }
-    if (reviewStatus === "current_standard_structural_only") {
-        return "substantive rereview required; legacy compatibility structural pass is not proof";
+    if (reviewStatus === "current_standard_platinum_only") {
+        return queueMode === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW
+            ? "explicit Obsidian proof required; Platinum is not Obsidian proof"
+            : "already current-standard platinum; no missing-Platinum work required";
     }
     if (reviewStatus === "legacy_unversioned_platinum") {
-        return "revalidate existing legacy compatibility under current standard";
+        return "revalidate existing platinum under current standard";
     }
     if (reviewStatus === "active_platinum") {
         return "already reviewed";
@@ -455,14 +465,14 @@ function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = 
     return "likely platinum after dictionary/source check";
 }
 
-function normalizeQueueMode(queue = WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW) {
+function normalizeQueueMode(queue = DEFAULT_WORD_BATCH_QUEUE_MODE) {
     const normalized = normalizeText(queue);
     return Object.values(WORD_BATCH_QUEUE_MODES).includes(normalized)
         ? normalized
-        : WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW;
+        : DEFAULT_WORD_BATCH_QUEUE_MODE;
 }
 
-function selectBatchRows({ rows = [], entries = [], words = [], limit = 12, queue = WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW } = {}) {
+function selectBatchRows({ rows = [], entries = [], words = [], limit = 12, queue = DEFAULT_WORD_BATCH_QUEUE_MODE } = {}) {
     const queueMode = normalizeQueueMode(queue);
     const stateByIdentity = buildEntryReviewStateByIdentity(entries);
     const generatedRows = Array.isArray(rows) ? rows : [];
@@ -481,7 +491,7 @@ function selectBatchRows({ rows = [], entries = [], words = [], limit = 12, queu
             const state = stateByIdentity.get(buildWordIdentity(row)) || {};
             const reviewState = classifyReviewState(state);
             if (queueMode === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD) {
-                return reviewState !== "current_standard_structural_only"
+                return reviewState !== "current_standard_platinum_only"
                     && reviewState !== "substantive_rereview_proven";
             }
             return !state.hasSubstantiveCurrentStandardRereview;
@@ -496,7 +506,7 @@ function buildPlatinumWordBatchReport({
     level,
     words = [],
     limit = 12,
-    queue = WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+    queue = DEFAULT_WORD_BATCH_QUEUE_MODE,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
@@ -521,7 +531,7 @@ function buildPlatinumWordBatchReport({
     const missingCurrentStandardRows = generatedRows.filter((row) => {
         const state = stateByIdentity.get(buildWordIdentity(row)) || {};
         const reviewState = classifyReviewState(state);
-        return reviewState !== "current_standard_structural_only"
+        return reviewState !== "current_standard_platinum_only"
             && reviewState !== "substantive_rereview_proven";
     });
     const needsSubstantiveRereviewRows = generatedRows.filter((row) => {
@@ -534,6 +544,7 @@ function buildPlatinumWordBatchReport({
             .filter((identity) => !selectedRows.some((row) => buildWordIdentity(row) === identity))
         : [];
     const scopedToRequestedWords = Array.isArray(words) && words.length > 0;
+    const includeSubstantiveRereviewQueue = queueMode === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW;
 
     const cards = selectedRows.map((row) => {
         const identity = buildWordIdentity(row);
@@ -543,7 +554,7 @@ function buildPlatinumWordBatchReport({
         const pitch = buildPitchReview(row, wordPitchAccentData);
         const hardChecks = buildHardChecks(row, wordPitchAccentData);
         const hardChecksPassed = hardChecks.every((check) => check.passed);
-        const riskFlags = buildRiskFlags(row, { reviewStatus, statuses, pitch });
+        const riskFlags = buildRiskFlags(row, { reviewStatus, statuses, pitch, queueMode });
         const example = parseExampleParts(row.exampleSentence);
         return {
             identity,
@@ -575,6 +586,7 @@ function buildPlatinumWordBatchReport({
                 reviewStatus,
                 riskFlags,
                 pitch,
+                queueMode,
             }),
         };
     });
@@ -591,17 +603,21 @@ function buildPlatinumWordBatchReport({
             activePlatinum: activeCount,
             currentReviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
             currentStandardPlatinum: currentStandardCount,
-            substantiveRereviewProven: substantiveRereviewProvenCount,
             legacyOrUnversionedPlatinum: legacyOrUnversionedCount,
             remainingPlatinum: missingRows.length,
             remainingCurrentStandard: missingCurrentStandardRows.length,
-            remainingSubstantiveRereview: needsSubstantiveRereviewRows.length,
+            ...(includeSubstantiveRereviewQueue ? {
+                substantiveRereviewProven: substantiveRereviewProvenCount,
+                remainingSubstantiveRereview: needsSubstantiveRereviewRows.length,
+            } : {}),
             selectedCards: cards.length,
             requestedMissing: requestedMissing.length,
         },
         requestedMissing,
         nextMissingWords: missingCurrentStandardRows.map(buildWordIdentity),
-        nextSubstantiveRereviewWords: needsSubstantiveRereviewRows.map(buildWordIdentity),
+        ...(includeSubstantiveRereviewQueue ? {
+            nextSubstantiveRereviewWords: needsSubstantiveRereviewRows.map(buildWordIdentity),
+        } : {}),
         cards,
     };
 }
@@ -610,22 +626,23 @@ function formatPlatinumWordBatchReport(report = {}) {
     const levelLabel = Number.isInteger(report.level) ? `N${report.level}` : "Unknown level";
     const summary = report.summary || {};
     const lines = [
-        `Japanese Kanji Builder Legacy Platinum ${levelLabel} Word Compatibility Batch Report`,
+        `Japanese Kanji Builder Platinum ${levelLabel} Word Batch Report`,
         "",
-        "Lane: Legacy Platinum compatibility (read-only structural/card-quality proof-provider input; not native Platinum content certification)",
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
-        `Queue: ${report.queue || WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW}`,
-        `Legacy compatibility entries: ${summary.activePlatinum || 0}`,
+        `Queue: ${report.queue || DEFAULT_WORD_BATCH_QUEUE_MODE}`,
+        `Platinum entries: ${summary.activePlatinum || 0}`,
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard legacy compatibility entries: ${summary.currentStandardPlatinum || 0}`,
-        `Obsidian certified: ${summary.substantiveRereviewProven || 0}`,
-        `Legacy/unversioned compatibility entries: ${summary.legacyOrUnversionedPlatinum || 0}`,
-        `Missing legacy compatibility entries: ${summary.remainingPlatinum || 0}`,
-        `Missing current-standard legacy compatibility structure: ${summary.remainingCurrentStandard || 0}`,
-        `Remaining Obsidian certification: ${summary.remainingSubstantiveRereview || 0}`,
+        `Current-standard Platinum entries: ${summary.currentStandardPlatinum || 0}`,
+        `Legacy/unversioned platinum: ${summary.legacyOrUnversionedPlatinum || 0}`,
+        `Missing Platinum entries: ${summary.remainingPlatinum || 0}`,
+        `Missing current-standard Platinum: ${summary.remainingCurrentStandard || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
+    if (report.queue === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW) {
+        lines.splice(8, 0, `Obsidian certified: ${summary.substantiveRereviewProven || 0}`);
+        lines.splice(12, 0, `Remaining Obsidian certification: ${summary.remainingSubstantiveRereview || 0}`);
+    }
 
     if (Array.isArray(report.requestedMissing) && report.requestedMissing.length > 0) {
         lines.push("", `Requested word identities not found (${report.requestedMissing.length}):`);
@@ -638,8 +655,8 @@ function formatPlatinumWordBatchReport(report = {}) {
         ? report.nextMissingWords
         : report.nextSubstantiveRereviewWords;
     const queueLabel = report.queue === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
-        ? "Next missing legacy compatibility structure queue"
-        : "Next substantive rereview queue";
+        ? "Next missing current-standard Platinum queue"
+        : "Next explicit Obsidian proof queue";
     if (!report.scopedToRequestedWords && Array.isArray(queueWords) && queueWords.length > 0) {
         lines.push("", `${queueLabel} (${Math.min(queueWords.length, 30)}/${queueWords.length}):`);
         for (const identity of queueWords.slice(0, 30)) {
@@ -681,14 +698,15 @@ function formatPlatinumWordBatchReport(report = {}) {
 
     lines.push(
         "",
-        "This report is read-only. It prepares legacy compatibility review; it does not create legacy compatibility entries, native Platinum content entries, Obsidian proof, or release readiness.",
-        "Default queue is substantive rereview: legacy current-standard structural/card-quality entries remain in scope until explicit non-mechanical rereview proof exists."
+        "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.",
+        "Default queue is missing-current-standard Platinum. Use --queue=substantive-rereview only for explicit Obsidian proof-status compatibility work."
     );
     return `${lines.join("\n")}\n`;
 }
 
 module.exports = {
     WORD_BATCH_QUEUE_MODES,
+    DEFAULT_WORD_BATCH_QUEUE_MODE,
     buildEntryStatusByIdentity,
     buildHardChecks,
     buildInflectionEvidenceFragments,

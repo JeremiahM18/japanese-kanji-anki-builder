@@ -135,7 +135,7 @@ async function buildGateReport({ options, config }) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("deck:legacy-platinum:governance-gate", options.unknownArgs);
+    assertNoUnknownArgs("deck:platinum:governance-gate", options.unknownArgs);
 
     const config = loadConfig();
     const requiredLocalInputs = [

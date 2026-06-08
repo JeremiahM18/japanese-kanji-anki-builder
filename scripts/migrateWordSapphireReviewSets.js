@@ -148,7 +148,7 @@ function migrateEntry(entry = {}, { migratedAt, fromReviewSetPath } = {}) {
         previousReviewStandard,
         newStatus: migrated.status,
         newReviewStandard: migrated.reviewStandard || "",
-        authority: "Representation migration from the former word structural/card-quality Platinum compatibility lane into first-class Sapphire. This is not future Platinum content certification, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
+        authority: "Representation migration from the former word structural/card-quality Platinum compatibility lane into first-class Sapphire. This is not Platinum content certification, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
     };
 
     return migrated;

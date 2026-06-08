@@ -115,8 +115,8 @@ test("tracked Sapphire word manifests are first-class structural review sets", (
             assert.ok(entry.migrationProvenance, `${label} must record migration provenance`);
             assert.match(
                 entry.migrationProvenance.authority || "",
-                /not future Platinum content certification/i,
-                `${label} migration boundary must keep future Platinum separate`
+                /not Platinum content certification/i,
+                `${label} migration boundary must keep Platinum separate`
             );
             assert.match(
                 entry.migrationProvenance.migratedFrom || "",

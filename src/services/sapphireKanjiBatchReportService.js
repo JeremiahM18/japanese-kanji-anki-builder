@@ -155,7 +155,7 @@ function formatSapphireKanjiBatchReport(report = {}) {
         `Japanese Kanji Builder Sapphire ${levelLabel} Kanji Batch Report`,
         "",
         `Scope: ${report.scope || "(unknown)"}`,
-        "Lane: Sapphire structural/card-quality gate; not future Platinum content certification or Obsidian proof",
+        "Lane: Sapphire structural/card-quality gate; not Platinum content certification or Obsidian proof",
         `Generated cards: ${summary.generatedRows || 0}`,
         `Queue: ${report.queue || KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD}`,
         `Sapphire entries: ${summary.activeSapphire || 0}`,
@@ -214,7 +214,7 @@ function formatSapphireKanjiBatchReport(report = {}) {
 
     lines.push(
         "",
-        "This report is read-only. It prepares Sapphire review; it does not create entries, prove future Platinum, record Obsidian proof, or prove release readiness."
+        "This report is read-only. It prepares Sapphire review; it does not create entries, prove Platinum, record Obsidian proof, or prove release readiness."
     );
     return `${lines.join("\n")}\n`;
 }

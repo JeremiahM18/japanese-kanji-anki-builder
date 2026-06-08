@@ -26,6 +26,40 @@ function listJavaScriptFiles(relativeDirectory) {
     return files;
 }
 
+function listTextFiles(relativePath) {
+    const absolutePath = path.join(repoRoot, relativePath);
+    const entry = fs.statSync(absolutePath);
+
+    if (entry.isFile()) {
+        return [relativePath.split(path.sep).join("/")];
+    }
+
+    const files = [];
+    for (const directoryEntry of fs.readdirSync(absolutePath, { withFileTypes: true })) {
+        const childRelativePath = path.join(relativePath, directoryEntry.name);
+        if (directoryEntry.isDirectory()) {
+            files.push(...listTextFiles(childRelativePath));
+        } else if (/\.(?:md|js|json|jsonl|ya?ml|txt)$/u.test(directoryEntry.name)) {
+            files.push(childRelativePath.split(path.sep).join("/"));
+        }
+    }
+
+    return files;
+}
+
+function listReviewLaneTerminologyFiles() {
+    return [
+        "README.md",
+        "CLAUDE.md",
+        "CHANGELOG.md",
+        "docs",
+        "scripts",
+        "src",
+        "test",
+        "templates",
+    ].flatMap(listTextFiles).sort();
+}
+
 function extractReadmeSection(readme, heading) {
     const headingText = `## ${heading}`;
     const start = readme.indexOf(headingText);
@@ -305,7 +339,9 @@ test("README presents the review tier model before status snapshots", () => {
     assert.match(tierSection, /Core kanji uses native `templates\/sapphire_n\*_review_set\.json` and `deck:sapphire:\*`/);
     assert.match(tierSection, /words use native `templates\/sapphire_n\*_word_review_set\.json` and `deck:words:sapphire:\*`/);
     assert.match(tierSection, /additional surfaces still retain compatibility command names/);
-    assert.match(tierSection, /Expert content certification: Sapphire is already satisfied and a dedicated Platinum schema/);
+    assert.match(tierSection, /Expert content certification: Sapphire is already satisfied, and once implemented a dedicated Platinum schema/);
+    assert.match(tierSection, /native Platinum content certification is not complete until a dedicated Platinum schema, manifest family, and command family exist and pass/);
+    assert.match(tierSection, /Existing `platinum`-named commands and manifests are legacy compatibility\/proof-provider inputs only/);
 });
 
 test("forward review system contract locks lane authority and compatibility boundaries", () => {
@@ -324,6 +360,7 @@ test("forward review system contract locks lane authority and compatibility boun
         "## Authority Boundary",
         "## Source Of Truth",
         "## Forward Lane Matrix",
+        "## Current Implementation Status",
         "## Legacy Compatibility Lock",
         "## Consumer Rules",
         "## Forbidden Claims",
@@ -335,11 +372,14 @@ test("forward review system contract locks lane authority and compatibility boun
     }
 
     assert.match(contract, /\| Candidate \| Proposed item[\s\S]*not deck-trusted and must not be called Bronze[\s\S]*Candidate counts never shrink Silver, Gold, Sapphire, Platinum, or Obsidian denominators/);
-    assert.match(contract, /\| Sapphire \| Structural\/card-quality certification\.[\s\S]*Empty or incomplete native Sapphire manifests fail closed\. Sapphire is not future Platinum content certification and is not Obsidian proof\./);
-    assert.match(contract, /\| Platinum \| Future expert content certification after Sapphire\.[\s\S]*No Platinum claim can come from Sapphire or legacy compatibility coverage\./);
+    assert.match(contract, /\| Sapphire \| Structural\/card-quality certification\.[\s\S]*Empty or incomplete native Sapphire manifests fail closed\. Sapphire is not Platinum content certification and is not Obsidian proof\./);
+    assert.match(contract, /\| Platinum \| Expert content certification after Sapphire\.[\s\S]*No Platinum claim can come from Sapphire or legacy compatibility coverage\./);
+    assert.match(contract, /Platinum is the lane name\. Do not add a temporal adjective to the lane name\./);
+    assert.match(contract, /Native Platinum content certification is not complete until a dedicated Platinum schema, manifest family, and command family exist and pass/);
+    assert.match(contract, /existing `platinum`-named commands and manifests are legacy compatibility\/proof-provider inputs only/);
     assert.match(contract, /Do not add new core-kanji or word structural work to legacy Platinum naming/);
     assert.match(contract, /Do not use a legacy compatibility command as the forward structural path when a native Sapphire command exists/);
-    assert.match(contract, /Legacy compatibility coverage never certifies future Platinum content review/);
+    assert.match(contract, /Legacy compatibility coverage never certifies Platinum content review/);
     assert.match(contract, /Candidate is Bronze, reviewed, generated, trusted, or release-relevant/);
     assert.match(contract, /A denominator can shrink because another lane is incomplete/);
     assert.match(contract, /Create the native artifact and schema before retiring a compatibility name/);
@@ -356,6 +396,19 @@ test("forward review system contract locks lane authority and compatibility boun
     assert.match(tierGovernance, /\[review-system-forward-contract\.md\]\(review-system-forward-contract\.md\)/);
     assert.match(platinumContract, /\[review-system-forward-contract\.md\]\(review-system-forward-contract\.md\)/);
     assert.match(platinumPolicy, /\[Review System Forward Contract\]\(review-system-forward-contract\.md\)/);
+});
+
+test("forward review text names the lane Platinum without temporal qualifiers", () => {
+    const files = listReviewLaneTerminologyFiles();
+    assert.ok(files.length > 100, "Review-lane terminology guard must scan repo-wide text surfaces.");
+
+    for (const file of files) {
+        assert.doesNotMatch(
+            readRepoFile(file),
+            /\b(?:future|vNext)[-\s]+Platinum\b/i,
+            `${file} must name the lane Platinum and describe implementation status separately.`
+        );
+    }
 });
 
 test("CLAUDE N5/N4 word freeze guard requires fail-closed frozen-row proof checks", () => {
@@ -456,7 +509,7 @@ test("documentation standard defines enterprise doc schemas and README routing",
     }
 
     assert.match(standard, /Do not use generated TSV, APKG output, SQLite mirrors, or local ignored files as tracked source truth/);
-    assert.match(standard, /Candidate pre-trust workflow state, Silver generated surface, Gold regression, Sapphire structural\/card-quality certification, future Platinum content certification, Obsidian proof/);
+    assert.match(standard, /Candidate pre-trust workflow state, Silver generated surface, Gold regression, Sapphire structural\/card-quality certification, Platinum content certification, Obsidian proof/);
     assert.match(readmePurpose, /controlled output, not casual scrape-and-export deck generation/);
     assert.match(readmeAuthorityBoundary, /orientation and routing document/);
     assert.match(readmeAuthorityBoundary, /does not certify release readiness/);

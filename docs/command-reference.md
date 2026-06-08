@@ -54,7 +54,7 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:readiness` | Report per-level quality gates |
 | `npm run deck:preview` | Preview kanji cards |
 | `npm run deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard` | Build a read-only core-kanji Sapphire review packet for generated rows missing current-standard Sapphire coverage |
-| `npm run deck:sapphire:promote -- --level=1 --input=<reviewed-json>` | Validate and merge reviewed Sapphire candidate entries; writes only with `--write`, does not create future Platinum or Obsidian proof |
+| `npm run deck:sapphire:promote -- --level=1 --input=<reviewed-json>` | Validate and merge reviewed Sapphire candidate entries; writes only with `--write`, does not create Platinum or Obsidian proof |
 | `npm run deck:platinum:batch -- --level=5 --limit=12` | Legacy read-only kanji compatibility packet for Obsidian/substantive proof workflows; new structural core-kanji work should use `deck:sapphire:batch` |
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |

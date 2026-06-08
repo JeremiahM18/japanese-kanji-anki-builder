@@ -29,7 +29,7 @@ This document defines tier meaning at summary level. [review-system-forward-cont
 | Silver | Generated surface | A learner-facing card row exists and can be inspected. | Reviewed content, source truth, mechanical readiness, release quality, or learner usefulness. |
 | Gold | Regression protection | Reviewed generated output is protected from silent drift against tracked expectations. | Source truth, structural certification, content certification, Obsidian proof, or release approval. |
 | Sapphire | Structural/card-quality certification | The live generated card passed the governed card contract for its product: field identity, source-lane separation, required evidence shape, internal checks, media identity, NLP support where required, explicit limitations, and a keep/fix/defer/remove decision. | Expert content certification, Obsidian proof, native/fluent audit, source-governance confidence, release readiness, or permission to shrink another lane's denominator. |
-| Platinum | Expert content certification | Sapphire is already satisfied and an explicit higher review has certified the card's learner value, reading and meaning choice, example usefulness, level fit, source interpretation, limitation decision, and final product judgment under a dedicated Platinum schema. | Obsidian proof, release readiness, manual APKG/mobile/accessibility/listening QA, or future audits not recorded in the schema. |
+| Platinum | Expert content certification | Sapphire is already satisfied and an explicit higher review has certified the card's learner value, reading and meaning choice, example usefulness, level fit, source interpretation, limitation decision, and final product judgment under a dedicated Platinum schema. | Obsidian proof, release readiness, manual APKG/mobile/accessibility/listening QA, or later audits not recorded in the schema. |
 | Obsidian | Proof-ledger certification | Explicit non-mechanical current-version rereview proof exists in the canonical proof path and binds to the exact live card identity. | Release readiness, later fluent/native audit, or manual QA unless separately recorded. |
 
 ## Deck Ready Boundary
@@ -63,17 +63,17 @@ The following names remain compatibility names for unmigrated or legacy surfaces
 - `kanji-platinum-v3-evidence-lanes`
 - `word-platinum-v3-evidence-lanes`
 
-Under this transition, legacy current-standard `platinum` and `fixed_then_platinum` entries remain valid migration inputs where no native Sapphire surface exists, and legacy word Platinum manifests remain compatibility/proof-provider inputs until downstream consumers are migrated. Existing completed work is not invalidated by introducing Sapphire language, but migrated core-kanji and word Sapphire work is represented by `sapphire` and `fixed_then_sapphire` under native Sapphire standards and must not be described as future Platinum content certification.
+Under this transition, legacy current-standard `platinum` and `fixed_then_platinum` entries remain valid migration inputs where no native Sapphire surface exists, and legacy word Platinum manifests remain compatibility/proof-provider inputs until downstream consumers are migrated. Existing completed work is not invalidated by introducing Sapphire language, but migrated core-kanji and word Sapphire work is represented by `sapphire` and `fixed_then_sapphire` under native Sapphire standards and must not be described as Platinum content certification.
 
-For new core-kanji and word structural documentation, prompts, and reviews, use the native Sapphire command families. For additional-unverified surfaces that still carry `platinum` names, describe them as structural/card-quality compatibility gates unless the work is explicitly implementing the future Platinum content-certification schema. Do not claim vNext Platinum content certification from a structural/card-quality pass.
+For new core-kanji and word structural documentation, prompts, and reviews, use the native Sapphire command families. For additional-unverified surfaces that still carry `platinum` names, describe them as structural/card-quality compatibility gates unless the work is explicitly implementing the Platinum content-certification schema. Do not claim Platinum content certification from a structural/card-quality pass.
 
 ## Migration Rules
 
 - Do not mass rename manifests, commands, statuses, or historical review entries without a dedicated migration plan, tests, and count-preserving proof.
 - Do not demote existing current-standard compatibility coverage merely because the tier language was clarified.
-- Do not promote existing compatibility coverage to vNext Platinum content certification unless a dedicated Platinum schema/gate exists and the card passes it.
+- Do not promote existing compatibility coverage to Platinum content certification unless a dedicated Platinum schema/gate exists and the card passes it.
 - Future additional schema work should add Sapphire-native command aliases before removing any compatibility `platinum` names.
-- Future Platinum schema work must inherit Sapphire and add stronger content-review evidence instead of reusing structure-only wording.
+- Platinum schema work must inherit Sapphire and add stronger content-review evidence instead of reusing structure-only wording.
 - Obsidian remains separate from both Sapphire and Platinum.
 
 ## Required Reporting

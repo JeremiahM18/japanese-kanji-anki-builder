@@ -89,7 +89,7 @@ As of 2026-06-03, the recurring supply-chain maintenance items are:
 - Rerun `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, `npm run security:advisories`, and `npm run security:secrets` after dependency, workflow, release-artifact, NOTICE, or policy changes.
 - Treat green maintenance checks as supply-chain hygiene only. They do not close hosted alert regressions, source-governance, release-trust, attestation-proof, APKG import, mobile, accessibility, listening, or manual QA blockers.
 
-The NLP dependency stack is assistive-only. It may generate review context, but it must not certify cards, approve source truth, or bypass Gold, Sapphire, future Platinum, Obsidian, release, import, listening, or accessibility gates.
+The NLP dependency stack is assistive-only. It may generate review context, but it must not certify cards, approve source truth, or bypass Gold, Sapphire, Platinum, Obsidian, release, import, listening, or accessibility gates.
 
 ## CI Boundary
 

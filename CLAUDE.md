@@ -102,7 +102,7 @@ Current posture:
 
 - N5 word work is stabilized through Gold, native Sapphire, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
 - N4 word work is stabilized through Gold, native Sapphire, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
-- N3/N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, future Platinum, and Obsidian lanes are populated
+- N3/N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
 
@@ -119,14 +119,14 @@ Keep the review layers separate.
 - Gold regression does not mean a card deserves to ship in version 1.
 - Sapphire is the current structural and card-quality gate.
 - Native Sapphire commands and manifests own core-kanji and word structural review. Current `platinum` commands and manifests are compatibility names only for legacy/proof-provider inputs or unmigrated additional surfaces.
-- Future Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
+- Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
 - Sapphire requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
 - Obsidian requires explicit non-mechanical current-version rereview proof.
 - Deck Ready is mechanical artifact readiness only. It is not Silver, Gold, Sapphire, Platinum, Obsidian, source truth, release readiness, APKG import QA, accessibility QA, mobile QA, or listening QA.
 - A card can be Gold-reviewed and still fail Sapphire.
 - A level can be Gold-reviewed and still not be release-ready.
 - Do not use Gold coverage as a substitute for Sapphire.
-- Do not use Sapphire or compatibility Platinum coverage as a substitute for future Platinum content certification, Gold regression, or Obsidian proof.
+- Do not use Sapphire or compatibility Platinum coverage as a substitute for Platinum content certification, Gold regression, or Obsidian proof.
 - For Obsidian batch work, follow [docs/obsidian-batch-workflow.md](docs/obsidian-batch-workflow.md): run status and batch commands as the work queue, refresh the generated surface, run the governed NLP support lane, perform the human review, run structural/reading verification, then run the fail-closed certification command only when the selected scope should be complete.
 
 ## N5/N4 Word Freeze

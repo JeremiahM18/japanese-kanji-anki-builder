@@ -184,7 +184,7 @@ function migrateAudit(audit = {}, { migratedAt, fromReviewSetPath, level } = {})
         migrationType: "platinum-compatibility-to-first-class-sapphire",
         level,
         legacyCommandNamesPreserved: true,
-        authority: "Representation migration from the former structural/card-quality Platinum compatibility lane into first-class Sapphire. This is not future Platinum content certification, Obsidian proof, or release readiness.",
+        authority: "Representation migration from the former structural/card-quality Platinum compatibility lane into first-class Sapphire. This is not Platinum content certification, Obsidian proof, or release readiness.",
     };
 
     if (migrated.batch?.id) {
@@ -319,7 +319,7 @@ function migrateEntry(entry = {}, { level, migratedAt, fromReviewSetPath } = {})
         previousReviewStandard: entry.reviewStandard || "",
         newStatus: migrated.status,
         newReviewStandard: migrated.reviewStandard || "",
-        authority: "Preserves current structural/card-quality review as Sapphire only. Does not claim future Platinum content certification, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
+        authority: "Preserves current structural/card-quality review as Sapphire only. Does not claim Platinum content certification, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
     };
 
     recomputeGeneratedSurfaceChecks(migrated);

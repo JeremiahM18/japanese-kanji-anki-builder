@@ -157,7 +157,7 @@ function formatSapphireWordReviewReport(report = {}, { title = "Japanese Kanji B
         title,
         "",
         `Review entries: ${report.totalEntries || 0}`,
-        "Tier: Sapphire (current-standard structural/card-quality gate; not future Platinum content certification or Obsidian proof)",
+        "Tier: Sapphire (current-standard structural/card-quality gate; not Platinum content certification or Obsidian proof)",
         `Sapphire cards: ${report.activeSapphireCount ?? report.activePlatinumCount ?? 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD}`,
         `Current-standard Sapphire cards: ${report.currentStandardSapphireCount ?? report.currentStandardPlatinumCount ?? 0}`,

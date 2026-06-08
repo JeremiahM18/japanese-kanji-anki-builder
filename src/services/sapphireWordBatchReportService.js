@@ -22,7 +22,7 @@ function mapSuggestedReviewStep(value = "") {
     return mapPlatinumTextToSapphire(value)
         .replace(
             /substantive rereview required; structural v3 pass is not proof/i,
-            "already Sapphire; future Platinum content certification and Obsidian proof remain separate"
+            "already Sapphire; Platinum content certification and Obsidian proof remain separate"
         )
         .replace(/already substantively rereviewed/i, "already Sapphire and separately Obsidian certified")
         .replace(/already reviewed/i, "already Sapphire");
@@ -32,7 +32,7 @@ function mapRiskFlag(value = "") {
     return mapPlatinumTextToSapphire(value)
         .replace(
             /has current-standard structure only; square-zero substantive rereview proof is still required/i,
-            "has current-standard Sapphire; future Platinum content certification and Obsidian proof remain separate"
+            "has current-standard Sapphire; Platinum content certification and Obsidian proof remain separate"
         )
         .replace(
             /already has substantive current-standard rereview proof; skip unless intentionally replacing prior evidence/i,
@@ -99,7 +99,7 @@ function formatSapphireWordBatchReport(report = {}) {
         `Japanese Kanji Builder Sapphire ${levelLabel} Word Batch Report`,
         "",
         `Scope: ${report.scope || "(unknown)"}`,
-        "Lane: Sapphire structural/card-quality gate; not future Platinum content certification, Obsidian proof, or release readiness",
+        "Lane: Sapphire structural/card-quality gate; not Platinum content certification, Obsidian proof, or release readiness",
         `Generated cards: ${summary.generatedRows || 0}`,
         `Queue: ${report.queue || WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD}`,
         `Sapphire entries: ${summary.activeSapphire || 0}`,
@@ -158,7 +158,7 @@ function formatSapphireWordBatchReport(report = {}) {
 
     lines.push(
         "",
-        "This report is read-only. It prepares Sapphire review; it does not create entries, prove future Platinum, record Obsidian proof, or prove release readiness."
+        "This report is read-only. It prepares Sapphire review; it does not create entries, prove Platinum, record Obsidian proof, or prove release readiness."
     );
     return `${lines.join("\n")}\n`;
 }

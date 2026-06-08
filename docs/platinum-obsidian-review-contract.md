@@ -1,6 +1,6 @@
 # Platinum And Obsidian Review Contract
 
-This is the front-door contract for every Sapphire, compatibility-named structural, future Platinum, or Obsidian review pass in this repository. Read this before touching `templates/sapphire_n*_review_set.json`, `templates/sapphire_n*_word_review_set.json`, legacy `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
+This is the front-door contract for every Sapphire, compatibility-named structural, Platinum, or Obsidian review pass in this repository. Read this before touching `templates/sapphire_n*_review_set.json`, `templates/sapphire_n*_word_review_set.json`, legacy `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
 
 For program-wide lane authority, read [review-system-forward-contract.md](review-system-forward-contract.md) first, then [review-tier-governance.md](review-tier-governance.md). Core kanji and words use native Sapphire files and commands; additional surfaces still retain compatibility names until their own deliberate migration is implemented.
 
@@ -9,8 +9,8 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 ## Non-Negotiables
 
 - Sapphire is structural/card-quality certification, not a softer name for "almost reviewed."
-- Core-kanji and word Sapphire commands and manifests are the structural lane; legacy `platinum` commands and manifests are read-only compatibility inputs unless the specific surface has not yet migrated. Do not treat either as future Platinum content certification.
-- Future Platinum must inherit Sapphire and add stronger expert content-review evidence under a dedicated schema.
+- Core-kanji and word Sapphire commands and manifests are the structural lane; legacy `platinum` commands and manifests are read-only compatibility inputs unless the specific surface has not yet migrated. Do not treat either as Platinum content certification.
+- Platinum must inherit Sapphire and add stronger expert content-review evidence under a dedicated schema.
 - Obsidian is separate non-mechanical rereview proof, not a synonym for Platinum.
 - Deck Ready, Word Deck Ready, APKG readiness, and package staging are mechanical artifact states, not content trust tiers.
 - NLP is required review support where the lane defines it, but NLP never approves cards, writes tracked templates, certifies Obsidian, or claims release readiness.
@@ -32,7 +32,7 @@ Sapphire proves the live generated card currently passes the active structural/c
 - Core kanji: `kanji-sapphire-v1-evidence-lanes`.
 - Word: `word-sapphire-v1-evidence-lanes`.
 
-Future Platinum content certification is intentionally not inferred from these compatibility names. It requires its own schema/gate when implemented.
+Platinum content certification is intentionally not inferred from these compatibility names. It requires its own schema/gate when implemented.
 
 Obsidian proves explicit, non-mechanical current-version rereview was performed for the live card and recorded in the canonical proof path.
 

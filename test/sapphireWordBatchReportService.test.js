@@ -91,7 +91,7 @@ function buildSapphireEntry(overrides = {}) {
             migratedAt: "2026-06-05",
             migratedFrom: "templates/platinum_n5_word_review_set.json",
             migrationType: "word-platinum-compatibility-to-first-class-sapphire",
-            authority: "Preserves structural review as Sapphire only; not future Platinum or Obsidian proof.",
+            authority: "Preserves structural review as Sapphire only; not Platinum or Obsidian proof.",
         },
         ...overrides,
     };
@@ -116,7 +116,7 @@ test("word Sapphire batch report defaults to missing current-standard structure"
     assert.equal(report.cards[0].identity, "八|はち");
     assert.equal(report.cards[0].reviewStatus, "missing_sapphire");
     assert.match(formatted, /Sapphire N5 Word Batch Report/);
-    assert.match(formatted, /not future Platinum content certification, Obsidian proof, or release readiness/);
+    assert.match(formatted, /not Platinum content certification, Obsidian proof, or release readiness/);
     assert.match(formatted, /Next missing current-standard Sapphire queue/);
     assert.doesNotMatch(formatted, /Missing Platinum/);
 });
@@ -136,5 +136,5 @@ test("word Sapphire scoped report maps current-standard structural status withou
     assert.equal(report.cards[0].identity, "今日|きょう");
     assert.equal(report.cards[0].reviewStatus, "current_standard_sapphire");
     assert.match(report.cards[0].suggestedReviewStep, /already Sapphire/);
-    assert.match(formatted, /future Platinum content certification and Obsidian proof remain separate/);
+    assert.match(formatted, /Platinum content certification and Obsidian proof remain separate/);
 });

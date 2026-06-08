@@ -106,7 +106,7 @@ async function main() {
             failedEntries: result.report.failedCount,
             currentStandardSapphireCount: result.report.currentStandardSapphireCount,
         },
-        authority: "Reviewed-input Sapphire merger only; does not create future Platinum certification, Obsidian proof, release readiness, or source truth from the batch report.",
+        authority: "Reviewed-input Sapphire merger only; does not create Platinum certification, Obsidian proof, release readiness, or source truth from the batch report.",
     }, null, 2));
 }
 

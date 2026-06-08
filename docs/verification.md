@@ -10,7 +10,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 - The tracked [../examples/n5-mini](../examples/n5-mini) fixture locks exact generated TSV rows against the live note schemas so schema or export drift is visible immediately.
 - Candidate is a pre-trust workflow state, not Bronze and not a certification lane.
 - Gold regression protects generated card output from drift.
-- Native Sapphire gates and compatibility structural gates check current structural/card-quality evidence. Future Platinum content certification is a separate stronger lane after Sapphire.
+- Native Sapphire gates and compatibility structural gates check current structural/card-quality evidence. Platinum content certification is a separate stronger lane after Sapphire.
 - Obsidian proof records substantive current-version rereview.
 - GitHub CodeQL scans JavaScript/TypeScript source and GitHub Actions workflow code in CI; there is no local npm equivalent for that hosted code-scanning upload gate.
 - Tagged release workflows create GitHub artifact attestations for release-bundle provenance and SBOM binding; there is no local npm equivalent for the hosted Sigstore-backed attestation upload gate.

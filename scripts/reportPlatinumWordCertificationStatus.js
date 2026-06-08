@@ -7,7 +7,7 @@ module.exports = obsidianWordCertificationStatus;
 
 if (require.main === module) {
     obsidianWordCertificationStatus.main({
-        commandName: "deck:words:platinum:certify-status",
+        commandName: "deck:words:legacy-platinum:certify-status",
         defaultProofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
     }).catch((error) => {
         console.error(error.stack || error);

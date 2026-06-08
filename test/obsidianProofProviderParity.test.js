@@ -400,7 +400,7 @@ function buildFieldSourceInputs() {
 test("provider parity script parses levels, consumer, json, and unknown args", () => {
     const options = parseArgs([
         "--levels=3",
-        "--consumer=kanji-batch-report",
+        "--consumer=kanji-legacy-platinum-batch-report",
         "--kanji=常,幸",
         "--limit=8",
         "--queue=substantive-rereview",
@@ -410,7 +410,7 @@ test("provider parity script parses levels, consumer, json, and unknown args", (
     ]);
 
     assert.deepEqual(options.levels, [3]);
-    assert.equal(options.consumer, "kanji-batch-report");
+    assert.equal(options.consumer, "kanji-legacy-platinum-batch-report");
     assert.deepEqual(options.kanji, ["常", "幸"]);
     assert.equal(options.limit, 8);
     assert.equal(options.queue, "substantive-rereview");
@@ -419,15 +419,15 @@ test("provider parity script parses levels, consumer, json, and unknown args", (
     assert.deepEqual(options.unknownArgs, ["--unexpected"]);
 });
 
-test("provider parity script parses platinum-level consumer options", () => {
+test("provider parity script parses legacy platinum-level consumer options", () => {
     const options = parseArgs([
         "--levels=3",
-        "--consumer=kanji-platinum-level",
+        "--consumer=kanji-legacy-platinum-level",
         "--allow-legacy-standard",
         "--allow-empty",
     ]);
 
-    assert.equal(options.consumer, "kanji-platinum-level");
+    assert.equal(options.consumer, "kanji-legacy-platinum-level");
     assert.equal(options.requireCurrentReviewStandard, false);
     assert.equal(options.allowEmpty, true);
     assert.equal(options.requireAllRows, true);
@@ -442,13 +442,13 @@ test("provider parity script parses kanji field-source contract consumer", () =>
     assert.equal(options.consumer, "kanji-field-source-contract");
 });
 
-test("provider parity script parses platinum governance gate consumer", () => {
+test("provider parity script parses legacy platinum governance gate consumer", () => {
     const options = parseArgs([
         "--levels=3",
-        "--consumer=platinum-governance-gate",
+        "--consumer=legacy-platinum-governance-gate",
     ]);
 
-    assert.equal(options.consumer, "platinum-governance-gate");
+    assert.equal(options.consumer, "legacy-platinum-governance-gate");
 });
 
 test("provider parity script parses word rereview-status consumer and deck kind", () => {
@@ -465,17 +465,17 @@ test("provider parity script parses word rereview-status consumer and deck kind"
     assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
 });
 
-test("provider parity script parses word platinum-level consumer and deck kind", () => {
+test("provider parity script parses word legacy platinum-level consumer and deck kind", () => {
     const options = parseArgs([
         "--levels=5,4",
-        "--consumer=word-platinum-level",
+        "--consumer=word-legacy-platinum-level",
         "--deck-kind=word",
         "--row-source=tracked-review-set",
         "--allow-legacy-standard",
         "--allow-empty",
     ]);
 
-    assert.equal(options.consumer, "word-platinum-level");
+    assert.equal(options.consumer, "word-legacy-platinum-level");
     assert.equal(options.deckKind, "word");
     assert.deepEqual(options.levels, [5, 4]);
     assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
@@ -497,17 +497,17 @@ test("provider parity script parses word governance inputs consumer and deck kin
     assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
 });
 
-test("provider parity script parses word batch-report consumer and word targets", () => {
+test("provider parity script parses word legacy platinum batch-report consumer and word targets", () => {
     const options = parseArgs([
         "--levels=5",
-        "--consumer=word-batch-report",
+        "--consumer=word-legacy-platinum-batch-report",
         "--deck-kind=word",
         "--words=本:ほん,今日|きょう",
         "--limit=2",
         "--row-source=tracked-review-set",
     ]);
 
-    assert.equal(options.consumer, "word-batch-report");
+    assert.equal(options.consumer, "word-legacy-platinum-batch-report");
     assert.equal(options.deckKind, "word");
     assert.deepEqual(options.levels, [5]);
     assert.deepEqual(options.words, [
@@ -703,7 +703,7 @@ test("word batch-report provider parity fails when ledger changes queue selectio
     });
     const formatted = formatObsidianProofProviderParityReport({
         passed: false,
-        consumer: "word-batch-report",
+        consumer: "word-legacy-platinum-batch-report",
         deckKind: "word",
         levels: [5],
         scopes: [scope],
@@ -1078,7 +1078,7 @@ test("kanji field-source contract provider parity fails when rereview binding wo
     assert.match(formatted, /Inline coverage/);
 });
 
-test("platinum governance gate provider parity passes when kanji gate projections match", () => {
+test("legacy platinum governance gate provider parity passes when kanji gate projections match", () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
     writeLedger(rootDir, [buildProofEvent()]);
 
@@ -1097,7 +1097,7 @@ test("platinum governance gate provider parity passes when kanji gate projection
     assert.equal(scope.ledgerProjection.kanjiRereviewReports[0].counts.substantive_current_standard_review_proven, 1);
 });
 
-test("platinum governance gate provider parity fails when kanji proof warning posture drifts", () => {
+test("legacy platinum governance gate provider parity fails when kanji proof warning posture drifts", () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
     writeLedger(rootDir, []);
 
@@ -1110,7 +1110,7 @@ test("platinum governance gate provider parity fails when kanji proof warning po
     });
     const formatted = formatObsidianProofProviderParityReport({
         passed: false,
-        consumer: "platinum-governance-gate",
+        consumer: "legacy-platinum-governance-gate",
         levels: [3],
         scopes: [scope],
     });
@@ -1181,7 +1181,7 @@ test("kanji batch-report provider parity fails when ledger changes queue selecti
     });
     const formatted = formatObsidianProofProviderParityReport({
         passed: false,
-        consumer: "kanji-batch-report",
+        consumer: "kanji-legacy-platinum-batch-report",
         levels: [3],
         scopes: [scope],
     });

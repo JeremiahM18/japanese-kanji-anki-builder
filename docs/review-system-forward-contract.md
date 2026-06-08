@@ -34,14 +34,14 @@ Live commands, tracked schemas, tracked manifests, proof ledgers, and release ev
 | Silver | Generated/card surface exists and can be inspected. | May support card-surface review and downstream Gold/Sapphire work. | Generated TSV/APKG input rows or generated report output. | Deck generation, readiness, completion, or preview command for the product. | Every generated row in scope remains in the downstream denominator unless explicitly removed/deferred by the governed lane. | Silver can pass while Gold, Sapphire, Platinum, Obsidian, release, media QA, and source-depth lanes remain incomplete. |
 | Gold | Regression fixture protects the generated surface against silent drift. | May protect known reviewed output snippets. | `templates/golden_*_review_set.json` or word Gold equivalent. | `deck:review:*`, `deck:words:review:*`, or the level-specific Gold gate. | Gold protects generated rows; it does not shrink Sapphire, Platinum, or Obsidian denominators. | Gold failure is a regression or stale expected-surface problem until reviewed and fixed upstream. |
 | Sapphire | Structural/card-quality certification. | May certify that the live card currently satisfies the product field contract, evidence lanes, media identity, examples, limitations, NLP support where required, and keep/fix/defer/remove decision. | Native Sapphire manifests and schemas, or compatibility structural manifests only for unmigrated surfaces. | `deck:sapphire:*`, `deck:words:sapphire:*`, or a clearly labeled compatibility gate for unmigrated additional surfaces. | Generated rows remain in scope until they have active current-standard Sapphire coverage or a governed defer/remove decision. | Empty or incomplete native Sapphire manifests fail closed. Sapphire is not Platinum content certification and is not Obsidian proof. |
-| Platinum | Expert content certification after Sapphire. | May certify stronger human content judgment only after Sapphire is already satisfied. | A dedicated Platinum schema, manifest, and gate. | Native Platinum commands only, once implemented. | Platinum cannot shrink generated, Sapphire, or Obsidian denominators; it adds a stronger content-certified subset. | Empty, missing, or unimplemented Platinum manifests fail closed. No Platinum claim can come from Sapphire or legacy compatibility coverage. |
+| Platinum | Expert content certification after Sapphire. | May certify stronger human content judgment only after Sapphire is already satisfied. | Native Platinum content manifests and schemas. | `deck:platinum:*` and `deck:words:platinum:*`. | Platinum cannot shrink generated, Sapphire, or Obsidian denominators; it adds a stronger content-certified subset. | Empty or incomplete Platinum manifests fail closed. No Platinum claim can come from Sapphire or legacy compatibility coverage. |
 | Obsidian | Explicit substantive proof ledger/certification. | May certify that non-mechanical current-version review proof exists for the exact live card identity. | Canonical JSONL proof ledger entries and proof-provider reconciliation. | `data:obsidian:proof:*`, `deck:kanji:obsidian:*`, and `deck:words:obsidian:*`. | Generated rows are the proof denominator for the scoped product unless the lane has a governed defer/remove decision. | Obsidian fails closed when proof is missing, malformed, mechanically inferred, or not bound to the live card. |
 
 ## Current Implementation Status
 
 Platinum is the lane name. Do not add a temporal adjective to the lane name.
 
-Native Sapphire is implemented for core kanji and words. Native Platinum content certification is not complete until a dedicated Platinum schema, manifest family, and command family exist and pass for the scoped product. Until then, existing `platinum`-named commands and manifests are legacy compatibility/proof-provider inputs only.
+Native Sapphire is implemented for core kanji and words. Native Platinum content certification is implemented for core kanji and words with empty fail-closed content manifests: `templates/platinum_n*_content_review_set.json` and `templates/platinum_n*_word_content_review_set.json`. Current native Platinum coverage is `0` until expert content reviews are recorded. The old structural `platinum_n*_review_set.json` and `platinum_n*_word_review_set.json` manifests remain legacy compatibility/proof-provider inputs only.
 
 ## Legacy Compatibility Lock
 
@@ -49,10 +49,11 @@ Legacy `platinum` manifests, statuses, standards, and commands are compatibility
 
 Locked compatibility inputs include:
 
-- `templates/platinum_*_review_set.json`
-- `templates/platinum_*_word_review_set.json`
-- `deck:platinum:*`
-- `deck:words:platinum:*`
+- legacy `templates/platinum_*_review_set.json`
+- legacy `templates/platinum_*_word_review_set.json`
+- `deck:legacy-platinum:*`
+- `deck:words:legacy-platinum:*`
+- older proof-provider compatibility surfaces now exposed through explicit legacy names such as `deck:legacy-platinum:rereview-status` and `deck:words:legacy-platinum:rereview-status`
 - `kanji-platinum-v3-evidence-lanes`
 - `word-platinum-v3-evidence-lanes`
 - active legacy statuses `platinum` and `fixed_then_platinum`

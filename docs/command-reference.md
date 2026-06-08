@@ -55,7 +55,8 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:preview` | Preview kanji cards |
 | `npm run deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard` | Build a read-only core-kanji Sapphire review packet for generated rows missing current-standard Sapphire coverage |
 | `npm run deck:sapphire:promote -- --level=1 --input=<reviewed-json>` | Validate and merge reviewed Sapphire candidate entries; writes only with `--write`, does not create Platinum or Obsidian proof |
-| `npm run deck:platinum:batch -- --level=5 --limit=12` | Legacy read-only kanji compatibility packet for Obsidian/substantive proof workflows; new structural core-kanji work should use `deck:sapphire:batch` |
+| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only native kanji Platinum expert-content packet for generated rows that already have current-standard Sapphire but are missing native Platinum content certification |
+| `npm run deck:legacy-platinum:batch -- --level=5 --limit=12` | Legacy read-only kanji compatibility packet for historical structural/proof-provider workflows; new structural core-kanji work uses `deck:sapphire:batch`, and expert content work uses `deck:platinum:batch` |
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
@@ -82,22 +83,28 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:kanji:additional:platinum:n1` | Run the additional-unverified N1 kanji compatibility structural gate |
 | `npm run deck:review:coverage` | Audit Gold regression coverage |
 | `npm run deck:review:accessibility` | Report automated accessibility checklist status for kanji or word decks |
-| `npm run deck:platinum:rereview-status -- --levels=5,4,3,2` | Compatibility kanji rereview-status alias; proof-provider input now defaults to ledger-if-available, but new workflows should use `deck:kanji:obsidian:rereview-status` |
-| `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows before release claims that depend on those rows; migrated kanji and word Obsidian proof inputs default to ledger-if-available |
+| `npm run deck:legacy-platinum:rereview-status -- --levels=5,4,3,2` | Legacy kanji compatibility rereview-status gate; proof-provider input defaults to ledger-if-available, but new proof workflows should use `deck:kanji:obsidian:rereview-status` |
+| `npm run deck:legacy-platinum:governance-gate` | Run the local-data legacy structural governance gate against real generated N5/N4 rows before release claims that depend on those rows; migrated kanji and word Obsidian proof inputs default to ledger-if-available |
 | `npm run deck:sapphire:n5` | Run the native N5 core-kanji Sapphire gate; current coverage is `80/80` |
 | `npm run deck:sapphire:n4` | Run the native N4 core-kanji Sapphire gate; current coverage is `212/212` |
 | `npm run deck:sapphire:n3` | Run the native N3 core-kanji Sapphire gate; current coverage is `341/341` |
 | `npm run deck:sapphire:n2` | Run the native N2 core-kanji Sapphire gate; current coverage is `349/349` |
 | `npm run deck:sapphire:n1` | Run the native N1 core-kanji Sapphire gate; current coverage is `320/1230`, so the full-level gate fails closed on `910` missing Sapphire entries |
-| `npm run deck:platinum:n5` | Legacy read-only N5 kanji compatibility gate retained as a migration input; use `deck:sapphire:n5` for native core-kanji Sapphire |
-| `npm run deck:platinum:n4` | Legacy read-only N4 kanji compatibility gate retained as a migration input; use `deck:sapphire:n4` for native core-kanji Sapphire |
-| `npm run deck:platinum:n3` | Legacy read-only N3 kanji compatibility gate retained as a migration input; use `deck:sapphire:n3` for native core-kanji Sapphire |
-| `npm run deck:platinum:n2` | Legacy read-only N2 kanji compatibility gate retained as a migration input; use `deck:sapphire:n2` for native core-kanji Sapphire |
-| `npm run deck:platinum:n1` | Legacy read-only N1 kanji compatibility gate retained as a migration input; native N1 Sapphire is `320/1230` under `deck:sapphire:n1` |
+| `npm run deck:platinum:n5` | Run the native N5 kanji Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/80` |
+| `npm run deck:platinum:n4` | Run the native N4 kanji Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/212` |
+| `npm run deck:platinum:n3` | Run the native N3 kanji Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/341` |
+| `npm run deck:platinum:n2` | Run the native N2 kanji Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/349` |
+| `npm run deck:platinum:n1` | Run the native N1 kanji Platinum expert-content gate; currently fails closed with `0/1230` native Platinum content, `320` Sapphire-ready rows missing Platinum content, and `910` rows blocked by missing Sapphire |
+| `npm run deck:legacy-platinum:n5` | Legacy read-only N5 kanji compatibility gate retained as a migration/proof-provider input; use `deck:sapphire:n5` for structure and `deck:platinum:n5` for native Platinum content |
+| `npm run deck:legacy-platinum:n4` | Legacy read-only N4 kanji compatibility gate retained as a migration/proof-provider input; use `deck:sapphire:n4` for structure and `deck:platinum:n4` for native Platinum content |
+| `npm run deck:legacy-platinum:n3` | Legacy read-only N3 kanji compatibility gate retained as a migration/proof-provider input; use `deck:sapphire:n3` for structure and `deck:platinum:n3` for native Platinum content |
+| `npm run deck:legacy-platinum:n2` | Legacy read-only N2 kanji compatibility gate retained as a migration/proof-provider input; use `deck:sapphire:n2` for structure and `deck:platinum:n2` for native Platinum content |
+| `npm run deck:legacy-platinum:n1` | Legacy read-only N1 kanji compatibility gate retained as a migration/proof-provider input; use `deck:sapphire:n1` for structure and `deck:platinum:n1` for native Platinum content |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:sapphire:batch -- --level=5 --limit=8 --queue=missing-current-standard` | Build a read-only word Sapphire structural/card-quality review packet for generated rows missing current-standard Sapphire coverage |
-| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Legacy read-only word compatibility/proof packet; use `deck:words:sapphire:batch` for native word structural Sapphire |
+| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only native word Platinum expert-content packet for generated rows that already have current-standard Sapphire but are missing native Platinum content certification |
+| `npm run deck:words:legacy-platinum:batch -- --level=5 --limit=8` | Legacy read-only word compatibility/proof packet; use `deck:words:sapphire:batch` for structure and `deck:words:platinum:batch` for native Platinum content |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
 | `npm run deck:words:sapphire:n5` | Run the native N5 word Sapphire gate; current coverage is `287/287` active generated rows, with deferred/removed tracked separately |
@@ -105,11 +112,16 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:words:sapphire:n3` | Run the native N3 word Sapphire gate; currently fails closed because the manifest is empty and `269` generated rows are missing Sapphire |
 | `npm run deck:words:sapphire:n2` | Run the native N2 word Sapphire gate; currently fails closed because the manifest is empty and `28` generated rows are missing Sapphire |
 | `npm run deck:words:sapphire:n1` | Run the native N1 word Sapphire gate; currently fails closed because the manifest is empty and `26` generated rows are missing Sapphire |
-| `npm run deck:words:platinum:n5` | Legacy N5 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n5` for native word Sapphire |
-| `npm run deck:words:platinum:n4` | Legacy N4 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n4` for native word Sapphire |
+| `npm run deck:words:platinum:n5` | Run the native N5 word Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/287` |
+| `npm run deck:words:platinum:n4` | Run the native N4 word Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/700` |
+| `npm run deck:words:platinum:n3` | Run the native N3 word Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/269` and word Sapphire is missing |
+| `npm run deck:words:platinum:n2` | Run the native N2 word Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/28` and word Sapphire is missing |
+| `npm run deck:words:platinum:n1` | Run the native N1 word Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0/26` and word Sapphire is missing |
+| `npm run deck:words:legacy-platinum:n5` | Legacy N5 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n5` for structure and `deck:words:platinum:n5` for native Platinum content |
+| `npm run deck:words:legacy-platinum:n4` | Legacy N4 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n4` for structure and `deck:words:platinum:n4` for native Platinum content |
 | `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify legacy word Platinum compatibility structural pass versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider, while native `deck:words:sapphire:*` owns word Sapphire coverage |
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
-| `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word source-family independence posture; command name remains legacy |
+| `npm run deck:words:legacy-platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word source-family independence posture; legacy compatibility report, not native Platinum content certification |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |
@@ -182,7 +194,7 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run data:obsidian:proof:views` | Generate compatibility review-set JSON from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite` | Generate the local SQLite query mirror from canonical ledger events |
 | `npm run data:obsidian:proof:sqlite:query` | Query the generated local SQLite mirror after rebuilding it from JSONL |
-| `npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set` | CI-safe provider integrity test for switched proof consumers using tracked review-set row proxies; it performs dual-read parity while inline proof exists and canonical-ledger integrity after inline proof removal. Add `--consumer=kanji-platinum-level`, `--consumer=kanji-batch-report`, `--consumer=kanji-field-source-contract`, `--consumer=platinum-governance-gate`, `--consumer=word-rereview-status --deck-kind=word --levels=5,4`, `--consumer=word-certify-status --deck-kind=word --levels=5,4`, `--consumer=word-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8`, `--consumer=word-platinum-level --deck-kind=word --levels=5,4`, or `--consumer=word-governance-inputs --deck-kind=word --levels=5,4` for consumer-specific projections, and use `--row-source=generated` locally to compare against live generated rows |
+| `npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set` | CI-safe provider integrity test for switched proof consumers using tracked review-set row proxies; it performs dual-read parity while inline proof exists and canonical-ledger integrity after inline proof removal. Add `--consumer=kanji-legacy-platinum-level`, `--consumer=kanji-legacy-platinum-batch-report`, `--consumer=kanji-field-source-contract`, `--consumer=legacy-platinum-governance-gate`, `--consumer=word-rereview-status --deck-kind=word --levels=5,4`, `--consumer=word-certify-status --deck-kind=word --levels=5,4`, `--consumer=word-legacy-platinum-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8`, `--consumer=word-legacy-platinum-level --deck-kind=word --levels=5,4`, or `--consumer=word-governance-inputs --deck-kind=word --levels=5,4` for consumer-specific legacy/proof-provider projections, and use `--row-source=generated` locally to compare against live generated rows |
 | `npm run data:audit:jlpt:sources -- --governance-strict` | Audit JLPT kanji source evidence and fail only on source-governance regressions while evidence depth remains incomplete |
 | `npm run data:audit:jlpt:source-levels -- --worklist-only --limit=10` | Report the focused all-level governed review packet with current level, candidate levels, consensus, vote weights, and resolved source-input worksheet progress without changing decks or readiness |
 | `npm run data:audit:jlpt:source-access` | Rank source lanes by governed usefulness and current source-access state before spending another manual review batch |

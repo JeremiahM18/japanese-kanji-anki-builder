@@ -220,10 +220,10 @@ test("evaluatePlatinumKanjiReviewSet treats legacy review history as non-certify
     assert.equal(legacyReport.legacyOrUnversionedPlatinumCount, 1);
     assert.deepEqual(legacyReport.missingPlatinumRows, ["日"]);
     assert.deepEqual(legacyReport.missingCurrentStandardRows, ["日"]);
-    assert.match(legacyReport.results[0].failures.join("\n"), /active platinum status requires current-standard revalidation/);
+    assert.match(legacyReport.results[0].failures.join("\n"), /active legacy Platinum compatibility status requires current-standard structural\/card-quality revalidation/);
     assert.equal(legacyCompatReport.activePlatinumCount, 0);
     assert.equal(legacyCompatReport.results[0].passed, false);
-    assert.match(legacyCompatReport.results[0].failures.join("\n"), /active platinum status requires current-standard revalidation/);
+    assert.match(legacyCompatReport.results[0].failures.join("\n"), /active legacy Platinum compatibility status requires current-standard structural\/card-quality revalidation/);
     assert.equal(revalidationReport.failedCount, 0);
     assert.equal(revalidationReport.activePlatinumCount, 0);
     assert.equal(revalidationReport.revalidationBacklogCount, 1);
@@ -480,7 +480,7 @@ test("evaluatePlatinumKanjiReviewSet requires every structured evidence type", (
     assert.match(report.results[0].failures.join("\n"), /internalChecks must include evidence type: audio-review/);
 });
 
-test("evaluatePlatinumKanjiReviewSet can require every generated kanji to be platinum reviewed", () => {
+test("evaluatePlatinumKanjiReviewSet can require every generated kanji to have legacy compatibility review", () => {
     const report = evaluatePlatinumKanjiReviewSet({
         rows: [
             buildRow(),
@@ -492,18 +492,18 @@ test("evaluatePlatinumKanjiReviewSet can require every generated kanji to be pla
 
     assert.equal(report.passed, false);
     assert.deepEqual(report.missingPlatinumRows, ["月"]);
-    assert.match(formatPlatinumKanjiReviewReport(report), /missing Platinum entries for generated kanji: 1/);
+    assert.match(formatPlatinumKanjiReviewReport(report), /missing legacy Platinum compatibility entries for generated kanji: 1/);
     assert.match(formatPlatinumKanjiReviewReport(report), /月/);
 });
 
-test("evaluatePlatinumKanjiReviewSet does not pass an empty platinum set by default", () => {
+test("evaluatePlatinumKanjiReviewSet does not pass an empty legacy compatibility set by default", () => {
     const report = evaluatePlatinumKanjiReviewSet({
         rows: [buildRow()],
         entries: [],
     });
 
     assert.equal(report.passed, false);
-    assert.deepEqual(report.coverageFailures, ["no Platinum entries have been reviewed"]);
+    assert.deepEqual(report.coverageFailures, ["no legacy Platinum compatibility entries have been reviewed"]);
 });
 
 test("evaluatePlatinumKanjiReviewSet requires reviewer and date for non-shipping decisions", () => {

@@ -726,7 +726,7 @@ function evaluatePlatinumEntry({
     const failures = [];
 
     if (!ALLOWED_PLATINUM_STATUSES.includes(status)) {
-        failures.push(`unsupported platinum status: ${status || "(blank)"}`);
+        failures.push(`unsupported legacy Platinum compatibility status: ${status || "(blank)"}`);
     }
 
     if (ACTIVE_PLATINUM_STATUSES.includes(status)) {
@@ -735,7 +735,7 @@ function evaluatePlatinumEntry({
         if (row?.error) {
             failures.push(row.error);
         } else if (!row) {
-            failures.push("active platinum word could not be generated");
+            failures.push("active legacy Platinum compatibility word could not be generated");
         } else {
             failures.push(...validateGeneratedPlatinumRow(row));
             failures.push(...validateSameLevelWordAnchor({ row, entry, kanjiLevelData }));
@@ -807,7 +807,7 @@ function evaluatePlatinumEntry({
             failures.push(`${status} word still appears in the generated export`);
         }
     } else if (REVIEW_ONLY_STATUSES.includes(status)) {
-        failures.push("entry is still needs_review and cannot pass platinum");
+        failures.push("entry is still needs_review and cannot pass legacy Platinum compatibility");
     }
 
     return {
@@ -876,16 +876,16 @@ function evaluatePlatinumWordReviewSet({
         : [];
 
     if (!allowEmpty && activeEntries.length === 0) {
-        coverageFailures.push("no Platinum entries have been reviewed");
+        coverageFailures.push("no legacy Platinum compatibility entries have been reviewed");
     }
     if (duplicateActiveEntries.length > 0) {
-        coverageFailures.push(`duplicate active platinum entries: ${duplicateActiveEntries.join(", ")}`);
+        coverageFailures.push(`duplicate active legacy Platinum compatibility entries: ${duplicateActiveEntries.join(", ")}`);
     }
     if (missingPlatinumRows.length > 0) {
-        coverageFailures.push(`missing Platinum entries for generated words: ${missingPlatinumRows.length}`);
+        coverageFailures.push(`missing legacy Platinum compatibility entries for generated words: ${missingPlatinumRows.length}`);
     }
     if (missingCurrentStandardRows.length > 0) {
-        coverageFailures.push(`missing current-standard Platinum entries for generated words: ${missingCurrentStandardRows.length}`);
+        coverageFailures.push(`missing current-standard legacy Platinum compatibility entries for generated words: ${missingCurrentStandardRows.length}`);
     }
 
     const passedCount = results.filter((result) => result.passed).length;
@@ -917,16 +917,16 @@ function evaluatePlatinumWordReviewSet({
     };
 }
 
-function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji Builder Platinum Word Review" } = {}) {
+function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji Builder Legacy Platinum Word Compatibility Review" } = {}) {
     const lines = [
         title,
         "",
         `Review entries: ${report.totalEntries || 0}`,
-        "Tier: Platinum (current-standard structural gate; not Obsidian certification)",
-        `Platinum cards: ${report.activePlatinumCount || 0}`,
+        "Tier: Legacy Platinum compatibility (read-only structural/card-quality proof-provider input; not native Platinum content certification or Obsidian certification)",
+        `Legacy compatibility cards: ${report.activePlatinumCount || 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard Platinum cards: ${report.currentStandardPlatinumCount || 0}`,
-        `Legacy/unversioned platinum cards: ${report.legacyOrUnversionedPlatinumCount || 0}`,
+        `Current-standard legacy compatibility cards: ${report.currentStandardPlatinumCount || 0}`,
+        `Legacy/unversioned compatibility cards: ${report.legacyOrUnversionedPlatinumCount || 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationWordCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
         `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
@@ -946,7 +946,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
     if (Array.isArray(report.missingPlatinumRows) && report.missingPlatinumRows.length > 0) {
         const sampleSize = 30;
         const sample = report.missingPlatinumRows.slice(0, sampleSize);
-        lines.push("", `Missing Platinum row sample (${sample.length}/${report.missingPlatinumRows.length}):`);
+        lines.push("", `Missing legacy compatibility row sample (${sample.length}/${report.missingPlatinumRows.length}):`);
         for (const row of sample) {
             lines.push(`- ${row}`);
         }
@@ -958,7 +958,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
     if (Array.isArray(report.missingCurrentStandardRows) && report.missingCurrentStandardRows.length > 0) {
         const sampleSize = 30;
         const sample = report.missingCurrentStandardRows.slice(0, sampleSize);
-        lines.push("", `Missing current-standard Platinum row sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
+        lines.push("", `Missing current-standard legacy compatibility row sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
         for (const row of sample) {
             lines.push(`- ${row}`);
         }
@@ -975,7 +975,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
     }
 
     for (const result of report.results || []) {
-        lines.push("", `- ${result.label}: manifest status=${result.status}; Platinum gate ${result.passed ? "pass" : "fail"}`);
+        lines.push("", `- ${result.label}: manifest status=${result.status}; legacy compatibility gate ${result.passed ? "pass" : "fail"}`);
         if (!result.passed) {
             for (const failure of result.failures) {
                 lines.push(`  ${failure}`);

@@ -696,12 +696,12 @@ function evaluatePlatinumKanjiEntry({
     const failures = [];
 
     if (!ALLOWED_PLATINUM_STATUSES.includes(status)) {
-        failures.push(`unsupported platinum status: ${status || "(blank)"}`);
+        failures.push(`unsupported legacy Platinum compatibility status: ${status || "(blank)"}`);
     }
 
     if (ACTIVE_PLATINUM_STATUSES.includes(status)) {
         if (!entryUsesCurrentKanjiPlatinumStandard(entry)) {
-            failures.push("active platinum status requires current-standard revalidation with required evidence lanes; use needs_revalidation for legacy/unversioned review history");
+            failures.push("active legacy Platinum compatibility status requires current-standard structural/card-quality revalidation with required evidence lanes; use needs_revalidation for legacy/unversioned review history");
         }
         failures.push(...sourceOriginFailures);
         failures.push(...validateActivePlatinumEntry(entry, {
@@ -750,7 +750,7 @@ function evaluatePlatinumKanjiEntry({
     } else if (REVALIDATION_STATUSES.includes(status)) {
         failures.push(...validateRevalidationEntry(entry));
     } else if (REVIEW_ONLY_STATUSES.includes(status)) {
-        failures.push("entry is still needs_review and cannot pass platinum");
+        failures.push("entry is still needs_review and cannot pass legacy Platinum compatibility");
     }
 
     return {
@@ -831,16 +831,16 @@ function evaluatePlatinumKanjiReviewSet({
         : [];
 
     if (!allowEmpty && activeEntries.length === 0) {
-        coverageFailures.push("no Platinum entries have been reviewed");
+        coverageFailures.push("no legacy Platinum compatibility entries have been reviewed");
     }
     if (duplicateActiveEntries.length > 0) {
-        coverageFailures.push(`duplicate active platinum entries: ${duplicateActiveEntries.join(", ")}`);
+        coverageFailures.push(`duplicate active legacy Platinum compatibility entries: ${duplicateActiveEntries.join(", ")}`);
     }
     if (missingPlatinumRows.length > 0) {
-        coverageFailures.push(`missing Platinum entries for generated kanji: ${missingPlatinumRows.length} (Platinum coverage requires current-standard revalidation)`);
+        coverageFailures.push(`missing legacy Platinum compatibility entries for generated kanji: ${missingPlatinumRows.length} (legacy compatibility coverage requires current-standard structural/card-quality revalidation)`);
     }
     if (missingCurrentStandardRows.length > 0 && missingCurrentStandardRows.length !== missingPlatinumRows.length) {
-        coverageFailures.push(`missing current-standard Platinum entries for generated kanji: ${missingCurrentStandardRows.length}`);
+        coverageFailures.push(`missing current-standard legacy Platinum compatibility entries for generated kanji: ${missingCurrentStandardRows.length}`);
     }
 
     const passedCount = results.filter((result) => result.passed).length;
@@ -876,15 +876,15 @@ function evaluatePlatinumKanjiReviewSet({
     };
 }
 
-function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji Builder Platinum Kanji Review" } = {}) {
+function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji Builder Legacy Platinum Kanji Compatibility Review" } = {}) {
     const lines = [
         title,
         "",
         `Review entries: ${report.totalEntries || 0}`,
-        "Tier: Platinum (current-standard structural gate; not Obsidian certification)",
-        `Platinum cards: ${report.activePlatinumCount || 0}`,
+        "Tier: Legacy Platinum compatibility (read-only structural/card-quality proof-provider input; not native Platinum content certification or Obsidian certification)",
+        `Legacy compatibility cards: ${report.activePlatinumCount || 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard Platinum cards: ${report.currentStandardPlatinumCount || 0}`,
+        `Current-standard legacy compatibility cards: ${report.currentStandardPlatinumCount || 0}`,
         `Revalidation backlog/history cards: ${report.revalidationBacklogCount ?? report.legacyOrUnversionedPlatinumCount ?? 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationKanjiCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
@@ -906,7 +906,7 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     if (Array.isArray(report.missingPlatinumRows) && report.missingPlatinumRows.length > 0) {
         const sampleSize = 30;
         const sample = report.missingPlatinumRows.slice(0, sampleSize);
-        lines.push("", `Missing Platinum kanji sample (${sample.length}/${report.missingPlatinumRows.length}):`);
+        lines.push("", `Missing legacy compatibility kanji sample (${sample.length}/${report.missingPlatinumRows.length}):`);
         for (const kanji of sample) {
             lines.push(`- ${kanji}`);
         }
@@ -922,7 +922,7 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     ) {
         const sampleSize = 30;
         const sample = report.missingCurrentStandardRows.slice(0, sampleSize);
-        lines.push("", `Missing current-standard Platinum sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
+        lines.push("", `Missing current-standard legacy compatibility sample (${sample.length}/${report.missingCurrentStandardRows.length}):`);
         for (const kanji of sample) {
             lines.push(`- ${kanji}`);
         }
@@ -939,7 +939,7 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     }
 
     for (const result of report.results || []) {
-        lines.push("", `- ${result.label}: manifest status=${result.status}; Platinum gate ${result.passed ? "pass" : "fail"}`);
+        lines.push("", `- ${result.label}: manifest status=${result.status}; legacy compatibility gate ${result.passed ? "pass" : "fail"}`);
         if (!result.passed) {
             for (const failure of result.failures) {
                 lines.push(`  ${failure}`);

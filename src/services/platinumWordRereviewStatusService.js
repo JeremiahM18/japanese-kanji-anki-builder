@@ -132,13 +132,13 @@ function buildBlockedReasons({
     const reasons = [];
 
     if (reviewReport.missingPlatinumRows?.includes(label) || reviewReport.missingPlatinumRows?.includes(identity)) {
-        reasons.push("missing active platinum entry for generated word");
+        reasons.push("missing active legacy compatibility entry for generated word");
     }
     if (reviewReport.missingCurrentStandardRows?.includes(label) || reviewReport.missingCurrentStandardRows?.includes(identity)) {
         reasons.push("missing current-standard structural entry");
     }
     if (reviewReport.duplicateActiveEntries?.includes(label) || reviewReport.duplicateActiveEntries?.includes(identity)) {
-        reasons.push("duplicate active platinum entries");
+        reasons.push("duplicate active legacy compatibility entries");
     }
     for (const result of matchingResults) {
         if (!result.passed && result.failures?.length > 0) {
@@ -146,7 +146,7 @@ function buildBlockedReasons({
         }
     }
     if (matchingEntries.length === 0 && reasons.length === 0) {
-        reasons.push("no platinum manifest entry found for generated word");
+        reasons.push("no legacy compatibility manifest entry found for generated word");
     }
 
     return [...new Set(reasons)];
@@ -350,7 +350,7 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
         `Generated active word rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
         "",
-        "| Scope | Generated deck rows | Platinum pass (structural gate) | Obsidian certified (substantive proof) | Platinum entries needing Obsidian | Blocked/failing deck rows |",
+        "| Scope | Generated deck rows | Legacy compatibility pass | Obsidian certified (substantive proof) | Legacy entries needing Obsidian | Blocked/failing deck rows |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ];
 
@@ -378,9 +378,9 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
     lines.push(
         "",
         "Proof policy:",
-        "- Tier model: Silver = generated surface exists, Gold = golden regression, Platinum = current-standard structural gate, Obsidian = explicit non-mechanical current-version certification proof.",
-        "- Generated deck rows are the certification denominator. Platinum subsets do not shrink the Obsidian queue.",
-        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: Platinum lane validity is not counted as Obsidian certification proof by itself.`,
+        "- Tier model: Silver = generated surface exists, Gold = golden regression, Sapphire = current-standard structural/card-quality certification, Platinum = native expert content certification, Obsidian = explicit non-mechanical current-version certification proof.",
+        "- Generated deck rows are the certification denominator. Legacy compatibility subsets do not shrink the Obsidian queue.",
+        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: legacy compatibility validity is not counted as Obsidian certification proof by itself.`,
         `- To count as Obsidian certified, an entry must carry structured rereviewProvenance with explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance, ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, exact word-reading card identity binding, a full word-card evidence checklist, and actual ${summary.sentenceQualityReviewProofMarker || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );

@@ -53,6 +53,35 @@ function mapSapphireEntriesToPlatinumCompatibility(entries = []) {
     return (Array.isArray(entries) ? entries : []).map(mapSapphireEntryToPlatinumCompatibility);
 }
 
+function mapPlatinumTextToSapphire(value = "") {
+    return String(value || "")
+        .replaceAll(platinumKanjiReview.CURRENT_KANJI_PLATINUM_REVIEW_STANDARD, CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD)
+        .replace(/fixed_then_platinum/g, "fixed_then_sapphire")
+        .replace(/legacy Platinum compatibility/g, "Sapphire")
+        .replace(/legacy compatibility/g, "Sapphire")
+        .replace(/Legacy compatibility/g, "Sapphire")
+        .replace(/current-standard Platinum/g, "current-standard Sapphire")
+        .replace(/Current-standard Platinum/g, "Current-standard Sapphire")
+        .replace(/active platinum/g, "active Sapphire")
+        .replace(/active Platinum/g, "active Sapphire")
+        .replace(/Platinum coverage requires current-standard revalidation/g, "Sapphire coverage requires current-standard structural revalidation")
+        .replace(/Platinum cards/g, "Sapphire cards")
+        .replace(/Platinum entries/g, "Sapphire entries")
+        .replace(/platinum entries/g, "Sapphire entries")
+        .replace(/Platinum row/g, "Sapphire row")
+        .replace(/platinum row/g, "Sapphire row")
+        .replace(/Platinum/g, "Sapphire")
+        .replace(/platinum/g, "sapphire");
+}
+
+function mapSapphireResultFromCompatibility(result = {}) {
+    return {
+        ...result,
+        status: mapPlatinumTextToSapphire(result.status),
+        failures: (result.failures || []).map(mapPlatinumTextToSapphire),
+    };
+}
+
 function hasActiveSapphireStatus(entry = {}) {
     return ACTIVE_SAPPHIRE_STATUSES.includes(normalizeText(entry.status));
 }
@@ -97,9 +126,7 @@ function buildKanjiSapphireVerificationLimitationSummary(entries = []) {
 function validateCurrentKanjiSapphireReviewStandard(entry = {}) {
     return platinumKanjiReview
         .validateCurrentKanjiPlatinumReviewStandard(mapSapphireEntryToPlatinumCompatibility(entry))
-        .map((failure) => failure
-            .replaceAll(platinumKanjiReview.CURRENT_KANJI_PLATINUM_REVIEW_STANDARD, CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD)
-            .replace(/platinum/gi, "Sapphire"));
+        .map(mapPlatinumTextToSapphire);
 }
 
 function evaluateSapphireKanjiReviewSet({
@@ -120,9 +147,20 @@ function evaluateSapphireKanjiReviewSet({
         allowEmpty,
     });
     const standardSummary = buildKanjiSapphireReviewStandardSummary(entries);
+    const nativeReport = { ...report };
+    delete nativeReport.activePlatinumCount;
+    delete nativeReport.activePlatinumStatusCount;
+    delete nativeReport.currentStandardPlatinumCount;
+    delete nativeReport.legacyOrUnversionedPlatinumCount;
+    delete nativeReport.missingPlatinumRows;
+    delete nativeReport.missingCurrentStandardRows;
+    delete nativeReport.coverageFailures;
+    delete nativeReport.results;
 
     return {
-        ...report,
+        ...nativeReport,
+        coverageFailures: (report.coverageFailures || []).map(mapPlatinumTextToSapphire),
+        results: (report.results || []).map(mapSapphireResultFromCompatibility),
         activeSapphireCount: report.activePlatinumCount,
         activeSapphireStatusCount: report.activePlatinumStatusCount,
         currentReviewStandard: CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
@@ -132,6 +170,7 @@ function evaluateSapphireKanjiReviewSet({
         legacyOrUnversionedKanji: standardSummary.legacyOrUnversionedKanji,
         revalidationBacklogKanji: standardSummary.revalidationBacklogKanji,
         missingSapphireRows: report.missingPlatinumRows,
+        missingCurrentStandardSapphireRows: report.missingCurrentStandardRows,
     };
 }
 
@@ -141,9 +180,9 @@ function formatSapphireKanjiReviewReport(report = {}, { title = "Japanese Kanji 
         "",
         `Review entries: ${report.totalEntries || 0}`,
         "Tier: Sapphire (current-standard structural/card-quality gate; not Platinum content certification or Obsidian proof)",
-        `Sapphire cards: ${report.activeSapphireCount ?? report.activePlatinumCount ?? 0}`,
+        `Sapphire cards: ${report.activeSapphireCount ?? 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD}`,
-        `Current-standard Sapphire cards: ${report.currentStandardSapphireCount ?? report.currentStandardPlatinumCount ?? 0}`,
+        `Current-standard Sapphire cards: ${report.currentStandardSapphireCount ?? 0}`,
         `Revalidation backlog/history cards: ${report.revalidationBacklogCount ?? report.legacyOrUnversionedSapphireCount ?? 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationKanjiCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
@@ -158,11 +197,11 @@ function formatSapphireKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     if (Array.isArray(report.coverageFailures) && report.coverageFailures.length > 0) {
         lines.push("", "Coverage failures:");
         for (const failure of report.coverageFailures) {
-            lines.push(`- ${failure.replace(/Platinum/g, "Sapphire").replace(/platinum/g, "sapphire")}`);
+            lines.push(`- ${mapPlatinumTextToSapphire(failure)}`);
         }
     }
 
-    const missingRows = report.missingSapphireRows || report.missingPlatinumRows || [];
+    const missingRows = report.missingSapphireRows || [];
     if (Array.isArray(missingRows) && missingRows.length > 0) {
         const sampleSize = 30;
         const sample = missingRows.slice(0, sampleSize);
@@ -183,10 +222,10 @@ function formatSapphireKanjiReviewReport(report = {}, { title = "Japanese Kanji 
     }
 
     for (const result of report.results || []) {
-        lines.push("", `- ${result.label}: manifest status=${result.status.replace(/platinum/g, "sapphire")}; Sapphire gate ${result.passed ? "pass" : "fail"}`);
+        lines.push("", `- ${result.label}: manifest status=${mapPlatinumTextToSapphire(result.status)}; Sapphire gate ${result.passed ? "pass" : "fail"}`);
         if (!result.passed) {
             for (const failure of result.failures) {
-                lines.push(`  ${failure.replace(/Platinum/g, "Sapphire").replace(/platinum/g, "sapphire")}`);
+                lines.push(`  ${mapPlatinumTextToSapphire(failure)}`);
             }
         }
     }
@@ -208,6 +247,7 @@ module.exports = {
     formatSapphireKanjiReviewReport,
     hasActiveSapphireStatus,
     isCurrentStandardSapphireEntry,
+    mapPlatinumTextToSapphire,
     mapSapphireEntriesToPlatinumCompatibility,
     mapSapphireEntryToPlatinumCompatibility,
     validateCurrentKanjiSapphireReviewStandard,

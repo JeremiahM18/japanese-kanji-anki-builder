@@ -295,7 +295,8 @@ test("formatPlatinumKanjiBatchReport states that the report is read-only", () =>
     });
 
     const formatted = formatPlatinumKanjiBatchReport(report);
-    assert.match(formatted, /Platinum N5 Kanji Batch Report/);
+    assert.match(formatted, /Legacy Platinum N5 Kanji Compatibility Batch Report/);
+    assert.match(formatted, /Lane: Legacy Platinum compatibility/);
     assert.match(formatted, /Rubric: kanji-platinum-rereview-rubric-v1/);
     assert.match(formatted, /Review rubric: blocked/);
     assert.match(formatted, /manual_judgment_required/);

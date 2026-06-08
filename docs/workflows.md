@@ -90,10 +90,10 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 2. Generate the next human-review worklist:
 
 ```bash
-npm run deck:platinum:batch -- --level=<level> --limit=12
+npm run deck:legacy-platinum:batch -- --level=<level> --limit=12
 ```
 
-The default queue is `substantive-rereview`. It includes current-standard Sapphire or compatibility entries until explicit non-mechanical Obsidian proof exists. Use `deck:sapphire:batch -- --queue=missing-current-standard` only when the task is actual card-data Sapphire coverage rather than Obsidian proof.
+The default queue is `substantive-rereview`. It includes current-standard Sapphire or compatibility entries until explicit non-mechanical Obsidian proof exists. Use `deck:sapphire:batch -- --queue=missing-current-standard` only when the task is actual card-data Sapphire coverage, and use native `deck:platinum:batch` only when the task is expert content certification beyond Sapphire.
 
 3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support lane before or during review:
 
@@ -115,12 +115,12 @@ Kanji tokenizer differences are usually treated as reading variants or tokenizer
 6. Verify the batch:
 
 ```bash
-npm run deck:platinum:n<level>
+npm run deck:legacy-platinum:n<level>
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
-npm run deck:platinum:batch -- --level=<level> --limit=12
+npm run deck:legacy-platinum:batch -- --level=<level> --limit=12
 ```
 
-For core-kanji Sapphire structural verification, replace the first command with `npm run deck:sapphire:n<level>`, such as `deck:sapphire:n3` for N3. Keep `deck:platinum:batch` here only for the Obsidian substantive rereview queue.
+For core-kanji Sapphire structural verification, replace the first command with `npm run deck:sapphire:n<level>`, such as `deck:sapphire:n3` for N3. Keep `deck:legacy-platinum:batch` here only for the Obsidian substantive rereview queue.
 
 7. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
 
@@ -142,10 +142,10 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 2. Generate the next human-review worklist:
 
 ```bash
-npm run deck:words:platinum:batch -- --level=<level> --limit=8
+npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=8
 ```
 
-Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage. For word structural work, use `deck:words:sapphire:batch`; keep the `deck:words:platinum:batch` queue here for Obsidian/proof-provider compatibility work.
+Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage. For word structural work, use `deck:words:sapphire:batch`; keep the `deck:words:legacy-platinum:batch` queue here for Obsidian/proof-provider compatibility work. Use native `deck:words:platinum:batch` only for expert content certification beyond Sapphire.
 
 3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
 
@@ -165,7 +165,7 @@ Word NLP is broader than kanji NLP: it runs model/runtime checks, tokenization, 
 ```bash
 npm run deck:words:sapphire:n<level>
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
-npm run deck:words:platinum:batch -- --level=<level> --limit=8
+npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=8
 ```
 
 Replace `n<level>` with the actual npm alias when one exists, such as `deck:words:sapphire:n4`.

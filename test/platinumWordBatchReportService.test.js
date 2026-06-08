@@ -115,7 +115,7 @@ test("word batch report selects rows missing current-standard platinum and surfa
     assert.equal(report.cards.length, 2);
     assert.equal(report.cards[0].identity, "今日|きょう");
     assert.equal(report.cards[0].reviewStatus, "legacy_unversioned_platinum");
-    assert.match(report.cards[0].suggestedReviewStep, /revalidate existing platinum/);
+    assert.match(report.cards[0].suggestedReviewStep, /revalidate existing legacy compatibility/);
     assert.equal(report.cards[1].identity, "八|はち");
     assert.equal(report.cards[1].hardChecksPassed, true);
     assert.ok(report.cards[1].riskFlags.some((flag) => /generated pitch/.test(flag)));
@@ -123,7 +123,7 @@ test("word batch report selects rows missing current-standard platinum and surfa
     assert.match(report.cards[1].suggestedReviewStep, /source-check pitch/);
     assert.match(formatPlatinumWordBatchReport(report), /This report is read-only/);
     assert.match(formatPlatinumWordBatchReport(report), /Next substantive rereview queue/);
-    assert.match(formatPlatinumWordBatchReport(report), /structural current-standard entries remain in scope/);
+    assert.match(formatPlatinumWordBatchReport(report), /legacy current-standard structural\/card-quality entries remain in scope/);
 });
 
 test("word batch report keeps structural-only current-standard entries in the default rereview queue", () => {
@@ -141,7 +141,7 @@ test("word batch report keeps structural-only current-standard entries in the de
     assert.equal(report.summary.remainingSubstantiveRereview, 2);
     assert.equal(report.cards[0].identity, "今日|きょう");
     assert.equal(report.cards[0].reviewStatus, "current_standard_structural_only");
-    assert.match(report.cards[0].suggestedReviewStep, /structural v3 pass is not proof/);
+    assert.match(report.cards[0].suggestedReviewStep, /legacy compatibility structural pass is not proof/);
 });
 
 test("word batch report does not treat base rereview provenance as Obsidian proof", () => {
@@ -179,7 +179,7 @@ test("word batch report can still expose the missing current-standard structure 
 
     assert.equal(report.cards[0].identity, "八|はち");
     assert.equal(report.summary.remainingCurrentStandard, 1);
-    assert.match(formatPlatinumWordBatchReport(report), /Next missing current-standard structure queue/);
+    assert.match(formatPlatinumWordBatchReport(report), /Next missing legacy compatibility structure queue/);
 });
 
 test("scoped word batch report keeps formatted output focused on requested cards", () => {

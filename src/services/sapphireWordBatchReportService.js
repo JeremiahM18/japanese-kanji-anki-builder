@@ -21,7 +21,7 @@ function mapReviewStatus(status = "") {
 function mapSuggestedReviewStep(value = "") {
     return mapPlatinumTextToSapphire(value)
         .replace(
-            /substantive rereview required; structural v3 pass is not proof/i,
+            /substantive rereview required; (?:(?:legacy compatibility|Sapphire) )?structural(?: v3)? pass is not proof/i,
             "already Sapphire; Platinum content certification and Obsidian proof remain separate"
         )
         .replace(/already substantively rereviewed/i, "already Sapphire and separately Obsidian certified")

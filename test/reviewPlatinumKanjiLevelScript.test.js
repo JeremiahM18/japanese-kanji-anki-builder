@@ -33,7 +33,7 @@ function buildPlatinumEntry(overrides = {}) {
     };
 }
 
-test("kanji platinum level script fails fast when required Platinum coverage is empty", () => {
+test("kanji legacy platinum level script fails fast when required compatibility coverage is empty", () => {
     assert.throws(
         () => assertKanjiPlatinumPreflight({
             entries: [],
@@ -44,7 +44,7 @@ test("kanji platinum level script fails fast when required Platinum coverage is 
                 requireCurrentReviewStandard: true,
             },
         }),
-        /N3 has 0 Platinum entries/
+        /N3 has 0 legacy compatibility entries/
     );
 });
 
@@ -62,7 +62,7 @@ test("kanji platinum level script allows intentional empty diagnostic surfaces",
     assert.equal(result.platinumCount, 0);
 });
 
-test("kanji platinum level script allows real Platinum coverage to continue to generated-row checks", () => {
+test("kanji legacy platinum level script allows real compatibility coverage to continue to generated-row checks", () => {
     const result = assertKanjiPlatinumPreflight({
         entries: [buildPlatinumEntry()],
         level: 5,

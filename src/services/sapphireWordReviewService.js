@@ -69,6 +69,9 @@ function mapPlatinumTextToSapphire(value = "") {
     return String(value || "")
         .replaceAll(platinumWordReview.CURRENT_WORD_PLATINUM_REVIEW_STANDARD, CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD)
         .replace(/fixed_then_platinum/g, "fixed_then_sapphire")
+        .replace(/legacy Platinum compatibility/g, "Sapphire")
+        .replace(/legacy compatibility/g, "Sapphire")
+        .replace(/Legacy compatibility/g, "Sapphire")
         .replace(/current-standard Platinum/g, "current-standard Sapphire")
         .replace(/Current-standard Platinum/g, "Current-standard Sapphire")
         .replace(/active platinum/g, "active Sapphire")
@@ -80,6 +83,14 @@ function mapPlatinumTextToSapphire(value = "") {
         .replace(/platinum row/g, "Sapphire row")
         .replace(/Platinum/g, "Sapphire")
         .replace(/platinum/g, "sapphire");
+}
+
+function mapSapphireResultFromCompatibility(result = {}) {
+    return {
+        ...result,
+        status: mapPlatinumTextToSapphire(result.status),
+        failures: (result.failures || []).map(mapPlatinumTextToSapphire),
+    };
 }
 
 function hasActiveWordSapphireStatus(entry = {}) {
@@ -138,9 +149,19 @@ function evaluateSapphireWordReviewSet({
         allowEmpty,
     });
     const standardSummary = buildWordSapphireReviewStandardSummary(entries);
+    const nativeReport = { ...report };
+    delete nativeReport.activePlatinumCount;
+    delete nativeReport.currentStandardPlatinumCount;
+    delete nativeReport.legacyOrUnversionedPlatinumCount;
+    delete nativeReport.missingPlatinumRows;
+    delete nativeReport.missingCurrentStandardRows;
+    delete nativeReport.coverageFailures;
+    delete nativeReport.results;
 
     return {
-        ...report,
+        ...nativeReport,
+        coverageFailures: (report.coverageFailures || []).map(mapPlatinumTextToSapphire),
+        results: (report.results || []).map(mapSapphireResultFromCompatibility),
         activeSapphireCount: report.activePlatinumCount,
         currentReviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
         currentStandardSapphireCount: standardSummary.currentStandardCount,
@@ -158,10 +179,10 @@ function formatSapphireWordReviewReport(report = {}, { title = "Japanese Kanji B
         "",
         `Review entries: ${report.totalEntries || 0}`,
         "Tier: Sapphire (current-standard structural/card-quality gate; not Platinum content certification or Obsidian proof)",
-        `Sapphire cards: ${report.activeSapphireCount ?? report.activePlatinumCount ?? 0}`,
+        `Sapphire cards: ${report.activeSapphireCount ?? 0}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD}`,
-        `Current-standard Sapphire cards: ${report.currentStandardSapphireCount ?? report.currentStandardPlatinumCount ?? 0}`,
-        `Legacy/unversioned Sapphire cards: ${report.legacyOrUnversionedSapphireCount ?? report.legacyOrUnversionedPlatinumCount ?? 0}`,
+        `Current-standard Sapphire cards: ${report.currentStandardSapphireCount ?? 0}`,
+        `Legacy/unversioned Sapphire cards: ${report.legacyOrUnversionedSapphireCount ?? 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationWordCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
         `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
@@ -178,7 +199,7 @@ function formatSapphireWordReviewReport(report = {}, { title = "Japanese Kanji B
         }
     }
 
-    const missingRows = report.missingSapphireRows || report.missingPlatinumRows || [];
+    const missingRows = report.missingSapphireRows || [];
     if (Array.isArray(missingRows) && missingRows.length > 0) {
         const sampleSize = 30;
         const sample = missingRows.slice(0, sampleSize);
@@ -191,7 +212,7 @@ function formatSapphireWordReviewReport(report = {}, { title = "Japanese Kanji B
         }
     }
 
-    const missingCurrentStandardRows = report.missingCurrentStandardSapphireRows || report.missingCurrentStandardRows || [];
+    const missingCurrentStandardRows = report.missingCurrentStandardSapphireRows || [];
     if (Array.isArray(missingCurrentStandardRows) && missingCurrentStandardRows.length > 0) {
         const sampleSize = 30;
         const sample = missingCurrentStandardRows.slice(0, sampleSize);

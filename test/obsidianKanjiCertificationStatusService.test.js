@@ -42,7 +42,7 @@ test("kanji certification gate passes only when every generated row has Obsidian
     assert.equal(summary.certificationGate.manualJudgmentBoundary, MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE);
 });
 
-test("kanji certification gate fails structural Platinum rows that still need Obsidian proof", () => {
+test("kanji certification gate fails structural compatibility rows that still need Obsidian proof", () => {
     const summary = buildObsidianKanjiCertificationStatusSummary([buildLevelReport({
         cards: [{
             kanji: "月",

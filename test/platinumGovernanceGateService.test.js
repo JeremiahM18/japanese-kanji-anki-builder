@@ -93,7 +93,7 @@ test("manifest governance posture counts word card-specific summaries and limita
     assert.equal(posture.markers.includes(GOVERNANCE_MARKERS.ZERO_VERIFICATION_LIMITATIONS), false);
 });
 
-test("platinum governance gate allows configured incomplete word coverage but fails dirty reviewed blockers", () => {
+test("legacy platinum governance gate allows configured incomplete word coverage but fails dirty reviewed blockers", () => {
     const allowed = evaluatePlatinumGovernanceGate({
         kanjiRereviewReports: [{
             level: 5,
@@ -104,7 +104,7 @@ test("platinum governance gate allows configured incomplete word coverage but fa
             counts: { blocked_or_failing: 1, needs_substantive_rereview: 1 },
             cards: [{
                 blockedOrFailing: true,
-                reasons: ["missing active platinum entry for generated word"],
+                reasons: ["missing active legacy compatibility entry for generated word"],
             }],
         }],
         wordSourcePostureSummary: {
@@ -135,7 +135,7 @@ test("platinum governance gate allows configured incomplete word coverage but fa
     assert.match(dirty.issues.join("\n"), /unexpected blocked/);
 });
 
-test("platinum governance gate fails missing governed word source evidence", () => {
+test("legacy platinum governance gate fails missing governed word source evidence", () => {
     const report = evaluatePlatinumGovernanceGate({
         wordSourcePostureSummary: {
             totals: { missing_governed_source: 1, single_source_family: 0 },
@@ -146,7 +146,7 @@ test("platinum governance gate fails missing governed word source evidence", () 
     assert.match(report.issues.join("\n"), /missing governed source evidence/);
 });
 
-test("formatted platinum governance gate report includes marker table", () => {
+test("formatted legacy platinum governance gate report includes marker table", () => {
     const report = evaluatePlatinumGovernanceGate({
         wordSourcePostureSummary: {
             totals: { missing_governed_source: 0, single_source_family: 1 },
@@ -159,7 +159,7 @@ test("formatted platinum governance gate report includes marker table", () => {
     });
     const formatted = formatPlatinumGovernanceGateReport(report);
 
-    assert.match(formatted, /Platinum Governance Gate/);
+    assert.match(formatted, /Legacy Platinum Compatibility Governance Gate/);
     assert.match(formatted, /Governance warnings/);
     assert.match(formatted, /word_source_independence_not_proven/);
     assert.match(formatted, /Example quality automation/);

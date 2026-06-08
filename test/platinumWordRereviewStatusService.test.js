@@ -413,7 +413,7 @@ test("word rereview status reports generated rows without current-standard entri
     assert.equal(report.passed, false);
     assert.equal(report.counts.current_v3_structural_pass, 1);
     assert.equal(report.counts.blocked_or_failing, 1);
-    assert.match(report.cards.find((card) => card.identity === "明日|あした").reasons.join("\n"), /missing active platinum entry/);
+    assert.match(report.cards.find((card) => card.identity === "明日|あした").reasons.join("\n"), /missing active legacy compatibility entry/);
 });
 
 test("formatted word rereview report is clear and read-only", () => {
@@ -426,9 +426,9 @@ test("formatted word rereview report is clear and read-only", () => {
     const formatted = formatPlatinumWordRereviewStatusReport(summary);
 
     assert.match(formatted, /Word Obsidian Proof Status/);
-    assert.match(formatted, /Platinum pass \(structural gate\)/);
+    assert.match(formatted, /Legacy compatibility pass/);
     assert.match(formatted, /Generated deck rows are the certification denominator/);
-    assert.match(formatted, /Platinum entries needing Obsidian/);
+    assert.match(formatted, /Legacy entries needing Obsidian/);
     assert.match(formatted, /Obsidian = explicit non-mechanical current-version certification proof/);
     assert.match(formatted, /exact word-reading card identity binding/);
     assert.match(formatted, /full word-card evidence checklist/);

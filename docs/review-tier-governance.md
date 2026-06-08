@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the program-wide trust ladder for kanji and word deck work. It exists so future review threads do not reconstruct tier meanings from chat, old summaries, or command names.
+This document summarizes the program-wide trust ladder for kanji and word deck work. The binding forward-lane contract is [review-system-forward-contract.md](review-system-forward-contract.md). These files exist so future review threads do not reconstruct lane meanings from chat, old summaries, or command names.
 
 ## Scope
 
@@ -10,9 +10,17 @@ The trust ladder applies to core kanji decks, word decks, optional additional-un
 
 Core kanji and word decks have first-class Sapphire schemas and command families. Optional additional-unverified kanji still retains compatibility command names until its own deliberate migration is implemented.
 
+`Candidate` is a pre-trust workflow state for proposed items, selector rows, source rows, expansion targets, migrations, and triage. It is not a certification tier, is not Bronze, and must not move Silver, Gold, Sapphire, Platinum, or Obsidian denominators.
+
 ## Authority Boundary
 
-This document defines tier meaning. It does not certify any current card, level, generated artifact, or release. Live commands and tracked manifests still own counts and pass/fail posture.
+This document defines tier meaning at summary level. [review-system-forward-contract.md](review-system-forward-contract.md) owns required artifacts, command families, denominator rules, pass/fail behavior, consumer rules, forbidden claims, and migration policy. Neither document certifies any current card, level, generated artifact, or release. Live commands and tracked manifests still own counts and pass/fail posture.
+
+## Pre-Trust State
+
+| State | Lane | What it may do | What it must not imply |
+| --- | --- | --- | --- |
+| Candidate | Proposed work item | Start investigation, queue review, or identify a possible card/source/migration target. | Generated card surface, reviewed content, trusted deck inclusion, release relevance, Bronze status, or denominator movement. |
 
 ## Trust Ladder
 

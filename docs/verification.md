@@ -8,6 +8,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 
 - [../test/repositoryGovernance.test.js](../test/repositoryGovernance.test.js) protects source-of-truth boundaries, README/source-lane consistency, CI contract names, supply-chain policy, CODEOWNERS coverage, and source-evidence routing.
 - The tracked [../examples/n5-mini](../examples/n5-mini) fixture locks exact generated TSV rows against the live note schemas so schema or export drift is visible immediately.
+- Candidate is a pre-trust workflow state, not Bronze and not a certification lane.
 - Gold regression protects generated card output from drift.
 - Native Sapphire gates and compatibility structural gates check current structural/card-quality evidence. Future Platinum content certification is a separate stronger lane after Sapphire.
 - Obsidian proof records substantive current-version rereview.

@@ -66,12 +66,13 @@ Tagged release bundles include a checksum manifest, generated CycloneDX SBOM, ge
 
 ## Review Tiers
 
-These tier names are product gates, not marketing labels. Kanji and word decks run them separately.
+These lane names are product gates, not marketing labels. Kanji and word decks run them separately.
 
-The binding tier contract is [docs/review-tier-governance.md](docs/review-tier-governance.md). The current compatibility operating contract for `platinum`-named structural/card-quality and Obsidian work is [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md). Read both before any Sapphire, Platinum, or Obsidian batch.
+The binding forward-lane contract is [docs/review-system-forward-contract.md](docs/review-system-forward-contract.md). The tier summary is [docs/review-tier-governance.md](docs/review-tier-governance.md). The current compatibility operating contract for `platinum`-named structural/card-quality and Obsidian work is [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md). Read them before any Sapphire, Platinum, or Obsidian batch.
 
-| Tier | What it means | What it does not prove |
+| Lane | What it means | What it does not prove |
 | --- | --- | --- |
+| Candidate | A proposed item, migration target, source row, selector result, or triage item. It is pre-trust and must not be called Bronze. | Generated surface, reviewed content, release relevance, or any trusted deck denominator movement. |
 | Silver | A generated card surface exists for the product. | Reviewed content, source truth, release quality, or learner usefulness. |
 | Gold | Gold regression protects reviewed generated output from drift. | Source truth, release approval, or substantive current-version rereview. |
 | Sapphire | Structural/card-quality certification: the live generated card passed the governed card contract for its product, with source-lane separation, internal checks, media identity, NLP support where required, explicit limitations, and a keep/fix/defer/remove decision. Core kanji uses native `templates/sapphire_n*_review_set.json` and `deck:sapphire:*`; words use native `templates/sapphire_n*_word_review_set.json` and `deck:words:sapphire:*`; additional surfaces still retain compatibility command names until migrated. | Expert content certification, Obsidian proof, native/fluent audit, release readiness, or permission to shrink another lane's denominator. |
@@ -175,6 +176,7 @@ Tracked contracts define release behavior:
 | Word note schema | [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json) |
 | Gold kanji regression sets | `templates/golden_n*_review_set.json` |
 | Gold word regression sets | [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json) |
+| Forward review-lane contract | [docs/review-system-forward-contract.md](docs/review-system-forward-contract.md) |
 | Review tier governance | [docs/review-tier-governance.md](docs/review-tier-governance.md) |
 | Platinum and Obsidian review contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
 | Platinum policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |
@@ -249,6 +251,7 @@ Word decks:
 
 Review layers:
 
+- Candidate is a pre-trust workflow state for proposed items, selector results, source rows, migration targets, and triage. It is not Bronze and does not move trusted denominators.
 - Gold regression protects reviewed generated output from drift. It does not mean release approval.
 - Sapphire gates current structural/card-quality requirements against live generated rows. Core kanji uses native `deck:sapphire:*`; words use native `deck:words:sapphire:*`; additional surfaces still retain compatibility names until migrated.
 - Future Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
@@ -399,6 +402,7 @@ Full operating rules live in [docs/nlp-model-governance.md](docs/nlp-model-gover
 | Incident response | [docs/incident-response.md](docs/incident-response.md) |
 | Recovery and rollback | [docs/recovery-and-rollback.md](docs/recovery-and-rollback.md) |
 | Release bar | [docs/product-exit-criteria.md](docs/product-exit-criteria.md), [docs/release-process.md](docs/release-process.md), [docs/release-qa-checklist.md](docs/release-qa-checklist.md) |
+| Forward review-lane contract | [docs/review-system-forward-contract.md](docs/review-system-forward-contract.md) |
 | Review tier governance | [docs/review-tier-governance.md](docs/review-tier-governance.md) |
 | Platinum and Obsidian operating contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
 | Card-quality review policy | [docs/platinum-review-policy.md](docs/platinum-review-policy.md) |

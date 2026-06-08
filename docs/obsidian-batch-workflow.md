@@ -4,7 +4,7 @@ Use this runbook for every Obsidian pass. Do not wait until a level is complete 
 
 Obsidian is human rereview proof. Automation can prepare packets, reject bad structure, and verify that proof is present and card-bound. Automation does not perform the human review.
 
-Before running any Sapphire, compatibility-structural, or Obsidian batch, read [review-tier-governance.md](review-tier-governance.md) and the binding [Platinum And Obsidian Review Contract](platinum-obsidian-review-contract.md). They define the tier boundaries, native core-kanji Sapphire commands, remaining compatibility command names, required actual card-data review, NLP boundary, fixed-status rules, proof authority, verification requirements, and report shape.
+Before running any Sapphire, compatibility-structural, or Obsidian batch, read [review-system-forward-contract.md](review-system-forward-contract.md), [review-tier-governance.md](review-tier-governance.md), and the binding [Platinum And Obsidian Review Contract](platinum-obsidian-review-contract.md). They define the lane boundaries, native core-kanji Sapphire commands, remaining compatibility command names, required actual card-data review, NLP boundary, fixed-status rules, proof authority, verification requirements, and report shape.
 
 ## Kanji Obsidian Pass
 

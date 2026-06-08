@@ -71,12 +71,12 @@ function replaceLaneTerms(value) {
     return normalizeText(value)
         .replaceAll(LEGACY_WORD_PLATINUM_REVIEW_STANDARD, CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD)
         .replace(/fixed_then_platinum/g, "fixed_then_sapphire")
-        .replace(/Substantive current-standard Obsidian rereview for /g, "Current-standard Sapphire structural/card-quality review for ")
-        .replace(/Square-zero Obsidian revalidation for /g, "Current-standard Sapphire structural/card-quality revalidation for ")
+        .replace(/Substantive current-standard Obsidian rereview for /g, "Current-standard Sapphire structural review for ")
+        .replace(/Square-zero Obsidian revalidation for /g, "Current-standard Sapphire structural revalidation for ")
         .replace(/, not a mechanical migration: rechecked/g, ": rechecked")
-        .replace(/Obsidian rereview/gi, "Sapphire structural/card-quality review")
-        .replace(/Obsidian revalidation/gi, "Sapphire structural/card-quality revalidation")
-        .replace(/substantive current-standard rereview/gi, "current-standard structural/card-quality review")
+        .replace(/Obsidian rereview/gi, "Sapphire structural review")
+        .replace(/Obsidian revalidation/gi, "Sapphire structural revalidation")
+        .replace(/substantive current-standard rereview/gi, "current-standard structural review")
         .replace(/current word platinum standard/gi, "current word Sapphire standard")
         .replace(/word platinum standard/gi, "word Sapphire standard")
         .replace(/current-standard Platinum/g, "current-standard Sapphire")
@@ -148,7 +148,7 @@ function migrateEntry(entry = {}, { migratedAt, fromReviewSetPath } = {}) {
         previousReviewStandard,
         newStatus: migrated.status,
         newReviewStandard: migrated.reviewStandard || "",
-        authority: "Representation migration from the former word structural/card-quality Platinum compatibility lane into first-class Sapphire. This is not Platinum content certification, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
+        authority: "Representation migration from prior word Platinum history into first-class Sapphire structural coverage. This is not Platinum, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
     };
 
     return migrated;

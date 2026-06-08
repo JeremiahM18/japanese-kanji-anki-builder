@@ -116,7 +116,7 @@ test("word Sapphire batch report defaults to missing current-standard structure"
     assert.equal(report.cards[0].identity, "八|はち");
     assert.equal(report.cards[0].reviewStatus, "missing_sapphire");
     assert.match(formatted, /Sapphire N5 Word Batch Report/);
-    assert.match(formatted, /not Platinum content certification, Obsidian proof, or release readiness/);
+    assert.match(formatted, /not Platinum, Obsidian proof, or release readiness/);
     assert.match(formatted, /Next missing current-standard Sapphire queue/);
     assert.doesNotMatch(formatted, /Missing Platinum/);
 });
@@ -136,5 +136,5 @@ test("word Sapphire scoped report maps current-standard structural status withou
     assert.equal(report.cards[0].identity, "今日|きょう");
     assert.equal(report.cards[0].reviewStatus, "current_standard_sapphire");
     assert.match(report.cards[0].suggestedReviewStep, /already Sapphire/);
-    assert.match(formatted, /Platinum content certification and Obsidian proof remain separate/);
+    assert.match(formatted, /Platinum and Obsidian proof remain separate/);
 });

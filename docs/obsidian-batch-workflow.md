@@ -19,10 +19,10 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 2. Generate the next human-review batch.
 
 ```bash
-npm run deck:legacy-platinum:batch -- --level=<level> --limit=12
+npm run deck:platinum:batch -- --level=<level> --limit=12 --queue=substantive-rereview
 ```
 
-The default queue is `substantive-rereview`. It includes current-standard Sapphire or compatibility entries until explicit non-mechanical Obsidian proof exists. Use `deck:sapphire:batch -- --queue=missing-current-standard` only when the task is actual card-data Sapphire coverage, not Obsidian proof. Use native `deck:platinum:batch` only for expert content certification beyond Sapphire.
+Obsidian workflows must request `--queue=substantive-rereview` explicitly. The default Platinum batch queue is `missing-current-standard` and is for Platinum coverage work, not Obsidian proof. Use `deck:sapphire:batch -- --queue=missing-current-standard` when the task is actual card-data Sapphire coverage, not Obsidian proof.
 
 3. Generate or refresh the kanji deck surface.
 
@@ -131,7 +131,7 @@ npm run product:artifacts:kanji:preflight
 
 ```bash
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
-npm run deck:legacy-platinum:batch -- --level=<level> --limit=12
+npm run deck:platinum:batch -- --level=<level> --limit=12 --queue=substantive-rereview
 ```
 
 10. Commit only the completed batch.
@@ -158,10 +158,10 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 2. Generate the next human-review batch.
 
 ```bash
-npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=8
+npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substantive-rereview
 ```
 
-The default queue is `substantive-rereview`. Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage, not Obsidian proof. For word structural review, use `npm run deck:words:sapphire:batch -- --level=<level> --limit=8 --queue=missing-current-standard`. Use native `deck:words:platinum:batch` only for expert content certification beyond Sapphire.
+Obsidian word workflows must request `--queue=substantive-rereview` explicitly. The default word Platinum batch queue is `missing-current-standard` and is for Platinum coverage work, not Obsidian proof. For word structural review, use `npm run deck:words:sapphire:batch -- --level=<level> --limit=8 --queue=missing-current-standard`.
 
 3. Generate or refresh the word deck surface.
 
@@ -216,7 +216,7 @@ Then re-check Obsidian progress and the next queue:
 
 ```bash
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
-npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=8
+npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substantive-rereview
 ```
 
 8. Commit only the completed batch.
@@ -238,7 +238,7 @@ Canonical Obsidian proof is tracked JSONL under `templates/obsidian_proof_ledger
 Keep these lanes separate:
 
 - Canonical proof ledger: `templates/obsidian_proof_ledger/*.jsonl`.
-- Tracked review-set binding source: native core-kanji `templates/sapphire_n<level>_review_set.json` for Sapphire status, legacy compatibility `templates/platinum_n<level>_review_set.json` where older proof consumers still require it, and `templates/platinum_n<level>_word_review_set.json` for word compatibility status.
+- Tracked review-set binding source: native core-kanji `templates/sapphire_n<level>_review_set.json` for Sapphire structural status, `templates/platinum_n<level>_review_set.json` for kanji Platinum status, and `templates/platinum_n<level>_word_review_set.json` for word Platinum status.
 - Ignored/local proof-event draft input: `out/obsidian-proof/drafts/*.jsonl`; this is an input staging aid only and must not be staged as source truth.
 - Generated compatibility view: `out/obsidian-proof/compatibility/templates/platinum_n<level>_review_set.json` and `out/obsidian-proof/compatibility/templates/platinum_n<level>_word_review_set.json`.
 - Generated local query mirror: `out/obsidian-proof/sqlite/obsidian-proof-ledger.sqlite`.
@@ -251,13 +251,13 @@ npm run data:obsidian:proof:validate
 npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2
 npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4
 npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set
-npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
-npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set
-npm run data:obsidian:proof:provider-parity -- --consumer=legacy-platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set
+npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=generated
-npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=generated
-npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-level --levels=5,4,3,2 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=generated
+npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=generated
 npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set
 npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=generated
 npm run data:obsidian:proof:views
@@ -288,9 +288,9 @@ Switch consumers in small stages:
 
 Current transition state:
 
-- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:legacy-platinum:rereview-status`, `deck:legacy-platinum:batch`, `deck:legacy-platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:legacy-platinum:governance-gate` are switched kanji proof consumers. They use the scoped proof-provider path so N5/N4/N3/N2 kanji proof comes from canonical JSONL. Native `deck:platinum:batch` and `deck:platinum:n<level>` are Platinum content-certification gates and do not consume Obsidian proof-provider authority. N1 currently has no trusted scoped canonical ledger, `320/1230` trusted current-standard native Sapphire entries, and `910` remaining actual card-data Sapphire gaps; fresh N1 Obsidian proof must only be recorded after real card-level Sapphire review creates trusted current-standard entries. `deck:legacy-platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2 Obsidian proof is complete at the full generated denominator; N1 kanji proof must not be claimed as complete Obsidian certification until the generated denominator is fully covered and gates pass.
+- `deck:kanji:obsidian:rereview-status`, `deck:kanji:obsidian:certify-status`, `deck:platinum:rereview-status`, `deck:platinum:batch`, `deck:platinum:n<level>`, `data:build:kanji-field-source-contract`, and `deck:platinum:governance-gate` are switched kanji proof consumers. They use the scoped proof-provider path so N5/N4/N3/N2 kanji proof comes from canonical JSONL. N1 currently has no trusted scoped canonical ledger, `320/1230` trusted current-standard native Sapphire entries, and `910` remaining actual card-data Sapphire gaps; fresh N1 Obsidian proof must only be recorded after real card-level Sapphire review creates trusted current-standard entries. `deck:platinum:governance-gate` still requires a local-data workspace for the real generated-row gate itself; its clean-CI provider integrity is a tracked-row kanji proof-provider projection, not a replacement for local release QA. N2 Obsidian proof is complete at the full generated denominator; N1 kanji proof must not be claimed as complete Obsidian certification until the generated denominator is fully covered and gates pass.
 
-- `deck:words:obsidian:rereview-status`, `deck:words:obsidian:certify-status`, `deck:words:legacy-platinum:rereview-status`, `deck:words:legacy-platinum:batch`, `deck:words:legacy-platinum:n<level>`, and `deck:legacy-platinum:governance-gate` word inputs are the switched word proof consumers. Native `deck:words:sapphire:n<level>` commands own word structural/card-quality coverage, and native `deck:words:platinum:batch` plus `deck:words:platinum:n<level>` own Platinum content certification without consuming Obsidian proof-provider authority. For migrated N5/N4 word proof, legacy proof consumers default to `ledger-if-available` and can be audited with `--proof-provider=ledger` or `--proof-provider=ledger-if-available`. `--proof-provider=inline` is now only a negative-control legacy audit for those migrated word levels because tracked inline proof has been removed.
+- `deck:words:obsidian:rereview-status`, `deck:words:obsidian:certify-status`, their older Platinum compatibility aliases, `deck:words:platinum:batch`, `deck:words:platinum:n<level>`, and `deck:platinum:governance-gate` word inputs are the switched word proof consumers. Native `deck:words:sapphire:n<level>` commands own word structural coverage; `deck:words:platinum:n<level>` owns word Platinum. For migrated N5/N4 word proof, proof consumers default to `ledger-if-available` and can be audited with `--proof-provider=ledger` or `--proof-provider=ledger-if-available`. `--proof-provider=inline` is now only a negative-control legacy audit for those migrated word levels because tracked inline proof has been removed.
 
 Do not treat the word proof-ledger migration as new Obsidian review. It is a representation migration for already-certified N5/N4 word proof. Word proof has separate exact written-reading identity binding, evidence checklist, and release-quality sentence review requirements.
 
@@ -302,6 +302,7 @@ For future or unmigrated word Obsidian lanes, including N3/N2/N1 word, do not ad
 - A passing NLP gate is not Obsidian.
 - A generated TSV is not Obsidian.
 - A Gold regression pass is not Obsidian.
-- A Sapphire or compatibility card-quality pass is not Obsidian.
+- A Sapphire structural pass is not Platinum or Obsidian.
+- A Platinum pass is not Obsidian.
 - A tracked reading-reference match is not full card-field verification.
 - A tracked-source TSV gate is not APKG, media, accessibility, listening, or manual import QA.

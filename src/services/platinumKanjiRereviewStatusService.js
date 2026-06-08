@@ -6,7 +6,8 @@ const {
 const { normalizeEvidenceEntries } = require("./platinumEvidenceService");
 
 const REREVIEW_STATUS_CATEGORIES = Object.freeze({
-    CURRENT_V3_STRUCTURAL_PASS: "current_v3_structural_pass",
+    CURRENT_V3_PLATINUM_PASS: "current_v3_platinum_pass",
+    CURRENT_V3_STRUCTURAL_PASS: "current_v3_platinum_pass",
     SUBSTANTIVE_CURRENT_STANDARD_REVIEW_PROVEN: "substantive_current_standard_review_proven",
     NEEDS_SUBSTANTIVE_REREVIEW: "needs_substantive_rereview",
     BLOCKED_OR_FAILING: "blocked_or_failing",
@@ -253,7 +254,7 @@ function buildBlockedReasons({
         }
     }
     if (matchingEntries.length === 0 && reasons.length === 0) {
-        reasons.push("no legacy compatibility manifest entry found for generated kanji");
+        reasons.push("no platinum manifest entry found for generated kanji");
     }
 
     return [...new Set(reasons)];
@@ -269,15 +270,15 @@ function classifyGeneratedKanjiRereviewStatus({
     const activeCurrentEntries = matchingEntries.filter(isCurrentStandardPlatinumEntry);
     const passedResultExists = matchingResults.some((result) => result.passed);
     const duplicateActive = reviewReport.duplicateActiveEntries?.includes(kanji);
-    const structurallyPassingEntry = !duplicateActive && activeCurrentEntries.find((entry) => (
+    const platinumPassingEntry = !duplicateActive && activeCurrentEntries.find((entry) => (
         matchingResults.some((result) => result.passed && result.kanji === entry.kanji)
     ));
 
-    if (!structurallyPassingEntry || !passedResultExists || duplicateActive) {
+    if (!platinumPassingEntry || !passedResultExists || duplicateActive) {
         return {
             kanji,
             categories: [REREVIEW_STATUS_CATEGORIES.BLOCKED_OR_FAILING],
-            structuralPassed: false,
+            platinumPassed: false,
             substantiveRereviewProven: false,
             needsSubstantiveRereview: false,
             blockedOrFailing: true,
@@ -291,14 +292,14 @@ function classifyGeneratedKanjiRereviewStatus({
         };
     }
 
-    if (entryHasSubstantiveCurrentStandardRereviewProof(structurallyPassingEntry)) {
+    if (entryHasSubstantiveCurrentStandardRereviewProof(platinumPassingEntry)) {
         return {
             kanji,
             categories: [
-                REREVIEW_STATUS_CATEGORIES.CURRENT_V3_STRUCTURAL_PASS,
+                REREVIEW_STATUS_CATEGORIES.CURRENT_V3_PLATINUM_PASS,
                 REREVIEW_STATUS_CATEGORIES.SUBSTANTIVE_CURRENT_STANDARD_REVIEW_PROVEN,
             ],
-            structuralPassed: true,
+            platinumPassed: true,
             substantiveRereviewProven: true,
             needsSubstantiveRereview: false,
             blockedOrFailing: false,
@@ -310,15 +311,15 @@ function classifyGeneratedKanjiRereviewStatus({
     return {
         kanji,
         categories: [
-            REREVIEW_STATUS_CATEGORIES.CURRENT_V3_STRUCTURAL_PASS,
+            REREVIEW_STATUS_CATEGORIES.CURRENT_V3_PLATINUM_PASS,
             REREVIEW_STATUS_CATEGORIES.NEEDS_SUBSTANTIVE_REREVIEW,
         ],
-        structuralPassed: true,
+        platinumPassed: true,
         substantiveRereviewProven: false,
         needsSubstantiveRereview: true,
         blockedOrFailing: false,
         status: REREVIEW_STATUS_CATEGORIES.NEEDS_SUBSTANTIVE_REREVIEW,
-        reasons: [buildMissingRereviewProofReason(structurallyPassingEntry)],
+        reasons: [buildMissingRereviewProofReason(platinumPassingEntry)],
     };
 }
 
@@ -328,7 +329,8 @@ function countCards(cards = [], predicate) {
 
 function summarizeCards(cards = []) {
     return {
-        current_v3_structural_pass: countCards(cards, (card) => card.structuralPassed),
+        current_v3_platinum_pass: countCards(cards, (card) => card.platinumPassed ?? card.structuralPassed),
+        current_v3_structural_pass: countCards(cards, (card) => card.platinumPassed ?? card.structuralPassed),
         substantive_current_standard_review_proven: countCards(cards, (card) => card.substantiveRereviewProven),
         needs_substantive_rereview: countCards(cards, (card) => card.needsSubstantiveRereview),
         blocked_or_failing: countCards(cards, (card) => card.blockedOrFailing),
@@ -373,19 +375,19 @@ function buildPlatinumKanjiRereviewStatusReport({
             nonMechanicalMarker: NON_MECHANICAL_PROOF_MARKER,
             missingProofMarker: MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
             sentenceQualityReviewProofMarker: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
-            note: "revalidatedAt and required v3 current-standard-review lane text are structural evidence, not standalone proof of substantive post-v3 human rereview or actual example sentence quality review",
+            note: "revalidatedAt and required v3 current-standard-review lane text are Platinum evidence, not standalone proof of substantive post-v3 human rereview or actual example sentence quality review",
         },
         counts,
         passed: counts.blocked_or_failing === 0,
-        structuralReviewPassed: reviewReport.passed,
-        structuralCoverageFailures: reviewReport.coverageFailures || [],
+        platinumReviewPassed: reviewReport.passed,
+        platinumCoverageFailures: reviewReport.coverageFailures || [],
         cards,
     };
 }
 
 function buildAggregateCounts(levelReports = []) {
     return (Array.isArray(levelReports) ? levelReports : []).reduce((totals, report) => {
-        for (const key of Object.values(REREVIEW_STATUS_CATEGORIES)) {
+        for (const key of new Set(Object.values(REREVIEW_STATUS_CATEGORIES))) {
             totals[key] = (totals[key] || 0) + (report.counts?.[key] || 0);
         }
         totals.generatedRows += report.generatedRows || 0;
@@ -394,6 +396,7 @@ function buildAggregateCounts(levelReports = []) {
     }, {
         generatedRows: 0,
         reviewEntries: 0,
+        current_v3_platinum_pass: 0,
         current_v3_structural_pass: 0,
         substantive_current_standard_review_proven: 0,
         needs_substantive_rereview: 0,
@@ -435,7 +438,7 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
         `Generated active kanji rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
         "",
-        "| Scope | Generated deck rows | Legacy compatibility pass | Obsidian certified (substantive proof) | Legacy entries needing Obsidian | Blocked/failing deck rows |",
+        "| Scope | Generated deck rows | Platinum | Obsidian certified (substantive proof) | Platinum entries needing Obsidian | Blocked/failing deck rows |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ];
 
@@ -444,7 +447,7 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
         lines.push([
             `| N${report.level}`,
             report.generatedRows || 0,
-            counts.current_v3_structural_pass || 0,
+            counts.current_v3_platinum_pass || counts.current_v3_structural_pass || 0,
             counts.substantive_current_standard_review_proven || 0,
             counts.needs_substantive_rereview || 0,
             counts.blocked_or_failing || 0,
@@ -454,7 +457,7 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
     lines.push([
         "| Total",
         totals.generatedRows || 0,
-        totals.current_v3_structural_pass || 0,
+        totals.current_v3_platinum_pass || totals.current_v3_structural_pass || 0,
         totals.substantive_current_standard_review_proven || 0,
         totals.needs_substantive_rereview || 0,
         totals.blocked_or_failing || 0,
@@ -463,9 +466,9 @@ function formatPlatinumKanjiRereviewStatusReport(summary = {}) {
     lines.push(
         "",
         "Proof policy:",
-        "- Tier model: Silver = generated surface exists, Gold = golden regression, Sapphire = current-standard structural/card-quality certification, Platinum = native expert content certification, Obsidian = explicit non-mechanical current-version certification proof.",
-        "- Generated deck rows are the certification denominator. Legacy compatibility subsets do not shrink the Obsidian queue.",
-        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: legacy compatibility validity is not counted as Obsidian certification proof by itself.`,
+        "- Tier model: Silver = generated surface exists, Gold = golden regression, Sapphire = structural gate, Platinum = current-standard card-surface inspection, Obsidian = explicit non-mechanical current-version certification proof.",
+        "- Generated deck rows are the certification denominator. Platinum subsets do not shrink the Obsidian queue.",
+        `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: Platinum lane validity is not counted as Obsidian certification proof by itself.`,
         `- To count as Obsidian certified, an entry must carry structured rereviewProvenance with explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance, ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, card identity binding, and actual ${summary.sentenceQualityReviewProofMarker || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );

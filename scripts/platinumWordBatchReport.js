@@ -4,7 +4,7 @@ const { loadConfig } = require("../src/config");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
 const {
-    WORD_BATCH_QUEUE_MODES,
+    DEFAULT_WORD_BATCH_QUEUE_MODE,
     buildPlatinumWordBatchReport,
     formatPlatinumWordBatchReport,
     normalizeQueueMode,
@@ -43,7 +43,7 @@ function parseArgs(argv) {
         level: null,
         limit: 8,
         proofProvider: undefined,
-        queue: WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
+        queue: DEFAULT_WORD_BATCH_QUEUE_MODE,
         unknownArgs: [],
         words: [],
     };
@@ -82,7 +82,7 @@ function readReviewSet(level, {
 }
 
 async function main({
-    commandName = "deck:words:legacy-platinum:batch",
+    commandName = "deck:words:platinum:batch",
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
 } = {}) {
     const options = parseArgs(process.argv.slice(2));

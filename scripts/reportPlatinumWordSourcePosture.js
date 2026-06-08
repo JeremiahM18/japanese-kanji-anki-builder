@@ -42,7 +42,7 @@ function readReviewSet(level) {
 
 function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("deck:words:legacy-platinum:source-posture", options.unknownArgs);
+    assertNoUnknownArgs("deck:words:platinum:source-posture", options.unknownArgs);
 
     const levelReports = options.levels.map((level) => buildPlatinumWordSourcePostureReport({
         entries: readReviewSet(level),

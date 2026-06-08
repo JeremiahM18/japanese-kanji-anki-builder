@@ -112,27 +112,32 @@ test("word batch report selects rows missing current-standard platinum and surfa
     assert.equal(report.summary.legacyOrUnversionedPlatinum, 1);
     assert.equal(report.summary.remainingPlatinum, 1);
     assert.equal(report.summary.remainingCurrentStandard, 2);
+    assert.equal(report.summary.substantiveRereviewProven, undefined);
+    assert.equal(report.summary.remainingSubstantiveRereview, undefined);
+    assert.equal(report.nextSubstantiveRereviewWords, undefined);
     assert.equal(report.cards.length, 2);
     assert.equal(report.cards[0].identity, "今日|きょう");
     assert.equal(report.cards[0].reviewStatus, "legacy_unversioned_platinum");
-    assert.match(report.cards[0].suggestedReviewStep, /revalidate existing legacy compatibility/);
+    assert.match(report.cards[0].suggestedReviewStep, /revalidate existing platinum/);
     assert.equal(report.cards[1].identity, "八|はち");
     assert.equal(report.cards[1].hardChecksPassed, true);
     assert.ok(report.cards[1].riskFlags.some((flag) => /generated pitch/.test(flag)));
     assert.ok(report.cards[1].riskFlags.some((flag) => /single-kanji word/.test(flag)));
     assert.match(report.cards[1].suggestedReviewStep, /source-check pitch/);
     assert.match(formatPlatinumWordBatchReport(report), /This report is read-only/);
-    assert.match(formatPlatinumWordBatchReport(report), /Next substantive rereview queue/);
-    assert.match(formatPlatinumWordBatchReport(report), /legacy current-standard structural\/card-quality entries remain in scope/);
+    assert.match(formatPlatinumWordBatchReport(report), /Next missing current-standard Platinum queue/);
+    assert.doesNotMatch(formatPlatinumWordBatchReport(report), /Obsidian certified|Remaining Obsidian certification/);
+    assert.match(formatPlatinumWordBatchReport(report), /Default queue is missing-current-standard Platinum/);
 });
 
-test("word batch report keeps structural-only current-standard entries in the default rereview queue", () => {
+test("word batch report keeps Platinum-only current-standard entries in the explicit Obsidian proof queue", () => {
     const report = buildPlatinumWordBatchReport({
         rows,
         entries: [buildStructuralCurrentWordEntry()],
         wordPitchAccentData,
         level: 5,
         limit: 1,
+        queue: WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
     });
 
     assert.equal(report.queue, WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW);
@@ -140,8 +145,8 @@ test("word batch report keeps structural-only current-standard entries in the de
     assert.equal(report.summary.substantiveRereviewProven, 0);
     assert.equal(report.summary.remainingSubstantiveRereview, 2);
     assert.equal(report.cards[0].identity, "今日|きょう");
-    assert.equal(report.cards[0].reviewStatus, "current_standard_structural_only");
-    assert.match(report.cards[0].suggestedReviewStep, /legacy compatibility structural pass is not proof/);
+    assert.equal(report.cards[0].reviewStatus, "current_standard_platinum_only");
+    assert.match(report.cards[0].suggestedReviewStep, /Platinum is not Obsidian proof/);
 });
 
 test("word batch report does not treat base rereview provenance as Obsidian proof", () => {
@@ -159,27 +164,31 @@ test("word batch report does not treat base rereview provenance as Obsidian proo
         wordPitchAccentData,
         level: 5,
         limit: 1,
+        queue: WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
     });
 
     assert.equal(report.summary.substantiveRereviewProven, 0);
     assert.equal(report.summary.remainingSubstantiveRereview, 2);
     assert.equal(report.cards[0].identity, "今日|きょう");
-    assert.equal(report.cards[0].reviewStatus, "current_standard_structural_only");
+    assert.equal(report.cards[0].reviewStatus, "current_standard_platinum_only");
 });
 
-test("word batch report can still expose the missing current-standard structure queue explicitly", () => {
+test("word batch report defaults to missing current-standard Platinum queue", () => {
     const report = buildPlatinumWordBatchReport({
         rows,
         entries: [buildStructuralCurrentWordEntry()],
         wordPitchAccentData,
         level: 5,
-        queue: WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD,
         limit: 1,
     });
 
+    assert.equal(report.queue, WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD);
     assert.equal(report.cards[0].identity, "八|はち");
     assert.equal(report.summary.remainingCurrentStandard, 1);
-    assert.match(formatPlatinumWordBatchReport(report), /Next missing legacy compatibility structure queue/);
+    assert.equal(report.summary.substantiveRereviewProven, undefined);
+    assert.equal(report.summary.remainingSubstantiveRereview, undefined);
+    assert.equal(report.nextSubstantiveRereviewWords, undefined);
+    assert.match(formatPlatinumWordBatchReport(report), /Next missing current-standard Platinum queue/);
 });
 
 test("scoped word batch report keeps formatted output focused on requested cards", () => {

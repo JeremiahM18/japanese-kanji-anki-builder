@@ -109,4 +109,5 @@ test("platinumKanjiBatchReport parseArgs defaults to ledger fallback proof provi
     const options = parseBatchReportArgs([]);
 
     assert.equal(options.proofProvider, OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE);
+    assert.equal(options.queue, "missing-current-standard");
 });

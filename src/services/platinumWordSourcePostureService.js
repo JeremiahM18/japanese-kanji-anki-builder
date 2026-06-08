@@ -215,12 +215,12 @@ function formatSample(cards = [], { limit = 24 } = {}) {
 function formatPlatinumWordSourcePostureReport(summary = {}) {
     const totals = summary.totals || {};
     const lines = [
-        "Japanese Kanji Builder Legacy Platinum Word Source Posture",
+        "Japanese Kanji Builder Platinum Word Source Posture",
         "",
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
         `Result: ${summary.passed ? "passing" : "failing"}`,
         `Structural word entries inspected: ${totals.activeCurrentStandardEntries || 0}`,
-        "Source-family counts are posture diagnostics only; they are not the rereview selection pool, native Platinum content proof, or Obsidian proof.",
+        "Source-family counts are posture diagnostics only; they are not the rereview selection pool or substantive platinum proof.",
         "",
         "| Scope | Structural entries inspected | Independent source families proven | Single source family | Missing governed source |",
         "| --- | ---: | ---: | ---: | ---: |",

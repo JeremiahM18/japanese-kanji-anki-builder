@@ -1,6 +1,6 @@
 # Platinum And Obsidian Review Contract
 
-This is the front-door contract for every Sapphire, compatibility-named structural, Platinum, or Obsidian review pass in this repository. Read this before touching `templates/sapphire_n*_review_set.json`, `templates/sapphire_n*_word_review_set.json`, legacy `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
+This is the front-door contract for every Sapphire, Platinum, or Obsidian review pass in this repository. Read this before touching `templates/sapphire_n*_review_set.json`, `templates/sapphire_n*_word_review_set.json`, `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, or `templates/obsidian_proof_ledger/*.jsonl`.
 
 For program-wide lane authority, read [review-system-forward-contract.md](review-system-forward-contract.md) first, then [review-tier-governance.md](review-tier-governance.md). Core kanji and words use native Sapphire files and commands; additional surfaces still retain compatibility names until their own deliberate migration is implemented.
 
@@ -8,14 +8,14 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 
 ## Non-Negotiables
 
-- Sapphire is structural/card-quality certification, not a softer name for "almost reviewed."
-- Core-kanji and word Sapphire commands and manifests are the structural lane; legacy `platinum` commands and manifests are read-only compatibility inputs unless the specific surface has not yet migrated. Do not treat either as Platinum content certification.
-- Platinum must inherit Sapphire and add stronger expert content-review evidence under a dedicated schema.
+- Sapphire is structural certification only, not a softer name for "almost reviewed" and not card-surface inspection.
+- Core-kanji and word Sapphire commands and manifests are the structural lane. Do not put structure-only work into Platinum naming.
+- Platinum is card-surface inspection. The existing Platinum commands and manifests remain active Platinum inputs; do not describe them as gone, legacy-only, future-only, or unimplemented.
 - Obsidian is separate non-mechanical rereview proof, not a synonym for Platinum.
 - Deck Ready, Word Deck Ready, APKG readiness, and package staging are mechanical artifact states, not content trust tiers.
 - NLP is required review support where the lane defines it, but NLP never approves cards, writes tracked templates, certifies Obsidian, or claims release readiness.
 - Kanji and word lanes are separate products. Do not borrow proof, status, counts, or source decisions across them.
-- Generated rows, source evidence, internal checks, reviewer judgment, media identity, NLP support, Obsidian proof, and release readiness are separate lanes.
+- Generated rows, source evidence, internal checks, reviewer judgment, media identity, NLP support, Platinum, Obsidian proof, and release readiness are separate lanes.
 - Scoped media review commands are card-level evidence only. Full-level media completeness must be verified with `deck:ready -- --levels=<level>` and the relevant media policy audits.
 - If a real core-kanji or word card field is corrected during Sapphire review, the outcome is `fixed_then_sapphire`, and the entry must include `fixSummary`. Compatibility-named additional surfaces still use their current `fixed_then_platinum` status until migrated.
 - If core truth remains uncertain, defer or remove the card. Do not hide uncertainty in prose.
@@ -25,14 +25,17 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 
 ## Evidence Boundaries
 
-Gold protects generated output against drift. It does not prove source truth, Sapphire quality, Platinum content certification, Obsidian proof, or release readiness.
+Gold protects generated output against drift. It does not prove source truth, Sapphire structural coverage, Platinum, Obsidian proof, or release readiness.
 
-Sapphire proves the live generated card currently passes the active structural/card-quality compatibility standard for its product:
+Sapphire proves the live generated card currently passes the active structural standard for its product:
 
 - Core kanji: `kanji-sapphire-v1-evidence-lanes`.
 - Word: `word-sapphire-v1-evidence-lanes`.
 
-Platinum content certification is intentionally not inferred from these compatibility names. It requires its own schema/gate when implemented.
+Platinum proves the live generated card has passed card-surface inspection under the current Platinum standard:
+
+- Core kanji: `kanji-platinum-v3-evidence-lanes`.
+- Word: `word-platinum-v3-evidence-lanes`.
 
 Obsidian proves explicit, non-mechanical current-version rereview was performed for the live card and recorded in the canonical proof path.
 
@@ -40,7 +43,7 @@ Obsidian proves explicit, non-mechanical current-version rereview was performed 
 
 Generated TSVs, Gold fixtures, local caches, ignored `data/` or `out/` files, batch reports, clean structure, `revalidatedAt`, and `current-standard-review` prose are not Obsidian proof.
 
-## Sapphire And Compatibility Batch Standard
+## Sapphire Structural Batch Standard
 
 Every Sapphire or compatibility-structural batch starts from live repo state:
 
@@ -56,45 +59,51 @@ npm run deck:sapphire:batch -- --level=<level> --limit=<batch-size> --queue=miss
 npm run deck:words:sapphire:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
 ```
 
-Use `deck:legacy-platinum:batch -- --queue=missing-current-standard` only as a legacy migration-input inspection command when a native Sapphire manifest is not available. Native core-kanji structural work uses `deck:sapphire:batch`, and native `deck:platinum:batch` is reserved for expert content certification beyond Sapphire.
+Use `deck:platinum:batch -- --queue=missing-current-standard` for Platinum work. Native core-kanji structural work uses `deck:sapphire:batch`.
 
-Use `deck:sapphire:batch` for core-kanji Sapphire work and `deck:words:sapphire:batch` for word Sapphire work. Use explicit `legacy-platinum` batch commands only for legacy compatibility surfaces or Obsidian/substantive proof preparation.
+Use `deck:sapphire:batch` for core-kanji Sapphire work and `deck:words:sapphire:batch` for word Sapphire work. Use the `platinum`-named batch commands for Platinum or Obsidian/substantive proof preparation.
 
-A Sapphire or compatibility-structural pass must inspect the actual live generated card data, not just the manifest shape.
+A Sapphire structural pass must inspect the actual live generated card data, not just the manifest shape, but its conclusion is structural only.
 
-Core-kanji Sapphire review must check:
+Core-kanji Sapphire review must check structural identity only:
 
 - target kanji identity and deck fit
 - `DisplayWord`
-- `PrimaryReading` and reading rationale
-- `MeaningJP`
-- `KanjiMeanings`
+- `PrimaryReading`, `MeaningJP`, and `KanjiMeanings` are present and protected by structural snippets
 - notes and support vocabulary
-- example sentence, reading, and translation
-- example naturalness, learner usefulness, level fit, release quality, and support-only status
-- governed Japanese-source field evidence
+- example sentence, reading, and translation fields are present and protected by structural snippets
+- evidence lanes are separate and do not contain Obsidian proof
 - source-origin independence from placement/source-governance claims
 - exact primary-reading audio identity
 - stroke-order media target and provenance
-- verification limitations
-- learner usefulness and product fit
+- verification limitations are explicit when present
 
-Word Sapphire review must check:
+Word Sapphire review must check structural identity only:
 
 - exact written form and reading identity
 - deck fit, current-level anchor, support-kanji labels, and placement rationale
-- meaning and usefulness
-- example sentence, reading, and translation
-- example naturalness, learner usefulness, level fit, and release quality
-- governed Japanese-source field evidence
+- meaning, example sentence, reading, and translation fields are present and protected by structural snippets
+- evidence lanes are separate and do not contain Obsidian proof
 - reading breakdown and constituent labels
 - exact word-reading audio identity
 - pitch source/render state
 - media provenance
-- verification limitations
-- learner usefulness and product fit
+- verification limitations are explicit when present
 
-If any reviewed core-kanji surface is wrong, fix the source/card data first, regenerate as needed, rerun affected gates, and record `fixed_then_sapphire` with `fixSummary`. A card that needed correction is not plain `sapphire`.
+If any reviewed structural surface is wrong, fix the source/card data first, regenerate as needed, rerun affected gates, and record `fixed_then_sapphire` with `fixSummary`. A card that needed correction is not plain `sapphire`.
+
+## Platinum Card-Surface Batch Standard
+
+Platinum starts after or alongside satisfied structural checks, but it answers a different question: whether the actual generated card surface has been inspected beyond structure.
+
+Use:
+
+```bash
+npm run deck:platinum:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
+npm run deck:words:platinum:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
+```
+
+A Platinum pass must inspect the actual live generated card data for learner-facing reading, meaning, example, notes/support surface, media identity, level/product fit, evidence boundaries, limitations, and final keep/fix/defer/remove judgment. If the card surface is wrong, fix source/card data first, regenerate as needed, rerun affected gates, and record `fixed_then_platinum` with `fixSummary`. A card that needed correction is not plain `platinum`.
 
 `media:review:audio` and `media:review:word-audio` may support exact-audio review for the selected batch, but they are not level readiness gates. Do not summarize a scoped audio packet count as the level's media status.
 
@@ -118,19 +127,19 @@ The reviewer must inspect relevant NLP review packets, tokenization signals, dra
 
 ## Obsidian Batch Standard
 
-Obsidian starts after the live card has structurally valid current-standard Sapphire or compatibility coverage. Use the Obsidian queue, not the missing-structure queue:
+Obsidian starts after the live card has valid current-standard Platinum. Use the Obsidian queue, not the missing-Platinum queue:
 
 ```bash
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
-npm run deck:legacy-platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
+npm run deck:platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
 ```
 
 ```bash
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
-npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
+npm run deck:words:platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
 ```
 
-The reviewer must rereview the actual live card data again, including source evidence, examples, media identity, limitations, and any NLP support. Obsidian proof is not inferred from the Sapphire entry or any legacy compatibility entry.
+The reviewer must rereview the actual live card data again, including source evidence, examples, media identity, limitations, and any NLP support. Obsidian proof is not inferred from the Sapphire entry or the Platinum entry.
 
 Canonical Obsidian proof is tracked JSONL under:
 
@@ -157,14 +166,14 @@ The proof event must bind the exact card identity, review standard, reviewer, re
 
 Run the smallest complete verification set for the lane and scope. Do not substitute one gate for another.
 
-Core-kanji Sapphire batch verification normally includes:
+Core-kanji Sapphire structural batch verification normally includes:
 
 ```bash
 npm run deck:sapphire:n<level>
 node --test test/sapphireTrackedReviewSets.test.js
 ```
 
-For word levels with an npm alias, run `npm run deck:words:sapphire:n<level>`. Native word Sapphire commands fail closed for empty or incomplete manifests; legacy `deck:words:legacy-platinum:n<level>` commands are compatibility/proof-provider inputs, not the new structural lane. Native `deck:words:platinum:n<level>` is reserved for expert content certification beyond Sapphire.
+For word levels with an npm alias, run `npm run deck:words:sapphire:n<level>`. Native word Sapphire commands fail closed for empty or incomplete manifests. Platinum commands remain the card-surface inspection lane, not the structural lane.
 
 When a batch report makes a media-readiness claim for a level, also run:
 
@@ -216,7 +225,7 @@ Every batch report must state:
 - exact scope: product, level, queue, batch size, and selected cards
 - exact files inspected
 - exact commands run
-- cards fixed, with the lane-native fixed status such as `fixed_then_sapphire` or compatibility `fixed_then_platinum`, and `fixSummary`
+- cards fixed, with the lane-native fixed status such as `fixed_then_sapphire` or `fixed_then_platinum`, and `fixSummary`
 - cards promoted without data changes, with a statement that actual card data was reviewed
 - cards deferred or removed, with reasons
 - source-evidence status and any unresolved source boundary
@@ -233,10 +242,10 @@ Do not:
 
 - promote by structure alone
 - claim examples were reviewed without reading the sentence, reading, and translation
-- leave a corrected card as plain `sapphire` or plain compatibility `platinum`
+- leave a corrected card as plain `sapphire` or plain `platinum`
 - use NLP as approval
 - use generated output, Gold, local cache, or source-governance placement evidence as Japanese-source card-field proof
-- use Platinum as Obsidian proof
+- use Sapphire as Platinum, or Platinum as Obsidian proof
 - stage ignored proof drafts from `out/obsidian-proof/drafts`
 - shrink an Obsidian denominator because Sapphire or structural compatibility coverage is incomplete
 - call a level release-ready because one lane passed

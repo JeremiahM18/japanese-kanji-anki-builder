@@ -2,7 +2,7 @@
 
 This document collects the common local workflows for setup, preview, build, media, word expansion, and output review.
 
-The commands here are operational tools. They do not replace Candidate triage boundaries, Gold regression, native Sapphire or compatibility structural gates, Platinum content certification, Obsidian proof, Deck Ready boundaries, release QA, or manual Anki import review. For lane authority, use [review-system-forward-contract.md](review-system-forward-contract.md), then [review-tier-governance.md](review-tier-governance.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
+The commands here are operational tools. They do not replace candidate triage boundaries, Gold regression, native Sapphire structural gates, Platinum, Obsidian proof, Deck Ready boundaries, release QA, or manual Anki import review. For lane authority, use [review-system-forward-contract.md](review-system-forward-contract.md), then [review-tier-governance.md](review-tier-governance.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md).
 
 ## Setup
 
@@ -67,11 +67,11 @@ npm run deck:words:review:n4
 npm run deck:words:sapphire:n5
 ```
 
-Lane names: Candidate means proposed pre-trust work and is not Bronze; Silver means generated surface; Gold means regression protection; Sapphire means current-standard structural/card-quality certification; Platinum means the stronger content-certification lane after Sapphire; and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
+Lane names: candidate means proposed pre-trust work, not a certification lane; Silver means generated surface; Gold means regression protection; Sapphire means current-standard structural certification; Platinum means current-standard card-surface inspection; and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
 
 `deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:sapphire:batch` is the read-only word Sapphire pre-review report. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps.
 
-The `npm run deck:sapphire:n5` and `npm run deck:words:sapphire:n5` commands are full-level structural gates. They fail unless every generated N5 card has an active current-standard card-quality entry. Platinum content certification is a stronger lane after Sapphire.
+The `npm run deck:sapphire:n5` and `npm run deck:words:sapphire:n5` commands are full-level structural gates. They fail unless every generated N5 card has an active current-standard structural entry. Platinum is a separate lane after Sapphire.
 
 ## Run Obsidian batches
 
@@ -90,10 +90,10 @@ npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 2. Generate the next human-review worklist:
 
 ```bash
-npm run deck:legacy-platinum:batch -- --level=<level> --limit=12
+npm run deck:platinum:batch -- --level=<level> --limit=12 --queue=substantive-rereview
 ```
 
-The default queue is `substantive-rereview`. It includes current-standard Sapphire or compatibility entries until explicit non-mechanical Obsidian proof exists. Use `deck:sapphire:batch -- --queue=missing-current-standard` only when the task is actual card-data Sapphire coverage, and use native `deck:platinum:batch` only when the task is expert content certification beyond Sapphire.
+Obsidian workflows must request `--queue=substantive-rereview` explicitly. The default Platinum batch queue is `missing-current-standard` and is for Platinum coverage work, not Obsidian proof. Use `deck:sapphire:batch -- --queue=missing-current-standard` when the task is actual card-data Sapphire coverage rather than Obsidian proof.
 
 3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support lane before or during review:
 
@@ -115,12 +115,12 @@ Kanji tokenizer differences are usually treated as reading variants or tokenizer
 6. Verify the batch:
 
 ```bash
-npm run deck:legacy-platinum:n<level>
+npm run deck:platinum:n<level>
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
-npm run deck:legacy-platinum:batch -- --level=<level> --limit=12
+npm run deck:platinum:batch -- --level=<level> --limit=12 --queue=substantive-rereview
 ```
 
-For core-kanji Sapphire structural verification, replace the first command with `npm run deck:sapphire:n<level>`, such as `deck:sapphire:n3` for N3. Keep `deck:legacy-platinum:batch` here only for the Obsidian substantive rereview queue.
+For core-kanji Sapphire structural verification, replace the first command with `npm run deck:sapphire:n<level>`, such as `deck:sapphire:n3` for N3. Keep `deck:platinum:batch` here only for the Obsidian substantive rereview queue.
 
 7. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
 
@@ -142,10 +142,10 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 2. Generate the next human-review worklist:
 
 ```bash
-npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=8
+npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substantive-rereview
 ```
 
-Use `--queue=missing-current-standard` only when the task is actual card-data Sapphire coverage. For word structural work, use `deck:words:sapphire:batch`; keep the `deck:words:legacy-platinum:batch` queue here for Obsidian/proof-provider compatibility work. Use native `deck:words:platinum:batch` only for expert content certification beyond Sapphire.
+Obsidian word workflows must request `--queue=substantive-rereview` explicitly. The default word Platinum batch queue is `missing-current-standard` and is for Platinum coverage work, not Obsidian proof. For word structural work, use `deck:words:sapphire:batch`.
 
 3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
 
@@ -165,7 +165,7 @@ Word NLP is broader than kanji NLP: it runs model/runtime checks, tokenization, 
 ```bash
 npm run deck:words:sapphire:n<level>
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
-npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=8
+npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substantive-rereview
 ```
 
 Replace `n<level>` with the actual npm alias when one exists, such as `deck:words:sapphire:n4`.
@@ -316,7 +316,7 @@ It has three separate signals:
 
 The configured source TSVs under `downloads/` are ignored local inputs. The signal source config pins their source URL, source label, SHA-256, byte size, and parsed row count.
 
-The signal is deliberately not a release claim. It does not replace Gold regression, native Sapphire or structural compatibility gates, Platinum content certification, Obsidian proof, APKG import QA, accessibility checks, media/listening QA, or readiness gates.
+The signal is deliberately not a release claim. It does not replace Gold regression, native Sapphire structural gates, Platinum, Obsidian proof, APKG import QA, accessibility checks, media/listening QA, or readiness gates.
 
 ## Stroke order
 

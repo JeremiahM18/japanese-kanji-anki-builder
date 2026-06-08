@@ -67,7 +67,7 @@ function mapRubric(rubric = {}, reviewStatus = "") {
     const itemStatusCounts = buildItemStatusCounts(items);
     const result = itemStatusCounts.blocked > 0
         ? "blocked"
-        : reviewStatus === "current_standard_structural_only"
+        : reviewStatus === "current_standard_platinum_only"
             ? "already_sapphire"
             : "ready_for_sapphire_review";
 
@@ -155,7 +155,7 @@ function formatSapphireKanjiBatchReport(report = {}) {
         `Japanese Kanji Builder Sapphire ${levelLabel} Kanji Batch Report`,
         "",
         `Scope: ${report.scope || "(unknown)"}`,
-        "Lane: Sapphire structural/card-quality gate; not Platinum content certification or Obsidian proof",
+        "Lane: Sapphire structural gate; not Platinum or Obsidian proof",
         `Generated cards: ${summary.generatedRows || 0}`,
         `Queue: ${report.queue || KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD}`,
         `Sapphire entries: ${summary.activeSapphire || 0}`,
@@ -214,7 +214,7 @@ function formatSapphireKanjiBatchReport(report = {}) {
 
     lines.push(
         "",
-        "This report is read-only. It prepares Sapphire review; it does not create entries, prove Platinum, record Obsidian proof, or prove release readiness."
+        "This report is read-only. It prepares Sapphire structural review; it does not create entries, prove Platinum, record Obsidian proof, or prove release readiness."
     );
     return `${lines.join("\n")}\n`;
 }

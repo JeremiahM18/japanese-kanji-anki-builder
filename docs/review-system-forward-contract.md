@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the forward review-lane model for every kanji and word deck surface after the legacy structural `platinum` naming transition.
+This document defines the review-lane model for every kanji and word deck surface.
 
 It exists so a future reviewer can answer one question per lane without reading old chat, old migration commits, or compatibility command names.
 
@@ -10,7 +10,7 @@ It exists so a future reviewer can answer one question per lane without reading 
 
 This contract applies to core kanji decks, word decks, optional additional-unverified kanji surfaces, generated card rows, Gold fixtures, Sapphire manifests, Platinum manifests, Obsidian proof ledgers, batch reports, command references, release docs, and AI-assisted review work.
 
-`Candidate` is included as a pre-trust workflow state. The trust ladder starts at `Silver`.
+Candidate rows, selector output, migration targets, source rows, and expansion triage are pre-trust queues. They are workflow inputs, not certification gates. The trust ladder starts at `Silver`.
 
 ## Authority Boundary
 
@@ -30,64 +30,59 @@ Live commands, tracked schemas, tracked manifests, proof ledgers, and release ev
 
 | Lane | Purpose | Authority | Required artifact | Required command | Denominator rule | Pass/fail behavior |
 | --- | --- | --- | --- | --- | --- | --- |
-| Candidate | Proposed item for review, expansion, migration, or triage. It is not deck-trusted and must not be called Bronze. | May start investigation or queue review. | Candidate packet, triage report, source row, or generated selector output. | The relevant selector, audit, or triage command for the product. | Candidate counts never shrink Silver, Gold, Sapphire, Platinum, or Obsidian denominators. | Missing or rejected candidates do not fail trusted deck lanes unless a command explicitly gates the candidate source. |
 | Silver | Generated/card surface exists and can be inspected. | May support card-surface review and downstream Gold/Sapphire work. | Generated TSV/APKG input rows or generated report output. | Deck generation, readiness, completion, or preview command for the product. | Every generated row in scope remains in the downstream denominator unless explicitly removed/deferred by the governed lane. | Silver can pass while Gold, Sapphire, Platinum, Obsidian, release, media QA, and source-depth lanes remain incomplete. |
 | Gold | Regression fixture protects the generated surface against silent drift. | May protect known reviewed output snippets. | `templates/golden_*_review_set.json` or word Gold equivalent. | `deck:review:*`, `deck:words:review:*`, or the level-specific Gold gate. | Gold protects generated rows; it does not shrink Sapphire, Platinum, or Obsidian denominators. | Gold failure is a regression or stale expected-surface problem until reviewed and fixed upstream. |
-| Sapphire | Structural/card-quality certification. | May certify that the live card currently satisfies the product field contract, evidence lanes, media identity, examples, limitations, NLP support where required, and keep/fix/defer/remove decision. | Native Sapphire manifests and schemas, or compatibility structural manifests only for unmigrated surfaces. | `deck:sapphire:*`, `deck:words:sapphire:*`, or a clearly labeled compatibility gate for unmigrated additional surfaces. | Generated rows remain in scope until they have active current-standard Sapphire coverage or a governed defer/remove decision. | Empty or incomplete native Sapphire manifests fail closed. Sapphire is not Platinum content certification and is not Obsidian proof. |
-| Platinum | Expert content certification after Sapphire. | May certify stronger human content judgment only after Sapphire is already satisfied. | Native Platinum content manifests and schemas. | `deck:platinum:*` and `deck:words:platinum:*`. | Platinum cannot shrink generated, Sapphire, or Obsidian denominators; it adds a stronger content-certified subset. | Empty or incomplete Platinum manifests fail closed. No Platinum claim can come from Sapphire or legacy compatibility coverage. |
+| Sapphire | Structural certification. | May certify that the live card currently satisfies the product structural contract: required field identity, evidence lane separation, required internal check records, media identity fields, required support artifacts such as NLP where the workflow calls for them, explicit limitations, and keep/fix/defer/remove decision. | Native Sapphire manifests and schemas, or compatibility structural manifests only for unmigrated surfaces. | `deck:sapphire:*`, `deck:words:sapphire:*`, or a clearly labeled compatibility gate for unmigrated additional surfaces. | Generated rows remain in scope until they have active current-standard Sapphire coverage or a governed defer/remove decision. | Empty or incomplete native Sapphire manifests fail closed. Sapphire is not Platinum and is not Obsidian proof. |
+| Platinum | Card-surface inspection. | May certify that the actual generated card was reviewed beyond structure for learner-facing reading, meaning, example, notes/support surface, media identity, level/product fit, evidence boundaries, limitations, and final keep/fix/defer/remove judgment. | `templates/platinum_*_review_set.json`, `templates/platinum_*_word_review_set.json`, and the current Platinum schema. | `deck:platinum:*` and `deck:words:platinum:*`. | Platinum cannot shrink generated, Sapphire, or Obsidian denominators; it adds the card-surface-inspected subset. | Empty or incomplete Platinum manifests fail closed. No Platinum claim can come from Sapphire or NLP support alone. |
 | Obsidian | Explicit substantive proof ledger/certification. | May certify that non-mechanical current-version review proof exists for the exact live card identity. | Canonical JSONL proof ledger entries and proof-provider reconciliation. | `data:obsidian:proof:*`, `deck:kanji:obsidian:*`, and `deck:words:obsidian:*`. | Generated rows are the proof denominator for the scoped product unless the lane has a governed defer/remove decision. | Obsidian fails closed when proof is missing, malformed, mechanically inferred, or not bound to the live card. |
 
 ## Current Implementation Status
 
-Platinum is the lane name. Do not add a temporal adjective to the lane name.
-
-Native Sapphire is implemented for core kanji and words. Native Platinum content certification is implemented for core kanji and words with empty fail-closed content manifests: `templates/platinum_n*_content_review_set.json` and `templates/platinum_n*_word_content_review_set.json`. Current native Platinum coverage is `0` until expert content reviews are recorded. The old structural `platinum_n*_review_set.json` and `platinum_n*_word_review_set.json` manifests remain legacy compatibility/proof-provider inputs only.
+Native Sapphire is implemented for core kanji and words. Platinum is implemented through the existing Platinum manifests and command families. Do not describe these Platinum commands as legacy-only or unimplemented.
 
 ## Legacy Compatibility Lock
 
-Legacy `platinum` manifests, statuses, standards, and commands are compatibility history after the native Sapphire migration.
+Historical Platinum manifests, statuses, standards, and commands are still the active Platinum lane unless a deliberate count-preserving migration changes that contract.
 
-Locked compatibility inputs include:
+Locked Platinum inputs include:
 
-- legacy `templates/platinum_*_review_set.json`
-- legacy `templates/platinum_*_word_review_set.json`
-- `deck:legacy-platinum:*`
-- `deck:words:legacy-platinum:*`
-- older proof-provider compatibility surfaces now exposed through explicit legacy names such as `deck:legacy-platinum:rereview-status` and `deck:words:legacy-platinum:rereview-status`
+- `templates/platinum_*_review_set.json`
+- `templates/platinum_*_word_review_set.json`
+- `deck:platinum:*`
+- `deck:words:platinum:*`
 - `kanji-platinum-v3-evidence-lanes`
 - `word-platinum-v3-evidence-lanes`
 - active legacy statuses `platinum` and `fixed_then_platinum`
 
 Rules:
 
-- Do not add new core-kanji or word structural work to legacy Platinum naming.
-- Do not use a legacy compatibility command as the forward structural path when a native Sapphire command exists.
+- Do not add new structure-only Sapphire work to Platinum naming.
+- Do not use a Platinum command as the forward structural path when a native Sapphire command exists.
 - Do not mass rename legacy files, commands, statuses, or standards without a dedicated migration plan, tests, and count-preserving proof.
-- Do not delete legacy compatibility inputs while proof consumers, migration checks, or historical audits still depend on them.
-- Targeted bug fixes are allowed only when the compatibility input itself is wrong or a downstream compatibility/proof-provider consumer would otherwise be misleading.
-- Legacy compatibility coverage never certifies Platinum content review.
+- Do not delete Platinum inputs while proof consumers, migration checks, historical audits, or Platinum gates still depend on them.
+- Targeted bug fixes are allowed when the Platinum input itself is wrong or a downstream consumer would otherwise be misleading.
+- Platinum is not Obsidian proof.
 
 ## Consumer Rules
 
 | Lane | May consume | Must not consume |
 | --- | --- | --- |
-| Candidate | Source manifests, triage reports, generated selectors, NLP suggestions, and human review queues. | Gold, Sapphire, Platinum, Obsidian, or release claims as proof. |
 | Silver | Candidate inputs and generated rows. | Gold, Sapphire, Platinum, Obsidian, source truth, release, or manual QA authority. |
 | Gold | Silver output and reviewed expected snippets. | Sapphire, Platinum, Obsidian, or source-governance authority. |
-| Sapphire | Silver, Gold, governed Japanese-source field evidence, internal generated/media checks, NLP support where required, and reviewer judgment in separate evidence lanes. | Obsidian proof fields, Platinum content claims, release readiness, or source-governance placement authority. |
-| Platinum | Current-standard Sapphire plus a dedicated expert content-review schema. | Legacy Platinum compatibility history, Sapphire alone, Obsidian proof alone, Deck Ready, or NLP approval as sufficient evidence. |
+| Sapphire | Silver, Gold, structural evidence lanes, internal generated/media checks, NLP support where required, and reviewer structural decision fields. | Obsidian proof fields, Platinum claims, release readiness, source-truth certification, or source-governance placement authority. |
+| Platinum | Current-standard Sapphire, generated card rows, governed Japanese-source field evidence, internal generated/media checks, review evidence, and reviewer card-surface judgment. | Sapphire alone, Obsidian proof alone, Deck Ready, or NLP approval as sufficient evidence. |
 | Obsidian | Current-standard Sapphire or compatibility structural coverage plus actual human rereview proof. | `revalidatedAt`, clean batch reports, NLP output, generated TSVs, Gold fixtures, or Sapphire text as standalone proof. |
 
 ## Forbidden Claims
 
 Do not claim:
 
-- Candidate is Bronze, reviewed, generated, trusted, or release-relevant.
+- Candidate queues are reviewed, generated, trusted, release-relevant, or certification gates.
 - Silver means reviewed.
 - Gold means source truth, Sapphire, Platinum, Obsidian, or release-ready.
-- Sapphire means Platinum content certification.
+- Sapphire counts as Platinum.
 - Sapphire means Obsidian proof.
-- Platinum can be inferred from legacy `platinum` names.
+- Platinum can be inferred from Sapphire, NLP support, Obsidian proof, or command naming alone.
 - Obsidian can be inferred from `revalidatedAt`, `current-standard-review` prose, Sapphire entries, or compatibility entries.
 - Deck Ready, Word Deck Ready, APKG readiness, clean CI, NLP governance, source-use governance, or media completeness certifies unrelated lanes.
 - A denominator can shrink because another lane is incomplete.

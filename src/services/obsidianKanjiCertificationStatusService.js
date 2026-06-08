@@ -11,7 +11,7 @@ const {
 const MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE = "Automation can verify structure, source binding, protected snippets, audio identity, stroke-order identity, and the presence of card-bound sentence-quality review evidence. The human reviewer still owns the actual natural-Japanese and pedagogy judgment.";
 const REQUIRED_ZERO_COUNTS = Object.freeze(["blocked_or_failing", "needs_substantive_rereview"]);
 const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
-    "current-standard Platinum structure",
+    "legacy current-standard structural/card-quality compatibility",
     "governed Japanese-source binding",
     "protected field snippets",
     "exact primary-reading audio identity",
@@ -19,7 +19,7 @@ const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
     "card-bound Obsidian rereview provenance",
     "presence of actual example sentence quality review proof",
 ]);
-const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard human rereview provenance after the Platinum structural gate, including actual example sentence quality review proof";
+const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard human rereview provenance after the legacy structural/card-quality compatibility gate, including actual example sentence quality review proof";
 const NEEDS_REREVIEW_ACTION = "Perform the Obsidian rereview from the live generated card. Inspect and fix the actual example sentence if needed, then record rereviewProvenance with reviewedAfterStandard=true, mechanicalMigration=false, reviewer, reviewedAt, cardReviewed, checked evidence, limitation decision, and example sentence quality review evidence covering natural Japanese, learner usefulness, level appropriateness, support-only usage, reading, and translation.";
 
 function normalizeText(value) {
@@ -45,7 +45,7 @@ function mapBlockedReasonToFailure({ card = {}, level = null, reason = "" } = {}
         level,
         card: card.kanji || "(unknown)",
         category: REREVIEW_STATUS_CATEGORIES.BLOCKED_OR_FAILING,
-        actual: normalizedReason || "blocked or failing structural Platinum gate",
+        actual: normalizedReason || "blocked or failing legacy structural/card-quality compatibility gate",
     };
 
     const qualityGateMatch = normalizedReason.match(/quality gate must be true: ([A-Za-z0-9_-]+)/);
@@ -55,7 +55,7 @@ function mapBlockedReasonToFailure({ card = {}, level = null, reason = "" } = {}
             field: `qualityGates.${qualityGateMatch[1]}`,
             expected: "true",
             evidenceLane: "qualityGates + reviewEvidence.current-standard-review",
-            reviewerAction: "Fix the card data or manifest judgment, rerun the Platinum structural gate, and only then attempt Obsidian certification.",
+            reviewerAction: "Fix the card data or manifest judgment, rerun the legacy compatibility gate, and only then attempt Obsidian certification.",
         };
     }
 
@@ -66,17 +66,17 @@ function mapBlockedReasonToFailure({ card = {}, level = null, reason = "" } = {}
             field: laneMatch[1],
             expected: "complete required current-standard structured evidence lane with governed source/use semantics",
             evidenceLane: laneMatch[1],
-            reviewerAction: "Repair the evidence lane with governed evidence for the live card fields, rerun the Platinum structural gate, then rerun certification.",
+            reviewerAction: "Repair the evidence lane with governed evidence for the live card fields, rerun the legacy compatibility gate, then rerun certification.",
         };
     }
 
-    if (/missing current-standard structural entry|no platinum manifest entry|could not be generated|missing.*Platinum/i.test(normalizedReason)) {
+    if (/missing current-standard structural entry|no legacy compatibility manifest entry|could not be generated|missing.*legacy.*compatibility/i.test(normalizedReason)) {
         return {
             ...base,
             field: "platinumManifestEntry",
-            expected: `one active current-standard Platinum entry using ${CURRENT_KANJI_PLATINUM_REVIEW_STANDARD} and bound to the generated kanji row`,
+            expected: `one active current-standard legacy compatibility entry using ${CURRENT_KANJI_PLATINUM_REVIEW_STANDARD} and bound to the generated kanji row`,
             evidenceLane: "sourceEvidence + internalChecks + reviewEvidence",
-            reviewerAction: "Create or repair the governed Platinum manifest entry from the live generated card before attempting Obsidian certification.",
+            reviewerAction: "Create or repair the governed legacy compatibility manifest entry from the live generated card before attempting Obsidian certification.",
         };
     }
 
@@ -84,9 +84,9 @@ function mapBlockedReasonToFailure({ card = {}, level = null, reason = "" } = {}
         return {
             ...base,
             field: "platinumManifestEntry",
-            expected: "exactly one active current-standard Platinum entry for the generated kanji row",
+            expected: "exactly one active current-standard legacy compatibility entry for the generated kanji row",
             evidenceLane: "manifest identity",
-            reviewerAction: "Resolve duplicate active manifest entries, rerun the Platinum structural gate, then rerun certification.",
+            reviewerAction: "Resolve duplicate active manifest entries, rerun the legacy compatibility gate, then rerun certification.",
         };
     }
 
@@ -106,23 +106,23 @@ function mapBlockedReasonToFailure({ card = {}, level = null, reason = "" } = {}
             field: "strokeOrder",
             expected: "stroke-order media identity bound to the target kanji",
             evidenceLane: "internalChecks.stroke-order-review",
-            reviewerAction: "Fix stroke-order media identity/provenance and rerun the Platinum structural gate before certification.",
+            reviewerAction: "Fix stroke-order media identity/provenance and rerun the legacy compatibility gate before certification.",
         };
     }
 
     return {
         ...base,
-        field: "platinumStructuralGate",
-        expected: "passing current-standard Platinum structural gate for the live generated card",
+        field: "legacyStructuralCompatibilityGate",
+        expected: "passing current-standard legacy structural/card-quality compatibility gate for the live generated card",
         evidenceLane: "sourceEvidence + internalChecks + reviewEvidence",
-        reviewerAction: "Inspect the structural failure, repair the generated card or manifest evidence, rerun Platinum, then rerun certification.",
+        reviewerAction: "Inspect the structural failure, repair the generated card or manifest evidence, rerun the legacy compatibility gate, then rerun certification.",
     };
 }
 
 function buildBlockedFailures({ card = {}, level = null } = {}) {
     const reasons = Array.isArray(card.reasons) && card.reasons.length > 0
         ? card.reasons
-        : ["blocked or failing structural Platinum gate"];
+        : ["blocked or failing legacy structural/card-quality compatibility gate"];
 
     return reasons.map((reason) => mapBlockedReasonToFailure({ card, level, reason }));
 }
@@ -191,7 +191,7 @@ function formatObsidianKanjiCertificationStatusReport(summary = {}) {
         `Generated active kanji rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
         "",
-        "| Scope | Generated deck rows | Platinum pass (structural gate) | Obsidian certified | Needs Obsidian | Blocked/failing |",
+        "| Scope | Generated deck rows | Legacy compatibility pass | Obsidian certified | Needs Obsidian | Blocked/failing |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ];
 
@@ -219,7 +219,7 @@ function formatObsidianKanjiCertificationStatusReport(summary = {}) {
     lines.push(
         "",
         "Certification policy:",
-        "- Platinum structural commands test the current structural/card requirements against the live generated rows.",
+        "- Legacy compatibility commands test the current structural/card requirements against the live generated rows; native Platinum content certification is a separate stronger lane.",
         "- This command is stricter: it fails when any intended release row is blocked/failing or still needs Obsidian proof.",
         `- Obsidian proof must include structured rereviewProvenance and actual ${gate.requiredSentenceReviewProof || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence for the live card.`,
         `- ${gate.manualJudgmentBoundary || MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE}`

@@ -2,11 +2,11 @@
 
 This document governs the current Platinum policy boundary plus compatibility surfaces that still carry `platinum` names. For program-wide lane authority, start with [Review System Forward Contract](review-system-forward-contract.md), then use [Review Tier Governance](review-tier-governance.md) as the summary.
 
-Core kanji and word structural/card-quality work now use first-class Sapphire files, statuses, and commands. Additional-unverified surfaces still carry `platinum` command names as compatibility names until their own migration is implemented. Existing current-standard compatibility entries remain valid migration inputs where no native Sapphire surface exists; they do not automatically claim Platinum content certification.
+Core kanji and word structural/card-quality work now use first-class Sapphire files, statuses, and commands. Core kanji and word expert content certification now uses first-class native Platinum content manifests and commands. Additional-unverified surfaces and older proof-provider/status commands still carry `platinum` names as compatibility names until their own migration is implemented. Existing current-standard compatibility entries remain valid migration inputs where no native Sapphire surface exists; they do not automatically claim Platinum content certification.
 
-Sapphire is the current structural/card-quality gate. It is stricter than Gold regression and separate from Obsidian certification. Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
+Sapphire is the current structural/card-quality gate. It is stricter than Gold regression and separate from Obsidian certification. Platinum content certification must inherit Sapphire and add stronger human content-review evidence under the native Platinum schema.
 
-Gold regression means the exported card surface is protected against drift. Sapphire means the live generated card passes current field-bound evidence and quality requirements. Platinum means the stronger content-certification lane after Sapphire, once its schema exists. Obsidian means explicit non-mechanical current-version rereview proof exists for the live card.
+Gold regression means the exported card surface is protected against drift. Sapphire means the live generated card passes current field-bound evidence and quality requirements. Platinum means the stronger content-certification lane after Sapphire, under the native Platinum content schema. Obsidian means explicit non-mechanical current-version rereview proof exists for the live card.
 
 For the binding operating contract that agents must follow before any Platinum or Obsidian batch, start with [Platinum And Obsidian Review Contract](platinum-obsidian-review-contract.md).
 
@@ -28,11 +28,11 @@ Rules:
 - A level can be Gold-reviewed and still not be release-ready.
 - Do not use Gold coverage as a substitute for Sapphire.
 - Do not use Sapphire or compatibility Platinum coverage as a substitute for Gold regression, Platinum content certification, or Obsidian proof.
-- Empty Platinum manifests fail intentionally.
+- Empty native Platinum manifests fail intentionally.
 
 ## Product rule
 
-A card only reaches Sapphire coverage, or compatibility structural coverage on unmigrated surfaces, when it is accurate, useful, learner-friendly, and governed under the current command family. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it. Platinum content certification requires Sapphire first and must not be claimed until a dedicated Platinum schema/gate exists and passes.
+A card only reaches Sapphire coverage, or compatibility structural coverage on unmigrated surfaces, when it is accurate, useful, learner-friendly, and governed under the current command family. If a card is uncommon, awkward, too advanced for the level, misleading, or only present to chase reading coverage, remove or defer it instead of promoting it. Platinum content certification requires Sapphire first and must not be claimed unless the native Platinum schema and gate pass for that exact card.
 
 Sapphire evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; human review still owns the judgment that the cited source and final card are correct.
 
@@ -101,7 +101,7 @@ Use the tier names below in product and release discussion:
 - **Silver**: generated learner-facing surface exists and can be inspected.
 - **Gold**: golden regression protects generated output against tracked expectations.
 - **Sapphire**: current-standard structural/card-quality gate passes, including evidence lanes, field bindings, governed source posture, media identity, actual card-data review, and required quality gates. Core kanji and words use native Sapphire files and commands; additional surfaces still retain compatibility command names until migrated.
-- **Platinum**: expert content certification after Sapphire, backed by a dedicated schema and stronger human content-review evidence.
+- **Platinum**: expert content certification after Sapphire, backed by the native Platinum content schema and stronger human content-review evidence.
 - **Obsidian**: the card has explicit non-mechanical current-version rereview provenance after the reviewer actually performs the substantive review.
 
 ## Outcomes
@@ -121,7 +121,7 @@ Sapphire validates the generated card in its current deck level; it does not its
 
 ## Required manifest fields
 
-Active platinum word entries must include:
+Active word Sapphire entries must include:
 
 - `word`
 - `status`
@@ -199,7 +199,7 @@ Required `qualityGates`:
 - `mediaProvenanceVerified`
 - `noSilentFallback`
 
-All gates must be `true`. `fixed_then_platinum` entries must also include `fixSummary`.
+All gates must be `true`. `fixed_then_sapphire` entries must also include `fixSummary`.
 
 Deferred and removed word entries must include `word`, `readingIncludes`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
@@ -288,18 +288,24 @@ npm run deck:sapphire:batch -- --level=5 --kanji=父,生,男
 npm run deck:sapphire:promote -- --level=5 --input=<reviewed-json>
 npm run deck:kanji:obsidian:rereview-status -- --levels=5,4
 npm run deck:kanji:obsidian:certify-status -- --levels=5,4
-npm run deck:platinum:governance-gate
+npm run deck:legacy-platinum:governance-gate
 npm run deck:words:sapphire:batch -- --level=5 --limit=8
 npm run deck:words:sapphire:batch -- --level=5 --words=今日:きょう,八日:ようか
 npm run deck:words:obsidian:rereview-status -- --levels=5,4
 npm run deck:words:obsidian:certify-status -- --levels=5,4
-npm run deck:words:platinum:source-posture -- --levels=5,4
+npm run deck:words:legacy-platinum:source-posture -- --levels=5,4
 npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:sapphire:n5
 npm run deck:sapphire:n4
 npm run deck:sapphire:n3
 npm run deck:sapphire:n2
 npm run deck:sapphire:n1
+npm run deck:platinum:batch -- --level=5 --limit=8
+npm run deck:platinum:n5
+npm run deck:platinum:n4
+npm run deck:platinum:n3
+npm run deck:platinum:n2
+npm run deck:platinum:n1
 npm run deck:kanji:additional:platinum:n5
 npm run deck:kanji:additional:platinum:n4
 npm run deck:kanji:additional:platinum:n3
@@ -307,6 +313,12 @@ npm run deck:kanji:additional:platinum:n2
 npm run deck:kanji:additional:platinum:n1
 npm run deck:words:sapphire:n5
 npm run deck:words:sapphire:n4
+npm run deck:words:platinum:batch -- --level=5 --limit=8
+npm run deck:words:platinum:n5
+npm run deck:words:platinum:n4
+npm run deck:words:platinum:n3
+npm run deck:words:platinum:n2
+npm run deck:words:platinum:n1
 ```
 
 `deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. It does not create entries or prove release readiness. By default it queues cards missing current-standard Sapphire structure. Use it before editing a Sapphire candidate packet to see generated card fields, hard-rule checks, risk flags, existing Sapphire status, and the next square-zero structural review queue. `deck:sapphire:promote` validates reviewed candidate JSON and writes only with `--write`; it does not create Platinum certification or Obsidian proof.
@@ -319,15 +331,17 @@ The generated deck-row count is the certification denominator. Sapphire counts a
 
 `deck:words:sapphire:batch` is the matching read-only word Sapphire pre-review report. It does not create entries, prove Platinum, prove Obsidian, or prove release readiness. By default it queues word cards missing current-standard Sapphire structure. Use it before editing a word Sapphire candidate packet to see exact written-reading identity, generated card fields, sentence lines, exact word audio, pitch source/render status, source lookup links, risk flags, existing Sapphire status, and the next structural review queue.
 
+`deck:platinum:batch`, `deck:platinum:n<level>`, `deck:words:platinum:batch`, and `deck:words:platinum:n<level>` are the native Platinum expert content-certification commands. They consume current-standard Sapphire as a prerequisite, use the native `*-platinum-v1-expert-content` standards, and fail closed while the native Platinum content manifests are empty. They do not create Sapphire entries, record Obsidian proof, or certify release readiness. Legacy structural/proof-provider compatibility remains explicit under `deck:legacy-platinum:*`, `deck:words:legacy-platinum:*`, and older Obsidian proof-provider aliases.
+
 `deck:words:obsidian:rereview-status` is the read-only word Obsidian proof-status report. The current proof consumer still labels its structural column as **Platinum** compatibility while native `deck:words:sapphire:*` owns word Sapphire coverage; both remain separate from **Obsidian** current-version certification proof. Migrated N5/N4 word proof reads canonical JSONL through the scoped proof-provider path by default, and the tracked N5/N4 word review sets no longer carry inline word proof. The command accepts `--proof-provider=ledger` and `--proof-provider=ledger-if-available` for normal migrated-level audits; `--proof-provider=inline` is only a negative-control legacy audit after inline removal. It must not infer proof from `revalidatedAt`, lane-valid `current-standard-review` text, or loose textual proof markers alone; missing proof is reported with the searchable marker `missing_substantive_current_standard_word_rereview_proof`. Obsidian word proof requires structured `rereviewProvenance`, exact word-reading card identity binding, a full word-card `evidenceChecked` checklist, and actual example-sentence quality review evidence covering natural Japanese, learner usefulness, level fit, release quality, reading, and translation. Generated rows without active current-standard structural word entries are classified as `blocked_or_failing` rather than hidden in the rereview backlog.
 
 `deck:words:obsidian:certify-status` is the fail-closed word Obsidian certification gate. It reuses the rereview-status classifier, then fails if any intended release row is `blocked_or_failing` or `needs_substantive_rereview`. For migrated N5/N4 word proof it reads canonical JSONL through the scoped proof-provider path by default; use `--proof-provider=ledger` or `--proof-provider=ledger-if-available` for normal migrated-level audits, and reserve `--proof-provider=inline` as a negative-control legacy audit after inline removal. Every failed word card is reported with the card, field, expected value, actual state, evidence lane, and reviewer action. Automation can verify the proof is present and card-bound; the reviewer still owns the natural-Japanese, sense-fit, and pedagogy judgment.
 
-The older `deck:platinum:rereview-status`, `deck:words:platinum:rereview-status`, `deck:kanji:platinum:certify-status`, and `deck:words:platinum:certify-status` names remain compatibility aliases only. Migrated kanji and word aliases default to the scoped `ledger-if-available` proof provider. Use the Obsidian names in new docs, release checklists, handoff prompts, and governance reports.
+Legacy structural/proof-provider compatibility commands use explicit legacy names such as `deck:legacy-platinum:rereview-status`, `deck:words:legacy-platinum:rereview-status`, and `deck:words:legacy-platinum:certify-status`. Migrated kanji and word legacy commands default to the scoped `ledger-if-available` proof provider. Use the Obsidian names in new docs, release checklists, handoff prompts, and governance reports when the work is proof, and use native `deck:platinum:*` only for Platinum content certification.
 
-`deck:words:platinum:source-posture` is the read-only word source-family posture report. It is scoped to structurally current-standard word entries only. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. Word source-claim origin independence is marked `word_source_claim_origin_independence_not_evaluated` until a word source-origin manifest exists; do not imply that word placement/source-origin circularity was checked before that data exists. Source-family posture counts are not a rereview selection pool and are not substantive platinum proof.
+`deck:words:legacy-platinum:source-posture` is the read-only word source-family posture report. It is scoped to structurally current-standard word entries only. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. Word source-claim origin independence is marked `word_source_claim_origin_independence_not_evaluated` until a word source-origin manifest exists; do not imply that word placement/source-origin circularity was checked before that data exists. Source-family posture counts are not a rereview selection pool and are not substantive Platinum proof.
 
-`deck:platinum:governance-gate` is the local-data real-row governance gate for N5/N4 native Sapphire and word source/proof posture. It reads migrated kanji and word Obsidian proof through the scoped proof-provider path, defaulting to canonical JSONL for migrated levels; unmigrated levels still fall back through the provider path until their own scoped ledger exists. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, zero verification-limitations populations, missing Obsidian proof, and word source-family posture. If an explicitly configured incomplete word level has blocked rows, only rows missing active current-standard Sapphire coverage can be allowed; dirty reviewed entries still fail the gate. It does not edit cards or replace level-specific release commands.
+`deck:legacy-platinum:governance-gate` is the local-data real-row governance gate for N5/N4 native Sapphire and word source/proof posture. It reads migrated kanji and word Obsidian proof through the scoped proof-provider path, defaulting to canonical JSONL for migrated levels; unmigrated levels still fall back through the provider path until their own scoped ledger exists. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, zero verification-limitations populations, missing Obsidian proof, and word source-family posture. If an explicitly configured incomplete word level has blocked rows, only rows missing active current-standard Sapphire coverage can be allowed; dirty reviewed entries still fail the gate. It does not edit cards, certify native Platinum content, or replace level-specific release commands.
 
 Each core-kanji Sapphire command requires every generated card for that level to have an active current-standard Sapphire entry by default. Core kanji commands fail fast before generated-row construction when `--require-all` is used with an empty or incomplete Sapphire manifest, so incomplete N1 gates report the missing current-standard Sapphire coverage instead of implying release readiness. N5/N4/N3/N2 are current-standard complete and have complete canonical Obsidian proof. N2 Sapphire and Obsidian certification still do not imply APKG manual media QA, source-governance completion, Platinum content certification, or release readiness. Use `--allow-legacy-standard` only to inspect historical field-bound entries while planning revalidation; it must not be used as version 1 release evidence.
 

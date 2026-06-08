@@ -51,7 +51,7 @@ function readReviewSet(level, {
 }
 
 async function main({
-    commandName = "deck:platinum:rereview-status",
+    commandName = "deck:legacy-platinum:rereview-status",
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
 } = {}) {
     const options = parseArgs(process.argv.slice(2), { defaultProofProvider });

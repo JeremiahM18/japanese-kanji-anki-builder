@@ -454,8 +454,8 @@ test("tracked populated kanji platinum manifests bind evidence to protected fiel
         });
 
         if (fileName === "platinum_n1_review_set.json" && report.activePlatinumCount === 0) {
-            assert.equal(report.activePlatinumCount, 0, "N1 reset must have zero active Platinum cards");
-            assert.equal(report.currentStandardPlatinumCount, 0, "N1 reset must have zero current-standard Platinum cards");
+            assert.equal(report.activePlatinumCount, 0, "N1 reset must have zero active legacy compatibility cards");
+            assert.equal(report.currentStandardPlatinumCount, 0, "N1 reset must have zero current-standard legacy compatibility cards");
             assertN1PlatinumResetToZero(entries);
             continue;
         }
@@ -476,8 +476,8 @@ test("N1 kanji platinum manifest is either reset-zero history or active current-
         assert.equal(report.currentStandardPlatinumCount, 0);
         assert.equal(report.passed, false);
         assert.ok(
-            report.coverageFailures.some((failure) => /no Platinum entries have been reviewed/i.test(failure)),
-            "N1 zero reset must fail closed until real active Platinum entries are restored"
+            report.coverageFailures.some((failure) => /no legacy Platinum compatibility entries have been reviewed/i.test(failure)),
+            "N1 zero reset must fail closed until real active legacy compatibility entries are restored"
         );
         assertN1PlatinumResetToZero(entries);
         return;
@@ -634,9 +634,9 @@ test("active N1 kanji platinum entries include structured card audit evidence wh
         assert.ok(levelPlacement.sourceConfidence, `${label} source confidence must be recorded`);
         assert.equal(typeof levelPlacement.releaseBlockedBySourceConfidence, "boolean", `${label} source confidence release boundary`);
         if (audit.auditType === N1_CARD_QUALITY_AUDIT_TYPE) {
-            assert.match(levelPlacement.reviewerDecision || "", /card-quality Platinum/i, `${label} level placement boundary must say card-quality Platinum`);
+            assert.match(levelPlacement.reviewerDecision || "", /card-quality Platinum/i, `${label} legacy compatibility boundary must identify the historical card-quality lane`);
         } else {
-            assert.match(levelPlacement.reviewerDecision || "", /structural Platinum/i, `${label} level placement boundary must say structural Platinum`);
+            assert.match(levelPlacement.reviewerDecision || "", /structural Platinum/i, `${label} legacy compatibility boundary must identify the historical structural lane`);
         }
         assert.match(levelPlacement.reviewerDecision || "", /release readiness/i, `${label} level placement boundary must mention release readiness`);
 
@@ -689,7 +689,7 @@ test("active N1 kanji platinum entries include structured card audit evidence wh
         const rubricReview = audit.rubricReview || {};
         assert.equal(rubricReview.rubricVersion, "kanji-platinum-rereview-rubric-v1", `${label} rubric version`);
         assert.equal(rubricReview.rubricResult, "ready_for_substantive_review", `${label} rubric result`);
-        assert.equal(rubricReview.structuralPlatinum, true, `${label} structural Platinum`);
+        assert.equal(rubricReview.structuralPlatinum, true, `${label} legacy structural compatibility flag`);
         assert.equal(rubricReview.substantiveProofRecorded, false, `${label} substantive proof boundary`);
         assert.equal(rubricReview.obsidianProofEligibleFromThisAudit, false, `${label} Obsidian proof boundary`);
 
@@ -707,7 +707,7 @@ test("active N1 kanji platinum entries include structured card audit evidence wh
     }
 });
 
-test("active N1 kanji structural audit preserves ledger-grade review breadth without claiming Obsidian proof when present", () => {
+test("active legacy N1 kanji compatibility audit preserves ledger-grade review breadth without claiming Obsidian proof when present", () => {
     const entries = loadJson(path.join("templates", "platinum_n1_review_set.json"));
     const manifestActiveEntries = activeEntries(entries, ACTIVE_KANJI_PLATINUM_STATUSES);
 
@@ -721,11 +721,11 @@ test("active N1 kanji structural audit preserves ledger-grade review breadth wit
     }
 });
 
-test("active N2 kanji platinum entries bind to ledger-grade Obsidian proof evidence", () => {
+test("active N2 kanji legacy compatibility entries bind to ledger-grade Obsidian proof evidence", () => {
     assertKanjiLedgerGradeForLevel(2);
 });
 
-test("active N3 kanji platinum entries bind to ledger-grade Obsidian proof evidence", () => {
+test("active N3 kanji legacy compatibility entries bind to ledger-grade Obsidian proof evidence", () => {
     assertKanjiLedgerGradeForLevel(3);
 });
 

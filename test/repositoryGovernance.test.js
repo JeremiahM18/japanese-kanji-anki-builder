@@ -220,32 +220,33 @@ test("CI workflow uses tracked-input governance checks and documents local-data 
     assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=legacy-platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-certify-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
-    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-platinum-level --deck-kind=word --levels=5,4 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-legacy-platinum-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set"), true);
+    assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-legacy-platinum-level --deck-kind=word --levels=5,4 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run data:obsidian:proof:provider-parity -- --consumer=word-governance-inputs --deck-kind=word --levels=5,4 --row-source=tracked-review-set"), true);
     assert.equal(workflow.includes("npm run perf:memory:matrix"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt -- --strict --tracked-only"), true);
     assert.equal(workflow.includes("npm run data:audit:jlpt:words"), true);
-    assert.equal(workflow.includes("npm run deck:words:platinum:source-posture -- --levels=5,4"), true);
+    assert.equal(workflow.includes("npm run deck:words:legacy-platinum:source-posture -- --levels=5,4"), true);
     assert.equal(workflow.includes("npm run deck:platinum:governance-gate"), false);
+    assert.equal(workflow.includes("npm run deck:legacy-platinum:governance-gate"), false);
     assert.equal(workflow.includes("hashFiles('data/"), false);
-    assert.match(workflow, /deck:platinum:governance-gate is intentionally local-data release QA/);
+    assert.match(workflow, /deck:legacy-platinum:governance-gate is intentionally local-data release QA/);
     assert.match(readme, /Clean CI runs `security:licenses`, `security:requirements`, `security:sdlc-metrics`, `data:obsidian:proof:validate`, `data:obsidian:proof:reconcile -- --levels=5,4,3,2`, `data:obsidian:proof:reconcile -- --deck-kind=word --levels=5,4`, `data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set`/);
-    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set`/);
-    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=legacy-platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-certify-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set`/);
-    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`/);
-    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-platinum-level --deck-kind=word --levels=5,4 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-legacy-platinum-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set`/);
+    assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-legacy-platinum-level --deck-kind=word --levels=5,4 --row-source=tracked-review-set`/);
     assert.match(readme, /`data:obsidian:proof:provider-parity -- --consumer=word-governance-inputs --deck-kind=word --levels=5,4 --row-source=tracked-review-set`/);
-    assert.match(readme, /Clean CI does not run `deck:platinum:governance-gate` or generated-row Obsidian proof-provider parity/);
+    assert.match(readme, /Clean CI does not run `deck:legacy-platinum:governance-gate` or generated-row Obsidian proof-provider parity/);
     assert.match(readme, /data:audit:jlpt -- --strict --tracked-only/);
 });
 
@@ -339,9 +340,10 @@ test("README presents the review tier model before status snapshots", () => {
     assert.match(tierSection, /Core kanji uses native `templates\/sapphire_n\*_review_set\.json` and `deck:sapphire:\*`/);
     assert.match(tierSection, /words use native `templates\/sapphire_n\*_word_review_set\.json` and `deck:words:sapphire:\*`/);
     assert.match(tierSection, /additional surfaces still retain compatibility command names/);
-    assert.match(tierSection, /Expert content certification: Sapphire is already satisfied, and once implemented a dedicated Platinum schema/);
-    assert.match(tierSection, /native Platinum content certification is not complete until a dedicated Platinum schema, manifest family, and command family exist and pass/);
-    assert.match(tierSection, /Existing `platinum`-named commands and manifests are legacy compatibility\/proof-provider inputs only/);
+    assert.match(tierSection, /Expert content certification: Sapphire is already satisfied, and a dedicated Platinum schema records the stronger human content judgment/);
+    assert.match(tierSection, /native Platinum content certification now uses `templates\/platinum_n\*_content_review_set\.json`, `templates\/platinum_n\*_word_content_review_set\.json`, `deck:platinum:\*`, and `deck:words:platinum:\*`/);
+    assert.match(tierSection, /native Platinum manifests are intentionally empty and fail closed until expert content reviews are recorded/);
+    assert.match(tierSection, /explicit compatibility aliases such as `deck:legacy-platinum:\*`, `deck:words:legacy-platinum:\*`/);
 });
 
 test("forward review system contract locks lane authority and compatibility boundaries", () => {
@@ -375,8 +377,8 @@ test("forward review system contract locks lane authority and compatibility boun
     assert.match(contract, /\| Sapphire \| Structural\/card-quality certification\.[\s\S]*Empty or incomplete native Sapphire manifests fail closed\. Sapphire is not Platinum content certification and is not Obsidian proof\./);
     assert.match(contract, /\| Platinum \| Expert content certification after Sapphire\.[\s\S]*No Platinum claim can come from Sapphire or legacy compatibility coverage\./);
     assert.match(contract, /Platinum is the lane name\. Do not add a temporal adjective to the lane name\./);
-    assert.match(contract, /Native Platinum content certification is not complete until a dedicated Platinum schema, manifest family, and command family exist and pass/);
-    assert.match(contract, /existing `platinum`-named commands and manifests are legacy compatibility\/proof-provider inputs only/);
+    assert.match(contract, /Native Platinum content certification is implemented for core kanji and words with empty fail-closed content manifests/);
+    assert.match(contract, /old structural `platinum_n\*_review_set\.json` and `platinum_n\*_word_review_set\.json` manifests remain legacy compatibility\/proof-provider inputs only/);
     assert.match(contract, /Do not add new core-kanji or word structural work to legacy Platinum naming/);
     assert.match(contract, /Do not use a legacy compatibility command as the forward structural path when a native Sapphire command exists/);
     assert.match(contract, /Legacy compatibility coverage never certifies Platinum content review/);
@@ -390,8 +392,10 @@ test("forward review system contract locks lane authority and compatibility boun
     assert.match(wordSapphireSchema, /platinumReviewAudit:\s*z\.never\(\)\.optional\(\)/);
     assert.match(wordSapphireSchema, /rereviewProvenance:\s*z\.never\(\)\.optional\(\)/);
 
-    assert.match(commandReference, /`npm run deck:platinum:n5` \| Legacy read-only N5 kanji compatibility gate retained as a migration input; use `deck:sapphire:n5`/);
-    assert.match(commandReference, /`npm run deck:words:platinum:n5` \| Legacy N5 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n5`/);
+    assert.match(commandReference, /`npm run deck:platinum:n5` \| Run the native N5 kanji Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0\/80`/);
+    assert.match(commandReference, /`npm run deck:legacy-platinum:n5` \| Legacy read-only N5 kanji compatibility gate retained as a migration\/proof-provider input; use `deck:sapphire:n5`/);
+    assert.match(commandReference, /`npm run deck:words:platinum:n5` \| Run the native N5 word Platinum expert-content gate; currently fails closed because native Platinum content coverage is `0\/287`/);
+    assert.match(commandReference, /`npm run deck:words:legacy-platinum:n5` \| Legacy N5 word compatibility gate retained for proof-provider and downstream migration compatibility; use `deck:words:sapphire:n5`/);
     assert.match(readme, /\[docs\/review-system-forward-contract\.md\]\(docs\/review-system-forward-contract\.md\)/);
     assert.match(tierGovernance, /\[review-system-forward-contract\.md\]\(review-system-forward-contract\.md\)/);
     assert.match(platinumContract, /\[review-system-forward-contract\.md\]\(review-system-forward-contract\.md\)/);

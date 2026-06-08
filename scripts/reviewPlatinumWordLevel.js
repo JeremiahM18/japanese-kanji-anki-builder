@@ -145,7 +145,7 @@ async function buildWordRowsForLevel({ level, config }) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("deck:words:platinum:n<level>", options.unknownArgs);
+    assertNoUnknownArgs("deck:words:legacy-platinum:n<level>", options.unknownArgs);
     const level = options.level;
 
     if (!Number.isInteger(level) || level < 1 || level > 5) {
@@ -183,7 +183,7 @@ async function main() {
     }
 
     process.stdout.write(formatPlatinumWordReviewReport(report, {
-        title: "Japanese Kanji Builder Platinum N" + level + " Word Review",
+        title: "Japanese Kanji Builder Legacy Platinum N" + level + " Word Compatibility Gate",
     }));
     process.exit(report.passed ? 0 : 1);
 }

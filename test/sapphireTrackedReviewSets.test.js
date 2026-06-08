@@ -207,6 +207,30 @@ test("Sapphire schema validates native manifests and rejects Platinum-shaped can
     );
 });
 
+test("Sapphire kanji coverage reports expose Sapphire-native field names", () => {
+    const sourceEntries = activeEntries(loadJson(path.join("templates", "sapphire_n5_review_set.json")));
+    const entries = sourceEntries.slice(0, 1);
+    const rows = buildSyntheticSapphireRows(sourceEntries.slice(0, 2), "N5");
+    const report = evaluateSapphireKanjiReviewSet({
+        rows,
+        entries,
+        requireCurrentReviewStandard: true,
+        requireAllRows: true,
+    });
+
+    assert.equal(report.activePlatinumCount, undefined);
+    assert.equal(report.activePlatinumStatusCount, undefined);
+    assert.equal(report.currentStandardPlatinumCount, undefined);
+    assert.equal(report.legacyOrUnversionedPlatinumCount, undefined);
+    assert.equal(report.missingPlatinumRows, undefined);
+    assert.equal(report.missingCurrentStandardRows, undefined);
+    assert.equal(report.activeSapphireCount, 1);
+    assert.equal(report.currentStandardSapphireCount, 1);
+    assert.deepEqual(report.missingSapphireRows, [sourceEntries[1].kanji]);
+    assert.match(report.coverageFailures.join("\n"), /missing Sapphire entries/);
+    assert.doesNotMatch(report.coverageFailures.join("\n"), /Platinum entries|Platinum coverage/);
+});
+
 test("Sapphire promoter merges reviewed input and fails closed on unsafe candidates", () => {
     const candidate = JSON.parse(JSON.stringify(loadJson(path.join("templates", "sapphire_n5_review_set.json"))[0]));
     const rows = buildSyntheticSapphireRows([candidate], "N5");

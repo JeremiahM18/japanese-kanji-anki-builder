@@ -549,7 +549,7 @@ test("evaluatePlatinumWordReviewSet keeps deferred and removed words out of the 
     assert.match(failing.results[0].failures.join("\n"), /deferred word still appears/);
 });
 
-test("evaluatePlatinumWordReviewSet can require every generated row to be platinum reviewed", () => {
+test("evaluatePlatinumWordReviewSet can require every generated row to have legacy compatibility review", () => {
     const report = evaluateWordPlatinum({
         rows: [
             buildRow(),
@@ -561,11 +561,11 @@ test("evaluatePlatinumWordReviewSet can require every generated row to be platin
 
     assert.equal(report.passed, false);
     assert.deepEqual(report.missingPlatinumRows, ["明日 (あした)"]);
-    assert.match(formatPlatinumWordReviewReport(report), /missing Platinum entries for generated words: 1/);
+    assert.match(formatPlatinumWordReviewReport(report), /missing legacy Platinum compatibility entries for generated words: 1/);
     assert.match(formatPlatinumWordReviewReport(report), /明日 \(あした\)/);
 });
 
-test("formatPlatinumWordReviewReport summarizes current-standard and legacy word coverage", () => {
+test("formatPlatinumWordReviewReport summarizes current-standard legacy compatibility and history coverage", () => {
     const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [buildEntry()],
@@ -575,20 +575,20 @@ test("formatPlatinumWordReviewReport summarizes current-standard and legacy word
     const formatted = formatPlatinumWordReviewReport(report);
 
     assert.match(formatted, new RegExp(`Current review standard: ${CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`));
-    assert.match(formatted, /Current-standard Platinum cards: 0/);
-    assert.match(formatted, /Legacy\/unversioned platinum cards: 1/);
-    assert.match(formatted, /missing current-standard Platinum entries for generated words: 1/);
-    assert.match(formatted, /Missing current-standard Platinum row sample \(1\/1\):/);
+    assert.match(formatted, /Current-standard legacy compatibility cards: 0/);
+    assert.match(formatted, /Legacy\/unversioned compatibility cards: 1/);
+    assert.match(formatted, /missing current-standard legacy Platinum compatibility entries for generated words: 1/);
+    assert.match(formatted, /Missing current-standard legacy compatibility row sample \(1\/1\):/);
 });
 
-test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by default", () => {
+test("evaluatePlatinumWordReviewSet does not pass an empty legacy compatibility set by default", () => {
     const report = evaluateWordPlatinum({
         rows: [buildRow()],
         entries: [],
     });
 
     assert.equal(report.passed, false);
-    assert.deepEqual(report.coverageFailures, ["no Platinum entries have been reviewed"]);
+    assert.deepEqual(report.coverageFailures, ["no legacy Platinum compatibility entries have been reviewed"]);
 });
 
 test("evaluatePlatinumWordReviewSet requires reviewer and date for non-shipping decisions", () => {

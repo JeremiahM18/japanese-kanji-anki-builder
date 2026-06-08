@@ -130,9 +130,9 @@ function assertKanjiPlatinumPreflight({ entries = [], level, options = {} } = {}
 
     if (requiresPlatinumCoverage && platinumCount === 0) {
         throw new Error([
-            `N${level} has 0 Platinum entries for ${CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}.`,
-            "Generated-row build skipped because --require-all needs current-standard Platinum coverage before export checks.",
-            "Start the governed Platinum manifest first, or use --allow-empty only for intentional empty diagnostic surfaces.",
+            `N${level} has 0 legacy compatibility entries for ${CURRENT_KANJI_PLATINUM_REVIEW_STANDARD}.`,
+            "Generated-row build skipped because --require-all needs current-standard legacy compatibility coverage before export checks.",
+            "Start the governed legacy compatibility manifest first, or use --allow-empty only for intentional empty diagnostic surfaces.",
         ].join(" "));
     }
 
@@ -141,7 +141,7 @@ function assertKanjiPlatinumPreflight({ entries = [], level, options = {} } = {}
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("deck:platinum:n<level>", options.unknownArgs);
+    assertNoUnknownArgs("deck:legacy-platinum:n<level>", options.unknownArgs);
     const level = options.level;
 
     if (!Number.isInteger(level) || level < 1 || level > 5) {
@@ -184,7 +184,7 @@ async function main() {
     }
 
     process.stdout.write(formatPlatinumKanjiReviewReport(report, {
-        title: "Japanese Kanji Builder Platinum N" + level + " Kanji Gate",
+        title: "Japanese Kanji Builder Legacy Platinum N" + level + " Kanji Compatibility Gate",
     }));
     process.exit(report.passed ? 0 : 1);
 }

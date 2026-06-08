@@ -82,7 +82,7 @@ function readReviewSet(level, {
 }
 
 async function main({
-    commandName = "deck:words:platinum:batch",
+    commandName = "deck:words:legacy-platinum:batch",
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
 } = {}) {
     const options = parseArgs(process.argv.slice(2));

@@ -432,10 +432,10 @@ function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = 
         return "already substantively rereviewed";
     }
     if (reviewStatus === "current_standard_structural_only") {
-        return "substantive rereview required; structural v3 pass is not proof";
+        return "substantive rereview required; legacy compatibility structural pass is not proof";
     }
     if (reviewStatus === "legacy_unversioned_platinum") {
-        return "revalidate existing platinum under current standard";
+        return "revalidate existing legacy compatibility under current standard";
     }
     if (reviewStatus === "active_platinum") {
         return "already reviewed";
@@ -610,18 +610,19 @@ function formatPlatinumWordBatchReport(report = {}) {
     const levelLabel = Number.isInteger(report.level) ? `N${report.level}` : "Unknown level";
     const summary = report.summary || {};
     const lines = [
-        `Japanese Kanji Builder Platinum ${levelLabel} Word Batch Report`,
+        `Japanese Kanji Builder Legacy Platinum ${levelLabel} Word Compatibility Batch Report`,
         "",
+        "Lane: Legacy Platinum compatibility (read-only structural/card-quality proof-provider input; not native Platinum content certification)",
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
         `Queue: ${report.queue || WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW}`,
-        `Platinum entries: ${summary.activePlatinum || 0}`,
+        `Legacy compatibility entries: ${summary.activePlatinum || 0}`,
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard Platinum entries: ${summary.currentStandardPlatinum || 0}`,
+        `Current-standard legacy compatibility entries: ${summary.currentStandardPlatinum || 0}`,
         `Obsidian certified: ${summary.substantiveRereviewProven || 0}`,
-        `Legacy/unversioned platinum: ${summary.legacyOrUnversionedPlatinum || 0}`,
-        `Missing Platinum entries: ${summary.remainingPlatinum || 0}`,
-        `Missing current-standard Platinum structure: ${summary.remainingCurrentStandard || 0}`,
+        `Legacy/unversioned compatibility entries: ${summary.legacyOrUnversionedPlatinum || 0}`,
+        `Missing legacy compatibility entries: ${summary.remainingPlatinum || 0}`,
+        `Missing current-standard legacy compatibility structure: ${summary.remainingCurrentStandard || 0}`,
         `Remaining Obsidian certification: ${summary.remainingSubstantiveRereview || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
@@ -637,7 +638,7 @@ function formatPlatinumWordBatchReport(report = {}) {
         ? report.nextMissingWords
         : report.nextSubstantiveRereviewWords;
     const queueLabel = report.queue === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
-        ? "Next missing current-standard structure queue"
+        ? "Next missing legacy compatibility structure queue"
         : "Next substantive rereview queue";
     if (!report.scopedToRequestedWords && Array.isArray(queueWords) && queueWords.length > 0) {
         lines.push("", `${queueLabel} (${Math.min(queueWords.length, 30)}/${queueWords.length}):`);
@@ -680,8 +681,8 @@ function formatPlatinumWordBatchReport(report = {}) {
 
     lines.push(
         "",
-        "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.",
-        "Default queue is substantive rereview: structural current-standard entries remain in scope until explicit non-mechanical rereview proof exists."
+        "This report is read-only. It prepares legacy compatibility review; it does not create legacy compatibility entries, native Platinum content entries, Obsidian proof, or release readiness.",
+        "Default queue is substantive rereview: legacy current-standard structural/card-quality entries remain in scope until explicit non-mechanical rereview proof exists."
     );
     return `${lines.join("\n")}\n`;
 }

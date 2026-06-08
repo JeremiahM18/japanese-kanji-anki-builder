@@ -44,7 +44,7 @@ test("word certification gate passes only when every generated row has Obsidian 
     assert.equal(summary.certificationGate.manualJudgmentBoundary, MANUAL_WORD_REVIEW_BOUNDARY_NOTE);
 });
 
-test("word certification gate fails structural Platinum rows that still need Obsidian proof", () => {
+test("word certification gate fails structural compatibility rows that still need Obsidian proof", () => {
     const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
         cards: [{
             identity: "日本|にほん",

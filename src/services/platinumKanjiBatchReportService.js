@@ -692,14 +692,15 @@ function formatPlatinumKanjiBatchReport(report = {}) {
     const levelLabel = Number.isInteger(report.level) ? `N${report.level}` : "Unknown level";
     const summary = report.summary || {};
     const lines = [
-        `Japanese Kanji Builder Platinum ${levelLabel} Kanji Batch Report`,
+        `Japanese Kanji Builder Legacy Platinum ${levelLabel} Kanji Compatibility Batch Report`,
         "",
+        "Lane: Legacy Platinum compatibility (read-only structural/card-quality proof-provider input; not native Platinum content certification)",
         `Scope: ${report.scope || "(unknown)"}`,
         `Generated cards: ${summary.generatedRows || 0}`,
         `Queue: ${report.queue || KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW}`,
-        `Platinum entries: ${summary.activePlatinum || 0}`,
+        `Legacy compatibility entries: ${summary.activePlatinum || 0}`,
         `Obsidian certified: ${summary.substantiveRereviewProven || 0}`,
-        `Missing Platinum structure: ${summary.remainingPlatinum || 0}`,
+        `Missing legacy compatibility structure: ${summary.remainingPlatinum || 0}`,
         `Remaining Obsidian certification: ${summary.remainingSubstantiveRereview || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
@@ -716,7 +717,7 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         ? report.nextMissingKanji
         : report.nextSubstantiveRereviewKanji;
     const queueLabel = report.queue === KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
-        ? "Next missing current-standard structure queue"
+        ? "Next missing legacy compatibility structure queue"
         : "Next substantive rereview queue";
     if (Array.isArray(queueKanji) && queueKanji.length > 0) {
         lines.push("", `${queueLabel} (${Math.min(queueKanji.length, 30)}/${queueKanji.length}):`);
@@ -760,8 +761,8 @@ function formatPlatinumKanjiBatchReport(report = {}) {
 
     lines.push(
         "",
-        "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.",
-        "Default queue is substantive rereview: structural current-standard entries remain in scope until explicit non-mechanical rereview proof exists."
+        "This report is read-only. It prepares legacy compatibility review; it does not create legacy compatibility entries, native Platinum content entries, Obsidian proof, or release readiness.",
+        "Default queue is substantive rereview: legacy current-standard structural/card-quality entries remain in scope until explicit non-mechanical rereview proof exists."
     );
     return `${lines.join("\n")}\n`;
 }

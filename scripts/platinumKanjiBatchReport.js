@@ -56,7 +56,7 @@ function parseArgs(argv, {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
-    assertNoUnknownArgs("platinumKanjiBatchReport", options.unknownArgs);
+    assertNoUnknownArgs("deck:legacy-platinum:batch", options.unknownArgs);
 
     if (!Number.isInteger(options.level) || options.level < 1 || options.level > 5) {
         throw new Error("Platinum kanji batch report level must be 1-5.");

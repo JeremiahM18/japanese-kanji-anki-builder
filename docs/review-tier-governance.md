@@ -54,16 +54,17 @@ Word structural/card-quality work uses native Sapphire names:
 - `word-sapphire-v1-evidence-lanes`
 - active statuses `sapphire` and `fixed_then_sapphire`
 
-The following names remain compatibility names for unmigrated or legacy surfaces:
+The following names remain compatibility names for unmigrated, historical, or proof-provider surfaces:
 
 - `templates/platinum_*_review_set.json`
 - `templates/platinum_*_word_review_set.json`
-- `npm run deck:platinum:*`
-- `npm run deck:words:platinum:*`
+- `npm run deck:legacy-platinum:*`
+- `npm run deck:words:legacy-platinum:*`
+- older proof-provider compatibility surfaces now exposed through explicit legacy names such as `deck:legacy-platinum:rereview-status` and `deck:words:legacy-platinum:rereview-status`
 - `kanji-platinum-v3-evidence-lanes`
 - `word-platinum-v3-evidence-lanes`
 
-Under this transition, legacy current-standard `platinum` and `fixed_then_platinum` entries remain valid migration inputs where no native Sapphire surface exists, and legacy word Platinum manifests remain compatibility/proof-provider inputs until downstream consumers are migrated. Existing completed work is not invalidated by introducing Sapphire language, but migrated core-kanji and word Sapphire work is represented by `sapphire` and `fixed_then_sapphire` under native Sapphire standards and must not be described as Platinum content certification.
+Native Platinum content certification now uses `templates/platinum_n*_content_review_set.json`, `templates/platinum_n*_word_content_review_set.json`, `deck:platinum:*`, and `deck:words:platinum:*`. Those manifests are empty and fail closed until expert content reviews are recorded. Under this transition, legacy current-standard `platinum` and `fixed_then_platinum` entries remain valid migration inputs where no native Sapphire surface exists, and legacy word Platinum manifests remain compatibility/proof-provider inputs until downstream consumers are migrated. Existing completed work is not invalidated by introducing Sapphire language, but migrated core-kanji and word Sapphire work is represented by `sapphire` and `fixed_then_sapphire` under native Sapphire standards and must not be described as Platinum content certification.
 
 For new core-kanji and word structural documentation, prompts, and reviews, use the native Sapphire command families. For additional-unverified surfaces that still carry `platinum` names, describe them as structural/card-quality compatibility gates unless the work is explicitly implementing the Platinum content-certification schema. Do not claim Platinum content certification from a structural/card-quality pass.
 
@@ -71,8 +72,8 @@ For new core-kanji and word structural documentation, prompts, and reviews, use 
 
 - Do not mass rename manifests, commands, statuses, or historical review entries without a dedicated migration plan, tests, and count-preserving proof.
 - Do not demote existing current-standard compatibility coverage merely because the tier language was clarified.
-- Do not promote existing compatibility coverage to Platinum content certification unless a dedicated Platinum schema/gate exists and the card passes it.
-- Future additional schema work should add Sapphire-native command aliases before removing any compatibility `platinum` names.
+- Do not promote existing compatibility coverage to Platinum content certification unless the card passes the native Platinum content schema and gate.
+- Future additional-surface schema work should add Sapphire-native command aliases before removing any compatibility `platinum` names.
 - Platinum schema work must inherit Sapphire and add stronger content-review evidence instead of reusing structure-only wording.
 - Obsidian remains separate from both Sapphire and Platinum.
 

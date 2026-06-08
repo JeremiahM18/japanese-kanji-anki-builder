@@ -83,15 +83,15 @@ const {
 } = require("../src/services/platinumWordSourcePostureService");
 
 const SUPPORTED_CONSUMERS = Object.freeze({
-    KANJI_BATCH_REPORT: "kanji-batch-report",
+    KANJI_LEGACY_PLATINUM_BATCH_REPORT: "kanji-legacy-platinum-batch-report",
     KANJI_FIELD_SOURCE_CONTRACT: "kanji-field-source-contract",
-    KANJI_PLATINUM_LEVEL: "kanji-platinum-level",
+    KANJI_LEGACY_PLATINUM_LEVEL: "kanji-legacy-platinum-level",
     KANJI_REREVIEW_STATUS: "kanji-rereview-status",
-    PLATINUM_GOVERNANCE_GATE: "platinum-governance-gate",
-    WORD_BATCH_REPORT: "word-batch-report",
+    LEGACY_STRUCTURAL_GOVERNANCE_GATE: "legacy-platinum-governance-gate",
+    WORD_LEGACY_PLATINUM_BATCH_REPORT: "word-legacy-platinum-batch-report",
     WORD_CERTIFY_STATUS: "word-certify-status",
     WORD_GOVERNANCE_INPUTS: "word-governance-inputs",
-    WORD_PLATINUM_LEVEL: "word-platinum-level",
+    WORD_LEGACY_PLATINUM_LEVEL: "word-legacy-platinum-level",
     WORD_REREVIEW_STATUS: "word-rereview-status",
 });
 
@@ -170,10 +170,10 @@ function parseArgs(argv) {
 
 function assertConsumerDeckKind({ consumer, deckKind }) {
     const wordConsumers = new Set([
-        SUPPORTED_CONSUMERS.WORD_BATCH_REPORT,
+        SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_BATCH_REPORT,
         SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS,
         SUPPORTED_CONSUMERS.WORD_GOVERNANCE_INPUTS,
-        SUPPORTED_CONSUMERS.WORD_PLATINUM_LEVEL,
+        SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_LEVEL,
         SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS,
     ]);
     const expectedDeckKind = wordConsumers.has(consumer) ? "word" : "kanji";
@@ -658,7 +658,7 @@ function buildPlatinumGovernanceGateProviderParityForLevel({
 
     return {
         level,
-        consumer: SUPPORTED_CONSUMERS.PLATINUM_GOVERNANCE_GATE,
+        consumer: SUPPORTED_CONSUMERS.LEGACY_STRUCTURAL_GOVERNANCE_GATE,
         comparisonMode: parity.comparisonMode,
         passed: parity.passed,
         inlineProofCount,
@@ -855,7 +855,7 @@ function buildKanjiPlatinumLevelProviderParityForLevel({
 
     return {
         level,
-        consumer: SUPPORTED_CONSUMERS.KANJI_PLATINUM_LEVEL,
+        consumer: SUPPORTED_CONSUMERS.KANJI_LEGACY_PLATINUM_LEVEL,
         comparisonMode: parity.comparisonMode,
         passed: parity.passed,
         inlineProofCount,
@@ -945,7 +945,7 @@ function buildWordPlatinumLevelProviderParityForLevel({
     return {
         level,
         deckKind: "word",
-        consumer: SUPPORTED_CONSUMERS.WORD_PLATINUM_LEVEL,
+        consumer: SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_LEVEL,
         comparisonMode: parity.comparisonMode,
         passed: parity.passed,
         inlineProofCount,
@@ -1169,7 +1169,7 @@ function buildKanjiBatchReportProviderParityForLevel({
 
     return {
         level,
-        consumer: SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT,
+        consumer: SUPPORTED_CONSUMERS.KANJI_LEGACY_PLATINUM_BATCH_REPORT,
         comparisonMode: parity.comparisonMode,
         passed: parity.passed,
         inlineProofCount,
@@ -1394,7 +1394,7 @@ function buildWordBatchReportProviderParityForLevel({
     return {
         level,
         deckKind: "word",
-        consumer: SUPPORTED_CONSUMERS.WORD_BATCH_REPORT,
+        consumer: SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_BATCH_REPORT,
         comparisonMode: parity.comparisonMode,
         passed: parity.passed,
         inlineProofCount,
@@ -1511,17 +1511,17 @@ async function buildObsidianProofProviderParityReport({
     assertConsumerDeckKind({ consumer, deckKind });
     const normalizedRowSource = normalizeRowSource(rowSource);
     const scopes = [];
-    const curatedStudyData = consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT
+    const curatedStudyData = consumer === SUPPORTED_CONSUMERS.KANJI_LEGACY_PLATINUM_BATCH_REPORT
         ? loadCuratedStudyData(config.curatedStudyDataPath)
         : {};
     const fieldSourceInputs = consumer === SUPPORTED_CONSUMERS.KANJI_FIELD_SOURCE_CONTRACT
         ? loadKanjiFieldSourceContractInputs({ cwd })
         : {};
     const wordPitchAccentData = [
-        SUPPORTED_CONSUMERS.WORD_BATCH_REPORT,
+        SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_BATCH_REPORT,
         SUPPORTED_CONSUMERS.WORD_CERTIFY_STATUS,
         SUPPORTED_CONSUMERS.WORD_GOVERNANCE_INPUTS,
-        SUPPORTED_CONSUMERS.WORD_PLATINUM_LEVEL,
+        SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_LEVEL,
         SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS,
     ].includes(consumer)
         ? loadWordPitchAccentData(path.join(cwd, "templates", "word_pitch_accent_data.json"))
@@ -1541,7 +1541,7 @@ async function buildObsidianProofProviderParityReport({
             rawEntries: rawReviewSet.entries,
             config,
         });
-        if (consumer === SUPPORTED_CONSUMERS.WORD_BATCH_REPORT) {
+        if (consumer === SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_BATCH_REPORT) {
             scopes.push(buildWordBatchReportProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -1573,7 +1573,7 @@ async function buildObsidianProofProviderParityReport({
                 wordPitchAccentData,
                 kanjiLevelData: null,
             }));
-        } else if (consumer === SUPPORTED_CONSUMERS.WORD_PLATINUM_LEVEL) {
+        } else if (consumer === SUPPORTED_CONSUMERS.WORD_LEGACY_PLATINUM_LEVEL) {
             scopes.push(buildWordPlatinumLevelProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -1596,7 +1596,7 @@ async function buildObsidianProofProviderParityReport({
                 wordPitchAccentData,
                 kanjiLevelData: null,
             }));
-        } else if (consumer === SUPPORTED_CONSUMERS.KANJI_BATCH_REPORT) {
+        } else if (consumer === SUPPORTED_CONSUMERS.KANJI_LEGACY_PLATINUM_BATCH_REPORT) {
             scopes.push(buildKanjiBatchReportProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -1616,7 +1616,7 @@ async function buildObsidianProofProviderParityReport({
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
                 fieldSourceInputs,
             }));
-        } else if (consumer === SUPPORTED_CONSUMERS.KANJI_PLATINUM_LEVEL) {
+        } else if (consumer === SUPPORTED_CONSUMERS.KANJI_LEGACY_PLATINUM_LEVEL) {
             scopes.push(buildKanjiPlatinumLevelProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -1627,7 +1627,7 @@ async function buildObsidianProofProviderParityReport({
                 requireAllRows,
                 allowEmpty,
             }));
-        } else if (consumer === SUPPORTED_CONSUMERS.PLATINUM_GOVERNANCE_GATE) {
+        } else if (consumer === SUPPORTED_CONSUMERS.LEGACY_STRUCTURAL_GOVERNANCE_GATE) {
             scopes.push(buildPlatinumGovernanceGateProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
@@ -1670,13 +1670,13 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "- During dual-read transition, inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
         "- After inline proof is removed, canonical ledger integrity must prove every scoped ledger event binds to a tracked review-set entry and applies cleanly.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
-        "- Word batch report queue samples, selected word identities, summaries, review statuses, and risk flags must match before deck:words:platinum:batch reads the proof provider by default.",
+        "- Word legacy Platinum batch report queue samples, selected word identities, summaries, review statuses, and risk flags must match before deck:words:legacy-platinum:batch reads the proof provider by default.",
         "- Word certification status totals, zero-failure gate posture, and failure objects must match before deck:words:obsidian:certify-status reads the proof provider by default.",
-        "- Word Platinum level gate structural projections must match before deck:words:platinum:n<level> reads the proof provider by default.",
-        "- Platinum governance gate word rereview, word source posture, and manifest projections must match before deck:platinum:governance-gate reads word proof through the provider.",
-        "- Structural Platinum gate projections must match before deck:platinum:n<level> reads the proof provider by default.",
+        "- Word legacy Platinum level structural projections must match before deck:words:legacy-platinum:n<level> reads the proof provider by default.",
+        "- Legacy Platinum governance gate word rereview, word source posture, and manifest projections must match before deck:legacy-platinum:governance-gate reads word proof through the provider.",
+        "- Legacy compatibility structural/card-quality gate projections must match before deck:legacy-platinum:n<level> reads the proof provider by default.",
         "- Kanji card-field source contract projections must match before data:build:kanji-field-source-contract reads the proof provider by default.",
-        "- Platinum governance gate kanji proof-provider projections must match before deck:platinum:governance-gate reads the proof provider by default.",
+        "- Legacy Platinum governance gate kanji proof-provider projections must match before deck:legacy-platinum:governance-gate reads the proof provider by default.",
         "- tracked-review-set row source is CI-safe proof-provider parity; generated row source is local live-row parity and may require ignored data/* inputs.",
         "- This command does not certify cards, repair proof, read generated TSV/APKG output, or claim release readiness.",
     ];

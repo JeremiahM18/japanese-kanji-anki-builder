@@ -56,9 +56,9 @@ npm run deck:sapphire:batch -- --level=<level> --limit=<batch-size> --queue=miss
 npm run deck:words:sapphire:batch -- --level=<level> --limit=<batch-size> --queue=missing-current-standard --json
 ```
 
-Use `deck:platinum:batch -- --queue=missing-current-standard` only as a legacy migration-input inspection command when a native Sapphire manifest is not available. Native core-kanji structural work uses `deck:sapphire:batch`.
+Use `deck:legacy-platinum:batch -- --queue=missing-current-standard` only as a legacy migration-input inspection command when a native Sapphire manifest is not available. Native core-kanji structural work uses `deck:sapphire:batch`, and native `deck:platinum:batch` is reserved for expert content certification beyond Sapphire.
 
-Use `deck:sapphire:batch` for core-kanji Sapphire work and `deck:words:sapphire:batch` for word Sapphire work. Use the `platinum`-named batch commands only for legacy compatibility surfaces or Obsidian/substantive proof preparation.
+Use `deck:sapphire:batch` for core-kanji Sapphire work and `deck:words:sapphire:batch` for word Sapphire work. Use explicit `legacy-platinum` batch commands only for legacy compatibility surfaces or Obsidian/substantive proof preparation.
 
 A Sapphire or compatibility-structural pass must inspect the actual live generated card data, not just the manifest shape.
 
@@ -122,12 +122,12 @@ Obsidian starts after the live card has structurally valid current-standard Sapp
 
 ```bash
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
-npm run deck:platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
+npm run deck:legacy-platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
 ```
 
 ```bash
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
-npm run deck:words:platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
+npm run deck:words:legacy-platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
 ```
 
 The reviewer must rereview the actual live card data again, including source evidence, examples, media identity, limitations, and any NLP support. Obsidian proof is not inferred from the Sapphire entry or any legacy compatibility entry.
@@ -164,7 +164,7 @@ npm run deck:sapphire:n<level>
 node --test test/sapphireTrackedReviewSets.test.js
 ```
 
-For word levels with an npm alias, run `npm run deck:words:sapphire:n<level>`. Native word Sapphire commands fail closed for empty or incomplete manifests; legacy `deck:words:platinum:n<level>` commands are compatibility/proof-provider inputs, not the new structural lane.
+For word levels with an npm alias, run `npm run deck:words:sapphire:n<level>`. Native word Sapphire commands fail closed for empty or incomplete manifests; legacy `deck:words:legacy-platinum:n<level>` commands are compatibility/proof-provider inputs, not the new structural lane. Native `deck:words:platinum:n<level>` is reserved for expert content certification beyond Sapphire.
 
 When a batch report makes a media-readiness claim for a level, also run:
 

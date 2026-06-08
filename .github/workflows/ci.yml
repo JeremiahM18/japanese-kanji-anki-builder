@@ -133,17 +133,17 @@ jobs:
       - name: Verify Obsidian proof provider parity
         run: npm run data:obsidian:proof:provider-parity -- --levels=5,4,3,2 --row-source=tracked-review-set
 
-      - name: Verify Obsidian proof provider parity for batch selector
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
+      - name: Verify Obsidian proof provider parity for legacy kanji batch selector
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-batch-report --levels=5,4,3,2 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
 
-      - name: Verify Obsidian proof provider parity for platinum level gate
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set
+      - name: Verify Obsidian proof provider parity for legacy kanji structural gate
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-legacy-platinum-level --levels=5,4,3,2 --row-source=tracked-review-set
 
       - name: Verify Obsidian proof provider parity for kanji field-source contract
         run: npm run data:obsidian:proof:provider-parity -- --consumer=kanji-field-source-contract --levels=5,4,3,2 --row-source=tracked-review-set
 
-      - name: Verify Obsidian proof provider parity for platinum governance gate
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set
+      - name: Verify Obsidian proof provider parity for legacy governance gate
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=legacy-platinum-governance-gate --levels=5,4,3,2 --row-source=tracked-review-set
 
       - name: Verify Obsidian proof provider parity for word rereview status
         run: npm run data:obsidian:proof:provider-parity -- --consumer=word-rereview-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set
@@ -151,11 +151,11 @@ jobs:
       - name: Verify Obsidian proof provider parity for word certification status
         run: npm run data:obsidian:proof:provider-parity -- --consumer=word-certify-status --deck-kind=word --levels=5,4 --row-source=tracked-review-set
 
-      - name: Verify Obsidian proof provider parity for word batch selector
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=word-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
+      - name: Verify Obsidian proof provider parity for legacy word batch selector
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=word-legacy-platinum-batch-report --deck-kind=word --levels=5,4 --queue=substantive-rereview --limit=8 --row-source=tracked-review-set
 
-      - name: Verify Obsidian proof provider parity for word platinum level gate
-        run: npm run data:obsidian:proof:provider-parity -- --consumer=word-platinum-level --deck-kind=word --levels=5,4 --row-source=tracked-review-set
+      - name: Verify Obsidian proof provider parity for legacy word structural gate
+        run: npm run data:obsidian:proof:provider-parity -- --consumer=word-legacy-platinum-level --deck-kind=word --levels=5,4 --row-source=tracked-review-set
 
       - name: Verify Obsidian proof provider parity for word governance inputs
         run: npm run data:obsidian:proof:provider-parity -- --consumer=word-governance-inputs --deck-kind=word --levels=5,4 --row-source=tracked-review-set
@@ -169,10 +169,10 @@ jobs:
       - name: Verify tracked JLPT word taxonomy alignment
         run: npm run data:audit:jlpt:words
 
-      - name: Run manifest-only word platinum source posture
-        run: npm run deck:words:platinum:source-posture -- --levels=5,4
+      - name: Run manifest-only word legacy source posture
+        run: npm run deck:words:legacy-platinum:source-posture -- --levels=5,4
 
-      # deck:platinum:governance-gate is intentionally local-data release QA.
+      # deck:legacy-platinum:governance-gate is intentionally local-data release QA.
       # Clean GitHub Actions checkouts do not include ignored data/* generated-row inputs.
 
   smoke:

@@ -268,6 +268,8 @@ Blockers require a fix, a rerun, or an explicit accepted-risk record before rele
 
 Diagnostic passes do not certify unrelated lanes. Source-use governance, NLP governance, generated-row readiness, Gold regression, Sapphire structural coverage, Platinum, Obsidian proof, media completeness, hosted security posture, release trust, and manual product QA each keep their own denominator and command evidence.
 
+For end-of-batch handoff, run `npm run deck:closeout -- --levels=<levels>`. It prints git state, kanji/word Silver-Gold-Sapphire-Platinum counts, expected coverage-failure gates, NLP support posture, CI/release/manual-QA reminders, and proof-ledger worktree status. It is read-only: it does not run Obsidian status commands, append proof, listen to audio, import APKGs, or certify release readiness.
+
 ## Core Workflows
 
 Use [docs/workflows.md](docs/workflows.md) for complete workflow details.

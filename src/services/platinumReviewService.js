@@ -1043,6 +1043,8 @@ module.exports = {
     REQUIRED_WORD_REVIEW_EVIDENCE_TYPES,
     REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
     REVIEW_ONLY_STATUSES,
+    buildWordReviewStandardSummary,
+    buildWordVerificationLimitationSummary,
     entryUsesCurrentWordPlatinumStandard,
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,

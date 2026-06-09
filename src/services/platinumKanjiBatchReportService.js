@@ -35,6 +35,8 @@ const REVIEW_RUBRIC_RESULTS = Object.freeze({
     READY_FOR_SUBSTANTIVE_REVIEW: "ready_for_substantive_review",
     BLOCKED: "blocked",
 });
+const PRIOR_KANJI_SAPPHIRE_REVIEW_STANDARD = "kanji-sapphire-v1-evidence-lanes";
+const ACTIVE_SAPPHIRE_PRECONDITION_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -235,6 +237,16 @@ function buildEntryStateByKanji(entries = []) {
     }
 
     return stateByKanji;
+}
+
+function buildCurrentStandardSapphireSet(entries = []) {
+    return new Set((Array.isArray(entries) ? entries : [])
+        .filter((entry) => (
+            ACTIVE_SAPPHIRE_PRECONDITION_STATUSES.includes(normalizeText(entry.status))
+            && entry.reviewStandard === PRIOR_KANJI_SAPPHIRE_REVIEW_STANDARD
+        ))
+        .map((entry) => normalizeText(entry.kanji))
+        .filter(Boolean));
 }
 
 function classifyReviewStatus(statuses = [], entries = []) {
@@ -589,9 +601,19 @@ function normalizeQueueMode(queue = DEFAULT_KANJI_BATCH_QUEUE_MODE) {
         : DEFAULT_KANJI_BATCH_QUEUE_MODE;
 }
 
-function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12, queue = DEFAULT_KANJI_BATCH_QUEUE_MODE } = {}) {
+function selectBatchRows({
+    rows = [],
+    entries = [],
+    sapphireEntries = [],
+    kanji = [],
+    limit = 12,
+    skipSapphirePreconditionForSapphireCompatibilityReport = false,
+    queue = DEFAULT_KANJI_BATCH_QUEUE_MODE,
+} = {}) {
     const queueMode = normalizeQueueMode(queue);
     const stateByKanji = buildEntryStateByKanji(entries);
+    const currentSapphireSet = buildCurrentStandardSapphireSet(sapphireEntries);
+    const enforceSapphirePrecondition = !skipSapphirePreconditionForSapphireCompatibilityReport;
 
     if (Array.isArray(kanji) && kanji.length > 0) {
         return kanji
@@ -601,6 +623,9 @@ function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12, queu
 
     return rows
         .filter((row) => {
+            if (enforceSapphirePrecondition && !currentSapphireSet.has(row.kanji)) {
+                return false;
+            }
             const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
             const reviewStatus = classifyReviewStatus(state.statuses, state.entries);
             if (queueMode === KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD) {
@@ -615,29 +640,47 @@ function selectBatchRows({ rows = [], entries = [], kanji = [], limit = 12, queu
 function buildPlatinumKanjiBatchReport({
     rows = [],
     entries = [],
+    sapphireEntries = [],
     level,
     kanji = [],
     limit = 12,
     curatedStudyData = {},
+    skipSapphirePreconditionForSapphireCompatibilityReport = false,
     queue = DEFAULT_KANJI_BATCH_QUEUE_MODE,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
+    const currentSapphireSet = buildCurrentStandardSapphireSet(sapphireEntries);
     const stateByKanji = buildEntryStateByKanji(reviewEntries);
     const queueMode = normalizeQueueMode(queue);
-    const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, kanji, limit, queue: queueMode });
+    const enforceSapphirePrecondition = !skipSapphirePreconditionForSapphireCompatibilityReport;
+    const selectedRows = selectBatchRows({
+        rows: generatedRows,
+        entries: reviewEntries,
+        sapphireEntries,
+        kanji,
+        limit,
+        skipSapphirePreconditionForSapphireCompatibilityReport,
+        queue: queueMode,
+    });
     const activeCount = reviewEntries.filter(isCurrentStandardPlatinumEntry).length;
     const substantiveRereviewProvenCount = reviewEntries.filter((entry) => (
         isCurrentStandardPlatinumEntry(entry)
         && entryHasSubstantiveCurrentStandardRereviewProof(entry)
     )).length;
     const missingRows = generatedRows.filter((row) => {
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(row.kanji)) {
+            return false;
+        }
         const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
         const reviewStatus = classifyReviewStatus(state.statuses, state.entries);
         return reviewStatus !== "current_standard_platinum_only"
             && reviewStatus !== "substantive_rereview_proven";
     });
     const needsSubstantiveRereviewRows = generatedRows.filter((row) => {
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(row.kanji)) {
+            return false;
+        }
         const state = stateByKanji.get(row.kanji) || { statuses: [], entries: [] };
         return classifyReviewStatus(state.statuses, state.entries) !== "substantive_rereview_proven";
     });
@@ -652,6 +695,9 @@ function buildPlatinumKanjiBatchReport({
         const curatedEntry = curatedStudyData?.[row.kanji] || null;
         const currentStandardEntry = findCurrentStandardEntry(state.entries);
         const riskFlags = buildRiskFlags(row, { reviewStatus, statuses, curatedEntry, queueMode });
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(row.kanji)) {
+            riskFlags.unshift("missing current-standard Sapphire precondition; run Sapphire before Platinum");
+        }
         const reviewRubric = buildReviewRubric(row, {
             reviewStatus,
             statuses,
@@ -694,6 +740,10 @@ function buildPlatinumKanjiBatchReport({
         summary: {
             generatedRows: generatedRows.length,
             activePlatinum: activeCount,
+            sapphireEligibleRows: generatedRows.filter((row) => currentSapphireSet.has(row.kanji)).length,
+            blockedByMissingSapphire: enforceSapphirePrecondition
+                ? generatedRows.filter((row) => !currentSapphireSet.has(row.kanji)).length
+                : 0,
             remainingPlatinum: missingRows.length,
             ...(includeSubstantiveRereviewQueue ? {
                 substantiveRereviewProven: substantiveRereviewProvenCount,
@@ -720,6 +770,8 @@ function formatPlatinumKanjiBatchReport(report = {}) {
         `Generated cards: ${summary.generatedRows || 0}`,
         `Queue: ${report.queue || DEFAULT_KANJI_BATCH_QUEUE_MODE}`,
         `Platinum entries: ${summary.activePlatinum || 0}`,
+        `Sapphire-eligible rows: ${summary.sapphireEligibleRows || 0}`,
+        `Blocked by missing Sapphire: ${summary.blockedByMissingSapphire || 0}`,
         `Missing Platinum: ${summary.remainingPlatinum || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
@@ -805,5 +857,5 @@ module.exports = {
     formatPlatinumKanjiBatchReport,
     normalizeQueueMode,
     normalizeReadingEvidence,
-    selectBatchRows,
+        selectBatchRows,
 };

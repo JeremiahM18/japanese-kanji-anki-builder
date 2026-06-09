@@ -13,6 +13,8 @@ const {
 } = require("../src/services/obsidianProofProviderService");
 const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { readPriorLaneInputs: readKanjiPriorLaneInputs } = require("./reportPlatinumKanjiRereviewStatus");
+const { readPriorLaneInputs: readWordPriorLaneInputs } = require("./reportPlatinumWordRereviewStatus");
 const {
     buildPlatinumKanjiRereviewStatusReport,
 } = require("../src/services/platinumKanjiRereviewStatusService");
@@ -88,9 +90,12 @@ async function buildGateReport({ options, config }) {
             proofProvider: options.proofProvider || OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
         });
         const rows = await buildKanjiRowsForLevel({ level, config });
+        const priorLaneInputs = readKanjiPriorLaneInputs(level, { rows });
         kanjiRereviewReports.push(buildPlatinumKanjiRereviewStatusReport({
             rows,
             entries,
+            ...priorLaneInputs,
+            requireLanePreconditions: true,
             level,
         }));
         manifestPostures.push(buildManifestGovernancePosture({
@@ -107,9 +112,12 @@ async function buildGateReport({ options, config }) {
             proofProvider: options.proofProvider || OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
         });
         const rows = await buildWordRowsForLevel({ level, config });
+        const priorLaneInputs = readWordPriorLaneInputs(level, { rows });
         wordRereviewReports.push(buildPlatinumWordRereviewStatusReport({
             rows,
             entries,
+            ...priorLaneInputs,
+            requireLanePreconditions: true,
             level,
             wordPitchAccentData,
             kanjiLevelData,

@@ -189,6 +189,31 @@ test("Sapphire migration preserves Platinum manifest coverage without shrinking 
     }
 });
 
+test("Sapphire kanji evaluator requires prior Gold when precondition enforcement is enabled", () => {
+    const candidate = JSON.parse(JSON.stringify(loadJson(path.join("templates", "sapphire_n5_review_set.json"))[0]));
+    const rows = buildSyntheticSapphireRows([candidate], "N5");
+    const goldenExpectations = loadJson(path.join("templates", "golden_n5_review_set.json"));
+
+    const passingReport = evaluateSapphireKanjiReviewSet({
+        rows,
+        entries: [candidate],
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+    });
+    const missingGoldReport = evaluateSapphireKanjiReviewSet({
+        rows,
+        entries: [candidate],
+        goldenExpectations: [],
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(passingReport.passed, true, formatSapphireKanjiReviewReport(passingReport));
+    assert.equal(missingGoldReport.passed, false);
+    assert.match(missingGoldReport.results[0].failures.join("\n"), /Sapphire requires a prior Gold expectation/);
+});
+
 test("Sapphire schema validates native manifests and rejects Platinum-shaped candidates", () => {
     const entries = loadJson(path.join("templates", "sapphire_n5_review_set.json"));
 
@@ -209,11 +234,13 @@ test("Sapphire schema validates native manifests and rejects Platinum-shaped can
 
 test("Sapphire promoter merges reviewed input and fails closed on unsafe candidates", () => {
     const candidate = JSON.parse(JSON.stringify(loadJson(path.join("templates", "sapphire_n5_review_set.json"))[0]));
+    const goldenExpectations = loadJson(path.join("templates", "golden_n5_review_set.json"));
     const rows = buildSyntheticSapphireRows([candidate], "N5");
     const promoted = promoteSapphireKanjiBatch({
         existingEntries: [],
         candidateEntries: [candidate],
         rows,
+        goldenExpectations,
     });
 
     assert.equal(promoted.summary.candidateEntries, 1);
@@ -225,6 +252,7 @@ test("Sapphire promoter merges reviewed input and fails closed on unsafe candida
             existingEntries: [],
             candidateEntries: [candidate, candidate],
             rows,
+            goldenExpectations,
         }),
         /Duplicate Sapphire candidate kanji/
     );
@@ -233,6 +261,7 @@ test("Sapphire promoter merges reviewed input and fails closed on unsafe candida
             existingEntries: [candidate],
             candidateEntries: [candidate],
             rows,
+            goldenExpectations,
         }),
         /already exist/
     );
@@ -247,6 +276,7 @@ test("Sapphire promoter merges reviewed input and fails closed on unsafe candida
             existingEntries: [],
             candidateEntries: [platinumShapedCandidate],
             rows,
+            goldenExpectations,
         }),
         /Sapphire candidate batch failed schema validation/i
     );

@@ -61,11 +61,16 @@ async function main() {
 
     const config = loadConfig();
     const reviewSetPath = path.join(process.cwd(), "templates", `sapphire_n${options.level}_review_set.json`);
+    const goldenReviewSetPath = path.join(process.cwd(), "templates", `golden_n${options.level}_review_set.json`);
     if (!fs.existsSync(reviewSetPath)) {
         throw new Error(`Missing sapphire kanji review set at ${reviewSetPath}`);
     }
+    if (!fs.existsSync(goldenReviewSetPath)) {
+        throw new Error(`Missing prior Gold kanji review set at ${goldenReviewSetPath}`);
+    }
 
     const entries = loadJson(reviewSetPath);
+    const goldenExpectations = loadJson(goldenReviewSetPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const rows = await buildKanjiRowsForLevel({ level: options.level, config });
     const report = buildSapphireKanjiBatchReport({
@@ -76,6 +81,7 @@ async function main() {
         limit: options.limit,
         queue: options.queue,
         curatedStudyData,
+        goldenExpectations,
     });
 
     if (options.json) {

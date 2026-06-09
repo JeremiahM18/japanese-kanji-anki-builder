@@ -66,14 +66,19 @@ async function main() {
     const config = loadConfig();
     const inputPath = path.resolve(process.cwd(), options.input);
     const targetPath = path.join(process.cwd(), "templates", `sapphire_n${options.level}_review_set.json`);
+    const goldenPath = path.join(process.cwd(), "templates", `golden_n${options.level}_review_set.json`);
     if (!fs.existsSync(inputPath)) {
         throw new Error(`Missing Sapphire candidate input at ${inputPath}`);
     }
     if (!fs.existsSync(targetPath)) {
         throw new Error(`Missing Sapphire review set at ${targetPath}`);
     }
+    if (!fs.existsSync(goldenPath)) {
+        throw new Error(`Missing prior Gold review set at ${goldenPath}`);
+    }
 
     const existingEntries = readJson(targetPath);
+    const goldenExpectations = readJson(goldenPath);
     const candidatePayload = readJson(inputPath);
     const candidateEntries = Array.isArray(candidatePayload)
         ? candidatePayload
@@ -87,6 +92,7 @@ async function main() {
         existingEntries,
         candidateEntries,
         rows,
+        goldenExpectations,
         replaceExisting: options.replaceExisting,
     });
 

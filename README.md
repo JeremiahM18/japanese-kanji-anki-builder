@@ -96,7 +96,7 @@ All five JLPT levels are first-class product surfaces. N5/N4/N3/N2 kanji are Obs
 | N4 kanji | `212/212` generated, Gold, native Sapphire, and Obsidian. | `deck:sapphire:n4`, `deck:kanji:obsidian:rereview-status -- --levels=5,4`, `deck:ready -- --levels=4` |
 | N3 kanji | `341/341` generated, Gold, current-standard native Sapphire structural coverage, Platinum, and Obsidian certified. | `deck:kanji:review-status`, `deck:ready -- --levels=3`, `deck:sapphire:n3`, `deck:platinum:n3`, `deck:kanji:obsidian:rereview-status -- --levels=3`, `deck:kanji:obsidian:certify-status -- --levels=3` |
 | N2 kanji | `349/349` generated, Gold, current-standard native Sapphire structural coverage, Platinum, and Obsidian certified with `0` remaining and `0` blocked/failing. | `deck:kanji:review-status`, `deck:sapphire:n2`, `deck:platinum:n2`, `deck:ready -- --levels=2`, `deck:kanji:obsidian:rereview-status -- --levels=2`, `deck:kanji:obsidian:certify-status -- --levels=2` |
-| N1 kanji | `1230/1230` generated and Gold; trusted current-standard native Sapphire structural coverage is `320/1230`, current-standard Platinum is tracked separately, trusted Obsidian proof remains `0/1230`, and remaining generated rows still require fresh actual card-data review before any Obsidian proof is recorded. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:sapphire:n1`, `deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard`, `deck:platinum:n1`, `deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard` |
+| N1 kanji | `1230/1230` generated and Gold; trusted current-standard native Sapphire structural coverage is `328/1230`, current-standard Platinum is tracked separately, trusted Obsidian proof remains `0/1230`, and remaining generated rows still require fresh actual card-data review before any Obsidian proof is recorded. | `deck:kanji:review-status`, `deck:ready -- --levels=1`, `deck:sapphire:n1`, `deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard`, `deck:platinum:n1`, `deck:platinum:batch -- --level=1 --limit=8 --queue=missing-current-standard` |
 | Additional kanji diagnostic | `0` physical additional cards. `398` additional source claims are governed and suppressed because they collide with `387` core-retained source-claim kanji; unresolved duplicates are `0`. | `deck:kanji:additional:ready`, `deck:kanji:review-status` |
 
 `deck:ready` currently reports N5 through N1 kanji as ready with `100.0%` of mechanical readiness checks passing for sentence, curated, stroke-order, required media, readings, meanings, examples, and contextual notes. For N1, this is not content trust, Sapphire coverage, Platinum, Obsidian certification, or release approval.
@@ -176,7 +176,7 @@ Tracked contracts define release behavior:
 | Kanji note schema | [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json) |
 | Word note schema | [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json) |
 | Gold kanji regression sets | `templates/golden_n*_review_set.json` |
-| Gold word regression sets | [templates/golden_n5_word_review_set.json](templates/golden_n5_word_review_set.json), [templates/golden_n4_word_review_set.json](templates/golden_n4_word_review_set.json) |
+| Gold word regression sets | `templates/golden_n*_word_review_set.json` |
 | Forward review-lane contract | [docs/review-system-forward-contract.md](docs/review-system-forward-contract.md) |
 | Review tier governance | [docs/review-tier-governance.md](docs/review-tier-governance.md) |
 | Platinum and Obsidian review contract | [docs/platinum-obsidian-review-contract.md](docs/platinum-obsidian-review-contract.md) |
@@ -184,7 +184,7 @@ Tracked contracts define release behavior:
 | Sapphire kanji review sets | `templates/sapphire_n*_review_set.json` |
 | Platinum kanji review sets | `templates/platinum_n*_review_set.json` |
 | Sapphire word review sets | `templates/sapphire_n*_word_review_set.json` |
-| Platinum word review sets | [templates/platinum_n5_word_review_set.json](templates/platinum_n5_word_review_set.json), [templates/platinum_n4_word_review_set.json](templates/platinum_n4_word_review_set.json) |
+| Platinum word review sets | `templates/platinum_n*_word_review_set.json` |
 | Platinum card-source roles | [templates/platinum_card_source_manifest.json](templates/platinum_card_source_manifest.json) |
 | Word source manifest | [templates/word_source_manifest.json](templates/word_source_manifest.json) |
 | Word expansion signal config | [templates/word_expansion_signal_sources.json](templates/word_expansion_signal_sources.json) |

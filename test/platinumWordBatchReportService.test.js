@@ -15,6 +15,9 @@ const {
     REQUIRED_WORD_REVIEW_EVIDENCE_TYPES,
     REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
 } = require("../src/services/platinumReviewService");
+const {
+    CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+} = require("../src/services/sapphireWordReviewService");
 
 const kanjiumSource = "kanjium-cc-by-sa-4.0";
 const generatedSource = "voicevox-nemo-accent-query";
@@ -97,10 +100,26 @@ function buildStructuralCurrentWordEntry(overrides = {}) {
     };
 }
 
+function buildCurrentStandardSapphireWordEntry(overrides = {}) {
+    return {
+        word: "今日",
+        status: "sapphire",
+        readingIncludes: ["きょう"],
+        reviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+        ...overrides,
+    };
+}
+
+const sapphireEntries = [
+    buildCurrentStandardSapphireWordEntry(),
+    buildCurrentStandardSapphireWordEntry({ word: "八", readingIncludes: ["はち"] }),
+];
+
 test("word batch report selects rows missing current-standard platinum and surfaces review risks", () => {
     const report = buildPlatinumWordBatchReport({
         rows,
         entries: [{ word: "今日", status: "platinum", readingIncludes: ["きょう"] }],
+        sapphireEntries,
         wordPitchAccentData,
         level: 5,
         limit: 12,
@@ -110,6 +129,8 @@ test("word batch report selects rows missing current-standard platinum and surfa
     assert.equal(report.summary.activePlatinum, 1);
     assert.equal(report.summary.currentStandardPlatinum, 0);
     assert.equal(report.summary.legacyOrUnversionedPlatinum, 1);
+    assert.equal(report.summary.sapphireEligibleRows, 2);
+    assert.equal(report.summary.blockedByMissingSapphire, 0);
     assert.equal(report.summary.remainingPlatinum, 1);
     assert.equal(report.summary.remainingCurrentStandard, 2);
     assert.equal(report.summary.substantiveRereviewProven, undefined);
@@ -130,10 +151,26 @@ test("word batch report selects rows missing current-standard platinum and surfa
     assert.match(formatPlatinumWordBatchReport(report), /Default queue is missing-current-standard Platinum/);
 });
 
+test("word batch report blocks unscoped Platinum queues without current-standard Sapphire", () => {
+    const report = buildPlatinumWordBatchReport({
+        rows,
+        entries: [],
+        wordPitchAccentData,
+        level: 5,
+        limit: 12,
+    });
+
+    assert.equal(report.summary.sapphireEligibleRows, 0);
+    assert.equal(report.summary.blockedByMissingSapphire, 2);
+    assert.equal(report.summary.remainingCurrentStandard, 0);
+    assert.equal(report.cards.length, 0);
+});
+
 test("word batch report keeps Platinum-only current-standard entries in the explicit Obsidian proof queue", () => {
     const report = buildPlatinumWordBatchReport({
         rows,
         entries: [buildStructuralCurrentWordEntry()],
+        sapphireEntries,
         wordPitchAccentData,
         level: 5,
         limit: 1,
@@ -161,6 +198,7 @@ test("word batch report does not treat base rereview provenance as Obsidian proo
                 reviewer: "content-review",
             },
         })],
+        sapphireEntries,
         wordPitchAccentData,
         level: 5,
         limit: 1,
@@ -177,6 +215,7 @@ test("word batch report defaults to missing current-standard Platinum queue", ()
     const report = buildPlatinumWordBatchReport({
         rows,
         entries: [buildStructuralCurrentWordEntry()],
+        sapphireEntries,
         wordPitchAccentData,
         level: 5,
         limit: 1,
@@ -195,6 +234,7 @@ test("scoped word batch report keeps formatted output focused on requested cards
     const report = buildPlatinumWordBatchReport({
         rows,
         entries: [{ word: "今日", status: "platinum", readingIncludes: ["きょう"] }],
+        sapphireEntries,
         wordPitchAccentData,
         level: 5,
         words: [{ word: "八", reading: "はち" }],

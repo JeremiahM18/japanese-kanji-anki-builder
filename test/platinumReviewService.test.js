@@ -195,6 +195,51 @@ test("evaluatePlatinumWordReviewSet does not require Obsidian proof for current-
     assert.equal(report.failedCount, 0);
 });
 
+test("evaluatePlatinumWordReviewSet enforces Gold and Sapphire preconditions when claiming the lane", () => {
+    const baseOptions = {
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry()],
+        goldenExpectations: [{
+            word: "今日",
+            readingIncludes: ["きょう"],
+            meaningIncludes: ["today"],
+            jlptLevelIncludes: ["JLPT N5"],
+            coverageRoleIncludes: ["JLPT core"],
+            focusIncludes: ["今", "日"],
+            coversReadingIncludes: ["今: いま", "日: ひ"],
+            breakdownIncludes: ["今 （いま）", "日 （ひ）"],
+            exampleIncludes: ["今日は図書館へ行きます。"],
+            notesIncludes: ["Common N5 word."],
+        }],
+        requireGoldPrecondition: true,
+        sapphireEntries: [{
+            word: "今日",
+            status: "sapphire",
+            reviewStandard: "word-sapphire-v1-evidence-lanes",
+            readingIncludes: ["きょう"],
+        }],
+        requireSapphirePrecondition: true,
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    };
+
+    const passingReport = evaluateWordPlatinum(baseOptions);
+    const missingGoldReport = evaluateWordPlatinum({
+        ...baseOptions,
+        goldenExpectations: [],
+    });
+    const missingSapphireReport = evaluateWordPlatinum({
+        ...baseOptions,
+        sapphireEntries: [],
+    });
+
+    assert.equal(passingReport.passed, true, passingReport.results[0]?.failures.join("\n") || "");
+    assert.equal(missingGoldReport.passed, false);
+    assert.match(missingGoldReport.results[0].failures.join("\n"), /Platinum requires a prior Gold expectation for 今日\|きょう/);
+    assert.equal(missingSapphireReport.passed, false);
+    assert.match(missingSapphireReport.results[0].failures.join("\n"), /Platinum requires current-standard Sapphire coverage for 今日\|きょう/);
+});
+
 test("evaluatePlatinumWordReviewSet gates current-standard revalidation separately from legacy word platinum", () => {
     const legacyReport = evaluateWordPlatinum({
         rows: [buildRow()],

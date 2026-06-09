@@ -1,4 +1,9 @@
 const platinumWordReview = require("./platinumReviewService");
+const {
+    buildWordEntryIdentity,
+    buildWordGoldPreconditionFailuresByKey,
+    mergeFailuresIntoResult,
+} = require("./reviewLanePreconditionService");
 
 const ACTIVE_WORD_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 const NON_SHIPPING_STATUSES = platinumWordReview.NON_SHIPPING_STATUSES;
@@ -519,6 +524,7 @@ function evaluateSapphireWordEntry({
 
     return {
         label,
+        identity: buildWordEntryIdentity(entry),
         word: entry.word,
         status: status || "(blank)",
         passed: failures.length === 0,
@@ -553,6 +559,8 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 function evaluateSapphireWordReviewSet({
     rows = [],
     entries = [],
+    goldenExpectations,
+    requireGoldPrecondition = false,
     requireCurrentReviewStandard = false,
     requireAllRows = false,
     allowEmpty = false,
@@ -565,11 +573,22 @@ function evaluateSapphireWordReviewSet({
     const currentStandardEntries = activeEntries;
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
     const needsReviewEntries = reviewEntries.filter((entry) => REVIEW_ONLY_STATUSES.includes(normalizeText(entry.status)));
-    const results = reviewEntries.map((entry) => evaluateSapphireWordEntry({
-        rows: generatedRows,
-        entry,
-        requireCurrentReviewStandard,
-    }));
+    const goldPreconditionFailures = requireGoldPrecondition
+        ? buildWordGoldPreconditionFailuresByKey({
+            rows: generatedRows,
+            entries: activeEntries,
+            goldenExpectations,
+            laneName: "Sapphire",
+        })
+        : new Map();
+    const results = reviewEntries.map((entry) => mergeFailuresIntoResult(
+        evaluateSapphireWordEntry({
+            rows: generatedRows,
+            entry,
+            requireCurrentReviewStandard,
+        }),
+        goldPreconditionFailures.get(buildWordEntryIdentity(entry))
+    ));
     const coverageFailures = [];
     const duplicateActiveEntries = buildDuplicateActiveEntryLabels(activeEntries);
     const missingSapphireRows = requireAllRows

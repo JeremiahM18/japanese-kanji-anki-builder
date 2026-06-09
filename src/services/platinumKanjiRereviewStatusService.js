@@ -340,6 +340,10 @@ function summarizeCards(cards = []) {
 function buildPlatinumKanjiRereviewStatusReport({
     rows = [],
     entries = [],
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults = [],
+    requireLanePreconditions = false,
     level = null,
     kanjiSourceEvidence,
 } = {}) {
@@ -348,6 +352,11 @@ function buildPlatinumKanjiRereviewStatusReport({
     const reviewReport = evaluatePlatinumKanjiReviewSet({
         rows: generatedRows,
         entries: reviewEntries,
+        goldenExpectations,
+        requireGoldPrecondition: requireLanePreconditions,
+        sapphireEntries,
+        sapphireResults,
+        requireSapphirePrecondition: requireLanePreconditions,
         kanjiSourceEvidence,
         requireAllRows: true,
         requireCurrentReviewStandard: true,

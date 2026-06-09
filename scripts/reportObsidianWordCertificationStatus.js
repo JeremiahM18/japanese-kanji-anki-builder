@@ -6,6 +6,7 @@ const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { readPriorLaneInputs } = require("./reportPlatinumWordRereviewStatus");
 const {
     buildPlatinumWordRereviewStatusReport,
 } = require("../src/services/platinumWordRereviewStatusService");
@@ -72,9 +73,12 @@ async function main({
     for (const level of options.levels) {
         const entries = readReviewSet(level, { proofProvider: options.proofProvider });
         const rows = await buildWordRowsForLevel({ level, config });
+        const priorLaneInputs = readPriorLaneInputs(level, { rows });
         levelReports.push(buildPlatinumWordRereviewStatusReport({
             rows,
             entries,
+            ...priorLaneInputs,
+            requireLanePreconditions: true,
             level,
             wordPitchAccentData,
             kanjiLevelData,

@@ -55,7 +55,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Changed
 
-- Migrated core-kanji structural review posture into native Sapphire: N5/N4/N3/N2 pass at full generated denominators, and N1 now reports `320/1230` current-standard Sapphire with `0/1230` Obsidian proof and `910` rows still requiring fresh Sapphire review before proof is recorded.
+- Migrated core-kanji structural review posture into native Sapphire: N5/N4/N3/N2 pass at full generated denominators, and N1 now reports `328/1230` current-standard Sapphire with `0/1230` Obsidian proof and `902` rows still requiring fresh Sapphire review before proof is recorded.
 - Clarified that scoped audio review packets are selected-card evidence only; full-level media completeness remains owned by `deck:ready` plus audio and stroke-order policy audits.
 - Completed the governed N3 core kanji Obsidian proof lane while keeping certification fail-closed: live N3 kanji is `341/341` generated, Gold, Platinum, and Obsidian certified; N5/N4/N3 kanji Obsidian now totals `633/633`; `0` Platinum entries need substantive Obsidian proof; and `0` generated rows are blocked/failing structurally. N3 kanji NLP packets remain assistive review context only, not certification proof.
 - Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.

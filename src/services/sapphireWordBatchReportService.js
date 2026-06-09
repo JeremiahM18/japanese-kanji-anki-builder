@@ -8,6 +8,9 @@ const {
     mapPlatinumTextToSapphire,
     mapSapphireWordEntriesToPlatinumCompatibility,
 } = require("./sapphireWordReviewService");
+const {
+    buildWordGoldPreconditionFailuresByKey,
+} = require("./reviewLanePreconditionService");
 
 function mapReviewStatus(status = "") {
     return String(status || "")
@@ -62,6 +65,20 @@ function mapCard(card = {}) {
     };
 }
 
+function addGoldPreconditionToCard(card = {}, failures = []) {
+    if (!Array.isArray(failures) || failures.length === 0) {
+        return card;
+    }
+
+    return {
+        ...card,
+        hardChecksPassed: false,
+        priorLaneFailures: failures,
+        riskFlags: [...(card.riskFlags || []), ...failures],
+        suggestedReviewStep: "run and pass Gold regression before Sapphire",
+    };
+}
+
 function buildSapphireWordBatchReport({
     rows = [],
     entries = [],
@@ -69,6 +86,7 @@ function buildSapphireWordBatchReport({
     level,
     words = [],
     limit = 12,
+    goldenExpectations,
     queue = WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD,
 } = {}) {
     const report = buildPlatinumWordBatchReport({
@@ -79,8 +97,20 @@ function buildSapphireWordBatchReport({
         words,
         limit,
         queue,
+        skipSapphirePreconditionForSapphireCompatibilityReport: true,
     });
-    const cards = (report.cards || []).map(mapCard);
+    const goldPreconditionFailures = buildWordGoldPreconditionFailuresByKey({
+        rows,
+        entries: (report.cards || []).map((card) => ({
+            word: card.word,
+            readingIncludes: [card.reading],
+        })),
+        goldenExpectations,
+        laneName: "Sapphire batch",
+    });
+    const cards = (report.cards || [])
+        .map((card) => addGoldPreconditionToCard(card, goldPreconditionFailures.get(card.identity)))
+        .map(mapCard);
 
     return {
         level: report.level,

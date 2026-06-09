@@ -1,5 +1,11 @@
 const { evaluateGoldenWordReviewSet } = require("./goldenReviewService");
 const {
+    buildCurrentStandardPreconditionFailuresByKey,
+    buildWordEntryIdentity,
+    buildWordGoldPreconditionFailuresByKey,
+    mergeFailuresIntoResult,
+} = require("./reviewLanePreconditionService");
+const {
     extractRenderedPitchAccentPattern,
     parsePitchAccentPattern,
 } = require("./pitchAccentRenderService");
@@ -31,6 +37,8 @@ const ALLOWED_PLATINUM_STATUSES = Object.freeze([
 ]);
 
 const CURRENT_WORD_PLATINUM_REVIEW_STANDARD = "word-platinum-v3-evidence-lanes";
+const PRIOR_WORD_SAPPHIRE_REVIEW_STANDARD = "word-sapphire-v1-evidence-lanes";
+const ACTIVE_WORD_SAPPHIRE_PRECONDITION_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 
 const CURRENT_STANDARD_REVALIDATION_SUMMARY_CHECKS = Object.freeze([
     Object.freeze({ label: "evidence lanes", requiredPatterns: [/evidence/i, /lanes?/i] }),
@@ -812,6 +820,7 @@ function evaluatePlatinumEntry({
 
     return {
         label,
+        identity: buildWordEntryIdentity(entry),
         word: entry.word,
         status: status || "(blank)",
         passed: failures.length === 0,
@@ -846,6 +855,11 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 function evaluatePlatinumWordReviewSet({
     rows = [],
     entries = [],
+    goldenExpectations,
+    requireGoldPrecondition = false,
+    sapphireEntries,
+    sapphireResults = [],
+    requireSapphirePrecondition = false,
     wordPitchAccentData = {},
     kanjiLevelData = null,
     requireCurrentReviewStandard = false,
@@ -859,13 +873,44 @@ function evaluatePlatinumWordReviewSet({
     const currentStandardEntries = activeEntries.filter(entryUsesCurrentWordPlatinumStandard);
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
     const needsReviewEntries = reviewEntries.filter((entry) => REVIEW_ONLY_STATUSES.includes(normalizeText(entry.status)));
-    const results = reviewEntries.map((entry) => evaluatePlatinumEntry({
-        rows: generatedRows,
-        entry,
-        wordPitchAccentData,
-        kanjiLevelData,
-        requireCurrentReviewStandard,
-    }));
+    const goldPreconditionFailures = requireGoldPrecondition
+        ? buildWordGoldPreconditionFailuresByKey({
+            rows: generatedRows,
+            entries: currentStandardEntries,
+            goldenExpectations,
+            laneName: "Platinum",
+        })
+        : new Map();
+    const sapphirePreconditionFailures = requireSapphirePrecondition
+        ? buildCurrentStandardPreconditionFailuresByKey({
+            entries: currentStandardEntries,
+            priorEntries: sapphireEntries,
+            priorResults: sapphireResults,
+            laneName: "Platinum",
+            priorLaneName: "Sapphire",
+            getEntryKey: buildWordEntryIdentity,
+            getPriorEntryKey: buildWordEntryIdentity,
+            getResultKey: (result) => result.identity || buildWordEntryIdentity(result),
+            isCurrentStandardPriorEntry: (entry) => (
+                ACTIVE_WORD_SAPPHIRE_PRECONDITION_STATUSES.includes(normalizeText(entry.status))
+                && entry.reviewStandard === PRIOR_WORD_SAPPHIRE_REVIEW_STANDARD
+            ),
+        })
+        : new Map();
+    const results = reviewEntries.map((entry) => {
+        const identity = buildWordEntryIdentity(entry);
+        const preconditionFailures = [
+            ...(goldPreconditionFailures.get(identity) || []),
+            ...(sapphirePreconditionFailures.get(identity) || []),
+        ];
+        return mergeFailuresIntoResult(evaluatePlatinumEntry({
+            rows: generatedRows,
+            entry,
+            wordPitchAccentData,
+            kanjiLevelData,
+            requireCurrentReviewStandard,
+        }), preconditionFailures);
+    });
     const coverageFailures = [];
     const duplicateActiveEntries = buildDuplicateActiveEntryLabels(activeEntries);
     const missingPlatinumRows = requireAllRows

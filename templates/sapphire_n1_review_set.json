@@ -98835,5 +98835,2002 @@
       "newReviewStandard": "kanji-sapphire-v1-evidence-lanes",
       "authority": "Preserves current structural review as Sapphire only. Does not claim Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
     }
+  },
+  {
+    "kanji": "弓",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ゆみ"
+    ],
+    "meaningIncludes": [
+      "bow"
+    ],
+    "kanjiMeaningsIncludes": [
+      "bow",
+      "bow (archery"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "弓",
+      "弓道",
+      "弓矢"
+    ],
+    "exampleIncludes": [
+      "祖父の家には古い弓が大切に飾られていました。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0001366800",
+        "detail": "Japanese-source review for 弓|ゆみ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001366800; source page title verified as 弓 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 キュウ, 訓 ゆみ, and meanings ゆみ plus bow-shaped things with support words 弓馬, 洋弓, 弓状, and 弓形. Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), and support surface 弓 / 弓道 / 弓矢 for the individual kanji 弓. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading ゆみ is the direct kun reading and the learner-facing individual-kanji anchor for the bow meaning.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 弓|ゆみ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), example sentence 祖父の家には古い弓が大切に飾られていました。, reading そふのいえにはふるいゆみがたいせつにかざられていました。, translation An old bow was carefully displayed in my grandfather&#39;s house., notes/support surface 弓 / 弓道 / 弓矢, audio kanji-reading-弓-ゆみ, stroke-order media 弓-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 弓|ゆみ: single-kanji anchor; Kanji and DisplayWord 弓; StudyWordKanji blank; PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); notes <ruby>弓<rt>ゆみ</rt></ruby> - bow ／ <ruby>弓道<rt>きゅうどう</rt></ruby> - Japanese archery ／ <ruby>弓矢<rt>ゆみや</rt></ruby> - bow and arrow; example 祖父の家には古い弓が大切に飾られていました。 ／ そふのいえにはふるいゆみがたいせつにかざられていました。 ／ An old bow was carefully displayed in my grandfather&#39;s house.; audio field includes kanji-reading-弓-ゆみ; stroke-order field includes 弓-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 弓: exact audio media fragment kanji-reading-弓-ゆみ; stroke-order media target 弓; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 弓|ゆみ: exact kanji-reading audio filename includes kanji-reading-弓-ゆみ; exported PrimaryReading ゆみ; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弓: exported stroke-order field targets 弓; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 弓; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 弓|ゆみ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 弓|ゆみ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), example sentence 祖父の家には古い弓が大切に飾られていました。, reading そふのいえにはふるいゆみがたいせつにかざられていました。, translation An old bow was carefully displayed in my grandfather&#39;s house., notes/support surface 弓 / 弓道 / 弓矢, audio kanji-reading-弓-ゆみ, stroke-order media 弓-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "弓",
+        "displayWord": "弓",
+        "studyWordKanji": "",
+        "primaryReading": "ゆみ",
+        "meaningJP": "bow",
+        "kanjiMeanings": "bow / bow (archery, violin)",
+        "notes": "<ruby>弓<rt>ゆみ</rt></ruby> - bow ／ <ruby>弓道<rt>きゅうどう</rt></ruby> - Japanese archery ／ <ruby>弓矢<rt>ゆみや</rt></ruby> - bow and arrow",
+        "exampleSentence": "祖父の家には古い弓が大切に飾られていました。 ／ そふのいえにはふるいゆみがたいせつにかざられていました。 ／ An old bow was carefully displayed in my grandfather&#39;s house.",
+        "audio": "[sound:5F13_弓-kanji-reading-弓-ゆみ.wav]",
+        "strokeOrder": "<img src=\"5F13_弓-stroke-order.gif\" alt=\"Stroke order for 弓\" />",
+        "onReading": "キュウ",
+        "kunReading": "ゆみ",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0001366800",
+        "sourceTitle": "弓 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 弓|ゆみ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001366800; source page title verified as 弓 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 キュウ, 訓 ゆみ, and meanings ゆみ plus bow-shaped things with support words 弓馬, 洋弓, 弓状, and 弓形. Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), and support surface 弓 / 弓道 / 弓矢 for the individual kanji 弓. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "祖父の家には古い弓が大切に飾られていました。",
+        "reading": "そふのいえにはふるいゆみがたいせつにかざられていました。",
+        "translation": "An old bow was carefully displayed in my grandfather&#39;s house.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0061",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": true
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F13_弓-kanji-reading-弓-ゆみ.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-弓-ゆみ",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F13_弓-stroke-order.gif\" alt=\"Stroke order for 弓\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    }
+  },
+  {
+    "kanji": "弔",
+    "status": "sapphire",
+    "readingIncludes": [
+      "とむらう"
+    ],
+    "meaningIncludes": [
+      "to mourn"
+    ],
+    "kanjiMeaningsIncludes": [
+      "mourn",
+      "condolences",
+      "funeral"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "弔う",
+      "弔辞",
+      "弔問"
+    ],
+    "exampleIncludes": [
+      "家族だけで静かに故人を弔いました。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004777100",
+        "detail": "Japanese-source review for 弔|とむらう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004777100; source page title verified as 弔 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 チョウ, 訓 とむらう, and the meaning to mourn or grieve a person's death, with support words 弔意, 弔辞, and 弔問. Reviewer mapped this Japanese-source field evidence to PrimaryReading とむらう, MeaningJP to mourn, KanjiMeanings mourn / condolences / funeral / mourning, and support surface 弔う / 弔辞 / 弔問 for the individual kanji 弔. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弔|とむらう: PrimaryReading とむらう; MeaningJP to mourn; KanjiMeanings mourn / condolences / funeral / mourning; support surface 弔う / 弔辞 / 弔問; example sentence 家族だけで静かに故人を弔いました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading とむらう is the direct kun verb used by the generated example and the most useful learner-facing individual-kanji reading for the mourn meaning.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 弔|とむらう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading とむらう, MeaningJP to mourn, KanjiMeanings mourn / condolences / funeral / mourning, example sentence 家族だけで静かに故人を弔いました。, reading かぞくだけでしずかにこじんをとむらいました。, translation The family quietly mourned the deceased together., notes/support surface 弔う / 弔辞 / 弔問, audio kanji-reading-弔-とむらう, stroke-order media 弔-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弔|とむらう: PrimaryReading とむらう; MeaningJP to mourn; KanjiMeanings mourn / condolences / funeral / mourning; support surface 弔う / 弔辞 / 弔問; example sentence 家族だけで静かに故人を弔いました。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 弔|とむらう: single-kanji anchor; Kanji and DisplayWord 弔; StudyWordKanji blank; PrimaryReading とむらう; MeaningJP to mourn; KanjiMeanings mourn / condolences / funeral / mourning; notes <ruby>弔<rt>とむら</rt></ruby>う - to mourn ／ <ruby>弔辞<rt>ちょうじ</rt></ruby> - funeral address ／ <ruby>弔問<rt>ちょうもん</rt></ruby> - condolence visit; example 家族だけで静かに故人を弔いました。 ／ かぞくだけでしずかにこじんをとむらいました。 ／ The family quietly mourned the deceased together.; audio field includes kanji-reading-弔-とむらう; stroke-order field includes 弔-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 弔: exact audio media fragment kanji-reading-弔-とむらう; stroke-order media target 弔; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 弔|とむらう: exact kanji-reading audio filename includes kanji-reading-弔-とむらう; exported PrimaryReading とむらう; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弔: exported stroke-order field targets 弔; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 弔; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 弔|とむらう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弔|とむらう: PrimaryReading とむらう; MeaningJP to mourn; KanjiMeanings mourn / condolences / funeral / mourning; support surface 弔う / 弔辞 / 弔問; example sentence 家族だけで静かに故人を弔いました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 弔|とむらう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading とむらう, MeaningJP to mourn, KanjiMeanings mourn / condolences / funeral / mourning, example sentence 家族だけで静かに故人を弔いました。, reading かぞくだけでしずかにこじんをとむらいました。, translation The family quietly mourned the deceased together., notes/support surface 弔う / 弔辞 / 弔問, audio kanji-reading-弔-とむらう, stroke-order media 弔-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弔|とむらう: PrimaryReading とむらう; MeaningJP to mourn; KanjiMeanings mourn / condolences / funeral / mourning; support surface 弔う / 弔辞 / 弔問; example sentence 家族だけで静かに故人を弔いました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "弔",
+        "displayWord": "弔",
+        "studyWordKanji": "",
+        "primaryReading": "とむらう",
+        "meaningJP": "to mourn",
+        "kanjiMeanings": "mourn / condolences / funeral / mourning",
+        "notes": "<ruby>弔<rt>とむら</rt></ruby>う - to mourn ／ <ruby>弔辞<rt>ちょうじ</rt></ruby> - funeral address ／ <ruby>弔問<rt>ちょうもん</rt></ruby> - condolence visit",
+        "exampleSentence": "家族だけで静かに故人を弔いました。 ／ かぞくだけでしずかにこじんをとむらいました。 ／ The family quietly mourned the deceased together.",
+        "audio": "[sound:5F14_弔-kanji-reading-弔-とむらう.wav]",
+        "strokeOrder": "<img src=\"5F14_弔-stroke-order.gif\" alt=\"Stroke order for 弔\" />",
+        "onReading": "チョウ",
+        "kunReading": "とぶら.う、 とむら.う",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0004777100",
+        "sourceTitle": "弔 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 弔|とむらう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004777100; source page title verified as 弔 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 チョウ, 訓 とむらう, and the meaning to mourn or grieve a person's death, with support words 弔意, 弔辞, and 弔問. Reviewer mapped this Japanese-source field evidence to PrimaryReading とむらう, MeaningJP to mourn, KanjiMeanings mourn / condolences / funeral / mourning, and support surface 弔う / 弔辞 / 弔問 for the individual kanji 弔. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弔|とむらう: PrimaryReading とむらう; MeaningJP to mourn; KanjiMeanings mourn / condolences / funeral / mourning; support surface 弔う / 弔辞 / 弔問; example sentence 家族だけで静かに故人を弔いました。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "家族だけで静かに故人を弔いました。",
+        "reading": "かぞくだけでしずかにこじんをとむらいました。",
+        "translation": "The family quietly mourned the deceased together.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0205",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": false
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F14_弔-kanji-reading-弔-とむらう.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-弔-とむらう",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F14_弔-stroke-order.gif\" alt=\"Stroke order for 弔\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    }
+  },
+  {
+    "kanji": "弘",
+    "status": "fixed_then_sapphire",
+    "readingIncludes": [
+      "ひろめる"
+    ],
+    "meaningIncludes": [
+      "to spread widely"
+    ],
+    "kanjiMeaningsIncludes": [
+      "expand",
+      "spread",
+      "broad",
+      "wide"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "弘める",
+      "弘報",
+      "弘法"
+    ],
+    "exampleIncludes": [
+      "その団体は読書の楽しさを社会に弘めようとしています。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0002146600",
+        "detail": "Japanese-source review for 弘|ひろめる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002146600; source page title verified as 弘 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 コウ・グ, 訓 ひろい・ひろめる, and meanings broad/large plus spread or make widely known, with support words 弘遠, 寛弘, 弘通, and 弘法. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, and support surface 弘める / 弘報 / 弘法 for the individual kanji 弘. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading ひろめる is explicitly listed by the governed Japanese source and matches the generated verb card surface after the tracked additional-kun reading fix.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 弘|ひろめる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, example sentence その団体は読書の楽しさを社会に弘めようとしています。, reading そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。, translation That organization is trying to spread the joy of reading through society., notes/support surface 弘める / 弘報 / 弘法, audio kanji-reading-弘-ひろめる, stroke-order media 弘-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 弘|ひろめる: single-kanji anchor; Kanji and DisplayWord 弘; StudyWordKanji blank; PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; notes <ruby>弘<rt>ひろ</rt></ruby>める - to spread widely ／ <ruby>弘報<rt>こうほう</rt></ruby> - broad communication ／ <ruby>弘法<rt>こうぼう</rt></ruby> - Kobo (name/title); example その団体は読書の楽しさを社会に弘めようとしています。 ／ そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。 ／ That organization is trying to spread the joy of reading through society.; audio field includes kanji-reading-弘-ひろめる; stroke-order field includes 弘-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 弘: exact audio media fragment kanji-reading-弘-ひろめる; stroke-order media target 弘; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 弘|ひろめる: exact kanji-reading audio filename includes kanji-reading-弘-ひろめる; exported PrimaryReading ひろめる; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弘: exported stroke-order field targets 弘; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 弘; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 弘|ひろめる: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 弘|ひろめる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, example sentence その団体は読書の楽しさを社会に弘めようとしています。, reading そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。, translation That organization is trying to spread the joy of reading through society., notes/support surface 弘める / 弘報 / 弘法, audio kanji-reading-弘-ひろめる, stroke-order media 弘-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "弘",
+        "displayWord": "弘",
+        "studyWordKanji": "",
+        "primaryReading": "ひろめる",
+        "meaningJP": "to spread widely",
+        "kanjiMeanings": "expand / spread / broad / vast / wide",
+        "notes": "<ruby>弘<rt>ひろ</rt></ruby>める - to spread widely ／ <ruby>弘報<rt>こうほう</rt></ruby> - broad communication ／ <ruby>弘法<rt>こうぼう</rt></ruby> - Kobo (name/title)",
+        "exampleSentence": "その団体は読書の楽しさを社会に弘めようとしています。 ／ そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。 ／ That organization is trying to spread the joy of reading through society.",
+        "audio": "[sound:5F18_弘-kanji-reading-弘-ひろめる.wav]",
+        "strokeOrder": "<img src=\"5F18_弘-stroke-order.svg\" alt=\"Stroke order for 弘\" />",
+        "onReading": "グ、 コウ",
+        "kunReading": "ひろ.い、 ひろ.める",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0002146600",
+        "sourceTitle": "弘 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 弘|ひろめる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002146600; source page title verified as 弘 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 コウ・グ, 訓 ひろい・ひろめる, and meanings broad/large plus spread or make widely known, with support words 弘遠, 寛弘, 弘通, and 弘法. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, and support surface 弘める / 弘報 / 弘法 for the individual kanji 弘. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "その団体は読書の楽しさを社会に弘めようとしています。",
+        "reading": "そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。",
+        "translation": "That organization is trying to spread the joy of reading through society.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0105",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": false
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F18_弘-kanji-reading-弘-ひろめる.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-弘-ひろめる",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F18_弘-stroke-order.svg\" alt=\"Stroke order for 弘\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    },
+    "fixSummary": "Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion."
+  },
+  {
+    "kanji": "弥",
+    "status": "sapphire",
+    "readingIncludes": [
+      "いよいよ"
+    ],
+    "meaningIncludes": [
+      "more and more"
+    ],
+    "kanjiMeaningsIncludes": [
+      "more and more",
+      "all the more",
+      "increasingly"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "弥々",
+      "弥生",
+      "弥増"
+    ],
+    "exampleIncludes": [
+      "大会が近づき、会場の熱気は弥々高まってきました。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0006792700",
+        "detail": "Japanese-source review for 弥|いよいよ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006792700; source page title verified as 弥 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ビ・ミ, 訓 や and additional readings including いよいよ and いや; meanings include broadly extending, continuing over time, repairing, stopping, increasingly/more and more, and phonetic Buddhist transcription use, with support words 弥栄, 弥増す, 弥生, 弥陀, and 弥勒. Reviewer mapped this Japanese-source field evidence to PrimaryReading いよいよ, MeaningJP more and more, KanjiMeanings more and more / all the more / increasingly, and support surface 弥々 / 弥生 / 弥増す for the individual kanji 弥. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弥|いよいよ: PrimaryReading いよいよ; MeaningJP more and more; KanjiMeanings more and more / all the more / increasingly; support surface 弥々 / 弥生 / 弥増す; example sentence 大会が近づき、会場の熱気は弥々高まってきました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading いよいよ is source-listed and aligns with the generated MeaningJP more and more and the example's adverbial learner surface.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 弥|いよいよ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading いよいよ, MeaningJP more and more, KanjiMeanings more and more / all the more / increasingly, example sentence 大会が近づき、会場の熱気は弥々高まってきました。, reading たいかいがちかづき、かいじょうのねっきはいよいよたかまってきました。, translation As the tournament approaches, the excitement in the venue is growing more and more intense., notes/support surface 弥々 / 弥生 / 弥増す, audio kanji-reading-弥-いよいよ, stroke-order media 弥-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弥|いよいよ: PrimaryReading いよいよ; MeaningJP more and more; KanjiMeanings more and more / all the more / increasingly; support surface 弥々 / 弥生 / 弥増す; example sentence 大会が近づき、会場の熱気は弥々高まってきました。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 弥|いよいよ: single-kanji anchor; Kanji and DisplayWord 弥; StudyWordKanji blank; PrimaryReading いよいよ; MeaningJP more and more; KanjiMeanings more and more / all the more / increasingly; notes <ruby>弥々<rt>いよいよ</rt></ruby> - more and more / at last ／ <ruby>弥生<rt>やよい</rt></ruby> - Yayoi / March ／ <ruby>弥増<rt>いやま</rt></ruby>す - to increase even more; example 大会が近づき、会場の熱気は弥々高まってきました。 ／ たいかいがちかづき、かいじょうのねっきはいよいよたかまってきました。 ／ As the tournament approaches, the excitement in the venue is growing more and more intense.; audio field includes kanji-reading-弥-いよいよ; stroke-order field includes 弥-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 弥: exact audio media fragment kanji-reading-弥-いよいよ; stroke-order media target 弥; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 弥|いよいよ: exact kanji-reading audio filename includes kanji-reading-弥-いよいよ; exported PrimaryReading いよいよ; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弥: exported stroke-order field targets 弥; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 弥; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 弥|いよいよ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弥|いよいよ: PrimaryReading いよいよ; MeaningJP more and more; KanjiMeanings more and more / all the more / increasingly; support surface 弥々 / 弥生 / 弥増す; example sentence 大会が近づき、会場の熱気は弥々高まってきました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 弥|いよいよ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading いよいよ, MeaningJP more and more, KanjiMeanings more and more / all the more / increasingly, example sentence 大会が近づき、会場の熱気は弥々高まってきました。, reading たいかいがちかづき、かいじょうのねっきはいよいよたかまってきました。, translation As the tournament approaches, the excitement in the venue is growing more and more intense., notes/support surface 弥々 / 弥生 / 弥増す, audio kanji-reading-弥-いよいよ, stroke-order media 弥-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弥|いよいよ: PrimaryReading いよいよ; MeaningJP more and more; KanjiMeanings more and more / all the more / increasingly; support surface 弥々 / 弥生 / 弥増す; example sentence 大会が近づき、会場の熱気は弥々高まってきました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "弥",
+        "displayWord": "弥",
+        "studyWordKanji": "",
+        "primaryReading": "いよいよ",
+        "meaningJP": "more and more",
+        "kanjiMeanings": "more and more / all the more / increasingly",
+        "notes": "<ruby>弥々<rt>いよいよ</rt></ruby> - more and more / at last ／ <ruby>弥生<rt>やよい</rt></ruby> - Yayoi / March ／ <ruby>弥増<rt>いやま</rt></ruby>す - to increase even more",
+        "exampleSentence": "大会が近づき、会場の熱気は弥々高まってきました。 ／ たいかいがちかづき、かいじょうのねっきはいよいよたかまってきました。 ／ As the tournament approaches, the excitement in the venue is growing more and more intense.",
+        "audio": "[sound:5F25_弥-kanji-reading-弥-いよいよ.wav]",
+        "strokeOrder": "<img src=\"5F25_弥-stroke-order.gif\" alt=\"Stroke order for 弥\" />",
+        "onReading": "ビ、 ミ",
+        "kunReading": "いや、 いよ.いよ、 や、 わた.る",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0006792700",
+        "sourceTitle": "弥 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 弥|いよいよ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006792700; source page title verified as 弥 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ビ・ミ, 訓 や and additional readings including いよいよ and いや; meanings include broadly extending, continuing over time, repairing, stopping, increasingly/more and more, and phonetic Buddhist transcription use, with support words 弥栄, 弥増す, 弥生, 弥陀, and 弥勒. Reviewer mapped this Japanese-source field evidence to PrimaryReading いよいよ, MeaningJP more and more, KanjiMeanings more and more / all the more / increasingly, and support surface 弥々 / 弥生 / 弥増す for the individual kanji 弥. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弥|いよいよ: PrimaryReading いよいよ; MeaningJP more and more; KanjiMeanings more and more / all the more / increasingly; support surface 弥々 / 弥生 / 弥増す; example sentence 大会が近づき、会場の熱気は弥々高まってきました。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "大会が近づき、会場の熱気は弥々高まってきました。",
+        "reading": "たいかいがちかづき、かいじょうのねっきはいよいよたかまってきました。",
+        "translation": "As the tournament approaches, the excitement in the venue is growing more and more intense.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0298",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": false
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F25_弥-kanji-reading-弥-いよいよ.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-弥-いよいよ",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F25_弥-stroke-order.gif\" alt=\"Stroke order for 弥\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    }
+  },
+  {
+    "kanji": "弦",
+    "status": "sapphire",
+    "readingIncludes": [
+      "げん"
+    ],
+    "meaningIncludes": [
+      "string",
+      "bowstring"
+    ],
+    "kanjiMeaningsIncludes": [
+      "string",
+      "bowstring",
+      "chord"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "弦楽",
+      "弦",
+      "弦楽器"
+    ],
+    "exampleIncludes": [
+      "静かな弦楽の音がホールいっぱいに広がりました。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0001995000",
+        "detail": "Japanese-source review for 弦|げん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001995000; source page title verified as 弦 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ゲン, 訓 つる, and meanings bowstring, string on an instrument, and the half-moon/chord sense, with support words 弦楽, 管弦, 弦月, 上弦, and 下弦. Reviewer mapped this Japanese-source field evidence to PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, and support surface 弦楽 / 弦 / 弦楽器 for the individual kanji 弦. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading げん is the source-listed on reading and best matches the generated compound/support surface 弦楽 and 弦楽器.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 弦|げん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, example sentence 静かな弦楽の音がホールいっぱいに広がりました。, reading しずかなげんがくのおとがホールいっぱいにひろがりました。, translation The sound of calm string music spread throughout the hall., notes/support surface 弦楽 / 弦 / 弦楽器, audio kanji-reading-弦-げん, stroke-order media 弦-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 弦|げん: single-kanji anchor; Kanji and DisplayWord 弦; StudyWordKanji blank; PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; notes <ruby>弦楽<rt>げんがく</rt></ruby> - string music ／ <ruby>弦<rt>つる</rt></ruby> - string / bowstring ／ <ruby>弦楽器<rt>げんがっき</rt></ruby> - string instrument; example 静かな弦楽の音がホールいっぱいに広がりました。 ／ しずかなげんがくのおとがホールいっぱいにひろがりました。 ／ The sound of calm string music spread throughout the hall.; audio field includes kanji-reading-弦-げん; stroke-order field includes 弦-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 弦: exact audio media fragment kanji-reading-弦-げん; stroke-order media target 弦; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 弦|げん: exact kanji-reading audio filename includes kanji-reading-弦-げん; exported PrimaryReading げん; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弦: exported stroke-order field targets 弦; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 弦; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 弦|げん: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 弦|げん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, example sentence 静かな弦楽の音がホールいっぱいに広がりました。, reading しずかなげんがくのおとがホールいっぱいにひろがりました。, translation The sound of calm string music spread throughout the hall., notes/support surface 弦楽 / 弦 / 弦楽器, audio kanji-reading-弦-げん, stroke-order media 弦-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "弦",
+        "displayWord": "弦",
+        "studyWordKanji": "",
+        "primaryReading": "げん",
+        "meaningJP": "string / bowstring",
+        "kanjiMeanings": "string / bowstring / chord / hypotenuse",
+        "notes": "<ruby>弦楽<rt>げんがく</rt></ruby> - string music ／ <ruby>弦<rt>つる</rt></ruby> - string / bowstring ／ <ruby>弦楽器<rt>げんがっき</rt></ruby> - string instrument",
+        "exampleSentence": "静かな弦楽の音がホールいっぱいに広がりました。 ／ しずかなげんがくのおとがホールいっぱいにひろがりました。 ／ The sound of calm string music spread throughout the hall.",
+        "audio": "[sound:5F26_弦-kanji-reading-弦-げん.wav]",
+        "strokeOrder": "<img src=\"5F26_弦-stroke-order.gif\" alt=\"Stroke order for 弦\" />",
+        "onReading": "ゲン",
+        "kunReading": "つる",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0001995000",
+        "sourceTitle": "弦 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 弦|げん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001995000; source page title verified as 弦 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ゲン, 訓 つる, and meanings bowstring, string on an instrument, and the half-moon/chord sense, with support words 弦楽, 管弦, 弦月, 上弦, and 下弦. Reviewer mapped this Japanese-source field evidence to PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, and support surface 弦楽 / 弦 / 弦楽器 for the individual kanji 弦. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "静かな弦楽の音がホールいっぱいに広がりました。",
+        "reading": "しずかなげんがくのおとがホールいっぱいにひろがりました。",
+        "translation": "The sound of calm string music spread throughout the hall.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0089",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": false
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F26_弦-kanji-reading-弦-げん.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-弦-げん",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F26_弦-stroke-order.gif\" alt=\"Stroke order for 弦\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    }
+  },
+  {
+    "kanji": "弧",
+    "status": "fixed_then_sapphire",
+    "readingIncludes": [
+      "こ"
+    ],
+    "meaningIncludes": [
+      "arc"
+    ],
+    "kanjiMeaningsIncludes": [
+      "arc",
+      "arch",
+      "bow"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "円弧",
+      "弧線",
+      "弧状"
+    ],
+    "exampleIncludes": [
+      "設計図には緩やかな円弧がいくつも描かれていました。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0002045200",
+        "detail": "Japanese-source review for 弧|こ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002045200; source page title verified as 弧 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 コ, 訓 きゆみ, and meanings wooden bow plus a bow-shaped curved line or part of a circle/curve, with support words 弧矢, 弧状, 弧線, 弧を描く, and 円弧. Reviewer mapped this Japanese-source field evidence to PrimaryReading こ, MeaningJP arc, KanjiMeanings arc / arch / bow, and support surface 円弧 / 弧線 / 弧状 for the individual kanji 弧. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Sapphire: Replaced unsupported 孤弧 support note with Kanjipedia-supported 弧状 before Sapphire promotion. Protected-field mapping for 弧|こ: PrimaryReading こ; MeaningJP arc; KanjiMeanings arc / arch / bow; support surface 円弧 / 弧線 / 弧状; example sentence 設計図には緩やかな円弧がいくつも描かれていました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading こ is the source-listed on reading and matches the generated support words 円弧, 弧線, and 弧状 for the arc meaning.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 弧|こ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading こ, MeaningJP arc, KanjiMeanings arc / arch / bow, example sentence 設計図には緩やかな円弧がいくつも描かれていました。, reading せっけいずにはゆるやかなえんこがいくつもえがかれていました。, translation Several gentle arcs were drawn in the design plans., notes/support surface 円弧 / 弧線 / 弧状, audio kanji-reading-弧-こ, stroke-order media 弧-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Fixed before Sapphire: Replaced unsupported 孤弧 support note with Kanjipedia-supported 弧状 before Sapphire promotion. Protected-field mapping for 弧|こ: PrimaryReading こ; MeaningJP arc; KanjiMeanings arc / arch / bow; support surface 円弧 / 弧線 / 弧状; example sentence 設計図には緩やかな円弧がいくつも描かれていました。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 弧|こ: single-kanji anchor; Kanji and DisplayWord 弧; StudyWordKanji blank; PrimaryReading こ; MeaningJP arc; KanjiMeanings arc / arch / bow; notes <ruby>円弧<rt>えんこ</rt></ruby> - arc ／ <ruby>弧線<rt>こせん</rt></ruby> - curved line ／ <ruby>弧状<rt>こじょう</rt></ruby> - arc-shaped / curved; example 設計図には緩やかな円弧がいくつも描かれていました。 ／ せっけいずにはゆるやかなえんこがいくつもえがかれていました。 ／ Several gentle arcs were drawn in the design plans.; audio field includes kanji-reading-弧-こ; stroke-order field includes 弧-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 弧: exact audio media fragment kanji-reading-弧-こ; stroke-order media target 弧; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 弧|こ: exact kanji-reading audio filename includes kanji-reading-弧-こ; exported PrimaryReading こ; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弧: exported stroke-order field targets 弧; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 弧; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 弧|こ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弧|こ: PrimaryReading こ; MeaningJP arc; KanjiMeanings arc / arch / bow; support surface 円弧 / 弧線 / 弧状; example sentence 設計図には緩やかな円弧がいくつも描かれていました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 弧|こ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading こ, MeaningJP arc, KanjiMeanings arc / arch / bow, example sentence 設計図には緩やかな円弧がいくつも描かれていました。, reading せっけいずにはゆるやかなえんこがいくつもえがかれていました。, translation Several gentle arcs were drawn in the design plans., notes/support surface 円弧 / 弧線 / 弧状, audio kanji-reading-弧-こ, stroke-order media 弧-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Fixed before Sapphire: Replaced unsupported 孤弧 support note with Kanjipedia-supported 弧状 before Sapphire promotion. Protected-field mapping for 弧|こ: PrimaryReading こ; MeaningJP arc; KanjiMeanings arc / arch / bow; support surface 円弧 / 弧線 / 弧状; example sentence 設計図には緩やかな円弧がいくつも描かれていました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "弧",
+        "displayWord": "弧",
+        "studyWordKanji": "",
+        "primaryReading": "こ",
+        "meaningJP": "arc",
+        "kanjiMeanings": "arc / arch / bow",
+        "notes": "<ruby>円弧<rt>えんこ</rt></ruby> - arc ／ <ruby>弧線<rt>こせん</rt></ruby> - curved line ／ <ruby>弧状<rt>こじょう</rt></ruby> - arc-shaped / curved",
+        "exampleSentence": "設計図には緩やかな円弧がいくつも描かれていました。 ／ せっけいずにはゆるやかなえんこがいくつもえがかれていました。 ／ Several gentle arcs were drawn in the design plans.",
+        "audio": "[sound:5F27_弧-kanji-reading-弧-こ.wav]",
+        "strokeOrder": "<img src=\"5F27_弧-stroke-order.gif\" alt=\"Stroke order for 弧\" />",
+        "onReading": "コ",
+        "kunReading": "",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0002045200",
+        "sourceTitle": "弧 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 弧|こ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002045200; source page title verified as 弧 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 コ, 訓 きゆみ, and meanings wooden bow plus a bow-shaped curved line or part of a circle/curve, with support words 弧矢, 弧状, 弧線, 弧を描く, and 円弧. Reviewer mapped this Japanese-source field evidence to PrimaryReading こ, MeaningJP arc, KanjiMeanings arc / arch / bow, and support surface 円弧 / 弧線 / 弧状 for the individual kanji 弧. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Sapphire: Replaced unsupported 孤弧 support note with Kanjipedia-supported 弧状 before Sapphire promotion. Protected-field mapping for 弧|こ: PrimaryReading こ; MeaningJP arc; KanjiMeanings arc / arch / bow; support surface 円弧 / 弧線 / 弧状; example sentence 設計図には緩やかな円弧がいくつも描かれていました。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "設計図には緩やかな円弧がいくつも描かれていました。",
+        "reading": "せっけいずにはゆるやかなえんこがいくつもえがかれていました。",
+        "translation": "Several gentle arcs were drawn in the design plans.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0092",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": true
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F27_弧-kanji-reading-弧-こ.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-弧-こ",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F27_弧-stroke-order.gif\" alt=\"Stroke order for 弧\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    },
+    "fixSummary": "Replaced unsupported 孤弧 support note with Kanjipedia-supported 弧状 before Sapphire promotion."
+  },
+  {
+    "kanji": "張",
+    "status": "sapphire",
+    "readingIncludes": [
+      "はる"
+    ],
+    "meaningIncludes": [
+      "to stretch",
+      "put up"
+    ],
+    "kanjiMeaningsIncludes": [
+      "stretch",
+      "spread",
+      "counter for bows",
+      "put up"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "張る",
+      "緊張",
+      "欲張り"
+    ],
+    "exampleIncludes": [
+      "新しい地図を壁に張って旅の計画を立てました。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004796600",
+        "detail": "Japanese-source review for 張|はる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004796600; source page title verified as 張 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 チョウ, 訓 はる, and meanings stretch/pull tight, spread/enlarge, insist, and a counter for clothes, koto, bows, and curtains, with support words 張力, 緊張, 拡張, 膨張, and 主張. Reviewer mapped this Japanese-source field evidence to PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), and support surface 張る / 緊張 / 欲張り for the individual kanji 張. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading はる is the source-listed kun verb and matches the generated map-on-wall example and stretch/put-up meaning.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 張|はる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), example sentence 新しい地図を壁に張って旅の計画を立てました。, reading あたらしいちずをかべにはってたびのけいかくをたてました。, translation I put a new map on the wall and planned the trip., notes/support surface 張る / 緊張 / 欲張り, audio kanji-reading-張-はる, stroke-order media 張-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 張|はる: single-kanji anchor; Kanji and DisplayWord 張; StudyWordKanji blank; PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); notes <ruby>張<rt>は</rt></ruby>る - to stretch / put up ／ <ruby>緊張<rt>きんちょう</rt></ruby> - tension ／ <ruby>欲張<rt>よくば</rt></ruby>り - greedy person; example 新しい地図を壁に張って旅の計画を立てました。 ／ あたらしいちずをかべにはってたびのけいかくをたてました。 ／ I put a new map on the wall and planned the trip.; audio field includes kanji-reading-張-はる; stroke-order field includes 張-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 張: exact audio media fragment kanji-reading-張-はる; stroke-order media target 張; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 張|はる: exact kanji-reading audio filename includes kanji-reading-張-はる; exported PrimaryReading はる; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 張: exported stroke-order field targets 張; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 張; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 張|はる: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 張|はる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), example sentence 新しい地図を壁に張って旅の計画を立てました。, reading あたらしいちずをかべにはってたびのけいかくをたてました。, translation I put a new map on the wall and planned the trip., notes/support surface 張る / 緊張 / 欲張り, audio kanji-reading-張-はる, stroke-order media 張-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "張",
+        "displayWord": "張",
+        "studyWordKanji": "",
+        "primaryReading": "はる",
+        "meaningJP": "to stretch / put up",
+        "kanjiMeanings": "stretch / spread / counter for bows &amp; stringed instruments / put up (tent)",
+        "notes": "<ruby>張<rt>は</rt></ruby>る - to stretch / put up ／ <ruby>緊張<rt>きんちょう</rt></ruby> - tension ／ <ruby>欲張<rt>よくば</rt></ruby>り - greedy person",
+        "exampleSentence": "新しい地図を壁に張って旅の計画を立てました。 ／ あたらしいちずをかべにはってたびのけいかくをたてました。 ／ I put a new map on the wall and planned the trip.",
+        "audio": "[sound:5F35_張-kanji-reading-張-はる.wav]",
+        "strokeOrder": "<img src=\"5F35_張-stroke-order.gif\" alt=\"Stroke order for 張\" />",
+        "onReading": "チョウ",
+        "kunReading": "-は.り、 -ば.り、 は.る",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0004796600",
+        "sourceTitle": "張 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 張|はる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004796600; source page title verified as 張 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 チョウ, 訓 はる, and meanings stretch/pull tight, spread/enlarge, insist, and a counter for clothes, koto, bows, and curtains, with support words 張力, 緊張, 拡張, 膨張, and 主張. Reviewer mapped this Japanese-source field evidence to PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), and support surface 張る / 緊張 / 欲張り for the individual kanji 張. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "新しい地図を壁に張って旅の計画を立てました。",
+        "reading": "あたらしいちずをかべにはってたびのけいかくをたてました。",
+        "translation": "I put a new map on the wall and planned the trip.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0206",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": false
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F35_張-kanji-reading-張-はる.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-張-はる",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F35_張-stroke-order.gif\" alt=\"Stroke order for 張\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    }
+  },
+  {
+    "kanji": "弾",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ひく"
+    ],
+    "meaningIncludes": [
+      "to play"
+    ],
+    "kanjiMeaningsIncludes": [
+      "bullet",
+      "play",
+      "flip",
+      "snap",
+      "twang"
+    ],
+    "levelIncludes": [
+      "N1"
+    ],
+    "notesIncludes": [
+      "弾く",
+      "弾丸",
+      "弾力"
+    ],
+    "exampleIncludes": [
+      "彼女は舞台で静かにギターを弾き始めました。"
+    ],
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "https://www.kanjipedia.jp/kanji/0004647800",
+        "detail": "Japanese-source review for 弾|ひく: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004647800; source page title verified as 弾 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ダン, 訓 ひく・はずむ・たま plus はじく, はじける, はずみ, and ただす; meanings include bullet, bounce/snap, correct/criticize, and play/perform on a string instrument, with support words 弾丸, 銃弾, 弾力, 弾劾, and 連弾. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひく, MeaningJP to play (a string instrument), KanjiMeanings bullet / play / flip / snap / twang, and support surface 弾く / 弾丸 / 弾力 for the individual kanji 弾. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弾|ひく: PrimaryReading ひく; MeaningJP to play (a string instrument); KanjiMeanings bullet / play / flip / snap / twang; support surface 弾く / 弾丸 / 弾力; example sentence 彼女は舞台で静かにギターを弾き始めました。."
+      }
+    ],
+    "qualityGates": {
+      "belongsInKanjiDeck": true,
+      "individualKanjiAnchor": true,
+      "displayWordIsTargetKanji": true,
+      "japaneseVerified": true,
+      "primaryReadingVerified": true,
+      "primaryMeaningVerified": true,
+      "broaderMeaningsVerified": true,
+      "exampleReleaseQuality": true,
+      "exampleSupportOnly": true,
+      "studyWordSuppressed": true,
+      "levelPlacementVerified": true,
+      "audioExactPrimaryReading": true,
+      "audioArtifactVerified": true,
+      "strokeOrderVerified": true,
+      "strokeOrderTargetVerified": true,
+      "noSilentFallback": true
+    },
+    "primaryReadingRationale": "PrimaryReading ひく is source-listed and matches the generated string-instrument example and learner-facing meaning to play a string instrument.",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Current-standard structural review accepted 弾|ひく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひく, MeaningJP to play (a string instrument), KanjiMeanings bullet / play / flip / snap / twang, example sentence 彼女は舞台で静かにギターを弾き始めました。, reading かのじょはぶたいでしずかにギターをひきはじめました。, translation She quietly began to play the guitar on stage., notes/support surface 弾く / 弾丸 / 弾力, audio kanji-reading-弾-ひく, stroke-order media 弾-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弾|ひく: PrimaryReading ひく; MeaningJP to play (a string instrument); KanjiMeanings bullet / play / flip / snap / twang; support surface 弾く / 弾丸 / 弾力; example sentence 彼女は舞台で静かにギターを弾き始めました。.",
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "detail": "Generated card surface inspected for 弾|ひく: single-kanji anchor; Kanji and DisplayWord 弾; StudyWordKanji blank; PrimaryReading ひく; MeaningJP to play (a string instrument); KanjiMeanings bullet / play / flip / snap / twang; notes <ruby>弾<rt>ひ</rt></ruby>く - to play (a string instrument) ／ <ruby>弾丸<rt>だんがん</rt></ruby> - bullet ／ <ruby>弾力<rt>だんりょく</rt></ruby> - elasticity; example 彼女は舞台で静かにギターを弾き始めました。 ／ かのじょはぶたいでしずかにギターをひきはじめました。 ／ She quietly began to play the guitar on stage.; audio field includes kanji-reading-弾-ひく; stroke-order field includes 弾-stroke-order."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
+        "detail": "Managed media identity inspected for 弾: exact audio media fragment kanji-reading-弾-ひく; stroke-order media target 弾; generated N1 package step reported full media coverage and no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
+        "detail": "Audio field identity reviewed for 弾|ひく: exact kanji-reading audio filename includes kanji-reading-弾-ひく; exported PrimaryReading ひく; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弾: exported stroke-order field targets 弾; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate Gold regression command checked 弾; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire structural batch 41 review",
+        "detail": "Final structural product judgment for 弾|ひく: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弾|ひく: PrimaryReading ひく; MeaningJP to play (a string instrument); KanjiMeanings bullet / play / flip / snap / twang; support surface 弾く / 弾丸 / 弾力; example sentence 彼女は舞台で静かにギターを弾き始めました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire structural batch 41",
+        "detail": "Current-standard structural review accepted 弾|ひく with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひく, MeaningJP to play (a string instrument), KanjiMeanings bullet / play / flip / snap / twang, example sentence 彼女は舞台で静かにギターを弾き始めました。, reading かのじょはぶたいでしずかにギターをひきはじめました。, translation She quietly began to play the guitar on stage., notes/support surface 弾く / 弾丸 / 弾力, audio kanji-reading-弾-ひく, stroke-order media 弾-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弾|ひく: PrimaryReading ひく; MeaningJP to play (a string instrument); KanjiMeanings bullet / play / flip / snap / twang; support surface 弾く / 弾丸 / 弾力; example sentence 彼女は舞台で静かにギターを弾き始めました。."
+      }
+    ],
+    "verificationLimitations": [],
+    "sapphireReviewAudit": {
+      "schemaVersion": 1,
+      "auditType": "n1-structural-sapphire-card-review",
+      "batch": {
+        "deckKind": "kanji",
+        "level": 1,
+        "batchDate": "2026-06-09",
+        "selectedKanji": [
+          "弓",
+          "弔",
+          "弘",
+          "弥",
+          "弦",
+          "弧",
+          "張",
+          "弾"
+        ],
+        "queue": "missing-current-standard"
+      },
+      "commandsReviewed": [
+        "git status --short --branch",
+        "git log -1 --oneline --decorate",
+        "git branch -a -vv",
+        "git ls-remote --heads origin",
+        "rg schema/doc lane contract inspections",
+        "npm run deck:kanji:review-status",
+        "npm run deck:sapphire:n1",
+        "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
+        "node out/n1-platinum-review/fetchKanjipediaEvidence.js 弓 弔 弘 弥 弦 弧 張 弾",
+        "npm run curated:init -- --merge --refresh-starter",
+        "node --test test/exportService.test.js",
+        "npm run deck:review:n1",
+        "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328"
+      ],
+      "actualCardDataReview": {
+        "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+        "cardSurfaceReviewed": true,
+        "sourceEvidenceReviewed": true,
+        "exampleReviewed": true,
+        "supportOnlyExampleRole": true,
+        "nlpSupportReviewed": true,
+        "nlpIsNonCertifying": true
+      },
+      "generatedSurface": {
+        "kanji": "弾",
+        "displayWord": "弾",
+        "studyWordKanji": "",
+        "primaryReading": "ひく",
+        "meaningJP": "to play (a string instrument)",
+        "kanjiMeanings": "bullet / play / flip / snap / twang",
+        "notes": "<ruby>弾<rt>ひ</rt></ruby>く - to play (a string instrument) ／ <ruby>弾丸<rt>だんがん</rt></ruby> - bullet ／ <ruby>弾力<rt>だんりょく</rt></ruby> - elasticity",
+        "exampleSentence": "彼女は舞台で静かにギターを弾き始めました。 ／ かのじょはぶたいでしずかにギターをひきはじめました。 ／ She quietly began to play the guitar on stage.",
+        "audio": "[sound:5F3E_弾-kanji-reading-弾-ひく.wav]",
+        "strokeOrder": "<img src=\"5F3E_弾-stroke-order.gif\" alt=\"Stroke order for 弾\" />",
+        "onReading": "タン、 ダン",
+        "kunReading": "-ひ.き、 ただ.す、 たま、 はじ.きゆみ、 はじ.く、 はじ.ける、 はず.む、 ひ.く",
+        "hardChecks": {
+          "Kanji is one target kanji": true,
+          "DisplayWord equals target kanji": true,
+          "StudyWordKanji is blank": true,
+          "PrimaryReading is present": true,
+          "MeaningJP is present": true,
+          "KanjiMeanings is present": true,
+          "ExampleSentence is present": true,
+          "StrokeOrder field is present": true,
+          "Audio is exact target plus primary reading": true,
+          "No generic offline fallback note": true
+        },
+        "hardChecksPassed": true,
+        "generatedFailures": []
+      },
+      "sourceFieldReview": {
+        "source": "https://www.kanjipedia.jp/kanji/0004647800",
+        "sourceTitle": "弾 | 漢字一字 | 漢字ペディア",
+        "sourceEvidenceDetail": "Japanese-source review for 弾|ひく: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004647800; source page title verified as 弾 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ダン, 訓 ひく・はずむ・たま plus はじく, はじける, はずみ, and ただす; meanings include bullet, bounce/snap, correct/criticize, and play/perform on a string instrument, with support words 弾丸, 銃弾, 弾力, 弾劾, and 連弾. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひく, MeaningJP to play (a string instrument), KanjiMeanings bullet / play / flip / snap / twang, and support surface 弾く / 弾丸 / 弾力 for the individual kanji 弾. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弾|ひく: PrimaryReading ひく; MeaningJP to play (a string instrument); KanjiMeanings bullet / play / flip / snap / twang; support surface 弾く / 弾丸 / 弾力; example sentence 彼女は舞台で静かにギターを弾き始めました。.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
+      },
+      "levelPlacementReview": {
+        "generatedLevelLabel": "N1",
+        "denominatorPreserved": true,
+        "levelPlacementCertifiedByThisEntry": false
+      },
+      "exampleSentenceReview": {
+        "japanese": "彼女は舞台で静かにギターを弾き始めました。",
+        "reading": "かのじょはぶたいでしずかにギターをひきはじめました。",
+        "translation": "She quietly began to play the guitar on stage.",
+        "naturalEnoughForRelease": true,
+        "learnerUseful": true,
+        "levelAppropriate": true,
+        "supportOnly": true
+      },
+      "nlpReview": {
+        "packetId": "nlp-review-kanji-n1-0200",
+        "priority": "routine",
+        "signalKinds": [
+          "routine-tokenization-review",
+          "kanji-card-tokenizer-reading-variant"
+        ],
+        "readingAlignment": [
+          {
+            "comparable": true,
+            "matches": false
+          }
+        ],
+        "supportOnly": true,
+        "certifiesCards": false,
+        "writesTrackedTemplates": false,
+        "claimsReleaseReadiness": false
+      },
+      "mediaReview": {
+        "audioField": "[sound:5F3E_弾-kanji-reading-弾-ひく.wav]",
+        "audioIdentityVerified": true,
+        "exactAudioFragment": "kanji-reading-弾-ひく",
+        "listeningNaturalnessQaClaimed": false,
+        "strokeOrderField": "<img src=\"5F3E_弾-stroke-order.gif\" alt=\"Stroke order for 弾\" />",
+        "strokeOrderTargetVerified": true,
+        "visualStrokeSequenceQaClaimed": false
+      },
+      "limitationDecision": {
+        "activeLimitations": [],
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+      },
+      "rubricReview": {
+        "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
+        "prePromotionResult": "blocked",
+        "hardChecksPassed": true,
+        "manualJudgmentItemsResolved": true
+      },
+      "trackedSourceContractBoundary": {
+        "sourceTruthFromJapaneseSourceOnly": true,
+        "goldRegressionIsInternalOnly": true,
+        "nlpSupportOnly": true,
+        "noProofLedgerChange": true
+      },
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+      }
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native reviewed Sapphire input",
+      "migrationType": "native-sapphire-structural-review",
+      "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
+    }
   }
 ]

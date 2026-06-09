@@ -17,6 +17,9 @@ const {
     CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     REQUIRED_KANJI_QUALITY_GATES,
 } = require("../src/services/platinumKanjiReviewService");
+const {
+    CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
+} = require("../src/services/sapphireKanjiReviewService");
 
 function buildRow(overrides = {}) {
     return {
@@ -94,6 +97,14 @@ function buildCurrentStandardEntry(kanji = "日") {
     };
 }
 
+function buildCurrentStandardSapphireEntry(kanji = "日") {
+    return {
+        kanji,
+        status: "sapphire",
+        reviewStandard: CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
+    };
+}
+
 test("normalizeReadingEvidence sees dictionary punctuation and katakana readings as comparable", () => {
     assert.equal(normalizeReadingEvidence("On: ジ、 Kun: か.く"), "onじkunかく");
 });
@@ -106,7 +117,21 @@ test("selectBatchRows defaults to missing current-standard Platinum queue in gen
     ];
     const entries = [buildCurrentStandardEntry("一")];
 
-    assert.deepEqual(selectBatchRows({ rows, entries, limit: 2 }).map((row) => row.kanji), ["二", "三"]);
+    assert.deepEqual(selectBatchRows({
+        rows,
+        entries,
+        sapphireEntries: rows.map((row) => buildCurrentStandardSapphireEntry(row.kanji)),
+        limit: 2,
+    }).map((row) => row.kanji), ["二", "三"]);
+});
+
+test("selectBatchRows blocks unscoped Platinum queues without current-standard Sapphire", () => {
+    const rows = [
+        buildRow({ kanji: "一", displayWord: "一" }),
+        buildRow({ kanji: "二", displayWord: "二" }),
+    ];
+
+    assert.deepEqual(selectBatchRows({ rows, entries: [], limit: 2 }).map((row) => row.kanji), []);
 });
 
 test("batch report does not count revalidationSummary prose as rereview proof", () => {
@@ -116,6 +141,7 @@ test("batch report does not count revalidationSummary prose as rereview proof", 
     const report = buildPlatinumKanjiBatchReport({
         rows: [buildRow({ kanji: "一", displayWord: "一", primaryReading: "いち" })],
         entries: [entry],
+        sapphireEntries: [buildCurrentStandardSapphireEntry("一")],
         level: 5,
         limit: 1,
         queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
@@ -141,6 +167,7 @@ test("selectBatchRows can expose the missing current-standard Platinum queue exp
     assert.deepEqual(selectBatchRows({
         rows,
         entries,
+        sapphireEntries: rows.map((row) => buildCurrentStandardSapphireEntry(row.kanji)),
         limit: 2,
         queue: KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD,
     }).map((row) => row.kanji), ["二", "三"]);
@@ -166,6 +193,7 @@ test("buildPlatinumKanjiBatchReport summarizes surfaces checks and risks without
     const report = buildPlatinumKanjiBatchReport({
         rows,
         entries: [buildCurrentStandardEntry("日")],
+        sapphireEntries: rows.map((row) => buildCurrentStandardSapphireEntry(row.kanji)),
         level: 5,
         limit: 12,
     });
@@ -195,6 +223,7 @@ test("explicit substantive-rereview queue is Obsidian proof-status compatibility
     const report = buildPlatinumKanjiBatchReport({
         rows: [buildRow()],
         entries: [buildCurrentStandardEntry("日")],
+        sapphireEntries: [buildCurrentStandardSapphireEntry("日")],
         level: 5,
         limit: 1,
         queue: KANJI_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW,
@@ -289,6 +318,7 @@ test("buildPlatinumKanjiBatchReport includes curated reading conflict risks from
             exampleSentence: "元気です。 ／ げんきです。 ／ I am well.",
         })],
         entries: [],
+        sapphireEntries: [buildCurrentStandardSapphireEntry("元")],
         level: 4,
         curatedStudyData: {
             元: {
@@ -305,6 +335,7 @@ test("formatPlatinumKanjiBatchReport states that the report is read-only", () =>
     const report = buildPlatinumKanjiBatchReport({
         rows: [buildRow()],
         entries: [],
+        sapphireEntries: [buildCurrentStandardSapphireEntry("日")],
         level: 5,
         limit: 1,
     });

@@ -60,7 +60,7 @@ function selectRowsForEntries(rows = [], entries = []) {
     return selectedRows;
 }
 
-function validateCandidateEntries(candidateEntries = [], rows = []) {
+function validateCandidateEntries(candidateEntries = [], rows = [], { goldenExpectations } = {}) {
     const candidates = parseSapphireKanjiReviewSet(candidateEntries, "Sapphire candidate batch");
     const inactiveCandidates = candidates
         .filter((entry) => !ACTIVE_SAPPHIRE_STATUSES.includes(entry.status))
@@ -78,6 +78,8 @@ function validateCandidateEntries(candidateEntries = [], rows = []) {
     const report = evaluateSapphireKanjiReviewSet({
         rows: selectedRows,
         entries: candidates,
+        goldenExpectations,
+        requireGoldPrecondition: true,
         requireCurrentReviewStandard: true,
     });
     if (!report.passed) {
@@ -94,6 +96,7 @@ function promoteSapphireKanjiBatch({
     existingEntries = [],
     candidateEntries = [],
     rows = [],
+    goldenExpectations,
     replaceExisting = false,
 } = {}) {
     const existing = parseSapphireKanjiReviewSet(existingEntries, "Existing Sapphire review set");
@@ -102,7 +105,7 @@ function promoteSapphireKanjiBatch({
         throw new Error(`Existing Sapphire review set has duplicate kanji: ${existingDuplicateKanji.join(", ")}`);
     }
 
-    const { candidates, report } = validateCandidateEntries(candidateEntries, rows);
+    const { candidates, report } = validateCandidateEntries(candidateEntries, rows, { goldenExpectations });
     const candidateKanji = new Set(candidates.map((entry) => entry.kanji));
     const collisions = existing
         .filter((entry) => candidateKanji.has(entry.kanji))

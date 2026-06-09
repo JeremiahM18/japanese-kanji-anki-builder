@@ -143,6 +143,45 @@ test("evaluatePlatinumKanjiReviewSet does not require Obsidian proof for current
     assert.equal(report.failedCount, 0);
 });
 
+test("evaluatePlatinumKanjiReviewSet enforces Gold and Sapphire preconditions when claiming the lane", () => {
+    const baseOptions = {
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry()],
+        goldenExpectations: [{
+            kanji: "日",
+            readingIncludes: ["ひ"],
+            meaningIncludes: ["day"],
+            notesIncludes: ["日"],
+            exampleIncludes: ["雨の日です。"],
+        }],
+        requireGoldPrecondition: true,
+        sapphireEntries: [{
+            kanji: "日",
+            status: "sapphire",
+            reviewStandard: "kanji-sapphire-v1-evidence-lanes",
+        }],
+        requireSapphirePrecondition: true,
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    };
+
+    const passingReport = evaluatePlatinumKanjiReviewSet(baseOptions);
+    const missingGoldReport = evaluatePlatinumKanjiReviewSet({
+        ...baseOptions,
+        goldenExpectations: [],
+    });
+    const missingSapphireReport = evaluatePlatinumKanjiReviewSet({
+        ...baseOptions,
+        sapphireEntries: [],
+    });
+
+    assert.equal(passingReport.passed, true, passingReport.results[0]?.failures.join("\n") || "");
+    assert.equal(missingGoldReport.passed, false);
+    assert.match(missingGoldReport.results[0].failures.join("\n"), /Platinum requires a prior Gold expectation for 日/);
+    assert.equal(missingSapphireReport.passed, false);
+    assert.match(missingSapphireReport.results[0].failures.join("\n"), /Platinum requires current-standard Sapphire coverage for 日/);
+});
+
 test("evaluatePlatinumKanjiReviewSet compares escaped generated notes by visible surface text", () => {
     const reviewEvidence = buildReviewEvidence().map((evidence) => evidence.type === "current-standard-review"
         ? {

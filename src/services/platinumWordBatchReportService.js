@@ -23,6 +23,8 @@ const WORD_BATCH_QUEUE_MODES = {
     SUBSTANTIVE_REREVIEW: "substantive-rereview",
 };
 const DEFAULT_WORD_BATCH_QUEUE_MODE = WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD;
+const PRIOR_WORD_SAPPHIRE_REVIEW_STANDARD = "word-sapphire-v1-evidence-lanes";
+const ACTIVE_WORD_SAPPHIRE_PRECONDITION_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -204,6 +206,31 @@ function buildEntryReviewStateByIdentity(entries = []) {
     }
 
     return stateByIdentity;
+}
+
+function buildCurrentStandardSapphireSet(entries = []) {
+    const identities = new Set();
+
+    for (const entry of Array.isArray(entries) ? entries : []) {
+        if (
+            !ACTIVE_WORD_SAPPHIRE_PRECONDITION_STATUSES.includes(normalizeText(entry.status))
+            || entry.reviewStandard !== PRIOR_WORD_SAPPHIRE_REVIEW_STANDARD
+        ) {
+            continue;
+        }
+        const readings = Array.isArray(entry.readingIncludes) ? entry.readingIncludes : [""];
+        for (const reading of readings) {
+            const identity = buildWordIdentity({
+                word: entry.word,
+                reading,
+            });
+            if (identity) {
+                identities.add(identity);
+            }
+        }
+    }
+
+    return identities;
 }
 
 function classifyReviewState(state = {}) {
@@ -472,9 +499,19 @@ function normalizeQueueMode(queue = DEFAULT_WORD_BATCH_QUEUE_MODE) {
         : DEFAULT_WORD_BATCH_QUEUE_MODE;
 }
 
-function selectBatchRows({ rows = [], entries = [], words = [], limit = 12, queue = DEFAULT_WORD_BATCH_QUEUE_MODE } = {}) {
+function selectBatchRows({
+    rows = [],
+    entries = [],
+    sapphireEntries = [],
+    words = [],
+    limit = 12,
+    skipSapphirePreconditionForSapphireCompatibilityReport = false,
+    queue = DEFAULT_WORD_BATCH_QUEUE_MODE,
+} = {}) {
     const queueMode = normalizeQueueMode(queue);
     const stateByIdentity = buildEntryReviewStateByIdentity(entries);
+    const currentSapphireSet = buildCurrentStandardSapphireSet(sapphireEntries);
+    const enforceSapphirePrecondition = !skipSapphirePreconditionForSapphireCompatibilityReport;
     const generatedRows = Array.isArray(rows) ? rows : [];
 
     if (Array.isArray(words) && words.length > 0) {
@@ -488,7 +525,11 @@ function selectBatchRows({ rows = [], entries = [], words = [], limit = 12, queu
 
     return generatedRows
         .filter((row) => {
-            const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+            const identity = buildWordIdentity(row);
+            if (enforceSapphirePrecondition && !currentSapphireSet.has(identity)) {
+                return false;
+            }
+            const state = stateByIdentity.get(identity) || {};
             const reviewState = classifyReviewState(state);
             if (queueMode === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD) {
                 return reviewState !== "current_standard_platinum_only"
@@ -502,17 +543,29 @@ function selectBatchRows({ rows = [], entries = [], words = [], limit = 12, queu
 function buildPlatinumWordBatchReport({
     rows = [],
     entries = [],
+    sapphireEntries = [],
     wordPitchAccentData = {},
     level,
     words = [],
     limit = 12,
+    skipSapphirePreconditionForSapphireCompatibilityReport = false,
     queue = DEFAULT_WORD_BATCH_QUEUE_MODE,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const stateByIdentity = buildEntryReviewStateByIdentity(reviewEntries);
+    const currentSapphireSet = buildCurrentStandardSapphireSet(sapphireEntries);
     const queueMode = normalizeQueueMode(queue);
-    const selectedRows = selectBatchRows({ rows: generatedRows, entries: reviewEntries, words, limit, queue: queueMode });
+    const enforceSapphirePrecondition = !skipSapphirePreconditionForSapphireCompatibilityReport;
+    const selectedRows = selectBatchRows({
+        rows: generatedRows,
+        entries: reviewEntries,
+        sapphireEntries,
+        words,
+        limit,
+        skipSapphirePreconditionForSapphireCompatibilityReport,
+        queue: queueMode,
+    });
     const activeCount = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))).length;
     const currentStandardCount = reviewEntries.filter((entry) => (
         ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status))
@@ -525,17 +578,29 @@ function buildPlatinumWordBatchReport({
     )).length;
     const legacyOrUnversionedCount = activeCount - currentStandardCount;
     const missingRows = generatedRows.filter((row) => {
-        const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+        const identity = buildWordIdentity(row);
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(identity)) {
+            return false;
+        }
+        const state = stateByIdentity.get(identity) || {};
         return !state.hasActivePlatinum;
     });
     const missingCurrentStandardRows = generatedRows.filter((row) => {
-        const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+        const identity = buildWordIdentity(row);
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(identity)) {
+            return false;
+        }
+        const state = stateByIdentity.get(identity) || {};
         const reviewState = classifyReviewState(state);
         return reviewState !== "current_standard_platinum_only"
             && reviewState !== "substantive_rereview_proven";
     });
     const needsSubstantiveRereviewRows = generatedRows.filter((row) => {
-        const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+        const identity = buildWordIdentity(row);
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(identity)) {
+            return false;
+        }
+        const state = stateByIdentity.get(identity) || {};
         return !state.hasSubstantiveCurrentStandardRereview;
     });
     const requestedMissing = Array.isArray(words)
@@ -555,6 +620,9 @@ function buildPlatinumWordBatchReport({
         const hardChecks = buildHardChecks(row, wordPitchAccentData);
         const hardChecksPassed = hardChecks.every((check) => check.passed);
         const riskFlags = buildRiskFlags(row, { reviewStatus, statuses, pitch, queueMode });
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(identity)) {
+            riskFlags.unshift("missing current-standard Sapphire precondition; run Sapphire before Platinum");
+        }
         const example = parseExampleParts(row.exampleSentence);
         return {
             identity,
@@ -604,6 +672,10 @@ function buildPlatinumWordBatchReport({
             currentReviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
             currentStandardPlatinum: currentStandardCount,
             legacyOrUnversionedPlatinum: legacyOrUnversionedCount,
+            sapphireEligibleRows: generatedRows.filter((row) => currentSapphireSet.has(buildWordIdentity(row))).length,
+            blockedByMissingSapphire: enforceSapphirePrecondition
+                ? generatedRows.filter((row) => !currentSapphireSet.has(buildWordIdentity(row))).length
+                : 0,
             remainingPlatinum: missingRows.length,
             remainingCurrentStandard: missingCurrentStandardRows.length,
             ...(includeSubstantiveRereviewQueue ? {
@@ -635,6 +707,8 @@ function formatPlatinumWordBatchReport(report = {}) {
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
         `Current-standard Platinum entries: ${summary.currentStandardPlatinum || 0}`,
         `Legacy/unversioned platinum: ${summary.legacyOrUnversionedPlatinum || 0}`,
+        `Sapphire-eligible rows: ${summary.sapphireEligibleRows || 0}`,
+        `Blocked by missing Sapphire: ${summary.blockedByMissingSapphire || 0}`,
         `Missing Platinum entries: ${summary.remainingPlatinum || 0}`,
         `Missing current-standard Platinum: ${summary.remainingCurrentStandard || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,

@@ -4,6 +4,7 @@ const path = require("node:path");
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
+const { parseSapphireWordReviewSet } = require("../src/datasets/sapphireWordReviewSet");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
@@ -17,6 +18,9 @@ const {
     loadReviewSetWithObsidianProof,
     normalizeObsidianProofProviderMode,
 } = require("../src/services/obsidianProofProviderService");
+const {
+    evaluateSapphireWordReviewSet,
+} = require("../src/services/sapphireWordReviewService");
 
 function parseArgs(argv, {
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
@@ -60,6 +64,38 @@ function readReviewSet(level, {
     }).entries;
 }
 
+function readJson(filePath) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+function readPriorLaneInputs(level, { rows } = {}) {
+    const goldenPath = path.join(process.cwd(), "templates", `golden_n${level}_word_review_set.json`);
+    const sapphirePath = path.join(process.cwd(), "templates", `sapphire_n${level}_word_review_set.json`);
+    if (!fs.existsSync(goldenPath)) {
+        throw new Error(`Missing prior Gold word review set at ${goldenPath}`);
+    }
+    if (!fs.existsSync(sapphirePath)) {
+        throw new Error(`Missing prior Sapphire word review set at ${sapphirePath}`);
+    }
+    const goldenExpectations = readJson(goldenPath);
+    const sapphireEntries = parseSapphireWordReviewSet(
+        readJson(sapphirePath),
+        `templates/sapphire_n${level}_word_review_set.json`
+    );
+    const sapphireReport = evaluateSapphireWordReviewSet({
+        rows,
+        entries: sapphireEntries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+    });
+    return {
+        goldenExpectations,
+        sapphireEntries,
+        sapphireResults: sapphireReport.results,
+    };
+}
+
 async function main({
     commandName = "deck:words:platinum:rereview-status",
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
@@ -75,9 +111,12 @@ async function main({
     for (const level of options.levels) {
         const entries = readReviewSet(level, { proofProvider });
         const rows = await buildWordRowsForLevel({ level, config });
+        const priorLaneInputs = readPriorLaneInputs(level, { rows });
         levelReports.push(buildPlatinumWordRereviewStatusReport({
             rows,
             entries,
+            ...priorLaneInputs,
+            requireLanePreconditions: true,
             level,
             wordPitchAccentData,
             kanjiLevelData,
@@ -106,5 +145,6 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
+    readPriorLaneInputs,
     readReviewSet,
 };

@@ -22,6 +22,12 @@ const {
     REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
 } = require("../src/services/platinumReviewService");
 const {
+    CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
+} = require("../src/services/sapphireKanjiReviewService");
+const {
+    CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+} = require("../src/services/sapphireWordReviewService");
+const {
     buildKanjiBatchReportProviderParityForLevel,
     buildKanjiFieldSourceContractProviderParityForLevel,
     buildKanjiPlatinumLevelProviderParityForLevel,
@@ -162,6 +168,15 @@ function buildEntry(overrides = {}) {
         }),
         qualityGates: Object.fromEntries(REQUIRED_KANJI_QUALITY_GATES.map((gate) => [gate, true])),
         rereviewProvenance: buildProvenance(),
+        ...overrides,
+    };
+}
+
+function buildSapphireEntry(overrides = {}) {
+    return {
+        kanji: "常",
+        status: "sapphire",
+        reviewStandard: CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
         ...overrides,
     };
 }
@@ -324,6 +339,16 @@ function buildWordEntry(overrides = {}) {
         }),
         qualityGates: Object.fromEntries(REQUIRED_WORD_QUALITY_GATES.map((gate) => [gate, true])),
         rereviewProvenance: buildWordProvenance(),
+        ...overrides,
+    };
+}
+
+function buildWordSapphireEntry(overrides = {}) {
+    return {
+        word: "本",
+        status: "sapphire",
+        readingIncludes: ["ほん"],
+        reviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
         ...overrides,
     };
 }
@@ -642,6 +667,7 @@ test("word batch-report provider parity passes when inline and ledger projection
     const scope = buildWordBatchReportProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        sapphireEntries: [buildWordSapphireEntry()],
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -679,6 +705,7 @@ test("word batch-report provider parity fails when ledger changes queue selectio
     const scope = buildWordBatchReportProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        sapphireEntries: [buildWordSapphireEntry()],
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -1154,6 +1181,7 @@ test("kanji batch-report provider parity passes when inline and ledger projectio
     const scope = buildKanjiBatchReportProviderParityForLevel({
         rows: [buildRow()],
         rawEntries: [buildEntry()],
+        sapphireEntries: [buildSapphireEntry()],
         cwd: rootDir,
         level: 3,
         sourceReviewSetPath: "templates/platinum_n3_review_set.json",
@@ -1174,6 +1202,7 @@ test("kanji batch-report provider parity fails when ledger changes queue selecti
     const scope = buildKanjiBatchReportProviderParityForLevel({
         rows: [buildRow()],
         rawEntries: [buildEntry()],
+        sapphireEntries: [buildSapphireEntry()],
         cwd: rootDir,
         level: 3,
         sourceReviewSetPath: "templates/platinum_n3_review_set.json",

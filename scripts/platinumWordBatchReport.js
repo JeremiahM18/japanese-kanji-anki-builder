@@ -1,7 +1,9 @@
 const path = require("node:path");
+const fs = require("node:fs");
 const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
+const { parseSapphireWordReviewSet } = require("../src/datasets/sapphireWordReviewSet");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
 const {
     DEFAULT_WORD_BATCH_QUEUE_MODE,
@@ -81,6 +83,18 @@ function readReviewSet(level, {
     }).entries;
 }
 
+function readSapphireReviewSet(level, { cwd = process.cwd() } = {}) {
+    const reviewSetPath = path.join(cwd, "templates", `sapphire_n${level}_word_review_set.json`);
+    if (!fs.existsSync(reviewSetPath)) {
+        throw new Error(`Missing prior Sapphire word review set at ${reviewSetPath}`);
+    }
+
+    return parseSapphireWordReviewSet(
+        JSON.parse(fs.readFileSync(reviewSetPath, "utf8")),
+        `templates/sapphire_n${level}_word_review_set.json`
+    );
+}
+
 async function main({
     commandName = "deck:words:platinum:batch",
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
@@ -95,11 +109,13 @@ async function main({
 
     const config = loadConfig();
     const entries = readReviewSet(options.level, { proofProvider });
+    const sapphireEntries = readSapphireReviewSet(options.level);
     const rows = await buildWordRowsForLevel({ level: options.level, config });
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const report = buildPlatinumWordBatchReport({
         rows,
         entries,
+        sapphireEntries,
         wordPitchAccentData,
         level: options.level,
         words: options.words,
@@ -126,6 +142,7 @@ module.exports = {
     main,
     parseArgs,
     readReviewSet,
+    readSapphireReviewSet,
     parseWordIdentities,
     parseWordIdentity,
 };

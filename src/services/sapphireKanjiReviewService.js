@@ -1,4 +1,8 @@
 const platinumKanjiReview = require("./platinumKanjiReviewService");
+const {
+    buildKanjiGoldPreconditionFailuresByKey,
+    mergeFailuresIntoResult,
+} = require("./reviewLanePreconditionService");
 
 const ACTIVE_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 const NON_SHIPPING_STATUSES = platinumKanjiReview.NON_SHIPPING_STATUSES;
@@ -526,6 +530,8 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 function evaluateSapphireKanjiReviewSet({
     rows = [],
     entries = [],
+    goldenExpectations,
+    requireGoldPrecondition = false,
     requireCurrentReviewStandard = false,
     requireAllRows = false,
     allowEmpty = false,
@@ -539,11 +545,22 @@ function evaluateSapphireKanjiReviewSet({
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
     const needsRevalidationEntries = reviewEntries.filter((entry) => REVALIDATION_STATUSES.includes(normalizeText(entry.status)));
     const needsReviewEntries = reviewEntries.filter((entry) => normalizeText(entry.status) === "needs_review");
-    const results = reviewEntries.map((entry) => evaluateSapphireKanjiEntry({
-        rows: generatedRows,
-        entry,
-        requireCurrentReviewStandard,
-    }));
+    const goldPreconditionFailures = requireGoldPrecondition
+        ? buildKanjiGoldPreconditionFailuresByKey({
+            rows: generatedRows,
+            entries: activeEntries,
+            goldenExpectations,
+            laneName: "Sapphire",
+        })
+        : new Map();
+    const results = reviewEntries.map((entry) => mergeFailuresIntoResult(
+        evaluateSapphireKanjiEntry({
+            rows: generatedRows,
+            entry,
+            requireCurrentReviewStandard,
+        }),
+        goldPreconditionFailures.get(entry.kanji)
+    ));
     const coverageFailures = [];
     const duplicateActiveEntries = buildDuplicateActiveEntryLabels(activeEntries);
     const missingSapphireRows = requireAllRows

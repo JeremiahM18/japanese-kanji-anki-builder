@@ -23,6 +23,9 @@ const {
     isCurrentStandardPlatinumEntry,
 } = require("../src/services/platinumKanjiReviewService");
 const {
+    evaluateSapphireKanjiReviewSet,
+} = require("../src/services/sapphireKanjiReviewService");
+const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
     loadReviewSetWithObsidianProof,
     normalizeObsidianProofProviderMode,
@@ -92,6 +95,10 @@ function parseKanjiTsvForPlatinum(tsv, { level } = {}) {
     return rows;
 }
 
+function loadJson(filePath) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
 async function buildKanjiRowsForLevel({ level, config }) {
     const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const sentenceCorpus = loadSentenceCorpus(config.sentenceCorpusPath);
@@ -150,6 +157,8 @@ async function main() {
 
     const config = loadConfig();
     const reviewSetPath = path.join(process.cwd(), "templates", "platinum_n" + level + "_review_set.json");
+    const sapphireReviewSetPath = path.join(process.cwd(), "templates", "sapphire_n" + level + "_review_set.json");
+    const goldenReviewSetPath = path.join(process.cwd(), "templates", "golden_n" + level + "_review_set.json");
 
     if (!fs.existsSync(config.jlptJsonPath)) {
         throw new Error("Missing JLPT JSON file at " + config.jlptJsonPath);
@@ -160,6 +169,12 @@ async function main() {
     if (!fs.existsSync(reviewSetPath)) {
         throw new Error("Missing platinum kanji review set at " + reviewSetPath);
     }
+    if (!fs.existsSync(sapphireReviewSetPath)) {
+        throw new Error("Missing prior Sapphire kanji review set at " + sapphireReviewSetPath);
+    }
+    if (!fs.existsSync(goldenReviewSetPath)) {
+        throw new Error("Missing prior Gold kanji review set at " + goldenReviewSetPath);
+    }
 
     const reviewSet = loadReviewSetWithObsidianProof({
         cwd: process.cwd(),
@@ -168,11 +183,26 @@ async function main() {
         proofProvider: options.proofProvider,
     });
     const entries = reviewSet.entries;
+    const sapphireEntries = loadJson(sapphireReviewSetPath);
+    const goldenExpectations = loadJson(goldenReviewSetPath);
     assertKanjiPlatinumPreflight({ entries, level, options });
     const rows = await buildKanjiRowsForLevel({ level, config });
+    const sapphireReport = evaluateSapphireKanjiReviewSet({
+        rows,
+        entries: sapphireEntries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+        allowEmpty: options.allowEmpty,
+    });
     const report = evaluatePlatinumKanjiReviewSet({
         rows,
         entries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        sapphireEntries,
+        sapphireResults: sapphireReport.results,
+        requireSapphirePrecondition: true,
         requireCurrentReviewStandard: options.requireCurrentReviewStandard,
         requireAllRows: options.requireAllRows,
         allowEmpty: options.allowEmpty,

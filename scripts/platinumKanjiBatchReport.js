@@ -1,3 +1,5 @@
+const fs = require("node:fs");
+const path = require("node:path");
 const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
@@ -54,6 +56,10 @@ function parseArgs(argv, {
     return options;
 }
 
+function loadJson(filePath) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("platinumKanjiBatchReport", options.unknownArgs);
@@ -68,11 +74,17 @@ async function main() {
         level: options.level,
         proofProvider: options.proofProvider,
     }).entries;
+    const sapphireReviewSetPath = path.join(process.cwd(), "templates", `sapphire_n${options.level}_review_set.json`);
+    if (!fs.existsSync(sapphireReviewSetPath)) {
+        throw new Error(`Missing prior Sapphire kanji review set at ${sapphireReviewSetPath}`);
+    }
+    const sapphireEntries = loadJson(sapphireReviewSetPath);
     const curatedStudyData = loadCuratedStudyData(config.curatedStudyDataPath);
     const rows = await buildKanjiRowsForLevel({ level: options.level, config });
     const report = buildPlatinumKanjiBatchReport({
         rows,
         entries,
+        sapphireEntries,
         level: options.level,
         kanji: options.kanji,
         limit: options.limit,

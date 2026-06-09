@@ -24,13 +24,13 @@ This document defines tier meaning at summary level. [review-system-forward-cont
 
 ## Trust Ladder
 
-| Tier | Lane | Proves | Does not prove |
-| --- | --- | --- | --- |
-| Silver | Generated surface | A learner-facing card row exists and can be inspected. | Reviewed content, source truth, mechanical readiness, release quality, or learner usefulness. |
-| Gold | Regression protection | Reviewed generated output is protected from silent drift against tracked expectations. | Source truth, structural certification, Platinum, Obsidian proof, or release approval. |
-| Sapphire | Structural certification | The live generated card passed the governed structural contract for its product: required field identity, evidence lane separation, required internal check records, media identity fields, required support artifacts such as NLP where the workflow calls for them, explicit limitations, and a keep/fix/defer/remove decision. | Platinum, source-truth certification, Obsidian proof, native/fluent audit, source-governance confidence, release readiness, or permission to shrink another lane's denominator. |
-| Platinum | Card-surface inspection | The actual generated card was reviewed beyond structure for learner-facing reading, meaning, example, notes/support surface, media identity, level/product fit, evidence boundaries, limitations, and final keep/fix/defer/remove judgment under the current Platinum schema. | Obsidian proof, release readiness, manual APKG/mobile/accessibility/listening QA, or later audits not recorded in the schema. |
-| Obsidian | Proof-ledger certification | Explicit non-mechanical current-version rereview proof exists in the canonical proof path and binds to the exact live card identity. | Release readiness, later fluent/native audit, or manual QA unless separately recorded. |
+| Tier | Lane | Requires | Proves | Does not prove |
+| --- | --- | --- | --- | --- |
+| Silver | Generated surface | A generated learner-facing row for the scoped product. | A learner-facing card row exists and can be inspected. | Reviewed content, source truth, mechanical readiness, release quality, or learner usefulness. |
+| Gold | Regression protection | Matching Silver generated row. | Reviewed generated output is protected from silent drift against tracked expectations. | Source truth, structural certification, Platinum, Obsidian proof, or release approval. |
+| Sapphire | Structural certification | Matching passing Gold regression. | The live generated card passed the governed structural contract for its product: required field identity, evidence lane separation, required internal check records, media identity fields, required support artifacts such as NLP where the workflow calls for them, explicit limitations, and a keep/fix/defer/remove decision. | Platinum, source-truth certification, Obsidian proof, native/fluent audit, source-governance confidence, release readiness, or permission to shrink another lane's denominator. |
+| Platinum | Card-surface inspection | Matching passing Gold regression plus active current-standard Sapphire. | The actual generated card was reviewed beyond structure for learner-facing reading, meaning, example, notes/support surface, media identity, level/product fit, evidence boundaries, limitations, and final keep/fix/defer/remove judgment under the current Platinum schema. | Obsidian proof, release readiness, manual APKG/mobile/accessibility/listening QA, or later audits not recorded in the schema. |
+| Obsidian | Proof-ledger certification | Valid current-standard Platinum plus exact non-mechanical proof. | Explicit non-mechanical current-version rereview proof exists in the canonical proof path and binds to the exact live card identity. | Release readiness, later fluent/native audit, or manual QA unless separately recorded. |
 
 ## Deck Ready Boundary
 
@@ -71,6 +71,7 @@ For new core-kanji and word structural documentation, prompts, and reviews, use 
 
 - Do not mass rename manifests, commands, statuses, or historical review entries without a dedicated migration plan, tests, and count-preserving proof.
 - Do not demote existing current-standard compatibility coverage merely because the tier language was clarified.
+- Do not promote any row into Sapphire, Platinum, or Obsidian when the required prior lane is missing or failing.
 - Do not promote structure-only Sapphire coverage to Platinum unless the card passes the Platinum gate.
 - Future additional schema work should add Sapphire-native command aliases before removing any compatibility `platinum` names.
 - Platinum schema work must inherit Sapphire and add card-surface inspection evidence instead of reusing structure-only wording.

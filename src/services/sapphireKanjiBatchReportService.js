@@ -6,6 +6,9 @@ const {
 const {
     mapSapphireEntriesToPlatinumCompatibility,
 } = require("./sapphireKanjiReviewService");
+const {
+    buildKanjiGoldPreconditionFailuresByKey,
+} = require("./reviewLanePreconditionService");
 
 const SAPPHIRE_BATCH_RUBRIC_VERSION = "kanji-sapphire-structural-review-rubric-v1";
 
@@ -91,6 +94,39 @@ function mapCard(card = {}) {
     };
 }
 
+function addGoldPreconditionToCard(card = {}, failures = []) {
+    if (!Array.isArray(failures) || failures.length === 0) {
+        return card;
+    }
+
+    const blockedItem = {
+        id: "prior_gold_precondition",
+        label: "Prior Gold regression",
+        status: "blocked",
+        evidence: failures,
+        reviewerAction: "Run and pass the Gold regression lane for this generated card before Sapphire review.",
+        limitation: "",
+    };
+    const reviewRubric = card.reviewRubric
+        ? {
+            ...card.reviewRubric,
+            result: "blocked",
+            itemStatusCounts: {
+                ...(card.reviewRubric.itemStatusCounts || {}),
+                blocked: ((card.reviewRubric.itemStatusCounts || {}).blocked || 0) + 1,
+            },
+            items: [blockedItem, ...(card.reviewRubric.items || [])],
+        }
+        : card.reviewRubric;
+
+    return {
+        ...card,
+        hardChecksPassed: false,
+        riskFlags: [...(card.riskFlags || []), ...failures],
+        reviewRubric,
+    };
+}
+
 function buildSelectedRubricSummary(cards = []) {
     const resultCounts = {};
     const itemStatusCounts = {};
@@ -118,6 +154,7 @@ function buildSapphireKanjiBatchReport({
     kanji = [],
     limit = 12,
     curatedStudyData = {},
+    goldenExpectations,
     queue = KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD,
 } = {}) {
     const report = buildPlatinumKanjiBatchReport({
@@ -128,8 +165,17 @@ function buildSapphireKanjiBatchReport({
         limit,
         curatedStudyData,
         queue,
+        skipSapphirePreconditionForSapphireCompatibilityReport: true,
     });
-    const cards = (report.cards || []).map(mapCard);
+    const goldPreconditionFailures = buildKanjiGoldPreconditionFailuresByKey({
+        rows,
+        entries: report.cards || [],
+        goldenExpectations,
+        laneName: "Sapphire batch",
+    });
+    const cards = (report.cards || [])
+        .map((card) => addGoldPreconditionToCard(card, goldPreconditionFailures.get(card.kanji)))
+        .map(mapCard);
 
     return {
         level: report.level,

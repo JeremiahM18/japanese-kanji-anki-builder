@@ -363,6 +363,7 @@ test("forward review system contract locks lane authority and compatibility boun
         "## Current Implementation Status",
         "## Legacy Compatibility Lock",
         "## Consumer Rules",
+        "## Prior-Lane Enforcement",
         "## Forbidden Claims",
         "## Migration Policy",
         "## Verification",
@@ -375,6 +376,9 @@ test("forward review system contract locks lane authority and compatibility boun
     assert.match(contract, /Candidate rows.*pre-trust queues[\s\S]*not certification gates/);
     assert.match(contract, /\| Sapphire \| Structural certification\.[\s\S]*Empty or incomplete native Sapphire manifests fail closed\. Sapphire is not Platinum and is not Obsidian proof\./);
     assert.match(contract, /\| Platinum \| Card-surface inspection\.[\s\S]*No Platinum claim can come from Sapphire or NLP support alone\./);
+    assert.match(contract, /Sapphire requires a passing prior Gold regression for the exact card identity/);
+    assert.match(contract, /Platinum requires passing prior Gold and active current-standard Sapphire coverage for the exact card identity/);
+    assert.match(contract, /Unscoped forward queues must not advance rows that are missing their required prior-lane coverage/);
     assert.match(contract, /Platinum is implemented through the existing Platinum manifests and command families/);
     assert.match(contract, /Do not describe these Platinum commands as legacy-only or unimplemented/);
     assert.match(contract, /Do not add new structure-only Sapphire work to Platinum naming/);
@@ -392,6 +396,10 @@ test("forward review system contract locks lane authority and compatibility boun
 
     assert.match(commandReference, /`npm run deck:platinum:n5` \| Run the N5 kanji Platinum gate/);
     assert.match(commandReference, /`npm run deck:words:platinum:n5` \| Run the N5 word Platinum gate/);
+    assert.match(commandReference, /Forward review gates enforce prior lanes/);
+    assert.match(commandReference, /`npm run deck:platinum:batch -- --level=5 --limit=12` \| Build a read-only kanji Platinum packet for Sapphire-eligible rows/);
+    assert.match(commandReference, /`npm run deck:words:review:n3` \| Run the N3 word Gold regression benchmark/);
+    assert.match(commandReference, /`npm run deck:words:platinum:n3` \| Run the N3 word Platinum gate/);
     assert.match(readme, /\[docs\/review-system-forward-contract\.md\]\(docs\/review-system-forward-contract\.md\)/);
     assert.match(tierGovernance, /\[review-system-forward-contract\.md\]\(review-system-forward-contract\.md\)/);
     assert.match(platinumContract, /\[review-system-forward-contract\.md\]\(review-system-forward-contract\.md\)/);

@@ -4,6 +4,8 @@ This reference lists the npm commands exposed by the repository and the role eac
 
 For lane authority, use [review-system-forward-contract.md](review-system-forward-contract.md). For workflow ordering, use [workflows.md](workflows.md). For the exact Obsidian pass checklist, use [obsidian-batch-workflow.md](obsidian-batch-workflow.md). For release gate boundaries, use [release-process.md](release-process.md) and [verification.md](verification.md).
 
+Forward review gates enforce prior lanes. Gold requires the generated card surface. Sapphire requires passing Gold for the same card identity. Platinum requires passing Gold plus active current-standard Sapphire for the same card identity. Obsidian requires valid current-standard Platinum plus explicit proof.
+
 | Command | Purpose |
 | --- | --- |
 | `npm test` | Run the full test suite |
@@ -55,7 +57,7 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:preview` | Preview kanji cards |
 | `npm run deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard` | Build a read-only core-kanji Sapphire review packet for generated rows missing current-standard Sapphire coverage |
 | `npm run deck:sapphire:promote -- --level=1 --input=<reviewed-json>` | Validate and merge reviewed Sapphire candidate entries; writes only with `--write`, does not create Platinum or Obsidian proof |
-| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji Platinum packet; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
+| `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji Platinum packet for Sapphire-eligible rows; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
 | `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
@@ -88,7 +90,7 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:sapphire:n4` | Run the native N4 core-kanji Sapphire gate; current coverage is `212/212` |
 | `npm run deck:sapphire:n3` | Run the native N3 core-kanji Sapphire gate; current coverage is `341/341` |
 | `npm run deck:sapphire:n2` | Run the native N2 core-kanji Sapphire gate; current coverage is `349/349` |
-| `npm run deck:sapphire:n1` | Run the native N1 core-kanji Sapphire gate; current coverage is `320/1230`, so the full-level gate fails closed on `910` missing Sapphire entries |
+| `npm run deck:sapphire:n1` | Run the native N1 core-kanji Sapphire gate; current coverage is `328/1230`, so the full-level gate fails closed on `902` missing Sapphire entries |
 | `npm run deck:platinum:n5` | Run the N5 kanji Platinum gate; use `deck:sapphire:n5` for structure-only Sapphire |
 | `npm run deck:platinum:n4` | Run the N4 kanji Platinum gate; use `deck:sapphire:n4` for structure-only Sapphire |
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; use `deck:sapphire:n3` for structure-only Sapphire |
@@ -97,9 +99,12 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:sapphire:batch -- --level=5 --limit=8 --queue=missing-current-standard` | Build a read-only word Sapphire structural review packet for generated rows missing current-standard Sapphire coverage |
-| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word Platinum packet; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
+| `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word Platinum packet for Sapphire-eligible rows; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
+| `npm run deck:words:review:n3` | Run the N3 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
+| `npm run deck:words:review:n2` | Run the N2 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
+| `npm run deck:words:review:n1` | Run the N1 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
 | `npm run deck:words:sapphire:n5` | Run the native N5 word Sapphire gate; current coverage is `287/287` active generated rows, with deferred/removed tracked separately |
 | `npm run deck:words:sapphire:n4` | Run the native N4 word Sapphire gate; current coverage is `700/700` |
 | `npm run deck:words:sapphire:n3` | Run the native N3 word Sapphire gate; currently fails closed because the manifest is empty and `269` generated rows are missing Sapphire |
@@ -107,6 +112,9 @@ For lane authority, use [review-system-forward-contract.md](review-system-forwar
 | `npm run deck:words:sapphire:n1` | Run the native N1 word Sapphire gate; currently fails closed because the manifest is empty and `26` generated rows are missing Sapphire |
 | `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate; use `deck:words:sapphire:n5` for structure-only Sapphire |
 | `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate; use `deck:words:sapphire:n4` for structure-only Sapphire |
+| `npm run deck:words:platinum:n3` | Run the N3 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
+| `npm run deck:words:platinum:n2` | Run the N2 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
+| `npm run deck:words:platinum:n1` | Run the N1 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
 | `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider, while native `deck:words:sapphire:*` owns word Sapphire coverage |
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word source-family independence posture; command name remains legacy |

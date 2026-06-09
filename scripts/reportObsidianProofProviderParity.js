@@ -1,3 +1,4 @@
+const fs = require("node:fs");
 const path = require("node:path");
 
 const {
@@ -34,6 +35,12 @@ const {
 const {
     loadWordPitchAccentData,
 } = require("../src/datasets/wordPitchAccentData");
+const {
+    parseSapphireKanjiReviewSet,
+} = require("../src/datasets/sapphireKanjiReviewSet");
+const {
+    parseSapphireWordReviewSet,
+} = require("../src/datasets/sapphireWordReviewSet");
 const {
     loadPlatinumCardSourceManifest,
 } = require("../src/datasets/platinumCardSourceManifest");
@@ -194,6 +201,33 @@ function normalizeRowSource(rowSource = ROW_SOURCES.TRACKED_REVIEW_SET) {
         return normalized;
     }
     throw new Error(`Unsupported Obsidian proof provider parity row source: ${rowSource}.`);
+}
+
+function loadJsonIfExists(filePath, fallback = []) {
+    try {
+        return JSON.parse(fs.readFileSync(filePath, "utf8"));
+    } catch (error) {
+        if (error && error.code === "ENOENT") {
+            return fallback;
+        }
+        throw error;
+    }
+}
+
+function loadSapphireKanjiEntries({ cwd = process.cwd(), level } = {}) {
+    const relativePath = `templates/sapphire_n${level}_review_set.json`;
+    return parseSapphireKanjiReviewSet(
+        loadJsonIfExists(path.join(cwd, relativePath), []),
+        relativePath
+    );
+}
+
+function loadSapphireWordEntries({ cwd = process.cwd(), level } = {}) {
+    const relativePath = `templates/sapphire_n${level}_word_review_set.json`;
+    return parseSapphireWordReviewSet(
+        loadJsonIfExists(path.join(cwd, relativePath), []),
+        relativePath
+    );
 }
 
 function firstString(values = []) {
@@ -1102,6 +1136,7 @@ function buildKanjiFieldSourceContractProviderParityForLevel({
 function buildKanjiBatchReportProviderParityForLevel({
     rows = [],
     rawEntries = [],
+    sapphireEntries = [],
     cwd = process.cwd(),
     ledgerDir,
     level = 3,
@@ -1133,6 +1168,7 @@ function buildKanjiBatchReportProviderParityForLevel({
     const inlineReport = buildPlatinumKanjiBatchReport({
         rows,
         entries: inlineProvider.entries,
+        sapphireEntries,
         level,
         kanji,
         limit,
@@ -1142,6 +1178,7 @@ function buildKanjiBatchReportProviderParityForLevel({
     const ledgerReport = buildPlatinumKanjiBatchReport({
         rows,
         entries: ledgerProvider.entries,
+        sapphireEntries,
         level,
         kanji,
         limit,
@@ -1328,6 +1365,7 @@ function buildWordRereviewStatusProviderParityForLevel({
 function buildWordBatchReportProviderParityForLevel({
     rows = [],
     rawEntries = [],
+    sapphireEntries = [],
     cwd = process.cwd(),
     ledgerDir,
     level = 5,
@@ -1358,6 +1396,7 @@ function buildWordBatchReportProviderParityForLevel({
     });
     const reportOptions = {
         rows,
+        sapphireEntries,
         wordPitchAccentData,
         level,
         words,
@@ -1545,6 +1584,7 @@ async function buildObsidianProofProviderParityReport({
             scopes.push(buildWordBatchReportProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
+                sapphireEntries: loadSapphireWordEntries({ cwd, level }),
                 cwd,
                 level,
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
@@ -1600,6 +1640,7 @@ async function buildObsidianProofProviderParityReport({
             scopes.push(buildKanjiBatchReportProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
+                sapphireEntries: loadSapphireKanjiEntries({ cwd, level }),
                 cwd,
                 level,
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,

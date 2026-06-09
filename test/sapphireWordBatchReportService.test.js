@@ -70,6 +70,31 @@ const rows = [
     },
 ];
 
+const goldenExpectations = [
+    {
+        word: "今日",
+        readingIncludes: ["きょう"],
+        meaningIncludes: ["today"],
+        jlptLevelIncludes: ["JLPT N5"],
+        coverageRoleIncludes: ["JLPT core + reading coverage"],
+        focusIncludes: ["今", "日"],
+        coversReadingIncludes: ["今: いま", "日: ひ"],
+        breakdownIncludes: ["今 （いま）", "日 （ひ）"],
+        exampleIncludes: ["今日は図書館へ行きます。"],
+    },
+    {
+        word: "八",
+        readingIncludes: ["はち"],
+        meaningIncludes: ["eight"],
+        jlptLevelIncludes: ["JLPT N5"],
+        coverageRoleIncludes: ["JLPT core + reading coverage"],
+        focusIncludes: ["八"],
+        coversReadingIncludes: ["八: はち"],
+        breakdownIncludes: ["八 （はち）", "eight"],
+        exampleIncludes: ["数字を八から十まで言います。"],
+    },
+];
+
 function buildSapphireEntry(overrides = {}) {
     return {
         word: "今日",
@@ -102,6 +127,7 @@ test("word Sapphire batch report defaults to missing current-standard structure"
         rows,
         entries: [buildSapphireEntry()],
         wordPitchAccentData,
+        goldenExpectations,
         level: 5,
         limit: 12,
     });
@@ -126,6 +152,7 @@ test("word Sapphire scoped report maps current-standard structural status withou
         rows,
         entries: [buildSapphireEntry()],
         wordPitchAccentData,
+        goldenExpectations,
         level: 5,
         words: [{ word: "今日", reading: "きょう" }],
     });

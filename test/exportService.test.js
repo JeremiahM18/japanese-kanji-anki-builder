@@ -827,6 +827,57 @@ test("buildInferenceForKanji filters curated blocked readings and duplicate norm
     assert.equal(inference.onReading, "シ");
 });
 
+test("buildInferenceForKanji keeps tracked curated additional readings in primary and learner-facing labels", async () => {
+    const exportService = createExportService({
+        curatedStudyData: {
+            弘: {
+                englishMeaning: "expand / spread",
+                displayWord: { written: "弘める", pron: "ひろめる" },
+                additionalKunReadings: ["ひろ.める"],
+                notes: "弘める （ひろめる） - to spread widely",
+            },
+        },
+        inferenceEngine: {
+            hasFullyCuratedKanjiEntry() {
+                return true;
+            },
+            inferKanjiStudyData() {
+                return {
+                    displayWord: { written: "弘める", pron: "ひろめる" },
+                    bestWord: { written: "弘める", pron: "ひろめる" },
+                    meaningJP: "弘める （ひろめる） ／ to spread widely",
+                    notes: "弘める （ひろめる） - to spread widely",
+                    sentenceCandidates: [],
+                };
+            },
+        },
+    });
+
+    const inference = await exportService.buildInferenceForKanji({
+        kanji: "弘",
+        jlptEntry: {
+            jlpt: 1,
+            meanings: ["broad", "vast", "wide"],
+            on_readings: ["コウ", "グ"],
+            kun_readings: ["ひろ.い"],
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                throw new Error("should use local JLPT data");
+            },
+            async getWords() {
+                throw new Error("should skip word fetch");
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+    });
+
+    assert.equal(inference.primaryReading, "ひろめる");
+    assert.equal(inference.kunReading, "ひろ.い、 ひろ.める");
+    assert.equal(inference.onReading, "コウ、 グ");
+});
+
 test("buildInferenceForKanji reuses a single shared manifest lookup when available", async () => {
     let manifestCalls = 0;
     const exportService = createExportService({
@@ -1596,4 +1647,3 @@ test("buildRowForKanji falls back to local data instead of leaking raw timeout e
         error: "Request timed out after 10000 ms: https://kanjiapi.dev/v1/words/%E4%B8%BB",
     }]);
 });
-

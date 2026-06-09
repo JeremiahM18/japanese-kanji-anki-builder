@@ -157,25 +157,51 @@ function extractConstituentKanji(text) {
 
 const normalizeReading = normalizeJapaneseReading;
 
-function collectNormalizedKanjiReadings(kanjiInfo) {
+function mergeReadings(primary = [], additional = []) {
+    const out = [];
+    const seen = new Set();
+    for (const reading of [
+        ...(Array.isArray(primary) ? primary : []),
+        ...(Array.isArray(additional) ? additional : []),
+    ]) {
+        const text = String(reading || "").trim();
+        const key = normalizeReading(text);
+        if (!text || !key || seen.has(key)) {
+            continue;
+        }
+        seen.add(key);
+        out.push(text);
+    }
+    return out;
+}
+
+function collectKanjiOnReadings(kanjiInfo, curatedEntry = null) {
+    return mergeReadings(kanjiInfo?.on_readings, curatedEntry?.additionalOnReadings);
+}
+
+function collectKanjiKunReadings(kanjiInfo, curatedEntry = null) {
+    return mergeReadings(kanjiInfo?.kun_readings, curatedEntry?.additionalKunReadings);
+}
+
+function collectNormalizedKanjiReadings(kanjiInfo, curatedEntry = null) {
     return [
-        ...(Array.isArray(kanjiInfo?.kun_readings) ? kanjiInfo.kun_readings : []),
-        ...(Array.isArray(kanjiInfo?.on_readings) ? kanjiInfo.on_readings : []),
+        ...collectKanjiKunReadings(kanjiInfo, curatedEntry),
+        ...collectKanjiOnReadings(kanjiInfo, curatedEntry),
     ].map(normalizeReading).filter(Boolean);
 }
 
-function isKnownKanjiReading(reading, kanjiInfo) {
+function isKnownKanjiReading(reading, kanjiInfo, curatedEntry = null) {
     const normalizedReading = normalizeReading(reading);
     if (!normalizedReading) {
         return false;
     }
 
-    return collectNormalizedKanjiReadings(kanjiInfo).includes(normalizedReading);
+    return collectNormalizedKanjiReadings(kanjiInfo, curatedEntry).includes(normalizedReading);
 }
 
-function selectReadingFromKanjiInfo({ kanjiInfo, contextReading = "" }) {
+function selectReadingFromKanjiInfo({ kanjiInfo, curatedEntry = null, contextReading = "" }) {
     const normalizedContext = normalizeReading(contextReading);
-    const readings = collectNormalizedKanjiReadings(kanjiInfo);
+    const readings = collectNormalizedKanjiReadings(kanjiInfo, curatedEntry);
 
     if (normalizedContext) {
         const contextual = readings
@@ -195,7 +221,7 @@ function selectKanjiPrimaryReading({ kanji, curatedEntry = null, inferred = null
     if (curatedPron
         && hasOnlyTargetKanji(curatedWord, kanji)
         && String(curatedWord || "").trim() !== kanji
-        && isKnownKanjiReading(curatedPron, kanjiInfo)) {
+        && isKnownKanjiReading(curatedPron, kanjiInfo, curatedEntry)) {
         return String(curatedPron).trim();
     }
 
@@ -217,6 +243,7 @@ function selectKanjiPrimaryReading({ kanji, curatedEntry = null, inferred = null
 
     return selectReadingFromKanjiInfo({
         kanjiInfo,
+        curatedEntry,
         contextReading: curatedPron || inferredPron || inferred?.bestWord?.pron || "",
     });
 }
@@ -658,8 +685,8 @@ function buildInferredRow({ kanji, inferred, kanjiInfo, curatedEntry = null, kra
     const displayWord = inferred.displayWordText || selectDisplayWord({ kanji, displayWord: inferred.displayWord, bestWord: inferred.bestWord });
     const primaryReading = inferred.primaryReading || selectPrimaryReading(inferred);
     const studyWordKanji = formatStudyWordKanjiLabels(displayWord, kanjiLevelLookup, { currentLevel });
-    const onReading = labelOnReading(filterBlockedReadings(kanjiInfo?.on_readings, curatedEntry));
-    const kunReading = labelKunReading(filterBlockedReadings(kanjiInfo?.kun_readings, curatedEntry));
+    const onReading = labelOnReading(filterBlockedReadings(collectKanjiOnReadings(kanjiInfo, curatedEntry), curatedEntry));
+    const kunReading = labelKunReading(filterBlockedReadings(collectKanjiKunReadings(kanjiInfo, curatedEntry), curatedEntry));
     const components = kradMap.get(kanji) || [];
     const radical = pickMainComponent(components);
     const exampleSentence = formatExampleSentence(inferred.sentenceCandidates[0]);
@@ -853,8 +880,8 @@ function createExportService({
             audioReading: inferred.primaryReading,
         });
 
-        const onReading = labelOnReading(filterBlockedReadings(kanjiInfo?.on_readings, curatedEntry));
-        const kunReading = labelKunReading(filterBlockedReadings(kanjiInfo?.kun_readings, curatedEntry));
+        const onReading = labelOnReading(filterBlockedReadings(collectKanjiOnReadings(kanjiInfo, curatedEntry), curatedEntry));
+        const kunReading = labelKunReading(filterBlockedReadings(collectKanjiKunReadings(kanjiInfo, curatedEntry), curatedEntry));
         const displayWordText = inferred.displayWordText;
         const currentLevel = Number(jlptEntry?.jlpt);
 
@@ -948,4 +975,3 @@ module.exports = {
     formatRubyText,
     formatStudyWordKanjiLabels,
 };
-

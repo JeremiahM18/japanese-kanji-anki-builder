@@ -2,6 +2,7 @@ const { loadConfig } = require("../src/config");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
+const { readPriorLaneInputs } = require("./reportPlatinumKanjiRereviewStatus");
 const {
     buildPlatinumKanjiRereviewStatusReport,
 } = require("../src/services/platinumKanjiRereviewStatusService");
@@ -66,9 +67,12 @@ async function main({
     for (const level of options.levels) {
         const entries = readReviewSet(level, { proofProvider: options.proofProvider });
         const rows = await buildKanjiRowsForLevel({ level, config });
+        const priorLaneInputs = readPriorLaneInputs(level, { rows });
         levelReports.push(buildPlatinumKanjiRereviewStatusReport({
             rows,
             entries,
+            ...priorLaneInputs,
+            requireLanePreconditions: true,
             level,
         }));
     }

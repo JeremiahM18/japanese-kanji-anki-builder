@@ -62,7 +62,7 @@ function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
             coverageRole: normalizeList(entry.coverageRoleIncludes).join(" / "),
             focusKanji: normalizeList(entry.focusIncludes).join("、"),
             coversReading: normalizeList(entry.coversReadingIncludes).join(" ／ "),
-            kanjiBreakdown: normalizeList(entry.breakdownIncludes).join(" / "),
+            kanjiBreakdown: normalizeList(entry.breakdownIncludes).join(" ／ "),
             exampleSentence: normalizeList(entry.exampleIncludes).join(" / "),
             notes: normalizeList(entry.notesIncludes).join(" / "),
         };
@@ -182,6 +182,35 @@ test("tracked populated word Sapphire manifests bind evidence to protected field
 
         assert.equal(report.passed, true, `${fileName}\n${formatSapphireWordReviewReport(report)}`);
     }
+});
+
+test("Sapphire word evaluator requires prior Gold when precondition enforcement is enabled", () => {
+    const wordPitchAccentData = loadJson(path.join("templates", "word_pitch_accent_data.json"));
+    const candidate = JSON.parse(JSON.stringify(
+        loadJson(path.join("templates", "sapphire_n5_word_review_set.json"))
+            .find((entry) => ACTIVE_WORD_SAPPHIRE_STATUSES.includes(entry.status))
+    ));
+    const rows = buildSyntheticWordRows([candidate], wordPitchAccentData);
+    const goldenExpectations = loadJson(path.join("templates", "golden_n5_word_review_set.json"));
+
+    const passingReport = evaluateSapphireWordReviewSet({
+        rows,
+        entries: [candidate],
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+    });
+    const missingGoldReport = evaluateSapphireWordReviewSet({
+        rows,
+        entries: [candidate],
+        goldenExpectations: [],
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(passingReport.passed, true, formatSapphireWordReviewReport(passingReport));
+    assert.equal(missingGoldReport.passed, false);
+    assert.match(missingGoldReport.results[0].failures.join("\n"), /Sapphire requires a prior Gold expectation/);
 });
 
 test("Sapphire word schema rejects Platinum-shaped candidates and inline Obsidian proof", () => {

@@ -245,6 +245,10 @@ function summarizeCards(cards = []) {
 function buildPlatinumWordRereviewStatusReport({
     rows = [],
     entries = [],
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults = [],
+    requireLanePreconditions = false,
     level = null,
     wordPitchAccentData = {},
     kanjiLevelData = null,
@@ -254,6 +258,11 @@ function buildPlatinumWordRereviewStatusReport({
     const reviewReport = evaluatePlatinumWordReviewSet({
         rows: generatedRows,
         entries: reviewEntries,
+        goldenExpectations,
+        requireGoldPrecondition: requireLanePreconditions,
+        sapphireEntries,
+        sapphireResults,
+        requireSapphirePrecondition: requireLanePreconditions,
         wordPitchAccentData,
         kanjiLevelData,
         requireAllRows: true,

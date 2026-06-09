@@ -15,12 +15,16 @@ const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
 const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
+const { parseSapphireWordReviewSet } = require("../src/datasets/sapphireWordReviewSet");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { createWordExportService } = require("../src/services/wordExportService");
 const {
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
+const {
+    evaluateSapphireWordReviewSet,
+} = require("../src/services/sapphireWordReviewService");
 const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
     loadReviewSetWithObsidianProof,
@@ -88,6 +92,10 @@ function parseWordTsvForPlatinum(tsv) {
     }
 
     return rows;
+}
+
+function readJson(filePath) {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
 function buildWordExportOptions({
@@ -158,18 +166,45 @@ async function main() {
         throw new Error("Missing JLPT JSON file at " + config.jlptJsonPath);
     }
 
+    const sapphireReviewSetPath = path.join(process.cwd(), "templates", `sapphire_n${level}_word_review_set.json`);
+    const goldenReviewSetPath = path.join(process.cwd(), "templates", `golden_n${level}_word_review_set.json`);
+    if (!fs.existsSync(sapphireReviewSetPath)) {
+        throw new Error(`Missing prior Sapphire word review set at ${sapphireReviewSetPath}`);
+    }
+    if (!fs.existsSync(goldenReviewSetPath)) {
+        throw new Error(`Missing prior Gold word review set at ${goldenReviewSetPath}`);
+    }
+
     const reviewSet = loadReviewSetWithObsidianProof({
         deckKind: "word",
         level,
         proofProvider: options.proofProvider,
     });
     const entries = reviewSet.entries;
+    const sapphireEntries = parseSapphireWordReviewSet(
+        readJson(sapphireReviewSetPath),
+        `templates/sapphire_n${level}_word_review_set.json`
+    );
+    const goldenExpectations = readJson(goldenReviewSetPath);
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const rows = await buildWordRowsForLevel({ level, config });
+    const sapphireReport = evaluateSapphireWordReviewSet({
+        rows,
+        entries: sapphireEntries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+        allowEmpty: options.allowEmpty,
+    });
     const report = evaluatePlatinumWordReviewSet({
         rows,
         entries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        sapphireEntries,
+        sapphireResults: sapphireReport.results,
+        requireSapphirePrecondition: true,
         wordPitchAccentData,
         kanjiLevelData,
         requireCurrentReviewStandard: options.requireCurrentReviewStandard,

@@ -82,6 +82,15 @@ function readReviewSet(level, { cwd = process.cwd() } = {}) {
     );
 }
 
+function readGoldenReviewSet(level, { cwd = process.cwd() } = {}) {
+    const reviewSetPath = path.join(cwd, "templates", `golden_n${level}_word_review_set.json`);
+    if (!fs.existsSync(reviewSetPath)) {
+        throw new Error(`Missing prior Gold word review set at ${reviewSetPath}`);
+    }
+
+    return JSON.parse(fs.readFileSync(reviewSetPath, "utf8"));
+}
+
 async function main({ commandName = "deck:words:sapphire:batch" } = {}) {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs(commandName, options.unknownArgs);
@@ -92,6 +101,7 @@ async function main({ commandName = "deck:words:sapphire:batch" } = {}) {
 
     const config = loadConfig();
     const entries = readReviewSet(options.level);
+    const goldenExpectations = readGoldenReviewSet(options.level);
     const rows = await buildWordRowsForLevel({ level: options.level, config });
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const report = buildSapphireWordBatchReport({
@@ -101,6 +111,7 @@ async function main({ commandName = "deck:words:sapphire:batch" } = {}) {
         level: options.level,
         words: options.words,
         limit: options.limit,
+        goldenExpectations,
         queue: options.queue,
     });
 
@@ -122,6 +133,7 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
+    readGoldenReviewSet,
     parseWordIdentities,
     parseWordIdentity,
     readReviewSet,

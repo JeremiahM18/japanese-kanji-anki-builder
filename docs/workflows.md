@@ -64,6 +64,9 @@ npm run deck:review:coverage -- --level=1
 npm run deck:sapphire:n5
 npm run deck:words:review:n5
 npm run deck:words:review:n4
+npm run deck:words:review:n3
+npm run deck:words:review:n2
+npm run deck:words:review:n1
 npm run deck:words:sapphire:n5
 ```
 
@@ -71,7 +74,7 @@ Lane names: candidate means proposed pre-trust work, not a certification lane; S
 
 `deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:sapphire:batch` is the read-only word Sapphire pre-review report. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps.
 
-The `npm run deck:sapphire:n5` and `npm run deck:words:sapphire:n5` commands are full-level structural gates. They fail unless every generated N5 card has an active current-standard structural entry. Platinum is a separate lane after Sapphire.
+The `npm run deck:sapphire:n5` and `npm run deck:words:sapphire:n5` commands are full-level structural gates. They fail unless every generated N5 card has an active current-standard structural entry and matching passing Gold regression input. Platinum is a separate lane after Sapphire and requires both prior Gold and current-standard Sapphire for the same card identity.
 
 ## Run Obsidian batches
 

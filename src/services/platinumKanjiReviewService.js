@@ -5,6 +5,11 @@ const {
     validateJapaneseSourceEvidence,
 } = require("./platinumEvidenceService");
 const {
+    buildCurrentStandardPreconditionFailuresByKey,
+    buildKanjiGoldPreconditionFailuresByKey,
+    mergeFailuresIntoResult,
+} = require("./reviewLanePreconditionService");
+const {
     getDefaultJlptKanjiSourceEvidence,
     resolveKanjiSourceOriginIdsForEntry,
 } = require("./platinumKanjiSourceOriginService");
@@ -20,6 +25,8 @@ const ALLOWED_PLATINUM_STATUSES = Object.freeze([
 ]);
 
 const CURRENT_KANJI_PLATINUM_REVIEW_STANDARD = "kanji-platinum-v3-evidence-lanes";
+const PRIOR_KANJI_SAPPHIRE_REVIEW_STANDARD = "kanji-sapphire-v1-evidence-lanes";
+const ACTIVE_SAPPHIRE_PRECONDITION_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 
 const CURRENT_STANDARD_REVALIDATION_SUMMARY_CHECKS = Object.freeze([
     Object.freeze({ label: "evidence lanes", requiredPatterns: [/evidence/i, /lanes?/i] }),
@@ -788,6 +795,11 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 function evaluatePlatinumKanjiReviewSet({
     rows = [],
     entries = [],
+    goldenExpectations,
+    requireGoldPrecondition = false,
+    sapphireEntries,
+    sapphireResults = [],
+    requireSapphirePrecondition = false,
     kanjiSourceEvidence = getDefaultJlptKanjiSourceEvidence(),
     requireCurrentReviewStandard = false,
     requireAllRows = false,
@@ -802,23 +814,50 @@ function evaluatePlatinumKanjiReviewSet({
     const nonShippingEntries = reviewEntries.filter((entry) => NON_SHIPPING_STATUSES.includes(normalizeText(entry.status)));
     const needsRevalidationEntries = reviewEntries.filter((entry) => REVALIDATION_STATUSES.includes(normalizeText(entry.status)));
     const needsReviewEntries = reviewEntries.filter((entry) => normalizeText(entry.status) === "needs_review");
+    const goldPreconditionFailures = requireGoldPrecondition
+        ? buildKanjiGoldPreconditionFailuresByKey({
+            rows: generatedRows,
+            entries: activeEntries,
+            goldenExpectations,
+            laneName: "Platinum",
+        })
+        : new Map();
+    const sapphirePreconditionFailures = requireSapphirePrecondition
+        ? buildCurrentStandardPreconditionFailuresByKey({
+            entries: activeEntries,
+            priorEntries: sapphireEntries,
+            priorResults: sapphireResults,
+            laneName: "Platinum",
+            priorLaneName: "Sapphire",
+            getEntryKey: (entry) => entry.kanji,
+            getResultKey: (result) => result.kanji,
+            isCurrentStandardPriorEntry: (entry) => (
+                ACTIVE_SAPPHIRE_PRECONDITION_STATUSES.includes(normalizeText(entry.status))
+                && entry.reviewStandard === PRIOR_KANJI_SAPPHIRE_REVIEW_STANDARD
+            ),
+        })
+        : new Map();
     const results = reviewEntries.map((entry) => {
+        const preconditionFailures = [
+            ...(goldPreconditionFailures.get(entry.kanji) || []),
+            ...(sapphirePreconditionFailures.get(entry.kanji) || []),
+        ];
         try {
             const sourceOriginIds = resolveKanjiSourceOriginIdsForEntry({
                 evidence: kanjiSourceEvidence,
                 entry,
             });
-            return evaluatePlatinumKanjiEntry({
+            return mergeFailuresIntoResult(evaluatePlatinumKanjiEntry({
                 rows: generatedRows,
                 entry,
                 sourceOriginIds,
-            });
+            }), preconditionFailures);
         } catch (error) {
-            return evaluatePlatinumKanjiEntry({
+            return mergeFailuresIntoResult(evaluatePlatinumKanjiEntry({
                 rows: generatedRows,
                 entry,
                 sourceOriginFailures: [`could not resolve kanji source-claim origin ids: ${error.message}`],
-            });
+            }), preconditionFailures);
         }
     });
     const coverageFailures = [];

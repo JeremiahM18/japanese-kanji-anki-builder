@@ -61,6 +61,15 @@ function readSapphireReviewSet(level, { cwd = process.cwd() } = {}) {
     );
 }
 
+function readGoldenReviewSet(level, { cwd = process.cwd() } = {}) {
+    const reviewSetPath = path.join(cwd, "templates", `golden_n${level}_word_review_set.json`);
+    if (!fs.existsSync(reviewSetPath)) {
+        throw new Error(`Missing prior Gold word review set at ${reviewSetPath}`);
+    }
+
+    return JSON.parse(fs.readFileSync(reviewSetPath, "utf8"));
+}
+
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("deck:words:sapphire:n<level>", options.unknownArgs);
@@ -77,12 +86,15 @@ async function main() {
     }
 
     const entries = readSapphireReviewSet(level);
+    const goldenExpectations = readGoldenReviewSet(level);
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const rows = await buildWordRowsForLevel({ level, config });
     const report = evaluateSapphireWordReviewSet({
         rows,
         entries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
         wordPitchAccentData,
         kanjiLevelData,
         requireCurrentReviewStandard: options.requireCurrentReviewStandard,
@@ -111,5 +123,6 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
+    readGoldenReviewSet,
     readSapphireReviewSet,
 };

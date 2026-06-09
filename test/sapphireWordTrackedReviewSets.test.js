@@ -120,8 +120,8 @@ test("tracked Sapphire word manifests are first-class structural review sets", (
             );
             assert.match(
                 entry.migrationProvenance.migratedFrom || "",
-                /^templates\/platinum_n[1-5]_word_review_set\.json$/,
-                `${label} migration source path must be stable across platforms`
+                /^(templates\/platinum_n[1-5]_word_review_set\.json|native-word-sapphire-review)$/,
+                `${label} provenance source must be stable across platforms`
             );
             assert.equal(entry.platinumReviewAudit, undefined, `${label} must not include platinumReviewAudit`);
             assert.equal(entry.rereviewProvenance, undefined, `${label} must not carry inline Obsidian proof`);
@@ -139,7 +139,7 @@ test("tracked Sapphire word manifests are first-class structural review sets", (
     }
 });
 
-test("word Sapphire migration preserves Platinum inputs without shrinking denominators", () => {
+test("word Sapphire migration preserves completed Platinum inputs without shrinking denominators", () => {
     for (const level of [4, 5]) {
         const sapphireEntries = loadJson(path.join("templates", `sapphire_n${level}_word_review_set.json`));
         const platinumEntries = loadJson(path.join("templates", `platinum_n${level}_word_review_set.json`));
@@ -150,16 +150,53 @@ test("word Sapphire migration preserves Platinum inputs without shrinking denomi
         assert.equal(sapphireActiveCount, platinumActiveCount, `N${level} active structural coverage must be preserved`);
     }
 
-    for (const level of [1, 2, 3]) {
+    for (const level of [1, 2]) {
         const sapphireEntries = loadJson(path.join("templates", `sapphire_n${level}_word_review_set.json`));
         assert.deepEqual(sapphireEntries, [], `N${level} word Sapphire must fail closed until actual review exists`);
+    }
+});
+
+test("native word Sapphire can lead Platinum without manufacturing Platinum coverage", () => {
+    const sapphireEntries = loadJson(path.join("templates", "sapphire_n3_word_review_set.json"));
+    const platinumEntries = loadJson(path.join("templates", "platinum_n3_word_review_set.json"));
+    const activeSapphireEntries = activeEntries(sapphireEntries);
+    const activePlatinumEntries = platinumEntries.filter((entry) =>
+        ["platinum", "fixed_then_platinum"].includes(entry.status)
+    );
+    const sapphireKeys = activeSapphireEntries.map((entry) =>
+        buildWordStudyEntryKey({
+            written: entry.word,
+            reading: normalizeList(entry.readingIncludes)[0],
+        })
+    );
+    const platinumKeys = activePlatinumEntries.map((entry) =>
+        buildWordStudyEntryKey({
+            written: entry.word,
+            reading: normalizeList(entry.readingIncludes)[0],
+        })
+    );
+
+    assert.equal(activeSapphireEntries.length, 8);
+    assert.equal(activePlatinumEntries.length, 8);
+    assert.deepEqual(platinumKeys, sapphireKeys);
+
+    for (const entry of activePlatinumEntries) {
+        assert.equal(entry.reviewStandard, "word-platinum-v3-evidence-lanes");
+        assert.equal(entry.migrationProvenance, undefined);
+        assert.equal(entry.sapphireReviewAudit, undefined);
+        assert.equal(entry.rereviewProvenance, undefined);
+        assert.doesNotMatch(
+            JSON.stringify(entry),
+            /Sapphire|word-sapphire-v1-evidence-lanes|Obsidian|obsidian/,
+            `${entry.word} Platinum entry must stay lane-native and proof-free`
+        );
     }
 });
 
 test("tracked populated word Sapphire manifests bind evidence to protected fields and pitch sources", () => {
     const wordPitchAccentData = loadJson(path.join("templates", "word_pitch_accent_data.json"));
 
-    for (const level of [4, 5]) {
+    for (const level of [3, 4, 5]) {
         const fileName = `sapphire_n${level}_word_review_set.json`;
         const entries = loadJson(path.join("templates", fileName));
         const manifestActiveEntries = activeEntries(entries);
@@ -211,6 +248,48 @@ test("Sapphire word evaluator requires prior Gold when precondition enforcement 
     assert.equal(passingReport.passed, true, formatSapphireWordReviewReport(passingReport));
     assert.equal(missingGoldReport.passed, false);
     assert.match(missingGoldReport.results[0].failures.join("\n"), /Sapphire requires a prior Gold expectation/);
+});
+
+test("Sapphire word evaluator protects kanji breakdown snippets alongside reading breakdown", () => {
+    const wordPitchAccentData = loadJson(path.join("templates", "word_pitch_accent_data.json"));
+    const candidate = JSON.parse(JSON.stringify(
+        loadJson(path.join("templates", "sapphire_n5_word_review_set.json"))
+            .find((entry) => ACTIVE_WORD_SAPPHIRE_STATUSES.includes(entry.status))
+    ));
+    const reading = normalizeList(candidate.readingIncludes)[0];
+    const wordKey = buildWordStudyEntryKey({
+        written: candidate.word,
+        reading,
+    });
+    const pitchAccent = buildPitchAccentHtml({
+        pattern: wordPitchAccentData.entries[wordKey]?.pattern || "",
+        reading,
+        sourceLabel: normalizePitchSourceLabel(wordPitchAccentData.entries[wordKey], wordPitchAccentData.sources || {}),
+    });
+    const row = {
+        word: candidate.word,
+        reading,
+        readingBreakdown: `<ruby>${candidate.word}<rt>${reading}</rt></ruby>`,
+        audio: `[sound:word-reading-${candidate.word}-${reading}.wav]`,
+        pitchAccent,
+        meaning: normalizeList(candidate.meaningIncludes).join(" / "),
+        jlptLevel: normalizeList(candidate.jlptLevelIncludes)[0],
+        coverageRole: normalizeList(candidate.coverageRoleIncludes).join(" / "),
+        focusKanji: normalizeList(candidate.focusIncludes).join("、"),
+        coversReading: normalizeList(candidate.coversReadingIncludes).join(" ／ "),
+        kanjiBreakdown: normalizeList(candidate.breakdownIncludes).join(" ／ "),
+        exampleSentence: normalizeList(candidate.exampleIncludes).join(" / "),
+        notes: normalizeList(candidate.notesIncludes).join(" / "),
+    };
+
+    const report = evaluateSapphireWordReviewSet({
+        rows: [row],
+        entries: [candidate],
+        wordPitchAccentData,
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(report.passed, true, formatSapphireWordReviewReport(report));
 });
 
 test("Sapphire word schema rejects Platinum-shaped candidates and inline Obsidian proof", () => {

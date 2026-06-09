@@ -8,6 +8,7 @@ const {
     buildCurrentStandardPreconditionFailuresByKey,
     buildKanjiGoldPreconditionFailuresByKey,
     mergeFailuresIntoResult,
+    validatePlatinumLaneAuthorityBoundary,
 } = require("./reviewLanePreconditionService");
 const {
     getDefaultJlptKanjiSourceEvidence,
@@ -381,6 +382,7 @@ function validateActivePlatinumEntry(entry = {}, {
     if (!normalizeText(entry.primaryReadingRationale)) {
         failures.push("primaryReadingRationale must explain why this individual-kanji reading was chosen");
     }
+    failures.push(...validatePlatinumLaneAuthorityBoundary({ deckKind: "kanji", entry }));
 
     const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
     failures.push(...validateStructuredEvidenceLane(entry.sourceEvidence, {

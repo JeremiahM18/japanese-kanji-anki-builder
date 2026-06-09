@@ -4,6 +4,7 @@ const {
     buildWordEntryIdentity,
     buildWordGoldPreconditionFailuresByKey,
     mergeFailuresIntoResult,
+    validatePlatinumLaneAuthorityBoundary,
 } = require("./reviewLanePreconditionService");
 const {
     extractRenderedPitchAccentPattern,
@@ -395,6 +396,7 @@ function validateActivePlatinumEntry(entry = {}, { requireCurrentReviewStandard 
     if (!normalizeText(entry.selectionRationale)) {
         failures.push("selectionRationale must explain why this word ships in the reviewed level");
     }
+    failures.push(...validatePlatinumLaneAuthorityBoundary({ deckKind: "word", entry }));
 
     const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
     failures.push(...validateStructuredEvidenceLane(entry.sourceEvidence, {

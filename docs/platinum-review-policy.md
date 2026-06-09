@@ -144,7 +144,7 @@ Active platinum word entries must include:
 
 Current-standard active word entries must also include:
 
-- `reviewStandard`: exactly `word-sapphire-v1-evidence-lanes`
+- `reviewStandard`: exactly `word-platinum-v3-evidence-lanes`
 - `revalidatedAt`: `YYYY-MM-DD`
 - `revalidationSummary`: explicit current-standard revalidation summary covering evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations
 - `notesIncludes`: protected snippets from the exported notes/support surface
@@ -176,7 +176,7 @@ Active word `reviewEvidence` must include all evidence types below:
 
 - `example-review`: the example sentence and reading were checked for release quality.
 - `manual-review`: a final product judgment was made.
-- `current-standard-review`: the whole-card surface was revalidated under `word-sapphire-v1-evidence-lanes`.
+- `current-standard-review`: the whole-card surface was revalidated under `word-platinum-v3-evidence-lanes`.
 
 Gold word regression remains required where applicable, but it is not word Sapphire source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in word `sourceEvidence`.
 
@@ -225,7 +225,7 @@ Active core-kanji Sapphire entries must include:
 
 Current-standard active kanji entries must also include:
 
-- `reviewStandard`: exactly `kanji-sapphire-v1-evidence-lanes`
+- `reviewStandard`: exactly `kanji-platinum-v3-evidence-lanes`
 - `revalidatedAt`: `YYYY-MM-DD`
 - `revalidationSummary`: explicit current-standard revalidation summary covering evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations
 - `current-standard-review` review evidence: exact whole-card revalidation evidence covering generated surface, Japanese-source fields, example sentence plus generated reading and translation, natural/useful/learner-friendly/level-appropriate sentence judgment, notes/support surface, exact audio identity, stroke-order media, and either explicit verification limitations or `no active limitations`
@@ -253,7 +253,7 @@ Active kanji `internalChecks` must include all evidence types below:
 Active kanji `reviewEvidence` must include all evidence types below:
 
 - `manual-review`: a final product judgment was made.
-- `current-standard-review`: the whole-card surface was revalidated under `kanji-sapphire-v1-evidence-lanes`.
+- `current-standard-review`: the whole-card surface was revalidated under `kanji-platinum-v3-evidence-lanes`.
 
 Gold kanji regression remains required where applicable, but it is not kanji Sapphire source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in kanji `sourceEvidence`.
 

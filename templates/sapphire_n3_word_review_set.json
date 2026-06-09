@@ -1,1 +1,1052 @@
-[]
+[
+  {
+    "word": "実は",
+    "status": "sapphire",
+    "readingIncludes": [
+      "じつは"
+    ],
+    "meaningIncludes": [
+      "actually / to tell the truth"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "実"
+    ],
+    "coversReadingIncludes": [
+      "実: じつは"
+    ],
+    "breakdownIncludes": [
+      "実 （じつ） ／ reality / truth"
+    ],
+    "exampleIncludes": [
+      "実は、明日引っ越します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common/useful N3 discourse expression with current-level 実 anchor; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 実は|じつは"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 実は|じつは, reading じつは, learner meaning actually / to tell the truth, and product review checked example 実は、明日引っ越します。 for the shipped word-card surface; row meaning support: as a matter of fact; by the way; to tell you the truth; to be honest; frankly; actually; source row: entrySeq=1320830; jmdictPriority=ichi1,news1,nf03; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 実は|じつは: word 実は, reading じつは, meaning actually / to tell the truth, example 実は、明日引っ越します。, audio word-reading-実は-じつは, reading breakdown 実 じつは, kanji breakdown 実 （じつ） ／ reality / truth, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 実は|じつは for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 実は|じつは; generated export includes exact audio word-reading-実は-じつは, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 実は|じつは exact asset fragment word-reading-実は-じつは for the exported word reading じつは."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 実は|じつは source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 実は|じつは JLPT N3; JLPT core + reading coverage; focus 実; covers 実: じつは."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 実は|じつは; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 実は|じつは, reading じつは, sentence 実は、明日引っ越します。, sentence reading じつは、あしたひっこします。, translation Actually, I am moving tomorrow., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 実は|じつは common and learner-friendly for the N3 word deck, with accurate reading じつは, meaning actually / to tell the truth, example 実は、明日引っ越します。, and no active verification limitations. Common/useful N3 discourse expression with current-level 実 anchor; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 実は|じつは checked generated surface, Japanese-source evidence, example sentence 実は、明日引っ越します。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 実は|じつは, reading じつは, and actually/to-tell-the-truth/by-the-way senses with priority/commonness support., reading breakdown 実 じつは and kanji breakdown 実 （じつ） ／ reality / truth, meaning actually / to tell the truth, labels JLPT N3; JLPT core + reading coverage; focus 実; covers 実: じつは, audio word-reading-実は-じつは, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "際",
+    "status": "sapphire",
+    "readingIncludes": [
+      "さい"
+    ],
+    "meaningIncludes": [
+      "occasion / when"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "際"
+    ],
+    "coversReadingIncludes": [
+      "際: さい"
+    ],
+    "breakdownIncludes": [
+      "際 （さい） ／ occasion / when"
+    ],
+    "exampleIncludes": [
+      "出発の際に連絡してください。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common/useful N3 word with current-level 際 anchor; reviewed as a word-deck vocabulary card for occasion/when usage, not as kanji-deck certification for 際.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 際|さい"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 際|さい, reading さい, learner meaning occasion / when, and product review checked example 出発の際に連絡してください。 for the shipped word-card surface; row meaning support: occasion; time; circumstances; (in) case (of); when; source row: entrySeq=1296300; jmdictPriority=ichi1,news1,nf06; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 際|さい: word 際, reading さい, meaning occasion / when, example 出発の際に連絡してください。, audio word-reading-際-さい, reading breakdown 際 さい, kanji breakdown 際 （さい） ／ occasion / when, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 際|さい for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 際|さい; generated export includes exact audio word-reading-際-さい, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 際|さい exact asset fragment word-reading-際-さい for the exported word reading さい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 際|さい source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 際|さい JLPT N3; JLPT core + reading coverage; focus 際; covers 際: さい."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 際|さい; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 際|さい, reading さい, sentence 出発の際に連絡してください。, sentence reading しゅっぱつのさいにれんらくしてください。, translation Please contact me when you depart., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 際|さい common and learner-friendly for the N3 word deck, with accurate reading さい, meaning occasion / when, example 出発の際に連絡してください。, and no active verification limitations. Common/useful N3 word with current-level 際 anchor; reviewed as a word-deck vocabulary card for occasion/when usage, not as kanji-deck certification for 際."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 際|さい checked generated surface, Japanese-source evidence, example sentence 出発の際に連絡してください。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 際|さい, reading さい, and occasion/when/in-case senses with priority/commonness support., reading breakdown 際 さい and kanji breakdown 際 （さい） ／ occasion / when, meaning occasion / when, labels JLPT N3; JLPT core + reading coverage; focus 際; covers 際: さい, audio word-reading-際-さい, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "掛かる",
+    "status": "sapphire",
+    "readingIncludes": [
+      "かかる"
+    ],
+    "meaningIncludes": [
+      "to take time or money / hang"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "掛"
+    ],
+    "coversReadingIncludes": [
+      "掛: かかる"
+    ],
+    "breakdownIncludes": [
+      "掛 （か） ／ hang / put on / take time"
+    ],
+    "exampleIncludes": [
+      "駅まで十分掛かります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common/useful N3 verb with current-level 掛 anchor; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 掛かる|かかる"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 掛かる|かかる, reading かかる, learner meaning to take time or money / hang, and product review checked example 駅まで十分掛かります。 for the shipped word-card surface; row meaning support: to take (a resource, e.g. time or money); to hang; to come into view; to arrive; to come under (a contract, a tax); to start (engines, motors); to attend; to deal with; to handle; to have started to; to be on the verge of; to overlap (e.g. information in a manual); source row: entrySeq=1207590; jmdictPriority=ichi1,news2,nf47; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 掛かる|かかる: word 掛かる, reading かかる, meaning to take time or money / hang, example 駅まで十分掛かります。, audio word-reading-掛かる-かかる, reading breakdown 掛 かかる, kanji breakdown 掛 （か） ／ hang / put on / take time, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 掛かる|かかる for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 掛かる|かかる; generated export includes exact audio word-reading-掛かる-かかる, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 掛かる|かかる exact asset fragment word-reading-掛かる-かかる for the exported word reading かかる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 掛かる|かかる source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 掛かる|かかる JLPT N3; JLPT core + reading coverage; focus 掛; covers 掛: かかる."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 掛かる|かかる; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 掛かる|かかる, reading かかる, sentence 駅まで十分掛かります。, sentence reading えきまでじゅっぷんかかります。, translation It takes ten minutes to get to the station., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 掛かる|かかる common and learner-friendly for the N3 word deck, with accurate reading かかる, meaning to take time or money / hang, example 駅まで十分掛かります。, and no active verification limitations. Common/useful N3 verb with current-level 掛 anchor; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 掛かる|かかる checked generated surface, Japanese-source evidence, example sentence 駅まで十分掛かります。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 掛かる|かかる, reading かかる, and take-time-or-money/hang senses with priority/commonness support., reading breakdown 掛 かかる and kanji breakdown 掛 （か） ／ hang / put on / take time, meaning to take time or money / hang, labels JLPT N3; JLPT core + reading coverage; focus 掛; covers 掛: かかる, audio word-reading-掛かる-かかる, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "覚める",
+    "status": "sapphire",
+    "readingIncludes": [
+      "さめる"
+    ],
+    "meaningIncludes": [
+      "to wake up / to wear off"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "覚"
+    ],
+    "coversReadingIncludes": [
+      "覚: さめる"
+    ],
+    "breakdownIncludes": [
+      "覚 （さ） ／ remember / realize / sense"
+    ],
+    "exampleIncludes": [
+      "早く目が覚めることがあります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common/useful N3 verb with current-level 覚 anchor; reviewed as learner-friendly vocabulary and kept distinct from 覚ます|さます.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 覚める|さめる",
+      "kept distinct from 覚ます|さます"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 覚める|さめる, reading さめる, learner meaning to wake up / to wear off, and product review checked example 早く目が覚めることがあります。 for the shipped word-card surface; row meaning support: to wake; to wake up; to wear off (of drunkenness, anaesthesia, etc.); to regain consciousness; to sober up; to come to one's senses; to be disillusioned; source row: entrySeq=1206070; jmdictPriority=ichi1,news2,nf41; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 覚める|さめる: word 覚める, reading さめる, meaning to wake up / to wear off, example 早く目が覚めることがあります。, audio word-reading-覚める-さめる, reading breakdown 覚 さめる, kanji breakdown 覚 （さ） ／ remember / realize / sense, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 覚める|さめる for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 覚める|さめる; generated export includes exact audio word-reading-覚める-さめる, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 覚める|さめる exact asset fragment word-reading-覚める-さめる for the exported word reading さめる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 覚める|さめる source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 覚める|さめる JLPT N3; JLPT core + reading coverage; focus 覚; covers 覚: さめる."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 覚める|さめる; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 覚める|さめる, reading さめる, sentence 早く目が覚めることがあります。, sentence reading はやくめがさめることがあります。, translation Sometimes I wake up early., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 覚める|さめる common and learner-friendly for the N3 word deck, with accurate reading さめる, meaning to wake up / to wear off, example 早く目が覚めることがあります。, and no active verification limitations. Common/useful N3 verb with current-level 覚 anchor; reviewed as learner-friendly vocabulary and kept distinct from 覚ます|さます."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 覚める|さめる checked generated surface, Japanese-source evidence, example sentence 早く目が覚めることがあります。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 覚める|さめる, reading さめる, and wake-up/wear-off senses with priority/commonness support. The card is kept distinct from 覚ます|さます., reading breakdown 覚 さめる and kanji breakdown 覚 （さ） ／ remember / realize / sense, meaning to wake up / to wear off, labels JLPT N3; JLPT core + reading coverage; focus 覚; covers 覚: さめる, audio word-reading-覚める-さめる, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "香り",
+    "status": "sapphire",
+    "readingIncludes": [
+      "かおり"
+    ],
+    "meaningIncludes": [
+      "aroma / fragrance / scent"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "香"
+    ],
+    "coversReadingIncludes": [
+      "香: かおり"
+    ],
+    "breakdownIncludes": [
+      "香 （かお） ／ fragrance / scent"
+    ],
+    "exampleIncludes": [
+      "花の香りが部屋に広がりました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N3 noun with current-level 香 anchor; learner-facing aroma/fragrance/scent gloss is concise and not a noisy dictionary dump.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 香り|かおり"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 香り|かおり, reading かおり, learner meaning aroma / fragrance / scent, and product review checked example 花の香りが部屋に広がりました。 for the shipped word-card surface; row meaning support: aroma; fragrance; scent; smell; source row: entrySeq=1589820; jmdictPriority=ichi1,news1,nf06; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 香り|かおり: word 香り, reading かおり, meaning aroma / fragrance / scent, example 花の香りが部屋に広がりました。, audio word-reading-香り-かおり, reading breakdown 香 かおり, kanji breakdown 香 （かお） ／ fragrance / scent, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 香り|かおり for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 香り|かおり; generated export includes exact audio word-reading-香り-かおり, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 香り|かおり exact asset fragment word-reading-香り-かおり for the exported word reading かおり."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 香り|かおり source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 香り|かおり JLPT N3; JLPT core + reading coverage; focus 香; covers 香: かおり."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 香り|かおり; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 香り|かおり, reading かおり, sentence 花の香りが部屋に広がりました。, sentence reading はなのかおりがへやにひろがりました。, translation The scent of flowers spread through the room., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 香り|かおり common and learner-friendly for the N3 word deck, with accurate reading かおり, meaning aroma / fragrance / scent, example 花の香りが部屋に広がりました。, and no active verification limitations. Common/useful N3 noun with current-level 香 anchor; learner-facing aroma/fragrance/scent gloss is concise and not a noisy dictionary dump."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 香り|かおり checked generated surface, Japanese-source evidence, example sentence 花の香りが部屋に広がりました。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 香り|かおり, reading かおり, and aroma/fragrance/scent senses with priority/commonness support., reading breakdown 香 かおり and kanji breakdown 香 （かお） ／ fragrance / scent, meaning aroma / fragrance / scent, labels JLPT N3; JLPT core + reading coverage; focus 香; covers 香: かおり, audio word-reading-香り-かおり, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "王",
+    "status": "sapphire",
+    "readingIncludes": [
+      "おう"
+    ],
+    "meaningIncludes": [
+      "king / ruler"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "王"
+    ],
+    "coversReadingIncludes": [
+      "王: おう"
+    ],
+    "breakdownIncludes": [
+      "王 （おう） ／ king / ruler"
+    ],
+    "exampleIncludes": [
+      "その国の王は若いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "selectionRationale": "Common/useful N3 single-kanji word with current-level 王 anchor; reviewed as a word-deck vocabulary card for king/ruler usage, not as kanji-deck certification for 王.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 王|おう"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 王|おう, reading おう, learner meaning king / ruler, and product review checked example その国の王は若いです。 for the shipped word-card surface; row meaning support: king; ruler; sovereign; monarch; tycoon; magnate; champion; master; king (of the senior player); source row: entrySeq=1629200; jmdictPriority=news1,nf04; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 王|おう: word 王, reading おう, meaning king / ruler, example その国の王は若いです。, audio word-reading-王-おう, reading breakdown 王 おう, kanji breakdown 王 （おう） ／ king / ruler, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 王|おう for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 王|おう; generated export includes exact audio word-reading-王-おう, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 王|おう exact asset fragment word-reading-王-おう for the exported word reading おう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 王|おう source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] and rendered label Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 王|おう JLPT N3; JLPT core + reading coverage; focus 王; covers 王: おう."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 王|おう; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 王|おう, reading おう, sentence その国の王は若いです。, sentence reading そのくにのおうはわかいです。, translation The king of that country is young., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 王|おう common and learner-friendly for the N3 word deck, with accurate reading おう, meaning king / ruler, example その国の王は若いです。, and no active verification limitations. Common/useful N3 single-kanji word with current-level 王 anchor; reviewed as a word-deck vocabulary card for king/ruler usage, not as kanji-deck certification for 王."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 王|おう checked generated surface, Japanese-source evidence, example sentence その国の王は若いです。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 王|おう, reading おう, and king/ruler senses with priority/commonness support., reading breakdown 王 おう and kanji breakdown 王 （おう） ／ king / ruler, meaning king / ruler, labels JLPT N3; JLPT core + reading coverage; focus 王; covers 王: おう, audio word-reading-王-おう, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "型",
+    "status": "sapphire",
+    "readingIncludes": [
+      "かた"
+    ],
+    "meaningIncludes": [
+      "type / model / pattern"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "型"
+    ],
+    "coversReadingIncludes": [
+      "型: かた"
+    ],
+    "breakdownIncludes": [
+      "型 （かた） ／ type / model / pattern"
+    ],
+    "exampleIncludes": [
+      "新しい型の車を見ました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "selectionRationale": "Common/useful N3 single-kanji word with current-level 型 anchor; learner-facing type/model/pattern gloss is concise, and this remains a word-deck vocabulary card rather than kanji-deck certification.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 型|かた"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 型|かた, reading かた, learner meaning type / model / pattern, and product review checked example 新しい型の車を見ました。 for the shipped word-card surface; row meaning support: type; style; model; pattern; mold; mould; template; impression; kata (set sequence of positions and movements in martial arts); style (in kabuki, noh, etc.); form; convention; source row: entrySeq=1250090; jmdictPriority=ichi1,news1,nf05; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 型|かた: word 型, reading かた, meaning type / model / pattern, example 新しい型の車を見ました。, audio word-reading-型-かた, reading breakdown 型 かた, kanji breakdown 型 （かた） ／ type / model / pattern, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 型|かた for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 型|かた; generated export includes exact audio word-reading-型-かた, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 型|かた exact asset fragment word-reading-型-かた for the exported word reading かた."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 型|かた source kanjium-cc-by-sa-4.0 pattern 2 [odaka] and rendered label Pitch 1: 2."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 型|かた JLPT N3; JLPT core + reading coverage; focus 型; covers 型: かた."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 型|かた; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 型|かた, reading かた, sentence 新しい型の車を見ました。, sentence reading あたらしいかたのくるまをみました。, translation I saw a new model of car., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 型|かた common and learner-friendly for the N3 word deck, with accurate reading かた, meaning type / model / pattern, example 新しい型の車を見ました。, and no active verification limitations. Common/useful N3 single-kanji word with current-level 型 anchor; learner-facing type/model/pattern gloss is concise, and this remains a word-deck vocabulary card rather than kanji-deck certification."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 型|かた checked generated surface, Japanese-source evidence, example sentence 新しい型の車を見ました。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 型|かた, reading かた, and type/model/pattern senses with priority/commonness support., reading breakdown 型 かた and kanji breakdown 型 （かた） ／ type / model / pattern, meaning type / model / pattern, labels JLPT N3; JLPT core + reading coverage; focus 型; covers 型: かた, audio word-reading-型-かた, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [odaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "越す",
+    "status": "sapphire",
+    "readingIncludes": [
+      "こす"
+    ],
+    "meaningIncludes": [
+      "to cross / to exceed"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N3"
+    ],
+    "coverageRoleIncludes": [
+      "JLPT core + reading coverage"
+    ],
+    "focusIncludes": [
+      "越"
+    ],
+    "coversReadingIncludes": [
+      "越: こす"
+    ],
+    "breakdownIncludes": [
+      "越 （こ） ／ go over / exceed"
+    ],
+    "exampleIncludes": [
+      "山を越して村へ行きました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "selectionRationale": "Common/useful N3 verb with current-level 越 anchor; reviewed as learner-friendly vocabulary and kept distinct from 越える|こえる.",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "notesIncludes": [
+      "JMdict row verifies 越す|こす",
+      "kept distinct from 越える|こえる"
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict governed local row verified 越す|こす, reading こす, learner meaning to cross / to exceed, and product review checked example 山を越して村へ行きました。 for the shipped word-card surface; row meaning support: to cross over (e.g. mountain); to go across; to get over (e.g. hardship); to pass time (e.g. a winter); to surpass; to be better than; to exceed; to move house; to go; to come; source row: entrySeq=1175300; jmdictPriority=ichi1,news2,nf29,nf30; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N3 word TSV surface built by npm run deck:words:ready -- --levels=3",
+        "detail": "Generated word-card surface inspected for 越す|こす: word 越す, reading こす, meaning to cross / to exceed, example 山を越して村へ行きました。, audio word-reading-越す-こす, reading breakdown 越 こす, kanji breakdown 越 （こ） ／ go over / exceed, labels JLPT N3 JLPT core + reading coverage."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N3 word export",
+        "detail": "templates/jlpt_word_level_contract.json and generated N3 word export list 越す|こす for JLPT N3; product review confirmed the word belongs in the N3 word deck as JLPT core + reading coverage."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=3 and npm run media:review:word-audio -- --level=3 --word=実は,際,掛かる,覚める,香り,王,型,越す --limit=8",
+        "detail": "Managed media provenance audit checked 越す|こす; generated export includes exact audio word-reading-越す-こす, pitch field, and media references without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 越す|こす exact asset fragment word-reading-越す-こす for the exported word reading こす."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 越す|こす source kanjium-cc-by-sa-4.0 pattern 0 [heiban] and rendered label Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N3 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 越す|こす JLPT N3; JLPT core + reading coverage; focus 越; covers 越: こす."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n3_word_review_set.json and npm run deck:words:review:n3",
+        "detail": "Separate golden regression gate checked 越す|こす; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 越す|こす, reading こす, sentence 山を越して村へ行きました。, sentence reading やまをこしてむらへいきました。, translation We crossed the mountain and went to the village., and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire product review",
+        "detail": "Manual review judged 越す|こす common and learner-friendly for the N3 word deck, with accurate reading こす, meaning to cross / to exceed, example 山を越して村へ行きました。, and no active verification limitations. Common/useful N3 verb with current-level 越 anchor; reviewed as learner-friendly vocabulary and kept distinct from 越える|こえる."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word Sapphire review using generated N3 word batch report and separated source/internal/review evidence lanes",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 越す|こす checked generated surface, Japanese-source evidence, example sentence 山を越して村へ行きました。, notes/support surface N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 越す|こす, reading こす, and cross/exceed/pass senses with priority/commonness support. The card is kept distinct from 越える|こえる., reading breakdown 越 こす and kanji breakdown 越 （こ） ／ go over / exceed, meaning to cross / to exceed, labels JLPT N3; JLPT core + reading coverage; focus 越; covers 越: こす, audio word-reading-越す-こす, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-06-09",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "native-word-sapphire-review",
+      "previousStatus": "none",
+      "previousReviewStandard": "",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  }
+]

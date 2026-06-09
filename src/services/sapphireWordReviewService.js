@@ -203,7 +203,7 @@ function validateCurrentWordSapphireReviewStandard(entry = {}) {
         failures.push("revalidationSummary is required for the current word Sapphire standard");
     }
     if (!entry.migrationProvenance || typeof entry.migrationProvenance !== "object" || Array.isArray(entry.migrationProvenance)) {
-        failures.push("migrationProvenance is required for migrated active Sapphire word entries");
+        failures.push("migrationProvenance is required for active Sapphire word entries");
     }
 
     return failures;
@@ -440,8 +440,8 @@ function validateActiveSapphireWordEntry(entry = {}, {
         if (Array.isArray(entry.coverageRoleIncludes) && !includesAll(row.coverageRole, entry.coverageRoleIncludes)) {
             failures.push(`coverage role field did not include protected snippet: ${entry.coverageRoleIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.breakdownIncludes) && !includesAll(row.readingBreakdown, entry.breakdownIncludes)) {
-            failures.push(`reading breakdown field did not include protected snippet: ${entry.breakdownIncludes.join(", ")}`);
+        if (Array.isArray(entry.breakdownIncludes) && !includesAll(`${row.readingBreakdown} ${row.kanjiBreakdown}`, entry.breakdownIncludes)) {
+            failures.push(`reading/kanji breakdown fields did not include protected snippet: ${entry.breakdownIncludes.join(", ")}`);
         }
         if (Array.isArray(entry.exampleIncludes) && !includesAll(row.exampleSentence, entry.exampleIncludes)) {
             failures.push(`example field did not include protected snippet: ${entry.exampleIncludes.join(", ")}`);

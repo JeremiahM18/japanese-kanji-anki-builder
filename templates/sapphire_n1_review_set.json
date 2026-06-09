@@ -96231,7 +96231,10 @@
   },
   {
     "kanji": "庸",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-platinum-review",
     "readingIncludes": [
       "よう"
     ],
@@ -96247,21 +96250,59 @@
     "levelIncludes": [
       "N1"
     ],
-    "notesIncludes": [
-      "庸人",
-      "庸俗",
-      "中庸"
-    ],
     "exampleIncludes": [
-      "彼は自分を庸人だと言いますが、判断は的確です。"
+      "その案は凡庸に見えても現場では役立ちました。"
     ],
-    "reviewedAt": "2026-06-05",
-    "reviewer": "codex-platinum-review",
+    "notesIncludes": [
+      "凡庸",
+      "中庸",
+      "登庸"
+    ],
+    "primaryReadingRationale": "Uses よう because the live generated N1 card and Kanjipedia field evidence support that target-kanji reading; 凡庸 / 中庸 / 登庸 remain support examples and do not replace the single-kanji card anchor.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0006950200",
-        "detail": "Japanese-source review for 庸|よう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006950200; source page title verified as 庸 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数8 4539 4D47 ヨウ もち いる ・つね・おろ か ・なん ぞ ①もちいる。やとう。「登庸」 用・傭(ヨウ) ②かたよらない。ふつう。つね。ふだん。「中庸」「凡庸」 ③税法の一種。律令(リツリョウ)制で、夫役の代わりに物を納めること。「租庸調」 ④おろか。 ⑤なんぞ。なに。いずくんぞ。疑問・反語を示す助字。 中庸(チュウヨウ)・登庸(トウヨウ)・凡庸(ボンヨウ); meaning excerpt reviewed as や行 ー よ 庸 画数：(11) 部首： 部首内画数8 4539 4D47 ヨウ もち いる ・つね・おろ か ・なん ぞ ①もちいる。やとう。「登庸」. Reviewer mapped this Japanese-source field evidence to PrimaryReading よう, MeaningJP ordinary / commonplace, KanjiMeanings ordinary / commonplace / employment, and support surface 庸人 / 庸俗 / 中庸 for the individual kanji 庸. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 庸|よう: PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; support surface 庸人 / 庸俗 / 中庸; example sentence 彼は自分を庸人だと言いますが、判断は的確です。."
+        "detail": "Japanese-source review for 庸|よう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006950200; source page title verified as 庸 | 漢字一字 | 漢字ペディア; source lists 音 ヨウ, meanings including もちいる/やとう, ordinary/common/usual, and source-listed support words 中庸, 登庸, and 凡庸. Reviewer mapped this Japanese-source field evidence to PrimaryReading よう, MeaningJP ordinary / commonplace, KanjiMeanings ordinary / commonplace / employment, and support surface 凡庸 / 中庸 / 登庸 for the individual kanji 庸 after replacing less-governed 庸人/庸俗 support. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 庸|よう: PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; support surface 凡庸 / 中庸 / 登庸; example sentence その案は凡庸に見えても現場では役立ちました。."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:ready -- --levels=1; out/build/exports/jlpt-n1.tsv",
+        "detail": "Generated card surface inspected for 庸|よう: Kanji and DisplayWord 庸; StudyWordKanji blank; PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; notes <ruby>凡庸<rt>ぼんよう</rt></ruby> - ordinary / mediocre ／ <ruby>中庸<rt>ちゅうよう</rt></ruby> - moderation ／ <ruby>登庸<rt>とうよう</rt></ruby> - appointment / employment; example その案は凡庸に見えても現場では役立ちました。 ／ そのあんはぼんようにみえてもげんばではやくだちました。 ／ Even though that proposal looked ordinary, it was useful on site.; audio field includes 5EB8_庸-kanji-reading-庸-よう; stroke-order field includes 庸-stroke-order."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate N1 Gold regression checked 庸; deck:review:n1 passed 1230/1230 after this tracked card-surface fix. Gold protects generated field expectations but is not source truth or lane authority."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 庸: exact audio media fragment 5EB8_庸-kanji-reading-庸-よう; stroke-order media target 庸; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio field identity reviewed for 庸|よう: exact kanji-reading audio filename includes 5EB8_庸-kanji-reading-庸-よう; exported PrimaryReading よう; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 庸: exported stroke-order field targets 庸; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire source/card surface fix audit",
+        "detail": "Final Sapphire structural judgment for 庸|よう: tracked source/card data was fixed first, live generated row was regenerated, Gold regression passed, governed Japanese-source evidence and support-only example usage were reviewed, media identity fields were checked, NLP remained support-only, and no active verification limitations remain. Protected-field mapping for 庸|よう: PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; support surface 凡庸 / 中庸 / 登庸; example sentence その案は凡庸に見えても現場では役立ちました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire surface-fix revalidation",
+        "detail": "Current-standard Sapphire review revalidated 庸|よう with separated evidence lanes, generated surface, Gold regression, Japanese-source evidence, PrimaryReading よう, MeaningJP ordinary / commonplace, KanjiMeanings ordinary / commonplace / employment, example sentence その案は凡庸に見えても現場では役立ちました。, reading そのあんはぼんようにみえてもげんばではやくだちました。, translation Even though that proposal looked ordinary, it was useful on site., notes/support surface 凡庸 / 中庸 / 登庸, audio 5EB8_庸-kanji-reading-庸-よう, stroke-order media 庸-stroke-order, NLP support-only context, and verification limitations with no active limitations present. This is current-standard Sapphire structural evidence for this lane."
       }
     ],
     "qualityGates": {
@@ -96282,53 +96323,19 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses よう because Kanjipedia lists it as a source-supported target-kanji reading for 庸. 庸人 / 庸俗 / 中庸 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (ヨウ) for separate contexts.",
-    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-06-05",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji Sapphire standard.",
-    "internalChecks": [
-      {
-        "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=1 --kanji=庸,廃,廊,廉,廷,弁,弊,弐 --json",
-        "detail": "Generated card surface inspected for 庸|よう: single-kanji anchor; Kanji and DisplayWord 庸; StudyWordKanji blank; PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; notes <ruby>庸人<rt>ようじん</rt></ruby> - ordinary person ／ <ruby>庸俗<rt>ようぞく</rt></ruby> - vulgar / commonplace ／ <ruby>中庸<rt>ちゅうよう</rt></ruby> - moderation; example 彼は自分を庸人だと言いますが、判断は的確です。 ／ かれはじぶんをようじんだといいますが、はんだんはてきかくです。 ／ He says he is an ordinary person, but his judgment is accurate.; audio field includes kanji-reading-庸-よう; stroke-order field includes 庸-stroke-order."
-      },
-      {
-        "type": "media-audit",
-        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
-        "detail": "Managed media provenance inspected for 庸: exact audio media fragment kanji-reading-庸-よう; stroke-order media target 庸; package media reports full N1 coverage with no silent fallback accepted."
-      },
-      {
-        "type": "audio-review",
-        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
-        "detail": "Audio field identity reviewed for 庸|よう: exact kanji-reading audio filename includes kanji-reading-庸-よう; exported PrimaryReading よう; managed package provenance present. Listening naturalness QA is not claimed here."
-      },
-      {
-        "type": "stroke-order-review",
-        "source": "exported StrokeOrder field and managed media manifest",
-        "detail": "Stroke-order field identity reviewed for 庸: exported stroke-order field targets 庸; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
-      },
-      {
-        "type": "golden-regression",
-        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
-        "detail": "Separate golden regression command checked 庸; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
-      }
-    ],
-    "reviewEvidence": [
-      {
-        "type": "manual-review",
-        "source": "N1 Sapphire structural batch 40 review",
-        "detail": "Final product judgment for 庸|よう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 庸|よう: PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; support surface 庸人 / 庸俗 / 中庸; example sentence 彼は自分を庸人だと言いますが、判断は的確です。."
-      },
-      {
-        "type": "current-standard-review",
-        "source": "core N1 current-standard Sapphire structural batch 40",
-        "detail": "Current-standard review revalidated 庸|よう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading よう, MeaningJP ordinary / commonplace, KanjiMeanings ordinary / commonplace / employment, example sentence 彼は自分を庸人だと言いますが、判断は的確です。, reading かれはじぶんをようじんだといいますが、はんだんはてきかくです。, translation He says he is an ordinary person, but his judgment is accurate., notes/support surface 庸人 / 庸俗 / 中庸, audio kanji-reading-庸-よう, stroke-order media 庸-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 庸|よう: PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; support surface 庸人 / 庸俗 / 中庸; example sentence 彼は自分を庸人だと言いますが、判断は的確です。."
-      }
-    ],
     "verificationLimitations": [],
+    "fixSummary": "Replaced less-governed 庸人/庸俗 support surface with Kanjipedia-listed 凡庸/中庸/登庸 and refreshed the support-only example before Sapphire revalidation.",
     "sapphireReviewAudit": {
       "schemaVersion": 1,
       "auditType": "n1-card-quality-sapphire-review",
+      "migrationBoundary": {
+        "migratedAt": "2026-06-05",
+        "migratedFrom": "templates\\platinum_n1_review_set.json",
+        "migrationType": "platinum-compatibility-to-first-class-sapphire",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Sapphire structural review only; not Platinum, not Obsidian proof, not release readiness.",
+        "level": 1
+      },
       "batch": {
         "id": "n1-card-quality-sapphire-batch-040",
         "level": 1,
@@ -96370,7 +96377,7 @@
           "verification limitations",
           "learner usefulness and product fit"
         ],
-        "reviewerDecision": "Actual live card data reviewed for 庸|よう: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire promotion."
+        "reviewerDecision": "Actual live card data re-reviewed for 庸|よう after tracked source/card surface fix: generated row, Gold expectation, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire revalidation."
       },
       "generatedSurface": {
         "artifact": "out/build/exports/jlpt-n1.tsv",
@@ -96382,8 +96389,8 @@
         "studyWordKanji": "",
         "onReading": "ヨウ",
         "kunReading": "",
-        "notes": "<ruby>庸人<rt>ようじん</rt></ruby> - ordinary person ／ <ruby>庸俗<rt>ようぞく</rt></ruby> - vulgar / commonplace ／ <ruby>中庸<rt>ちゅうよう</rt></ruby> - moderation",
-        "exampleSentence": "彼は自分を庸人だと言いますが、判断は的確です。 ／ かれはじぶんをようじんだといいますが、はんだんはてきかくです。 ／ He says he is an ordinary person, but his judgment is accurate.",
+        "notes": "<ruby>凡庸<rt>ぼんよう</rt></ruby> - ordinary / mediocre ／ <ruby>中庸<rt>ちゅうよう</rt></ruby> - moderation ／ <ruby>登庸<rt>とうよう</rt></ruby> - appointment / employment",
+        "exampleSentence": "その案は凡庸に見えても現場では役立ちました。 ／ そのあんはぼんようにみえてもげんばではやくだちました。 ／ Even though that proposal looked ordinary, it was useful on site.",
         "audio": "[sound:5EB8_庸-kanji-reading-庸-よう.wav]",
         "strokeOrder": "<img src=\"5EB8_庸-stroke-order.gif\" alt=\"Stroke order for 庸\" />",
         "hardChecks": {
@@ -96419,7 +96426,7 @@
           "cardFieldOnly": true,
           "jlptPlacementTruth": false
         },
-        "sourceEvidenceDetail": "Japanese-source review for 庸|よう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006950200; source page title verified as 庸 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数8 4539 4D47 ヨウ もち いる ・つね・おろ か ・なん ぞ ①もちいる。やとう。「登庸」 用・傭(ヨウ) ②かたよらない。ふつう。つね。ふだん。「中庸」「凡庸」 ③税法の一種。律令(リツリョウ)制で、夫役の代わりに物を納めること。「租庸調」 ④おろか。 ⑤なんぞ。なに。いずくんぞ。疑問・反語を示す助字。 中庸(チュウヨウ)・登庸(トウヨウ)・凡庸(ボンヨウ); meaning excerpt reviewed as や行 ー よ 庸 画数：(11) 部首： 部首内画数8 4539 4D47 ヨウ もち いる ・つね・おろ か ・なん ぞ ①もちいる。やとう。「登庸」. Reviewer mapped this Japanese-source field evidence to PrimaryReading よう, MeaningJP ordinary / commonplace, KanjiMeanings ordinary / commonplace / employment, and support surface 庸人 / 庸俗 / 中庸 for the individual kanji 庸. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 庸|よう: PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; support surface 庸人 / 庸俗 / 中庸; example sentence 彼は自分を庸人だと言いますが、判断は的確です。.",
+        "sourceEvidenceDetail": "Japanese-source review for 庸|よう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0006950200; source page title verified as 庸 | 漢字一字 | 漢字ペディア; source lists 音 ヨウ, meanings including もちいる/やとう, ordinary/common/usual, and source-listed support words 中庸, 登庸, and 凡庸. Reviewer mapped this Japanese-source field evidence to PrimaryReading よう, MeaningJP ordinary / commonplace, KanjiMeanings ordinary / commonplace / employment, and support surface 凡庸 / 中庸 / 登庸 for the individual kanji 庸 after replacing less-governed 庸人/庸俗 support. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 庸|よう: PrimaryReading よう; MeaningJP ordinary / commonplace; KanjiMeanings ordinary / commonplace / employment; support surface 凡庸 / 中庸 / 登庸; example sentence その案は凡庸に見えても現場では役立ちました。.",
         "sourceOriginIds": [
           "kanjidic2_legacy",
           "tanos_legacy_direct"
@@ -96430,7 +96437,12 @@
         ],
         "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
         "independentFromPlacementOrigins": true,
-        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
       },
       "levelPlacementReview": {
         "currentContractLevel": "N1",
@@ -96444,9 +96456,9 @@
         "reviewerDecision": "Record weak_evidence as the source-confidence label and complete only the current-standard Sapphire structural review under the current governed contract. Do not describe this as deck movement authority, upgraded source confidence, Obsidian proof, or full N1 release readiness."
       },
       "exampleSentenceReview": {
-        "sentence": "彼は自分を庸人だと言いますが、判断は的確です。",
-        "reading": "かれはじぶんをようじんだといいますが、はんだんはてきかくです。",
-        "translation": "He says he is an ordinary person, but his judgment is accurate.",
+        "sentence": "その案は凡庸に見えても現場では役立ちました。",
+        "reading": "そのあんはぼんようにみえてもげんばではやくだちました。",
+        "translation": "Even though that proposal looked ordinary, it was useful on site.",
         "naturalJapanese": true,
         "learnerUseful": true,
         "learnerFriendly": true,
@@ -96516,7 +96528,7 @@
         "noActiveLimitations": true,
         "releaseReadinessClaimed": false,
         "obsidianProofClaimed": false,
-        "reviewerDecision": "No active card-field verification limitations remain for 庸|よう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+        "reviewerDecision": "No active card-field verification limitations remain for 庸|よう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, Gold, and source-origin review."
       },
       "rubricReview": {
         "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
@@ -96531,26 +96543,20 @@
         "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
         "result": "blocked_until_obsidian_rereview_binding_exists",
         "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this Sapphire structural batch."
-      },
-      "migrationBoundary": {
-        "migratedAt": "2026-06-05",
-        "migratedFrom": "templates\\platinum_n1_review_set.json",
-        "migrationType": "platinum-compatibility-to-first-class-sapphire",
-        "level": 1,
-        "legacyCommandNamesPreserved": true,
-        "authority": "Representation migration from the former structural/Platinum card-surface compatibility lane into first-class Sapphire. This is not Platinum card-surface inspection, Obsidian proof, or release readiness."
       }
     },
     "migrationProvenance": {
       "migratedAt": "2026-06-05",
       "migratedFrom": "templates\\platinum_n1_review_set.json",
       "migrationType": "platinum-compatibility-to-first-class-sapphire",
+      "authority": "Preserves current structural review as Sapphire only. Does not claim Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
       "previousStatus": "platinum",
       "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
       "newStatus": "sapphire",
-      "newReviewStandard": "kanji-sapphire-v1-evidence-lanes",
-      "authority": "Preserves current structural review as Sapphire only. Does not claim Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
-    }
+      "newReviewStandard": "kanji-sapphire-v1-evidence-lanes"
+    },
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated Sapphire structural lanes after tracked source/card surface fixes: generated surface, Gold regression, Japanese-source evidence, example sentence, notes/support surface, NLP support-only packet, audio identity, stroke-order media, and verification limitations. Sapphire structural scope only; no release-readiness claim."
   },
   {
     "kanji": "廃",
@@ -96879,7 +96885,10 @@
   },
   {
     "kanji": "廊",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-platinum-review",
     "readingIncludes": [
       "ろう"
     ],
@@ -96890,27 +96899,64 @@
     "kanjiMeaningsIncludes": [
       "corridor",
       "gallery",
-      "hall",
-      "tower"
+      "hall"
     ],
     "levelIncludes": [
       "N1"
+    ],
+    "exampleIncludes": [
+      "静かな廊下に足音だけが響いていました。"
     ],
     "notesIncludes": [
       "廊下",
       "回廊",
       "画廊"
     ],
-    "exampleIncludes": [
-      "静かな廊下に足音だけが響いていました。"
-    ],
-    "reviewedAt": "2026-06-05",
-    "reviewer": "codex-platinum-review",
+    "primaryReadingRationale": "Uses ろう because the live generated N1 card and Kanjipedia field evidence support that target-kanji reading; 廊下 / 回廊 / 画廊 remain support examples and do not replace the single-kanji card anchor.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0007361500",
-        "detail": "Japanese-source review for 廊|ろう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007361500; source page title verified as 廊 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数9 4713 4F2D ロウ わたどの 廊 8414 742E 画数(13) 部首： 部首内画数:10; meaning excerpt reviewed as ら行 ー ろ 廊 画数：(12) 部首： 部首内画数9 4713 4F2D ロウ わたどの. Reviewer mapped this Japanese-source field evidence to PrimaryReading ろう, MeaningJP corridor / gallery, KanjiMeanings corridor / gallery / hall / tower, and support surface 廊下 / 回廊 / 画廊 for the individual kanji 廊. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廊|ろう: PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall / tower; support surface 廊下 / 回廊 / 画廊; example sentence 静かな廊下に足音だけが響いていました。."
+        "detail": "Japanese-source review for 廊|ろう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007361500; source page title verified as 廊 | 漢字一字 | 漢字ペディア; source lists 音 ロウ, わたどの, passage/corridor in a building, and source-listed support words 廊下, 回廊, 画廊, and 柱廊. Reviewer mapped this Japanese-source field evidence to PrimaryReading ろう, MeaningJP corridor / gallery, KanjiMeanings corridor / gallery / hall, and support surface 廊下 / 回廊 / 画廊 for the individual kanji 廊 after removing unsupported tower noise. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廊|ろう: PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall; support surface 廊下 / 回廊 / 画廊; example sentence 静かな廊下に足音だけが響いていました。."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:ready -- --levels=1; out/build/exports/jlpt-n1.tsv",
+        "detail": "Generated card surface inspected for 廊|ろう: Kanji and DisplayWord 廊; StudyWordKanji blank; PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall; notes <ruby>廊下<rt>ろうか</rt></ruby> - hallway ／ <ruby>回廊<rt>かいろう</rt></ruby> - cloister / corridor ／ <ruby>画廊<rt>がろう</rt></ruby> - art gallery; example 静かな廊下に足音だけが響いていました。 ／ しずかなろうかにあしおとだけがひびいていました。 ／ Only footsteps echoed in the quiet hallway.; audio field includes 5ECA_廊-kanji-reading-廊-ろう; stroke-order field includes 廊-stroke-order."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate N1 Gold regression checked 廊; deck:review:n1 passed 1230/1230 after this tracked card-surface fix. Gold protects generated field expectations but is not source truth or lane authority."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 廊: exact audio media fragment 5ECA_廊-kanji-reading-廊-ろう; stroke-order media target 廊; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio field identity reviewed for 廊|ろう: exact kanji-reading audio filename includes 5ECA_廊-kanji-reading-廊-ろう; exported PrimaryReading ろう; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 廊: exported stroke-order field targets 廊; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire source/card surface fix audit",
+        "detail": "Final Sapphire structural judgment for 廊|ろう: tracked source/card data was fixed first, live generated row was regenerated, Gold regression passed, governed Japanese-source evidence and support-only example usage were reviewed, media identity fields were checked, NLP remained support-only, and no active verification limitations remain. Protected-field mapping for 廊|ろう: PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall; support surface 廊下 / 回廊 / 画廊; example sentence 静かな廊下に足音だけが響いていました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire surface-fix revalidation",
+        "detail": "Current-standard Sapphire review revalidated 廊|ろう with separated evidence lanes, generated surface, Gold regression, Japanese-source evidence, PrimaryReading ろう, MeaningJP corridor / gallery, KanjiMeanings corridor / gallery / hall, example sentence 静かな廊下に足音だけが響いていました。, reading しずかなろうかにあしおとだけがひびいていました。, translation Only footsteps echoed in the quiet hallway., notes/support surface 廊下 / 回廊 / 画廊, audio 5ECA_廊-kanji-reading-廊-ろう, stroke-order media 廊-stroke-order, NLP support-only context, and verification limitations with no active limitations present. This is current-standard Sapphire structural evidence for this lane."
       }
     ],
     "qualityGates": {
@@ -96931,53 +96977,19 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "Uses ろう because Kanjipedia lists it as a source-supported target-kanji reading for 廊. 廊下 / 回廊 / 画廊 remain learner-facing support examples; they do not create or replace the primary reading. Other readings remain visible in the generated on/kun fields (ロウ) for separate contexts.",
-    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-06-05",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, audio, stroke-order media, and verification limitations under the current kanji Sapphire standard.",
-    "internalChecks": [
-      {
-        "type": "generated-surface",
-        "source": "npm run deck:platinum:batch -- --level=1 --kanji=庸,廃,廊,廉,廷,弁,弊,弐 --json",
-        "detail": "Generated card surface inspected for 廊|ろう: single-kanji anchor; Kanji and DisplayWord 廊; StudyWordKanji blank; PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall / tower; notes <ruby>廊下<rt>ろうか</rt></ruby> - hallway ／ <ruby>回廊<rt>かいろう</rt></ruby> - cloister / corridor ／ <ruby>画廊<rt>がろう</rt></ruby> - art gallery; example 静かな廊下に足音だけが響いていました。 ／ しずかなろうかにあしおとだけがひびいていました。 ／ Only footsteps echoed in the quiet hallway.; audio field includes kanji-reading-廊-ろう; stroke-order field includes 廊-stroke-order."
-      },
-      {
-        "type": "media-audit",
-        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
-        "detail": "Managed media provenance inspected for 廊: exact audio media fragment kanji-reading-廊-ろう; stroke-order media target 廊; package media reports full N1 coverage with no silent fallback accepted."
-      },
-      {
-        "type": "audio-review",
-        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest; out/build/package/package-summary.json",
-        "detail": "Audio field identity reviewed for 廊|ろう: exact kanji-reading audio filename includes kanji-reading-廊-ろう; exported PrimaryReading ろう; managed package provenance present. Listening naturalness QA is not claimed here."
-      },
-      {
-        "type": "stroke-order-review",
-        "source": "exported StrokeOrder field and managed media manifest",
-        "detail": "Stroke-order field identity reviewed for 廊: exported stroke-order field targets 廊; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
-      },
-      {
-        "type": "golden-regression",
-        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
-        "detail": "Separate golden regression command checked 廊; this selected card passed. The full N1 command currently has unrelated existing failures, so this is selected-card regression evidence only. Gold regression protects generated field expectations but is not source truth and not source evidence."
-      }
-    ],
-    "reviewEvidence": [
-      {
-        "type": "manual-review",
-        "source": "N1 Sapphire structural batch 40 review",
-        "detail": "Final product judgment for 廊|ろう: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 廊|ろう: PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall / tower; support surface 廊下 / 回廊 / 画廊; example sentence 静かな廊下に足音だけが響いていました。."
-      },
-      {
-        "type": "current-standard-review",
-        "source": "core N1 current-standard Sapphire structural batch 40",
-        "detail": "Current-standard review revalidated 廊|ろう with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ろう, MeaningJP corridor / gallery, KanjiMeanings corridor / gallery / hall / tower, example sentence 静かな廊下に足音だけが響いていました。, reading しずかなろうかにあしおとだけがひびいていました。, translation Only footsteps echoed in the quiet hallway., notes/support surface 廊下 / 回廊 / 画廊, audio kanji-reading-廊-ろう, stroke-order media 廊-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 廊|ろう: PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall / tower; support surface 廊下 / 回廊 / 画廊; example sentence 静かな廊下に足音だけが響いていました。."
-      }
-    ],
     "verificationLimitations": [],
+    "fixSummary": "Removed the unsupported tower gloss from tracked card data before Sapphire revalidation.",
     "sapphireReviewAudit": {
       "schemaVersion": 1,
       "auditType": "n1-card-quality-sapphire-review",
+      "migrationBoundary": {
+        "migratedAt": "2026-06-05",
+        "migratedFrom": "templates\\platinum_n1_review_set.json",
+        "migrationType": "platinum-compatibility-to-first-class-sapphire",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Sapphire structural review only; not Platinum, not Obsidian proof, not release readiness.",
+        "level": 1
+      },
       "batch": {
         "id": "n1-card-quality-sapphire-batch-040",
         "level": 1,
@@ -97019,7 +97031,7 @@
           "verification limitations",
           "learner usefulness and product fit"
         ],
-        "reviewerDecision": "Actual live card data reviewed for 廊|ろう: generated row, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire promotion."
+        "reviewerDecision": "Actual live card data re-reviewed for 廊|ろう after tracked source/card surface fix: generated row, Gold expectation, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire revalidation."
       },
       "generatedSurface": {
         "artifact": "out/build/exports/jlpt-n1.tsv",
@@ -97027,7 +97039,7 @@
         "displayWord": "廊",
         "primaryReading": "ろう",
         "meaningJP": "corridor / gallery",
-        "kanjiMeanings": "corridor / gallery / hall / tower",
+        "kanjiMeanings": "corridor / gallery / hall",
         "studyWordKanji": "",
         "onReading": "ロウ",
         "kunReading": "",
@@ -97068,7 +97080,7 @@
           "cardFieldOnly": true,
           "jlptPlacementTruth": false
         },
-        "sourceEvidenceDetail": "Japanese-source review for 廊|ろう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007361500; source page title verified as 廊 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数9 4713 4F2D ロウ わたどの 廊 8414 742E 画数(13) 部首： 部首内画数:10; meaning excerpt reviewed as ら行 ー ろ 廊 画数：(12) 部首： 部首内画数9 4713 4F2D ロウ わたどの. Reviewer mapped this Japanese-source field evidence to PrimaryReading ろう, MeaningJP corridor / gallery, KanjiMeanings corridor / gallery / hall / tower, and support surface 廊下 / 回廊 / 画廊 for the individual kanji 廊. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廊|ろう: PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall / tower; support surface 廊下 / 回廊 / 画廊; example sentence 静かな廊下に足音だけが響いていました。.",
+        "sourceEvidenceDetail": "Japanese-source review for 廊|ろう: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007361500; source page title verified as 廊 | 漢字一字 | 漢字ペディア; source lists 音 ロウ, わたどの, passage/corridor in a building, and source-listed support words 廊下, 回廊, 画廊, and 柱廊. Reviewer mapped this Japanese-source field evidence to PrimaryReading ろう, MeaningJP corridor / gallery, KanjiMeanings corridor / gallery / hall, and support surface 廊下 / 回廊 / 画廊 for the individual kanji 廊 after removing unsupported tower noise. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廊|ろう: PrimaryReading ろう; MeaningJP corridor / gallery; KanjiMeanings corridor / gallery / hall; support surface 廊下 / 回廊 / 画廊; example sentence 静かな廊下に足音だけが響いていました。.",
         "sourceOriginIds": [
           "kanjidic2_legacy",
           "tanos_legacy_direct"
@@ -97079,7 +97091,12 @@
         ],
         "fieldVerificationIndependenceGroup": "japan_kanji_aptitude_foundation",
         "independentFromPlacementOrigins": true,
-        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence."
+        "sourceOriginReview": "Card-field source verification uses Kanjipedia for the exported kanji fields and is independent of the source-governance origin ids used for the N1 placement claim. It does not upgrade taxonomy source-confidence.",
+        "supportsPrimaryReading": true,
+        "supportsPrimaryMeaning": true,
+        "supportsBroaderMeanings": true,
+        "supportsSupportSurface": true,
+        "limitation": ""
       },
       "levelPlacementReview": {
         "currentContractLevel": "N1",
@@ -97164,7 +97181,7 @@
         "noActiveLimitations": true,
         "releaseReadinessClaimed": false,
         "obsidianProofClaimed": false,
-        "reviewerDecision": "No active card-field verification limitations remain for 廊|ろう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, and source-origin review."
+        "reviewerDecision": "No active card-field verification limitations remain for 廊|ろう after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, Gold, and source-origin review."
       },
       "rubricReview": {
         "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
@@ -97179,26 +97196,20 @@
         "attemptedCommand": "npm run data:build:kanji-field-source-contract -- --level=1",
         "result": "blocked_until_obsidian_rereview_binding_exists",
         "reason": "The builder requires nonempty rereviewReviewedAt, rereviewReviewer, and rereviewResult bindings. N1 Obsidian proof is intentionally reset to 0/1230, so no N1 card-field source contract was committed from this Sapphire structural batch."
-      },
-      "migrationBoundary": {
-        "migratedAt": "2026-06-05",
-        "migratedFrom": "templates\\platinum_n1_review_set.json",
-        "migrationType": "platinum-compatibility-to-first-class-sapphire",
-        "level": 1,
-        "legacyCommandNamesPreserved": true,
-        "authority": "Representation migration from the former structural/Platinum card-surface compatibility lane into first-class Sapphire. This is not Platinum card-surface inspection, Obsidian proof, or release readiness."
       }
     },
     "migrationProvenance": {
       "migratedAt": "2026-06-05",
       "migratedFrom": "templates\\platinum_n1_review_set.json",
       "migrationType": "platinum-compatibility-to-first-class-sapphire",
+      "authority": "Preserves current structural review as Sapphire only. Does not claim Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority.",
       "previousStatus": "platinum",
       "previousReviewStandard": "kanji-platinum-v3-evidence-lanes",
       "newStatus": "sapphire",
-      "newReviewStandard": "kanji-sapphire-v1-evidence-lanes",
-      "authority": "Preserves current structural review as Sapphire only. Does not claim Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
-    }
+      "newReviewStandard": "kanji-sapphire-v1-evidence-lanes"
+    },
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated Sapphire structural lanes after tracked source/card surface fixes: generated surface, Gold regression, Japanese-source evidence, example sentence, notes/support surface, NLP support-only packet, audio identity, stroke-order media, and verification limitations. Sapphire structural scope only; no release-readiness claim."
   },
   {
     "kanji": "廉",
@@ -97234,7 +97245,7 @@
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0007301600",
-        "detail": "Japanese-source review for 廉|れん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007301600; source page title verified as 廉 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど 画数(13) 部首： 部首内画数:10; meaning excerpt reviewed as ら行 ー れ 廉 画数：(13) 部首： 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど. Reviewer mapped this Japanese-source field evidence to PrimaryReading れん, MeaningJP honest / inexpensive / cheap / low price / purity, KanjiMeanings honest / inexpensive / cheap / low price / purity, and support surface 廉価 / 清廉 / 廉潔 for the individual kanji 廉. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive / cheap / low price / purity; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。."
+        "detail": "Japanese-source review for 廉|れん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007301600; source page title verified as 廉 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど 画数(13) 部首： 部首内画数:10; meaning excerpt reviewed as ら行 ー れ 廉 画数：(13) 部首： 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど. Reviewer mapped this Japanese-source field evidence to PrimaryReading れん, MeaningJP honest / inexpensive, KanjiMeanings honest / inexpensive / cheap / low price / purity, and support surface 廉価 / 清廉 / 廉潔 for the individual kanji 廉. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。."
       }
     ],
     "qualityGates": {
@@ -97290,12 +97301,12 @@
       {
         "type": "manual-review",
         "source": "N1 Sapphire structural batch 40 review",
-        "detail": "Final product judgment for 廉|れん: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive / cheap / low price / purity; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。."
+        "detail": "Final product judgment for 廉|れん: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。."
       },
       {
         "type": "current-standard-review",
         "source": "core N1 current-standard Sapphire structural batch 40",
-        "detail": "Current-standard review revalidated 廉|れん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading れん, MeaningJP honest / inexpensive, KanjiMeanings honest / inexpensive / cheap / low price / purity, example sentence この店は廉価でも品質の高い商品をそろえています。, reading このみせはれんかでもひんしつのたかいしょうひんをそろえています。, translation This shop carries high-quality products even at low prices., notes/support surface 廉価 / 清廉 / 廉潔, audio kanji-reading-廉-れん, stroke-order media 廉-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive / cheap / low price / purity; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。."
+        "detail": "Current-standard review revalidated 廉|れん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading れん, MeaningJP honest / inexpensive, KanjiMeanings honest / inexpensive / cheap / low price / purity, example sentence この店は廉価でも品質の高い商品をそろえています。, reading このみせはれんかでもひんしつのたかいしょうひんをそろえています。, translation This shop carries high-quality products even at low prices., notes/support surface 廉価 / 清廉 / 廉潔, audio kanji-reading-廉-れん, stroke-order media 廉-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。."
       }
     ],
     "verificationLimitations": [],
@@ -97392,7 +97403,7 @@
           "cardFieldOnly": true,
           "jlptPlacementTruth": false
         },
-        "sourceEvidenceDetail": "Japanese-source review for 廉|れん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007301600; source page title verified as 廉 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど 画数(13) 部首： 部首内画数:10; meaning excerpt reviewed as ら行 ー れ 廉 画数：(13) 部首： 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど. Reviewer mapped this Japanese-source field evidence to PrimaryReading れん, MeaningJP honest / inexpensive / cheap / low price / purity, KanjiMeanings honest / inexpensive / cheap / low price / purity, and support surface 廉価 / 清廉 / 廉潔 for the individual kanji 廉. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive / cheap / low price / purity; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。.",
+        "sourceEvidenceDetail": "Japanese-source review for 廉|れん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0007301600; source page title verified as 廉 | 漢字一字 | 漢字ペディア; reading excerpt reviewed as 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど 画数(13) 部首： 部首内画数:10; meaning excerpt reviewed as ら行 ー れ 廉 画数：(13) 部首： 部首内画数10 4687 4E77 レン いさぎよ い ・やす い ・かど. Reviewer mapped this Japanese-source field evidence to PrimaryReading れん, MeaningJP honest / inexpensive, KanjiMeanings honest / inexpensive / cheap / low price / purity, and support surface 廉価 / 清廉 / 廉潔 for the individual kanji 廉. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 廉|れん: PrimaryReading れん; MeaningJP honest / inexpensive; KanjiMeanings honest / inexpensive / cheap / low price / purity; support surface 廉価 / 清廉 / 廉潔; example sentence この店は廉価でも品質の高い商品をそろえています。.",
         "sourceOriginIds": [
           "kanjidic2_legacy",
           "tanos_legacy_direct"
@@ -98838,7 +98849,10 @@
   },
   {
     "kanji": "弓",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-platinum-review",
     "readingIncludes": [
       "ゆみ"
     ],
@@ -98846,27 +98860,64 @@
       "bow"
     ],
     "kanjiMeaningsIncludes": [
-      "bow",
-      "bow (archery"
+      "bow"
     ],
     "levelIncludes": [
       "N1"
+    ],
+    "exampleIncludes": [
+      "祖父の家には古い弓が大切に飾られていました。"
     ],
     "notesIncludes": [
       "弓",
       "弓道",
       "弓矢"
     ],
-    "exampleIncludes": [
-      "祖父の家には古い弓が大切に飾られていました。"
-    ],
-    "reviewedAt": "2026-06-09",
-    "reviewer": "codex-sapphire-review",
+    "primaryReadingRationale": "Uses ゆみ because the live generated N1 card and Kanjipedia field evidence support that target-kanji reading; 弓 / 弓道 / 弓矢 remain support examples and do not replace the single-kanji card anchor.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0001366800",
-        "detail": "Japanese-source review for 弓|ゆみ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001366800; source page title verified as 弓 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 キュウ, 訓 ゆみ, and meanings ゆみ plus bow-shaped things with support words 弓馬, 洋弓, 弓状, and 弓形. Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), and support surface 弓 / 弓道 / 弓矢 for the individual kanji 弓. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
+        "detail": "Japanese-source review for 弓|ゆみ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001366800; source page title verified as 弓 | 漢字一字 | 漢字ペディア; source lists 音 キュウ, 訓 ゆみ, the bow meaning, bow-shaped object sense, and support words such as 洋弓 and 弓状. Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow, and support surface 弓 / 弓道 / 弓矢 for the individual kanji 弓 after removing the duplicate English gloss. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow; support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:ready -- --levels=1; out/build/exports/jlpt-n1.tsv",
+        "detail": "Generated card surface inspected for 弓|ゆみ: Kanji and DisplayWord 弓; StudyWordKanji blank; PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow; notes <ruby>弓<rt>ゆみ</rt></ruby> - bow ／ <ruby>弓道<rt>きゅうどう</rt></ruby> - Japanese archery ／ <ruby>弓矢<rt>ゆみや</rt></ruby> - bow and arrow; example 祖父の家には古い弓が大切に飾られていました。 ／ そふのいえにはふるいゆみがたいせつにかざられていました。 ／ An old bow was carefully displayed in my grandfather&#39;s house.; audio field includes 5F13_弓-kanji-reading-弓-ゆみ; stroke-order field includes 弓-stroke-order."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate N1 Gold regression checked 弓; deck:review:n1 passed 1230/1230 after this tracked card-surface fix. Gold protects generated field expectations but is not source truth or lane authority."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 弓: exact audio media fragment 5F13_弓-kanji-reading-弓-ゆみ; stroke-order media target 弓; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio field identity reviewed for 弓|ゆみ: exact kanji-reading audio filename includes 5F13_弓-kanji-reading-弓-ゆみ; exported PrimaryReading ゆみ; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弓: exported stroke-order field targets 弓; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire source/card surface fix audit",
+        "detail": "Final Sapphire structural judgment for 弓|ゆみ: tracked source/card data was fixed first, live generated row was regenerated, Gold regression passed, governed Japanese-source evidence and support-only example usage were reviewed, media identity fields were checked, NLP remained support-only, and no active verification limitations remain. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow; support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire surface-fix revalidation",
+        "detail": "Current-standard Sapphire review revalidated 弓|ゆみ with separated evidence lanes, generated surface, Gold regression, Japanese-source evidence, PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow, example sentence 祖父の家には古い弓が大切に飾られていました。, reading そふのいえにはふるいゆみがたいせつにかざられていました。, translation An old bow was carefully displayed in my grandfather&#39;s house., notes/support surface 弓 / 弓道 / 弓矢, audio 5F13_弓-kanji-reading-弓-ゆみ, stroke-order media 弓-stroke-order, NLP support-only context, and verification limitations with no active limitations present. This is current-standard Sapphire structural evidence for this lane."
       }
     ],
     "qualityGates": {
@@ -98887,53 +98938,18 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "PrimaryReading ゆみ is the direct kun reading and the learner-facing individual-kanji anchor for the bow meaning.",
-    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-06-09",
-    "revalidationSummary": "Current-standard structural review accepted 弓|ゆみ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), example sentence 祖父の家には古い弓が大切に飾られていました。, reading そふのいえにはふるいゆみがたいせつにかざられていました。, translation An old bow was carefully displayed in my grandfather&#39;s house., notes/support surface 弓 / 弓道 / 弓矢, audio kanji-reading-弓-ゆみ, stroke-order media 弓-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。.",
-    "internalChecks": [
-      {
-        "type": "generated-surface",
-        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
-        "detail": "Generated card surface inspected for 弓|ゆみ: single-kanji anchor; Kanji and DisplayWord 弓; StudyWordKanji blank; PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); notes <ruby>弓<rt>ゆみ</rt></ruby> - bow ／ <ruby>弓道<rt>きゅうどう</rt></ruby> - Japanese archery ／ <ruby>弓矢<rt>ゆみや</rt></ruby> - bow and arrow; example 祖父の家には古い弓が大切に飾られていました。 ／ そふのいえにはふるいゆみがたいせつにかざられていました。 ／ An old bow was carefully displayed in my grandfather&#39;s house.; audio field includes kanji-reading-弓-ゆみ; stroke-order field includes 弓-stroke-order."
-      },
-      {
-        "type": "media-audit",
-        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
-        "detail": "Managed media identity inspected for 弓: exact audio media fragment kanji-reading-弓-ゆみ; stroke-order media target 弓; generated N1 package step reported full media coverage and no silent fallback accepted."
-      },
-      {
-        "type": "audio-review",
-        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
-        "detail": "Audio field identity reviewed for 弓|ゆみ: exact kanji-reading audio filename includes kanji-reading-弓-ゆみ; exported PrimaryReading ゆみ; managed package provenance present. Listening naturalness QA is not claimed here."
-      },
-      {
-        "type": "stroke-order-review",
-        "source": "exported StrokeOrder field and managed media manifest",
-        "detail": "Stroke-order field identity reviewed for 弓: exported stroke-order field targets 弓; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
-      },
-      {
-        "type": "golden-regression",
-        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
-        "detail": "Separate Gold regression command checked 弓; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
-      }
-    ],
-    "reviewEvidence": [
-      {
-        "type": "manual-review",
-        "source": "N1 Sapphire structural batch 41 review",
-        "detail": "Final structural product judgment for 弓|ゆみ: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
-      },
-      {
-        "type": "current-standard-review",
-        "source": "core N1 current-standard Sapphire structural batch 41",
-        "detail": "Current-standard structural review accepted 弓|ゆみ with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), example sentence 祖父の家には古い弓が大切に飾られていました。, reading そふのいえにはふるいゆみがたいせつにかざられていました。, translation An old bow was carefully displayed in my grandfather&#39;s house., notes/support surface 弓 / 弓道 / 弓矢, audio kanji-reading-弓-ゆみ, stroke-order media 弓-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。."
-      }
-    ],
     "verificationLimitations": [],
+    "fixSummary": "Removed the noisy duplicate bow (archery, violin) gloss from tracked card data before Sapphire revalidation.",
     "sapphireReviewAudit": {
       "schemaVersion": 1,
-      "auditType": "n1-structural-sapphire-card-review",
+      "auditType": "n1-card-quality-sapphire-review",
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Sapphire structural review only; not Platinum, not Obsidian proof, not release readiness."
+      },
       "batch": {
         "deckKind": "kanji",
         "level": 1,
@@ -98972,45 +98988,60 @@
         "exampleReviewed": true,
         "supportOnlyExampleRole": true,
         "nlpSupportReviewed": true,
-        "nlpIsNonCertifying": true
+        "nlpIsNonCertifying": true,
+        "actualCardDataReviewed": true,
+        "reviewerDecision": "Actual live card data re-reviewed for 弓|ゆみ after tracked source/card surface fix: generated row, Gold expectation, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire revalidation."
       },
       "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
         "kanji": "弓",
         "displayWord": "弓",
-        "studyWordKanji": "",
         "primaryReading": "ゆみ",
         "meaningJP": "bow",
-        "kanjiMeanings": "bow / bow (archery, violin)",
+        "kanjiMeanings": "bow",
+        "studyWordKanji": "",
+        "onReading": "キュウ",
+        "kunReading": "ゆみ",
         "notes": "<ruby>弓<rt>ゆみ</rt></ruby> - bow ／ <ruby>弓道<rt>きゅうどう</rt></ruby> - Japanese archery ／ <ruby>弓矢<rt>ゆみや</rt></ruby> - bow and arrow",
         "exampleSentence": "祖父の家には古い弓が大切に飾られていました。 ／ そふのいえにはふるいゆみがたいせつにかざられていました。 ／ An old bow was carefully displayed in my grandfather&#39;s house.",
         "audio": "[sound:5F13_弓-kanji-reading-弓-ゆみ.wav]",
         "strokeOrder": "<img src=\"5F13_弓-stroke-order.gif\" alt=\"Stroke order for 弓\" />",
-        "onReading": "キュウ",
-        "kunReading": "ゆみ",
         "hardChecks": {
-          "Kanji is one target kanji": true,
-          "DisplayWord equals target kanji": true,
-          "StudyWordKanji is blank": true,
-          "PrimaryReading is present": true,
-          "MeaningJP is present": true,
-          "KanjiMeanings is present": true,
-          "ExampleSentence is present": true,
-          "StrokeOrder field is present": true,
-          "Audio is exact target plus primary reading": true,
-          "No generic offline fallback note": true
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
         },
-        "hardChecksPassed": true,
-        "generatedFailures": []
+        "hardChecksPassed": true
       },
       "sourceFieldReview": {
         "source": "https://www.kanjipedia.jp/kanji/0001366800",
         "sourceTitle": "弓 | 漢字一字 | 漢字ペディア",
-        "sourceEvidenceDetail": "Japanese-source review for 弓|ゆみ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001366800; source page title verified as 弓 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 キュウ, 訓 ゆみ, and meanings ゆみ plus bow-shaped things with support words 弓馬, 洋弓, 弓状, and 弓形. Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow / bow (archery, violin), and support surface 弓 / 弓道 / 弓矢 for the individual kanji 弓. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow / bow (archery, violin); support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。.",
+        "sourceEvidenceDetail": "Japanese-source review for 弓|ゆみ: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001366800; source page title verified as 弓 | 漢字一字 | 漢字ペディア; source lists 音 キュウ, 訓 ゆみ, the bow meaning, bow-shaped object sense, and support words such as 洋弓 and 弓状. Reviewer mapped this Japanese-source field evidence to PrimaryReading ゆみ, MeaningJP bow, KanjiMeanings bow, and support surface 弓 / 弓道 / 弓矢 for the individual kanji 弓 after removing the duplicate English gloss. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弓|ゆみ: PrimaryReading ゆみ; MeaningJP bow; KanjiMeanings bow; support surface 弓 / 弓道 / 弓矢; example sentence 祖父の家には古い弓が大切に飾られていました。.",
         "supportsPrimaryReading": true,
         "supportsPrimaryMeaning": true,
         "supportsBroaderMeanings": true,
         "supportsSupportSurface": true,
-        "limitation": ""
+        "limitation": "",
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0001366800",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        }
       },
       "levelPlacementReview": {
         "generatedLevelLabel": "N1",
@@ -99018,13 +99049,17 @@
         "levelPlacementCertifiedByThisEntry": false
       },
       "exampleSentenceReview": {
-        "japanese": "祖父の家には古い弓が大切に飾られていました。",
+        "sentence": "祖父の家には古い弓が大切に飾られていました。",
         "reading": "そふのいえにはふるいゆみがたいせつにかざられていました。",
         "translation": "An old bow was carefully displayed in my grandfather&#39;s house.",
-        "naturalEnoughForRelease": true,
+        "naturalJapanese": true,
         "learnerUseful": true,
+        "learnerFriendly": true,
         "levelAppropriate": true,
-        "supportOnly": true
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 弓|ゆみ: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
       },
       "nlpReview": {
         "packetId": "nlp-review-kanji-n1-0061",
@@ -99054,7 +99089,14 @@
       },
       "limitationDecision": {
         "activeLimitations": [],
-        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks",
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 弓|ゆみ after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, Gold, and source-origin review."
       },
       "rubricReview": {
         "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
@@ -99067,13 +99109,6 @@
         "goldRegressionIsInternalOnly": true,
         "nlpSupportOnly": true,
         "noProofLedgerChange": true
-      },
-      "migrationBoundary": {
-        "migratedAt": "2026-06-09",
-        "migratedFrom": "native reviewed Sapphire input",
-        "migrationType": "native-sapphire-structural-review",
-        "legacyCommandNamesPreserved": true,
-        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
       }
     },
     "migrationProvenance": {
@@ -99081,7 +99116,9 @@
       "migratedFrom": "native reviewed Sapphire input",
       "migrationType": "native-sapphire-structural-review",
       "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
-    }
+    },
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated Sapphire structural lanes after tracked source/card surface fixes: generated surface, Gold regression, Japanese-source evidence, example sentence, notes/support surface, NLP support-only packet, audio identity, stroke-order media, and verification limitations. Sapphire structural scope only; no release-readiness claim."
   },
   {
     "kanji": "弔",
@@ -99335,6 +99372,9 @@
   {
     "kanji": "弘",
     "status": "fixed_then_sapphire",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-platinum-review",
     "readingIncludes": [
       "ひろめる"
     ],
@@ -99345,26 +99385,65 @@
       "expand",
       "spread",
       "broad",
+      "vast",
       "wide"
     ],
     "levelIncludes": [
       "N1"
     ],
-    "notesIncludes": [
-      "弘める",
-      "弘報",
-      "弘法"
-    ],
     "exampleIncludes": [
       "その団体は読書の楽しさを社会に弘めようとしています。"
     ],
-    "reviewedAt": "2026-06-09",
-    "reviewer": "codex-sapphire-review",
+    "notesIncludes": [
+      "弘める",
+      "弘遠",
+      "弘法"
+    ],
+    "primaryReadingRationale": "Uses ひろめる because the live generated N1 card and Kanjipedia field evidence support that target-kanji reading; 弘める / 弘遠 / 弘法 remain support examples and do not replace the single-kanji card anchor.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0002146600",
-        "detail": "Japanese-source review for 弘|ひろめる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002146600; source page title verified as 弘 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 コウ・グ, 訓 ひろい・ひろめる, and meanings broad/large plus spread or make widely known, with support words 弘遠, 寛弘, 弘通, and 弘法. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, and support surface 弘める / 弘報 / 弘法 for the individual kanji 弘. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
+        "detail": "Japanese-source review for 弘|ひろめる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002146600; source page title verified as 弘 | 漢字一字 | 漢字ペディア; source lists 音 コウ・グ, 訓 ひろい・ひろめる, meanings for broad/vast and spreading widely, and source-listed support words 弘遠, 寛弘, 弘通, and 弘法. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, and support surface 弘める / 弘遠 / 弘法 for the individual kanji 弘 after replacing unsupported 弘報. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘遠 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:ready -- --levels=1; out/build/exports/jlpt-n1.tsv",
+        "detail": "Generated card surface inspected for 弘|ひろめる: Kanji and DisplayWord 弘; StudyWordKanji blank; PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; notes <ruby>弘<rt>ひろ</rt></ruby>める - to spread widely ／ <ruby>弘遠<rt>こうえん</rt></ruby> - vast / far-reaching ／ <ruby>弘法<rt>こうぼう</rt></ruby> - Kobo (name/title); example その団体は読書の楽しさを社会に弘めようとしています。 ／ そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。 ／ That organization is trying to spread the joy of reading through society.; audio field includes 5F18_弘-kanji-reading-弘-ひろめる; stroke-order field includes 弘-stroke-order."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate N1 Gold regression checked 弘; deck:review:n1 passed 1230/1230 after this tracked card-surface fix. Gold protects generated field expectations but is not source truth or lane authority."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 弘: exact audio media fragment 5F18_弘-kanji-reading-弘-ひろめる; stroke-order media target 弘; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio field identity reviewed for 弘|ひろめる: exact kanji-reading audio filename includes 5F18_弘-kanji-reading-弘-ひろめる; exported PrimaryReading ひろめる; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弘: exported stroke-order field targets 弘; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire source/card surface fix audit",
+        "detail": "Final Sapphire structural judgment for 弘|ひろめる: tracked source/card data was fixed first, live generated row was regenerated, Gold regression passed, governed Japanese-source evidence and support-only example usage were reviewed, media identity fields were checked, NLP remained support-only, and no active verification limitations remain. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘遠 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire surface-fix revalidation",
+        "detail": "Current-standard Sapphire review revalidated 弘|ひろめる with separated evidence lanes, generated surface, Gold regression, Japanese-source evidence, PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, example sentence その団体は読書の楽しさを社会に弘めようとしています。, reading そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。, translation That organization is trying to spread the joy of reading through society., notes/support surface 弘める / 弘遠 / 弘法, audio 5F18_弘-kanji-reading-弘-ひろめる, stroke-order media 弘-stroke-order, NLP support-only context, and verification limitations with no active limitations present. This is current-standard Sapphire structural evidence for this lane."
       }
     ],
     "qualityGates": {
@@ -99385,53 +99464,18 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "PrimaryReading ひろめる is explicitly listed by the governed Japanese source and matches the generated verb card surface after the tracked additional-kun reading fix.",
-    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-06-09",
-    "revalidationSummary": "Current-standard structural review accepted 弘|ひろめる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, example sentence その団体は読書の楽しさを社会に弘めようとしています。, reading そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。, translation That organization is trying to spread the joy of reading through society., notes/support surface 弘める / 弘報 / 弘法, audio kanji-reading-弘-ひろめる, stroke-order media 弘-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。.",
-    "internalChecks": [
-      {
-        "type": "generated-surface",
-        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
-        "detail": "Generated card surface inspected for 弘|ひろめる: single-kanji anchor; Kanji and DisplayWord 弘; StudyWordKanji blank; PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; notes <ruby>弘<rt>ひろ</rt></ruby>める - to spread widely ／ <ruby>弘報<rt>こうほう</rt></ruby> - broad communication ／ <ruby>弘法<rt>こうぼう</rt></ruby> - Kobo (name/title); example その団体は読書の楽しさを社会に弘めようとしています。 ／ そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。 ／ That organization is trying to spread the joy of reading through society.; audio field includes kanji-reading-弘-ひろめる; stroke-order field includes 弘-stroke-order."
-      },
-      {
-        "type": "media-audit",
-        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
-        "detail": "Managed media identity inspected for 弘: exact audio media fragment kanji-reading-弘-ひろめる; stroke-order media target 弘; generated N1 package step reported full media coverage and no silent fallback accepted."
-      },
-      {
-        "type": "audio-review",
-        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
-        "detail": "Audio field identity reviewed for 弘|ひろめる: exact kanji-reading audio filename includes kanji-reading-弘-ひろめる; exported PrimaryReading ひろめる; managed package provenance present. Listening naturalness QA is not claimed here."
-      },
-      {
-        "type": "stroke-order-review",
-        "source": "exported StrokeOrder field and managed media manifest",
-        "detail": "Stroke-order field identity reviewed for 弘: exported stroke-order field targets 弘; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
-      },
-      {
-        "type": "golden-regression",
-        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
-        "detail": "Separate Gold regression command checked 弘; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
-      }
-    ],
-    "reviewEvidence": [
-      {
-        "type": "manual-review",
-        "source": "N1 Sapphire structural batch 41 review",
-        "detail": "Final structural product judgment for 弘|ひろめる: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
-      },
-      {
-        "type": "current-standard-review",
-        "source": "core N1 current-standard Sapphire structural batch 41",
-        "detail": "Current-standard structural review accepted 弘|ひろめる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, example sentence その団体は読書の楽しさを社会に弘めようとしています。, reading そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。, translation That organization is trying to spread the joy of reading through society., notes/support surface 弘める / 弘報 / 弘法, audio kanji-reading-弘-ひろめる, stroke-order media 弘-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。."
-      }
-    ],
     "verificationLimitations": [],
+    "fixSummary": "Kept the tracked additional kun reading ひろ.める and replaced unsupported 弘報 support with Kanjipedia-listed 弘遠 before Sapphire revalidation.",
     "sapphireReviewAudit": {
       "schemaVersion": 1,
-      "auditType": "n1-structural-sapphire-card-review",
+      "auditType": "n1-card-quality-sapphire-review",
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Sapphire structural review only; not Platinum, not Obsidian proof, not release readiness."
+      },
       "batch": {
         "deckKind": "kanji",
         "level": 1,
@@ -99470,45 +99514,60 @@
         "exampleReviewed": true,
         "supportOnlyExampleRole": true,
         "nlpSupportReviewed": true,
-        "nlpIsNonCertifying": true
+        "nlpIsNonCertifying": true,
+        "actualCardDataReviewed": true,
+        "reviewerDecision": "Actual live card data re-reviewed for 弘|ひろめる after tracked source/card surface fix: generated row, Gold expectation, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire revalidation."
       },
       "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
         "kanji": "弘",
         "displayWord": "弘",
-        "studyWordKanji": "",
         "primaryReading": "ひろめる",
         "meaningJP": "to spread widely",
         "kanjiMeanings": "expand / spread / broad / vast / wide",
-        "notes": "<ruby>弘<rt>ひろ</rt></ruby>める - to spread widely ／ <ruby>弘報<rt>こうほう</rt></ruby> - broad communication ／ <ruby>弘法<rt>こうぼう</rt></ruby> - Kobo (name/title)",
+        "studyWordKanji": "",
+        "onReading": "グ、 コウ",
+        "kunReading": "ひろ.い、 ひろ.める",
+        "notes": "<ruby>弘<rt>ひろ</rt></ruby>める - to spread widely ／ <ruby>弘遠<rt>こうえん</rt></ruby> - vast / far-reaching ／ <ruby>弘法<rt>こうぼう</rt></ruby> - Kobo (name/title)",
         "exampleSentence": "その団体は読書の楽しさを社会に弘めようとしています。 ／ そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。 ／ That organization is trying to spread the joy of reading through society.",
         "audio": "[sound:5F18_弘-kanji-reading-弘-ひろめる.wav]",
         "strokeOrder": "<img src=\"5F18_弘-stroke-order.svg\" alt=\"Stroke order for 弘\" />",
-        "onReading": "グ、 コウ",
-        "kunReading": "ひろ.い、 ひろ.める",
         "hardChecks": {
-          "Kanji is one target kanji": true,
-          "DisplayWord equals target kanji": true,
-          "StudyWordKanji is blank": true,
-          "PrimaryReading is present": true,
-          "MeaningJP is present": true,
-          "KanjiMeanings is present": true,
-          "ExampleSentence is present": true,
-          "StrokeOrder field is present": true,
-          "Audio is exact target plus primary reading": true,
-          "No generic offline fallback note": true
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
         },
-        "hardChecksPassed": true,
-        "generatedFailures": []
+        "hardChecksPassed": true
       },
       "sourceFieldReview": {
         "source": "https://www.kanjipedia.jp/kanji/0002146600",
         "sourceTitle": "弘 | 漢字一字 | 漢字ペディア",
-        "sourceEvidenceDetail": "Japanese-source review for 弘|ひろめる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002146600; source page title verified as 弘 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 コウ・グ, 訓 ひろい・ひろめる, and meanings broad/large plus spread or make widely known, with support words 弘遠, 寛弘, 弘通, and 弘法. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, and support surface 弘める / 弘報 / 弘法 for the individual kanji 弘. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Fixed before Sapphire: Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘報 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。.",
+        "sourceEvidenceDetail": "Japanese-source review for 弘|ひろめる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0002146600; source page title verified as 弘 | 漢字一字 | 漢字ペディア; source lists 音 コウ・グ, 訓 ひろい・ひろめる, meanings for broad/vast and spreading widely, and source-listed support words 弘遠, 寛弘, 弘通, and 弘法. Reviewer mapped this Japanese-source field evidence to PrimaryReading ひろめる, MeaningJP to spread widely, KanjiMeanings expand / spread / broad / vast / wide, and support surface 弘める / 弘遠 / 弘法 for the individual kanji 弘 after replacing unsupported 弘報. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弘|ひろめる: PrimaryReading ひろめる; MeaningJP to spread widely; KanjiMeanings expand / spread / broad / vast / wide; support surface 弘める / 弘遠 / 弘法; example sentence その団体は読書の楽しさを社会に弘めようとしています。.",
         "supportsPrimaryReading": true,
         "supportsPrimaryMeaning": true,
         "supportsBroaderMeanings": true,
         "supportsSupportSurface": true,
-        "limitation": ""
+        "limitation": "",
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0002146600",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        }
       },
       "levelPlacementReview": {
         "generatedLevelLabel": "N1",
@@ -99516,13 +99575,17 @@
         "levelPlacementCertifiedByThisEntry": false
       },
       "exampleSentenceReview": {
-        "japanese": "その団体は読書の楽しさを社会に弘めようとしています。",
+        "sentence": "その団体は読書の楽しさを社会に弘めようとしています。",
         "reading": "そのだんたいはどくしょのたのしさをしゃかいにひろめようとしています。",
         "translation": "That organization is trying to spread the joy of reading through society.",
-        "naturalEnoughForRelease": true,
+        "naturalJapanese": true,
         "learnerUseful": true,
+        "learnerFriendly": true,
         "levelAppropriate": true,
-        "supportOnly": true
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 弘|ひろめる: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
       },
       "nlpReview": {
         "packetId": "nlp-review-kanji-n1-0105",
@@ -99553,7 +99616,14 @@
       },
       "limitationDecision": {
         "activeLimitations": [],
-        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks",
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 弘|ひろめる after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, Gold, and source-origin review."
       },
       "rubricReview": {
         "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
@@ -99566,13 +99636,6 @@
         "goldRegressionIsInternalOnly": true,
         "nlpSupportOnly": true,
         "noProofLedgerChange": true
-      },
-      "migrationBoundary": {
-        "migratedAt": "2026-06-09",
-        "migratedFrom": "native reviewed Sapphire input",
-        "migrationType": "native-sapphire-structural-review",
-        "legacyCommandNamesPreserved": true,
-        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
       }
     },
     "migrationProvenance": {
@@ -99581,7 +99644,8 @@
       "migrationType": "native-sapphire-structural-review",
       "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
     },
-    "fixSummary": "Added tracked additional kun reading ひろ.める so the generated PrimaryReading ひろめる is source/inventory-backed before Sapphire promotion."
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated Sapphire structural lanes after tracked source/card surface fixes: generated surface, Gold regression, Japanese-source evidence, example sentence, notes/support surface, NLP support-only packet, audio identity, stroke-order media, and verification limitations. Sapphire structural scope only; no release-readiness claim."
   },
   {
     "kanji": "弥",
@@ -99834,7 +99898,10 @@
   },
   {
     "kanji": "弦",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-platinum-review",
     "readingIncludes": [
       "げん"
     ],
@@ -99850,21 +99917,59 @@
     "levelIncludes": [
       "N1"
     ],
+    "exampleIncludes": [
+      "静かな弦楽の音がホールいっぱいに広がりました。"
+    ],
     "notesIncludes": [
       "弦楽",
       "弦",
       "弦楽器"
     ],
-    "exampleIncludes": [
-      "静かな弦楽の音がホールいっぱいに広がりました。"
-    ],
-    "reviewedAt": "2026-06-09",
-    "reviewer": "codex-sapphire-review",
+    "primaryReadingRationale": "Uses げん because the live generated N1 card and Kanjipedia field evidence support that target-kanji reading; 弦楽 / 弦 / 弦楽器 remain support examples and do not replace the single-kanji card anchor.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0001995000",
-        "detail": "Japanese-source review for 弦|げん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001995000; source page title verified as 弦 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ゲン, 訓 つる, and meanings bowstring, string on an instrument, and the half-moon/chord sense, with support words 弦楽, 管弦, 弦月, 上弦, and 下弦. Reviewer mapped this Japanese-source field evidence to PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, and support surface 弦楽 / 弦 / 弦楽器 for the individual kanji 弦. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
+        "detail": "Japanese-source review for 弦|げん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001995000; source page title verified as 弦 | 漢字一字 | 漢字ペディア; source lists 音 ゲン, 訓 つる, meanings for bowstring, string on an instrument, and bow-shaped/half-moon curve, with support words 弦楽, 管弦, 上弦, and 鳴弦. Reviewer mapped this Japanese-source field evidence to PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord, and support surface 弦楽 / 弦 / 弦楽器 for the individual kanji 弦 after removing unsupported hypotenuse noise. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:ready -- --levels=1; out/build/exports/jlpt-n1.tsv",
+        "detail": "Generated card surface inspected for 弦|げん: Kanji and DisplayWord 弦; StudyWordKanji blank; PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord; notes <ruby>弦楽<rt>げんがく</rt></ruby> - string music ／ <ruby>弦<rt>つる</rt></ruby> - string / bowstring ／ <ruby>弦楽器<rt>げんがっき</rt></ruby> - string instrument; example 静かな弦楽の音がホールいっぱいに広がりました。 ／ しずかなげんがくのおとがホールいっぱいにひろがりました。 ／ The sound of calm string music spread throughout the hall.; audio field includes 5F26_弦-kanji-reading-弦-げん; stroke-order field includes 弦-stroke-order."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate N1 Gold regression checked 弦; deck:review:n1 passed 1230/1230 after this tracked card-surface fix. Gold protects generated field expectations but is not source truth or lane authority."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 弦: exact audio media fragment 5F26_弦-kanji-reading-弦-げん; stroke-order media target 弦; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio field identity reviewed for 弦|げん: exact kanji-reading audio filename includes 5F26_弦-kanji-reading-弦-げん; exported PrimaryReading げん; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 弦: exported stroke-order field targets 弦; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire source/card surface fix audit",
+        "detail": "Final Sapphire structural judgment for 弦|げん: tracked source/card data was fixed first, live generated row was regenerated, Gold regression passed, governed Japanese-source evidence and support-only example usage were reviewed, media identity fields were checked, NLP remained support-only, and no active verification limitations remain. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire surface-fix revalidation",
+        "detail": "Current-standard Sapphire review revalidated 弦|げん with separated evidence lanes, generated surface, Gold regression, Japanese-source evidence, PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord, example sentence 静かな弦楽の音がホールいっぱいに広がりました。, reading しずかなげんがくのおとがホールいっぱいにひろがりました。, translation The sound of calm string music spread throughout the hall., notes/support surface 弦楽 / 弦 / 弦楽器, audio 5F26_弦-kanji-reading-弦-げん, stroke-order media 弦-stroke-order, NLP support-only context, and verification limitations with no active limitations present. This is current-standard Sapphire structural evidence for this lane."
       }
     ],
     "qualityGates": {
@@ -99885,53 +99990,18 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "PrimaryReading げん is the source-listed on reading and best matches the generated compound/support surface 弦楽 and 弦楽器.",
-    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-06-09",
-    "revalidationSummary": "Current-standard structural review accepted 弦|げん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, example sentence 静かな弦楽の音がホールいっぱいに広がりました。, reading しずかなげんがくのおとがホールいっぱいにひろがりました。, translation The sound of calm string music spread throughout the hall., notes/support surface 弦楽 / 弦 / 弦楽器, audio kanji-reading-弦-げん, stroke-order media 弦-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。.",
-    "internalChecks": [
-      {
-        "type": "generated-surface",
-        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
-        "detail": "Generated card surface inspected for 弦|げん: single-kanji anchor; Kanji and DisplayWord 弦; StudyWordKanji blank; PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; notes <ruby>弦楽<rt>げんがく</rt></ruby> - string music ／ <ruby>弦<rt>つる</rt></ruby> - string / bowstring ／ <ruby>弦楽器<rt>げんがっき</rt></ruby> - string instrument; example 静かな弦楽の音がホールいっぱいに広がりました。 ／ しずかなげんがくのおとがホールいっぱいにひろがりました。 ／ The sound of calm string music spread throughout the hall.; audio field includes kanji-reading-弦-げん; stroke-order field includes 弦-stroke-order."
-      },
-      {
-        "type": "media-audit",
-        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
-        "detail": "Managed media identity inspected for 弦: exact audio media fragment kanji-reading-弦-げん; stroke-order media target 弦; generated N1 package step reported full media coverage and no silent fallback accepted."
-      },
-      {
-        "type": "audio-review",
-        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
-        "detail": "Audio field identity reviewed for 弦|げん: exact kanji-reading audio filename includes kanji-reading-弦-げん; exported PrimaryReading げん; managed package provenance present. Listening naturalness QA is not claimed here."
-      },
-      {
-        "type": "stroke-order-review",
-        "source": "exported StrokeOrder field and managed media manifest",
-        "detail": "Stroke-order field identity reviewed for 弦: exported stroke-order field targets 弦; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
-      },
-      {
-        "type": "golden-regression",
-        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
-        "detail": "Separate Gold regression command checked 弦; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
-      }
-    ],
-    "reviewEvidence": [
-      {
-        "type": "manual-review",
-        "source": "N1 Sapphire structural batch 41 review",
-        "detail": "Final structural product judgment for 弦|げん: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
-      },
-      {
-        "type": "current-standard-review",
-        "source": "core N1 current-standard Sapphire structural batch 41",
-        "detail": "Current-standard structural review accepted 弦|げん with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, example sentence 静かな弦楽の音がホールいっぱいに広がりました。, reading しずかなげんがくのおとがホールいっぱいにひろがりました。, translation The sound of calm string music spread throughout the hall., notes/support surface 弦楽 / 弦 / 弦楽器, audio kanji-reading-弦-げん, stroke-order media 弦-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。."
-      }
-    ],
     "verificationLimitations": [],
+    "fixSummary": "Removed the unsupported hypotenuse gloss from tracked card data before Sapphire revalidation.",
     "sapphireReviewAudit": {
       "schemaVersion": 1,
-      "auditType": "n1-structural-sapphire-card-review",
+      "auditType": "n1-card-quality-sapphire-review",
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Sapphire structural review only; not Platinum, not Obsidian proof, not release readiness."
+      },
       "batch": {
         "deckKind": "kanji",
         "level": 1,
@@ -99970,45 +100040,60 @@
         "exampleReviewed": true,
         "supportOnlyExampleRole": true,
         "nlpSupportReviewed": true,
-        "nlpIsNonCertifying": true
+        "nlpIsNonCertifying": true,
+        "actualCardDataReviewed": true,
+        "reviewerDecision": "Actual live card data re-reviewed for 弦|げん after tracked source/card surface fix: generated row, Gold expectation, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire revalidation."
       },
       "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
         "kanji": "弦",
         "displayWord": "弦",
-        "studyWordKanji": "",
         "primaryReading": "げん",
         "meaningJP": "string / bowstring",
-        "kanjiMeanings": "string / bowstring / chord / hypotenuse",
+        "kanjiMeanings": "string / bowstring / chord",
+        "studyWordKanji": "",
+        "onReading": "ゲン",
+        "kunReading": "つる",
         "notes": "<ruby>弦楽<rt>げんがく</rt></ruby> - string music ／ <ruby>弦<rt>つる</rt></ruby> - string / bowstring ／ <ruby>弦楽器<rt>げんがっき</rt></ruby> - string instrument",
         "exampleSentence": "静かな弦楽の音がホールいっぱいに広がりました。 ／ しずかなげんがくのおとがホールいっぱいにひろがりました。 ／ The sound of calm string music spread throughout the hall.",
         "audio": "[sound:5F26_弦-kanji-reading-弦-げん.wav]",
         "strokeOrder": "<img src=\"5F26_弦-stroke-order.gif\" alt=\"Stroke order for 弦\" />",
-        "onReading": "ゲン",
-        "kunReading": "つる",
         "hardChecks": {
-          "Kanji is one target kanji": true,
-          "DisplayWord equals target kanji": true,
-          "StudyWordKanji is blank": true,
-          "PrimaryReading is present": true,
-          "MeaningJP is present": true,
-          "KanjiMeanings is present": true,
-          "ExampleSentence is present": true,
-          "StrokeOrder field is present": true,
-          "Audio is exact target plus primary reading": true,
-          "No generic offline fallback note": true
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
         },
-        "hardChecksPassed": true,
-        "generatedFailures": []
+        "hardChecksPassed": true
       },
       "sourceFieldReview": {
         "source": "https://www.kanjipedia.jp/kanji/0001995000",
         "sourceTitle": "弦 | 漢字一字 | 漢字ペディア",
-        "sourceEvidenceDetail": "Japanese-source review for 弦|げん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001995000; source page title verified as 弦 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 ゲン, 訓 つる, and meanings bowstring, string on an instrument, and the half-moon/chord sense, with support words 弦楽, 管弦, 弦月, 上弦, and 下弦. Reviewer mapped this Japanese-source field evidence to PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord / hypotenuse, and support surface 弦楽 / 弦 / 弦楽器 for the individual kanji 弦. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord / hypotenuse; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。.",
+        "sourceEvidenceDetail": "Japanese-source review for 弦|げん: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0001995000; source page title verified as 弦 | 漢字一字 | 漢字ペディア; source lists 音 ゲン, 訓 つる, meanings for bowstring, string on an instrument, and bow-shaped/half-moon curve, with support words 弦楽, 管弦, 上弦, and 鳴弦. Reviewer mapped this Japanese-source field evidence to PrimaryReading げん, MeaningJP string / bowstring, KanjiMeanings string / bowstring / chord, and support surface 弦楽 / 弦 / 弦楽器 for the individual kanji 弦 after removing unsupported hypotenuse noise. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 弦|げん: PrimaryReading げん; MeaningJP string / bowstring; KanjiMeanings string / bowstring / chord; support surface 弦楽 / 弦 / 弦楽器; example sentence 静かな弦楽の音がホールいっぱいに広がりました。.",
         "supportsPrimaryReading": true,
         "supportsPrimaryMeaning": true,
         "supportsBroaderMeanings": true,
         "supportsSupportSurface": true,
-        "limitation": ""
+        "limitation": "",
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0001995000",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        }
       },
       "levelPlacementReview": {
         "generatedLevelLabel": "N1",
@@ -100016,13 +100101,17 @@
         "levelPlacementCertifiedByThisEntry": false
       },
       "exampleSentenceReview": {
-        "japanese": "静かな弦楽の音がホールいっぱいに広がりました。",
+        "sentence": "静かな弦楽の音がホールいっぱいに広がりました。",
         "reading": "しずかなげんがくのおとがホールいっぱいにひろがりました。",
         "translation": "The sound of calm string music spread throughout the hall.",
-        "naturalEnoughForRelease": true,
+        "naturalJapanese": true,
         "learnerUseful": true,
+        "learnerFriendly": true,
         "levelAppropriate": true,
-        "supportOnly": true
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 弦|げん: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
       },
       "nlpReview": {
         "packetId": "nlp-review-kanji-n1-0089",
@@ -100053,7 +100142,14 @@
       },
       "limitationDecision": {
         "activeLimitations": [],
-        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks",
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 弦|げん after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, Gold, and source-origin review."
       },
       "rubricReview": {
         "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
@@ -100066,13 +100162,6 @@
         "goldRegressionIsInternalOnly": true,
         "nlpSupportOnly": true,
         "noProofLedgerChange": true
-      },
-      "migrationBoundary": {
-        "migratedAt": "2026-06-09",
-        "migratedFrom": "native reviewed Sapphire input",
-        "migrationType": "native-sapphire-structural-review",
-        "legacyCommandNamesPreserved": true,
-        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
       }
     },
     "migrationProvenance": {
@@ -100080,7 +100169,9 @@
       "migratedFrom": "native reviewed Sapphire input",
       "migrationType": "native-sapphire-structural-review",
       "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
-    }
+    },
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated Sapphire structural lanes after tracked source/card surface fixes: generated surface, Gold regression, Japanese-source evidence, example sentence, notes/support surface, NLP support-only packet, audio identity, stroke-order media, and verification limitations. Sapphire structural scope only; no release-readiness claim."
   },
   {
     "kanji": "弧",
@@ -100333,7 +100424,10 @@
   },
   {
     "kanji": "張",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
+    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
+    "reviewedAt": "2026-06-09",
+    "reviewer": "codex-platinum-review",
     "readingIncludes": [
       "はる"
     ],
@@ -100344,27 +100438,64 @@
     "kanjiMeaningsIncludes": [
       "stretch",
       "spread",
-      "counter for bows",
-      "put up"
+      "counter for bows &amp; stringed instruments"
     ],
     "levelIncludes": [
       "N1"
     ],
-    "notesIncludes": [
-      "張る",
-      "緊張",
-      "欲張り"
-    ],
     "exampleIncludes": [
       "新しい地図を壁に張って旅の計画を立てました。"
     ],
-    "reviewedAt": "2026-06-09",
-    "reviewer": "codex-sapphire-review",
+    "notesIncludes": [
+      "張る",
+      "緊張",
+      "主張"
+    ],
+    "primaryReadingRationale": "Uses はる because the live generated N1 card and Kanjipedia field evidence support that target-kanji reading; 張る / 緊張 / 主張 remain support examples and do not replace the single-kanji card anchor.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "https://www.kanjipedia.jp/kanji/0004796600",
-        "detail": "Japanese-source review for 張|はる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004796600; source page title verified as 張 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 チョウ, 訓 はる, and meanings stretch/pull tight, spread/enlarge, insist, and a counter for clothes, koto, bows, and curtains, with support words 張力, 緊張, 拡張, 膨張, and 主張. Reviewer mapped this Japanese-source field evidence to PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), and support surface 張る / 緊張 / 欲張り for the individual kanji 張. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。."
+        "detail": "Japanese-source review for 張|はる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004796600; source page title verified as 張 | 漢字一字 | 漢字ペディア; source lists 音 チョウ, 訓 はる, meanings stretch/pull tight, spread/enlarge, insist, and a counter for clothing, koto, bows, and curtains, with support words 張力, 緊張, 拡張, 膨張, and 主張. Reviewer mapped this Japanese-source field evidence to PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments, and support surface 張る / 緊張 / 主張 for the individual kanji 張 after removing unsupported put up (tent) and replacing 欲張り. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments; support surface 張る / 緊張 / 主張; example sentence 新しい地図を壁に張って旅の計画を立てました。."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "npm run deck:ready -- --levels=1; out/build/exports/jlpt-n1.tsv",
+        "detail": "Generated card surface inspected for 張|はる: Kanji and DisplayWord 張; StudyWordKanji blank; PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments; notes <ruby>張<rt>は</rt></ruby>る - to stretch / put up ／ <ruby>緊張<rt>きんちょう</rt></ruby> - tension ／ <ruby>主張<rt>しゅちょう</rt></ruby> - claim / insistence; example 新しい地図を壁に張って旅の計画を立てました。 ／ あたらしいちずをかべにはってたびのけいかくをたてました。 ／ I put a new map on the wall and planned the trip.; audio field includes 5F35_張-kanji-reading-張-はる; stroke-order field includes 張-stroke-order."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
+        "detail": "Separate N1 Gold regression checked 張; deck:review:n1 passed 1230/1230 after this tracked card-surface fix. Gold protects generated field expectations but is not source truth or lane authority."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:ready -- --levels=1; managed kanji media manifest",
+        "detail": "Managed media provenance inspected for 張: exact audio media fragment 5F35_張-kanji-reading-張-はる; stroke-order media target 張; package media reports full N1 coverage with no silent fallback accepted."
+      },
+      {
+        "type": "audio-review",
+        "source": "exported Audio field and managed media manifest",
+        "detail": "Audio field identity reviewed for 張|はる: exact kanji-reading audio filename includes 5F35_張-kanji-reading-張-はる; exported PrimaryReading はる; managed package provenance present. Listening naturalness QA is not claimed here."
+      },
+      {
+        "type": "stroke-order-review",
+        "source": "exported StrokeOrder field and managed media manifest",
+        "detail": "Stroke-order field identity reviewed for 張: exported stroke-order field targets 張; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "manual-review",
+        "source": "N1 Sapphire source/card surface fix audit",
+        "detail": "Final Sapphire structural judgment for 張|はる: tracked source/card data was fixed first, live generated row was regenerated, Gold regression passed, governed Japanese-source evidence and support-only example usage were reviewed, media identity fields were checked, NLP remained support-only, and no active verification limitations remain. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments; support surface 張る / 緊張 / 主張; example sentence 新しい地図を壁に張って旅の計画を立てました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "core N1 current-standard Sapphire surface-fix revalidation",
+        "detail": "Current-standard Sapphire review revalidated 張|はる with separated evidence lanes, generated surface, Gold regression, Japanese-source evidence, PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments, example sentence 新しい地図を壁に張って旅の計画を立てました。, reading あたらしいちずをかべにはってたびのけいかくをたてました。, translation I put a new map on the wall and planned the trip., notes/support surface 張る / 緊張 / 主張, audio 5F35_張-kanji-reading-張-はる, stroke-order media 張-stroke-order, NLP support-only context, and verification limitations with no active limitations present. This is current-standard Sapphire structural evidence for this lane."
       }
     ],
     "qualityGates": {
@@ -100385,53 +100516,18 @@
       "strokeOrderTargetVerified": true,
       "noSilentFallback": true
     },
-    "primaryReadingRationale": "PrimaryReading はる is the source-listed kun verb and matches the generated map-on-wall example and stretch/put-up meaning.",
-    "reviewStandard": "kanji-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-06-09",
-    "revalidationSummary": "Current-standard structural review accepted 張|はる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), example sentence 新しい地図を壁に張って旅の計画を立てました。, reading あたらしいちずをかべにはってたびのけいかくをたてました。, translation I put a new map on the wall and planned the trip., notes/support surface 張る / 緊張 / 欲張り, audio kanji-reading-張-はる, stroke-order media 張-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。.",
-    "internalChecks": [
-      {
-        "type": "generated-surface",
-        "source": "npm run deck:sapphire:batch -- --level=1 --kanji=弓,弔,弘,弥,弦,弧,張,弾 --queue=missing-current-standard --json",
-        "detail": "Generated card surface inspected for 張|はる: single-kanji anchor; Kanji and DisplayWord 張; StudyWordKanji blank; PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); notes <ruby>張<rt>は</rt></ruby>る - to stretch / put up ／ <ruby>緊張<rt>きんちょう</rt></ruby> - tension ／ <ruby>欲張<rt>よくば</rt></ruby>り - greedy person; example 新しい地図を壁に張って旅の計画を立てました。 ／ あたらしいちずをかべにはってたびのけいかくをたてました。 ／ I put a new map on the wall and planned the trip.; audio field includes kanji-reading-張-はる; stroke-order field includes 張-stroke-order."
-      },
-      {
-        "type": "media-audit",
-        "source": "npm run deck:kanji:nlp-signals -- --levels=1 --artifact-limit=328; generated Deck Ready step; managed kanji media manifest",
-        "detail": "Managed media identity inspected for 張: exact audio media fragment kanji-reading-張-はる; stroke-order media target 張; generated N1 package step reported full media coverage and no silent fallback accepted."
-      },
-      {
-        "type": "audio-review",
-        "source": "out/build/exports/jlpt-n1.tsv; managed media manifest",
-        "detail": "Audio field identity reviewed for 張|はる: exact kanji-reading audio filename includes kanji-reading-張-はる; exported PrimaryReading はる; managed package provenance present. Listening naturalness QA is not claimed here."
-      },
-      {
-        "type": "stroke-order-review",
-        "source": "exported StrokeOrder field and managed media manifest",
-        "detail": "Stroke-order field identity reviewed for 張: exported stroke-order field targets 張; managed source manifest confirms stroke-order media provenance. Visual stroke sequence QA is not claimed here."
-      },
-      {
-        "type": "golden-regression",
-        "source": "templates/golden_n1_review_set.json and npm run deck:review:n1",
-        "detail": "Separate Gold regression command checked 張; this selected card passed in the live N1 Gold gate. Gold regression protects generated field expectations but is not source truth and not source evidence."
-      }
-    ],
-    "reviewEvidence": [
-      {
-        "type": "manual-review",
-        "source": "N1 Sapphire structural batch 41 review",
-        "detail": "Final structural product judgment for 張|はる: individual-kanji card for an N1 learner, primary reading and meanings reviewed against Japanese source evidence, support-only example usage, learner-friendly and useful card surface, blank StudyWordKanji, no silent fallback, and no active verification limitations. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。."
-      },
-      {
-        "type": "current-standard-review",
-        "source": "core N1 current-standard Sapphire structural batch 41",
-        "detail": "Current-standard structural review accepted 張|はる with separated evidence lanes, generated surface, Japanese-source evidence, PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), example sentence 新しい地図を壁に張って旅の計画を立てました。, reading あたらしいちずをかべにはってたびのけいかくをたてました。, translation I put a new map on the wall and planned the trip., notes/support surface 張る / 緊張 / 欲張り, audio kanji-reading-張-はる, stroke-order media 張-stroke-order, release-quality support-only example usage, learner-friendly, useful, level-appropriate, natural sentence review, and verification limitations with no active limitations present. Evidence lanes separated sourceEvidence, internalChecks, and reviewEvidence. This is current-standard structural Sapphire evidence; it is not Obsidian proof and does not claim release readiness. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。."
-      }
-    ],
     "verificationLimitations": [],
+    "fixSummary": "Removed unsupported put up (tent) broader gloss and replaced 欲張り support with Kanjipedia-listed 主張 before Sapphire revalidation.",
     "sapphireReviewAudit": {
       "schemaVersion": 1,
-      "auditType": "n1-structural-sapphire-card-review",
+      "auditType": "n1-card-quality-sapphire-review",
+      "migrationBoundary": {
+        "migratedAt": "2026-06-09",
+        "migratedFrom": "native reviewed Sapphire input",
+        "migrationType": "native-sapphire-structural-review",
+        "legacyCommandNamesPreserved": true,
+        "authority": "Sapphire structural review only; not Platinum, not Obsidian proof, not release readiness."
+      },
       "batch": {
         "deckKind": "kanji",
         "level": 1,
@@ -100470,45 +100566,60 @@
         "exampleReviewed": true,
         "supportOnlyExampleRole": true,
         "nlpSupportReviewed": true,
-        "nlpIsNonCertifying": true
+        "nlpIsNonCertifying": true,
+        "actualCardDataReviewed": true,
+        "reviewerDecision": "Actual live card data re-reviewed for 張|はる after tracked source/card surface fix: generated row, Gold expectation, source field evidence, example sentence with reading and translation, NLP support packet, audio identity, stroke-order target/provenance, limitations, learner usefulness, and product fit were inspected before Sapphire revalidation."
       },
       "generatedSurface": {
+        "artifact": "out/build/exports/jlpt-n1.tsv",
         "kanji": "張",
         "displayWord": "張",
-        "studyWordKanji": "",
         "primaryReading": "はる",
         "meaningJP": "to stretch / put up",
-        "kanjiMeanings": "stretch / spread / counter for bows &amp; stringed instruments / put up (tent)",
-        "notes": "<ruby>張<rt>は</rt></ruby>る - to stretch / put up ／ <ruby>緊張<rt>きんちょう</rt></ruby> - tension ／ <ruby>欲張<rt>よくば</rt></ruby>り - greedy person",
+        "kanjiMeanings": "stretch / spread / counter for bows &amp; stringed instruments",
+        "studyWordKanji": "",
+        "onReading": "チョウ",
+        "kunReading": "-は.り、 -ば.り、 は.る",
+        "notes": "<ruby>張<rt>は</rt></ruby>る - to stretch / put up ／ <ruby>緊張<rt>きんちょう</rt></ruby> - tension ／ <ruby>主張<rt>しゅちょう</rt></ruby> - claim / insistence",
         "exampleSentence": "新しい地図を壁に張って旅の計画を立てました。 ／ あたらしいちずをかべにはってたびのけいかくをたてました。 ／ I put a new map on the wall and planned the trip.",
         "audio": "[sound:5F35_張-kanji-reading-張-はる.wav]",
         "strokeOrder": "<img src=\"5F35_張-stroke-order.gif\" alt=\"Stroke order for 張\" />",
-        "onReading": "チョウ",
-        "kunReading": "-は.り、 -ば.り、 は.る",
         "hardChecks": {
-          "Kanji is one target kanji": true,
-          "DisplayWord equals target kanji": true,
-          "StudyWordKanji is blank": true,
-          "PrimaryReading is present": true,
-          "MeaningJP is present": true,
-          "KanjiMeanings is present": true,
-          "ExampleSentence is present": true,
-          "StrokeOrder field is present": true,
-          "Audio is exact target plus primary reading": true,
-          "No generic offline fallback note": true
+          "singleKanjiAnchor": true,
+          "studyWordSuppressed": true,
+          "primaryReadingMatches": true,
+          "meaningProtected": true,
+          "kanjiMeaningsProtected": true,
+          "notesProtected": true,
+          "exampleProtected": true,
+          "audioExactPrimaryReading": true,
+          "strokeOrderFieldPresent": true,
+          "noSilentFallback": true
         },
-        "hardChecksPassed": true,
-        "generatedFailures": []
+        "hardChecksPassed": true
       },
       "sourceFieldReview": {
         "source": "https://www.kanjipedia.jp/kanji/0004796600",
         "sourceTitle": "張 | 漢字一字 | 漢字ペディア",
-        "sourceEvidenceDetail": "Japanese-source review for 張|はる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004796600; source page title verified as 張 | 漢字一字 | 漢字ペディア; Kanjipedia lists 音 チョウ, 訓 はる, and meanings stretch/pull tight, spread/enlarge, insist, and a counter for clothes, koto, bows, and curtains, with support words 張力, 緊張, 拡張, 膨張, and 主張. Reviewer mapped this Japanese-source field evidence to PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent), and support surface 張る / 緊張 / 欲張り for the individual kanji 張. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments / put up (tent); support surface 張る / 緊張 / 欲張り; example sentence 新しい地図を壁に張って旅の計画を立てました。.",
+        "sourceEvidenceDetail": "Japanese-source review for 張|はる: Kanjipedia card-field page checked at https://www.kanjipedia.jp/kanji/0004796600; source page title verified as 張 | 漢字一字 | 漢字ペディア; source lists 音 チョウ, 訓 はる, meanings stretch/pull tight, spread/enlarge, insist, and a counter for clothing, koto, bows, and curtains, with support words 張力, 緊張, 拡張, 膨張, and 主張. Reviewer mapped this Japanese-source field evidence to PrimaryReading はる, MeaningJP to stretch / put up, KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments, and support surface 張る / 緊張 / 主張 for the individual kanji 張 after removing unsupported put up (tent) and replacing 欲張り. This is card-field verification only, not JLPT placement evidence, generated TSV evidence, Obsidian proof, or release readiness. Use: kanji-field-verification. Protected-field mapping for 張|はる: PrimaryReading はる; MeaningJP to stretch / put up; KanjiMeanings stretch / spread / counter for bows &amp; stringed instruments; support surface 張る / 緊張 / 主張; example sentence 新しい地図を壁に張って旅の計画を立てました。.",
         "supportsPrimaryReading": true,
         "supportsPrimaryMeaning": true,
         "supportsBroaderMeanings": true,
         "supportsSupportSurface": true,
-        "limitation": ""
+        "limitation": "",
+        "sourceId": "kanjipedia",
+        "sourceName": "Kanjipedia",
+        "sourceStatus": "active",
+        "sourceUrl": "https://www.kanjipedia.jp/kanji/0004796600",
+        "supports": {
+          "targetKanji": true,
+          "primaryReading": true,
+          "primaryMeaning": true,
+          "broaderMeanings": true,
+          "supportVocabulary": true,
+          "cardFieldOnly": true,
+          "jlptPlacementTruth": false
+        }
       },
       "levelPlacementReview": {
         "generatedLevelLabel": "N1",
@@ -100516,13 +100627,17 @@
         "levelPlacementCertifiedByThisEntry": false
       },
       "exampleSentenceReview": {
-        "japanese": "新しい地図を壁に張って旅の計画を立てました。",
+        "sentence": "新しい地図を壁に張って旅の計画を立てました。",
         "reading": "あたらしいちずをかべにはってたびのけいかくをたてました。",
         "translation": "I put a new map on the wall and planned the trip.",
-        "naturalEnoughForRelease": true,
+        "naturalJapanese": true,
         "learnerUseful": true,
+        "learnerFriendly": true,
         "levelAppropriate": true,
-        "supportOnly": true
+        "releaseQuality": true,
+        "supportOnly": true,
+        "anchorPreserved": true,
+        "reviewerJudgment": "Reviewed the live example for 張|はる: natural enough, learner-useful, learner-friendly, level-appropriate for an N1 kanji support sentence, release-quality, and support-only; it does not replace the individual-kanji anchor."
       },
       "nlpReview": {
         "packetId": "nlp-review-kanji-n1-0206",
@@ -100553,7 +100668,14 @@
       },
       "limitationDecision": {
         "activeLimitations": [],
-        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks"
+        "decision": "no active limitations recorded after source, generated-surface, example, media-identity, and NLP support checks",
+        "activeVerificationLimitations": [],
+        "coreUncertainty": false,
+        "unresolvedCoreFields": [],
+        "noActiveLimitations": true,
+        "releaseReadinessClaimed": false,
+        "obsidianProofClaimed": false,
+        "reviewerDecision": "No active card-field verification limitations remain for 張|はる after generated surface, source-field, example, NLP, audio-identity, stroke-order-target, Gold, and source-origin review."
       },
       "rubricReview": {
         "rubricVersion": "kanji-sapphire-structural-review-rubric-v1",
@@ -100566,13 +100688,6 @@
         "goldRegressionIsInternalOnly": true,
         "nlpSupportOnly": true,
         "noProofLedgerChange": true
-      },
-      "migrationBoundary": {
-        "migratedAt": "2026-06-09",
-        "migratedFrom": "native reviewed Sapphire input",
-        "migrationType": "native-sapphire-structural-review",
-        "legacyCommandNamesPreserved": true,
-        "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
       }
     },
     "migrationProvenance": {
@@ -100580,7 +100695,9 @@
       "migratedFrom": "native reviewed Sapphire input",
       "migrationType": "native-sapphire-structural-review",
       "authority": "Native Sapphire structural certification only; not Platinum and not Obsidian proof, source-governance completion, or release readiness."
-    }
+    },
+    "revalidatedAt": "2026-06-09",
+    "revalidationSummary": "Revalidated Sapphire structural lanes after tracked source/card surface fixes: generated surface, Gold regression, Japanese-source evidence, example sentence, notes/support surface, NLP support-only packet, audio identity, stroke-order media, and verification limitations. Sapphire structural scope only; no release-readiness claim."
   },
   {
     "kanji": "弾",

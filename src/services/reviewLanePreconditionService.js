@@ -7,6 +7,61 @@ function normalizeText(value) {
     return String(value ?? "").trim();
 }
 
+function normalizeLaneBoundaryText(value) {
+    return normalizeText(value).replace(/\s+/g, " ");
+}
+
+function evidenceEntries(value) {
+    return (Array.isArray(value) ? value : [])
+        .filter((entry) => entry && typeof entry === "object" && !Array.isArray(entry));
+}
+
+function buildPlatinumLaneAuthorityLabel({ deckKind = "", entry = {} } = {}) {
+    if (deckKind === "word") {
+        return buildWordEntryIdentity(entry);
+    }
+    return normalizeText(entry.kanji);
+}
+
+const SAPPHIRE_REVIEW_STANDARD_PATTERN = /\b(?:kanji|word)-sapphire-v\d+-evidence-lanes\b/i;
+const SAPPHIRE_REVIEW_AUTHORITY_SOURCE_PATTERN = /\bSapphire\b/i;
+const SAPPHIRE_DERIVED_PLATINUM_AUTHORITY_PATTERN = /(?:Sapphire product review|current-standard\s+(?:word\s+|kanji\s+)?Sapphire review|Native Sapphire structural review entry|Representation migration[^.]*Sapphire|Sapphire structural review entry|This is not Platinum|not Platinum card-surface inspection|not Platinum,|not Platinum\.|structure-only Sapphire)/i;
+
+function validatePlatinumLaneAuthorityBoundary({ deckKind = "", entry = {} } = {}) {
+    const failures = [];
+    const label = buildPlatinumLaneAuthorityLabel({ deckKind, entry }) || "entry";
+    const reviewer = normalizeLaneBoundaryText(entry.reviewer);
+    const reviewStandard = normalizeLaneBoundaryText(entry.reviewStandard);
+
+    if (entry.migrationProvenance !== undefined) {
+        failures.push(`${label} active Platinum entry must not carry Sapphire migrationProvenance; create lane-native Platinum evidence after actual card-surface inspection`);
+    }
+    if (entry.sapphireReviewAudit !== undefined) {
+        failures.push(`${label} active Platinum entry must not carry sapphireReviewAudit; Sapphire structural audit is a prior-lane precondition, not Platinum authority`);
+    }
+    if (/sapphire/i.test(reviewer)) {
+        failures.push(`${label} active Platinum reviewer must not be a Sapphire reviewer identity`);
+    }
+    if (SAPPHIRE_REVIEW_STANDARD_PATTERN.test(reviewStandard)) {
+        failures.push(`${label} active Platinum reviewStandard must not use a Sapphire review standard`);
+    }
+
+    for (const laneName of ["sourceEvidence", "internalChecks", "reviewEvidence"]) {
+        for (const evidence of evidenceEntries(entry[laneName])) {
+            const source = normalizeLaneBoundaryText(evidence.source);
+            const detail = normalizeLaneBoundaryText(evidence.detail);
+            if (SAPPHIRE_REVIEW_AUTHORITY_SOURCE_PATTERN.test(source)) {
+                failures.push(`${label} ${laneName} source must not use Sapphire as Platinum review authority: ${source}`);
+            }
+            if (SAPPHIRE_DERIVED_PLATINUM_AUTHORITY_PATTERN.test(detail)) {
+                failures.push(`${label} ${laneName} detail appears copied from Sapphire authority instead of lane-native Platinum card-surface inspection`);
+            }
+        }
+    }
+
+    return failures;
+}
+
 function formatWordIdentity(word = "", reading = "") {
     const normalizedWord = normalizeText(word);
     const normalizedReading = normalizeText(reading);
@@ -219,4 +274,5 @@ module.exports = {
     collectPreconditionFailures,
     formatWordIdentity,
     mergeFailuresIntoResult,
+    validatePlatinumLaneAuthorityBoundary,
 };

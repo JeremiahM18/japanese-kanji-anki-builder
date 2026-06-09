@@ -872,6 +872,15 @@ test("resolved tracked N1 batch entries keep selected learner-facing editorial c
     assert.deepEqual(curatedStudyData["跳"].preferredWords, ["跳ぶ", "跳ねる", "跳躍"]);
     assert.ok(curatedStudyData["廉"].blockedMeanings.includes("suspicion"));
     assert.ok(curatedStudyData["露"].blockedMeanings.includes("Russia"));
+    assert.deepEqual(curatedStudyData["庸"].preferredWords, ["凡庸", "中庸", "登庸"]);
+    assert.equal(curatedStudyData["庸"].exampleSentence.japanese, "その案は凡庸に見えても現場では役立ちました。");
+    assert.deepEqual(curatedStudyData["廊"].blockedMeanings, ["tower"]);
+    assert.deepEqual(curatedStudyData["弓"].blockedMeanings, ["bow (archery, violin)"]);
+    assert.deepEqual(curatedStudyData["弘"].preferredWords, ["弘める", "弘遠", "弘法"]);
+    assert.ok(!curatedStudyData["弘"].notes.includes("弘報"));
+    assert.deepEqual(curatedStudyData["弦"].blockedMeanings, ["hypotenuse"]);
+    assert.deepEqual(curatedStudyData["張"].preferredWords, ["張る", "緊張", "主張"]);
+    assert.deepEqual(curatedStudyData["張"].blockedMeanings, ["put up (tent)"]);
     assert.deepEqual(curatedStudyData["倭"].preferredWords, ["倭", "倭人", "倭国"]);
     assert.equal(curatedStudyData["倭"].exampleSentence.japanese, "倭という呼び名は古い時代の日本を表します。");
     assert.ok(curatedStudyData["枠"].blockedMeanings.includes("(kokuji)"));

@@ -18,6 +18,9 @@ const {
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
+const {
+    validatePlatinumLaneAuthorityBoundary,
+} = require("../src/services/reviewLanePreconditionService");
 const { buildPitchAccentHtml } = require("../src/services/pitchAccentRenderService");
 const {
     GENERATED_PITCH_LABEL,
@@ -102,6 +105,16 @@ function assertAuditIncludes(label, haystack, needle) {
 
 function activeEntries(entries = [], activeStatuses = []) {
     return entries.filter((entry) => activeStatuses.includes(entry.status));
+}
+
+function platinumDeckKindForFile(fileName = "") {
+    return /_word_review_set\.json$/.test(fileName) ? "word" : "kanji";
+}
+
+function platinumActiveStatusesForFile(fileName = "") {
+    return platinumDeckKindForFile(fileName) === "word"
+        ? ACTIVE_WORD_PLATINUM_STATUSES
+        : ACTIVE_KANJI_PLATINUM_STATUSES;
 }
 
 function assertN1PlatinumResetToZero(entries = []) {
@@ -459,6 +472,30 @@ test("tracked populated kanji platinum manifests bind evidence to protected fiel
         }
 
         assert.equal(report.passed, true, `${fileName}\n${formatPlatinumKanjiReviewReport(report)}`);
+    }
+});
+
+test("tracked active Platinum manifests do not use Sapphire as Platinum authority", () => {
+    const platinumFiles = fs
+        .readdirSync(TEMPLATES_DIR)
+        .filter((name) => (
+            /^platinum_n[1-5]_review_set\.json$/.test(name)
+            || /^platinum_n[1-5]_word_review_set\.json$/.test(name)
+        ))
+        .sort();
+
+    for (const fileName of platinumFiles) {
+        const deckKind = platinumDeckKindForFile(fileName);
+        const entries = loadJson(path.join("templates", fileName));
+        const manifestActiveEntries = activeEntries(entries, platinumActiveStatusesForFile(fileName));
+
+        for (const entry of manifestActiveEntries) {
+            assert.deepEqual(
+                validatePlatinumLaneAuthorityBoundary({ deckKind, entry }),
+                [],
+                `${fileName} active Platinum entry must be lane-native, not copied from Sapphire authority`
+            );
+        }
     }
 });
 

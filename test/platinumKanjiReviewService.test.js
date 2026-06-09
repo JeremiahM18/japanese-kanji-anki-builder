@@ -143,6 +143,42 @@ test("evaluatePlatinumKanjiReviewSet does not require Obsidian proof for current
     assert.equal(report.failedCount, 0);
 });
 
+test("evaluatePlatinumKanjiReviewSet rejects Platinum entries manufactured from Sapphire authority", () => {
+    const report = evaluatePlatinumKanjiReviewSet({
+        rows: [buildRow()],
+        entries: [buildCurrentStandardEntry({
+            reviewer: "codex-sapphire-review",
+            migrationProvenance: {
+                migratedFrom: "templates/sapphire_n5_review_set.json",
+                authority: "Native Sapphire structural review entry. This is not Platinum card-surface inspection.",
+            },
+            sapphireReviewAudit: {
+                auditType: "sapphire-structural-review",
+            },
+            reviewEvidence: buildReviewEvidence().map((evidence) => {
+                if (evidence.type !== "manual-review") {
+                    return evidence;
+                }
+                return {
+                    ...evidence,
+                    source: "Sapphire product review",
+                    detail: "Manual review copied from current-standard kanji Sapphire review. This is not Platinum card-surface inspection.",
+                };
+            }),
+        })],
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    const failures = report.results[0].failures.join("\n");
+    assert.equal(report.passed, false);
+    assert.match(failures, /must not carry Sapphire migrationProvenance/);
+    assert.match(failures, /must not carry sapphireReviewAudit/);
+    assert.match(failures, /reviewer must not be a Sapphire reviewer identity/);
+    assert.match(failures, /reviewEvidence source must not use Sapphire as Platinum review authority/);
+    assert.match(failures, /appears copied from Sapphire authority/);
+});
+
 test("evaluatePlatinumKanjiReviewSet enforces Gold and Sapphire preconditions when claiming the lane", () => {
     const baseOptions = {
         rows: [buildRow()],

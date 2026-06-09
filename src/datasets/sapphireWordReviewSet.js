@@ -131,7 +131,7 @@ const sapphireWordReviewEntrySchema = z.object({
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 path: ["migrationProvenance"],
-                message: "migrationProvenance is required for migrated active Sapphire word entries",
+                message: "migrationProvenance is required for active Sapphire word entries",
             });
         }
         if (entry.status === "fixed_then_sapphire" && !entry.fixSummary) {

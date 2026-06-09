@@ -54,6 +54,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run voicevox:start:fresh` | Recreate the local VOICEVOX Docker container with local host `127.0.0.1:50021` mapped to container `50121` plus required runtime hardening when the old container shape is wrong |
 | `npm run voicevox:stop` | Stop the local VOICEVOX Docker container after governed audio work |
 | `npm run deck:readiness` | Report per-level quality gates |
+| `npm run deck:closeout -- --levels=5,4,3,2,1` | Print a read-only closeout report with git state, kanji/word Silver/Gold/Sapphire/Platinum counts, expected coverage-failure gate classification, NLP governance status, CI/release/manual-QA hygiene, and proof-ledger worktree status; it does not run Obsidian commands or write proof ledger events |
 | `npm run deck:preview` | Preview kanji cards |
 | `npm run deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard` | Build a read-only core-kanji Sapphire review packet for generated rows missing current-standard Sapphire coverage |
 | `npm run deck:sapphire:promote -- --level=1 --input=<reviewed-json>` | Validate and merge reviewed Sapphire candidate entries; writes only with `--write`, does not create Platinum or Obsidian proof |

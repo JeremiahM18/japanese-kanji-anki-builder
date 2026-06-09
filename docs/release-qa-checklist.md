@@ -5,11 +5,13 @@ Run this checklist after automated gates pass and before marking a deck mileston
 ## Build verification
 
 - `npm test`
+- `git diff --check`
 - `npm run lint`
 - `npm run typecheck`
 - `npm run deck:review:accessibility -- --deck-kind=kanji`
 - `npm run deck:review:accessibility -- --deck-kind=word`
 - `npm run deck:kanji:review-status`
+- `npm run deck:closeout -- --levels=<levels>` before handoff, commit, or release-candidate review
 - `npm run product:artifacts:n5` when N5 word ships
 - `npm run product:artifacts:kanji:n5:preflight` when N5 kanji ships
 - `npm run product:artifacts:kanji:n5` when N5 kanji ships
@@ -26,6 +28,8 @@ Run this checklist after automated gates pass and before marking a deck mileston
 - `npm run release:gate`
 
 `release:gate` is smoke-fixture validation. It does not replace level-specific product checks.
+
+`deck:closeout` is a read-only handoff and hygiene report. It summarizes git state, lane counts, expected fail-closed coverage gates, NLP support status, documentation count-update reminders, CI/release commands, manual media/import QA boundaries, and whether the tracked Obsidian proof ledger is dirty. It does not certify cards, run Obsidian status commands, append proof events, perform manual Anki import QA, or listen to audio.
 
 ## Release QA evidence packet
 
@@ -72,6 +76,7 @@ The packet must name the release candidate, deck kind, JLPT levels, automated re
 - Run `npm run product:artifacts:kanji:release-qa` before any kanji release-ready claim. It must stay blocked until APKG approval, managed stroke-order/audio QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded.
 - Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits, tracked-source N5 word and kanji TSV gates, and Gold regression checks, but it does not replace the all-level kanji gate, APKG approval, or manual QA.
 - Run the deck readiness command for each shipped kanji or word surface.
+- Run `npm run deck:closeout -- --levels=<levels>` after count-moving deck work and before handoff; update every release-facing count line it exposes as stale before claiming the bucket is closed.
 - Confirm tracked-source coverage, provenance, and known limitations match the intended release.
 
 ## Kanji deck manual spot review

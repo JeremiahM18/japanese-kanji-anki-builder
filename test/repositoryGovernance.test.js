@@ -742,6 +742,7 @@ test("child process execution stays explicit and allowlisted", () => {
         "scripts/runWordNlpExpansionSupport.js",
         "src/services/ankiPackageService.js",
         "src/services/ciSmokeService.js",
+        "src/services/deckCloseoutStatusService.js",
         "src/services/obsidianProofSqliteMirrorService.js",
         "src/services/productReadinessService.js",
         "src/services/toolchainService.js",

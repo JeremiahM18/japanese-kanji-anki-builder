@@ -25,6 +25,7 @@ Live commands, tracked schemas, tracked manifests, proof ledgers, and release ev
 - Documentation rules: [documentation-standard.md](documentation-standard.md).
 - Current command behavior: [command-reference.md](command-reference.md), `package.json`, and the command implementations.
 - Current counts and backlog: live gate output, not remembered summaries.
+- Closeout/handoff posture: `npm run deck:closeout -- --levels=<levels>` aggregates git state, lane counts, expected coverage-failure gates, NLP support posture, CI/release hygiene, manual QA boundaries, and proof-ledger dirtiness; it is not a certification lane.
 
 ## Forward Lane Matrix
 
@@ -114,6 +115,14 @@ git diff --check
 ```
 
 Run affected lane gates when the change alters command behavior, manifests, counts, status claims, generated outputs, or release posture.
+
+Before closing a lane bucket or starting a new handoff thread, run:
+
+```bash
+npm run deck:closeout -- --levels=<levels>
+```
+
+Treat the closeout report as orientation only. It can identify expected fail-closed coverage gaps and dirty proof-ledger files, but it does not replace Gold, Sapphire, Platinum, Obsidian, release, CI, manual import, media listening, or accessibility gates.
 
 ## Update Triggers
 

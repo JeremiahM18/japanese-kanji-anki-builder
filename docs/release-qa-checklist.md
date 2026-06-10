@@ -2,6 +2,8 @@
 
 Run this checklist after automated gates pass and before marking a deck milestone release-ready.
 
+This checklist is release artifact QA. For an Obsidian-certified scope, the native/fluent-quality content-certification claim is owned by the fail-closed Obsidian gate and canonical proof ledger. Current Obsidian proof is non-human governed proof, and it must already check natural Japanese, sense and translation fit, learner usefulness, level fit, reading/example quality, evidence, limitations, and release-quality content. Release QA verifies the packaged APKG/import/render/media/accessibility/listening experience and records distribution blockers. If release QA exposes a content defect, stop the release, fix the source/card data, reopen the relevant Sapphire, Platinum, and Obsidian evidence, and rerun the gates.
+
 ## Build verification
 
 - `npm test`
@@ -29,7 +31,7 @@ Run this checklist after automated gates pass and before marking a deck mileston
 
 `release:gate` is smoke-fixture validation. It does not replace level-specific product checks.
 
-`deck:closeout` is a read-only handoff and hygiene report. It summarizes git state, lane counts, expected fail-closed coverage gates, NLP support status, documentation count-update reminders, CI/release commands, manual media/import QA boundaries, and whether the tracked Obsidian proof ledger is dirty. It does not certify cards, run Obsidian status commands, append proof events, perform manual Anki import QA, or listen to audio.
+`deck:closeout` is a read-only handoff and hygiene report. It summarizes git state, lane counts, count-complete gate reminders, expected fail-closed coverage gates, NLP support status, documentation count-update reminders, CI/release commands, manual media/import QA boundaries, and whether the tracked Obsidian proof ledger is dirty. Count-complete rows mean the named gate must still be run to confirm the actual pass. It does not certify cards, run Obsidian status commands, append proof events, perform manual Anki import QA, or listen to audio.
 
 ## Release QA evidence packet
 
@@ -41,7 +43,7 @@ Replace every `pending` entry with release-specific evidence, then run:
 npm run product:release-qa:evidence
 ```
 
-The packet must name the release candidate, deck kind, JLPT levels, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, accepted source-governance risk posture when applicable, and known blockers. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists. While source evidence depth remains incomplete, the packet must record `sourceEvidenceDepthComplete: false`, `freePublicSourceExpansionPaused: true`, `acceptedRiskRecord: GOV-SRC-001`, `npm run data:audit:jlpt:source-access`, and `npm run data:audit:jlpt:sources -- --governance-strict --limit=25`.
+The packet must name the release candidate, deck kind, JLPT levels, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, accepted source-governance risk posture when applicable, and known blockers. The manual QA fields are artifact evidence, not a replacement for Obsidian native/fluent-quality content certification. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists. While source evidence depth remains incomplete, the packet must record `sourceEvidenceDepthComplete: false`, `freePublicSourceExpansionPaused: true`, `acceptedRiskRecord: GOV-SRC-001`, `npm run data:audit:jlpt:source-access`, and `npm run data:audit:jlpt:sources -- --governance-strict --limit=25`.
 
 ## Product readiness checks
 
@@ -81,9 +83,10 @@ The packet must name the release candidate, deck kind, JLPT levels, automated re
 
 ## Kanji deck manual spot review
 
-- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Current-standard native Sapphire coverage is complete for N5/N4/N3/N2; N1 is only partially trusted at `328/1230` Sapphire and `328/1230` Platinum, with `902` rows still requiring fresh actual card-data review before any version-1 structural or proof lock. N1 deck readiness is mechanical/media readiness only until Sapphire, Platinum, and proof gates catch up.
+- Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Current-standard native Sapphire coverage and non-human governed native/fluent-quality Obsidian content certification are complete for N5/N4/N3/N2; N1 is only partially trusted at `328/1230` Sapphire and `328/1230` Platinum, with `902` rows still requiring fresh actual card-data review before any version-1 structural or proof lock. N1 deck readiness is mechanical/media readiness only until Sapphire, Platinum, and proof gates catch up.
 - Import additional unverified kanji decks separately from core decks only when `deck:kanji:additional:ready` reports selected physical additional cards. The current governed build selects `0` additional cards; in that state, confirm the empty generated surface and suppression report instead of looking for learner cards to review.
-- Confirm Sapphire-reviewed kanji cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces.
+- For Obsidian-certified kanji scopes, sample packaged cards for import, render, layout, media, and accessibility anomalies. Do not treat this pass as a replacement for the Obsidian native/fluent-quality content gate; any real content issue reopens Sapphire, Platinum, and Obsidian before release.
+- Confirm Sapphire-reviewed kanji cards preserve the individual-kanji anchor and do not ship weak, noisy, or compound-led teaching surfaces in the packaged artifact.
 - Confirm any kanji `verificationLimitations` are non-core, visibly labeled on the affected card surface, and reflected in `deck:kanji:review-status` counts.
 - Confirm each card front is the individual target kanji.
 - Confirm each card back starts with the learner-facing `PrimaryReading` plus only the meaning associated with that reading.
@@ -99,10 +102,10 @@ The packet must name the release candidate, deck kind, JLPT levels, automated re
 
 ## Word deck manual spot review
 
-- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, Gold regression, applicable Sapphire gate, and fail-closed Obsidian certification gate pass. N5 word currently passes placement, readiness, Gold, tracked-source artifact, native Sapphire, and strict Obsidian proof at `287/287`; N4 word placement passes and the generated surface builds at `700/700`, with Gold, native Sapphire, and strict Obsidian proof also complete at `700/700`. N4 still requires manual import QA, accessibility, and listening checks before release-ready product claims.
-- Confirm Sapphire-reviewed word cards are useful, common enough, learner-friendly, and not present only for reading coverage.
-- Review beginner core words.
-- Review support words.
+- Import each word level being shipped into Anki only after the current word-level placement audit, readiness audit, Gold regression, applicable Sapphire gate, Platinum gate, and fail-closed Obsidian certification gate pass. N5 word currently passes placement, readiness, Gold, tracked-source artifact, native Sapphire, Platinum, and strict non-human governed native/fluent-quality Obsidian content certification at `287/287`; N4 word placement passes and the generated surface builds at `700/700`, with Gold, native Sapphire, Platinum, and strict non-human governed native/fluent-quality Obsidian content certification also complete at `700/700`. N5/N4 still require release artifact QA, accessibility, and listening checks before release-ready product claims.
+- For Obsidian-certified word scopes, sample packaged cards for import, render, layout, media, and accessibility anomalies. Do not treat this pass as a replacement for the Obsidian native/fluent-quality content gate; any real content issue reopens Sapphire, Platinum, and Obsidian before release.
+- Spot-check beginner core words render the expected fields, media, badges, examples, and breakdown panels in the packaged APKG.
+- Spot-check support words render the expected fields, media, badges, examples, and breakdown panels in the packaged APKG.
 - Confirm every shipped word has a current-level kanji anchor, or has an explicit learner-fit rationale for later all-easier-kanji placement; support kanji from other levels must be visibly labeled.
 - Review constituent-kanji labels, including cross-level and outside-JLPT kanji.
 - Review audio-bearing word cards.
@@ -130,4 +133,4 @@ The packet must name the release candidate, deck kind, JLPT levels, automated re
 
 ## Exit rule
 
-Do not ship on automation alone. A release is ready only when automated gates pass and manual QA has no unresolved blocker.
+Do not ship on automation alone. A release is ready only when automated gates pass, Obsidian-certified scopes have their fail-closed content gate evidence, and release artifact QA has no unresolved blocker.

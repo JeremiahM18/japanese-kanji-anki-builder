@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const crypto = require("node:crypto");
 const { z } = require("zod");
 
 const wordStudySentenceSchema = z.object({
@@ -202,6 +203,95 @@ function refreshStarterEntries(starterEntries = {}, existingEntries = {}) {
     return refreshed;
 }
 
+function buildWordStudyDataFingerprint(entries = {}) {
+    return crypto
+        .createHash("sha256")
+        .update(JSON.stringify(normalizeWordStudyData(entries)))
+        .digest("hex");
+}
+
+/**
+ * @param {{ localPath?: string | null, starterPath?: string }} [options]
+ */
+function buildWordStudyDataStalenessReport({
+    localPath,
+    starterPath = path.resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+} = {}) {
+    const resolvedLocalPath = localPath ? path.resolve(localPath) : null;
+    const resolvedStarterPath = path.resolve(starterPath);
+    const localExists = Boolean(resolvedLocalPath && fs.existsSync(resolvedLocalPath));
+    const starterRawEntries = loadWordStudyDataFile(resolvedStarterPath);
+    const localRawEntries = loadWordStudyDataFile(resolvedLocalPath);
+    const starterEntries = normalizeWordStudyData(starterRawEntries);
+    const localEntries = normalizeWordStudyData(localRawEntries);
+    const refreshedEntries = normalizeWordStudyData(refreshStarterEntries(starterEntries, localEntries));
+    const missingStarterKeys = [];
+    const staleStarterDerivedKeys = [];
+    const customLocalKeys = [];
+
+    for (const key of Object.keys(starterEntries).sort((a, b) => a.localeCompare(b, "ja"))) {
+        const starterEntry = starterEntries[key];
+        const localEntry = localEntries[key];
+        if (!localEntry) {
+            missingStarterKeys.push(key);
+            continue;
+        }
+        if (
+            isStarterDerivedEntry(localEntry)
+            && JSON.stringify(localEntry) !== JSON.stringify(starterEntry)
+        ) {
+            staleStarterDerivedKeys.push(key);
+        }
+    }
+
+    for (const key of Object.keys(localEntries).sort((a, b) => a.localeCompare(b, "ja"))) {
+        if (!starterEntries[key]) {
+            customLocalKeys.push(key);
+        }
+    }
+
+    const needsRefresh = localExists && (missingStarterKeys.length > 0 || staleStarterDerivedKeys.length > 0);
+
+    return {
+        localPath: resolvedLocalPath,
+        starterPath: resolvedStarterPath,
+        localExists,
+        starterEntryCount: Object.keys(starterEntries).length,
+        localEntryCount: Object.keys(localEntries).length,
+        refreshedEntryCount: Object.keys(refreshedEntries).length,
+        customLocalEntryCount: customLocalKeys.length,
+        missingStarterEntryCount: missingStarterKeys.length,
+        staleStarterDerivedEntryCount: staleStarterDerivedKeys.length,
+        starterFingerprint: buildWordStudyDataFingerprint(starterEntries),
+        localFingerprint: localExists ? buildWordStudyDataFingerprint(localEntries) : null,
+        refreshedFingerprint: buildWordStudyDataFingerprint(refreshedEntries),
+        missingStarterKeys,
+        staleStarterDerivedKeys,
+        customLocalKeys,
+        needsRefresh,
+        inSync: !needsRefresh,
+    };
+}
+
+function formatShortFingerprint(value) {
+    return value ? value.slice(0, 12) : "(missing)";
+}
+
+function formatWordStudyDataStalenessWarning(report = {}) {
+    if (!report.needsRefresh) {
+        return "";
+    }
+
+    return [
+        "Word study data preflight:",
+        `- local data file: ${report.localPath || "(none)"}`,
+        `- tracked starter entries: ${report.starterEntryCount}; local entries: ${report.localEntryCount}; refreshed entries: ${report.refreshedEntryCount}`,
+        `- starter-derived mismatch: ${report.staleStarterDerivedEntryCount} stale, ${report.missingStarterEntryCount} missing; custom local entries preserved: ${report.customLocalEntryCount}`,
+        `- fingerprints: starter ${formatShortFingerprint(report.starterFingerprint)}, local ${formatShortFingerprint(report.localFingerprint)}, refreshed ${formatShortFingerprint(report.refreshedFingerprint)}`,
+        "- loader refreshes starter-derived entries in memory; run `npm run words:init -- --refresh-starter` to refresh the ignored local file.",
+    ].join("\n");
+}
+
 /**
  * @param {{ localPath?: string, starterPath?: string }} [options]
  */
@@ -266,8 +356,11 @@ function buildWordCoverageContractSummary(wordStudyEntries = {}) {
 
 module.exports = {
     buildWordCoverageContractSummary,
+    buildWordStudyDataFingerprint,
+    buildWordStudyDataStalenessReport,
     buildWordStudyEntryKey,
     cleanString,
+    formatWordStudyDataStalenessWarning,
     hasPhraseTag,
     isStarterDerivedEntry,
     loadWordStudyData,

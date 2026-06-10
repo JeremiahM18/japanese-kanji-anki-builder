@@ -1,4 +1,5 @@
 const platinumWordReview = require("./platinumReviewService");
+const { decodeHtmlEntities } = require("../utils/text");
 const {
     buildWordEntryIdentity,
     buildWordGoldPreconditionFailuresByKey,
@@ -43,11 +44,11 @@ function normalizeText(value) {
 }
 
 function normalizeForCompare(value) {
-    return normalizeText(value)
+    return decodeHtmlEntities(normalizeText(value)
         .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
         .replace(/:\s+/g, ":")
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, " "))
         .toLowerCase();
 }
 
@@ -66,6 +67,19 @@ function normalizeStringArray(value) {
 function includesAll(haystack, needles = []) {
     const normalizedHaystack = normalizeForCompare(haystack);
     return normalizeStringArray(needles).every((needle) => normalizedHaystack.includes(normalizeForCompare(needle)));
+}
+
+function normalizeBreakdownNeedles(needles = []) {
+    return normalizeStringArray(needles).flatMap((needle) => (
+        needle
+            .split(/,\s+(?=[一-龯々〆ヵヶ]\s*[（(])/u)
+            .map((part) => normalizeText(part))
+            .filter(Boolean)
+    ));
+}
+
+function includesAllBreakdownSnippets(haystack, needles = []) {
+    return includesAll(haystack, normalizeBreakdownNeedles(needles));
 }
 
 function includesAllLiteral(haystack, needles = []) {
@@ -440,7 +454,7 @@ function validateActiveSapphireWordEntry(entry = {}, {
         if (Array.isArray(entry.coverageRoleIncludes) && !includesAll(row.coverageRole, entry.coverageRoleIncludes)) {
             failures.push(`coverage role field did not include protected snippet: ${entry.coverageRoleIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.breakdownIncludes) && !includesAll(`${row.readingBreakdown} ${row.kanjiBreakdown}`, entry.breakdownIncludes)) {
+        if (Array.isArray(entry.breakdownIncludes) && !includesAllBreakdownSnippets(`${row.readingBreakdown} ${row.kanjiBreakdown}`, entry.breakdownIncludes)) {
             failures.push(`reading/kanji breakdown fields did not include protected snippet: ${entry.breakdownIncludes.join(", ")}`);
         }
         if (Array.isArray(entry.exampleIncludes) && !includesAll(row.exampleSentence, entry.exampleIncludes)) {

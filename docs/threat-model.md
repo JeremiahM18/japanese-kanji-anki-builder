@@ -95,7 +95,7 @@ Authoritative checks are:
 | GitHub workflow requests excessive permission | Token abuse, artifact tampering, or unwanted publishing | top-level read-only permissions; scoped CodeQL and attestation exceptions; action SHA pinning; supply-chain audit | Hosted branch protection is drift-prone and must be rechecked before release-trust claims |
 | Release bundle is tampered with or misunderstood | Users trust an unverified APKG, TSV, SBOM, or report | checksum manifest, SBOM, provenance/SBOM attestations, release process docs, tracked attestation verification step | P0 has tracked verification automation, but hosted tag-run evidence is not yet proven |
 | VOICEVOX container runs with broad network or broad Linux capabilities | Local runtime escape or unexpected network exposure | managed helper enforces local bind and Docker runtime hardening; doctor/status commands | Docker itself and image supply chain remain external dependencies |
-| NLP output is treated as card proof | Bad suggestions become certified learner content | assistive-only docs, governance gate, review-packet validation, Platinum/Obsidian separation | Human reviewers must keep certification decisions separate from model context |
+| NLP output is treated as card proof | Bad suggestions become certified learner content | assistive-only docs, governance gate, review-packet validation, Platinum/Obsidian separation | The Obsidian lane must keep certification decisions separate from model context |
 | Private vulnerability details are disclosed publicly too early | Exploit details or private data leak | SECURITY.md reporting rules; incident response runbook; minimal public issue guidance | Private vulnerability reporting is currently disabled in hosted GitHub settings |
 
 ## Residual Risks

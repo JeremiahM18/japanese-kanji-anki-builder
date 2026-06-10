@@ -90,7 +90,7 @@ npm run deck:kanji:review-status
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 ```
 
-2. Generate the next human-review worklist:
+2. Generate the next Obsidian rereview worklist:
 
 ```bash
 npm run deck:platinum:batch -- --level=<level> --limit=12 --queue=substantive-rereview
@@ -109,9 +109,9 @@ That audits the NLP manifest/runtime, refreshes generated kanji TSVs, tokenizes 
 
 It does not run word expansion, word reading-gap discovery, word example reranking, word sense-fit audits, or word-card embeddings.
 
-Kanji tokenizer differences are usually treated as reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings. NLP is review amplification only. It cannot certify Obsidian proof, approve source truth, or replace the reviewer.
+Kanji tokenizer differences are usually treated as reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings. NLP is review amplification only. It cannot certify Obsidian proof, approve source truth, or replace Obsidian rereview.
 
-4. Human-review each queued card against the live generated card, the batch rubric, tracked evidence, and any NLP signals. Check primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, and learner usefulness. If a signal reveals a real card/source issue, fix tracked data, regenerate, rerun the affected gates, and rerun NLP if its support artifact changed.
+4. Run Obsidian rereview for each queued card against the live generated card, the batch rubric, tracked evidence, and any NLP signals. Check primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, learner usefulness, and native/fluent-quality content criteria. If a signal reveals a real card/source issue, fix tracked data, regenerate, rerun the affected gates, and rerun NLP if its support artifact changed.
 
 5. Record Obsidian proof only after the review happened. Canonical proof must be appended to the scoped JSONL ledger and provide structured compatibility-shaped `rereviewProvenance` plus actual card-bound example-sentence quality evidence. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, or a clean batch report alone.
 
@@ -142,7 +142,7 @@ git status --short --untracked-files=all
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
 ```
 
-2. Generate the next human-review worklist:
+2. Generate the next Obsidian rereview worklist:
 
 ```bash
 npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substantive-rereview
@@ -157,9 +157,9 @@ npm run deck:words:ready -- --levels=<level>
 npm run deck:words:expansion-support -- --levels=<level>
 ```
 
-Word NLP is broader than kanji NLP: it runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. Review packets point the human reviewer at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. It still cannot certify Obsidian proof or write tracked templates.
+Word NLP is broader than kanji NLP: it runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. Review packets point the Obsidian pass at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. It still cannot certify Obsidian proof or write tracked templates.
 
-4. Human-review each queued word card against the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, and any NLP signals. Fix tracked source/card data first when NLP or the rubric exposes a real issue, then regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed.
+4. Run the Obsidian rereview for each queued word card against the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, native/fluent-quality content criteria, and any NLP signals. Fix tracked source/card data first when NLP or the rubric exposes a real issue, then regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed.
 
 5. Record Obsidian proof only after the live generated word row is actually rereviewed. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
 
@@ -253,7 +253,7 @@ Planner output is advisory. A suggested card still needs canonical contract cove
 
 `deck:words:expansion-support:n4` adds the governed NLP expansion layer for the same level: tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, validation, and the NLP governance gate.
 
-This is review amplification, not certification. If a word NLP packet exposes a real card/source issue, fix tracked source or card data first, regenerate the live word row, rerun the relevant gates, and rerun NLP when the affected support artifact changed. Word Obsidian proof is added only after the human reviewer rereviews the corrected live generated row and tracked evidence. Certification remains under `deck:words:obsidian:rereview-status` and `deck:words:obsidian:certify-status`.
+This is review amplification, not certification. If a word NLP packet exposes a real card/source issue, fix tracked source or card data first, regenerate the live word row, rerun the relevant gates, and rerun NLP when the affected support artifact changed. Word Obsidian proof is added only after the corrected live generated row and tracked evidence pass the Obsidian native/fluent-quality rereview. Certification remains under `deck:words:obsidian:rereview-status` and `deck:words:obsidian:certify-status`.
 
 ## Check kanji NLP support before Obsidian rereview
 
@@ -266,7 +266,7 @@ The kanji NLP command refreshes generated kanji TSVs, audits NLP manifest/runtim
 
 It deliberately does not run word expansion, word reading-gap discovery, word example reranking, word sense-fit audits, or word-card embeddings. Kanji tokenizer differences are usually reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings.
 
-The reviewer still inspects the live kanji card: primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, and learner usefulness. If a kanji NLP signal reveals a real card/source issue, fix tracked data first, regenerate, rerun gates, and rerun NLP when the affected support artifact changed. Kanji Obsidian proof is added only after the human reviewer rereviews the corrected live card. Certification remains under `deck:kanji:obsidian:rereview-status` and `deck:kanji:obsidian:certify-status`.
+The Obsidian pass still inspects the live kanji card: primary reading, meanings, example sentence, reading/translation, audio identity, stroke-order media, notes/support surface, source evidence, limitations, learner usefulness, and native/fluent-quality content criteria. If a kanji NLP signal reveals a real card/source issue, fix tracked data first, regenerate, rerun gates, and rerun NLP when the affected support artifact changed. Kanji Obsidian proof is added only after the corrected live card passes Obsidian native/fluent-quality rereview. Certification remains under `deck:kanji:obsidian:rereview-status` and `deck:kanji:obsidian:certify-status`.
 
 ## Plan word inventory expansion
 

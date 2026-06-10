@@ -76,7 +76,7 @@ Required workflow fields:
 - Expected-failure classification.
 - Commit and no-push posture when relevant.
 
-Workflow docs must keep human-review steps separate from automated gates. NLP, generated TSVs, Gold fixtures, local databases, Deck Ready output, Sapphire structural gates, Platinum, and green tests must never be documented as substitutes for Obsidian proof, source truth, legal permission, media QA, or release readiness.
+Workflow docs must keep Obsidian rereview/proof steps separate from mechanical gate output. NLP, generated TSVs, Gold fixtures, local databases, Deck Ready output, Sapphire structural gates, Platinum, and green tests must never be documented as substitutes for Obsidian proof, source truth, legal permission, media QA, or release readiness.
 
 ## Command And Reference Schema
 

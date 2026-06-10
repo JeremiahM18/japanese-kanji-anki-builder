@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 
 const {
     MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE,
+    OBSIDIAN_KANJI_REVIEW_BOUNDARY_NOTE,
     buildObsidianKanjiCertificationStatusSummary,
     formatObsidianKanjiCertificationStatusReport,
 } = require("../src/services/obsidianKanjiCertificationStatusService");
@@ -38,7 +39,9 @@ test("kanji certification gate passes only when every generated row has Obsidian
 
     assert.equal(summary.passed, true);
     assert.equal(summary.failureCount, 0);
-    assert.match(summary.certificationGate.manualJudgmentBoundary, /human reviewer still owns/);
+    assert.match(summary.certificationGate.contentCertificationBoundary, /non-human governed native\/fluent-quality proof/);
+    assert.match(summary.certificationGate.contentCertificationBoundary, /future human\/native review is separate provenance/);
+    assert.equal(summary.certificationGate.contentCertificationBoundary, OBSIDIAN_KANJI_REVIEW_BOUNDARY_NOTE);
     assert.equal(summary.certificationGate.manualJudgmentBoundary, MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE);
 });
 
@@ -128,7 +131,8 @@ test("formatted kanji certification report includes all failed cards and sentenc
     assert.match(formatted, /Certification target: Obsidian/);
     assert.match(formatted, /Result: failing/);
     assert.match(formatted, /actual example sentence quality review evidence/);
-    assert.match(formatted, /human reviewer still owns the actual natural-Japanese and pedagogy judgment/);
+    assert.match(formatted, /Current Obsidian certification is non-human governed native\/fluent-quality proof/);
+    assert.match(formatted, /future human\/native review is separate provenance for the same standard/);
     assert.match(formatted, /N5 月; field=rereviewProvenance/);
     assert.match(formatted, /N5 火; field=sourceEvidence/);
     assert.match(formatted, /reviewer action=/);

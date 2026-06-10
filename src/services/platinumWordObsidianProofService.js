@@ -3,7 +3,7 @@ const {
 } = require("./platinumReviewService");
 const { normalizeEvidenceEntries } = require("./platinumEvidenceService");
 
-const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
+const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 Obsidian rereview";
 const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 const MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER = "missing_substantive_current_standard_word_rereview_proof";
 const SENTENCE_QUALITY_REVIEW_PROOF_MARKER = "example sentence quality review";

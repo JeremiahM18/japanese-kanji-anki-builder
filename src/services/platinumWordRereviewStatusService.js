@@ -118,7 +118,7 @@ function buildMissingRereviewProofReason(entry = {}) {
 
     return [
         MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
-        "requires explicit non-mechanical post-v3 human rereview provenance with word-reading card identity binding, full word-card evidence checklist, and actual example sentence quality review proof",
+        "requires explicit non-mechanical post-v3 Obsidian rereview proof with word-reading card identity binding, full word-card evidence checklist, and actual example sentence quality review proof",
         observed.length > 0 ? `observed ${observed.join(" and ")} only` : "no current-standard rereview provenance observed",
     ].join(": ");
 }
@@ -297,7 +297,7 @@ function buildPlatinumWordRereviewStatusReport({
             nonMechanicalMarker: NON_MECHANICAL_PROOF_MARKER,
             missingProofMarker: MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
             sentenceQualityReviewProofMarker: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
-            note: "revalidatedAt and required v3 current-standard-review lane text are Platinum evidence, not standalone proof of substantive post-v3 human rereview or actual word example sentence quality review",
+            note: "revalidatedAt and required v3 current-standard-review lane text are Platinum evidence, not standalone proof of substantive post-v3 Obsidian rereview or actual word example sentence quality review",
         },
         counts,
         passed: counts.blocked_or_failing === 0,

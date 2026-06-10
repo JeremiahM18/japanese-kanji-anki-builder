@@ -8,7 +8,8 @@ const {
     buildPlatinumKanjiRereviewStatusSummary,
 } = require("./platinumKanjiRereviewStatusService");
 
-const MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE = "Automation can verify structure, source binding, protected snippets, audio identity, stroke-order identity, and the presence of card-bound sentence-quality review evidence. The human reviewer still owns the actual natural-Japanese and pedagogy judgment.";
+const OBSIDIAN_KANJI_REVIEW_BOUNDARY_NOTE = "Current Obsidian certification is non-human governed native/fluent-quality proof for the scoped version. The gate verifies structure, source binding, protected snippets, audio identity, stroke-order identity, canonical proof binding, and card-bound sentence-quality review evidence; future human/native review is separate provenance for the same standard.";
+const MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE = OBSIDIAN_KANJI_REVIEW_BOUNDARY_NOTE;
 const REQUIRED_ZERO_COUNTS = Object.freeze(["blocked_or_failing", "needs_substantive_rereview"]);
 const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
     "current-standard Platinum",
@@ -19,7 +20,7 @@ const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
     "card-bound Obsidian rereview provenance",
     "presence of actual example sentence quality review proof",
 ]);
-const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard human rereview provenance after Platinum, including actual example sentence quality review proof";
+const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard Obsidian rereview proof after Platinum, including actual example sentence quality review proof";
 const NEEDS_REREVIEW_ACTION = "Perform the Obsidian rereview from the live generated card. Inspect and fix the actual example sentence if needed, then record rereviewProvenance with reviewedAfterStandard=true, mechanicalMigration=false, reviewer, reviewedAt, cardReviewed, checked evidence, limitation decision, and example sentence quality review evidence covering natural Japanese, learner usefulness, level appropriateness, support-only usage, reading, and translation.";
 
 function normalizeText(value) {
@@ -161,6 +162,7 @@ function buildObsidianKanjiCertificationStatusSummary(levelReports = []) {
             requiredZeroCounts: [...REQUIRED_ZERO_COUNTS],
             automationChecks: [...CERTIFICATION_AUTOMATION_CHECKS],
             requiredSentenceReviewProof: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
+            contentCertificationBoundary: OBSIDIAN_KANJI_REVIEW_BOUNDARY_NOTE,
             manualJudgmentBoundary: MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE,
         },
         failureCount: failures.length,
@@ -222,7 +224,7 @@ function formatObsidianKanjiCertificationStatusReport(summary = {}) {
         "- Platinum commands test the current card-surface requirements against the live generated rows.",
         "- This command is stricter: it fails when any intended release row is blocked/failing or still needs Obsidian proof.",
         `- Obsidian proof must include structured rereviewProvenance and actual ${gate.requiredSentenceReviewProof || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence for the live card.`,
-        `- ${gate.manualJudgmentBoundary || MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE}`
+        `- ${gate.contentCertificationBoundary || gate.manualJudgmentBoundary || OBSIDIAN_KANJI_REVIEW_BOUNDARY_NOTE}`
     );
 
     const failures = Array.isArray(summary.failures) ? summary.failures : [];
@@ -238,6 +240,7 @@ function formatObsidianKanjiCertificationStatusReport(summary = {}) {
 
 module.exports = {
     MANUAL_SENTENCE_REVIEW_BOUNDARY_NOTE,
+    OBSIDIAN_KANJI_REVIEW_BOUNDARY_NOTE,
     buildCertificationFailures,
     buildObsidianKanjiCertificationStatusSummary,
     buildPlatinumKanjiCertificationStatusSummary: buildObsidianKanjiCertificationStatusSummary,

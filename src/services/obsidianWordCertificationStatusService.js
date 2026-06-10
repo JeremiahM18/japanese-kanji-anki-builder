@@ -8,7 +8,8 @@ const {
     buildPlatinumWordRereviewStatusSummary,
 } = require("./platinumWordRereviewStatusService");
 
-const MANUAL_WORD_REVIEW_BOUNDARY_NOTE = "Automation can verify structure, source binding, protected snippets, exact word-reading audio identity, pitch source/render evidence, and the presence of card-bound word example-quality review evidence. The human reviewer still owns the actual natural-Japanese, sense-fit, and pedagogy judgment.";
+const OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE = "Current Obsidian certification is non-human governed native/fluent-quality proof for the scoped version. The gate verifies structure, source binding, protected snippets, exact word-reading audio identity, pitch source/render evidence, canonical proof binding, the full word-card evidence checklist, and card-bound word example-quality review evidence; future human/native review is separate provenance for the same standard.";
+const MANUAL_WORD_REVIEW_BOUNDARY_NOTE = OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE;
 const REQUIRED_ZERO_COUNTS = Object.freeze(["blocked_or_failing", "needs_substantive_rereview"]);
 const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
     "current-standard Platinum",
@@ -20,7 +21,7 @@ const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
     "full word-card evidence checklist",
     "presence of actual example sentence quality review proof",
 ]);
-const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard human rereview provenance after Platinum, including exact word-reading card identity binding, a full word-card evidence checklist, and actual example sentence quality review proof";
+const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard Obsidian rereview proof after Platinum, including exact word-reading card identity binding, a full word-card evidence checklist, and actual example sentence quality review proof";
 const NEEDS_REREVIEW_ACTION = "Perform the Obsidian rereview from the live generated word card. Inspect and fix the actual written form, reading, meaning, example sentence, reading/translation, audio, pitch, labels, notes, and limitations if needed, then record rereviewProvenance with reviewedAfterStandard=true, mechanicalMigration=false, reviewer, reviewedAt, cardReviewed or equivalent identity binding, evidenceChecked, limitation decision, and example sentence quality review evidence covering natural Japanese, learner usefulness, level appropriateness, release quality, reading, and translation.";
 
 function normalizeText(value) {
@@ -169,6 +170,7 @@ function buildObsidianWordCertificationStatusSummary(levelReports = []) {
             requiredZeroCounts: [...REQUIRED_ZERO_COUNTS],
             automationChecks: [...CERTIFICATION_AUTOMATION_CHECKS],
             requiredSentenceReviewProof: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
+            contentCertificationBoundary: OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE,
             manualJudgmentBoundary: MANUAL_WORD_REVIEW_BOUNDARY_NOTE,
         },
         failureCount: failures.length,
@@ -230,7 +232,7 @@ function formatObsidianWordCertificationStatusReport(summary = {}) {
         "- Platinum commands test the current card-surface requirements against the live generated rows.",
         "- This command is stricter: it fails when any intended release row is blocked/failing or still needs Obsidian proof.",
         `- Obsidian proof must include structured rereviewProvenance, exact word-reading identity binding, a full word-card evidence checklist, and actual ${gate.requiredSentenceReviewProof || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence for the live card.`,
-        `- ${gate.manualJudgmentBoundary || MANUAL_WORD_REVIEW_BOUNDARY_NOTE}`
+        `- ${gate.contentCertificationBoundary || gate.manualJudgmentBoundary || OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE}`
     );
 
     const failures = Array.isArray(summary.failures) ? summary.failures : [];
@@ -246,6 +248,7 @@ function formatObsidianWordCertificationStatusReport(summary = {}) {
 
 module.exports = {
     MANUAL_WORD_REVIEW_BOUNDARY_NOTE,
+    OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE,
     buildObsidianWordCertificationStatusSummary,
     buildPlatinumWordCertificationStatusSummary: buildObsidianWordCertificationStatusSummary,
     buildWordCertificationFailures,

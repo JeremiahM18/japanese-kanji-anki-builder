@@ -81,7 +81,7 @@ function buildReviewEvidence({
 } = {}) {
     const exactAudio = `kanji-reading-${kanji}-${reading}`;
     const proof = substantiveProof
-        ? "Substantive post-v3 human rereview; not mechanically migrated."
+        ? "Substantive post-v3 Obsidian rereview; not mechanically migrated."
         : "";
 
     return REQUIRED_KANJI_REVIEW_EVIDENCE_TYPES.map((type) => {

@@ -81,6 +81,80 @@ function buildSyntheticSapphireRows(entries = [], levelLabel = "") {
     });
 }
 
+function buildCurrentStandardSapphireFixture({
+    kanji,
+    levelLabel,
+    primaryReading,
+    meaning,
+    kanjiMeaningsIncludes,
+    notesIncludes,
+    notes,
+    exampleSentence,
+}) {
+    const sourceEvidence = [{
+        type: "japanese-source",
+        source: "fixture",
+        detail: "fixture source protects visible Sapphire surface text",
+    }];
+    const internalChecks = [
+        "generated-surface",
+        "golden-regression",
+        "media-audit",
+        "audio-review",
+        "stroke-order-review",
+    ].map((type) => ({
+        type,
+        source: "fixture",
+        detail: `${type} fixture passed`,
+    }));
+    const reviewEvidence = [
+        "manual-review",
+        "current-standard-review",
+    ].map((type) => ({
+        type,
+        source: "fixture",
+        detail: `${type} fixture passed`,
+    }));
+    const entry = {
+        kanji,
+        status: "sapphire",
+        reviewStandard: CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
+        reviewedAt: "2026-06-10",
+        reviewer: "test-fixture",
+        readingIncludes: [primaryReading],
+        meaningIncludes: [meaning],
+        kanjiMeaningsIncludes,
+        levelIncludes: [levelLabel],
+        exampleIncludes: [exampleSentence],
+        notesIncludes,
+        primaryReadingRationale: "Fixture protects normalization of visible generated card text.",
+        sourceEvidence,
+        internalChecks,
+        reviewEvidence,
+        sapphireReviewAudit: {
+            auditType: "sapphire-card-surface-fixture",
+        },
+    };
+    const row = {
+        kanji,
+        levelLabel,
+        displayWord: kanji,
+        meaningJP: meaning,
+        primaryReading,
+        kanjiMeanings: kanjiMeaningsIncludes.map((snippet) => snippet.replace(/'/g, "&#39;")).join(" / "),
+        studyWordKanji: "",
+        onReading: "",
+        kunReading: "",
+        strokeOrder: `<img src="${kanji}-stroke-order.gif" alt="Stroke order for ${kanji}" />`,
+        audio: `[sound:${kanji}-kanji-reading-${kanji}-${primaryReading}.wav]`,
+        radical: "",
+        notes,
+        exampleSentence,
+    };
+
+    return { entry, row };
+}
+
 test("tracked Sapphire kanji manifests are first-class structural review sets", () => {
     const sapphireFiles = fs
         .readdirSync(TEMPLATES_DIR)
@@ -212,6 +286,38 @@ test("Sapphire kanji evaluator requires prior Gold when precondition enforcement
     assert.equal(passingReport.passed, true, formatSapphireKanjiReviewReport(passingReport));
     assert.equal(missingGoldReport.passed, false);
     assert.match(missingGoldReport.results[0].failures.join("\n"), /Sapphire requires a prior Gold expectation/);
+});
+
+test("Sapphire kanji evaluator compares protected snippets against decoded visible card text", () => {
+    const fixtures = [
+        buildCurrentStandardSapphireFixture({
+            kanji: "時",
+            levelLabel: "N5",
+            primaryReading: "とき",
+            meaning: "time",
+            kanjiMeaningsIncludes: ["time", "o'clock", "hour"],
+            notesIncludes: ["時 -> visible reading support"],
+            notes: "<ruby>時<rt>とき</rt></ruby> -&gt; visible reading support",
+            exampleSentence: "時を読む",
+        }),
+        buildCurrentStandardSapphireFixture({
+            kanji: "暮",
+            levelLabel: "N3",
+            primaryReading: "くれる",
+            meaning: "dusk",
+            kanjiMeaningsIncludes: ["live", "season's end", "twilight"],
+            notesIncludes: ["暮らす -> visible breakdown text"],
+            notes: "<ruby>暮<rt>く</rt></ruby>らす -&gt; visible breakdown text",
+            exampleSentence: "日が暮れる",
+        }),
+    ];
+    const report = evaluateSapphireKanjiReviewSet({
+        rows: fixtures.map(({ row }) => row),
+        entries: fixtures.map(({ entry }) => entry),
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(report.passed, true, formatSapphireKanjiReviewReport(report));
 });
 
 test("Sapphire schema validates native manifests and rejects Platinum-shaped candidates", () => {

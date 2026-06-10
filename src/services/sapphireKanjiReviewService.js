@@ -1,4 +1,5 @@
 const platinumKanjiReview = require("./platinumKanjiReviewService");
+const { decodeHtmlEntities } = require("../utils/text");
 const {
     buildKanjiGoldPreconditionFailuresByKey,
     mergeFailuresIntoResult,
@@ -44,11 +45,11 @@ function normalizeText(value) {
 }
 
 function normalizeForCompare(value) {
-    return normalizeText(value)
+    return decodeHtmlEntities(normalizeText(value)
         .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
         .replace(/:\s+/g, ":")
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, " "))
         .toLowerCase();
 }
 

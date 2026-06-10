@@ -147,7 +147,7 @@ function buildReviewEvidence({
     substantiveProof = false,
 } = {}) {
     const proof = substantiveProof
-        ? "Substantive post-v3 human rereview; not mechanically migrated."
+        ? "Substantive post-v3 Obsidian rereview; not mechanically migrated."
         : "";
     const currentStandardDetail = [
         proof,

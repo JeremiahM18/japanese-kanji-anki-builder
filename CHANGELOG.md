@@ -16,7 +16,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 ### Added
 
-- Added the scoped `0.2.0` Obsidian package lock for N5/N4 words plus N5/N4/N3/N2 core kanji, including fail-closed certification evidence, APKG paths, note/card counts, media completeness, and SHA-256 checksums.
+- Added the scoped `0.2.0` Obsidian release lock for N5/N4 words plus N5/N4/N3/N2 core kanji, including fail-closed certification evidence, APKG paths, note/card counts, media completeness, and SHA-256 checksums.
 - Added first-class core-kanji Sapphire review sets, commands, schema validation, batch reporting, and reviewed-input promotion, with Deck Ready explicitly scoped as mechanical artifact readiness outside the Silver/Gold/Sapphire/Platinum/Obsidian trust ladder.
 - Added first-class word Sapphire review sets, commands, schema validation, and batch reporting, preserving N5/N4 structural coverage at `987/987` while keeping legacy word Platinum manifests as compatibility/proof-provider inputs.
 - Added word-study local-data staleness fingerprints and preflight warnings to the word init, Sapphire, and Platinum commands so stale ignored starter-derived data is diagnosed before card-level gate failures.

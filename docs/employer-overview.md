@@ -11,14 +11,11 @@ For a hiring reviewer, the important signal is not "I made flashcards." The impo
 | What to inspect | Current verified state | Why it matters |
 | --- | --- | --- |
 | System type | Governed data pipeline and release-controlled content generation system for JLPT kanji and vocabulary. | Evaluates as backend/data/product engineering, not as a static content file. |
-| Core kanji product | N5/N4/N3/N2 are complete through generated surface, Gold, Sapphire, Platinum, and Obsidian certification: `982/982` certified. N1 is intentionally not overclaimed: `328/1230` Sapphire/Platinum and `902` remaining. | The system can finish large reviewed scopes without hiding unfinished work. |
-| Word product | N5/N4 words are complete through generated surface, Gold, Sapphire, Platinum, and Obsidian certification: `987/987` certified. N3 words are a Silver expansion lane: `269/269` generated, `8/269` downstream reviewed. | The project keeps product lanes separate and works one lane at a time. |
+| Governed surfaces | Current generated denominators cover `2212` core kanji rows and `1310` word rows across JLPT N5-N1. | The system is a multi-surface data product, not a single static deck. |
+| Locked certification scope | The scoped `v0.2.0` lock certifies `982` kanji rows and `987` word rows through Obsidian. | Release claims are explicit, bounded, and separate from ongoing work. |
 | Proof model | Canonical JSONL proof ledger validates with `1969` events across 6 ledger files. | Certification evidence is tracked, queryable, and replayable. |
 | Release discipline | `docs/releases/v0.2.0-scoped-obsidian-lock.md` freezes N5/N4 word and N5-N2 kanji scope. Future edits belong to the next version. | The repo has an explicit release boundary instead of an informal "current state." |
 | NLP support | `nlp:governance-gate` passes, while the docs and commands state NLP does not certify cards or write tracked templates. | Automation assists review without becoming unchecked authority. |
-| Next work | N3 word Silver expansion only: use fast promotions from `deck:words:gap-plan:n3`, not raw candidates and not Gold/Sapphire/Platinum work. | The roadmap is concrete and lane-correct. |
-
-Verified on branch `codex/n3-word-expansion-preflight` at commit `a7c599ba`.
 
 ## What The Program Is
 
@@ -43,12 +40,12 @@ The products share infrastructure but not certification authority. A word card p
 | Signal | Evidence in this repo |
 | --- | --- |
 | Deterministic build and packaging | Scripts produce TSV exports and optional byte-stable `.apkg` packages from tracked contracts and generated package inputs. |
-| Fail-closed quality gates | Full-level N3 word Gold/Sapphire/Platinum gates currently fail because `261` generated rows are missing each reviewed lane, even though the existing `8` reviewed entries pass. |
+| Fail-closed quality gates | Incomplete generated denominators stay visible; gates fail coverage instead of silently shrinking the denominator. |
 | Explicit trust ladder | Silver, Gold, Sapphire, Platinum, and Obsidian are separate lanes with different authority and separate commands. |
 | Canonical proof storage | Obsidian proof lives in tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`; SQLite is a generated query mirror only. |
 | Source and media boundaries | Source evidence, generated TSVs, media identity, pitch evidence, package readiness, NLP artifacts, and release QA are separate. |
-| Real release lock | `v0.2.0` records certified scope, artifact hashes, excluded scopes, future-work boundary, and broader release-trust caveats. |
-| Honest incompleteness | N1 kanji, N3/N2/N1 words, and broader product release claims are not collapsed into the completed scopes. |
+| Real release lock | `v0.2.0` records certified scope, artifact hashes, excluded scopes, and broader release-trust caveats. |
+| Honest incompleteness | Unlocked or unfinished surfaces are excluded from release claims instead of being merged into completed scopes. |
 
 ## Current Product State
 
@@ -68,14 +65,12 @@ Live certification commands confirm:
 
 This is a scoped content/package release lock, not a blanket claim that every product surface is finished.
 
-### Active Backlog
+### Product Denominators
 
-| Surface | State | Correct next lane |
-| --- | --- | --- |
-| N3 word | `269/269` generated; `8/269` Gold/Sapphire/Platinum; `0/269` Obsidian; reading coverage `19.9%` | Silver expansion |
-| N2 word | `28/28` generated; Gold/Sapphire/Platinum not started | Future word lane |
-| N1 word | `26/26` generated; Gold/Sapphire/Platinum not started | Future word lane |
-| N1 kanji | `1230/1230` generated/Gold; `328/1230` Sapphire/Platinum; `0/1230` Obsidian | Future kanji Sapphire then Platinum |
+| Surface | Current generated denominator | Current Obsidian-certified denominator | Boundary |
+| --- | --- | --- | --- |
+| Core kanji | `2212/2212` across N5-N1 | `982/2212` | The lock covers N5-N2. Remaining generated kanji rows are not Obsidian-certified. |
+| Words | `1310/1310` across N5-N1 | `987/1310` | The lock covers N5-N4. Remaining generated word rows are not Obsidian-certified. |
 
 ## Why This Is More Than A Deck
 
@@ -102,23 +97,7 @@ npm run deck:closeout -- --levels=5,4,3,2,1
 npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3,2
 npm run deck:words:obsidian:certify-status -- --levels=5,4
 npm run data:obsidian:proof:validate
-npm run deck:words:completion:n3
-npm run deck:words:obsidian:rereview-status -- --levels=3
-npm run deck:kanji:obsidian:rereview-status -- --levels=1
+npm run nlp:governance-gate
 ```
 
 `deck:closeout` is an orientation report. It does not replace lane gates, proof-ledger validation, package QA, hosted checks, or manual evidence.
-
-## Recommended Next Work
-
-Start N3 word Silver expansion. Do not touch the frozen `v0.2.0` lock and do not start Gold, Sapphire, Platinum, or Obsidian for N3 words yet.
-
-Use:
-
-```bash
-npm run deck:words:gap-plan:n3
-npm run deck:words:reading-audit:n3
-npm run deck:words:completion:n3
-```
-
-Select fast promotions from curated examples first. The current gap plan reports `215` fast promotions and `717` editorial research items. Start with fast promotions because they already have curated examples and can expand the generated N3 word surface without inventing raw candidates.

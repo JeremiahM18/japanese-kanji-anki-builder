@@ -127,57 +127,37 @@ Rules:
 - NLP support can surface risks, prioritize review, and generate packets; it cannot certify cards or write tracked templates.
 - Package readiness proves artifact mechanics, not content trust.
 
-## Current Verified State
+## Scale Snapshot
 
-Verified on branch `codex/n3-word-expansion-preflight` at commit `a7c599ba`.
+The architecture is product- and level-agnostic. The current repo snapshot proves the same machinery across completed release scope and unfinished visible backlog:
 
-| Product | Level | Silver | Gold | Sapphire | Platinum | Obsidian |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Kanji | N5 | 80/80 | 80/80 | 80/80 | 80/80 | 80/80 |
-| Word | N5 | 287/287 | 287/287 | 287/287 | 287/287 | 287/287 |
-| Kanji | N4 | 212/212 | 212/212 | 212/212 | 212/212 | 212/212 |
-| Word | N4 | 700/700 | 700/700 | 700/700 | 700/700 | 700/700 |
-| Kanji | N3 | 341/341 | 341/341 | 341/341 | 341/341 | 341/341 |
-| Word | N3 | 269/269 | 8/269 | 8/269 | 8/269 | 0/269 |
-| Kanji | N2 | 349/349 | 349/349 | 349/349 | 349/349 | 349/349 |
-| Word | N2 | 28/28 | 0/28 | 0/28 | 0/28 | 0/28 |
-| Kanji | N1 | 1230/1230 | 1230/1230 | 328/1230 | 328/1230 | 0/1230 |
-| Word | N1 | 26/26 | 0/26 | 0/26 | 0/26 | 0/26 |
+| Product surface | Generated denominator | Obsidian-certified denominator | Boundary |
+| --- | ---: | ---: | --- |
+| Core kanji | 2212 | 982 | The scoped release lock covers the completed N5-N2 denominator. Remaining generated rows are not Obsidian-certified. |
+| Words | 1310 | 987 | The scoped release lock covers the completed N5-N4 denominator. Remaining generated rows are not Obsidian-certified. |
 
 Obsidian counts for completed scopes are verified by fail-closed certification gates:
 
-- Kanji N5-N2: `982/982` Obsidian certified.
-- Word N5-N4: `987/987` Obsidian certified.
+- Kanji locked scope: `982/982` Obsidian certified.
+- Word locked scope: `987/987` Obsidian certified.
 - Proof ledger validation: `1969` events across 6 JSONL files.
-- N3 word Obsidian is fail-closed: `0/269` certified, `8` Platinum entries need proof, and `261` generated rows are blocked by missing Platinum.
-- N1 kanji Obsidian is fail-closed: `0/1230` certified, `328` Platinum entries need proof, and `902` generated rows are blocked by missing current-standard structural entries.
 
-## Word N3 Silver Expansion Path
+## Expansion Workflow Pattern
 
-N3 word is the next active lane, and the lane is Silver only.
+This pattern applies to whichever product, level, and lane is deliberately selected. The architecture does not make that selection for the reviewer.
 
 ```mermaid
 flowchart TD
-    Audit["deck:words:reading-audit:n3<br/>find uncovered readings"] --> Plan["deck:words:gap-plan:n3<br/>rank active planning items"]
-    Plan --> Fast["Fast promotions<br/>curated example exists"]
-    Plan --> Research["Editorial research<br/>no curated example yet"]
-    Fast --> SourceData["Update tracked word source/inventory data"]
-    SourceData --> BuildRows["Generate N3 word Silver rows"]
-    BuildRows --> Completion["deck:words:completion:n3"]
-    Completion --> Stop["Stop at Silver lane boundary"]
+    Audit["Gap or quality audit<br/>find uncovered, stale, or incomplete identities"] --> Plan["Ranked work queue<br/>fast paths, research paths, blockers"]
+    Plan --> Evidence["Tracked source or curation update<br/>no generated-only trust"]
+    Evidence --> Normalize["Normalize identity<br/>kanji or word|reading"]
+    Normalize --> Generate["Generate current card surface"]
+    Generate --> Gate["Run the selected lane gate"]
+    Gate --> Record["Record pass, defer, block, or fix decision"]
+    Record --> Boundary["Stop at the selected lane boundary"]
 ```
 
-Current N3 word facts:
-
-- Canonical inventory rows: `269`.
-- Built starter-eligible rows: `269/269`.
-- Gold/Sapphire/Platinum: `8/269`.
-- Reading coverage: `19.9%` (`236/1184`).
-- Active planning items: `932`.
-- Fast promotions: `215`.
-- Editorial research items: `717`.
-
-Silver expansion should promote curated-example candidates into the generated N3 word surface. It should not add Gold, Sapphire, Platinum, or Obsidian work in the same batch.
+The same pattern handles expansion, structural review, card-surface inspection, and proof work, but the lane authority changes. Silver can add generated rows. Gold can protect regression expectations. Sapphire can certify structure. Platinum can inspect the card surface. Obsidian can record proof only after the required upstream lanes exist for the exact card identity.
 
 ## Proof And Query Storage
 
@@ -216,10 +196,7 @@ npm run deck:closeout -- --levels=5,4,3,2,1
 npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3,2
 npm run deck:words:obsidian:certify-status -- --levels=5,4
 npm run data:obsidian:proof:validate
-npm run deck:words:completion:n3
 npm run nlp:governance-gate
-npm run deck:words:obsidian:rereview-status -- --levels=3
-npm run deck:kanji:obsidian:rereview-status -- --levels=1
 ```
 
 If any command changes a count or status, update this document from the live output or remove the stale claim.

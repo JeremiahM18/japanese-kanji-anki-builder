@@ -1,0 +1,124 @@
+# Employer Overview
+
+Program identity: governed data pipeline / release-controlled content generation system.
+
+This repository is not primarily "a flashcard deck." The Anki cards are the distribution artifact. The program is the controlled system that turns tracked source contracts, curated study data, media policy, review manifests, and proof ledgers into deterministic Japanese study content with fail-closed validation.
+
+For a hiring reviewer, the important signal is not "I made flashcards." The important signal is that this project treats learning content like release-critical product data: scoped contracts, lane boundaries, evidence provenance, regression protection, certification gates, generated artifact boundaries, and release locks.
+
+## Sixty-Second Read
+
+| What to inspect | Current verified state | Why it matters |
+| --- | --- | --- |
+| System type | Governed data pipeline and release-controlled content generation system for JLPT kanji and vocabulary. | Evaluates as backend/data/product engineering, not as a static content file. |
+| Core kanji product | N5/N4/N3/N2 are complete through generated surface, Gold, Sapphire, Platinum, and Obsidian certification: `982/982` certified. N1 is intentionally not overclaimed: `328/1230` Sapphire/Platinum and `902` remaining. | The system can finish large reviewed scopes without hiding unfinished work. |
+| Word product | N5/N4 words are complete through generated surface, Gold, Sapphire, Platinum, and Obsidian certification: `987/987` certified. N3 words are a Silver expansion lane: `269/269` generated, `8/269` downstream reviewed. | The project keeps product lanes separate and works one lane at a time. |
+| Proof model | Canonical JSONL proof ledger validates with `1969` events across 6 ledger files. | Certification evidence is tracked, queryable, and replayable. |
+| Release discipline | `docs/releases/v0.2.0-scoped-obsidian-lock.md` freezes N5/N4 word and N5-N2 kanji scope. Future edits belong to the next version. | The repo has an explicit release boundary instead of an informal "current state." |
+| NLP support | `nlp:governance-gate` passes, while the docs and commands state NLP does not certify cards or write tracked templates. | Automation assists review without becoming unchecked authority. |
+| Next work | N3 word Silver expansion only: use fast promotions from `deck:words:gap-plan:n3`, not raw candidates and not Gold/Sapphire/Platinum work. | The roadmap is concrete and lane-correct. |
+
+Verified on branch `codex/n3-word-expansion-preflight` at commit `a7c599ba`.
+
+## What The Program Is
+
+The program has four jobs:
+
+- Normalize tracked and local inputs into stable kanji and word identities.
+- Generate deterministic card surfaces and package-ready exports.
+- Promote exact card identities through separate review lanes without borrowing authority across lanes.
+- Preserve trust decisions in proof ledgers, gate output, and scoped release locks.
+
+## What The Program Produces
+
+The program builds two related products:
+
+- Kanji decks: one target kanji per card, with reading, meaning, examples, notes, audio, and stroke-order media.
+- Word decks: one exact written form plus reading per card, with meaning, example, reading breakdown, pitch accent, audio, and support labels.
+
+The products share infrastructure but not certification authority. A word card passing a gate does not certify a kanji card. A generated card does not become reviewed just because it exists. A release package does not become content-certified because it imports into Anki.
+
+## Engineering Signals
+
+| Signal | Evidence in this repo |
+| --- | --- |
+| Deterministic build and packaging | Scripts produce TSV exports and optional byte-stable `.apkg` packages from tracked contracts and generated package inputs. |
+| Fail-closed quality gates | Full-level N3 word Gold/Sapphire/Platinum gates currently fail because `261` generated rows are missing each reviewed lane, even though the existing `8` reviewed entries pass. |
+| Explicit trust ladder | Silver, Gold, Sapphire, Platinum, and Obsidian are separate lanes with different authority and separate commands. |
+| Canonical proof storage | Obsidian proof lives in tracked JSONL under `templates/obsidian_proof_ledger/*.jsonl`; SQLite is a generated query mirror only. |
+| Source and media boundaries | Source evidence, generated TSVs, media identity, pitch evidence, package readiness, NLP artifacts, and release QA are separate. |
+| Real release lock | `v0.2.0` records certified scope, artifact hashes, excluded scopes, future-work boundary, and broader release-trust caveats. |
+| Honest incompleteness | N1 kanji, N3/N2/N1 words, and broader product release claims are not collapsed into the completed scopes. |
+
+## Current Product State
+
+### Locked First-Version Scope
+
+The scoped `v0.2.0` lock covers:
+
+- Word N5 and N4.
+- Core kanji N5, N4, N3, and N2.
+
+Live certification commands confirm:
+
+| Scope | Generated rows | Obsidian certified | Needs Obsidian | Blocked/failing |
+| --- | ---: | ---: | ---: | ---: |
+| Kanji N5-N2 | 982 | 982 | 0 | 0 |
+| Word N5-N4 | 987 | 987 | 0 | 0 |
+
+This is a scoped content/package release lock, not a blanket claim that every product surface is finished.
+
+### Active Backlog
+
+| Surface | State | Correct next lane |
+| --- | --- | --- |
+| N3 word | `269/269` generated; `8/269` Gold/Sapphire/Platinum; `0/269` Obsidian; reading coverage `19.9%` | Silver expansion |
+| N2 word | `28/28` generated; Gold/Sapphire/Platinum not started | Future word lane |
+| N1 word | `26/26` generated; Gold/Sapphire/Platinum not started | Future word lane |
+| N1 kanji | `1230/1230` generated/Gold; `328/1230` Sapphire/Platinum; `0/1230` Obsidian | Future kanji Sapphire then Platinum |
+
+## Why This Is More Than A Deck
+
+The hard part is not rendering flashcards. The hard part is keeping a large educational data product honest while it changes:
+
+- Generated surfaces are tracked separately from reviewed surfaces.
+- Source truth is separated from regression protection.
+- Structural review is separated from card-surface inspection.
+- Content proof is separated from package readiness.
+- Package QA is separated from broader release trust.
+- Assistive NLP is useful but cannot certify or mutate tracked templates.
+
+That design makes the project auditable. A reviewer can rerun commands, inspect manifests, and see why a card or level is trusted, incomplete, deferred, or blocked.
+
+## Verification Commands
+
+These commands backed the snapshot above:
+
+```bash
+git status --short --branch
+git log -1 --oneline --decorate
+git ls-remote --heads origin
+npm run deck:closeout -- --levels=5,4,3,2,1
+npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3,2
+npm run deck:words:obsidian:certify-status -- --levels=5,4
+npm run data:obsidian:proof:validate
+npm run deck:words:completion:n3
+npm run deck:words:obsidian:rereview-status -- --levels=3
+npm run deck:kanji:obsidian:rereview-status -- --levels=1
+```
+
+`deck:closeout` is an orientation report. It does not replace lane gates, proof-ledger validation, package QA, hosted checks, or manual evidence.
+
+## Recommended Next Work
+
+Start N3 word Silver expansion. Do not touch the frozen `v0.2.0` lock and do not start Gold, Sapphire, Platinum, or Obsidian for N3 words yet.
+
+Use:
+
+```bash
+npm run deck:words:gap-plan:n3
+npm run deck:words:reading-audit:n3
+npm run deck:words:completion:n3
+```
+
+Select fast promotions from curated examples first. The current gap plan reports `215` fast promotions and `717` editorial research items. Start with fast promotions because they already have curated examples and can expand the generated N3 word surface without inventing raw candidates.

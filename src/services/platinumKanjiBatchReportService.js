@@ -19,7 +19,7 @@ const KANJI_BATCH_QUEUE_MODES = {
     SUBSTANTIVE_REREVIEW: "substantive-rereview",
 };
 const DEFAULT_KANJI_BATCH_QUEUE_MODE = KANJI_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD;
-const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
+const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 Obsidian rereview";
 const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 const KANJI_REREVIEW_RUBRIC_VERSION = "kanji-platinum-rereview-rubric-v1";
 const REVIEW_RUBRIC_STATUSES = Object.freeze({

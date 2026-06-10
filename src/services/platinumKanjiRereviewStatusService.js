@@ -13,7 +13,7 @@ const REREVIEW_STATUS_CATEGORIES = Object.freeze({
     BLOCKED_OR_FAILING: "blocked_or_failing",
 });
 
-const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 human rereview";
+const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 Obsidian rereview";
 const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 const MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER = "missing_substantive_current_standard_rereview_proof";
 const SENTENCE_QUALITY_REVIEW_PROOF_MARKER = "example sentence quality review";
@@ -229,7 +229,7 @@ function buildMissingRereviewProofReason(entry = {}) {
 
     return [
         MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
-        "requires explicit non-mechanical post-v3 human rereview provenance with actual example sentence quality review proof",
+        "requires explicit non-mechanical post-v3 Obsidian rereview proof with actual example sentence quality review proof",
         observed.length > 0 ? `observed ${observed.join(" and ")} only` : "no current-standard rereview provenance observed",
     ].join(": ");
 }
@@ -384,7 +384,7 @@ function buildPlatinumKanjiRereviewStatusReport({
             nonMechanicalMarker: NON_MECHANICAL_PROOF_MARKER,
             missingProofMarker: MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
             sentenceQualityReviewProofMarker: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
-            note: "revalidatedAt and required v3 current-standard-review lane text are Platinum evidence, not standalone proof of substantive post-v3 human rereview or actual example sentence quality review",
+            note: "revalidatedAt and required v3 current-standard-review lane text are Platinum evidence, not standalone proof of substantive post-v3 Obsidian rereview or actual example sentence quality review",
         },
         counts,
         passed: counts.blocked_or_failing === 0,

@@ -1,6 +1,6 @@
 # Japanese Kanji Anki Builder
 
-Japanese Kanji Anki Builder creates governed Anki flashcard decks for JLPT kanji and vocabulary. It combines curated study data, example sentences, pronunciation audio, stroke-order media, pitch-accent information, and tracked review contracts into deterministic TSV exports and optional `.apkg` packages.
+Japanese Kanji Anki Builder is a governed data pipeline and release-controlled content generation system for JLPT kanji and vocabulary. Its user-facing output is Anki study material, but the core program is the machinery that turns curated source data, media policy, review contracts, and proof ledgers into deterministic TSV exports and optional `.apkg` packages.
 
 Run this first:
 
@@ -12,7 +12,7 @@ Kanji cards and word cards are separate learning products. A kanji card teaches 
 
 ## Purpose
 
-This repository is built for controlled output, not casual scrape-and-export deck generation.
+This repository is built for controlled output, not casual scrape-and-export deck generation. In employer-facing terms, it is a release-controlled content generation system with deck exports as one governed artifact.
 
 - Tracked JSON contracts define JLPT kanji inventory, word eligibility, Anki note fields, media policy, review expectations, and source-evidence rules.
 - Ignored local files under `data/`, `downloads/`, and `out/` are workspace inputs or generated artifacts. They are not product truth unless promoted into tracked contracts.
@@ -26,6 +26,11 @@ This repository is built for controlled output, not casual scrape-and-export dec
 - Curated learner-facing readings, meanings, examples, notes, pitch accent, audio, and stroke-order media.
 - Governed source evidence for JLPT kanji taxonomy and word-card field review.
 - Offline-safe preview, review, build, package, audit, and release-gate commands.
+
+## Reviewer Entry Points
+
+- [docs/employer-overview.md](docs/employer-overview.md): a fast, evidence-backed summary of what the project proves today and what remains intentionally unfinished.
+- [docs/system-architecture.md](docs/system-architecture.md): a visual architecture map for the input, normalization, generated-surface, review, proof, and release layers.
 
 ## Authority Boundary
 

@@ -1,4 +1,5 @@
 const {
+    buildWordStudyDataStalenessReport,
     normalizeWordStudyData,
     refreshStarterEntries,
 } = require("../datasets/wordStudyData");
@@ -11,6 +12,10 @@ function bootstrapWordStudyData({
     merge = false,
     refreshStarter = false,
 }) {
+    const preflight = buildWordStudyDataStalenessReport({
+        localPath: targetPath,
+        starterPath,
+    });
     const starterEntries = normalizeWordStudyData(readJsonObject(starterPath));
     const existingTarget = readJsonObjectIfExists(targetPath);
     const targetExists = existingTarget.exists;
@@ -39,6 +44,7 @@ function bootstrapWordStudyData({
         existingEntries: Object.keys(existingEntries).length,
         writtenEntries: changed ? Object.keys(nextEntries).length : Object.keys(existingEntries).length,
         changed,
+        preflight,
     };
 }
 

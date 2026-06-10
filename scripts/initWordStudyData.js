@@ -3,6 +3,7 @@ const path = require("node:path");
 
 const { invokeCliMain } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
+const { formatWordStudyDataStalenessWarning } = require("../src/datasets/wordStudyData");
 const { bootstrapWordStudyData } = require("../src/services/wordStudyBootstrapService");
 
 function parseArgs(argv) {
@@ -22,7 +23,18 @@ function formatReport(summary) {
     lines.push(`Written target entries: ${summary.writtenEntries}`);
     lines.push(`Mode: ${summary.refreshStarter ? "refresh-starter" : summary.merge ? "merge" : "initialize"}`);
     lines.push(`Target file: ${summary.targetPath}`);
+    lines.push(`Starter fingerprint: ${summary.preflight.starterFingerprint.slice(0, 12)}`);
+    lines.push(`Existing fingerprint: ${summary.preflight.localFingerprint ? summary.preflight.localFingerprint.slice(0, 12) : "(missing)"}`);
+    lines.push(`Refreshed fingerprint: ${summary.preflight.refreshedFingerprint.slice(0, 12)}`);
+    lines.push(`Starter-derived mismatch: ${summary.preflight.staleStarterDerivedEntryCount} stale, ${summary.preflight.missingStarterEntryCount} missing`);
+    lines.push(`Custom local entries preserved: ${summary.preflight.customLocalEntryCount}`);
     lines.push("");
+
+    const warning = formatWordStudyDataStalenessWarning(summary.preflight);
+    if (warning) {
+        lines.push(warning);
+        lines.push("");
+    }
 
     if (!summary.changed) {
         lines.push("No file changes were made because word study data already exists. Re-run with `--merge` to add starter entries or `--refresh-starter` to replace stale starter-derived entries.");

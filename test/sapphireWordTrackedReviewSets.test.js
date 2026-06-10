@@ -292,6 +292,88 @@ test("Sapphire word evaluator protects kanji breakdown snippets alongside readin
     assert.equal(report.passed, true, formatSapphireWordReviewReport(report));
 });
 
+test("Sapphire word evaluator compares escaped generated fields by visible text", () => {
+    const entry = {
+        word: "一時",
+        status: "sapphire",
+        readingIncludes: ["いちじ"],
+        meaningIncludes: ["one o'clock"],
+        jlptLevelIncludes: ["JLPT N5"],
+        coverageRoleIncludes: ["JLPT core"],
+        focusIncludes: ["一", "時"],
+        coversReadingIncludes: ["一: いち", "時: じ"],
+        breakdownIncludes: [
+            "一 （いち） ／ one, 時 （じ） ／ time / o'clock",
+        ],
+        exampleIncludes: ["一時に"],
+        pitchAccentIncludes: ["Pitch 1"],
+        notesIncludes: ["一 -> いち", "o'clock"],
+        selectionRationale: "Fixture for visible-text comparison.",
+        reviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+        reviewedAt: "2026-06-10",
+        revalidatedAt: "2026-06-10",
+        reviewer: "test-fixture",
+        revalidationSummary: "Current-standard visible-text comparison fixture.",
+        migrationProvenance: {
+            migratedFrom: "native-word-sapphire-review",
+            authority: "Native Sapphire structural review entry. This is not Platinum card-surface inspection.",
+        },
+        sourceEvidence: [{
+            type: "japanese-source",
+            source: "test fixture",
+            detail: "Fixture source checked 一時|いちじ.",
+        }],
+        internalChecks: [
+            "generated-surface",
+            "golden-regression",
+            "level-contract",
+            "media-audit",
+            "audio-review",
+            "pitch-accent-review",
+            "label-review",
+        ].map((type) => ({
+            type,
+            source: "test fixture",
+            detail: `Fixture checked ${type}.`,
+        })),
+        reviewEvidence: [
+            "example-review",
+            "manual-review",
+            "current-standard-review",
+        ].map((type) => ({
+            type,
+            source: "test fixture",
+            detail: `Fixture checked ${type}.`,
+        })),
+    };
+    const row = {
+        word: "一時",
+        reading: "いちじ",
+        readingBreakdown: "<ruby>一時<rt>いちじ</rt></ruby>",
+        audio: "[sound:word-reading-一時-いちじ.wav]",
+        pitchAccent: "<span aria-label=\"Pitch 1: 0\">Pitch 1: 0</span>",
+        meaning: "one o&#39;clock",
+        jlptLevel: "JLPT N5",
+        coverageRole: "JLPT core",
+        focusKanji: "一、時",
+        coversReading: "一: いち ／ 時: じ",
+        kanjiBreakdown: [
+            "一 （いち） ／ one",
+            "<span>stroke order reviewed</span>",
+            "時 （じ） ／ time / o&#39;clock",
+        ].join(" "),
+        exampleSentence: "一時に行きます。",
+        notes: "一 -&gt; いち / time / o&#39;clock",
+    };
+
+    const report = evaluateSapphireWordReviewSet({
+        rows: [row],
+        entries: [entry],
+    });
+
+    assert.equal(report.passed, true, formatSapphireWordReviewReport(report));
+});
+
 test("Sapphire word schema rejects Platinum-shaped candidates and inline Obsidian proof", () => {
     const entries = loadJson(path.join("templates", "sapphire_n5_word_review_set.json"));
     const candidate = entries.find((entry) => ACTIVE_WORD_SAPPHIRE_STATUSES.includes(entry.status));

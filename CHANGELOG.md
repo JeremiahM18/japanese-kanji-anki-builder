@@ -12,6 +12,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 - Added first-class core-kanji Sapphire review sets, commands, schema validation, batch reporting, and reviewed-input promotion, with Deck Ready explicitly scoped as mechanical artifact readiness outside the Silver/Gold/Sapphire/Platinum/Obsidian trust ladder.
 - Added first-class word Sapphire review sets, commands, schema validation, and batch reporting, preserving N5/N4 structural coverage at `987/987` while keeping legacy word Platinum manifests as compatibility/proof-provider inputs.
+- Added word-study local-data staleness fingerprints and preflight warnings to the word init, Sapphire, and Platinum commands so stale ignored starter-derived data is diagnosed before card-level gate failures.
 - Added a program-wide review-system forward contract that keeps candidate queues pre-trust, preserves Silver/Gold/Sapphire/Platinum/Obsidian lane authority, makes Sapphire structural, and keeps Platinum as card-surface inspection.
 - Added a governed KANJIDIC2/EDRDG kanji on/kun reading-reference contract covering the tracked JLPT kanji inventory, with source-use limits, raw source identity, attribution, loader/audit tests, and tracked-source kanji preflight integration.
 - Added governed N5, N4, and N3 kanji card-field source contracts derived from current-standard Platinum Japanese-source evidence, with manual field-bound citation limits, source-origin independence context, loader/audit tests, and tracked-source kanji preflight certification for N5/N4/N3 source availability.
@@ -24,6 +25,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 
 - Raised the project runtime floor from Node 18 to Node 20 and updated CI, branch-protection policy, hosted required checks, and compatibility docs to verify Node 20/22 only.
 - Corrected the package metadata baseline from `1.0.0` to `0.1.0` because no matching git tag exists and product release readiness remains unclaimed.
+- Added the repository `LICENSE` file for the declared ISC code license and documented the separate shipped-content attribution boundary.
 
 ### Security
 
@@ -59,8 +61,10 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Clarified that scoped audio review packets are selected-card evidence only; full-level media completeness remains owned by `deck:ready` plus audio and stroke-order policy audits.
 - Completed the governed N3 core kanji Obsidian proof lane while keeping certification fail-closed: live N3 kanji is `341/341` generated, Gold, Platinum, and Obsidian certified; N5/N4/N3 kanji Obsidian now totals `633/633`; `0` Platinum entries need substantive Obsidian proof; and `0` generated rows are blocked/failing structurally. N3 kanji NLP packets remain assistive review context only, not certification proof.
 - Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.
+- Fixed native word Sapphire matching so escaped generated fields are checked against visible learner-facing text and legacy comma-joined breakdown snippets are matched as individual visible breakdown claims.
 - Completed the governed N4 word Obsidian proof lane while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word Platinum is `700/700`, N4 word Obsidian is `700/700`, total N5/N4 word Obsidian is `987/987`, `0` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
-- Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `239/344` (`69.5%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.
+- Clarified Obsidian as the current non-human governed native/fluent-quality content-certification lane, with future human/native review treated as human-reviewed provenance for the same standard rather than a different or higher content bar.
+- Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `233/344` (`67.7%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.
 - Expanded and governed the word inventory and reading-coverage work across N5/N4 while preserving separate Silver, Gold, Platinum, and Obsidian semantics; N3 word now has an initial `8/269` Gold, Sapphire, and Platinum current-standard batch, while N2/N1 word surfaces remain Silver starter material and no upper-word surface implies release certification.
 - Corrected weak Sou Matome table-of-contents rows to non-voting source-access-gap status after live verification: current routed assignment files and pinned worksheet baselines contain Sou Matome `442` reviewed / `473` source-access-gap / `1297` pending rows, Shin Kanzen `406` reviewed / `236` source-access-gap / `1570` pending rows, and ASK Hajimete `208` reviewed / `0` source-access-gap / `0` pending rows.
 - Strengthened source/release governance around JLPT evidence, editorial policy, deterministic exports, CI, benchmark guardrails, and NLP assistive-only boundaries; NLP artifacts remain support context and cannot certify cards.

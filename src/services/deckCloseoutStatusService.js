@@ -289,7 +289,7 @@ function buildExpectedGateRows(laneRows = []) {
                 levelLabel: laneRow.levelLabel,
                 lane: laneName,
                 command: commands[laneName],
-                classification: lane.missing > 0 ? "expected-fail-coverage" : "expected-pass-count-complete",
+                classification: lane.missing > 0 ? "expected-fail-coverage" : "count-complete-run-gate-to-confirm",
                 missing: lane.missing,
                 ratio: lane.ratio,
             });

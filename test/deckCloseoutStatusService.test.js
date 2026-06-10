@@ -239,6 +239,14 @@ test("buildDeckCloseoutStatus reports lane counts and expected coverage failures
             )),
             true
         );
+        assert.equal(
+            report.expectedGates.some((gate) => (
+                gate.command === "npm run deck:review:n1"
+                && gate.classification === "count-complete-run-gate-to-confirm"
+                && gate.missing === 0
+            )),
+            true
+        );
     } finally {
         fs.rmSync(rootDir, { recursive: true, force: true });
     }

@@ -7,6 +7,10 @@ const {
 } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
+const {
+    buildWordStudyDataStalenessReport,
+    formatWordStudyDataStalenessWarning,
+} = require("../src/datasets/wordStudyData");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const {
@@ -87,6 +91,10 @@ async function main() {
 
     const entries = readSapphireReviewSet(level);
     const goldenExpectations = readGoldenReviewSet(level);
+    const wordStudyPreflight = buildWordStudyDataStalenessReport({
+        localPath: config.wordStudyDataPath,
+        starterPath: path.join(process.cwd(), "templates", "starter_word_study_data.json"),
+    });
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const rows = await buildWordRowsForLevel({ level, config });
@@ -103,8 +111,13 @@ async function main() {
     });
 
     if (options.json) {
-        console.log(JSON.stringify({ report, rows }, null, 2));
+        console.log(JSON.stringify({ report, rows, wordStudyPreflight }, null, 2));
         process.exit(report.passed ? 0 : 1);
+    }
+
+    const warning = formatWordStudyDataStalenessWarning(wordStudyPreflight);
+    if (warning) {
+        process.stdout.write(`${warning}\n\n`);
     }
 
     process.stdout.write(formatSapphireWordReviewReport(report, {

@@ -12,7 +12,11 @@ const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { createKanjiApiClient } = require("../src/clients/kanjiApiClient");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const { loadSentenceCorpus } = require("../src/datasets/sentenceCorpus");
-const { loadWordStudyData } = require("../src/datasets/wordStudyData");
+const {
+    buildWordStudyDataStalenessReport,
+    formatWordStudyDataStalenessWarning,
+    loadWordStudyData,
+} = require("../src/datasets/wordStudyData");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
 const { parseSapphireWordReviewSet } = require("../src/datasets/sapphireWordReviewSet");
@@ -180,6 +184,10 @@ async function main() {
         level,
         proofProvider: options.proofProvider,
     });
+    const wordStudyPreflight = buildWordStudyDataStalenessReport({
+        localPath: config.wordStudyDataPath,
+        starterPath: path.join(process.cwd(), "templates", "starter_word_study_data.json"),
+    });
     const entries = reviewSet.entries;
     const sapphireEntries = parseSapphireWordReviewSet(
         readJson(sapphireReviewSetPath),
@@ -213,8 +221,13 @@ async function main() {
     });
 
     if (options.json) {
-        console.log(JSON.stringify({ report, rows }, null, 2));
+        console.log(JSON.stringify({ report, rows, wordStudyPreflight }, null, 2));
         process.exit(report.passed ? 0 : 1);
+    }
+
+    const warning = formatWordStudyDataStalenessWarning(wordStudyPreflight);
+    if (warning) {
+        process.stdout.write(`${warning}\n\n`);
     }
 
     process.stdout.write(formatPlatinumWordReviewReport(report, {

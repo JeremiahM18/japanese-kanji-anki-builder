@@ -1,11 +1,15 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
 const path = require("node:path");
 
 const {
     buildWordCoverageContractSummary,
+    buildWordStudyDataStalenessReport,
     loadWordStudyData,
     buildWordStudyEntryKey,
+    formatWordStudyDataStalenessWarning,
     isStarterDerivedEntry,
     normalizeWordStudyData,
     refreshStarterEntries,
@@ -1621,6 +1625,65 @@ test("word study dataset helpers detect and refresh starter-derived entries", ()
 
     assert.equal(refreshed["計画|けいかく"].meaning, "plan");
     assert.equal(refreshed["自作|じさく"].meaning, "self-made");
+});
+
+test("word study staleness report fingerprints stale ignored local data", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-study-preflight-"));
+    const starterPath = path.join(rootDir, "starter_word_study_data.json");
+    const localPath = path.join(rootDir, "word_study_data.json");
+    try {
+        fs.writeFileSync(starterPath, `${JSON.stringify({
+            "計画|けいかく": {
+                written: "計画",
+                reading: "けいかく",
+                meaning: "plan",
+                source: "word-study-data",
+                tags: ["starter", "n4"],
+                jlpt: 4,
+            },
+            "安心|あんしん": {
+                written: "安心",
+                reading: "あんしん",
+                meaning: "peace of mind",
+                source: "word-study-data",
+                tags: ["starter", "n4"],
+                jlpt: 4,
+            },
+        }, null, 2)}\n`);
+        fs.writeFileSync(localPath, `${JSON.stringify({
+            "計画|けいかく": {
+                written: "計画",
+                reading: "けいかく",
+                meaning: "old meaning",
+                source: "word-study-data",
+                tags: ["starter", "n4"],
+                jlpt: 4,
+            },
+            "自作|じさく": {
+                written: "自作",
+                reading: "じさく",
+                meaning: "self-made",
+                source: "manual-curation",
+                tags: ["n4"],
+                jlpt: 4,
+            },
+        }, null, 2)}\n`);
+
+        const report = buildWordStudyDataStalenessReport({ localPath, starterPath });
+        const warning = formatWordStudyDataStalenessWarning(report);
+
+        assert.equal(report.needsRefresh, true);
+        assert.equal(report.staleStarterDerivedEntryCount, 1);
+        assert.equal(report.missingStarterEntryCount, 1);
+        assert.equal(report.customLocalEntryCount, 1);
+        assert.equal(report.refreshedEntryCount, 3);
+        assert.match(report.starterFingerprint, /^[a-f0-9]{64}$/);
+        assert.match(report.localFingerprint, /^[a-f0-9]{64}$/);
+        assert.match(warning, /starter-derived mismatch: 1 stale, 1 missing/);
+        assert.match(warning, /loader refreshes starter-derived entries in memory/);
+    } finally {
+        fs.rmSync(rootDir, { recursive: true, force: true });
+    }
 });
 
 test("tracked starter word data includes the first governed N4 starter entries", () => {

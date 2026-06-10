@@ -11,8 +11,10 @@ This file does not replace the schemas, validators, tests, or detailed runbooks.
 - Sapphire is structural certification only, not a softer name for "almost reviewed" and not card-surface inspection.
 - Core-kanji and word Sapphire commands and manifests are the structural lane. Do not put structure-only work into Platinum naming.
 - Platinum is card-surface inspection. The existing Platinum commands and manifests remain active Platinum inputs; do not describe them as gone, legacy-only, future-only, or unimplemented.
-- Obsidian is separate non-mechanical rereview proof, not a synonym for Platinum.
+- Obsidian is the repository's current non-human governed native/fluent-quality content-certification proof lane for a scoped version. It is separate non-mechanical rereview proof, not a synonym for Platinum and not an inference from prior passes.
 - Deck Ready, Word Deck Ready, APKG readiness, and package staging are mechanical artifact states, not content trust tiers.
+- Release artifact QA is not a second content-certification lane. If import, render, media, accessibility, or listening QA exposes a content issue, reopen Sapphire, Platinum, and Obsidian for the affected cards.
+- Future human or native/fluent review is human-reviewed provenance for the same native/fluent-quality standard Obsidian already checks. It is not a different content standard.
 - NLP is required review support where the lane defines it, but NLP never approves cards, writes tracked templates, certifies Obsidian, or claims release readiness.
 - Kanji and word lanes are separate products. Do not borrow proof, status, counts, or source decisions across them.
 - Generated rows, source evidence, internal checks, reviewer judgment, media identity, NLP support, Platinum, Obsidian proof, and release readiness are separate lanes.
@@ -37,7 +39,7 @@ Platinum proves the live generated card has passed card-surface inspection under
 - Core kanji: `kanji-platinum-v3-evidence-lanes`.
 - Word: `word-platinum-v3-evidence-lanes`.
 
-Obsidian proves explicit, non-mechanical current-version rereview was performed for the live card and recorded in the canonical proof path.
+Obsidian proves explicit, non-mechanical current-version native/fluent-quality rereview was performed for the live card and recorded in the canonical proof path. Current Obsidian proof is non-human governed proof produced under this repository's evidence-backed workflow, schemas, checklists, and fail-closed gates. It must check natural Japanese, sense and translation fit, learner usefulness, level fit, reading/example quality, evidence, limitations, and release-quality content. The proof claim must not be widened to human-reviewed provenance unless that separate provenance is recorded.
 
 `sourceEvidence` is external governed Japanese-source card-field truth only. It must not contain generated-output checks, Gold regression, media checks, source-governance placement claims, NLP output, or manual judgment. Those belong in their own lanes.
 
@@ -123,7 +125,7 @@ Words use:
 npm run deck:words:expansion-support -- --levels=<level>
 ```
 
-The reviewer must inspect relevant NLP review packets, tokenization signals, draft notes, warnings, and limitations for the selected cards. NLP can reveal issues, prioritize review, or provide supporting context. It cannot certify the card. If NLP reveals a real issue, fix tracked data first and rerun the affected review artifacts or gates.
+The Obsidian pass must inspect relevant NLP review packets, tokenization signals, draft notes, warnings, and limitations for the selected cards. NLP can reveal issues, prioritize review, or provide supporting context. It cannot certify the card. If NLP reveals a real issue, fix tracked data first and rerun the affected review artifacts or gates.
 
 ## Obsidian Batch Standard
 
@@ -139,7 +141,7 @@ npm run deck:words:obsidian:rereview-status -- --levels=<level>
 npm run deck:words:platinum:batch -- --level=<level> --limit=<batch-size> --queue=substantive-rereview --json
 ```
 
-The reviewer must rereview the actual live card data again, including source evidence, examples, media identity, limitations, and any NLP support. Obsidian proof is not inferred from the Sapphire entry or the Platinum entry.
+The Obsidian pass must rereview the actual live card data again, including source evidence, examples, media identity, limitations, any NLP support, and native/fluent-quality content criteria. Obsidian proof is not inferred from the Sapphire entry or the Platinum entry.
 
 Canonical Obsidian proof is tracked JSONL under:
 
@@ -153,7 +155,7 @@ Draft events stay ignored/local under:
 out/obsidian-proof/drafts/*.jsonl
 ```
 
-Append proof only through the governed appender. Dry-run first, inspect the report, then write only if the dry-run is clean and the human review actually happened:
+Append proof only through the governed appender. Dry-run first, inspect the report, then write only if the dry-run is clean and the governed rereview actually happened:
 
 ```bash
 npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl

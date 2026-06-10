@@ -2,7 +2,7 @@
 
 Use this runbook for every Obsidian pass. Do not wait until a level is complete before running these commands. The status and batch commands are the work queue.
 
-Obsidian is human rereview proof. Automation can prepare packets, reject bad structure, and verify that proof is present and card-bound. Automation does not perform the human review.
+Obsidian is governed non-mechanical native/fluent-quality rereview proof and is the repository's current non-human content-certification lane for a scoped version. Mechanical gates can prepare packets, reject bad structure, and verify that proof is present and card-bound, but gate output alone does not create proof. Future human/native review is human-reviewed provenance for the same Obsidian standard, not a different content standard.
 
 Before running any Sapphire, compatibility-structural, or Obsidian batch, read [review-system-forward-contract.md](review-system-forward-contract.md), [review-tier-governance.md](review-tier-governance.md), and the binding [Platinum And Obsidian Review Contract](platinum-obsidian-review-contract.md). They define the lane boundaries, native core-kanji Sapphire commands, remaining compatibility command names, required actual card-data review, NLP boundary, fixed-status rules, proof authority, verification requirements, and report shape.
 
@@ -16,7 +16,7 @@ npm run deck:kanji:review-status
 npm run deck:kanji:obsidian:rereview-status -- --levels=<level>
 ```
 
-2. Generate the next human-review batch.
+2. Generate the next Obsidian rereview batch.
 
 ```bash
 npm run deck:platinum:batch -- --level=<level> --limit=12 --queue=substantive-rereview
@@ -30,7 +30,7 @@ Obsidian workflows must request `--queue=substantive-rereview` explicitly. The d
 npm run deck:ready -- --levels=<level>
 ```
 
-This refreshes the live generated TSV/APKG surface used by the reviewer. It is not Obsidian proof.
+This refreshes the live generated TSV/APKG surface used by the Obsidian pass. It is not Obsidian proof.
 
 4. Run the kanji NLP support lane.
 
@@ -42,11 +42,11 @@ This audits the NLP manifest/runtime, refreshes generated kanji TSVs, tokenizes 
 
 It does not run word expansion, word reading-gap discovery, word example reranking, word sense-fit audits, or word-card embeddings.
 
-Kanji tokenizer differences are usually reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings. NLP is review amplification only. It cannot certify Obsidian proof, approve source truth, write tracked templates, or replace the reviewer.
+Kanji tokenizer differences are usually reading variants or tokenizer coverage gaps, not automatic defects, because one bare kanji can legitimately have multiple readings. NLP is review amplification only. It cannot certify Obsidian proof, approve source truth, write tracked templates, or replace Obsidian rereview.
 
-5. Review each queued card manually.
+5. Rereview each queued card under the Obsidian checklist.
 
-The reviewer checks the live generated card, the batch rubric, tracked evidence, and any NLP signals:
+The Obsidian pass checks the live generated card, the batch rubric, tracked evidence, and any NLP signals:
 
 - primary reading
 - meanings
@@ -58,6 +58,7 @@ The reviewer checks the live generated card, the batch rubric, tracked evidence,
 - source evidence
 - limitations
 - learner usefulness
+- natural Japanese and native/fluent-quality release fit
 
 If NLP or the batch rubric exposes a real issue, fix tracked source/card data first. Then regenerate, rerun the affected gates, rerun NLP if its support artifact changed, and only then continue.
 
@@ -65,7 +66,7 @@ If NLP or the batch rubric exposes a real issue, fix tracked source/card data fi
 
 The canonical proof record is a complete JSONL ledger event under `templates/obsidian_proof_ledger/*.jsonl`. It must carry structured proof fields plus actual card-bound example-sentence quality evidence. Do not add inline `rereviewProvenance` to tracked review sets for migrated ledger levels such as N3 kanji.
 
-Use the governed appender instead of ad hoc helper scripts. Keep the draft input under an ignored/local path such as `out/obsidian-proof/drafts/`, inspect the dry-run report, then rerun with `--write` only after the human review and dry-run both pass:
+Use the governed appender instead of ad hoc helper scripts. Keep the draft input under an ignored/local path such as `out/obsidian-proof/drafts/`, inspect the dry-run report, then rerun with `--write` only after the Obsidian rereview and dry-run both pass:
 
 ```bash
 npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl
@@ -155,7 +156,7 @@ git status --short --untracked-files=all
 npm run deck:words:obsidian:rereview-status -- --levels=<level>
 ```
 
-2. Generate the next human-review batch.
+2. Generate the next Obsidian rereview batch.
 
 ```bash
 npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substantive-rereview
@@ -169,7 +170,7 @@ Obsidian word workflows must request `--queue=substantive-rereview` explicitly. 
 npm run deck:words:ready -- --levels=<level>
 ```
 
-This refreshes the live generated word rows used by the reviewer. It is not Obsidian proof.
+This refreshes the live generated word rows used by the Obsidian pass. It is not Obsidian proof.
 
 4. Run the word NLP support lane.
 
@@ -179,11 +180,11 @@ npm run deck:words:expansion-support -- --levels=<level>
 
 Word NLP is broad and model-backed. This command runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`.
 
-Review packets point the human reviewer at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. NLP cannot certify Obsidian proof, approve source truth, or write tracked templates.
+Review packets point the Obsidian pass at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. NLP cannot certify Obsidian proof, approve source truth, or write tracked templates.
 
-5. Review each queued word card manually.
+5. Rereview each queued word card under the Obsidian checklist.
 
-The reviewer checks the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, and any NLP signals.
+The Obsidian pass checks the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, natural Japanese/native-fluent quality, and any NLP signals.
 
 If NLP or the batch rubric exposes a real issue, fix tracked source/card data first. Then regenerate, rerun the affected gates, rerun NLP if its support artifact changed, and only then continue.
 

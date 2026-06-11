@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- Expanded active N3 word Silver coverage from `309` to `359` canonical rows. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold, Sapphire, Platinum, and Obsidian were not expanded in this lane.
+- Expanded active N3 word Silver coverage from `359` to `429` canonical rows. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold, Sapphire, Platinum, and Obsidian remain at `8/429` current-standard in this lane.
 
 Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active ongoing work until separately locked.
 
@@ -75,7 +75,7 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Completed the governed N4 word Obsidian proof lane while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word Platinum is `700/700`, N4 word Obsidian is `700/700`, total N5/N4 word Obsidian is `987/987`, `0` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
 - Clarified Obsidian as the current non-human governed native/fluent-quality content-certification lane, with future human/native review treated as human-reviewed provenance for the same standard rather than a different or higher content bar.
 - Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `233/344` (`67.7%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.
-- Expanded and governed the word inventory and reading-coverage work across N5/N4 while preserving separate Silver, Gold, Platinum, and Obsidian semantics; N3 word remains active expansion work, now has `359` Silver rows, and has an initial `8/359` Gold, Sapphire, and Platinum current-standard batch, while N2/N1 word surfaces remain Silver starter material and no upper-word surface implies release certification.
+- Expanded and governed the word inventory and reading-coverage work across N5/N4 while preserving separate Silver, Gold, Platinum, and Obsidian semantics; at the `0.2.0` lock point, N3 word remained active expansion work with `359` Silver rows and an initial `8/359` Gold, Sapphire, and Platinum current-standard batch, while N2/N1 word surfaces remained Silver starter material and no upper-word surface implied release certification.
 - Corrected weak Sou Matome table-of-contents rows to non-voting source-access-gap status after live verification: current routed assignment files and pinned worksheet baselines contain Sou Matome `442` reviewed / `473` source-access-gap / `1297` pending rows, Shin Kanzen `406` reviewed / `236` source-access-gap / `1570` pending rows, and ASK Hajimete `208` reviewed / `0` source-access-gap / `0` pending rows.
 - Strengthened source/release governance around JLPT evidence, editorial policy, deterministic exports, CI, benchmark guardrails, and NLP assistive-only boundaries; NLP artifacts remain support context and cannot certify cards.
 

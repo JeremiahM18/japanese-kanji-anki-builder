@@ -103,17 +103,17 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word Platinum packet for Sapphire-eligible rows; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
-| `npm run deck:words:review:n3` | Run the N3 word Gold regression benchmark; current coverage is `8/359`, so the full-level gate fails closed on `351` missing Gold entries |
+| `npm run deck:words:review:n3` | Run the N3 word Gold regression benchmark; current coverage is `8/429`, so the full-level gate fails closed on `421` missing Gold entries |
 | `npm run deck:words:review:n2` | Run the N2 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
 | `npm run deck:words:review:n1` | Run the N1 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
 | `npm run deck:words:sapphire:n5` | Run the native N5 word Sapphire gate; current coverage is `287/287` active generated rows, with deferred/removed tracked separately |
 | `npm run deck:words:sapphire:n4` | Run the native N4 word Sapphire gate; current coverage is `700/700` |
-| `npm run deck:words:sapphire:n3` | Run the native N3 word Sapphire gate; current coverage is `8/359`, so the full-level gate fails closed on `351` missing Sapphire entries |
+| `npm run deck:words:sapphire:n3` | Run the native N3 word Sapphire gate; current coverage is `8/429`, so the full-level gate fails closed on `421` missing Sapphire entries |
 | `npm run deck:words:sapphire:n2` | Run the native N2 word Sapphire gate; currently fails closed because the manifest is empty and `28` generated rows are missing Sapphire |
 | `npm run deck:words:sapphire:n1` | Run the native N1 word Sapphire gate; currently fails closed because the manifest is empty and `26` generated rows are missing Sapphire |
 | `npm run deck:words:platinum:n5` | Run the N5 word Platinum gate; use `deck:words:sapphire:n5` for structure-only Sapphire |
 | `npm run deck:words:platinum:n4` | Run the N4 word Platinum gate; use `deck:words:sapphire:n4` for structure-only Sapphire |
-| `npm run deck:words:platinum:n3` | Run the N3 word Platinum gate; current coverage is `8/359`, so the full-level gate fails closed on `351` missing Platinum entries after matching Gold and Sapphire preconditions |
+| `npm run deck:words:platinum:n3` | Run the N3 word Platinum gate; current coverage is `8/429`, so the full-level gate fails closed on `421` missing Platinum entries after matching Gold and Sapphire preconditions |
 | `npm run deck:words:platinum:n2` | Run the N2 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
 | `npm run deck:words:platinum:n1` | Run the N1 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
 | `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider, while native `deck:words:sapphire:*` owns word Sapphire coverage |

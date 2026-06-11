@@ -189,7 +189,7 @@ test("formatWordDeckReadyReport names the ready APKG and level-specific package 
             inferredOnlyRows: 0,
         },
         completion: {
-            contractInventoryCounts: { "1": 26, "2": 28, "3": 359, "4": 700, "5": 287 },
+            contractInventoryCounts: { "1": 26, "2": 28, "3": 429, "4": 700, "5": 287 },
             excludedContractCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 20 },
             starterGovernance: {
                 coverageByLevel: { 5: 100 },

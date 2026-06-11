@@ -110,7 +110,7 @@ function record(result, expectedFailure = false, note = "") {
   return result;
 }
 
-const gitStatus = record(run("git", ["status", "--short", "--branch"], { label: "git status --short --branch" }));
+record(run("git", ["status", "--short", "--branch"], { label: "git status --short --branch" }));
 const gitTrackedStatus = record(run("git", ["status", "--short", "--branch", "--", ".", ":(exclude)outputs"], { label: "git status --short --branch -- . \":(exclude)outputs\"" }));
 const gitLog = record(run("git", ["log", "-1", "--oneline", "--decorate"], { label: "git log -1 --oneline --decorate" }));
 const gitRemoteFirst = run("git", ["ls-remote", "--heads", "origin"], { label: "git ls-remote --heads origin" });

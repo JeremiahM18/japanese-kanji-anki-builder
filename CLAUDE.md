@@ -271,6 +271,7 @@ Tracked contract/source files include:
 - [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json)
 - [templates/starter_curated_study_data.json](templates/starter_curated_study_data.json)
 - [templates/starter_word_study_data.json](templates/starter_word_study_data.json)
+- tracked `starter_word_study_data_n*.json` per-level files
 - tracked `starter_curated_study_data_*.json` batch files
 
 Ignored local overlays include:

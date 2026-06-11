@@ -167,7 +167,61 @@ function loadWordStudyDataFile(filePath) {
         return {};
     }
 
-    return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    if (!parsed || Array.isArray(parsed) || typeof parsed !== "object") {
+        throw new Error(`Expected JSON object in ${filePath}`);
+    }
+
+    return parsed;
+}
+
+function buildDefaultStarterBatchPrefix(starterPath) {
+    const parsedPath = path.parse(starterPath);
+    return `${parsedPath.name}_`;
+}
+
+/**
+ * @param {{ starterPath?: string, starterPaths?: string[] }} [options]
+ * @returns {string[]}
+ */
+function resolveTrackedStarterPaths({
+    starterPath = path.resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+    starterPaths,
+} = {}) {
+    const explicitPaths = (Array.isArray(starterPaths) ? starterPaths : [starterPath])
+        .map((entry) => cleanString(entry))
+        .filter(Boolean)
+        .map((entry) => path.resolve(entry));
+
+    if (Array.isArray(starterPaths)) {
+        return [...new Set(explicitPaths)];
+    }
+
+    const resolvedStarterPath = explicitPaths[0];
+    const starterDir = path.dirname(resolvedStarterPath);
+    const batchPrefix = buildDefaultStarterBatchPrefix(resolvedStarterPath);
+    const batchPaths = fs.existsSync(starterDir)
+        ? fs.readdirSync(starterDir)
+            .filter((name) => name.startsWith(batchPrefix) && name.endsWith(".json"))
+            .sort((a, b) => a.localeCompare(b))
+            .map((name) => path.join(starterDir, name))
+        : [];
+
+    return [...new Set([resolvedStarterPath, ...batchPaths])];
+}
+
+/**
+ * @param {{ starterPath?: string, starterPaths?: string[] }} [options]
+ */
+function loadTrackedStarterWordStudyData({
+    starterPath,
+    starterPaths,
+} = {}) {
+    return resolveTrackedStarterPaths({ starterPath, starterPaths })
+        .reduce((mergedEntries, entryPath) => ({
+            ...mergedEntries,
+            ...loadWordStudyDataFile(entryPath),
+        }), {});
 }
 
 function isStarterDerivedEntry(entry) {
@@ -211,16 +265,20 @@ function buildWordStudyDataFingerprint(entries = {}) {
 }
 
 /**
- * @param {{ localPath?: string | null, starterPath?: string }} [options]
+ * @param {{ localPath?: string | null, starterPath?: string, starterPaths?: string[] }} [options]
  */
 function buildWordStudyDataStalenessReport({
     localPath,
     starterPath = path.resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+    starterPaths,
 } = {}) {
     const resolvedLocalPath = localPath ? path.resolve(localPath) : null;
     const resolvedStarterPath = path.resolve(starterPath);
     const localExists = Boolean(resolvedLocalPath && fs.existsSync(resolvedLocalPath));
-    const starterRawEntries = loadWordStudyDataFile(resolvedStarterPath);
+    const starterRawEntries = loadTrackedStarterWordStudyData({
+        starterPath: resolvedStarterPath,
+        starterPaths,
+    });
     const localRawEntries = loadWordStudyDataFile(resolvedLocalPath);
     const starterEntries = normalizeWordStudyData(starterRawEntries);
     const localEntries = normalizeWordStudyData(localRawEntries);
@@ -293,13 +351,17 @@ function formatWordStudyDataStalenessWarning(report = {}) {
 }
 
 /**
- * @param {{ localPath?: string, starterPath?: string }} [options]
+ * @param {{ localPath?: string | null, starterPath?: string, starterPaths?: string[] }} [options]
  */
 function loadWordStudyData({
     localPath,
     starterPath = path.resolve(process.cwd(), "templates", "starter_word_study_data.json"),
+    starterPaths,
 } = {}) {
-    const starterEntries = loadWordStudyDataFile(starterPath);
+    const starterEntries = loadTrackedStarterWordStudyData({
+        starterPath,
+        starterPaths,
+    });
     const localEntries = loadWordStudyDataFile(localPath);
     const refreshedLocalEntries = refreshStarterEntries(starterEntries, localEntries);
     return normalizeWordStudyData({
@@ -364,6 +426,7 @@ module.exports = {
     hasPhraseTag,
     isStarterDerivedEntry,
     loadWordStudyData,
+    loadTrackedStarterWordStudyData,
     normalizeTags,
     normalizeWordCoverage,
     normalizeWordLevelPlacement,
@@ -371,6 +434,7 @@ module.exports = {
     normalizeWordStudyEntry,
     normalizeWordStudySentence,
     refreshStarterEntries,
+    resolveTrackedStarterPaths,
     wordCoverageRoleSchema,
     wordLevelPlacementSchema,
     wordStudyCoverageSchema,

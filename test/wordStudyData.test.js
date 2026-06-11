@@ -13,6 +13,7 @@ const {
     isStarterDerivedEntry,
     normalizeWordStudyData,
     refreshStarterEntries,
+    resolveTrackedStarterPaths,
 } = require("../src/datasets/wordStudyData");
 
 const STARTER_WORD_STUDY_DATA_PATH = path.resolve(process.cwd(), "templates", "starter_word_study_data.json");
@@ -75,6 +76,90 @@ test("tracked starter word data governs N5 standalone number words as a family",
         assert.equal(entry?.tags?.includes("core"), true);
         assert.equal(entry?.tags?.includes("n5"), true);
         assert.match(entry?.notes || "", /standalone number form/);
+    }
+});
+
+test("tracked starter word data resolves per-level split files deterministically", () => {
+    const starterPaths = resolveTrackedStarterPaths({
+        starterPath: STARTER_WORD_STUDY_DATA_PATH,
+    });
+    const starterEntries = loadTrackedStarterWordEntries();
+    const countsByLevel = Object.values(starterEntries)
+        .reduce((counts, entry) => ({
+            ...counts,
+            [entry.jlpt]: (counts[entry.jlpt] || 0) + 1,
+        }), {});
+
+    assert.deepEqual(
+        starterPaths.map((entryPath) => path.basename(entryPath)),
+        [
+            "starter_word_study_data.json",
+            "starter_word_study_data_n1.json",
+            "starter_word_study_data_n2.json",
+            "starter_word_study_data_n3.json",
+            "starter_word_study_data_n4.json",
+            "starter_word_study_data_n5.json",
+        ]
+    );
+    assert.equal(Object.keys(starterEntries).length, 1490);
+    assert.deepEqual(countsByLevel, {
+        1: 26,
+        2: 28,
+        3: 429,
+        4: 700,
+        5: 307,
+    });
+});
+
+test("loadWordStudyData merges base and per-level word starter files", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-study-split-loader-"));
+    const starterPath = path.join(rootDir, "starter_word_study_data.json");
+    const n5Path = path.join(rootDir, "starter_word_study_data_n5.json");
+    const n4Path = path.join(rootDir, "starter_word_study_data_n4.json");
+    try {
+        fs.writeFileSync(starterPath, `${JSON.stringify({
+            "一|いち": {
+                written: "一",
+                reading: "いち",
+                meaning: "one",
+                source: "word-study-data",
+                tags: ["starter", "n5"],
+                jlpt: 5,
+            },
+        }, null, 2)}\n`);
+        fs.writeFileSync(n5Path, `${JSON.stringify({
+            "二|に": {
+                written: "二",
+                reading: "に",
+                meaning: "two",
+                source: "word-study-data",
+                tags: ["starter", "n5"],
+                jlpt: 5,
+            },
+        }, null, 2)}\n`);
+        fs.writeFileSync(n4Path, `${JSON.stringify({
+            "計画|けいかく": {
+                written: "計画",
+                reading: "けいかく",
+                meaning: "plan",
+                source: "word-study-data",
+                tags: ["starter", "n4"],
+                jlpt: 4,
+            },
+        }, null, 2)}\n`);
+
+        const starterEntries = loadWordStudyData({
+            starterPath,
+            localPath: null,
+        });
+
+        assert.deepEqual(Object.keys(starterEntries), [
+            "一|いち",
+            "二|に",
+            "計画|けいかく",
+        ]);
+    } finally {
+        fs.rmSync(rootDir, { recursive: true, force: true });
     }
 });
 

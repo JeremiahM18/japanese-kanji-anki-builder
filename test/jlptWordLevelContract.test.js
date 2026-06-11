@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 429);
+    assert.equal(contract.inventoryCounts["3"], 437);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
@@ -263,6 +263,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "頂く|いただく"), 3);
     assert.equal(getJlptWordLevel(contract, "痛み|いたみ"), 3);
     assert.equal(getJlptWordLevel(contract, "位置|いち"), 3);
+    assert.equal(getJlptWordLevel(contract, "一枚|いちまい"), 3);
     assert.equal(getJlptWordLevel(contract, "一種|いっしゅ"), 3);
     assert.equal(getJlptWordLevel(contract, "移動|いどう"), 3);
     assert.equal(getJlptWordLevel(contract, "居眠り|いねむり"), 3);
@@ -393,6 +394,13 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "暮れ|くれ"), 3);
     assert.equal(getJlptWordLevel(contract, "苦労|くろう"), 3);
     assert.equal(getJlptWordLevel(contract, "加える|くわえる"), 3);
+    assert.equal(getJlptWordLevel(contract, "死亡|しぼう"), 3);
+    assert.equal(getJlptWordLevel(contract, "辺|へん"), 3);
+    assert.equal(getJlptWordLevel(contract, "報告|ほうこく"), 3);
+    assert.equal(getJlptWordLevel(contract, "忘れる|わすれる"), 3);
+    assert.equal(getJlptWordLevel(contract, "捕まえる|つかまえる"), 3);
+    assert.equal(getJlptWordLevel(contract, "眠い|ねむい"), 3);
+    assert.equal(getJlptWordLevel(contract, "訪ねる|たずねる"), 3);
     assert.equal(getJlptWordLevel(contract, "加わる|くわわる"), 3);
     assert.equal(getJlptWordLevel(contract, "経営|けいえい"), 3);
     assert.equal(getJlptWordLevel(contract, "景気|けいき"), 3);

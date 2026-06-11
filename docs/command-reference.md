@@ -116,8 +116,8 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:platinum:n3` | Run the N3 word Platinum gate; fails closed while generated rows lack Platinum entries after matching Gold and Sapphire preconditions |
 | `npm run deck:words:platinum:n2` | Run the N2 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
 | `npm run deck:words:platinum:n1` | Run the N1 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
-| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider, while native `deck:words:sapphire:*` owns word Sapphire coverage |
-| `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider |
+| `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider, while native `deck:words:sapphire:*` owns word Sapphire coverage; prints local word-overlay path, mtime, staleness counts, and `stale_local_overlay` when starter-derived local rows are stale |
+| `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider; prints local word-overlay path, mtime, staleness counts, and `stale_local_overlay` when starter-derived local rows are stale |
 | `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word source-family independence posture; command name remains legacy |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |

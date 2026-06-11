@@ -3,6 +3,10 @@ const path = require("node:path");
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
+const {
+    buildWordStudyDataStalenessReport,
+    formatWordStudyDataOverlayProvenance,
+} = require("../src/datasets/wordStudyData");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
@@ -67,6 +71,10 @@ async function main({
     assertNoUnknownArgs(commandName, options.unknownArgs);
 
     const config = loadConfig();
+    const wordStudyPreflight = buildWordStudyDataStalenessReport({
+        localPath: config.wordStudyDataPath,
+        starterPath: path.join(process.cwd(), "templates", "starter_word_study_data.json"),
+    });
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
     const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
     const levelReports = [];
@@ -85,10 +93,12 @@ async function main({
         }));
     }
     const summary = buildObsidianWordCertificationStatusSummary(levelReports);
+    summary.wordStudyPreflight = wordStudyPreflight;
 
     if (options.json) {
         process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
     } else {
+        process.stdout.write(`${formatWordStudyDataOverlayProvenance(wordStudyPreflight)}\n\n`);
         process.stdout.write(formatObsidianWordCertificationStatusReport(summary));
     }
 

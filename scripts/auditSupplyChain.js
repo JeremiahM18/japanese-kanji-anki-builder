@@ -272,6 +272,47 @@ function collectWorkflowUses(workflowText) {
     return uses;
 }
 
+function collectWorkflowStepBlocks(workflowText) {
+    const lines = String(workflowText || "").split(/\r?\n/u);
+    const steps = [];
+    let current = null;
+
+    for (const line of lines) {
+        const stepMatch = /^(\s*)-\s+name:\s*(.+?)\s*$/u.exec(line);
+        if (stepMatch) {
+            if (current) {
+                steps.push(current);
+            }
+            current = {
+                name: stepMatch[2],
+                indent: stepMatch[1].length,
+                lines: [line],
+            };
+        } else if (current) {
+            current.lines.push(line);
+        }
+    }
+
+    if (current) {
+        steps.push(current);
+    }
+
+    return steps.map((step) => ({
+        name: step.name,
+        indent: step.indent,
+        text: step.lines.join("\n"),
+    }));
+}
+
+function collectNpmCiInstallSteps(workflowText) {
+    return collectWorkflowStepBlocks(workflowText)
+        .filter((step) => /^\s*run:\s*npm ci(?:\s|$)/mu.test(step.text))
+        .map((step) => ({
+            name: step.name,
+            hasOnnxruntimeNodeInstallSkip: /^\s*ONNXRUNTIME_NODE_INSTALL:\s*skip\s*$/mu.test(step.text),
+        }));
+}
+
 function assertSupplyChainAuditBeforeEveryInstall(workflowText, relativePath, errors) {
     const auditRe = /run:\s*npm run supply-chain:audit/gu;
     const installRe = /run:\s*npm ci(?:\s|$)/gu;
@@ -294,6 +335,17 @@ function assertSupplyChainAuditBeforeEveryInstall(workflowText, relativePath, er
         );
         previousInstallIndex = installIndex;
         installMatch = installRe.exec(workflowText);
+    }
+}
+
+function assertOnnxruntimeNodeCudaInstallSkipForEveryInstall(workflowText, relativePath, errors) {
+    const installSteps = collectNpmCiInstallSteps(workflowText);
+    for (const step of installSteps) {
+        assertCondition(
+            step.hasOnnxruntimeNodeInstallSkip,
+            errors,
+            `${relativePath} npm ci step "${step.name}" must set ONNXRUNTIME_NODE_INSTALL: skip so CI installs the reviewed CPU runtime without external CUDA NuGet side-downloads.`
+        );
     }
 }
 
@@ -351,6 +403,7 @@ function auditWorkflowFile({ relativePath, text }) {
         );
     }
     assertSupplyChainAuditBeforeEveryInstall(text, relativePath, errors);
+    assertOnnxruntimeNodeCudaInstallSkipForEveryInstall(text, relativePath, errors);
 
     for (const useValue of uses) {
         if (useValue.startsWith("./")) {
@@ -379,6 +432,7 @@ function auditWorkflowFile({ relativePath, text }) {
         warnings,
         summary: {
             actionUses: uses,
+            installSteps: collectNpmCiInstallSteps(text),
         },
     };
 }
@@ -486,6 +540,7 @@ function buildSupplyChainAuditReport({ cwd = process.cwd() } = {}) {
         workflows: workflowAudits.map((audit) => ({
             relativePath: audit.relativePath,
             actionUses: audit.summary.actionUses,
+            installSteps: audit.summary.installSteps,
         })),
         releaseArtifacts: releaseBoundaryAudit.summary,
     };
@@ -507,6 +562,12 @@ function formatSupplyChainAuditReport(report) {
     lines.push("GitHub Actions pins:");
     for (const workflow of report.workflows) {
         lines.push(`- ${workflow.relativePath}: ${workflow.actionUses.length} external action uses`);
+    }
+    lines.push("Install policy:");
+    for (const workflow of report.workflows) {
+        const installCount = workflow.installSteps.length;
+        const skipCount = workflow.installSteps.filter((step) => step.hasOnnxruntimeNodeInstallSkip).length;
+        lines.push(`- ${workflow.relativePath}: ${skipCount}/${installCount} npm ci steps set ONNXRUNTIME_NODE_INSTALL=skip`);
     }
 
     lines.push("Release artifact boundary:");

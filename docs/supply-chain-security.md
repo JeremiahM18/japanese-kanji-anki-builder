@@ -35,6 +35,7 @@ The command is deterministic and uses only repository files. It checks:
 - GitHub Actions are pinned to reviewed commit SHAs.
 - workflows keep permissions to `contents: read`.
 - every workflow job audits supply-chain policy before `npm ci`.
+- every workflow `npm ci` step sets `ONNXRUNTIME_NODE_INSTALL=skip` so CI installs the reviewed ONNX CPU runtime package from npm without attempting the Linux CUDA NuGet side-download.
 - the release workflow publishes only the governed smoke/gate outputs, release docs, NOTICE, changelog, and checksum manifest.
 
 Run `npm audit --json` separately when an internet-backed advisory check is needed. Advisory data changes over time, so it is not the deterministic repository policy gate.
@@ -77,6 +78,8 @@ Lifecycle scripts are high-signal supply-chain risk. The current reviewed allowl
 | `sharp@0.34.5` | Native image runtime pulled by the assistive Transformers.js stack. |
 
 Any new or changed lifecycle-script package must be reviewed before the install step is trusted. The audit gate fails until the allowlist is updated with a specific reason.
+
+`onnxruntime-node` bundles the CPU runtime needed by the assistive Transformers.js embedding lane. On Linux x64 its postinstall script also attempts to download CUDA provider binaries from NuGet unless told to skip that optional GPU expansion. CI and release workflows set `ONNXRUNTIME_NODE_INSTALL=skip` on `npm ci` so clean runners do not depend on the external CUDA binary host for ordinary verification. This does not remove the package, change the lockfile, bypass lifecycle-script review, or certify NLP output; it only keeps the CI install boundary to the reviewed npm package contents.
 
 Dependency license compliance is governed by [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). The current allowlist is permissive license expressions already present in the lockfile. The current reviewed exceptions are optional `sharp`/`libvips` binary packages with `LGPL-3.0-or-later` or mixed Apache/LGPL/MIT expressions; each exception has owner, reason, reviewed date, and next-review date. The license gate is not legal advice and does not replace manual NOTICE or attribution review before external release claims.
 

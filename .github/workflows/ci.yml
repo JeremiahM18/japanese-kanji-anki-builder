@@ -72,6 +72,8 @@ jobs:
         run: npm run security:sbom
 
       - name: Install dependencies
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
         run: npm ci
 
       - name: Run npm advisory audit
@@ -107,6 +109,8 @@ jobs:
         run: npm run security:licenses
 
       - name: Install dependencies
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
         run: npm ci
 
       - name: Run lint
@@ -209,6 +213,8 @@ jobs:
         run: npm run security:licenses
 
       - name: Install dependencies
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
         run: npm ci
 
       - name: Run release smoke verification
@@ -254,6 +260,8 @@ jobs:
         run: npm run security:licenses
 
       - name: Install dependencies
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
         run: npm ci
 
       - name: Run release gate

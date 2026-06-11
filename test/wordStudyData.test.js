@@ -1746,6 +1746,293 @@ test("tracked starter word data includes the thirty-fourth N3 Silver source-expa
     ]);
 });
 
+test("tracked starter word data includes the thirty-fifth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["昨年|さくねん", "昨", "さく"],
+        ["諸国|しょこく", "諸", "しょ"],
+        ["船|ふね", "船", "ふね"],
+        ["選ぶ|えらぶ", "選", "えらぶ"],
+        ["祖父|そふ", "祖", "そ"],
+        ["争う|あらそう", "争", "あらそう"],
+        ["窓|まど", "窓", "まど"],
+        ["草|くさ", "草", "くさ"],
+        ["増える|ふえる", "増", "ふえる"],
+        ["反対側|はんたいがわ", "側", "がわ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["昨年|さくねん", "both"],
+        ["諸国|しょこく", "both"],
+        ["船|ふね", "both"],
+        ["選ぶ|えらぶ", "both"],
+        ["祖父|そふ", "both"],
+        ["争う|あらそう", "both"],
+        ["窓|まど", "both"],
+        ["草|くさ", "both"],
+        ["増える|ふえる", "both"],
+        ["反対側|はんたいがわ", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["昨年|さくねん", "<ruby>昨<rt>さく</rt></ruby><ruby>年<rt>ねん</rt></ruby>"],
+        ["諸国|しょこく", "<ruby>諸<rt>しょ</rt></ruby><ruby>国<rt>こく</rt></ruby>"],
+        ["船|ふね", "<ruby>船<rt>ふね</rt></ruby>"],
+        ["選ぶ|えらぶ", "<ruby>選<rt>えら</rt></ruby>ぶ"],
+        ["祖父|そふ", "<ruby>祖<rt>そ</rt></ruby><ruby>父<rt>ふ</rt></ruby>"],
+        ["争う|あらそう", "<ruby>争<rt>あらそ</rt></ruby>う"],
+        ["窓|まど", "<ruby>窓<rt>まど</rt></ruby>"],
+        ["草|くさ", "<ruby>草<rt>くさ</rt></ruby>"],
+        ["増える|ふえる", "<ruby>増<rt>ふ</rt></ruby>える"],
+        ["反対側|はんたいがわ", "<ruby>反<rt>はん</rt></ruby><ruby>対<rt>たい</rt></ruby><ruby>側<rt>がわ</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the thirty-sixth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["約束|やくそく", "束", "そく"],
+        ["速い|はやい", "速", "はやい"],
+        ["続ける|つづける", "続", "つづける"],
+        ["存在|そんざい", "存", "そん"],
+        ["他|ほか", "他", "ほか"],
+        ["打つ|うつ", "打", "うつ"],
+        ["相談|そうだん", "談", "だん"],
+        ["簡単|かんたん", "単", "たん"],
+        ["探す|さがす", "探", "さがす"],
+        ["段階|だんかい", "段", "だん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["約束|やくそく", "both"],
+        ["速い|はやい", "both"],
+        ["続ける|つづける", "both"],
+        ["存在|そんざい", "both"],
+        ["他|ほか", "both"],
+        ["打つ|うつ", "both"],
+        ["相談|そうだん", "both"],
+        ["簡単|かんたん", "both"],
+        ["探す|さがす", "both"],
+        ["段階|だんかい", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["約束|やくそく", "<ruby>約<rt>やく</rt></ruby><ruby>束<rt>そく</rt></ruby>"],
+        ["速い|はやい", "<ruby>速<rt>はや</rt></ruby>い"],
+        ["続ける|つづける", "<ruby>続<rt>つづ</rt></ruby>ける"],
+        ["存在|そんざい", "<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>"],
+        ["他|ほか", "<ruby>他<rt>ほか</rt></ruby>"],
+        ["打つ|うつ", "<ruby>打<rt>う</rt></ruby>つ"],
+        ["相談|そうだん", "<ruby>相<rt>そう</rt></ruby><ruby>談<rt>だん</rt></ruby>"],
+        ["簡単|かんたん", "<ruby>簡<rt>かん</rt></ruby><ruby>単<rt>たん</rt></ruby>"],
+        ["探す|さがす", "<ruby>探<rt>さが</rt></ruby>す"],
+        ["段階|だんかい", "<ruby>段<rt>だん</rt></ruby><ruby>階<rt>かい</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the thirty-seventh N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["値段|ねだん", "値", "ね"],
+        ["恥ずかしい|はずかしい", "恥", "はずかしい"],
+        ["置く|おく", "置", "おく"],
+        ["遅い|おそい", "遅", "おそい"],
+        ["調べる|しらべる", "調", "しらべる"],
+        ["直す|なおす", "直", "なおす"],
+        ["痛い|いたい", "痛", "いたい"],
+        ["庭|にわ", "庭", "にわ"],
+        ["程|ほど", "程", "ほど"],
+        ["伝える|つたえる", "伝", "つたえる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["値段|ねだん", "both"],
+        ["恥ずかしい|はずかしい", "both"],
+        ["置く|おく", "both"],
+        ["遅い|おそい", "both"],
+        ["調べる|しらべる", "both"],
+        ["直す|なおす", "both"],
+        ["痛い|いたい", "both"],
+        ["庭|にわ", "both"],
+        ["程|ほど", "both"],
+        ["伝える|つたえる", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["値段|ねだん", "<ruby>値<rt>ね</rt></ruby><ruby>段<rt>だん</rt></ruby>"],
+        ["恥ずかしい|はずかしい", "<ruby>恥<rt>は</rt></ruby>ずかしい"],
+        ["置く|おく", "<ruby>置<rt>お</rt></ruby>く"],
+        ["遅い|おそい", "<ruby>遅<rt>おそ</rt></ruby>い"],
+        ["調べる|しらべる", "<ruby>調<rt>しら</rt></ruby>べる"],
+        ["直す|なおす", "<ruby>直<rt>なお</rt></ruby>す"],
+        ["痛い|いたい", "<ruby>痛<rt>いた</rt></ruby>い"],
+        ["庭|にわ", "<ruby>庭<rt>にわ</rt></ruby>"],
+        ["程|ほど", "<ruby>程<rt>ほど</rt></ruby>"],
+        ["伝える|つたえる", "<ruby>伝<rt>つた</rt></ruby>える"],
+    ]);
+});
+
+test("tracked starter word data includes the thirty-eighth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["渡る|わたる", "渡", "わたる"],
+        ["登る|のぼる", "登", "のぼる"],
+        ["努力|どりょく", "努", "ど"],
+        ["怒る|おこる", "怒", "おこる"],
+        ["投げる|なげる", "投", "なげる"],
+        ["盗む|ぬすむ", "盗", "ぬすむ"],
+        ["湯|ゆ", "湯", "ゆ"],
+        ["等|など", "等", "など"],
+        ["到着|とうちゃく", "到", "とう"],
+        ["逃げる|にげる", "逃", "にげる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["渡る|わたる", "both"],
+        ["登る|のぼる", "both"],
+        ["努力|どりょく", "both"],
+        ["怒る|おこる", "both"],
+        ["投げる|なげる", "both"],
+        ["盗む|ぬすむ", "both"],
+        ["湯|ゆ", "both"],
+        ["等|など", "both"],
+        ["到着|とうちゃく", "both"],
+        ["逃げる|にげる", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["渡る|わたる", "<ruby>渡<rt>わた</rt></ruby>る"],
+        ["登る|のぼる", "<ruby>登<rt>のぼ</rt></ruby>る"],
+        ["努力|どりょく", "<ruby>努<rt>ど</rt></ruby><ruby>力<rt>りょく</rt></ruby>"],
+        ["怒る|おこる", "<ruby>怒<rt>おこ</rt></ruby>る"],
+        ["投げる|なげる", "<ruby>投<rt>な</rt></ruby>げる"],
+        ["盗む|ぬすむ", "<ruby>盗<rt>ぬす</rt></ruby>む"],
+        ["湯|ゆ", "<ruby>湯<rt>ゆ</rt></ruby>"],
+        ["等|など", "<ruby>等<rt>など</rt></ruby>"],
+        ["到着|とうちゃく", "<ruby>到<rt>とう</rt></ruby><ruby>着<rt>ちゃく</rt></ruby>"],
+        ["逃げる|にげる", "<ruby>逃<rt>に</rt></ruby>げる"],
+    ]);
+});
+
+test("tracked starter word data includes the thirty-ninth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["任せる|まかせる", "任", "まかせる"],
+        ["認める|みとめる", "認", "みとめる"],
+        ["熱|ねつ", "熱", "ねつ"],
+        ["波|なみ", "波", "なみ"],
+        ["破る|やぶる", "破", "やぶる"],
+        ["敗れる|やぶれる", "敗", "やぶれる"],
+        ["杯|さかずき", "杯", "さかずき"],
+        ["配る|くばる", "配", "くばる"],
+        ["箱|はこ", "箱", "はこ"],
+        ["判断|はんだん", "判", "はん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["任せる|まかせる", "both"],
+        ["認める|みとめる", "both"],
+        ["熱|ねつ", "both"],
+        ["波|なみ", "both"],
+        ["破る|やぶる", "both"],
+        ["敗れる|やぶれる", "both"],
+        ["杯|さかずき", "both"],
+        ["配る|くばる", "both"],
+        ["箱|はこ", "both"],
+        ["判断|はんだん", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["任せる|まかせる", "<ruby>任<rt>まか</rt></ruby>せる"],
+        ["認める|みとめる", "<ruby>認<rt>みと</rt></ruby>める"],
+        ["熱|ねつ", "<ruby>熱<rt>ねつ</rt></ruby>"],
+        ["波|なみ", "<ruby>波<rt>なみ</rt></ruby>"],
+        ["破る|やぶる", "<ruby>破<rt>やぶ</rt></ruby>る"],
+        ["敗れる|やぶれる", "<ruby>敗<rt>やぶ</rt></ruby>れる"],
+        ["杯|さかずき", "<ruby>杯<rt>さかずき</rt></ruby>"],
+        ["配る|くばる", "<ruby>配<rt>くば</rt></ruby>る"],
+        ["箱|はこ", "<ruby>箱<rt>はこ</rt></ruby>"],
+        ["判断|はんだん", "<ruby>判<rt>はん</rt></ruby><ruby>断<rt>だん</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the fortieth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["否定|ひてい", "否", "ひ"],
+        ["彼|かれ", "彼", "かれ"],
+        ["悲しい|かなしい", "悲", "かなしい"],
+        ["非|ひ", "非", "ひ"],
+        ["飛ぶ|とぶ", "飛", "とぶ"],
+        ["美しい|うつくしい", "美", "うつくしい"],
+        ["表|おもて", "表", "おもて"],
+        ["貧しい|まずしい", "貧", "まずしい"],
+        ["付ける|つける", "付", "つける"],
+        ["夫|おっと", "夫", "おっと"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["否定|ひてい", "both"],
+        ["彼|かれ", "both"],
+        ["悲しい|かなしい", "both"],
+        ["非|ひ", "both"],
+        ["飛ぶ|とぶ", "both"],
+        ["美しい|うつくしい", "both"],
+        ["表|おもて", "both"],
+        ["貧しい|まずしい", "both"],
+        ["付ける|つける", "both"],
+        ["夫|おっと", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["否定|ひてい", "<ruby>否<rt>ひ</rt></ruby><ruby>定<rt>てい</rt></ruby>"],
+        ["彼|かれ", "<ruby>彼<rt>かれ</rt></ruby>"],
+        ["悲しい|かなしい", "<ruby>悲<rt>かな</rt></ruby>しい"],
+        ["非|ひ", "<ruby>非<rt>ひ</rt></ruby>"],
+        ["飛ぶ|とぶ", "<ruby>飛<rt>と</rt></ruby>ぶ"],
+        ["美しい|うつくしい", "<ruby>美<rt>うつく</rt></ruby>しい"],
+        ["表|おもて", "<ruby>表<rt>おもて</rt></ruby>"],
+        ["貧しい|まずしい", "<ruby>貧<rt>まず</rt></ruby>しい"],
+        ["付ける|つける", "<ruby>付<rt>つ</rt></ruby>ける"],
+        ["夫|おっと", "<ruby>夫<rt>おっと</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the forty-first N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["夫婦|ふうふ", "婦", "ふ"],
+        ["豊富|ほうふ", "富", "ふ"],
+        ["怖い|こわい", "怖", "こわい"],
+        ["浮かぶ|うかぶ", "浮", "うかぶ"],
+        ["負ける|まける", "負", "まける"],
+        ["舞台|ぶたい", "舞", "ぶ"],
+        ["腹|はら", "腹", "はら"],
+        ["並ぶ|ならぶ", "並", "ならぶ"],
+        ["米|こめ", "米", "こめ"],
+        ["変わる|かわる", "変", "かわる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["夫婦|ふうふ", "both"],
+        ["豊富|ほうふ", "both"],
+        ["怖い|こわい", "both"],
+        ["浮かぶ|うかぶ", "both"],
+        ["負ける|まける", "both"],
+        ["舞台|ぶたい", "both"],
+        ["腹|はら", "both"],
+        ["並ぶ|ならぶ", "both"],
+        ["米|こめ", "both"],
+        ["変わる|かわる", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["夫婦|ふうふ", "<ruby>夫<rt>ふう</rt></ruby><ruby>婦<rt>ふ</rt></ruby>"],
+        ["豊富|ほうふ", "<ruby>豊<rt>ほう</rt></ruby><ruby>富<rt>ふ</rt></ruby>"],
+        ["怖い|こわい", "<ruby>怖<rt>こわ</rt></ruby>い"],
+        ["浮かぶ|うかぶ", "<ruby>浮<rt>う</rt></ruby>かぶ"],
+        ["負ける|まける", "<ruby>負<rt>ま</rt></ruby>ける"],
+        ["舞台|ぶたい", "<ruby>舞<rt>ぶ</rt></ruby><ruby>台<rt>たい</rt></ruby>"],
+        ["腹|はら", "<ruby>腹<rt>はら</rt></ruby>"],
+        ["並ぶ|ならぶ", "<ruby>並<rt>なら</rt></ruby>ぶ"],
+        ["米|こめ", "<ruby>米<rt>こめ</rt></ruby>"],
+        ["変わる|かわる", "<ruby>変<rt>か</rt></ruby>わる"],
+    ]);
+});
+
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 

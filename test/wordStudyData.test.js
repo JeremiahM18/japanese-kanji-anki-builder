@@ -16,6 +16,7 @@ const {
     refreshStarterEntries,
     resolveTrackedStarterPaths,
 } = require("../src/datasets/wordStudyData");
+const { bootstrapWordStudyData } = require("../src/services/wordStudyBootstrapService");
 
 const STARTER_WORD_STUDY_DATA_PATH = path.resolve(process.cwd(), "templates", "starter_word_study_data.json");
 let trackedStarterWordEntriesCache = null;
@@ -102,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1490);
+    assert.equal(Object.keys(starterEntries).length, 1498);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 429,
+        3: 437,
         4: 700,
         5: 307,
     });
@@ -2119,6 +2120,41 @@ test("tracked starter word data includes the forty-first N3 Silver source-expans
     ]);
 });
 
+test("tracked starter word data includes the forty-second N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["一枚|いちまい", "枚", "まい"],
+        ["死亡|しぼう", "亡", "ぼう"],
+        ["辺|へん", "辺", "へん"],
+        ["報告|ほうこく", "報", "ほう"],
+        ["忘れる|わすれる", "忘", "わすれる"],
+        ["捕まえる|つかまえる", "捕", "つかまえる"],
+        ["眠い|ねむい", "眠", "ねむい"],
+        ["訪ねる|たずねる", "訪", "たずねる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["一枚|いちまい", "support"],
+        ["死亡|しぼう", "support"],
+        ["辺|へん", "support"],
+        ["報告|ほうこく", "support"],
+        ["忘れる|わすれる", "support"],
+        ["捕まえる|つかまえる", "support"],
+        ["眠い|ねむい", "support"],
+        ["訪ねる|たずねる", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["一枚|いちまい", "<ruby>一<rt>いち</rt></ruby><ruby>枚<rt>まい</rt></ruby>"],
+        ["死亡|しぼう", "<ruby>死<rt>し</rt></ruby><ruby>亡<rt>ぼう</rt></ruby>"],
+        ["辺|へん", "<ruby>辺<rt>へん</rt></ruby>"],
+        ["報告|ほうこく", "<ruby>報<rt>ほう</rt></ruby><ruby>告<rt>こく</rt></ruby>"],
+        ["忘れる|わすれる", "<ruby>忘<rt>わす</rt></ruby>れる"],
+        ["捕まえる|つかまえる", "<ruby>捕<rt>つか</rt></ruby>まえる"],
+        ["眠い|ねむい", "<ruby>眠<rt>ねむ</rt></ruby>い"],
+        ["訪ねる|たずねる", "<ruby>訪<rt>たず</rt></ruby>ねる"],
+    ]);
+});
+
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 
@@ -2436,6 +2472,69 @@ test("word study staleness report fingerprints stale ignored local data", () => 
         assert.match(provenance, /mtime: \d{4}-\d{2}-\d{2}T/);
         assert.match(provenance, /staleness counts: stale starter-derived rows=1; missing starter rows=1; custom local rows=1/);
         assert.match(provenance, /warning: stale_local_overlay/);
+    } finally {
+        fs.rmSync(rootDir, { recursive: true, force: true });
+    }
+});
+
+test("bootstrapWordStudyData refreshes split starter files into local word data", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-study-bootstrap-split-"));
+    const starterPath = path.join(rootDir, "starter_word_study_data.json");
+    const n3Path = path.join(rootDir, "starter_word_study_data_n3.json");
+    const targetPath = path.join(rootDir, "word_study_data.json");
+
+    try {
+        fs.writeFileSync(starterPath, `${JSON.stringify({
+            "一|いち": {
+                written: "一",
+                reading: "いち",
+                meaning: "one",
+                source: "word-study-data",
+                tags: ["starter", "n5"],
+                jlpt: 5,
+            },
+        }, null, 2)}\n`);
+        fs.writeFileSync(n3Path, `${JSON.stringify({
+            "一枚|いちまい": {
+                written: "一枚",
+                reading: "いちまい",
+                meaning: "one flat thing / one sheet",
+                source: "word-study-data",
+                tags: ["starter", "common", "n3"],
+                jlpt: 3,
+                readingBreakdown: "<ruby>一<rt>いち</rt></ruby><ruby>枚<rt>まい</rt></ruby>",
+                coverage: {
+                    role: "support",
+                    focusKanji: ["枚"],
+                    coversReadings: { "枚": "まい" },
+                },
+            },
+        }, null, 2)}\n`);
+        fs.writeFileSync(targetPath, `${JSON.stringify({
+            "一|いち": {
+                written: "一",
+                reading: "いち",
+                meaning: "stale one",
+                source: "word-study-data",
+                tags: ["starter", "n5"],
+                jlpt: 5,
+            },
+        }, null, 2)}\n`);
+
+        const summary = bootstrapWordStudyData({
+            targetPath,
+            starterPath,
+            refreshStarter: true,
+        });
+        const written = JSON.parse(fs.readFileSync(targetPath, "utf-8"));
+
+        assert.equal(summary.starterEntries, 2);
+        assert.equal(summary.existingEntries, 1);
+        assert.equal(summary.writtenEntries, 2);
+        assert.equal(summary.preflight.inSync, true);
+        assert.equal(summary.preflightBeforeWrite.missingStarterEntryCount, 1);
+        assert.equal(written["一|いち"].meaning, "one");
+        assert.equal(written["一枚|いちまい"].coverage.coversReadings["枚"], "まい");
     } finally {
         fs.rmSync(rootDir, { recursive: true, force: true });
     }

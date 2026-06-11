@@ -264,6 +264,21 @@ function buildWordStudyDataFingerprint(entries = {}) {
         .digest("hex");
 }
 
+function readLocalOverlayStats(filePath, exists) {
+    if (!exists) {
+        return {
+            localMtimeMs: null,
+            localMtimeIso: null,
+        };
+    }
+
+    const stats = fs.statSync(filePath);
+    return {
+        localMtimeMs: stats.mtimeMs,
+        localMtimeIso: stats.mtime.toISOString(),
+    };
+}
+
 /**
  * @param {{ localPath?: string | null, starterPath?: string, starterPaths?: string[] }} [options]
  */
@@ -275,6 +290,7 @@ function buildWordStudyDataStalenessReport({
     const resolvedLocalPath = localPath ? path.resolve(localPath) : null;
     const resolvedStarterPath = path.resolve(starterPath);
     const localExists = Boolean(resolvedLocalPath && fs.existsSync(resolvedLocalPath));
+    const localOverlayStats = readLocalOverlayStats(resolvedLocalPath, localExists);
     const starterRawEntries = loadTrackedStarterWordStudyData({
         starterPath: resolvedStarterPath,
         starterPaths,
@@ -314,6 +330,7 @@ function buildWordStudyDataStalenessReport({
         localPath: resolvedLocalPath,
         starterPath: resolvedStarterPath,
         localExists,
+        ...localOverlayStats,
         starterEntryCount: Object.keys(starterEntries).length,
         localEntryCount: Object.keys(localEntries).length,
         refreshedEntryCount: Object.keys(refreshedEntries).length,
@@ -333,6 +350,27 @@ function buildWordStudyDataStalenessReport({
 
 function formatShortFingerprint(value) {
     return value ? value.slice(0, 12) : "(missing)";
+}
+
+function formatWordStudyDataOverlayProvenance(report = {}) {
+    const staleStarterDerivedCount = report.staleStarterDerivedEntryCount || 0;
+    const missingStarterCount = report.missingStarterEntryCount || 0;
+    const customLocalCount = report.customLocalEntryCount || 0;
+    const lines = [
+        "Local word overlay provenance:",
+        `- resolved path: ${report.localPath || "(none)"}`,
+        `- exists: ${report.localExists ? "yes" : "no"}`,
+        `- mtime: ${report.localMtimeIso || "(missing)"}`,
+        `- starter entries: ${report.starterEntryCount || 0}; local entries: ${report.localEntryCount || 0}; refreshed entries: ${report.refreshedEntryCount || 0}`,
+        `- staleness counts: stale starter-derived rows=${staleStarterDerivedCount}; missing starter rows=${missingStarterCount}; custom local rows=${customLocalCount}`,
+        `- in sync: ${report.inSync ? "yes" : "no"}`,
+    ];
+
+    if (staleStarterDerivedCount > 0) {
+        lines.push(`- warning: stale_local_overlay (${staleStarterDerivedCount} stale starter-derived rows refresh in memory before deck/status evaluation)`);
+    }
+
+    return lines.join("\n");
 }
 
 function formatWordStudyDataStalenessWarning(report = {}) {
@@ -422,6 +460,7 @@ module.exports = {
     buildWordStudyDataStalenessReport,
     buildWordStudyEntryKey,
     cleanString,
+    formatWordStudyDataOverlayProvenance,
     formatWordStudyDataStalenessWarning,
     hasPhraseTag,
     isStarterDerivedEntry,

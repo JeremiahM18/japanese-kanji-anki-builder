@@ -9,6 +9,7 @@ const {
     buildWordStudyDataStalenessReport,
     loadWordStudyData,
     buildWordStudyEntryKey,
+    formatWordStudyDataOverlayProvenance,
     formatWordStudyDataStalenessWarning,
     isStarterDerivedEntry,
     normalizeWordStudyData,
@@ -2416,8 +2417,12 @@ test("word study staleness report fingerprints stale ignored local data", () => 
 
         const report = buildWordStudyDataStalenessReport({ localPath, starterPath });
         const warning = formatWordStudyDataStalenessWarning(report);
+        const provenance = formatWordStudyDataOverlayProvenance(report);
 
         assert.equal(report.needsRefresh, true);
+        assert.equal(report.localExists, true);
+        assert.equal(report.localPath, path.resolve(localPath));
+        assert.match(report.localMtimeIso, /^\d{4}-\d{2}-\d{2}T/);
         assert.equal(report.staleStarterDerivedEntryCount, 1);
         assert.equal(report.missingStarterEntryCount, 1);
         assert.equal(report.customLocalEntryCount, 1);
@@ -2426,6 +2431,11 @@ test("word study staleness report fingerprints stale ignored local data", () => 
         assert.match(report.localFingerprint, /^[a-f0-9]{64}$/);
         assert.match(warning, /starter-derived mismatch: 1 stale, 1 missing/);
         assert.match(warning, /loader refreshes starter-derived entries in memory/);
+        assert.match(provenance, /Local word overlay provenance:/);
+        assert.match(provenance, new RegExp(`resolved path: ${localPath.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&")}`));
+        assert.match(provenance, /mtime: \d{4}-\d{2}-\d{2}T/);
+        assert.match(provenance, /staleness counts: stale starter-derived rows=1; missing starter rows=1; custom local rows=1/);
+        assert.match(provenance, /warning: stale_local_overlay/);
     } finally {
         fs.rmSync(rootDir, { recursive: true, force: true });
     }

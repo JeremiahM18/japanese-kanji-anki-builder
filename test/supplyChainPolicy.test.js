@@ -23,6 +23,12 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
     );
     assert.equal(report.workflows.length, 3);
     assert.equal(report.workflows.some((workflow) => workflow.relativePath === ".github/workflows/codeql.yml"), true);
+    assert.equal(
+        report.workflows
+            .flatMap((workflow) => workflow.installSteps)
+            .every((step) => step.hasOnnxruntimeNodeInstallSkip),
+        true
+    );
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("release-artifacts.sha256"));
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("out/security/sbom.cdx.json"));
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("out/security/dependency-licenses.json"));
@@ -46,5 +52,6 @@ test("supply-chain audit report is readable for local verification", () => {
     assert.match(text, /Status: pass/);
     assert.match(text, /Lifecycle script packages:/);
     assert.match(text, /GitHub Actions pins:/);
+    assert.match(text, /Install policy:/);
     assert.match(text, /Release artifact boundary:/);
 });

@@ -61,6 +61,8 @@ jobs:
         run: npm run security:sbom
 
       - name: Install dependencies
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
         run: npm ci
 
       - name: Run npm advisory audit
@@ -135,6 +137,8 @@ jobs:
         run: npm run security:sbom
 
       - name: Install dependencies
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
         run: npm ci
 
       - name: Run npm advisory audit

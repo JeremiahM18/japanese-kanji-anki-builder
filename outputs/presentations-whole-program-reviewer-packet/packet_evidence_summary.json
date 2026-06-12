@@ -1,46 +1,95 @@
 {
-  "generatedAt": "2026-06-11T11:23:00-05:00",
+  "generatedAt": "2026-06-11T18:58:42-05:00",
   "artifact": {
     "pptxPath": "C:\\Users\\cover\\Projects\\Active\\Fullstack\\japanese_kanji_builder\\outputs\\presentations-whole-program-reviewer-packet\\jkb_governed_pipeline_reviewer_packet.pptx",
-    "slideCount": 9,
-    "pptxBytes": 59136,
-    "packageSlideXmlCount": 9,
+    "slideCount": 8,
+    "pptxBytes": 50985,
+    "packageSlideXmlCount": 8,
     "emptyMediaCount": 0,
     "layoutErrors": 0,
-    "layoutWarningsAccepted": 4,
-    "rubricScore": "42/45"
+    "layoutWarningsAccepted": 108,
+    "layoutWarningNote": "Artifact-tool tight-text warnings on compact text boxes; all 8 slides rendered, contact-sheet reviewed, and full-size spot checks inspected with zero layout errors.",
+    "rubricScore": "not rescored after full cold-reviewer narrative rebuild"
   },
-  "branch": "presentations/whole-program-reviewer-packet",
-  "sourceBaselineCommit": "645f49fb docs: add reviewer packets and command cleanup",
+  "branch": "main",
+  "sourceBaselineCommit": "e9f7b0b7 data(words): expand n3 silver starter words",
   "remote": {
     "verifiedBy": "git ls-remote --heads origin",
     "heads": [
       {
         "name": "main",
-        "sha": "645f49fb1ca89f8af5486036b5d26566c10c7ed7"
+        "sha": "e9f7b0b7cb13a8a44adae332dbce2abe52974f7b"
       }
     ],
     "closeoutInternalRemoteCheck": "unavailable: could not connect to github.com"
   },
   "sourceCommands": [
-    { "command": "git status --short --branch", "classification": "pass" },
-    { "command": "git log -1 --oneline --decorate", "classification": "pass" },
-    { "command": "git branch -a -vv", "classification": "pass" },
-    { "command": "git ls-remote --heads origin", "classification": "pass" },
-    { "command": "npm run deck:closeout -- --levels=5,4,3,2,1", "classification": "pass-with-note", "note": "internal remote-head lookup unavailable; direct git ls-remote passed" },
-    { "command": "npm run deck:kanji:review-status", "classification": "pass" },
-    { "command": "npm run deck:words:completion:n3", "classification": "pass-audit-incomplete-readiness" },
-    { "command": "npm run deck:words:reading-audit:n3", "classification": "pass-audit-backlog-visible" },
-    { "command": "npm run deck:words:gap-plan:n3", "classification": "pass-planning" },
-    { "command": "npm run nlp:governance-gate", "classification": "pass" },
-    { "command": "npm run data:obsidian:proof:validate", "classification": "pass" },
-    { "command": "npm run perf:memory:matrix", "classification": "pass" },
-    { "command": "npm run security:release-trust", "classification": "expected-fail-closed" },
-    { "command": "rg -n \"1400|1470\" docs/employer-overview.md docs/system-architecture.md outputs/presentations-whole-program-reviewer-packet/packet_evidence_summary.json", "classification": "pass-doc-denominator-check" }
+    {
+      "command": "git status --short --branch",
+      "classification": "pass"
+    },
+    {
+      "command": "git log -1 --oneline --decorate",
+      "classification": "pass"
+    },
+    {
+      "command": "git branch -a -vv",
+      "classification": "pass"
+    },
+    {
+      "command": "git ls-remote --heads origin",
+      "classification": "pass"
+    },
+    {
+      "command": "npm run deck:closeout -- --levels=5,4,3,2,1",
+      "classification": "pass-with-note",
+      "note": "internal remote-head lookup unavailable; direct git ls-remote passed"
+    },
+    {
+      "command": "npm run deck:kanji:review-status",
+      "classification": "pass"
+    },
+    {
+      "command": "npm run deck:words:completion:n3",
+      "classification": "pass-audit-incomplete-readiness"
+    },
+    {
+      "command": "npm run deck:words:reading-audit:n3",
+      "classification": "pass-audit-backlog-visible"
+    },
+    {
+      "command": "npm run deck:words:gap-plan:n3",
+      "classification": "pass-planning"
+    },
+    {
+      "command": "npm run nlp:governance-gate",
+      "classification": "pass"
+    },
+    {
+      "command": "npm run data:obsidian:proof:validate",
+      "classification": "pass"
+    },
+    {
+      "command": "npm run perf:memory:matrix",
+      "classification": "pass"
+    },
+    {
+      "command": "npm run security:release-trust",
+      "classification": "expected-fail-closed"
+    },
+    {
+      "command": "PPTX package/text validation script for stale claim markers, misleading denominator formats, removed trust-rant page, and lane-wording placement",
+      "classification": "pass-packet-text-check"
+    },
+    {
+      "command": "Artifact-tool import/render/layout check for all 8 slides",
+      "classification": "pass-rendered-with-tight-text-warnings",
+      "note": "0 layout errors; 108 tight-text warnings"
+    }
   ],
   "liveCounts": {
     "coreKanjiGenerated": 2212,
-    "wordRowsGenerated": 1470,
+    "wordRowsGenerated": 1478,
     "proofEvents": 1969,
     "ledgerFiles": 6,
     "lockedKanjiObsidian": 982,
@@ -48,27 +97,97 @@
   },
   "laneSnapshot": {
     "kanji": [
-      { "level": "N5", "denominator": 80, "silver": 80, "gold": 80, "sapphire": 80, "platinum": 80 },
-      { "level": "N4", "denominator": 212, "silver": 212, "gold": 212, "sapphire": 212, "platinum": 212 },
-      { "level": "N3", "denominator": 341, "silver": 341, "gold": 341, "sapphire": 341, "platinum": 341 },
-      { "level": "N2", "denominator": 349, "silver": 349, "gold": 349, "sapphire": 349, "platinum": 349 },
-      { "level": "N1", "denominator": 1230, "silver": 1230, "gold": 1230, "sapphire": 328, "platinum": 328 }
+      {
+        "level": "N5",
+        "denominator": 80,
+        "silver": 80,
+        "gold": 80,
+        "sapphire": 80,
+        "platinum": 80
+      },
+      {
+        "level": "N4",
+        "denominator": 212,
+        "silver": 212,
+        "gold": 212,
+        "sapphire": 212,
+        "platinum": 212
+      },
+      {
+        "level": "N3",
+        "denominator": 341,
+        "silver": 341,
+        "gold": 341,
+        "sapphire": 341,
+        "platinum": 341
+      },
+      {
+        "level": "N2",
+        "denominator": 349,
+        "silver": 349,
+        "gold": 349,
+        "sapphire": 349,
+        "platinum": 349
+      },
+      {
+        "level": "N1",
+        "denominator": 1230,
+        "silver": 1230,
+        "gold": 1230,
+        "sapphire": 328,
+        "platinum": 328
+      }
     ],
     "word": [
-      { "level": "N5", "denominator": 287, "silver": 287, "gold": 287, "sapphire": 287, "platinum": 287 },
-      { "level": "N4", "denominator": 700, "silver": 700, "gold": 700, "sapphire": 700, "platinum": 700 },
-      { "level": "N3", "denominator": 429, "silver": 429, "gold": 8, "sapphire": 8, "platinum": 8 },
-      { "level": "N2", "denominator": 28, "silver": 28, "gold": 0, "sapphire": 0, "platinum": 0 },
-      { "level": "N1", "denominator": 26, "silver": 26, "gold": 0, "sapphire": 0, "platinum": 0 }
+      {
+        "level": "N5",
+        "denominator": 287,
+        "silver": 287,
+        "gold": 287,
+        "sapphire": 287,
+        "platinum": 287
+      },
+      {
+        "level": "N4",
+        "denominator": 700,
+        "silver": 700,
+        "gold": 700,
+        "sapphire": 700,
+        "platinum": 700
+      },
+      {
+        "level": "N3",
+        "denominator": 437,
+        "silver": 437,
+        "gold": 8,
+        "sapphire": 8,
+        "platinum": 8
+      },
+      {
+        "level": "N2",
+        "denominator": 28,
+        "silver": 28,
+        "gold": 0,
+        "sapphire": 0,
+        "platinum": 0
+      },
+      {
+        "level": "N1",
+        "denominator": 26,
+        "silver": 26,
+        "gold": 0,
+        "sapphire": 0,
+        "platinum": 0
+      }
     ]
   },
   "n3WordReading": {
-    "coveragePercent": 34.9,
-    "covered": 413,
+    "coveragePercent": 35.6,
+    "covered": 421,
     "audited": 1184,
-    "openTriageItems": 771,
-    "activePlanningItems": 752,
-    "fastPromotions": 38,
+    "openTriageItems": 763,
+    "activePlanningItems": 744,
+    "fastPromotions": 30,
     "editorialResearch": 714,
     "deferredVariantsHidden": 19
   },
@@ -82,7 +201,12 @@
       "word:N5": 287,
       "word:N4": 700
     },
-    "notCertified": ["kanji:N1", "word:N3", "word:N2", "word:N1"]
+    "notCertified": [
+      "kanji:N1",
+      "word:N3",
+      "word:N2",
+      "word:N1"
+    ]
   },
   "nlpGovernance": {
     "result": "passing",
@@ -103,15 +227,20 @@
   "releaseTrust": {
     "result": "expected-fail-closed",
     "highCriticalReleaseBlockerRisks": 2,
-    "riskIds": ["SEC-P0-004", "PROD-REL-001"],
+    "riskIds": [
+      "SEC-P0-004",
+      "PROD-REL-001"
+    ],
     "unimplementedReleaseBlockerRequirements": 1,
-    "requirementIds": ["SEC-REQ-007"]
+    "requirementIds": [
+      "SEC-REQ-007"
+    ]
   },
   "limitations": [
-    "No Obsidian proof was recorded during this presentation rollout.",
-    "No lane batch, deck mutation, or proof append command was run.",
+    "No Obsidian proof was recorded during this presentation correction.",
+    "No lane batch, kanji/word deck-data mutation, or proof append command was run during this presentation correction.",
     "Manual Anki import QA, accessibility QA, and audio listening/naturalness QA were not performed.",
-    "Closeout internal remote-head lookup was unavailable; direct git ls-remote verified only main on origin."
+    "deck:closeout internal remote-head lookup was unavailable during this correction; direct git ls-remote verified origin/main."
   ],
   "docsCleanup": {
     "status": "resolved",
@@ -119,6 +248,6 @@
       "docs/employer-overview.md",
       "docs/system-architecture.md"
     ],
-    "change": "Updated stale word-row denominator references to 1470."
+    "change": "Presentation packet now opens with the product/program definition, removes the zero-trust rant page, explains kanji and context-sensitive readings before lane jargon, confines Platinum wording to the lane-definition slide, clarifies v1-ready scopes, and explains proof ledgers as card-bound receipts."
   }
 }

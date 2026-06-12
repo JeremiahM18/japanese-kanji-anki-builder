@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1533);
+    assert.equal(Object.keys(starterEntries).length, 1565);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 472,
+        3: 504,
         4: 700,
         5: 307,
     });
@@ -2187,6 +2187,149 @@ test("tracked starter word data includes the forty-third N3 Silver source-expans
         ["押収|おうしゅう", "<ruby>押<rt>おう</rt></ruby><ruby>収<rt>しゅう</rt></ruby>"],
         ["卵黄|らんおう", "<ruby>卵<rt>らん</rt></ruby><ruby>黄<rt>おう</rt></ruby>"],
         ["黄砂|こうさ", "<ruby>黄<rt>こう</rt></ruby><ruby>砂<rt>さ</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the forty-fourth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["出荷|しゅっか", "荷", "か"],
+        ["過程|かてい", "過", "か"],
+        ["解熱剤|げねつざい", "解", "げ"],
+        ["皆無|かいむ", "皆", "かい"],
+        ["格子|こうし", "格", "こう"],
+        ["分割|ぶんかつ", "割", "かつ"],
+        ["岩石|がんせき", "岩", "がん"],
+        ["願望|がんぼう", "願", "がん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["出荷|しゅっか", "support"],
+        ["過程|かてい", "support"],
+        ["解熱剤|げねつざい", "support"],
+        ["皆無|かいむ", "support"],
+        ["格子|こうし", "support"],
+        ["分割|ぶんかつ", "support"],
+        ["岩石|がんせき", "support"],
+        ["願望|がんぼう", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["出荷|しゅっか", "<ruby>出<rt>しゅっ</rt></ruby><ruby>荷<rt>か</rt></ruby>"],
+        ["過程|かてい", "<ruby>過<rt>か</rt></ruby><ruby>程<rt>てい</rt></ruby>"],
+        ["解熱剤|げねつざい", "<ruby>解<rt>げ</rt></ruby><ruby>熱<rt>ねつ</rt></ruby><ruby>剤<rt>ざい</rt></ruby>"],
+        ["皆無|かいむ", "<ruby>皆<rt>かい</rt></ruby><ruby>無<rt>む</rt></ruby>"],
+        ["格子|こうし", "<ruby>格<rt>こう</rt></ruby><ruby>子<rt>し</rt></ruby>"],
+        ["分割|ぶんかつ", "<ruby>分<rt>ぶん</rt></ruby><ruby>割<rt>かつ</rt></ruby>"],
+        ["岩石|がんせき", "<ruby>岩<rt>がん</rt></ruby><ruby>石<rt>せき</rt></ruby>"],
+        ["願望|がんぼう", "<ruby>願<rt>がん</rt></ruby><ruby>望<rt>ぼう</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the forty-fifth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["危機|きき", "危", "き"],
+        ["幾何学|きかがく", "幾", "き"],
+        ["要求|ようきゅう", "求", "きゅう"],
+        ["許可|きょか", "許", "きょ"],
+        ["供養|くよう", "供", "く"],
+        ["関係|かんけい", "係", "けい"],
+        ["典型|てんけい", "型", "けい"],
+        ["不可欠|ふかけつ", "欠", "けつ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["危機|きき", "support"],
+        ["幾何学|きかがく", "support"],
+        ["要求|ようきゅう", "support"],
+        ["許可|きょか", "support"],
+        ["供養|くよう", "support"],
+        ["関係|かんけい", "support"],
+        ["典型|てんけい", "support"],
+        ["不可欠|ふかけつ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["危機|きき", "<ruby>危<rt>き</rt></ruby><ruby>機<rt>き</rt></ruby>"],
+        ["幾何学|きかがく", "<ruby>幾<rt>き</rt></ruby><ruby>何<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby>"],
+        ["要求|ようきゅう", "<ruby>要<rt>よう</rt></ruby><ruby>求<rt>きゅう</rt></ruby>"],
+        ["許可|きょか", "<ruby>許<rt>きょ</rt></ruby><ruby>可<rt>か</rt></ruby>"],
+        ["供養|くよう", "<ruby>供<rt>く</rt></ruby><ruby>養<rt>よう</rt></ruby>"],
+        ["関係|かんけい", "<ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby>"],
+        ["典型|てんけい", "<ruby>典<rt>てん</rt></ruby><ruby>型<rt>けい</rt></ruby>"],
+        ["不可欠|ふかけつ", "<ruby>不<rt>ふ</rt></ruby><ruby>可<rt>か</rt></ruby><ruby>欠<rt>けつ</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the forty-sixth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["君主|くんしゅ", "君", "くん"],
+        ["経典|きょうてん", "経", "きょう"],
+        ["権化|ごんげ", "権", "ごん"],
+        ["相互|そうご", "互", "ご"],
+        ["港湾|こうわん", "港", "こう"],
+        ["以降|いこう", "降", "こう"],
+        ["香水|こうすい", "香", "こう"],
+        ["根拠|こんきょ", "根", "こん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["君主|くんしゅ", "support"],
+        ["経典|きょうてん", "support"],
+        ["権化|ごんげ", "support"],
+        ["相互|そうご", "support"],
+        ["港湾|こうわん", "support"],
+        ["以降|いこう", "support"],
+        ["香水|こうすい", "support"],
+        ["根拠|こんきょ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["君主|くんしゅ", "<ruby>君<rt>くん</rt></ruby><ruby>主<rt>しゅ</rt></ruby>"],
+        ["経典|きょうてん", "<ruby>経<rt>きょう</rt></ruby><ruby>典<rt>てん</rt></ruby>"],
+        ["権化|ごんげ", "<ruby>権<rt>ごん</rt></ruby><ruby>化<rt>げ</rt></ruby>"],
+        ["相互|そうご", "<ruby>相<rt>そう</rt></ruby><ruby>互<rt>ご</rt></ruby>"],
+        ["港湾|こうわん", "<ruby>港<rt>こう</rt></ruby><ruby>湾<rt>わん</rt></ruby>"],
+        ["以降|いこう", "<ruby>以<rt>い</rt></ruby><ruby>降<rt>こう</rt></ruby>"],
+        ["香水|こうすい", "<ruby>香<rt>こう</rt></ruby><ruby>水<rt>すい</rt></ruby>"],
+        ["根拠|こんきょ", "<ruby>根<rt>こん</rt></ruby><ruby>拠<rt>きょ</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the forty-seventh N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["骨盤|こつばん", "骨", "こつ"],
+        ["夫妻|ふさい", "妻", "さい"],
+        ["歳|さい", "歳", "さい"],
+        ["返済|へんさい", "済", "さい"],
+        ["雑煮|ぞうに", "雑", "ぞう"],
+        ["残業|ざんぎょう", "残", "ざん"],
+        ["寺院|じいん", "寺", "じ"],
+        ["政治|せいじ", "治", "じ"],
+        ["治療|ちりょう", "治", "ち"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["骨盤|こつばん", "support"],
+        ["夫妻|ふさい", "support"],
+        ["歳|さい", "support"],
+        ["返済|へんさい", "support"],
+        ["雑煮|ぞうに", "support"],
+        ["残業|ざんぎょう", "support"],
+        ["寺院|じいん", "support"],
+        ["政治|せいじ", "both"],
+        ["治療|ちりょう", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["骨盤|こつばん", "<ruby>骨<rt>こつ</rt></ruby><ruby>盤<rt>ばん</rt></ruby>"],
+        ["夫妻|ふさい", "<ruby>夫<rt>ふ</rt></ruby><ruby>妻<rt>さい</rt></ruby>"],
+        ["歳|さい", "<ruby>歳<rt>さい</rt></ruby>"],
+        ["返済|へんさい", "<ruby>返<rt>へん</rt></ruby><ruby>済<rt>さい</rt></ruby>"],
+        ["雑煮|ぞうに", "<ruby>雑<rt>ぞう</rt></ruby><ruby>煮<rt>に</rt></ruby>"],
+        ["残業|ざんぎょう", "<ruby>残<rt>ざん</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>"],
+        ["寺院|じいん", "<ruby>寺<rt>じ</rt></ruby><ruby>院<rt>いん</rt></ruby>"],
+        ["政治|せいじ", "<ruby>政<rt>せい</rt></ruby><ruby>治<rt>じ</rt></ruby>"],
+        ["治療|ちりょう", "<ruby>治<rt>ち</rt></ruby><ruby>療<rt>りょう</rt></ruby>"],
     ]);
 });
 

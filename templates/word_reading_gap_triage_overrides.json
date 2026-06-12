@@ -497,6 +497,116 @@
     }
   },
   "N3": {
+    "価|on|け": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict search found no learner-facing exact word where 価 honestly carries け; top hits were false positives, phrases, or technical securities/accounting terms where 価 is read か. Defer instead of forcing a low-value card."
+    },
+    "貝|on|ばい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict search for 貝 -> ばい surfaced shell species, shell-money, radical, and specialist terms with no priority/common learner value. Defer until a genuinely useful learner-facing word appears."
+    },
+    "格|on|きゃく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict search found 格 -> きゃく mainly in historical or formal-legal readings such as 格式|きゃくしき and ritsuryo terms. The useful modern 格 support word in this batch is 格子|こうし; keep きゃく deferred."
+    },
+    "格|on|ごう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict search found common-looking hits such as 合格|ごうかく are false positives for 格 -> ごう because ごう belongs to 合. Verified 格 -> ごう rows are architectural or specialist terms such as 格間|ごうま, so defer."
+    },
+    "掛|on|かい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict search found 掛 -> かい hits are false positives from adjacent 買い/機械/改札 readings or low-value accounting terms. Existing learner-facing 掛 support stays with かかる/かける; defer this on-reading."
+    },
+    "掛|on|けい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict search found 掛 -> けい hits are mostly false positives from 時計 or rare specialist terms such as 掛留|けいりゅう. Defer rather than adding a confusing low-value support card."
+    },
+    "久|on|く": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 久 -> く dominated by proper nouns, unprioritized words such as 久遠|くおん, and the priority alternate spelling 意久地|いくじ, which is not a good kanji-reading support card. Defer until a common learner-facing 久 -> く word appears."
+    },
+    "求|on|ぐ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 求 -> ぐ mainly in 求道|ぐどう and related religious/abstract seeker-after-truth terms. Promote 要求|ようきゅう for the useful 求 -> きゅう surface and defer this low-value alternate."
+    },
+    "供|on|ぐ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 供 -> ぐ in unprioritized ceremonial, Buddhist, or offering terms such as 供奉|ぐぶ and 供祭|ぐさい. Promote 供養|くよう for the useful cultural surface and defer this rarer reading."
+    },
+    "供|on|くう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 供 -> くう only in unprioritized offering or sacrifice terms such as 供花|くうげ and 人身御供|ひとみごくう. Defer rather than forcing a specialist support card."
+    },
+    "玉|on|ぎょく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 玉 -> ぎょく rows mostly in unprioritized gem, imperial, finance, or shogi vocabulary, with priority hits such as 玉砕 carrying war/death senses. Defer until a genuinely learner-facing N3 support word is justified."
+    },
+    "勤|on|ごん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 勤 -> ごん only in Buddhist service/aspiration terms such as 勤行|ごんぎょう and 勤求|ごんぐ, all without common priority. Defer outside the useful N3 learner surface."
+    },
+    "靴|on|か": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found useful-looking 靴 words such as 革靴|かわぐつ truthfully cover 靴 -> ぐつ, not 靴 -> か. Direct か rows are military, historical, technical, idiomatic, or low-priority, so defer rather than faking coverage."
+    },
+    "経|on|きん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found common-looking 経 -> きん hits are false positives where きん belongs to 基金 or 筋, while direct readings such as 経行|きんひん and 看経|かんきん are Buddhist/specialist. Promote 経典|きょうてん and defer きん."
+    },
+    "欠|on|けん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 欠 -> けん in unprioritized legal, mantra, or uncommon forms such as 欠缺|けんけつ and 欠伸|けんしん. Defer instead of adding a rare support card."
+    },
+    "降|on|ご": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 降 -> ご/gou rows only in unprioritized Buddhist or deity-advent terms such as 降魔|ごうま and 降誕会|ごうたんえ. Promote 以降|いこう for the useful 降 -> こう surface and defer this rarer reading."
+    },
+    "香|on|きょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 香 -> きょう rows are unprioritized incense, shogi, or specialist terms such as 香車|きょうしゃ and 香匙|きょうじ. Promote 香水|こうすい for the useful 香 -> こう surface and defer this reading."
+    },
+    "最|on|しゅ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found common-looking rows such as 最終|さいしゅう are false positives for 最 -> しゅ because 最 is read さい and しゅう belongs to 終. No useful exact 最 -> しゅ learner word was found, so defer."
+    },
+    "済|on|せい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found common-looking 済 -> せい hits are mostly compounds where せい belongs to adjacent kanji such as 成, 政, or 性, while direct rows such as 済世|せいせい are rare/abstract. Promote 返済|へんさい for the useful 済 -> さい surface and defer せい."
+    },
+    "財|on|ぞく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 財 -> ぞく hits are false positives around 相続 where ぞく belongs to 続 and 財 remains ざい, or long inheritance/property phrases. Defer rather than forcing incorrect coverage."
+    },
+    "参|on|しん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 参 -> しん in constellation, botanical, or specialist rows such as 参宿|しんしゅく and 参差|しんし. New参-style rows read 参 as ざん, not しん. Defer until a useful exact learner word appears."
+    },
+    "残|on|さん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 残 -> さん candidates are false positives from adjacent 資産 readings or long finance phrases, not useful direct 残 coverage. Promote 残業|ざんぎょう for the useful 残 -> ざん surface and defer さん."
+    },
     "達|on|たつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",

@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1498);
+    assert.equal(Object.keys(starterEntries).length, 1533);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 437,
+        3: 472,
         4: 700,
         5: 307,
     });
@@ -2152,6 +2152,41 @@ test("tracked starter word data includes the forty-second N3 Silver source-expan
         ["捕まえる|つかまえる", "<ruby>捕<rt>つか</rt></ruby>まえる"],
         ["眠い|ねむい", "<ruby>眠<rt>ねむ</rt></ruby>い"],
         ["訪ねる|たずねる", "<ruby>訪<rt>たず</rt></ruby>ねる"],
+    ]);
+});
+
+test("tracked starter word data includes the forty-third N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["貿易|ぼうえき", "易", "えき"],
+        ["暗雲|あんうん", "雲", "うん"],
+        ["優越感|ゆうえつかん", "越", "えつ"],
+        ["越年|おつねん", "越", "おつ"],
+        ["奥義|おうぎ", "奥", "おう"],
+        ["押収|おうしゅう", "押", "おう"],
+        ["卵黄|らんおう", "黄", "おう"],
+        ["黄砂|こうさ", "黄", "こう"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["貿易|ぼうえき", "support"],
+        ["暗雲|あんうん", "support"],
+        ["優越感|ゆうえつかん", "support"],
+        ["越年|おつねん", "support"],
+        ["奥義|おうぎ", "support"],
+        ["押収|おうしゅう", "support"],
+        ["卵黄|らんおう", "support"],
+        ["黄砂|こうさ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["貿易|ぼうえき", "<ruby>貿<rt>ぼう</rt></ruby><ruby>易<rt>えき</rt></ruby>"],
+        ["暗雲|あんうん", "<ruby>暗<rt>あん</rt></ruby><ruby>雲<rt>うん</rt></ruby>"],
+        ["優越感|ゆうえつかん", "<ruby>優<rt>ゆう</rt></ruby><ruby>越<rt>えつ</rt></ruby><ruby>感<rt>かん</rt></ruby>"],
+        ["越年|おつねん", "<ruby>越<rt>おつ</rt></ruby><ruby>年<rt>ねん</rt></ruby>"],
+        ["奥義|おうぎ", "<ruby>奥<rt>おう</rt></ruby><ruby>義<rt>ぎ</rt></ruby>"],
+        ["押収|おうしゅう", "<ruby>押<rt>おう</rt></ruby><ruby>収<rt>しゅう</rt></ruby>"],
+        ["卵黄|らんおう", "<ruby>卵<rt>らん</rt></ruby><ruby>黄<rt>おう</rt></ruby>"],
+        ["黄砂|こうさ", "<ruby>黄<rt>こう</rt></ruby><ruby>砂<rt>さ</rt></ruby>"],
     ]);
 });
 

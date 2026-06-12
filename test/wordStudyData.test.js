@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1565);
+    assert.equal(Object.keys(starterEntries).length, 1588);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 504,
+        3: 527,
         4: 700,
         5: 307,
     });
@@ -2331,6 +2331,154 @@ test("tracked starter word data includes the forty-seventh N3 Silver source-expa
         ["政治|せいじ", "<ruby>政<rt>せい</rt></ruby><ruby>治<rt>じ</rt></ruby>"],
         ["治療|ちりょう", "<ruby>治<rt>ち</rt></ruby><ruby>療<rt>りょう</rt></ruby>"],
     ]);
+});
+
+test("tracked starter word data includes the forty-eighth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["夫婦|ふうふ", "夫", "ふう"],
+        ["精神|せいしん", "神", "しん"],
+        ["変化|へんか", "変", "へん"],
+        ["接続|せつぞく", "続", "ぞく"],
+        ["過程|かてい", "程", "てい"],
+        ["責任|せきにん", "任", "にん"],
+        ["夫妻|ふさい", "夫", "ふ"],
+        ["優越感|ゆうえつかん", "優", "ゆう"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["夫婦|ふうふ", "both"],
+        ["精神|せいしん", "both"],
+        ["変化|へんか", "support"],
+        ["接続|せつぞく", "both"],
+        ["過程|かてい", "support"],
+        ["責任|せきにん", "both"],
+        ["夫妻|ふさい", "support"],
+        ["優越感|ゆうえつかん", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["夫婦|ふうふ", "<ruby>夫<rt>ふう</rt></ruby><ruby>婦<rt>ふ</rt></ruby>"],
+        ["精神|せいしん", "<ruby>精<rt>せい</rt></ruby><ruby>神<rt>しん</rt></ruby>"],
+        ["変化|へんか", "<ruby>変<rt>へん</rt></ruby><ruby>化<rt>か</rt></ruby>"],
+        ["接続|せつぞく", "<ruby>接<rt>せつ</rt></ruby><ruby>続<rt>ぞく</rt></ruby>"],
+        ["過程|かてい", "<ruby>過<rt>か</rt></ruby><ruby>程<rt>てい</rt></ruby>"],
+        ["責任|せきにん", "<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>"],
+        ["夫妻|ふさい", "<ruby>夫<rt>ふ</rt></ruby><ruby>妻<rt>さい</rt></ruby>"],
+        ["優越感|ゆうえつかん", "<ruby>優<rt>ゆう</rt></ruby><ruby>越<rt>えつ</rt></ruby><ruby>感<rt>かん</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["変化|へんか"].notes, /Tanos N3 row is only a discovery\/weak level hint/);
+});
+
+test("tracked starter word data includes the forty-ninth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["歳暮|せいぼ", "歳", "せい"],
+        ["耳鼻科|じびか", "耳", "じ"],
+        ["辞任|じにん", "辞", "じ"],
+        ["若年|じゃくねん", "若", "じゃく"],
+        ["取得|しゅとく", "取", "しゅ"],
+        ["保守|ほしゅ", "守", "しゅ"],
+        ["留守|るす", "守", "す"],
+        ["飲酒|いんしゅ", "酒", "しゅ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["歳暮|せいぼ", "support"],
+        ["耳鼻科|じびか", "support"],
+        ["辞任|じにん", "support"],
+        ["若年|じゃくねん", "support"],
+        ["取得|しゅとく", "support"],
+        ["保守|ほしゅ", "support"],
+        ["留守|るす", "support"],
+        ["飲酒|いんしゅ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["歳暮|せいぼ", "<ruby>歳<rt>せい</rt></ruby><ruby>暮<rt>ぼ</rt></ruby>"],
+        ["耳鼻科|じびか", "<ruby>耳<rt>じ</rt></ruby><ruby>鼻<rt>び</rt></ruby><ruby>科<rt>か</rt></ruby>"],
+        ["辞任|じにん", "<ruby>辞<rt>じ</rt></ruby><ruby>任<rt>にん</rt></ruby>"],
+        ["若年|じゃくねん", "<ruby>若<rt>じゃく</rt></ruby><ruby>年<rt>ねん</rt></ruby>"],
+        ["取得|しゅとく", "<ruby>取<rt>しゅ</rt></ruby><ruby>得<rt>とく</rt></ruby>"],
+        ["保守|ほしゅ", "<ruby>保<rt>ほ</rt></ruby><ruby>守<rt>しゅ</rt></ruby>"],
+        ["留守|るす", "<ruby>留<rt>る</rt></ruby><ruby>守<rt>す</rt></ruby>"],
+        ["飲酒|いんしゅ", "<ruby>飲<rt>いん</rt></ruby><ruby>酒<rt>しゅ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["辞任|じにん"].notes, /Existing frozen N5 辞書\|じしょ remains untouched/);
+});
+
+test("tracked starter word data includes the fiftieth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["歳暮|せいぼ", "暮", "ぼ"],
+        ["留守|るす", "留", "る"],
+        ["収拾|しゅうしゅう", "拾", "しゅう"],
+        ["最初|さいしょ", "初", "しょ"],
+        ["勝利|しょうり", "勝", "しょう"],
+        ["消費|しょうひ", "消", "しょう"],
+        ["燃焼|ねんしょう", "焼", "しょう"],
+        ["植物|しょくぶつ", "植", "しょく"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["歳暮|せいぼ", "support"],
+        ["留守|るす", "support"],
+        ["収拾|しゅうしゅう", "support"],
+        ["最初|さいしょ", "support"],
+        ["勝利|しょうり", "support"],
+        ["消費|しょうひ", "support"],
+        ["燃焼|ねんしょう", "support"],
+        ["植物|しょくぶつ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["歳暮|せいぼ", "<ruby>歳<rt>せい</rt></ruby><ruby>暮<rt>ぼ</rt></ruby>"],
+        ["留守|るす", "<ruby>留<rt>る</rt></ruby><ruby>守<rt>す</rt></ruby>"],
+        ["収拾|しゅうしゅう", "<ruby>収<rt>しゅう</rt></ruby><ruby>拾<rt>しゅう</rt></ruby>"],
+        ["最初|さいしょ", "<ruby>最<rt>さい</rt></ruby><ruby>初<rt>しょ</rt></ruby>"],
+        ["勝利|しょうり", "<ruby>勝<rt>しょう</rt></ruby><ruby>利<rt>り</rt></ruby>"],
+        ["消費|しょうひ", "<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby>"],
+        ["燃焼|ねんしょう", "<ruby>燃<rt>ねん</rt></ruby><ruby>焼<rt>しょう</rt></ruby>"],
+        ["植物|しょくぶつ", "<ruby>植<rt>しょく</rt></ruby><ruby>物<rt>ぶつ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["最初|さいしょ"].notes, /Existing frozen N4 初夏\|しょか remains untouched/);
+    assert.match(starterEntries["燃焼|ねんしょう"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["消費|しょうひ"].notes, /Tanos N3 row is only a discovery\/weak level hint/);
+});
+
+test("tracked starter word data includes the fifty-first N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["取捨|しゅしゃ", "捨", "しゃ"],
+        ["端緒|たんちょ", "緒", "ちょ"],
+        ["省略|しょうりゃく", "省", "しょう"],
+        ["反省|はんせい", "省", "せい"],
+        ["爆笑|ばくしょう", "笑", "しょう"],
+        ["深刻|しんこく", "深", "しん"],
+        ["申請|しんせい", "申", "しん"],
+        ["吹奏楽|すいそうがく", "吹", "すい"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["取捨|しゅしゃ", "support"],
+        ["端緒|たんちょ", "support"],
+        ["省略|しょうりゃく", "support"],
+        ["反省|はんせい", "support"],
+        ["爆笑|ばくしょう", "support"],
+        ["深刻|しんこく", "support"],
+        ["申請|しんせい", "support"],
+        ["吹奏楽|すいそうがく", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["取捨|しゅしゃ", "<ruby>取<rt>しゅ</rt></ruby><ruby>捨<rt>しゃ</rt></ruby>"],
+        ["端緒|たんちょ", "<ruby>端<rt>たん</rt></ruby><ruby>緒<rt>ちょ</rt></ruby>"],
+        ["省略|しょうりゃく", "<ruby>省<rt>しょう</rt></ruby><ruby>略<rt>りゃく</rt></ruby>"],
+        ["反省|はんせい", "<ruby>反<rt>はん</rt></ruby><ruby>省<rt>せい</rt></ruby>"],
+        ["爆笑|ばくしょう", "<ruby>爆<rt>ばく</rt></ruby><ruby>笑<rt>しょう</rt></ruby>"],
+        ["深刻|しんこく", "<ruby>深<rt>しん</rt></ruby><ruby>刻<rt>こく</rt></ruby>"],
+        ["申請|しんせい", "<ruby>申<rt>しん</rt></ruby><ruby>請<rt>せい</rt></ruby>"],
+        ["吹奏楽|すいそうがく", "<ruby>吹<rt>すい</rt></ruby><ruby>奏<rt>そう</rt></ruby><ruby>楽<rt>がく</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["端緒|たんちょ"].notes, /alternate 端緒\|たんしょ row exists/);
+    assert.match(starterEntries["省略|しょうりゃく"].notes, /Tanos N2 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["吹奏楽|すいそうがく"].notes, /lower-priority but recognizable school\/music support word/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

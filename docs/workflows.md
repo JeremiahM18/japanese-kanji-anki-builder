@@ -255,6 +255,18 @@ Planner output is advisory. A suggested card still needs canonical contract cove
 
 This is review amplification, not certification. If a word NLP packet exposes a real card/source issue, fix tracked source or card data first, regenerate the live word row, rerun the relevant gates, and rerun NLP when the affected support artifact changed. Word Obsidian proof is added only after the corrected live generated row and tracked evidence pass the Obsidian native/fluent-quality rereview. Certification remains under `deck:words:obsidian:rereview-status` and `deck:words:obsidian:certify-status`.
 
+### N3 Silver word expansion cadence
+
+Use this cadence only for one active word Silver/source-expansion lane. It is not Gold, Sapphire, Platinum, Obsidian, release QA, or proof-ledger work.
+
+- Default to four N3 Silver batches per commit.
+- Use three batches when candidates are source-thin, deferral-heavy, or editorially risky.
+- Use five batches only when candidates are unusually clean, same-pattern, and focused gates stay routine.
+- Verify after every batch with N3 word readiness or generation as required, completion, gap-plan, reading-audit, and `nlp:governance-gate`.
+- At the commit boundary, classify N3 word Gold/Sapphire/Platinum failures as expected backlog versus regression, then run `lint`, `typecheck`, `npm test`, `git diff --check`, and the normal git status/stat/name-status checks.
+- Keep the lane to N3 word Silver starter/source expansion. Do not write proof ledgers, record Obsidian proof, shrink denominators, certify downstream lanes, touch frozen N4/N5 word data, touch kanji lanes, or keep extra remote branches after merge cleanup.
+- The sentence corpus remains support infrastructure for examples and candidate assistance; it does not replace exact word-reading identity, governed source evidence, schema support, or reviewer promotion judgment.
+
 ## Check kanji NLP support before Obsidian rereview
 
 ```bash

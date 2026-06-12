@@ -1464,6 +1464,12 @@
       "sourceReading": "かかり",
       "sourceAccent": "1"
     },
+    "保守|ほしゅ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "保守",
+      "generatedReading": "ほしゅ"
+    },
     "候補|こうほ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1818,6 +1824,12 @@
       "sourceWord": "最低",
       "sourceReading": "さいてい",
       "sourceAccent": "0"
+    },
+    "最初|さいしょ": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "最初",
+      "generatedReading": "さいしょ"
     },
     "最終|さいしゅう": {
       "pattern": "0 [heiban]",
@@ -2197,6 +2209,12 @@
       "sourceReading": "かつ",
       "sourceAccent": "1"
     },
+    "勝利|しょうり": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "しょうり",
+      "generatedReading": "しょおり"
+    },
     "勤務|きんむ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -2470,12 +2488,36 @@
       "sourceQuery": "反対側",
       "generatedReading": "はんたいがわ"
     },
+    "反省|はんせい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "はんせい",
+      "generatedReading": "はんせい"
+    },
     "収める|おさめる": {
       "pattern": "3 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "収める",
       "sourceReading": "おさめる",
       "sourceAccent": "3"
+    },
+    "収拾|しゅうしゅう": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "収拾",
+      "generatedReading": "しゅうしゅう"
+    },
+    "取得|しゅとく": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "取得",
+      "generatedReading": "しゅとく"
+    },
+    "取捨|しゅしゃ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "取捨",
+      "generatedReading": "しゅしゃ"
     },
     "受け取る|うけとる": {
       "pattern": "0 [heiban] / 3 [nakadaka]",
@@ -2643,6 +2685,12 @@
       "sourceWord": "吹く",
       "sourceReading": "ふく",
       "sourceAccent": "1,2"
+    },
+    "吹奏楽|すいそうがく": {
+      "pattern": "4 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "すいそうがく",
+      "generatedReading": "すいそおがく"
     },
     "味|あじ": {
       "pattern": "0 [heiban]",
@@ -2997,6 +3045,12 @@
       "sourceWord": "変わる",
       "sourceReading": "かわる",
       "sourceAccent": "0"
+    },
+    "変化|へんか": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "変化",
+      "generatedReading": "へんか"
     },
     "夏|なつ": {
       "pattern": "2 [odaka]",
@@ -6002,6 +6056,12 @@
       "sourceReading": "うえる",
       "sourceAccent": "0"
     },
+    "植物|しょくぶつ": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "植物",
+      "generatedReading": "しょくぶつ"
+    },
     "楽しい|たのしい": {
       "pattern": "3 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -6320,6 +6380,12 @@
       "sourceWord": "歳",
       "sourceReading": "とし",
       "sourceAccent": "2"
+    },
+    "歳暮|せいぼ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "せいぼ",
+      "generatedReading": "せいぼ"
     },
     "死ぬ|しぬ": {
       "pattern": "0 [heiban]",
@@ -6700,6 +6766,12 @@
       "sourceReading": "きえる",
       "sourceAccent": "0"
     },
+    "消費|しょうひ": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "しょうひ",
+      "generatedReading": "しょおひ"
+    },
     "涙|なみだ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -6712,6 +6784,12 @@
       "sourceWord": "深い",
       "sourceReading": "ふかい",
       "sourceAccent": "2"
+    },
+    "深刻|しんこく": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "深刻",
+      "generatedReading": "しんこく"
     },
     "混雑|こんざつ": {
       "pattern": "1 [atamadaka]",
@@ -6864,6 +6942,18 @@
       "sourceWord": "熱",
       "sourceReading": "ねつ",
       "sourceAccent": "2"
+    },
+    "燃焼|ねんしょう": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ねんしょう",
+      "generatedReading": "ねんしょお"
+    },
+    "爆笑|ばくしょう": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ばくしょう",
+      "generatedReading": "ばくしょお"
     },
     "父|ちち": {
       "pattern": "2 [odaka] / 1 [atamadaka]",
@@ -7221,6 +7311,12 @@
       "sourceReading": "もうしこむ",
       "sourceAccent": "4,0"
     },
+    "申請|しんせい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "しんせい",
+      "generatedReading": "しんせい"
+    },
     "男|おとこ": {
       "pattern": "3 [odaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -7274,6 +7370,12 @@
       "sourceWord": "留学生",
       "sourceReading": "りゅうがくせい",
       "sourceAccent": "3,4"
+    },
+    "留守|るす": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "留守",
+      "generatedReading": "るす"
     },
     "異常|いじょう": {
       "pattern": "0 [heiban]",
@@ -7577,6 +7679,12 @@
       "sourceWord": "省く",
       "sourceReading": "はぶく",
       "sourceAccent": "2"
+    },
+    "省略|しょうりゃく": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "しょうりゃく",
+      "generatedReading": "しょおりゃく"
     },
     "県|けん": {
       "pattern": "1 [atamadaka]",
@@ -7939,6 +8047,12 @@
       "sourceReading": "たちば",
       "sourceAccent": "3,1"
     },
+    "端緒|たんちょ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "たんちょ",
+      "generatedReading": "たんちょ"
+    },
     "競走|きょうそう": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -8292,6 +8406,12 @@
       "sourceReading": "みみ",
       "sourceAccent": "2"
     },
+    "耳鼻科|じびか": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "耳鼻科",
+      "generatedReading": "じびか"
+    },
     "聞く|きく": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -8492,6 +8612,12 @@
       "sourceWord": "若い",
       "sourceReading": "わかい",
       "sourceAccent": "2"
+    },
+    "若年|じゃくねん": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "若年",
+      "generatedReading": "じゃくねん"
     },
     "苦しい|くるしい": {
       "pattern": "3 [nakadaka]",
@@ -9567,6 +9693,12 @@
       "sourceReading": "やめる",
       "sourceAccent": "0"
     },
+    "辞任|じにん": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "辞任",
+      "generatedReading": "じにん"
+    },
     "辞書|じしょ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -10616,6 +10748,12 @@
       "sourceWord": "飲料",
       "sourceReading": "いんりょう",
       "sourceAccent": "3"
+    },
+    "飲酒|いんしゅ": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "飲酒",
+      "generatedReading": "いんしゅ"
     },
     "館内|かんない": {
       "pattern": "1 [atamadaka]",

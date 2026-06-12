@@ -611,6 +611,26 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "The useful learner-facing 達 words here are 達成|たっせい and 発達|はったつ, but their actual readings do not honestly cover standalone 達 -> たつ. Do not add a low-value single-kanji word card only to close this reading."
+    },
+    "殺|on|せつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 殺生|せっしょう, but the surface reading is せっ rather than the exact queued せつ target, and no useful learner-facing exact 殺 -> せつ support word was found. Existing 殺 coverage stays with さい, さつ, and ころす."
+    },
+    "糸|on|し": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 製糸|せいし and 抜糸|ばっし without priority/commonness support, plus specialist thread/sericulture terms such as 金糸|きんし and 蚕糸|さんし. Defer 糸 -> し rather than adding a low-payoff material or technical support card."
+    },
+    "実|on|しつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found useful-looking words such as 実質|じっしつ and 実子|じっし, but their surface reading for 実 is じっ, not the exact queued しつ target. Defer instead of claiming non-exact geminated coverage."
+    },
+    "拾|on|じゅう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review shows 拾 -> じゅう mainly as a formal/legal numeral for ten. That is real but not useful enough for a learner-facing N3 support card."
     }
   },
   "N4": {

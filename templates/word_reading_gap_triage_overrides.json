@@ -607,10 +607,25 @@
       "priority": "low",
       "note": "Live local JMdict review found 残 -> さん candidates are false positives from adjacent 資産 readings or long finance phrases, not useful direct 残 coverage. Promote 残業|ざんぎょう for the useful 残 -> ざん surface and defer さん."
     },
+    "達|on|だ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found common-looking 友達|ともだち truthfully covers 達 -> だち, while 達成|たっせい and 発達|はったつ cover geminated たっ. 伊達|だて exists with priority support but is ateji/proper-name-adjacent and not a clean per-kanji N3 support card. Defer 達 -> だ instead of forcing misleading coverage."
+    },
     "達|on|たつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "The useful learner-facing 達 words here are 達成|たっせい and 発達|はったつ, but their actual readings do not honestly cover standalone 達 -> たつ. Do not add a low-value single-kanji word card only to close this reading."
+    },
+    "段|on|たん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found useful 段 words such as 段階|だんかい and 階段|かいだん, but they truthfully cover 段 -> だん, not the exact queued たん target. No useful learner-facing exact 段 -> たん support row was found, so defer rather than inventing coverage."
+    },
+    "伝|on|てん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 伝馬|てんま, but it has no priority/commonness support and means post horse, which is too historical and low-value for N3 Silver. Promote 伝統|でんとう for useful 伝 -> でん coverage and defer 伝 -> てん."
     },
     "殺|on|せつ": {
       "suggestedAction": "defer_variant",
@@ -681,6 +696,61 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Live local JMdict review found apparent 接 -> しょう hits such as 接衝 and 間接照明 are false or specialist matches where しょう belongs to adjacent kanji. Defer rather than adding a negotiation or lighting term for weak coverage."
+    },
+    "怒|on|ぬ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact learner-facing 怒 -> ぬ word. Promote 怒鳴る|どなる for useful 怒 -> ど coverage and defer this unsupported on-reading rather than inventing a card."
+    },
+    "猫|on|びょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 愛猫, 愛猫家, 成猫, 猫額, 猫種, and related 猫 -> びょう rows, but they have no priority/commonness support or are specialist, idiomatic, medical, phrase-shaped, or narrow. Keep 猫 coverage learner-facing through stronger ねこ rows and defer this on-reading for N3 Silver."
+    },
+    "箱|on|そう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found only weak or false-support rows for 箱 -> そう, including 書箱, 送信箱, 百葉箱, and 箱館戦争. The exact-looking rows are no-priority, specialist, proper-noun/history, or assign そう to adjacent kanji, so defer instead of forcing a poor N3 Silver support card."
+    },
+    "反|on|ほ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 反故/反古 readings such as ほご and ほぐ, but the row has no priority/commonness support and multiple low-confidence readings. Promote 反物|たんもの for useful exact 反 coverage and defer 反 -> ほ until a stronger learner-facing row appears."
+    },
+    "反|on|ほん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 謀反|むほん with limited priority/commonness support, but it is a historical treason/rebellion word and too narrow for the current N3 Silver batch. Defer rather than forcing a low-utility support row."
+    },
+    "美|on|み": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 美事|みごと with priority support, but that is a non-default written form for the common 見事 identity. The remaining 美 -> み rows are standalone, name/proper-noun, archaic, or specialist. Defer rather than teaching an awkward spelling as N3 Silver support."
+    },
+    "怖|on|ほ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found only the proverb-shaped row 落ち武者は薄の穂に怖ず for apparent 怖 -> ほ support, with no priority/commonness support. Keep learner-facing 怖 coverage through 怖い and defer this on-reading rather than forcing a proverb card."
+    },
+    "払|on|ひつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact 払 -> ひつ learner-facing row. Defer rather than inventing or misassigning support coverage."
+    },
+    "払|on|ふつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 払暁|ふつぎょう as the only exact-looking row, but it is a no-priority literary dawn/daybreak word and not useful enough for current N3 Silver support. Defer rather than force low-value coverage."
+    },
+    "払|on|ほつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact 払 -> ほつ learner-facing row. Defer rather than inventing or misassigning support coverage."
+    },
+    "並|on|ほう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact 並 -> ほう learner-facing row. Promote 並行|へいこう for useful exact 並 -> へい coverage and defer this unsupported on-reading."
     },
     "折|on|しゃく": {
       "suggestedAction": "defer_variant",

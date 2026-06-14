@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1612);
+    assert.equal(Object.keys(starterEntries).length, 1644);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 551,
+        3: 583,
         4: 700,
         5: 307,
     });
@@ -2593,6 +2593,165 @@ test("tracked starter word data includes the fifty-fourth N3 Silver source-expan
     assert.match(starterEntries["対|つい"].notes, /single-kanji support card is kept/);
     assert.match(starterEntries["同窓会|どうそうかい"].notes, /more learner-facing than narrower 車窓-style window terms/);
     assert.match(starterEntries["携帯|けいたい"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+});
+
+test("tracked starter word data includes the fifty-fifth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["羞恥|しゅうち", "恥", "ち"],
+        ["頂上|ちょうじょう", "頂", "ちょう"],
+        ["正直|しょうじき", "直", "じき"],
+        ["直接|ちょくせつ", "直", "ちょく"],
+        ["追加|ついか", "追", "つい"],
+        ["庭園|ていえん", "庭", "てい"],
+        ["伝統|でんとう", "伝", "でん"],
+        ["登山|とざん", "登", "と"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["羞恥|しゅうち", "support"],
+        ["頂上|ちょうじょう", "support"],
+        ["正直|しょうじき", "support"],
+        ["直接|ちょくせつ", "support"],
+        ["追加|ついか", "support"],
+        ["庭園|ていえん", "support"],
+        ["伝統|でんとう", "support"],
+        ["登山|とざん", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["羞恥|しゅうち", "<ruby>羞<rt>しゅう</rt></ruby><ruby>恥<rt>ち</rt></ruby>"],
+        ["頂上|ちょうじょう", "<ruby>頂<rt>ちょう</rt></ruby><ruby>上<rt>じょう</rt></ruby>"],
+        ["正直|しょうじき", "<ruby>正<rt>しょう</rt></ruby><ruby>直<rt>じき</rt></ruby>"],
+        ["直接|ちょくせつ", "<ruby>直<rt>ちょく</rt></ruby><ruby>接<rt>せつ</rt></ruby>"],
+        ["追加|ついか", "<ruby>追<rt>つい</rt></ruby><ruby>加<rt>か</rt></ruby>"],
+        ["庭園|ていえん", "<ruby>庭<rt>てい</rt></ruby><ruby>園<rt>えん</rt></ruby>"],
+        ["伝統|でんとう", "<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby>"],
+        ["登山|とざん", "<ruby>登<rt>と</rt></ruby><ruby>山<rt>ざん</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["羞恥|しゅうち"].notes, /formal but still learner-facing emotion vocabulary/);
+    assert.match(starterEntries["庭園|ていえん"].notes, /Existing frozen N4 家庭\|かてい remains untouched/);
+    assert.match(starterEntries["伝統|でんとう"].notes, /Existing frozen N4 伝言\|でんごん remains untouched/);
+    assert.match(starterEntries["追加|ついか"].notes, /Tanos N2 row is only a harder-level discovery hint/);
+});
+
+test("tracked starter word data includes the fifty-sixth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["渡航|とこう", "渡", "と"],
+        ["怒鳴る|どなる", "怒", "ど"],
+        ["投票|とうひょう", "投", "とう"],
+        ["銭湯|せんとう", "湯", "とう"],
+        ["同等|どうとう", "等", "とう"],
+        ["逃走|とうそう", "逃", "とう"],
+        ["波乱|はらん", "波", "は"],
+        ["破壊|はかい", "破", "は"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["渡航|とこう", "support"],
+        ["怒鳴る|どなる", "support"],
+        ["投票|とうひょう", "support"],
+        ["銭湯|せんとう", "support"],
+        ["同等|どうとう", "support"],
+        ["逃走|とうそう", "support"],
+        ["波乱|はらん", "support"],
+        ["破壊|はかい", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["渡航|とこう", "<ruby>渡<rt>と</rt></ruby><ruby>航<rt>こう</rt></ruby>"],
+        ["怒鳴る|どなる", "<ruby>怒<rt>ど</rt></ruby><ruby>鳴<rt>な</rt></ruby>る"],
+        ["投票|とうひょう", "<ruby>投<rt>とう</rt></ruby><ruby>票<rt>ひょう</rt></ruby>"],
+        ["銭湯|せんとう", "<ruby>銭<rt>せん</rt></ruby><ruby>湯<rt>とう</rt></ruby>"],
+        ["同等|どうとう", "<ruby>同<rt>どう</rt></ruby><ruby>等<rt>とう</rt></ruby>"],
+        ["逃走|とうそう", "<ruby>逃<rt>とう</rt></ruby><ruby>走<rt>そう</rt></ruby>"],
+        ["波乱|はらん", "<ruby>波<rt>は</rt></ruby><ruby>乱<rt>らん</rt></ruby>"],
+        ["破壊|はかい", "<ruby>破<rt>は</rt></ruby><ruby>壊<rt>かい</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["渡航|とこう"].notes, /broader learner-facing travel vocabulary than country-specific 渡米/);
+    assert.match(starterEntries["銭湯|せんとう"].notes, /more learner-facing cultural vocabulary than narrow hot-water technical rows/);
+    assert.match(starterEntries["波乱|はらん"].notes, /more general learner-facing vocabulary than technical 波長/);
+    assert.match(starterEntries["怒鳴る|どなる"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["破壊|はかい"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+});
+
+test("tracked starter word data includes the fifty-seventh N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["乗馬|じょうば", "馬", "ば"],
+        ["敗北|はいぼく", "敗", "はい"],
+        ["杯|はい", "杯", "はい"],
+        ["背景|はいけい", "背", "はい"],
+        ["反物|たんもの", "反", "たん"],
+        ["彼岸|ひがん", "彼", "ひ"],
+        ["悲劇|ひげき", "悲", "ひ"],
+        ["必要|ひつよう", "必", "ひつ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["乗馬|じょうば", "support"],
+        ["敗北|はいぼく", "support"],
+        ["杯|はい", "support"],
+        ["背景|はいけい", "support"],
+        ["反物|たんもの", "support"],
+        ["彼岸|ひがん", "support"],
+        ["悲劇|ひげき", "support"],
+        ["必要|ひつよう", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["乗馬|じょうば", "<ruby>乗<rt>じょう</rt></ruby><ruby>馬<rt>ば</rt></ruby>"],
+        ["敗北|はいぼく", "<ruby>敗<rt>はい</rt></ruby><ruby>北<rt>ぼく</rt></ruby>"],
+        ["杯|はい", "<ruby>杯<rt>はい</rt></ruby>"],
+        ["背景|はいけい", "<ruby>背<rt>はい</rt></ruby><ruby>景<rt>けい</rt></ruby>"],
+        ["反物|たんもの", "<ruby>反<rt>たん</rt></ruby><ruby>物<rt>もの</rt></ruby>"],
+        ["彼岸|ひがん", "<ruby>彼<rt>ひ</rt></ruby><ruby>岸<rt>がん</rt></ruby>"],
+        ["悲劇|ひげき", "<ruby>悲<rt>ひ</rt></ruby><ruby>劇<rt>げき</rt></ruby>"],
+        ["必要|ひつよう", "<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["乗馬|じょうば"].notes, /avoids the more gambling-specific 競馬 row/);
+    assert.match(starterEntries["杯|はい"].notes, /existing 杯\|さかずき row covers a different word-reading identity/);
+    assert.match(starterEntries["反物|たんもの"].notes, /concrete clothing\/material vocabulary rather than agricultural 減反/);
+    assert.match(starterEntries["彼岸|ひがん"].notes, /concrete Japanese culture\/calendar term/);
+    assert.match(starterEntries["必要|ひつよう"].notes, /promoted from governed dictionary evidence without needing a Tanos row/);
+});
+
+test("tracked starter word data includes the fifty-eighth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["表現|ひょうげん", "表", "ひょう"],
+        ["貧困|ひんこん", "貧", "ひん"],
+        ["貧乏|びんぼう", "貧", "びん"],
+        ["丈夫|じょうぶ", "夫", "ぶ"],
+        ["浮上|ふじょう", "浮", "ふ"],
+        ["負担|ふたん", "負", "ふ"],
+        ["腹痛|ふくつう", "腹", "ふく"],
+        ["並行|へいこう", "並", "へい"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["表現|ひょうげん", "support"],
+        ["貧困|ひんこん", "support"],
+        ["貧乏|びんぼう", "support"],
+        ["丈夫|じょうぶ", "support"],
+        ["浮上|ふじょう", "support"],
+        ["負担|ふたん", "support"],
+        ["腹痛|ふくつう", "support"],
+        ["並行|へいこう", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["表現|ひょうげん", "<ruby>表<rt>ひょう</rt></ruby><ruby>現<rt>げん</rt></ruby>"],
+        ["貧困|ひんこん", "<ruby>貧<rt>ひん</rt></ruby><ruby>困<rt>こん</rt></ruby>"],
+        ["貧乏|びんぼう", "<ruby>貧<rt>びん</rt></ruby><ruby>乏<rt>ぼう</rt></ruby>"],
+        ["丈夫|じょうぶ", "<ruby>丈<rt>じょう</rt></ruby><ruby>夫<rt>ぶ</rt></ruby>"],
+        ["浮上|ふじょう", "<ruby>浮<rt>ふ</rt></ruby><ruby>上<rt>じょう</rt></ruby>"],
+        ["負担|ふたん", "<ruby>負<rt>ふ</rt></ruby><ruby>担<rt>たん</rt></ruby>"],
+        ["腹痛|ふくつう", "<ruby>腹<rt>ふく</rt></ruby><ruby>痛<rt>つう</rt></ruby>"],
+        ["並行|へいこう", "<ruby>並<rt>へい</rt></ruby><ruby>行<rt>こう</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["表現|ひょうげん"].notes, /Tanos N3 row is only a discovery\/weak level hint/);
+    assert.match(starterEntries["貧乏|びんぼう"].notes, /covers 貧 -> びん separately from 貧困\|ひんこん/);
+    assert.match(starterEntries["丈夫|じょうぶ"].notes, /Tanos normalized row found live uses 丈夫\|じょうふ/);
+    assert.match(starterEntries["浮上|ふじょう"].notes, /rather than narrower 浮浪者 or technical buoyancy rows/);
+    assert.match(starterEntries["腹痛|ふくつう"].notes, /same written word also has 腹痛\|はらいた/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

@@ -97,10 +97,46 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 551);
+    assert.equal(contract.inventoryCounts["3"], 583);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
+    for (const key of [
+        "羞恥|しゅうち",
+        "頂上|ちょうじょう",
+        "正直|しょうじき",
+        "直接|ちょくせつ",
+        "追加|ついか",
+        "庭園|ていえん",
+        "伝統|でんとう",
+        "登山|とざん",
+        "渡航|とこう",
+        "怒鳴る|どなる",
+        "投票|とうひょう",
+        "銭湯|せんとう",
+        "同等|どうとう",
+        "逃走|とうそう",
+        "波乱|はらん",
+        "破壊|はかい",
+        "乗馬|じょうば",
+        "敗北|はいぼく",
+        "杯|はい",
+        "背景|はいけい",
+        "反物|たんもの",
+        "彼岸|ひがん",
+        "悲劇|ひげき",
+        "必要|ひつよう",
+        "表現|ひょうげん",
+        "貧困|ひんこん",
+        "貧乏|びんぼう",
+        "丈夫|じょうぶ",
+        "浮上|ふじょう",
+        "負担|ふたん",
+        "腹痛|ふくつう",
+        "並行|へいこう",
+    ]) {
+        assert.equal(getJlptWordLevel(contract, key), 3);
+    }
     for (const key of n5StandaloneNumberWords) {
         assert.equal(getJlptWordLevel(contract, key), 5);
     }

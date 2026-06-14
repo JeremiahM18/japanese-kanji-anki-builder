@@ -631,6 +631,61 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Live local JMdict review shows 拾 -> じゅう mainly as a formal/legal numeral for ten. That is real but not useful enough for a learner-facing N3 support card."
+    },
+    "情|on|せい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found common-looking hits such as 情勢 and 政情 do not honestly cover 情 -> せい because 情 is read じょう there. The direct row 契情|けいせい is a low-value courtesan/beauty term, so defer instead of forcing a confusing support card."
+    },
+    "職|on|そく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 職|そく as an alternate single-kanji reading and 有職|ゆうそく court-usage vocabulary. The useful learner-facing Tanos N3 row is 職|しょく, so defer this uncommon そく reading."
+    },
+    "数|on|さく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact learner-facing 数 -> さく word. Keep the reading visible as deferred rather than inventing coverage."
+    },
+    "数|on|しゅ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found useful-looking hits such as 周波数 are false positives for 数 -> しゅ because 数 is read すう and しゅ belongs to adjacent 周. Defer until an exact useful word exists."
+    },
+    "数|on|そく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 定足数 and technical formula terms, but 数 is read すう in those rows and そく belongs to 足, 束, or other adjacent kanji. Defer instead of claiming false coverage."
+    },
+    "成|on|じょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 成就|じょうじゅ and 成仏|じょうぶつ as exact rows, but they are formal, religious, or abstract later-level vocabulary. Common rows such as 醸成 do not cover 成 -> じょう. Defer for N3 Silver."
+    },
+    "政|on|しょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found common-looking rows such as 郵政省, 行政訴訟, and 政商 assign しょう to adjacent 省, 訟, or 商 while 政 remains せい. No useful exact 政 -> しょう support word was found."
+    },
+    "昔|on|しゃく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact 昔 -> しゃく learner-facing word. Defer rather than forcing an unsupported reading."
+    },
+    "昔|on|せき": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 今昔|こんせき and old-time words such as 昔日|せきじつ, but the usable rows are formal, literary, or low-value for N3 Silver. Keep the common 昔|むかし card and defer this on-reading."
+    },
+    "接|on|しょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found apparent 接 -> しょう hits such as 接衝 and 間接照明 are false or specialist matches where しょう belongs to adjacent kanji. Defer rather than adding a negotiation or lighting term for weak coverage."
+    },
+    "折|on|しゃく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 折伏|しゃくぶく as the only exact-looking row, a Buddhist/confrontational preaching term without learner-card value. Defer outside the useful N3 Silver surface."
     }
   },
   "N4": {

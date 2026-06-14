@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1588);
+    assert.equal(Object.keys(starterEntries).length, 1612);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 527,
+        3: 551,
         4: 700,
         5: 307,
     });
@@ -2479,6 +2479,120 @@ test("tracked starter word data includes the fifty-first N3 Silver source-expans
     assert.match(starterEntries["端緒|たんちょ"].notes, /alternate 端緒\|たんしょ row exists/);
     assert.match(starterEntries["省略|しょうりゃく"].notes, /Tanos N2 row is only a harder-level discovery hint/);
     assert.match(starterEntries["吹奏楽|すいそうがく"].notes, /lower-priority but recognizable school\/music support word/);
+});
+
+test("tracked starter word data includes the fifty-second N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["面積|めんせき", "積", "せき"],
+        ["絶滅|ぜつめつ", "絶", "ぜつ"],
+        ["温泉|おんせん", "泉", "せん"],
+        ["選択|せんたく", "選", "せん"],
+        ["天然|てんねん", "然", "ねん"],
+        ["増加|ぞうか", "増", "ぞう"],
+        ["保存|ほぞん", "存", "ぞん"],
+        ["遅刻|ちこく", "遅", "ち"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["面積|めんせき", "support"],
+        ["絶滅|ぜつめつ", "support"],
+        ["温泉|おんせん", "support"],
+        ["選択|せんたく", "support"],
+        ["天然|てんねん", "support"],
+        ["増加|ぞうか", "support"],
+        ["保存|ほぞん", "support"],
+        ["遅刻|ちこく", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["面積|めんせき", "<ruby>面<rt>めん</rt></ruby><ruby>積<rt>せき</rt></ruby>"],
+        ["絶滅|ぜつめつ", "<ruby>絶<rt>ぜつ</rt></ruby><ruby>滅<rt>めつ</rt></ruby>"],
+        ["温泉|おんせん", "<ruby>温<rt>おん</rt></ruby><ruby>泉<rt>せん</rt></ruby>"],
+        ["選択|せんたく", "<ruby>選<rt>せん</rt></ruby><ruby>択<rt>たく</rt></ruby>"],
+        ["天然|てんねん", "<ruby>天<rt>てん</rt></ruby><ruby>然<rt>ねん</rt></ruby>"],
+        ["増加|ぞうか", "<ruby>増<rt>ぞう</rt></ruby><ruby>加<rt>か</rt></ruby>"],
+        ["保存|ほぞん", "<ruby>保<rt>ほ</rt></ruby><ruby>存<rt>ぞん</rt></ruby>"],
+        ["遅刻|ちこく", "<ruby>遅<rt>ち</rt></ruby><ruby>刻<rt>こく</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["面積|めんせき"].notes, /Tanos N2 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["選択|せんたく"].notes, /Existing frozen N4 選手\|せんしゅ remains untouched/);
+    assert.match(starterEntries["絶滅|ぜつめつ"].notes, /Tanos N3 row is only a discovery\/weak level hint/);
+});
+
+test("tracked starter word data includes the fifty-third N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["相性|あいしょう", "性", "しょう"],
+        ["不精|ぶしょう", "精", "しょう"],
+        ["積雪|せきせつ", "雪", "せつ"],
+        ["戦争|せんそう", "戦", "せん"],
+        ["船長|せんちょう", "船", "せん"],
+        ["組織|そしき", "組", "そ"],
+        ["首相|しゅしょう", "相", "しょう"],
+        ["草原|そうげん", "草", "そう"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["相性|あいしょう", "support"],
+        ["不精|ぶしょう", "support"],
+        ["積雪|せきせつ", "support"],
+        ["戦争|せんそう", "support"],
+        ["船長|せんちょう", "support"],
+        ["組織|そしき", "support"],
+        ["首相|しゅしょう", "support"],
+        ["草原|そうげん", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["相性|あいしょう", "<ruby>相<rt>あい</rt></ruby><ruby>性<rt>しょう</rt></ruby>"],
+        ["不精|ぶしょう", "<ruby>不<rt>ぶ</rt></ruby><ruby>精<rt>しょう</rt></ruby>"],
+        ["積雪|せきせつ", "<ruby>積<rt>せき</rt></ruby><ruby>雪<rt>せつ</rt></ruby>"],
+        ["戦争|せんそう", "<ruby>戦<rt>せん</rt></ruby><ruby>争<rt>そう</rt></ruby>"],
+        ["船長|せんちょう", "<ruby>船<rt>せん</rt></ruby><ruby>長<rt>ちょう</rt></ruby>"],
+        ["組織|そしき", "<ruby>組<rt>そ</rt></ruby><ruby>織<rt>しき</rt></ruby>"],
+        ["首相|しゅしょう", "<ruby>首<rt>しゅ</rt></ruby><ruby>相<rt>しょう</rt></ruby>"],
+        ["草原|そうげん", "<ruby>草<rt>そう</rt></ruby><ruby>原<rt>げん</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["相性|あいしょう"].notes, /not the unprioritized five-elements readings/);
+    assert.match(starterEntries["船長|せんちょう"].notes, /alternate 船長\|ふなおさ row exists/);
+    assert.match(starterEntries["組織|そしき"].notes, /Tanos N3 row is only a discovery\/weak level hint/);
+});
+
+test("tracked starter word data includes the fifty-fourth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["同窓会|どうそうかい", "窓", "そう"],
+        ["側面|そくめん", "側", "そく"],
+        ["休息|きゅうそく", "息", "そく"],
+        ["他人|たにん", "他", "た"],
+        ["打撃|だげき", "打", "だ"],
+        ["対|つい", "対", "つい"],
+        ["携帯|けいたい", "帯", "たい"],
+        ["探検|たんけん", "探", "たん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["同窓会|どうそうかい", "support"],
+        ["側面|そくめん", "support"],
+        ["休息|きゅうそく", "support"],
+        ["他人|たにん", "support"],
+        ["打撃|だげき", "support"],
+        ["対|つい", "support"],
+        ["携帯|けいたい", "support"],
+        ["探検|たんけん", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["同窓会|どうそうかい", "<ruby>同<rt>どう</rt></ruby><ruby>窓<rt>そう</rt></ruby><ruby>会<rt>かい</rt></ruby>"],
+        ["側面|そくめん", "<ruby>側<rt>そく</rt></ruby><ruby>面<rt>めん</rt></ruby>"],
+        ["休息|きゅうそく", "<ruby>休<rt>きゅう</rt></ruby><ruby>息<rt>そく</rt></ruby>"],
+        ["他人|たにん", "<ruby>他<rt>た</rt></ruby><ruby>人<rt>にん</rt></ruby>"],
+        ["打撃|だげき", "<ruby>打<rt>だ</rt></ruby><ruby>撃<rt>げき</rt></ruby>"],
+        ["対|つい", "<ruby>対<rt>つい</rt></ruby>"],
+        ["携帯|けいたい", "<ruby>携<rt>けい</rt></ruby><ruby>帯<rt>たい</rt></ruby>"],
+        ["探検|たんけん", "<ruby>探<rt>たん</rt></ruby><ruby>検<rt>けん</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["対|つい"].notes, /single-kanji support card is kept/);
+    assert.match(starterEntries["同窓会|どうそうかい"].notes, /more learner-facing than narrower 車窓-style window terms/);
+    assert.match(starterEntries["携帯|けいたい"].notes, /Tanos N1 row is only a harder-level discovery hint/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

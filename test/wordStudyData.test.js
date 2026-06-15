@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1774);
+    assert.equal(Object.keys(starterEntries).length, 1798);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 713,
+        3: 737,
         4: 700,
         5: 307,
     });
@@ -604,7 +604,7 @@ test("tracked starter word data includes the sixth N3 Silver source-expansion ba
         ["収める|おさめる", "収", "おさめる"],
         ["汚染|おせん", "汚", "お"],
         ["恐れる|おそれる", "恐", "おそれる"],
-        ["恐ろしい|おそろしい", "恐", "おそ"],
+        ["恐ろしい|おそろしい", "恐", "おそろしい"],
         ["お腹|おなか", "腹", "なか"],
         ["降ろす|おろす", "降", "おろす"],
         ["温度|おんど", "温", "おん"],
@@ -3411,6 +3411,123 @@ test("tracked starter word data includes the seventy-fourth N3 Silver source-exp
     assert.match(starterEntries["労る|いたわる"].notes, /care-for\/appreciate-effort verb vocabulary/);
     assert.match(starterEntries["捕まる|つかまる"].notes, /Tanos N3 is used only as a discovery\/weak level hint/);
     assert.match(starterEntries["捕らえる|とらえる"].notes, /capture\/grasp verb vocabulary/);
+});
+
+test("tracked starter word data includes the seventy-fifth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["増し|まし", "増", "まし"],
+        ["増す|ます", "増", "ます"],
+        ["側|そば", "側", "そば"],
+        ["打つ|ぶつ", "打", "ぶつ"],
+        ["反る|そる", "反", "そる"],
+        ["反す|かえす", "反", "かえす"],
+        ["過ち|あやまち", "過", "あやまち"],
+        ["過ごす|すごす", "過", "すごす"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["増し|まし", "support"],
+        ["増す|ます", "support"],
+        ["側|そば", "support"],
+        ["打つ|ぶつ", "support"],
+        ["反る|そる", "support"],
+        ["反す|かえす", "support"],
+        ["過ち|あやまち", "support"],
+        ["過ごす|すごす", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["増し|まし", "<ruby>増<rt>ま</rt></ruby>し"],
+        ["増す|ます", "<ruby>増<rt>ま</rt></ruby>す"],
+        ["側|そば", "<ruby>側<rt>そば</rt></ruby>"],
+        ["打つ|ぶつ", "<ruby>打<rt>ぶ</rt></ruby>つ"],
+        ["反る|そる", "<ruby>反<rt>そ</rt></ruby>る"],
+        ["反す|かえす", "<ruby>反<rt>かえ</rt></ruby>す"],
+        ["過ち|あやまち", "<ruby>過<rt>あやま</rt></ruby>ち"],
+        ["過ごす|すごす", "<ruby>過<rt>す</rt></ruby>ごす"],
+    ]);
+    assert.match(starterEntries["増す|ます"].notes, /Tanos N3 is used only as a discovery\/weak level hint/);
+    assert.match(starterEntries["側|そば"].notes, /side\/nearby noun vocabulary/);
+    assert.match(starterEntries["反す|かえす"].notes, /turn-over\/return verb vocabulary/);
+    assert.match(starterEntries["過ち|あやまち"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+});
+
+test("tracked starter word data includes the seventy-sixth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["恐る恐る|おそるおそる", "恐", "おそる"],
+        ["恐い|こわい", "恐", "こわい"],
+        ["恐がる|こわがる", "恐", "こわがる"],
+        ["勤める|つとめる", "勤", "つとめる"],
+        ["絶つ|たつ", "絶", "たつ"],
+        ["選る|える", "選", "える"],
+        ["選る|よる", "選", "よる"],
+        ["眠る|ねむる", "眠", "ねむる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["恐る恐る|おそるおそる", "support"],
+        ["恐い|こわい", "support"],
+        ["恐がる|こわがる", "support"],
+        ["勤める|つとめる", "support"],
+        ["絶つ|たつ", "support"],
+        ["選る|える", "support"],
+        ["選る|よる", "support"],
+        ["眠る|ねむる", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["恐る恐る|おそるおそる", "<ruby>恐<rt>おそ</rt></ruby>る<ruby>恐<rt>おそ</rt></ruby>る"],
+        ["恐い|こわい", "<ruby>恐<rt>こわ</rt></ruby>い"],
+        ["恐がる|こわがる", "<ruby>恐<rt>こわ</rt></ruby>がる"],
+        ["勤める|つとめる", "<ruby>勤<rt>つと</rt></ruby>める"],
+        ["絶つ|たつ", "<ruby>絶<rt>た</rt></ruby>つ"],
+        ["選る|える", "<ruby>選<rt>え</rt></ruby>る"],
+        ["選る|よる", "<ruby>選<rt>よ</rt></ruby>る"],
+        ["眠る|ねむる", "<ruby>眠<rt>ねむ</rt></ruby>る"],
+    ]);
+    assert.match(starterEntries["恐る恐る|おそるおそる"].notes, /cautious-action adverb vocabulary/);
+    assert.match(starterEntries["勤める|つとめる"].notes, /employment\/service verb vocabulary/);
+    assert.match(starterEntries["絶つ|たつ"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["眠る|ねむる"].notes, /sleep\/rest verb vocabulary/);
+});
+
+test("tracked starter word data includes the seventy-seventh N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["招く|まねく", "招", "まねく"],
+        ["焼ける|やける", "焼", "やける"],
+        ["責める|せめる", "責", "せめる"],
+        ["折れる|おれる", "折", "おれる"],
+        ["続く|つづく", "続", "つづく"],
+        ["渡す|わたす", "渡", "わたす"],
+        ["飛ばす|とばす", "飛", "とばす"],
+        ["預かる|あずかる", "預", "あずかる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["招く|まねく", "support"],
+        ["焼ける|やける", "support"],
+        ["責める|せめる", "support"],
+        ["折れる|おれる", "support"],
+        ["続く|つづく", "support"],
+        ["渡す|わたす", "support"],
+        ["飛ばす|とばす", "support"],
+        ["預かる|あずかる", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["招く|まねく", "<ruby>招<rt>まね</rt></ruby>く"],
+        ["焼ける|やける", "<ruby>焼<rt>や</rt></ruby>ける"],
+        ["責める|せめる", "<ruby>責<rt>せ</rt></ruby>める"],
+        ["折れる|おれる", "<ruby>折<rt>お</rt></ruby>れる"],
+        ["続く|つづく", "<ruby>続<rt>つづ</rt></ruby>く"],
+        ["渡す|わたす", "<ruby>渡<rt>わた</rt></ruby>す"],
+        ["飛ばす|とばす", "<ruby>飛<rt>と</rt></ruby>ばす"],
+        ["預かる|あずかる", "<ruby>預<rt>あず</rt></ruby>かる"],
+    ]);
+    assert.match(starterEntries["招く|まねく"].notes, /Tanos N3 is used only as a discovery\/weak level hint/);
+    assert.match(starterEntries["責める|せめる"].notes, /blame\/criticize verb vocabulary/);
+    assert.match(starterEntries["飛ばす|とばす"].notes, /let-fly\/skip verb vocabulary/);
+    assert.match(starterEntries["預かる|あずかる"].notes, /Tanos N2 row is only a harder-level discovery hint/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

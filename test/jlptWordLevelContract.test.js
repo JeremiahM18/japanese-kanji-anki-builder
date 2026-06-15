@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 649);
+    assert.equal(contract.inventoryCounts["3"], 681);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
@@ -200,6 +200,38 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "散らかる|ちらかる",
         "散らかす|ちらかす",
         "散らす|ちらす",
+        "因る|よる",
+        "果て|はて",
+        "果てる|はてる",
+        "割く|さく",
+        "割る|わる",
+        "関わる|かかわる",
+        "関取|せきとり",
+        "窓越し|まどごし",
+        "越え|ごえ",
+        "越し|ごし",
+        "向かい|むかい",
+        "向き|むき",
+        "向く|むく",
+        "向け|むけ",
+        "向ける|むける",
+        "幸|さち",
+        "交ざる|まざる",
+        "交じる|まじる",
+        "交ぜる|まぜる",
+        "交える|まじえる",
+        "交わる|まじわる",
+        "経つ|たつ",
+        "経る|へる",
+        "供|とも",
+        "解かす|とかす",
+        "解ける|とける",
+        "解ける|ほどける",
+        "解る|わかる",
+        "汚い|きたない",
+        "汚す|よごす",
+        "降りる|おりる",
+        "降り|ふり",
     ]) {
         assert.equal(getJlptWordLevel(contract, key), 3);
     }

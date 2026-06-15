@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 583);
+    assert.equal(contract.inventoryCounts["3"], 617);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
@@ -134,6 +134,40 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "負担|ふたん",
         "腹痛|ふくつう",
         "並行|へいこう",
+        "米国|べいこく",
+        "新米|しんまい",
+        "逮捕|たいほ",
+        "抱負|ほうふ",
+        "法被|はっぴ",
+        "訪問|ほうもん",
+        "亡者|もうじゃ",
+        "忘年会|ぼうねんかい",
+        "本望|ほんもう",
+        "末路|ばつろ",
+        "睡眠|すいみん",
+        "夢中|むちゅう",
+        "解く|とく",
+        "寿命|じゅみょう",
+        "命令|めいれい",
+        "迷惑|めいわく",
+        "悲鳴|ひめい",
+        "兵役|へいえき",
+        "石油|せきゆ",
+        "遊園地|ゆうえんち",
+        "余裕|よゆう",
+        "給与|きゅうよ",
+        "預金|よきん",
+        "紅葉|こうよう",
+        "欲望|よくぼう",
+        "連絡|れんらく",
+        "落語|らくご",
+        "表裏|ひょうり",
+        "良好|りょうこう",
+        "緑茶|りょくちゃ",
+        "車輪|しゃりん",
+        "感涙|かんるい",
+        "冷房|れいぼう",
+        "横|よこ",
     ]) {
         assert.equal(getJlptWordLevel(contract, key), 3);
     }

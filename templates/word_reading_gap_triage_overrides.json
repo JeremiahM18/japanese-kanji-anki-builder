@@ -752,10 +752,95 @@
       "priority": "low",
       "note": "Live local JMdict review found no exact 並 -> ほう learner-facing row. Promote 並行|へいこう for useful exact 並 -> へい coverage and defer this unsupported on-reading."
     },
+    "法|on|ほっ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found exact 法 -> ほっ rows such as 法師, 法華経, and 法主, but the useful-looking candidates are Buddhist titles, sect/scripture names, or religious office terms rather than learner-facing N3 support cards. Promote 法被|はっぴ for useful exact 法 -> はっ support and defer ほっ."
+    },
+    "忙|on|もう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no priority/commonness-supported exact 忙 -> もう learner-facing row. Existing 忙しい|いそがしい and 多忙|たぼう keep the practical busy/busyness surface, so defer this on-reading rather than forcing unsupported coverage."
+    },
+    "枚|on|ばい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no priority/commonness-supported exact 枚 -> ばい learner-facing row. Existing 一枚|いちまい covers the useful 枚 -> まい counter surface; defer ばい instead of adding a false or low-value support card."
+    },
     "折|on|しゃく": {
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Live local JMdict review found 折伏|しゃくぶく as the only exact-looking row, a Buddhist/confrontational preaching term without learner-card value. Defer outside the useful N3 Silver surface."
+    },
+    "満|on|ばん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No priority/commonness-supported learner-facing 満 -> ばん word was found in the local JMdict verification surface; do not add coverage-only or proper-noun-like support."
+    },
+    "未|on|び": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No priority/commonness-supported learner-facing 未 -> び word was found in the local JMdict verification surface; keep 未 coverage on stronger み rows."
+    },
+    "夢|on|ぼう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "夢 -> ぼう candidates are rare or low learner value in the local verification surface; 夢中 now covers the stronger 夢 -> む support reading."
+    },
+    "面|on|べん": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No priority/commonness-supported learner-facing 面 -> べん word was found; do not force archaic or technical 面 readings into N3 Silver."
+    },
+    "油|on|ゆう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No clean priority/commonness-supported 油 -> ゆう learner row was found; 石油 covers the stronger 油 -> ゆ support target."
+    },
+    "遊|on|ゆ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "遊 -> ゆ candidates are rare, religious, or otherwise low learner value; 遊園地 now covers the stronger 遊 -> ゆう support target."
+    },
+    "予|on|しゃ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No priority/commonness-supported learner-facing 予 -> しゃ word was found in the local JMdict verification surface; do not invent a support card for this reading."
+    },
+    "緑|on|ろく": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "緑青|ろくしょう is real but technical verdigris/copper-rust vocabulary; 緑茶 now covers the stronger learner-facing 緑 -> りょく support target."
+    },
+    "涙|on|れい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No priority/commonness-supported learner-facing 涙 -> れい word was found in the local JMdict verification surface; 感涙 covers the stronger 涙 -> るい support target."
+    },
+    "礼|on|らい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "礼 -> らい rows are formal, religious, historical, or otherwise low learner value for N3 Silver; defer instead of adding worship/formal-rite vocabulary."
+    },
+    "路|on|る": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "路 -> る rows in the local verification surface are name/proper-noun, phrase-shaped, or low learner value; do not add a coverage-only card."
+    },
+    "和|on|お": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "和尚|おしょう is real but Buddhist/priest-specific and not a clean N3 support anchor for 和 -> お; defer rather than adding religious vocabulary for coverage."
+    },
+    "和|on|か": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "No clean priority/commonness-supported learner-facing 和 -> か word was found; many apparent candidates actually bind 和 as わ."
+    },
+    "娘|on|じょう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "娘|じょう exists with priority support but is suffix/title-style and not a clean learner-facing N3 support card; other 娘 -> じょう rows lack commonness or are technical. Defer instead of forcing 令嬢, which contains 嬢 rather than 娘."
     }
   },
   "N4": {

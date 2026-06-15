@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1742);
+    assert.equal(Object.keys(starterEntries).length, 1774);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 681,
+        3: 713,
         4: 700,
         5: 307,
     });
@@ -3255,6 +3255,162 @@ test("tracked starter word data includes the seventieth N3 Silver source-expansi
     assert.match(starterEntries["解る|わかる"].notes, /understand verb vocabulary/);
     assert.match(starterEntries["汚い|きたない"].notes, /dirty\/messy adjective vocabulary/);
     assert.match(starterEntries["降り|ふり"].notes, /rainfall\/snowfall noun vocabulary/);
+});
+
+test("tracked starter word data includes the seventy-first N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["観る|みる", "観", "みる"],
+        ["大関|おおぜき", "関", "ぜき"],
+        ["機織り|はたおり", "機", "はた"],
+        ["手許|てもと", "許", "もと"],
+        ["行き交う|いきかう", "交", "かう"],
+        ["向こう|むこう", "向", "むこ"],
+        ["見込み|みこみ", "込", "こみ"],
+        ["済み|ずみ", "済", "ずみ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["観る|みる", "support"],
+        ["大関|おおぜき", "support"],
+        ["機織り|はたおり", "support"],
+        ["手許|てもと", "support"],
+        ["行き交う|いきかう", "support"],
+        ["向こう|むこう", "support"],
+        ["見込み|みこみ", "support"],
+        ["済み|ずみ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["観る|みる", "<ruby>観<rt>み</rt></ruby>る"],
+        ["大関|おおぜき", "<ruby>大<rt>おお</rt></ruby><ruby>関<rt>ぜき</rt></ruby>"],
+        ["機織り|はたおり", "<ruby>機<rt>はた</rt></ruby><ruby>織<rt>お</rt></ruby>り"],
+        ["手許|てもと", "<ruby>手<rt>て</rt></ruby><ruby>許<rt>もと</rt></ruby>"],
+        ["行き交う|いきかう", "<ruby>行<rt>い</rt></ruby>き<ruby>交<rt>か</rt></ruby>う"],
+        ["向こう|むこう", "<ruby>向<rt>む</rt></ruby>こう"],
+        ["見込み|みこみ", "<ruby>見<rt>み</rt></ruby><ruby>込<rt>こ</rt></ruby>み"],
+        ["済み|ずみ", "<ruby>済<rt>ず</rt></ruby>み"],
+    ]);
+    assert.match(starterEntries["観る|みる"].notes, /watch\/view verb vocabulary/);
+    assert.match(starterEntries["向こう|むこう"].notes, /KANJIDIC-style 向 -> むこ stem/);
+    assert.match(starterEntries["見込み|みこみ"].notes, /prospect\/estimate noun vocabulary/);
+    assert.match(starterEntries["済み|ずみ"].notes, /completed\/settled suffix vocabulary/);
+});
+
+test("tracked starter word data includes the seventy-second N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["参る|まいる", "参", "まい"],
+        ["消す|けす", "消", "けす"],
+        ["常|つね", "常", "つね"],
+        ["直る|なおる", "直", "なおる"],
+        ["山積み|やまづみ", "積", "づみ"],
+        ["成す|なす", "成", "なす"],
+        ["成る|なる", "成", "なる"],
+        ["直ちに|ただちに", "直", "ただちに"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["参る|まいる", "support"],
+        ["消す|けす", "support"],
+        ["常|つね", "support"],
+        ["直る|なおる", "support"],
+        ["山積み|やまづみ", "support"],
+        ["成す|なす", "support"],
+        ["成る|なる", "support"],
+        ["直ちに|ただちに", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["参る|まいる", "<ruby>参<rt>まい</rt></ruby>る"],
+        ["消す|けす", "<ruby>消<rt>け</rt></ruby>す"],
+        ["常|つね", "<ruby>常<rt>つね</rt></ruby>"],
+        ["直る|なおる", "<ruby>直<rt>なお</rt></ruby>る"],
+        ["山積み|やまづみ", "<ruby>山<rt>やま</rt></ruby><ruby>積<rt>づ</rt></ruby>み"],
+        ["成す|なす", "<ruby>成<rt>な</rt></ruby>す"],
+        ["成る|なる", "<ruby>成<rt>な</rt></ruby>る"],
+        ["直ちに|ただちに", "<ruby>直<rt>ただ</rt></ruby>ちに"],
+    ]);
+    assert.match(starterEntries["参る|まいる"].notes, /humble go\/come verb vocabulary/);
+    assert.match(starterEntries["直る|なおる"].notes, /intransitive repair\/return-to-normal verb/);
+    assert.match(starterEntries["山積み|やまづみ"].notes, /huge-pile noun vocabulary/);
+    assert.match(starterEntries["成る|なる"].notes, /Tanos N3 is used only as a discovery\/weak level hint/);
+    assert.match(starterEntries["直ちに|ただちに"].notes, /immediately adverb vocabulary/);
+});
+
+test("tracked starter word data includes the seventy-third N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["和む|なごむ", "和", "なごむ"],
+        ["和やか|なごやか", "和", "なごやか"],
+        ["和らぐ|やわらぐ", "和", "やわらぐ"],
+        ["和らげる|やわらげる", "和", "やわらげる"],
+        ["温かい|あたたかい", "温", "あたたかい"],
+        ["温まる|あたたまる", "温", "あたたまる"],
+        ["温める|あたためる", "温", "あたためる"],
+        ["散らばる|ちらばる", "散", "ちらばる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["和む|なごむ", "support"],
+        ["和やか|なごやか", "support"],
+        ["和らぐ|やわらぐ", "support"],
+        ["和らげる|やわらげる", "support"],
+        ["温かい|あたたかい", "support"],
+        ["温まる|あたたまる", "support"],
+        ["温める|あたためる", "support"],
+        ["散らばる|ちらばる", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["和む|なごむ", "<ruby>和<rt>なご</rt></ruby>む"],
+        ["和やか|なごやか", "<ruby>和<rt>なご</rt></ruby>やか"],
+        ["和らぐ|やわらぐ", "<ruby>和<rt>やわ</rt></ruby>らぐ"],
+        ["和らげる|やわらげる", "<ruby>和<rt>やわ</rt></ruby>らげる"],
+        ["温かい|あたたかい", "<ruby>温<rt>あたた</rt></ruby>かい"],
+        ["温まる|あたたまる", "<ruby>温<rt>あたた</rt></ruby>まる"],
+        ["温める|あたためる", "<ruby>温<rt>あたた</rt></ruby>める"],
+        ["散らばる|ちらばる", "<ruby>散<rt>ち</rt></ruby>らばる"],
+    ]);
+    assert.match(starterEntries["和やか|なごやか"].notes, /congenial adjective vocabulary/);
+    assert.match(starterEntries["温める|あたためる"].notes, /warm-up verb vocabulary/);
+    assert.match(starterEntries["散らばる|ちらばる"].notes, /scattered-state verb vocabulary/);
+});
+
+test("tracked starter word data includes the seventy-fourth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["退く|どく", "退", "どく"],
+        ["退く|のく", "退", "のく"],
+        ["退く|しりぞく", "退", "しりぞく"],
+        ["退ける|どける", "退", "どける"],
+        ["退ける|のける", "退", "のける"],
+        ["労る|いたわる", "労", "いたわる"],
+        ["捕まる|つかまる", "捕", "つかまる"],
+        ["捕らえる|とらえる", "捕", "とらえる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["退く|どく", "support"],
+        ["退く|のく", "support"],
+        ["退く|しりぞく", "support"],
+        ["退ける|どける", "support"],
+        ["退ける|のける", "support"],
+        ["労る|いたわる", "support"],
+        ["捕まる|つかまる", "support"],
+        ["捕らえる|とらえる", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["退く|どく", "<ruby>退<rt>ど</rt></ruby>く"],
+        ["退く|のく", "<ruby>退<rt>の</rt></ruby>く"],
+        ["退く|しりぞく", "<ruby>退<rt>しりぞ</rt></ruby>く"],
+        ["退ける|どける", "<ruby>退<rt>ど</rt></ruby>ける"],
+        ["退ける|のける", "<ruby>退<rt>の</rt></ruby>ける"],
+        ["労る|いたわる", "<ruby>労<rt>いたわ</rt></ruby>る"],
+        ["捕まる|つかまる", "<ruby>捕<rt>つか</rt></ruby>まる"],
+        ["捕らえる|とらえる", "<ruby>捕<rt>と</rt></ruby>らえる"],
+    ]);
+    assert.match(starterEntries["退く|しりぞく"].notes, /retreat\/withdraw verb vocabulary/);
+    assert.match(starterEntries["労る|いたわる"].notes, /care-for\/appreciate-effort verb vocabulary/);
+    assert.match(starterEntries["捕まる|つかまる"].notes, /Tanos N3 is used only as a discovery\/weak level hint/);
+    assert.match(starterEntries["捕らえる|とらえる"].notes, /capture\/grasp verb vocabulary/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

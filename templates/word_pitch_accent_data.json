@@ -1265,6 +1265,12 @@
       "sourceReading": "つたえる",
       "sourceAccent": "0"
     },
+    "伝手|つて": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "伝手",
+      "generatedReading": "つて"
+    },
     "伝統|でんとう": {
       "pattern": "4 [odaka]",
       "sourceId": "voicevox-nemo-reading-query",
@@ -1952,11 +1958,35 @@
       "sourceReading": "とうじ",
       "sourceAccent": "0"
     },
+    "冷える|ひえる": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "冷える",
+      "generatedReading": "ひえる"
+    },
     "冷たい|つめたい": {
       "pattern": "4 [odaka]",
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "冷たい",
       "generatedReading": "つめたい"
+    },
+    "冷ます|さます": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "さます",
+      "generatedReading": "さます"
+    },
+    "冷める|さめる": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "冷める",
+      "generatedReading": "さめる"
+    },
+    "冷やす|ひやす": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ひやす",
+      "generatedReading": "ひやす"
     },
     "冷房|れいぼう": {
       "pattern": "4 [odaka]",
@@ -2099,6 +2129,12 @@
       "sourceWord": "初夏",
       "sourceReading": "しょか",
       "sourceAccent": "1"
+    },
+    "初雪|はつゆき": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "初雪",
+      "generatedReading": "はつゆき"
     },
     "判断|はんだん": {
       "pattern": "1 [atamadaka]",
@@ -2590,6 +2626,12 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "収拾",
       "generatedReading": "しゅうしゅう"
+    },
+    "取引|とりひき": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "取引",
+      "generatedReading": "とりひき"
     },
     "取得|しゅとく": {
       "pattern": "3 [odaka]",
@@ -3819,6 +3861,12 @@
       "sourceReading": "やちん",
       "sourceAccent": "1"
     },
+    "宿屋|やどや": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "宿屋",
+      "generatedReading": "やどや"
+    },
     "宿題|しゅくだい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3839,6 +3887,12 @@
       "sourceWord": "寄付",
       "sourceReading": "きふ",
       "sourceAccent": "1"
+    },
+    "富|とみ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "富",
+      "generatedReading": "とみ"
     },
     "寒い|さむい": {
       "pattern": "2 [nakadaka]",
@@ -4189,6 +4243,12 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "年",
       "generatedReading": "とし"
+    },
+    "年寄り|としより": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "年寄り",
+      "generatedReading": "としより"
     },
     "幸い|さいわい": {
       "pattern": "0 [heiban]",
@@ -5071,6 +5131,12 @@
       "sourceReading": "さいのう",
       "sourceAccent": "0"
     },
+    "打ち合わせ|うちあわせ": {
+      "pattern": "5 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "打ち合わせ",
+      "generatedReading": "うちあわせ"
+    },
     "打つ|うつ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5104,6 +5170,12 @@
       "sourceQuery": "とうひょう",
       "generatedReading": "とおひょお"
     },
+    "折り返し|おりかえし": {
+      "pattern": "5 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "折り返し",
+      "generatedReading": "おりかえし"
+    },
     "折る|おる": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5130,6 +5202,12 @@
       "sourceId": "voicevox-nemo-reading-query",
       "sourceQuery": "ほうふ",
       "generatedReading": "ほおふ"
+    },
+    "押し付ける|おしつける": {
+      "pattern": "4 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "押し付ける",
+      "generatedReading": "おしつける"
     },
     "押す|おす": {
       "pattern": "0 [heiban]",
@@ -5420,6 +5498,30 @@
       "sourceReading": "あえて",
       "sourceAccent": "1"
     },
+    "散らかす|ちらかす": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "散らかす",
+      "generatedReading": "ちらかす"
+    },
+    "散らかる|ちらかる": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "散らかる",
+      "generatedReading": "ちらかる"
+    },
+    "散らす|ちらす": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "散らす",
+      "generatedReading": "ちらす"
+    },
+    "散る|ちる": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "散る",
+      "generatedReading": "ちる"
+    },
     "散歩|さんぽ": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5600,6 +5702,12 @@
       "sourceWord": "日",
       "sourceReading": "ひ",
       "sourceAccent": "0"
+    },
+    "日付|ひづけ": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ひづけ",
+      "generatedReading": "ひずけ"
     },
     "日曜日|にちようび": {
       "pattern": "3 [nakadaka]",
@@ -6065,6 +6173,12 @@
       "sourceWord": "木",
       "sourceReading": "き",
       "sourceAccent": "1"
+    },
+    "木の実|きのみ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "きのみ",
+      "generatedReading": "きのみ"
     },
     "木刀|ぼくとう": {
       "pattern": "0 [heiban] / 3 [nakadaka]",
@@ -7223,6 +7337,12 @@
       "sourceReading": "あせる",
       "sourceAccent": "2"
     },
+    "焼き鳥|やきとり": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "焼き鳥",
+      "generatedReading": "やきとり"
+    },
     "焼く|やく": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -7877,6 +7997,12 @@
       "sourceReading": "みんな",
       "sourceAccent": "3"
     },
+    "皆様|みなさま": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "皆様",
+      "generatedReading": "みなさま"
+    },
     "皆無|かいむ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -8196,6 +8322,12 @@
       "sourceReading": "かみ",
       "sourceAccent": "1"
     },
+    "神主|かんぬし": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "神主",
+      "generatedReading": "かんぬし"
+    },
     "神社|じんじゃ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -8258,6 +8390,12 @@
       "sourceWord": "程",
       "sourceReading": "ほど",
       "sourceAccent": "0,2"
+    },
+    "種|たね": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "種",
+      "generatedReading": "たね"
     },
     "種類|しゅるい": {
       "pattern": "1 [atamadaka]",
@@ -8361,6 +8499,12 @@
       "sourceWord": "窓",
       "sourceReading": "まど",
       "sourceAccent": "1"
+    },
+    "窓際|まどぎわ": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "窓際",
+      "generatedReading": "まどぎわ"
     },
     "立つ|たつ": {
       "pattern": "1 [atamadaka]",
@@ -8702,6 +8846,18 @@
       "sourceReading": "くりかえす",
       "sourceAccent": "3,0"
     },
+    "罪|つみ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "罪",
+      "generatedReading": "つみ"
+    },
+    "置き換える|おきかえる": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "置き換える",
+      "generatedReading": "おきかえる"
+    },
     "置く|おく": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -8941,6 +9097,12 @@
       "sourceReading": "ふね",
       "sourceAccent": "1"
     },
+    "船便|ふなびん": {
+      "pattern": "1 [atamadaka] / 1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ふなびん",
+      "generatedReading": "ふなびん"
+    },
     "船長|せんちょう": {
       "pattern": "4 [odaka]",
       "sourceId": "voicevox-nemo-reading-query",
@@ -8979,6 +9141,12 @@
       "sourceWord": "花屋",
       "sourceReading": "はなや",
       "sourceAccent": "2"
+    },
+    "花束|はなたば": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "花束",
+      "generatedReading": "はなたば"
     },
     "花火|はなび": {
       "pattern": "1 [atamadaka]",
@@ -10601,6 +10769,12 @@
       "sourceReading": "さけ",
       "sourceAccent": "0"
     },
+    "酒屋|さかや": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "酒屋",
+      "generatedReading": "さかや"
+    },
     "重い|おもい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -10886,6 +11060,12 @@
       "sourceReading": "さい",
       "sourceAccent": "1"
     },
+    "際立つ|きわだつ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "際立つ",
+      "generatedReading": "きわだつ"
+    },
     "集う|つどう": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -10946,6 +11126,12 @@
       "sourceWord": "雨戸",
       "sourceReading": "あまど",
       "sourceAccent": "2"
+    },
+    "雨雲|あまぐも": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "雨雲",
+      "generatedReading": "あまぐも"
     },
     "雪|ゆき": {
       "pattern": "2 [odaka]",
@@ -11172,6 +11358,12 @@
       "sourceWord": "顔",
       "sourceReading": "かお",
       "sourceAccent": "0"
+    },
+    "顔付き|かおつき": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "顔付き",
+      "generatedReading": "かおつき"
     },
     "願う|ねがう": {
       "pattern": "2 [nakadaka]",

@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 617);
+    assert.equal(contract.inventoryCounts["3"], 649);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
@@ -168,6 +168,38 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "感涙|かんるい",
         "冷房|れいぼう",
         "横|よこ",
+        "取引|とりひき",
+        "押し付ける|おしつける",
+        "窓際|まどぎわ",
+        "初雪|はつゆき",
+        "折り返し|おりかえし",
+        "置き換える|おきかえる",
+        "雨雲|あまぐも",
+        "年寄り|としより",
+        "皆様|みなさま",
+        "酒屋|さかや",
+        "宿屋|やどや",
+        "焼き鳥|やきとり",
+        "船便|ふなびん",
+        "花束|はなたば",
+        "日付|ひづけ",
+        "木の実|きのみ",
+        "富|とみ",
+        "際立つ|きわだつ",
+        "種|たね",
+        "罪|つみ",
+        "顔付き|かおつき",
+        "打ち合わせ|うちあわせ",
+        "伝手|つて",
+        "神主|かんぬし",
+        "冷える|ひえる",
+        "冷やす|ひやす",
+        "冷ます|さます",
+        "冷める|さめる",
+        "散る|ちる",
+        "散らかる|ちらかる",
+        "散らかす|ちらかす",
+        "散らす|ちらす",
     ]) {
         assert.equal(getJlptWordLevel(contract, key), 3);
     }

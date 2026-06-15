@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1678);
+    assert.equal(Object.keys(starterEntries).length, 1710);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 617,
+        3: 649,
         4: 700,
         5: 307,
     });
@@ -2927,6 +2927,178 @@ test("tracked starter word data includes the sixty-second N3 Silver source-expan
     assert.match(starterEntries["感涙|かんるい"].notes, /instead of anatomy-only 涙腺/);
     assert.match(starterEntries["冷房|れいぼう"].notes, /home\/building vocabulary/);
     assert.match(starterEntries["横|よこ"].notes, /横断 already exists/);
+});
+
+test("tracked starter word data includes the sixty-third N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["取引|とりひき", "取", "とり"],
+        ["押し付ける|おしつける", "押", "おし"],
+        ["窓際|まどぎわ", "際", "ぎわ"],
+        ["初雪|はつゆき", "初", "はつ"],
+        ["折り返し|おりかえし", "折", "おり"],
+        ["置き換える|おきかえる", "置", "おき"],
+        ["雨雲|あまぐも", "雲", "ぐも"],
+        ["年寄り|としより", "寄", "より"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["取引|とりひき", "support"],
+        ["押し付ける|おしつける", "support"],
+        ["窓際|まどぎわ", "support"],
+        ["初雪|はつゆき", "support"],
+        ["折り返し|おりかえし", "support"],
+        ["置き換える|おきかえる", "support"],
+        ["雨雲|あまぐも", "support"],
+        ["年寄り|としより", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["取引|とりひき", "<ruby>取<rt>とり</rt></ruby><ruby>引<rt>ひき</rt></ruby>"],
+        ["押し付ける|おしつける", "<ruby>押<rt>お</rt></ruby>し<ruby>付<rt>つ</rt></ruby>ける"],
+        ["窓際|まどぎわ", "<ruby>窓<rt>まど</rt></ruby><ruby>際<rt>ぎわ</rt></ruby>"],
+        ["初雪|はつゆき", "<ruby>初<rt>はつ</rt></ruby><ruby>雪<rt>ゆき</rt></ruby>"],
+        ["折り返し|おりかえし", "<ruby>折<rt>お</rt></ruby>り<ruby>返<rt>かえ</rt></ruby>し"],
+        ["置き換える|おきかえる", "<ruby>置<rt>お</rt></ruby>き<ruby>換<rt>か</rt></ruby>える"],
+        ["雨雲|あまぐも", "<ruby>雨<rt>あま</rt></ruby><ruby>雲<rt>ぐも</rt></ruby>"],
+        ["年寄り|としより", "<ruby>年<rt>とし</rt></ruby><ruby>寄<rt>よ</rt></ruby>り"],
+    ]);
+    assert.match(starterEntries["取引|とりひき"].notes, /business\/dealings vocabulary/);
+    assert.match(starterEntries["押し付ける|おしつける"].notes, /impose\/foist verb/);
+    assert.match(starterEntries["窓際|まどぎわ"].notes, /location vocabulary/);
+    assert.match(starterEntries["初雪|はつゆき"].notes, /seasonal vocabulary/);
+    assert.match(starterEntries["折り返し|おりかえし"].notes, /communication and route vocabulary/);
+    assert.match(starterEntries["置き換える|おきかえる"].notes, /replace\/substitute verb/);
+    assert.match(starterEntries["雨雲|あまぐも"].notes, /weather vocabulary/);
+    assert.match(starterEntries["年寄り|としより"].notes, /people\/age vocabulary/);
+});
+
+test("tracked starter word data includes the sixty-fourth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["皆様|みなさま", "皆", "みな"],
+        ["酒屋|さかや", "酒", "さか"],
+        ["宿屋|やどや", "宿", "やど"],
+        ["焼き鳥|やきとり", "焼", "やき"],
+        ["船便|ふなびん", "船", "ふな"],
+        ["花束|はなたば", "束", "たば"],
+        ["日付|ひづけ", "付", "づけ"],
+        ["木の実|きのみ", "実", "み"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["皆様|みなさま", "support"],
+        ["酒屋|さかや", "support"],
+        ["宿屋|やどや", "support"],
+        ["焼き鳥|やきとり", "support"],
+        ["船便|ふなびん", "support"],
+        ["花束|はなたば", "support"],
+        ["日付|ひづけ", "support"],
+        ["木の実|きのみ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["皆様|みなさま", "<ruby>皆<rt>みな</rt></ruby><ruby>様<rt>さま</rt></ruby>"],
+        ["酒屋|さかや", "<ruby>酒<rt>さか</rt></ruby><ruby>屋<rt>や</rt></ruby>"],
+        ["宿屋|やどや", "<ruby>宿<rt>やど</rt></ruby><ruby>屋<rt>や</rt></ruby>"],
+        ["焼き鳥|やきとり", "<ruby>焼<rt>や</rt></ruby>き<ruby>鳥<rt>とり</rt></ruby>"],
+        ["船便|ふなびん", "<ruby>船<rt>ふな</rt></ruby><ruby>便<rt>びん</rt></ruby>"],
+        ["花束|はなたば", "<ruby>花<rt>はな</rt></ruby><ruby>束<rt>たば</rt></ruby>"],
+        ["日付|ひづけ", "<ruby>日<rt>ひ</rt></ruby><ruby>付<rt>づけ</rt></ruby>"],
+        ["木の実|きのみ", "<ruby>木<rt>き</rt></ruby>の<ruby>実<rt>み</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["皆様|みなさま"].notes, /formal address vocabulary/);
+    assert.match(starterEntries["酒屋|さかや"].notes, /shop vocabulary/);
+    assert.match(starterEntries["宿屋|やどや"].notes, /travel\/lodging vocabulary/);
+    assert.match(starterEntries["焼き鳥|やきとり"].notes, /food vocabulary/);
+    assert.match(starterEntries["船便|ふなびん"].notes, /shipping\/mail vocabulary/);
+    assert.match(starterEntries["花束|はなたば"].notes, /gift\/object vocabulary/);
+    assert.match(starterEntries["日付|ひづけ"].notes, /document\/time vocabulary/);
+    assert.match(starterEntries["木の実|きのみ"].notes, /nature\/food vocabulary/);
+});
+
+test("tracked starter word data includes the sixty-fifth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["富|とみ", "富", "とみ"],
+        ["際立つ|きわだつ", "際", "きわ"],
+        ["種|たね", "種", "たね"],
+        ["罪|つみ", "罪", "つみ"],
+        ["顔付き|かおつき", "付", "つき"],
+        ["打ち合わせ|うちあわせ", "打", "うち"],
+        ["伝手|つて", "伝", "つて"],
+        ["神主|かんぬし", "神", "かん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["富|とみ", "support"],
+        ["際立つ|きわだつ", "support"],
+        ["種|たね", "support"],
+        ["罪|つみ", "support"],
+        ["顔付き|かおつき", "support"],
+        ["打ち合わせ|うちあわせ", "support"],
+        ["伝手|つて", "support"],
+        ["神主|かんぬし", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["富|とみ", "<ruby>富<rt>とみ</rt></ruby>"],
+        ["際立つ|きわだつ", "<ruby>際<rt>きわ</rt></ruby><ruby>立<rt>だ</rt></ruby>つ"],
+        ["種|たね", "<ruby>種<rt>たね</rt></ruby>"],
+        ["罪|つみ", "<ruby>罪<rt>つみ</rt></ruby>"],
+        ["顔付き|かおつき", "<ruby>顔<rt>かお</rt></ruby><ruby>付<rt>つ</rt></ruby>き"],
+        ["打ち合わせ|うちあわせ", "<ruby>打<rt>う</rt></ruby>ち<ruby>合<rt>あ</rt></ruby>わせ"],
+        ["伝手|つて", "<ruby>伝<rt>つ</rt></ruby><ruby>手<rt>て</rt></ruby>"],
+        ["神主|かんぬし", "<ruby>神<rt>かん</rt></ruby><ruby>主<rt>ぬし</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["富|とみ"].notes, /wealth\/resources vocabulary/);
+    assert.match(starterEntries["際立つ|きわだつ"].notes, /descriptive verb vocabulary/);
+    assert.match(starterEntries["種|たね"].notes, /seed\/kind vocabulary/);
+    assert.match(starterEntries["罪|つみ"].notes, /legal\/moral vocabulary/);
+    assert.match(starterEntries["顔付き|かおつき"].notes, /expression\/features vocabulary/);
+    assert.match(starterEntries["打ち合わせ|うちあわせ"].notes, /workplace\/planning vocabulary/);
+    assert.match(starterEntries["伝手|つて"].notes, /connections\/intermediary vocabulary/);
+    assert.match(starterEntries["神主|かんぬし"].notes, /Shinto priest sense only/);
+});
+
+test("tracked starter word data includes the sixty-sixth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["冷える|ひえる", "冷", "ひえる"],
+        ["冷やす|ひやす", "冷", "ひやす"],
+        ["冷ます|さます", "冷", "さます"],
+        ["冷める|さめる", "冷", "さめる"],
+        ["散る|ちる", "散", "ちる"],
+        ["散らかる|ちらかる", "散", "ちらかる"],
+        ["散らかす|ちらかす", "散", "ちらかす"],
+        ["散らす|ちらす", "散", "ちらす"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["冷える|ひえる", "support"],
+        ["冷やす|ひやす", "support"],
+        ["冷ます|さます", "support"],
+        ["冷める|さめる", "support"],
+        ["散る|ちる", "support"],
+        ["散らかる|ちらかる", "support"],
+        ["散らかす|ちらかす", "support"],
+        ["散らす|ちらす", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["冷える|ひえる", "<ruby>冷<rt>ひ</rt></ruby>える"],
+        ["冷やす|ひやす", "<ruby>冷<rt>ひ</rt></ruby>やす"],
+        ["冷ます|さます", "<ruby>冷<rt>さ</rt></ruby>ます"],
+        ["冷める|さめる", "<ruby>冷<rt>さ</rt></ruby>める"],
+        ["散る|ちる", "<ruby>散<rt>ち</rt></ruby>る"],
+        ["散らかる|ちらかる", "<ruby>散<rt>ち</rt></ruby>らかる"],
+        ["散らかす|ちらかす", "<ruby>散<rt>ち</rt></ruby>らかす"],
+        ["散らす|ちらす", "<ruby>散<rt>ち</rt></ruby>らす"],
+    ]);
+    assert.match(starterEntries["冷える|ひえる"].notes, /temperature verb vocabulary/);
+    assert.match(starterEntries["冷やす|ひやす"].notes, /cool\/chill transitive verb vocabulary/);
+    assert.match(starterEntries["冷ます|さます"].notes, /cool-down transitive verb vocabulary/);
+    assert.match(starterEntries["冷める|さめる"].notes, /cool-down intransitive verb vocabulary/);
+    assert.match(starterEntries["散る|ちる"].notes, /blossom\/scatter verb vocabulary/);
+    assert.match(starterEntries["散らかる|ちらかる"].notes, /mess\/disorder intransitive verb vocabulary/);
+    assert.match(starterEntries["散らかす|ちらかす"].notes, /mess\/disorder transitive verb vocabulary/);
+    assert.match(starterEntries["散らす|ちらす"].notes, /scatter\/disperse transitive verb vocabulary/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

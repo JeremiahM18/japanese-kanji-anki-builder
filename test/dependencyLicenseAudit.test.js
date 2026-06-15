@@ -39,8 +39,8 @@ test("dependency license audit validates the current package-lock license surfac
 
     assert.equal(report.passed, true);
     assert.deepEqual(report.failures, []);
-    assert.equal(report.summary.packageCount, 286);
-    assert.equal(report.summary.statuses.allowed, 272);
+    assert.equal(report.summary.packageCount, 285);
+    assert.equal(report.summary.statuses.allowed, 271);
     assert.equal(report.summary.statuses["reviewed-exception"], 14);
     assert.equal(report.summary.reviewedExceptions, 14);
     assert.equal(report.summary.missingLicenses, 0);
@@ -57,7 +57,7 @@ test("dependency license audit report preserves authority boundary and reviewed 
 
     assert.match(text, /Dependency license audit/);
     assert.match(text, /Status: pass/);
-    assert.match(text, /Packages: 286/);
+    assert.match(text, /Packages: 285/);
     assert.match(text, /reviewed-exception=14/);
     assert.match(text, /Unexpected, missing, denied, or overdue reviewed-exception licenses fail closed/);
     assert.match(text, /Reviewed exceptions:/);
@@ -118,8 +118,8 @@ test("dependency license release summary is generated only from a passing report
     const writtenPath = writeDependencyLicenseReleaseSummary(report, outPath);
     const written = JSON.parse(fs.readFileSync(writtenPath, "utf-8"));
 
-    assert.equal(written.summary.packageCount, 286);
-    assert.equal(written.packages.length, 286);
+    assert.equal(written.summary.packageCount, 285);
+    assert.equal(written.packages.length, 285);
 });
 
 test("dependency license helpers parse dates, scoped package paths, and CLI options", () => {

@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1644);
+    assert.equal(Object.keys(starterEntries).length, 1678);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 583,
+        3: 617,
         4: 700,
         5: 307,
     });
@@ -2752,6 +2752,181 @@ test("tracked starter word data includes the fifty-eighth N3 Silver source-expan
     assert.match(starterEntries["丈夫|じょうぶ"].notes, /Tanos normalized row found live uses 丈夫\|じょうふ/);
     assert.match(starterEntries["浮上|ふじょう"].notes, /rather than narrower 浮浪者 or technical buoyancy rows/);
     assert.match(starterEntries["腹痛|ふくつう"].notes, /same written word also has 腹痛\|はらいた/);
+});
+
+test("tracked starter word data includes the fifty-ninth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["米国|べいこく", "米", "べい"],
+        ["新米|しんまい", "米", "まい"],
+        ["逮捕|たいほ", "捕", "ほ"],
+        ["抱負|ほうふ", "抱", "ほう"],
+        ["法被|はっぴ", "法", "はっ"],
+        ["訪問|ほうもん", "訪", "ほう"],
+        ["亡者|もうじゃ", "亡", "もう"],
+        ["忘年会|ぼうねんかい", "忘", "ぼう"],
+        ["本望|ほんもう", "望", "もう"],
+        ["末路|ばつろ", "末", "ばつ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["米国|べいこく", "support"],
+        ["新米|しんまい", "support"],
+        ["逮捕|たいほ", "support"],
+        ["抱負|ほうふ", "support"],
+        ["法被|はっぴ", "support"],
+        ["訪問|ほうもん", "support"],
+        ["亡者|もうじゃ", "support"],
+        ["忘年会|ぼうねんかい", "support"],
+        ["本望|ほんもう", "support"],
+        ["末路|ばつろ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["米国|べいこく", "<ruby>米<rt>べい</rt></ruby><ruby>国<rt>こく</rt></ruby>"],
+        ["新米|しんまい", "<ruby>新<rt>しん</rt></ruby><ruby>米<rt>まい</rt></ruby>"],
+        ["逮捕|たいほ", "<ruby>逮<rt>たい</rt></ruby><ruby>捕<rt>ほ</rt></ruby>"],
+        ["抱負|ほうふ", "<ruby>抱<rt>ほう</rt></ruby><ruby>負<rt>ふ</rt></ruby>"],
+        ["法被|はっぴ", "<ruby>法<rt>はっ</rt></ruby><ruby>被<rt>ぴ</rt></ruby>"],
+        ["訪問|ほうもん", "<ruby>訪<rt>ほう</rt></ruby><ruby>問<rt>もん</rt></ruby>"],
+        ["亡者|もうじゃ", "<ruby>亡<rt>もう</rt></ruby><ruby>者<rt>じゃ</rt></ruby>"],
+        ["忘年会|ぼうねんかい", "<ruby>忘<rt>ぼう</rt></ruby><ruby>年<rt>ねん</rt></ruby><ruby>会<rt>かい</rt></ruby>"],
+        ["本望|ほんもう", "<ruby>本<rt>ほん</rt></ruby><ruby>望<rt>もう</rt></ruby>"],
+        ["末路|ばつろ", "<ruby>末<rt>ばつ</rt></ruby><ruby>路<rt>ろ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["米国|べいこく"].notes, /rather than narrower 米軍 or relation-only 日米 rows/);
+    assert.match(starterEntries["新米|しんまい"].notes, /keeps frozen N5 白米\|はくまい untouched/);
+    assert.match(starterEntries["逮捕|たいほ"].notes, /Tanos N3 row is only a discovery\/weak level hint/);
+    assert.match(starterEntries["法被|はっぴ"].notes, /frozen N4 法度\|はっと already exists/);
+    assert.match(starterEntries["本望|ほんもう"].notes, /alternate 願望\|がんもう/);
+});
+
+test("tracked starter word data includes the sixtieth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["睡眠|すいみん", "眠", "みん"],
+        ["夢中|むちゅう", "夢", "む"],
+        ["解く|とく", "解", "とく"],
+        ["寿命|じゅみょう", "命", "みょう"],
+        ["命令|めいれい", "命", "めい"],
+        ["迷惑|めいわく", "迷", "めい"],
+        ["悲鳴|ひめい", "鳴", "めい"],
+        ["兵役|へいえき", "役", "えき"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["睡眠|すいみん", "support"],
+        ["夢中|むちゅう", "support"],
+        ["解く|とく", "support"],
+        ["寿命|じゅみょう", "support"],
+        ["命令|めいれい", "support"],
+        ["迷惑|めいわく", "support"],
+        ["悲鳴|ひめい", "support"],
+        ["兵役|へいえき", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["睡眠|すいみん", "<ruby>睡<rt>すい</rt></ruby><ruby>眠<rt>みん</rt></ruby>"],
+        ["夢中|むちゅう", "<ruby>夢<rt>む</rt></ruby><ruby>中<rt>ちゅう</rt></ruby>"],
+        ["解く|とく", "<ruby>解<rt>と</rt></ruby>く"],
+        ["寿命|じゅみょう", "<ruby>寿<rt>じゅ</rt></ruby><ruby>命<rt>みょう</rt></ruby>"],
+        ["命令|めいれい", "<ruby>命<rt>めい</rt></ruby><ruby>令<rt>れい</rt></ruby>"],
+        ["迷惑|めいわく", "<ruby>迷<rt>めい</rt></ruby><ruby>惑<rt>わく</rt></ruby>"],
+        ["悲鳴|ひめい", "<ruby>悲<rt>ひ</rt></ruby><ruby>鳴<rt>めい</rt></ruby>"],
+        ["兵役|へいえき", "<ruby>兵<rt>へい</rt></ruby><ruby>役<rt>えき</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["睡眠|すいみん"].notes, /Tanos N3 row is only a discovery\/weak level hint/);
+    assert.match(starterEntries["夢中|むちゅう"].notes, /being absorbed in something/);
+    assert.match(starterEntries["解く|とく"].notes, /after deferring 娘 -> じょう/);
+    assert.match(starterEntries["寿命|じゅみょう"].notes, /service-life word/);
+    assert.match(starterEntries["命令|めいれい"].notes, /command\/order word/);
+    assert.match(starterEntries["迷惑|めいわく"].notes, /social-friction word/);
+    assert.match(starterEntries["悲鳴|ひめい"].notes, /rather than rarer 鳴 technical compounds/);
+    assert.match(starterEntries["兵役|へいえき"].notes, /clean 役 -> えき evidence/);
+});
+
+test("tracked starter word data includes the sixty-first N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["石油|せきゆ", "油", "ゆ"],
+        ["遊園地|ゆうえんち", "遊", "ゆう"],
+        ["余裕|よゆう", "余", "よ"],
+        ["給与|きゅうよ", "与", "よ"],
+        ["預金|よきん", "預", "よ"],
+        ["紅葉|こうよう", "葉", "よう"],
+        ["欲望|よくぼう", "欲", "よく"],
+        ["連絡|れんらく", "絡", "らく"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["石油|せきゆ", "support"],
+        ["遊園地|ゆうえんち", "support"],
+        ["余裕|よゆう", "support"],
+        ["給与|きゅうよ", "support"],
+        ["預金|よきん", "support"],
+        ["紅葉|こうよう", "support"],
+        ["欲望|よくぼう", "support"],
+        ["連絡|れんらく", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["石油|せきゆ", "<ruby>石<rt>せき</rt></ruby><ruby>油<rt>ゆ</rt></ruby>"],
+        ["遊園地|ゆうえんち", "<ruby>遊<rt>ゆう</rt></ruby><ruby>園<rt>えん</rt></ruby><ruby>地<rt>ち</rt></ruby>"],
+        ["余裕|よゆう", "<ruby>余<rt>よ</rt></ruby><ruby>裕<rt>ゆう</rt></ruby>"],
+        ["給与|きゅうよ", "<ruby>給<rt>きゅう</rt></ruby><ruby>与<rt>よ</rt></ruby>"],
+        ["預金|よきん", "<ruby>預<rt>よ</rt></ruby><ruby>金<rt>きん</rt></ruby>"],
+        ["紅葉|こうよう", "<ruby>紅<rt>こう</rt></ruby><ruby>葉<rt>よう</rt></ruby>"],
+        ["欲望|よくぼう", "<ruby>欲<rt>よく</rt></ruby><ruby>望<rt>ぼう</rt></ruby>"],
+        ["連絡|れんらく", "<ruby>連<rt>れん</rt></ruby><ruby>絡<rt>らく</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["石油|せきゆ"].notes, /resource\/energy vocabulary/);
+    assert.match(starterEntries["遊園地|ゆうえんち"].notes, /concrete leisure\/place vocabulary/);
+    assert.match(starterEntries["余裕|よゆう"].notes, /room\/leeway\/composure word/);
+    assert.match(starterEntries["給与|きゅうよ"].notes, /work\/money vocabulary/);
+    assert.match(starterEntries["預金|よきん"].notes, /banking vocabulary/);
+    assert.match(starterEntries["紅葉|こうよう"].notes, /seasonal\/culture vocabulary/);
+    assert.match(starterEntries["欲望|よくぼう"].notes, /instead of 欲求\|よっきゅう/);
+    assert.match(starterEntries["連絡|れんらく"].notes, /communication word/);
+});
+
+test("tracked starter word data includes the sixty-second N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["落語|らくご", "落", "らく"],
+        ["表裏|ひょうり", "裏", "り"],
+        ["良好|りょうこう", "良", "りょう"],
+        ["緑茶|りょくちゃ", "緑", "りょく"],
+        ["車輪|しゃりん", "輪", "りん"],
+        ["感涙|かんるい", "涙", "るい"],
+        ["冷房|れいぼう", "冷", "れい"],
+        ["横|よこ", "横", "よこ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["落語|らくご", "support"],
+        ["表裏|ひょうり", "support"],
+        ["良好|りょうこう", "support"],
+        ["緑茶|りょくちゃ", "support"],
+        ["車輪|しゃりん", "support"],
+        ["感涙|かんるい", "support"],
+        ["冷房|れいぼう", "support"],
+        ["横|よこ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["落語|らくご", "<ruby>落<rt>らく</rt></ruby><ruby>語<rt>ご</rt></ruby>"],
+        ["表裏|ひょうり", "<ruby>表<rt>ひょう</rt></ruby><ruby>裏<rt>り</rt></ruby>"],
+        ["良好|りょうこう", "<ruby>良<rt>りょう</rt></ruby><ruby>好<rt>こう</rt></ruby>"],
+        ["緑茶|りょくちゃ", "<ruby>緑<rt>りょく</rt></ruby><ruby>茶<rt>ちゃ</rt></ruby>"],
+        ["車輪|しゃりん", "<ruby>車<rt>しゃ</rt></ruby><ruby>輪<rt>りん</rt></ruby>"],
+        ["感涙|かんるい", "<ruby>感<rt>かん</rt></ruby><ruby>涙<rt>るい</rt></ruby>"],
+        ["冷房|れいぼう", "<ruby>冷<rt>れい</rt></ruby><ruby>房<rt>ぼう</rt></ruby>"],
+        ["横|よこ", "<ruby>横<rt>よこ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["落語|らくご"].notes, /Japanese culture vocabulary/);
+    assert.match(starterEntries["表裏|ひょうり"].notes, /front\/back contrast word/);
+    assert.match(starterEntries["良好|りょうこう"].notes, /condition\/status word/);
+    assert.match(starterEntries["緑茶|りょくちゃ"].notes, /drink\/culture vocabulary/);
+    assert.match(starterEntries["車輪|しゃりん"].notes, /concrete object vocabulary/);
+    assert.match(starterEntries["感涙|かんるい"].notes, /instead of anatomy-only 涙腺/);
+    assert.match(starterEntries["冷房|れいぼう"].notes, /home\/building vocabulary/);
+    assert.match(starterEntries["横|よこ"].notes, /横断 already exists/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

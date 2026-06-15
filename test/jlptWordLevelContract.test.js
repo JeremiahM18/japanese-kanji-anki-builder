@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 681);
+    assert.equal(contract.inventoryCounts["3"], 713);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
@@ -232,6 +232,38 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "汚す|よごす",
         "降りる|おりる",
         "降り|ふり",
+        "観る|みる",
+        "大関|おおぜき",
+        "機織り|はたおり",
+        "手許|てもと",
+        "行き交う|いきかう",
+        "向こう|むこう",
+        "見込み|みこみ",
+        "済み|ずみ",
+        "参る|まいる",
+        "消す|けす",
+        "常|つね",
+        "直る|なおる",
+        "山積み|やまづみ",
+        "成す|なす",
+        "成る|なる",
+        "直ちに|ただちに",
+        "和む|なごむ",
+        "和やか|なごやか",
+        "和らぐ|やわらぐ",
+        "和らげる|やわらげる",
+        "温かい|あたたかい",
+        "温まる|あたたまる",
+        "温める|あたためる",
+        "散らばる|ちらばる",
+        "退く|どく",
+        "退く|のく",
+        "退く|しりぞく",
+        "退ける|どける",
+        "退ける|のける",
+        "労る|いたわる",
+        "捕まる|つかまる",
+        "捕らえる|とらえる",
     ]) {
         assert.equal(getJlptWordLevel(contract, key), 3);
     }

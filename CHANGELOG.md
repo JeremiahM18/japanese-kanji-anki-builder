@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- Expanded active N3 word Silver coverage from `359` to `761` canonical rows. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold, Sapphire, and Platinum remain at `8/761` current-standard in this lane, and no N3 word Obsidian proof is recorded.
+- Expanded active N3 word Silver coverage from `359` to `817` canonical rows. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold, Sapphire, and Platinum remain at `8/817` current-standard in this lane, and no N3 word Obsidian proof is recorded.
 
 Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active ongoing work until separately locked.
 

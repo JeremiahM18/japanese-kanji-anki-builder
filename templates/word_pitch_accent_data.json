@@ -713,6 +713,13 @@
       "sourceQuery": "九時",
       "generatedReading": "くじ"
     },
+    "予め|あらかじめ": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "予め",
+      "sourceReading": "あらかじめ",
+      "sourceAccent": "0"
+    },
     "予習|よしゅう": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1001,6 +1008,13 @@
       "sourceWord": "人口",
       "sourceReading": "じんこう",
       "sourceAccent": "0"
+    },
+    "人殺し|ひとごろし": {
+      "pattern": "0 [heiban] / 5 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "人殺し",
+      "sourceReading": "ひとごろし",
+      "sourceAccent": "0,5"
     },
     "人気|にんき": {
       "pattern": "0 [heiban]",
@@ -1501,12 +1515,26 @@
       "sourceReading": "なんじ",
       "sourceAccent": "1"
     },
+    "余す|あます": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "余す",
+      "sourceReading": "あます",
+      "sourceAccent": "2"
+    },
     "余り|あまり": {
       "pattern": "3 [odaka] / 1 [atamadaka] / 0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "余り",
       "sourceReading": "あまり",
       "sourceAccent": "(形動)3,(副)3,1,0"
+    },
+    "余り|あんまり": {
+      "pattern": "0 [heiban] / 4 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "余り",
+      "sourceReading": "あんまり",
+      "sourceAccent": "(副)0,(形動)4"
     },
     "余る|あまる": {
       "pattern": "2 [nakadaka]",
@@ -1588,6 +1616,13 @@
       "sourceId": "voicevox-nemo-reading-query",
       "sourceQuery": "れい",
       "generatedReading": "れい"
+    },
+    "例える|たとえる": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "例える",
+      "sourceReading": "たとえる",
+      "sourceAccent": "3"
     },
     "供|とも": {
       "pattern": "1 [atamadaka]",
@@ -1776,6 +1811,20 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "優しい",
       "generatedReading": "やさしい"
+    },
+    "優る|まさる": {
+      "pattern": "2 [nakadaka] / 0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "優る",
+      "sourceReading": "まさる",
+      "sourceAccent": "2,0"
+    },
+    "優れる|すぐれる": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "優れる",
+      "sourceReading": "すぐれる",
+      "sourceAccent": "3"
     },
     "優越感|ゆうえつかん": {
       "pattern": "4 [nakadaka]",
@@ -2357,6 +2406,13 @@
       "sourceQuery": "初雪",
       "generatedReading": "はつゆき"
     },
+    "判る|わかる": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "判る",
+      "sourceReading": "わかる",
+      "sourceAccent": "2"
+    },
     "判断|はんだん": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -2603,6 +2659,13 @@
       "sourceWord": "動物園",
       "sourceReading": "どうぶつえん",
       "sourceAccent": "4"
+    },
+    "務める|つとめる": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "務める",
+      "sourceReading": "つとめる",
+      "sourceAccent": "3"
     },
     "勝ち|かち": {
       "pattern": "2 [odaka]",
@@ -4446,6 +4509,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "家路",
       "sourceReading": "いえじ",
+      "sourceAccent": "0"
+    },
+    "容れる|いれる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "容れる",
+      "sourceReading": "いれる",
       "sourceAccent": "0"
     },
     "宿屋|やどや": {
@@ -7187,6 +7257,13 @@
       "sourceReading": "こかげ",
       "sourceAccent": "0"
     },
+    "未|ひつじ": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "未",
+      "sourceReading": "ひつじ",
+      "sourceAccent": "0"
+    },
     "未だ|まだ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -7659,6 +7736,13 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "欲しい",
       "generatedReading": "ほしい"
+    },
+    "欲する|ほっする": {
+      "pattern": "0 [heiban] / 3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "欲する",
+      "sourceReading": "ほっする",
+      "sourceAccent": "0,3"
     },
     "欲望|よくぼう": {
       "pattern": "4 [odaka]",
@@ -8307,6 +8391,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "浮かべる",
       "sourceReading": "うかべる",
+      "sourceAccent": "0"
+    },
+    "浮かれる|うかれる": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "浮かれる",
+      "sourceReading": "うかれる",
       "sourceAccent": "0"
     },
     "浮く|うく": {
@@ -10216,6 +10307,13 @@
       "sourceReading": "けつろん",
       "sourceAccent": "0"
     },
+    "絡まる|からまる": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "絡まる",
+      "sourceReading": "からまる",
+      "sourceAccent": "3"
+    },
     "絡む|からむ": {
       "pattern": "2 [nakadaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -10408,6 +10506,20 @@
       "sourceWord": "老い",
       "sourceReading": "おい",
       "sourceAccent": "1,2"
+    },
+    "老いる|おいる": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "老いる",
+      "sourceReading": "おいる",
+      "sourceAccent": "2"
+    },
+    "老ける|ふける": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "老ける",
+      "sourceReading": "ふける",
+      "sourceAccent": "2"
     },
     "老人|ろうじん": {
       "pattern": "4 [odaka]",
@@ -11010,6 +11122,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "西瓜",
       "sourceReading": "すいか",
+      "sourceAccent": "0"
+    },
+    "要|かなめ": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "要",
+      "sourceReading": "かなめ",
       "sourceAccent": "0"
     },
     "要る|いる": {
@@ -11669,6 +11788,13 @@
       "sourceReading": "おう",
       "sourceAccent": "0"
     },
+    "負かす|まかす": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "負かす",
+      "sourceReading": "まかす",
+      "sourceAccent": "0"
+    },
     "負ける|まける": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -12112,6 +12238,13 @@
       "sourceReading": "こむ",
       "sourceAccent": "1"
     },
+    "込める|こめる": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "込める",
+      "sourceReading": "こめる",
+      "sourceAccent": "2"
+    },
     "迎える|むかえる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -12339,6 +12472,20 @@
       "sourceWord": "速やか",
       "sourceReading": "すみやか",
       "sourceAccent": "2"
+    },
+    "連なる|つらなる": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "連なる",
+      "sourceReading": "つらなる",
+      "sourceAccent": "3"
+    },
+    "連ねる|つらねる": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "連ねる",
+      "sourceReading": "つらねる",
+      "sourceAccent": "3"
     },
     "連れ|づれ": {
       "pattern": "2 [odaka]",
@@ -13394,6 +13541,13 @@
       "sourceQuery": "頼む",
       "generatedReading": "たのむ"
     },
+    "頼る|たよる": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "頼る",
+      "sourceReading": "たよる",
+      "sourceAccent": "2"
+    },
     "題|だい": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -13440,6 +13594,13 @@
       "sourceId": "voicevox-nemo-reading-query",
       "sourceQuery": "がんぼう",
       "generatedReading": "がんぼお"
+    },
+    "類|たぐい": {
+      "pattern": "1 [atamadaka] / 2 [nakadaka] / 0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "類",
+      "sourceReading": "たぐい",
+      "sourceAccent": "1,2,0"
     },
     "風|かぜ": {
       "pattern": "0 [heiban]",
@@ -13730,6 +13891,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "鳴く",
       "sourceReading": "なく",
+      "sourceAccent": "0"
+    },
+    "鳴らす|ならす": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "鳴らす",
+      "sourceReading": "ならす",
       "sourceAccent": "0"
     },
     "鳴る|なる": {

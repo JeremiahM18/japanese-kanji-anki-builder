@@ -1397,6 +1397,12 @@
       "sourceQuery": "なんですか",
       "generatedReading": "なんですか"
     },
+    "何処|どこ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "何処",
+      "generatedReading": "どこ"
+    },
     "何時|なんじ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -1599,6 +1605,12 @@
       "sourceWord": "値段",
       "sourceReading": "ねだん",
       "sourceAccent": "0"
+    },
+    "側|かわ": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "かわ",
+      "generatedReading": "かわ"
     },
     "側|そば": {
       "pattern": "1 [atamadaka]",
@@ -2158,6 +2170,12 @@
       "sourceQuery": "列",
       "generatedReading": "れつ"
     },
+    "初々しい|ういういしい": {
+      "pattern": "5 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "初々しい",
+      "generatedReading": "ういういしい"
+    },
     "初めて|はじめて": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -2375,6 +2393,12 @@
       "sourceWord": "勝ち",
       "sourceReading": "かち",
       "sourceAccent": "2"
+    },
+    "勝ち|がち": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "がち",
+      "generatedReading": "がち"
     },
     "勝つ|かつ": {
       "pattern": "1 [atamadaka]",
@@ -2916,6 +2940,12 @@
       "sourceQuery": "君主",
       "generatedReading": "くんしゅ"
     },
+    "否|いな": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "いな",
+      "generatedReading": "いな"
+    },
     "否定|ひてい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -3207,6 +3237,12 @@
       "sourceWord": "圧迫",
       "sourceReading": "あっぱく",
       "sourceAccent": "0"
+    },
+    "在る|ある": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "在る",
+      "generatedReading": "ある"
     },
     "地下|ちか": {
       "pattern": "1 [atamadaka] / 2 [odaka]",
@@ -3813,6 +3849,18 @@
       "sourceWord": "子ども",
       "sourceReading": "こども",
       "sourceAccent": "0"
+    },
+    "子供|こども": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "子供",
+      "generatedReading": "こども"
+    },
+    "子守|こもり": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "子守",
+      "generatedReading": "こもり"
     },
     "子年|ねどし": {
       "pattern": "1 [atamadaka]",
@@ -4788,6 +4836,12 @@
       "sourceQuery": "彼岸",
       "generatedReading": "ひがん"
     },
+    "彼等|かれら": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "彼等",
+      "generatedReading": "かれら"
+    },
     "待ち合わせ|まちあわせ": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4848,6 +4902,12 @@
       "sourceWord": "復習",
       "sourceReading": "ふくしゅう",
       "sourceAccent": "0"
+    },
+    "微笑む|ほほえむ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "微笑む",
+      "generatedReading": "ほほえむ"
     },
     "心|こころ": {
       "pattern": "3 [odaka] / 2 [nakadaka]",
@@ -5045,6 +5105,12 @@
       "sourceReading": "きょうふ",
       "sourceAccent": "1,0"
     },
+    "恥|はじ": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "恥",
+      "generatedReading": "はじ"
+    },
     "恥ずかしい|はずかしい": {
       "pattern": "4 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -5154,6 +5220,12 @@
       "sourceWord": "愛する",
       "sourceReading": "あいする",
       "sourceAccent": "3"
+    },
+    "愛弟子|まなでし": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "愛弟子",
+      "generatedReading": "まなでし"
     },
     "愛情|あいじょう": {
       "pattern": "0 [heiban]",
@@ -5864,6 +5936,12 @@
       "sourceReading": "りょうきん",
       "sourceAccent": "1"
     },
+    "断つ|たつ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "断つ",
+      "generatedReading": "たつ"
+    },
     "断る|ことわる": {
       "pattern": "3 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -6348,6 +6426,12 @@
       "sourceReading": "こうしん",
       "sourceAccent": "0"
     },
+    "書き初め|かきぞめ": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "書き初め",
+      "generatedReading": "かきぞめ"
+    },
     "書く|かく": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -6518,6 +6602,12 @@
       "sourceWord": "村民",
       "sourceReading": "そんみん",
       "sourceAccent": "0"
+    },
+    "束の間|つかのま": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "束の間",
+      "generatedReading": "つかのま"
     },
     "来い|こい": {
       "pattern": "1 [atamadaka]",
@@ -7067,12 +7157,24 @@
       "sourceQuery": "ざんぎょう",
       "generatedReading": "ざんぎょお"
     },
+    "段取り|だんどり": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "段取り",
+      "generatedReading": "だんどり"
+    },
     "段階|だんかい": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "段階",
       "sourceReading": "だんかい",
       "sourceAccent": "0"
+    },
+    "殺ぐ|そぐ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "殺ぐ",
+      "generatedReading": "そぐ"
     },
     "殺す|ころす": {
       "pattern": "0 [heiban]",
@@ -8054,6 +8156,12 @@
       "sourceReading": "いなか",
       "sourceAccent": "0"
     },
+    "申|さる": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "申",
+      "generatedReading": "さる"
+    },
     "申し込む|もうしこむ": {
       "pattern": "4 [nakadaka] / 0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -8387,6 +8495,12 @@
       "sourceReading": "めがしら",
       "sourceAccent": "2"
     },
+    "直ぐ|すぐ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "直ぐ",
+      "generatedReading": "すぐ"
+    },
     "直す|なおす": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -8703,6 +8817,12 @@
       "sourceReading": "わたし",
       "sourceAccent": "0"
     },
+    "私達|わたしたち": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "私達",
+      "generatedReading": "わたしたち"
+    },
     "秋|あき": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -8756,6 +8876,12 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "種類",
       "generatedReading": "しゅるい"
+    },
+    "積む|つむ": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "積む",
+      "generatedReading": "つむ"
     },
     "積もる|つもる": {
       "pattern": "2 [nakadaka] / 0 [heiban]",
@@ -9743,6 +9869,12 @@
       "sourceReading": "ゆくえ",
       "sourceAccent": "0"
     },
+    "術|すべ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "すべ",
+      "generatedReading": "すべ"
+    },
     "表|おもて": {
       "pattern": "3 [odaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -10301,6 +10433,12 @@
       "sourceReading": "しらべる",
       "sourceAccent": "3"
     },
+    "諸々|もろもろ": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "諸々",
+      "generatedReading": "もろもろ"
+    },
     "諸国|しょこく": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -10314,6 +10452,12 @@
       "sourceWord": "講演",
       "sourceReading": "こうえん",
       "sourceAccent": "0"
+    },
+    "識る|しる": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "しる",
+      "generatedReading": "しる"
     },
     "警告|けいこく": {
       "pattern": "0 [heiban]",

@@ -163,7 +163,7 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
     const inFlight = new Map();
     const metrics = createEmptyClientMetrics();
 
-    async function fetchCachedJson({ cacheKey, url, schema, label }) {
+    async function readOrFetchCachedJson({ cacheKey, url, schema, label }) {
         ensureDir(cacheDir);
 
         const filePath = buildCacheFilePath(cacheDir, cacheKey);
@@ -203,18 +203,20 @@ function createKanjiApiClient({ baseUrl, cacheDir, fetchTimeoutMs = 10000 }) {
 
         metrics.cacheMisses += 1;
 
+        metrics.networkFetches += 1;
+        const rawData = await fetchJsonWithTimeout(url, fetchTimeoutMs);
+        const data = validatePayload(schema, rawData, label, metrics);
+        await writeJsonAtomic(filePath, data);
+        metrics.cacheWrites += 1;
+        return data;
+    }
+
+    async function fetchCachedJson({ cacheKey, url, schema, label }) {
         if (inFlight.has(cacheKey)) {
             return inFlight.get(cacheKey);
         }
 
-        const promise = (async () => {
-            metrics.networkFetches += 1;
-            const rawData = await fetchJsonWithTimeout(url, fetchTimeoutMs);
-            const data = validatePayload(schema, rawData, label, metrics);
-            await writeJsonAtomic(filePath, data);
-            metrics.cacheWrites += 1;
-            return data;
-        })();
+        const promise = readOrFetchCachedJson({ cacheKey, url, schema, label });
 
         inFlight.set(cacheKey, promise);
 

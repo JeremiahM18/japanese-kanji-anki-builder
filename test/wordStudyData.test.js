@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1798);
+    assert.equal(Object.keys(starterEntries).length, 1822);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 737,
+        3: 761,
         4: 700,
         5: 307,
     });
@@ -3528,6 +3528,124 @@ test("tracked starter word data includes the seventy-seventh N3 Silver source-ex
     assert.match(starterEntries["責める|せめる"].notes, /blame\/criticize verb vocabulary/);
     assert.match(starterEntries["飛ばす|とばす"].notes, /let-fly\/skip verb vocabulary/);
     assert.match(starterEntries["預かる|あずかる"].notes, /Tanos N2 row is only a harder-level discovery hint/);
+});
+
+test("tracked starter word data includes the seventy-eighth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["愛弟子|まなでし", "愛", "まな"],
+        ["子供|こども", "供", "ども"],
+        ["在る|ある", "在", "ある"],
+        ["殺ぐ|そぐ", "殺", "そぐ"],
+        ["段取り|だんどり", "取", "どり"],
+        ["子守|こもり", "守", "もり"],
+        ["術|すべ", "術", "すべ"],
+        ["何処|どこ", "処", "こ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["愛弟子|まなでし", "support"],
+        ["子供|こども", "support"],
+        ["在る|ある", "support"],
+        ["殺ぐ|そぐ", "support"],
+        ["段取り|だんどり", "support"],
+        ["子守|こもり", "support"],
+        ["術|すべ", "support"],
+        ["何処|どこ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["愛弟子|まなでし", "<ruby>愛<rt>まな</rt></ruby><ruby>弟<rt>で</rt></ruby><ruby>子<rt>し</rt></ruby>"],
+        ["子供|こども", "<ruby>子<rt>こ</rt></ruby><ruby>供<rt>ども</rt></ruby>"],
+        ["在る|ある", "<ruby>在<rt>あ</rt></ruby>る"],
+        ["殺ぐ|そぐ", "<ruby>殺<rt>そ</rt></ruby>ぐ"],
+        ["段取り|だんどり", "<ruby>段<rt>だん</rt></ruby><ruby>取<rt>ど</rt></ruby>り"],
+        ["子守|こもり", "<ruby>子<rt>こ</rt></ruby><ruby>守<rt>もり</rt></ruby>"],
+        ["術|すべ", "<ruby>術<rt>すべ</rt></ruby>"],
+        ["何処|どこ", "<ruby>何<rt>ど</rt></ruby><ruby>処<rt>こ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["子供|こども"].notes, /without touching frozen N4\/N5 word rows/);
+    assert.match(starterEntries["殺ぐ|そぐ"].notes, /source-thin priority data/);
+    assert.match(starterEntries["段取り|だんどり"].notes, /planning vocabulary/);
+    assert.match(starterEntries["何処|どこ"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+});
+
+test("tracked starter word data includes the seventy-ninth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["初々しい|ういういしい", "初", "うい"],
+        ["書き初め|かきぞめ", "初", "ぞめ"],
+        ["諸々|もろもろ", "諸", "もろ"],
+        ["勝ち|がち", "勝", "がち"],
+        ["微笑む|ほほえむ", "笑", "えむ"],
+        ["積む|つむ", "積", "つむ"],
+        ["束の間|つかのま", "束", "つか"],
+        ["断つ|たつ", "断", "たつ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["初々しい|ういういしい", "support"],
+        ["書き初め|かきぞめ", "support"],
+        ["諸々|もろもろ", "support"],
+        ["勝ち|がち", "support"],
+        ["微笑む|ほほえむ", "support"],
+        ["積む|つむ", "support"],
+        ["束の間|つかのま", "support"],
+        ["断つ|たつ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["初々しい|ういういしい", "<ruby>初<rt>うい</rt></ruby><ruby>初<rt>うい</rt></ruby>しい"],
+        ["書き初め|かきぞめ", "<ruby>書<rt>か</rt></ruby>き<ruby>初<rt>ぞ</rt></ruby>め"],
+        ["諸々|もろもろ", "<ruby>諸<rt>もろ</rt></ruby><ruby>々<rt>もろ</rt></ruby>"],
+        ["勝ち|がち", "<ruby>勝<rt>が</rt></ruby>ち"],
+        ["微笑む|ほほえむ", "<ruby>微<rt>ほほ</rt></ruby><ruby>笑<rt>え</rt></ruby>む"],
+        ["積む|つむ", "<ruby>積<rt>つ</rt></ruby>む"],
+        ["束の間|つかのま", "<ruby>束<rt>つか</rt></ruby>の<ruby>間<rt>ま</rt></ruby>"],
+        ["断つ|たつ", "<ruby>断<rt>た</rt></ruby>つ"],
+    ]);
+    assert.match(starterEntries["勝ち|がち"].notes, /source-thin priority data/);
+    assert.match(starterEntries["微笑む|ほほえむ"].notes, /Tanos N3 is used only as a discovery\/weak level hint/);
+    assert.match(starterEntries["積む|つむ"].notes, /Tanos N2 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["束の間|つかのま"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+});
+
+test("tracked starter word data includes the eightieth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["識る|しる", "識", "しる"],
+        ["申|さる", "申", "さる"],
+        ["側|かわ", "側", "かわ"],
+        ["彼等|かれら", "等", "ら"],
+        ["私達|わたしたち", "達", "たち"],
+        ["恥|はじ", "恥", "はじ"],
+        ["直ぐ|すぐ", "直", "すぐ"],
+        ["否|いな", "否", "いな"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["識る|しる", "support"],
+        ["申|さる", "support"],
+        ["側|かわ", "support"],
+        ["彼等|かれら", "support"],
+        ["私達|わたしたち", "support"],
+        ["恥|はじ", "support"],
+        ["直ぐ|すぐ", "support"],
+        ["否|いな", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["識る|しる", "<ruby>識<rt>し</rt></ruby>る"],
+        ["申|さる", "<ruby>申<rt>さる</rt></ruby>"],
+        ["側|かわ", "<ruby>側<rt>かわ</rt></ruby>"],
+        ["彼等|かれら", "<ruby>彼<rt>かれ</rt></ruby><ruby>等<rt>ら</rt></ruby>"],
+        ["私達|わたしたち", "<ruby>私<rt>わたし</rt></ruby><ruby>達<rt>たち</rt></ruby>"],
+        ["恥|はじ", "<ruby>恥<rt>はじ</rt></ruby>"],
+        ["直ぐ|すぐ", "<ruby>直<rt>す</rt></ruby>ぐ"],
+        ["否|いな", "<ruby>否<rt>いな</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["側|かわ"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["彼等|かれら"].notes, /instead of a bare suffix row/);
+    assert.match(starterEntries["私達|わたしたち"].notes, /without editing frozen N4\/N5 word data/);
+    assert.match(starterEntries["恥|はじ"].notes, /Tanos N1 row is only a harder-level discovery hint/);
+    assert.match(starterEntries["直ぐ|すぐ"].notes, /Tanos N1 row is only a harder-level discovery hint/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

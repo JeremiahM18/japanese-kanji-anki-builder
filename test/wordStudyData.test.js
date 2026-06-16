@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 1998);
+    assert.equal(Object.keys(starterEntries).length, 2022);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 937,
+        3: 961,
         4: 700,
         5: 307,
     });
@@ -4499,6 +4499,120 @@ test("tracked starter word data includes the one hundred second N3 Silver source
     assert.match(starterEntries["支う|かう"].notes, /support \/ prop-up written-form vocabulary/);
     assert.match(starterEntries["姫君|ひめぎみ"].notes, /story \/ noble-person written-form vocabulary/);
     assert.match(starterEntries["悲喜交々|ひきこもごも"].notes, /mixed-emotion idiom vocabulary/);
+});
+
+test("tracked starter word data includes the one hundred third N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["再び|ふたたび", "再", "ふたたび"],
+        ["治す|なおす", "治", "なおす"],
+        ["実|まこと", "実", "まこと"],
+        ["実に|まことに", "実", "まこと"],
+        ["初める|そめる", "初", "そめる"],
+        ["緒|いとぐち", "緒", "いとぐち"],
+        ["商う|あきなう", "商", "あきなう"],
+        ["植わる|うわる", "植", "うわる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["再び|ふたたび", "support"],
+        ["治す|なおす", "support"],
+        ["実|まこと", "support"],
+        ["実に|まことに", "support"],
+        ["初める|そめる", "support"],
+        ["緒|いとぐち", "support"],
+        ["商う|あきなう", "support"],
+        ["植わる|うわる", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["再び|ふたたび", "<ruby>再<rt>ふたた</rt></ruby>び"],
+        ["治す|なおす", "<ruby>治<rt>なお</rt></ruby>す"],
+        ["実|まこと", "<ruby>実<rt>まこと</rt></ruby>"],
+        ["実に|まことに", "<ruby>実<rt>まこと</rt></ruby>に"],
+        ["初める|そめる", "<ruby>初<rt>そ</rt></ruby>める"],
+        ["緒|いとぐち", "<ruby>緒<rt>いとぐち</rt></ruby>"],
+        ["商う|あきなう", "<ruby>商<rt>あきな</rt></ruby>う"],
+        ["植わる|うわる", "<ruby>植<rt>う</rt></ruby>わる"],
+    ]);
+    assert.match(starterEntries["実に|まことに"].notes, /separate written-reading identity/);
+    assert.match(starterEntries["商う|あきなう"].notes, /no JMdict priority marker is treated as a limitation/);
+    assert.match(starterEntries["植わる|うわる"].notes, /planting and garden-state vocabulary/);
+});
+
+test("tracked starter word data includes the one hundred fourth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["興味深い|きょうみぶかい", "深", "ぶかい"],
+        ["根深い|ねぶかい", "深", "ぶかい"],
+        ["申す|もうす", "申", "もうす"],
+        ["震う|ふるう", "震", "ふるう"],
+        ["単|ひとえ", "単", "ひとえ"],
+        ["値|あたい", "値", "あたい"],
+        ["値する|あたいする", "値", "あたい"],
+        ["遅らす|おくらす", "遅", "おくらす"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["興味深い|きょうみぶかい", "support"],
+        ["根深い|ねぶかい", "support"],
+        ["申す|もうす", "support"],
+        ["震う|ふるう", "support"],
+        ["単|ひとえ", "support"],
+        ["値|あたい", "support"],
+        ["値する|あたいする", "support"],
+        ["遅らす|おくらす", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["興味深い|きょうみぶかい", "<ruby>興味<rt>きょうみ</rt></ruby><ruby>深<rt>ぶか</rt></ruby>い"],
+        ["根深い|ねぶかい", "<ruby>根<rt>ね</rt></ruby><ruby>深<rt>ぶか</rt></ruby>い"],
+        ["申す|もうす", "<ruby>申<rt>もう</rt></ruby>す"],
+        ["震う|ふるう", "<ruby>震<rt>ふる</rt></ruby>う"],
+        ["単|ひとえ", "<ruby>単<rt>ひとえ</rt></ruby>"],
+        ["値|あたい", "<ruby>値<rt>あたい</rt></ruby>"],
+        ["値する|あたいする", "<ruby>値<rt>あたい</rt></ruby>する"],
+        ["遅らす|おくらす", "<ruby>遅<rt>おく</rt></ruby>らす"],
+    ]);
+    assert.match(starterEntries["興味深い|きょうみぶかい"].notes, /evaluation vocabulary/);
+    assert.match(starterEntries["震う|ふるう"].notes, /no JMdict priority marker is treated as a limitation/);
+    assert.match(starterEntries["値する|あたいする"].notes, /merit and evaluation vocabulary/);
+});
+
+test("tracked starter word data includes the one hundred fifth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["頂|いただき", "頂", "いただき"],
+        ["適う|かなう", "適", "かなう"],
+        ["盗み|ぬすみ", "盗", "ぬすみ"],
+        ["到る|いたる", "到", "いたる"],
+        ["任す|まかす", "任", "まかす"],
+        ["熱い|あつい", "熱", "あつい"],
+        ["破れる|われる", "破", "われる"],
+        ["望む|のぞむ", "望", "のぞむ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["頂|いただき", "support"],
+        ["適う|かなう", "support"],
+        ["盗み|ぬすみ", "support"],
+        ["到る|いたる", "support"],
+        ["任す|まかす", "support"],
+        ["熱い|あつい", "support"],
+        ["破れる|われる", "support"],
+        ["望む|のぞむ", "support"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["頂|いただき", "<ruby>頂<rt>いただき</rt></ruby>"],
+        ["適う|かなう", "<ruby>適<rt>かな</rt></ruby>う"],
+        ["盗み|ぬすみ", "<ruby>盗<rt>ぬす</rt></ruby>み"],
+        ["到る|いたる", "<ruby>到<rt>いた</rt></ruby>る"],
+        ["任す|まかす", "<ruby>任<rt>まか</rt></ruby>す"],
+        ["熱い|あつい", "<ruby>熱<rt>あつ</rt></ruby>い"],
+        ["破れる|われる", "<ruby>破<rt>わ</rt></ruby>れる"],
+        ["望む|のぞむ", "<ruby>望<rt>のぞ</rt></ruby>む"],
+    ]);
+    assert.match(starterEntries["適う|かなう"].notes, /no JMdict priority marker is treated as a limitation/);
+    assert.match(starterEntries["熱い|あつい"].notes, /without editing frozen N4\/N5 word data/);
+    assert.match(starterEntries["破れる|われる"].notes, /split-opinion and break-state written-form vocabulary/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

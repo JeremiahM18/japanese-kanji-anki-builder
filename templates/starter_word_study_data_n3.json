@@ -490,6 +490,33 @@
       }
     }
   },
+  "並べる|ならべる": {
+    "written": "並べる",
+    "reading": "ならべる",
+    "meaning": "line up / arrange / compare",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>並<rt>なら</rt></ruby>べる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "並"
+      ],
+      "coversReadings": {
+        "並": "ならべる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 並べる|ならべる, reading ならべる, and line-up / arrange / enumerate senses with priority/commonness support (entrySeq=1508390; jmdictPriority=ichi1). It is retained as useful arranging/comparison vocabulary vocabulary for a clean 並 -> ならべる support reading. 並 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "机の上に本を並べました。",
+      "reading": "つくえのうえにほんをならべました。",
+      "english": "I lined up the books on the desk."
+    }
+  },
   "並行|へいこう": {
     "written": "並行",
     "reading": "へいこう",
@@ -1625,6 +1652,33 @@
       "japanese": "友人に翻訳を依頼しました。",
       "reading": "ゆうじんにほんやくをいらいしました。",
       "english": "I asked a friend to translate it."
+    }
+  },
+  "価|あたい": {
+    "written": "価",
+    "reading": "あたい",
+    "meaning": "value / price / worth",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>価<rt>あたい</rt></ruby>",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "価"
+      ],
+      "coversReadings": {
+        "価": "あたい"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 価|あたい, reading あたい, and price / cost / value / worth senses with priority/commonness support (entrySeq=1581630; jmdictPriority=ichi1,news1,nf07). It is retained as useful value/price written-form recognition vocabulary for a clean 価 -> あたい support reading. 価 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "その品には高い価が付きました。",
+      "reading": "そのしなにはたかいあたいがつきました。",
+      "english": "A high value was placed on that item."
     }
   },
   "価値|かち": {
@@ -2890,6 +2944,33 @@
       "english": "I split the apple in two."
     }
   },
+  "割れる|われる": {
+    "written": "割れる",
+    "reading": "われる",
+    "meaning": "break / split / be divided",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>割<rt>わ</rt></ruby>れる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "割"
+      ],
+      "coversReadings": {
+        "割": "われる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 割れる|われる, reading われる, and break / split / be-divided senses with priority/commonness support (entrySeq=1208020; jmdictPriority=ichi1). It is retained as useful breaking/division vocabulary vocabulary for a clean 割 -> われる support reading. 割 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "古い皿が割れました。",
+      "reading": "ふるいさらがわれました。",
+      "english": "The old plate broke."
+    }
+  },
   "加える|くわえる": {
     "written": "加える",
     "reading": "くわえる",
@@ -3327,6 +3408,60 @@
       "english": "Everyone celebrated the team's victory."
     }
   },
+  "勤しむ|いそしむ": {
+    "written": "勤しむ",
+    "reading": "いそしむ",
+    "meaning": "work hard at / devote oneself to",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>勤<rt>いそ</rt></ruby>しむ",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "勤"
+      ],
+      "coversReadings": {
+        "勤": "いそしむ"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 勤しむ|いそしむ, reading いそしむ, and work-hard-at / devote-oneself-to senses (entrySeq=2087880; jmdictPriority=none). It is retained as useful diligence/effort vocabulary vocabulary for a clean 勤 -> いそしむ support reading; no JMdict priority marker is treated as a limitation, not a blocker. 勤 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "彼は研究に勤しんでいます。",
+      "reading": "かれはけんきゅうにいそしんでいます。",
+      "english": "He is devoting himself to research."
+    }
+  },
+  "勤まる|つとまる": {
+    "written": "勤まる",
+    "reading": "つとまる",
+    "meaning": "be fit for / be able to fulfill duties",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>勤<rt>つと</rt></ruby>まる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "勤"
+      ],
+      "coversReadings": {
+        "勤": "つとまる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 勤まる|つとまる, reading つとまる, and be-fit-for-a-role / fulfill-duties senses (entrySeq=1240800; jmdictPriority=none). It is retained as useful role/duty vocabulary vocabulary for a clean 勤 -> つとまる support reading; no JMdict priority marker is treated as a limitation, not a blocker. 勤 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "この仕事は私にも勤まります。",
+      "reading": "このしごとはわたしにもつとまります。",
+      "english": "I can handle this job too."
+    }
+  },
   "勤める|つとめる": {
     "written": "勤める",
     "reading": "つとめる",
@@ -3516,6 +3651,33 @@
       "japanese": "この道は夜になると危ないです。",
       "reading": "このみちはよるになるとあぶないです。",
       "english": "This road is dangerous at night."
+    }
+  },
+  "危ぶむ|あやぶむ": {
+    "written": "危ぶむ",
+    "reading": "あやぶむ",
+    "meaning": "fear / doubt / worry about",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>危<rt>あや</rt></ruby>ぶむ",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "危"
+      ],
+      "coversReadings": {
+        "危": "あやぶむ"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 危ぶむ|あやぶむ, reading あやぶむ, and fear / doubt / have-misgivings-about senses with priority/commonness support (entrySeq=1218410; jmdictPriority=news1,nf15). It is retained as useful risk/concern vocabulary vocabulary for a clean 危 -> あやぶむ support reading. 危 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "専門家は計画の成功を危ぶんでいます。",
+      "reading": "せんもんかはけいかくのせいこうをあやぶんでいます。",
+      "english": "Experts have doubts about the plan succeeding."
     }
   },
   "危機|きき": {
@@ -4854,6 +5016,33 @@
       "english": "My physical condition recovered a little."
     }
   },
+  "因む|ちなむ": {
+    "written": "因む",
+    "reading": "ちなむ",
+    "meaning": "be associated with / be connected with",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>因<rt>ちな</rt></ruby>む",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "因"
+      ],
+      "coversReadings": {
+        "因": "ちなむ"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 因む|ちなむ, reading ちなむ, and be-associated-with / be-connected-with senses (entrySeq=2008910; jmdictPriority=none). It is retained as useful association/origin vocabulary vocabulary for a clean 因 -> ちなむ support reading; no JMdict priority marker is treated as a limitation, not a blocker. 因 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "この祭りは古い伝説に因んでいます。",
+      "reading": "このまつりはふるいでんせつにちなんでいます。",
+      "english": "This festival is connected with an old legend."
+    }
+  },
   "因る|よる": {
     "written": "因る",
     "reading": "よる",
@@ -6149,6 +6338,33 @@
       "english": "I stayed at an inn near the mountain."
     }
   },
+  "寄せる|よせる": {
+    "written": "寄せる",
+    "reading": "よせる",
+    "meaning": "bring near / gather / send",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>寄<rt>よ</rt></ruby>せる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "寄"
+      ],
+      "coversReadings": {
+        "寄": "よせる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 寄せる|よせる, reading よせる, and bring-near / gather / send senses with priority/commonness support (entrySeq=1219560; jmdictPriority=ichi1,news1,nf09). It is retained as useful gathering/contribution vocabulary vocabulary for a clean 寄 -> よせる support reading. 寄 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "皆から意見を寄せてもらいました。",
+      "reading": "みなからいけんをよせてもらいました。",
+      "english": "We received opinions from everyone."
+    }
+  },
   "寄る|よる": {
     "written": "寄る",
     "reading": "よる",
@@ -7355,6 +7571,33 @@
       }
     }
   },
+  "彼の|かの": {
+    "written": "彼の",
+    "reading": "かの",
+    "meaning": "that well-known / that",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>彼<rt>か</rt></ruby>の",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "彼"
+      ],
+      "coversReadings": {
+        "彼": "かの"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 彼の|かの, reading かの, and that-well-known / that senses (entrySeq=2845746; jmdictPriority=none). It is retained as useful formal demonstrative recognition vocabulary for a clean 彼 -> かの support reading; no JMdict priority marker is treated as a limitation, not a blocker. 彼 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "彼の有名な作家の本を読みました。",
+      "reading": "かのゆうめいなさっかのほんをよみました。",
+      "english": "I read a book by that famous writer."
+    }
+  },
   "彼岸|ひがん": {
     "written": "彼岸",
     "reading": "ひがん",
@@ -7407,6 +7650,33 @@
       "japanese": "彼等は同じ学校に通っています。",
       "reading": "かれらはおなじがっこうにかよっています。",
       "english": "They attend the same school."
+    }
+  },
+  "復|また": {
+    "written": "復",
+    "reading": "また",
+    "meaning": "again / also / on the other hand",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>復<rt>また</rt></ruby>",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "復"
+      ],
+      "coversReadings": {
+        "復": "また"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 復|また, reading また, and again / also / likewise senses with priority/commonness support (entrySeq=1524930; jmdictPriority=ichi1,news1,nf19). It is retained as useful again/also written-form recognition vocabulary for a clean 復 -> また support reading. 復 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "復同じ失敗をしないようにします。",
+      "reading": "またおなじしっぱいをしないようにします。",
+      "english": "I will try not to make the same mistake again."
     }
   },
   "微笑む|ほほえむ": {
@@ -7740,6 +8010,33 @@
       "japanese": "子どもは大きな音を怖がります。",
       "reading": "こどもはおおきなおとをこわがります。",
       "english": "Children are afraid of loud sounds."
+    }
+  },
+  "怖れる|おそれる": {
+    "written": "怖れる",
+    "reading": "おそれる",
+    "meaning": "fear / be afraid of",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>怖<rt>おそ</rt></ruby>れる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "怖"
+      ],
+      "coversReadings": {
+        "怖": "おそれる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 怖れる|おそれる, reading おそれる, and fear / be-afraid-of senses with priority/commonness support (entrySeq=1589200; jmdictPriority=ichi1,news1,nf15). It is retained as useful fear/risk vocabulary vocabulary for a clean 怖 -> おそれる support reading. 怖 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "失敗を怖れずに挑戦します。",
+      "reading": "しっぱいをおそれずにちょうせんします。",
+      "english": "I will take on the challenge without fearing failure."
     }
   },
   "思想|しそう": {
@@ -10020,6 +10317,33 @@
       "english": "I replaced the old part with a new one."
     }
   },
+  "換わる|かわる": {
+    "written": "換わる",
+    "reading": "かわる",
+    "meaning": "be replaced / change places / switch",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>換<rt>か</rt></ruby>わる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "換"
+      ],
+      "coversReadings": {
+        "換": "かわる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 換わる|かわる, reading かわる, and replace / take-the-place-of / switch senses with priority/commonness support (entrySeq=1590820; jmdictPriority=ichi1,news2,nf30). It is retained as useful replacement/change vocabulary vocabulary for a clean 換 -> かわる support reading. 換 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "担当者が新しい人に換わりました。",
+      "reading": "たんとうしゃがあたらしいひとにかわりました。",
+      "english": "The person in charge was replaced by someone new."
+    }
+  },
   "援助|えんじょ": {
     "written": "援助",
     "reading": "えんじょ",
@@ -10099,6 +10423,33 @@
       "japanese": "家族が私を支えてくれました。",
       "reading": "かぞくがわたしをささえてくれました。",
       "english": "My family supported me."
+    }
+  },
+  "支える|つかえる": {
+    "written": "支える",
+    "reading": "つかえる",
+    "meaning": "get stuck / be occupied / be busy",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>支<rt>つか</rt></ruby>える",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "支"
+      ],
+      "coversReadings": {
+        "支": "つかえる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 支える|つかえる, reading つかえる, and get-stuck / be-occupied / be-busy senses with priority/commonness support (entrySeq=1607170; jmdictPriority=ichi1). It is retained as useful blocked/busy state vocabulary vocabulary for a clean 支 -> つかえる support reading. 支 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "用事が支えて行けません。",
+      "reading": "ようじがつかえていけません。",
+      "english": "I cannot go because I am tied up with errands."
     }
   },
   "支出|ししゅつ": {
@@ -10269,6 +10620,33 @@
       "japanese": "その国は長い間、外国に支配されていました。",
       "reading": "そのくにはながいあいだ、がいこくにしはいされていました。",
       "english": "That country was controlled by a foreign country for a long time."
+    }
+  },
+  "政|まつりごと": {
+    "written": "政",
+    "reading": "まつりごと",
+    "meaning": "government / administration / rule",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>政<rt>まつりごと</rt></ruby>",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "政"
+      ],
+      "coversReadings": {
+        "政": "まつりごと"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 政|まつりごと, reading まつりごと, and rule / government / administration senses with priority/commonness support (entrySeq=1375890; jmdictPriority=news1,nf06). It is retained as useful government/rule written-form recognition vocabulary for a clean 政 -> まつりごと support reading. 政 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "昔の政について学びました。",
+      "reading": "むかしのまつりごとについてまなびました。",
+      "english": "We studied government in old times."
     }
   },
   "政治|せいじ": {
@@ -12648,6 +13026,33 @@
       "english": "That medicine kills bacteria."
     }
   },
+  "殺める|あやめる": {
+    "written": "殺める",
+    "reading": "あやめる",
+    "meaning": "wound / murder",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>殺<rt>あや</rt></ruby>める",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "殺"
+      ],
+      "coversReadings": {
+        "殺": "あやめる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 殺める|あやめる, reading あやめる, and wound / murder senses (entrySeq=1218420; jmdictPriority=none). It is retained as useful serious harm/crime vocabulary vocabulary for a clean 殺 -> あやめる support reading; no JMdict priority marker is treated as a limitation, not a blocker. 殺 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "人を殺めてはいけません。",
+      "reading": "ひとをあやめてはいけません。",
+      "english": "You must not harm another person."
+    }
+  },
   "気付き|きづき": {
     "written": "気付き",
     "reading": "きづき",
@@ -13738,6 +14143,33 @@
       "english": "We discussed a serious problem."
     }
   },
+  "深山|みやま": {
+    "written": "深山",
+    "reading": "みやま",
+    "meaning": "deep mountain / mountain recesses",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>深<rt>み</rt></ruby><ruby>山<rt>やま</rt></ruby>",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "深"
+      ],
+      "coversReadings": {
+        "深": "み"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 深山|みやま, reading みやま, and mountain-recesses / deep-in-the-mountains senses with priority/commonness support (entrySeq=1641780; jmdictPriority=news1,nf18). It is retained as useful deep-mountain written-form recognition vocabulary for a clean 深 -> み support reading. 深 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "深山の静けさに驚きました。",
+      "reading": "みやまのしずけさにおどろきました。",
+      "english": "I was surprised by the quiet of the deep mountains."
+    }
+  },
   "混雑|こんざつ": {
     "written": "混雑",
     "reading": "こんざつ",
@@ -14232,6 +14664,33 @@
       "japanese": "会場は期待に満ちています。",
       "reading": "かいじょうはきたいにみちています。",
       "english": "The venue is full of anticipation."
+    }
+  },
+  "満つ|みつ": {
+    "written": "満つ",
+    "reading": "みつ",
+    "meaning": "be full / wax / mature",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>満<rt>み</rt></ruby>つ",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "満"
+      ],
+      "coversReadings": {
+        "満": "みつ"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 満つ|みつ, reading みつ, and be-full / wax / mature senses (entrySeq=2088400; jmdictPriority=none). It is retained as useful fullness/tide-moon vocabulary vocabulary for a clean 満 -> みつ support reading; no JMdict priority marker is treated as a limitation, not a blocker. 満 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "潮が満つ時間を調べました。",
+      "reading": "しおがみつじかんをしらべました。",
+      "english": "I checked the time when the tide rises."
     }
   },
   "満足|まんぞく": {
@@ -15240,6 +15699,33 @@
       }
     }
   },
+  "痛ましい|いたましい": {
+    "written": "痛ましい",
+    "reading": "いたましい",
+    "meaning": "pitiful / heartbreaking / tragic",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>痛<rt>いた</rt></ruby>ましい",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "痛"
+      ],
+      "coversReadings": {
+        "痛": "いたましい"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 痛ましい|いたましい, reading いたましい, and pitiful / heartbreaking / tragic senses with priority/commonness support (entrySeq=1609200; jmdictPriority=ichi1,news2,nf25). It is retained as useful tragedy/news vocabulary vocabulary for a clean 痛 -> いたましい support reading. 痛 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "痛ましい事故のニュースを聞きました。",
+      "reading": "いたましいじこのニュースをききました。",
+      "english": "I heard news of a tragic accident."
+    }
+  },
   "痛み|いたみ": {
     "written": "痛み",
     "reading": "いたみ",
@@ -15292,6 +15778,33 @@
       "japanese": "長く歩いて足が痛みました。",
       "reading": "ながくあるいてあしがいたみました。",
       "english": "My feet hurt after walking for a long time."
+    }
+  },
+  "痛める|いためる": {
+    "written": "痛める",
+    "reading": "いためる",
+    "meaning": "hurt / injure / damage",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>痛<rt>いた</rt></ruby>める",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "痛"
+      ],
+      "coversReadings": {
+        "痛": "いためる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 痛める|いためる, reading いためる, and hurt / injure / damage senses with priority/commonness support (entrySeq=1432720; jmdictPriority=ichi1,spec1). It is retained as useful injury/damage vocabulary vocabulary for a clean 痛 -> いためる support reading. 痛 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "運動で足を痛めました。",
+      "reading": "うんどうであしをいためました。",
+      "english": "I hurt my leg while exercising."
     }
   },
   "登る|のぼる": {
@@ -15965,6 +16478,33 @@
       "coversReadings": {
         "破": "やぶる"
       }
+    }
+  },
+  "破れる|やぶれる": {
+    "written": "破れる",
+    "reading": "やぶれる",
+    "meaning": "tear / rip / break down",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>破<rt>やぶ</rt></ruby>れる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "破"
+      ],
+      "coversReadings": {
+        "破": "やぶれる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 破れる|やぶれる, reading やぶれる, and get-torn / tear / break-down senses with priority/commonness support (entrySeq=1471210; jmdictPriority=ichi1). It is retained as useful tearing/breakdown vocabulary vocabulary for a clean 破 -> やぶれる support reading. 破 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "古い紙が破れました。",
+      "reading": "ふるいかみがやぶれました。",
+      "english": "The old paper tore."
     }
   },
   "破壊|はかい": {
@@ -19445,6 +19985,33 @@
       "english": "Sometimes I wake up early."
     }
   },
+  "覚る|さとる": {
+    "written": "覚る",
+    "reading": "さとる",
+    "meaning": "sense / realize / understand",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>覚<rt>さと</rt></ruby>る",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "覚"
+      ],
+      "coversReadings": {
+        "覚": "さとる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 覚る|さとる, reading さとる, and sense / perceive / realize / understand senses with priority/commonness support (entrySeq=1270850; jmdictPriority=ichi1,news2,nf47). It is retained as useful perception/realization vocabulary vocabulary for a clean 覚 -> さとる support reading. 覚 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "彼は危険を覚りました。",
+      "reading": "かれはきけんをさとりました。",
+      "english": "He sensed the danger."
+    }
+  },
   "覚悟|かくご": {
     "written": "覚悟",
     "reading": "かくご",
@@ -20018,6 +20585,33 @@
       "english": "I record my daily exercise."
     }
   },
+  "訪う|とう": {
+    "written": "訪う",
+    "reading": "とう",
+    "meaning": "ask / inquire / call into question",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>訪<rt>と</rt></ruby>う",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "訪"
+      ],
+      "coversReadings": {
+        "訪": "とう"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 訪う|とう, reading とう, and ask / inquire / call-into-question senses with priority/commonness support (entrySeq=1536000; jmdictPriority=ichi1,news1,nf02). It is retained as useful inquiry/responsibility written-form recognition vocabulary for a clean 訪 -> とう support reading. 訪 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "委員会は事故の責任を訪いました。",
+      "reading": "いいんかいはじこのせきにんをとういました。",
+      "english": "The committee questioned responsibility for the accident."
+    }
+  },
   "訪ねる|たずねる": {
     "written": "訪ねる",
     "reading": "たずねる",
@@ -20043,6 +20637,33 @@
       "japanese": "週末に祖母の家を訪ねました。",
       "reading": "しゅうまつにそぼのいえをたずねました。",
       "english": "I visited my grandmother's house on the weekend."
+    }
+  },
+  "訪れる|おとずれる": {
+    "written": "訪れる",
+    "reading": "おとずれる",
+    "meaning": "visit / arrive / come",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>訪<rt>おとず</rt></ruby>れる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "訪"
+      ],
+      "coversReadings": {
+        "訪": "おとずれる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 訪れる|おとずれる, reading おとずれる, and visit / arrive / come senses with priority/commonness support (entrySeq=1518080; jmdictPriority=ichi1,news2,nf42). It is retained as useful visit/arrival vocabulary vocabulary for a clean 訪 -> おとずれる support reading. 訪 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "春が静かに訪れました。",
+      "reading": "はるがしずかにおとずれました。",
+      "english": "Spring arrived quietly."
     }
   },
   "訪問|ほうもん": {
@@ -20353,6 +20974,60 @@
       "japanese": "次の課を読んでください。",
       "reading": "つぎのかをよんでください。",
       "english": "Please read the next lesson."
+    }
+  },
+  "調う|ととのう": {
+    "written": "調う",
+    "reading": "ととのう",
+    "meaning": "be ready / be arranged / be in order",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>調<rt>ととの</rt></ruby>う",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "調"
+      ],
+      "coversReadings": {
+        "調": "ととのう"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 調う|ととのう, reading ととのう, and be-ready / be-arranged / be-in-order senses with priority/commonness support (entrySeq=1598800; jmdictPriority=ichi1,news2,nf28). It is retained as useful preparation/order vocabulary vocabulary for a clean 調 -> ととのう support reading. 調 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "準備が調いました。",
+      "reading": "じゅんびがととのいました。",
+      "english": "The preparations are ready."
+    }
+  },
+  "調える|ととのえる": {
+    "written": "調える",
+    "reading": "ととのえる",
+    "meaning": "put in order / prepare / adjust",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>調<rt>ととの</rt></ruby>える",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "調"
+      ],
+      "coversReadings": {
+        "調": "ととのえる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 調える|ととのえる, reading ととのえる, and put-in-order / prepare / adjust senses with priority/commonness support (entrySeq=1376140; jmdictPriority=ichi1). It is retained as useful preparation/adjustment vocabulary vocabulary for a clean 調 -> ととのえる support reading. 調 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "部屋を調えて客を迎えました。",
+      "reading": "へやをととのえてきゃくをむかえました。",
+      "english": "I prepared the room and welcomed the guests."
     }
   },
   "調べる|しらべる": {
@@ -20777,6 +21452,33 @@
       "japanese": "費用の負担が大きいです。",
       "reading": "ひようのふたんがおおきいです。",
       "english": "The cost burden is large."
+    }
+  },
+  "財|たから": {
+    "written": "財",
+    "reading": "たから",
+    "meaning": "treasure",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>財<rt>たから</rt></ruby>",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "財"
+      ],
+      "coversReadings": {
+        "財": "たから"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 財|たから, reading たから, and treasure senses with priority/commonness support (entrySeq=1516160; jmdictPriority=ichi1,news1,nf05). It is retained as useful treasure/value vocabulary vocabulary for a clean 財 -> たから support reading. 財 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "自然は村の大切な財です。",
+      "reading": "しぜんはむらのたいせつなたからです。",
+      "english": "Nature is the village's precious treasure."
     }
   },
   "財布|さいふ": {
@@ -23000,6 +23702,33 @@
       "english": "The two incidents are related."
     }
   },
+  "降す|くだす": {
+    "written": "降す",
+    "reading": "くだす",
+    "meaning": "make a judgment / hand down / defeat",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>降<rt>くだ</rt></ruby>す",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "降"
+      ],
+      "coversReadings": {
+        "降": "くだす"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 降す|くだす, reading くだす, and make-a-judgment / hand-down / defeat senses with priority/commonness support (entrySeq=1184320; jmdictPriority=ichi1,news2,nf39). It is retained as useful judgment/order vocabulary vocabulary for a clean 降 -> くだす support reading. 降 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "先生が最後の判断を降しました。",
+      "reading": "せんせいがさいごのはんだんをくだしました。",
+      "english": "The teacher made the final judgment."
+    }
+  },
   "降り|ふり": {
     "written": "降り",
     "reading": "ふり",
@@ -23052,6 +23781,33 @@
       "japanese": "次の駅で電車を降ります。",
       "reading": "つぎのえきででんしゃをおります。",
       "english": "I will get off the train at the next station."
+    }
+  },
+  "降る|くだる": {
+    "written": "降る",
+    "reading": "くだる",
+    "meaning": "descend / be handed down / pass",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>降<rt>くだ</rt></ruby>る",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "降"
+      ],
+      "coversReadings": {
+        "降": "くだる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 降る|くだる, reading くだる, and descend / be-handed-down / pass senses with priority/commonness support (entrySeq=1184450; jmdictPriority=ichi1,news1,nf17). It is retained as useful judgment/order descent vocabulary vocabulary for a clean 降 -> くだる support reading. 降 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "裁判所から判決が降りました。",
+      "reading": "さいばんしょからはんけつがくだりました。",
+      "english": "A judgment was handed down by the court."
     }
   },
   "降る|ふる": {
@@ -23187,6 +23943,60 @@
       "japanese": "彼女の声は舞台で際立っています。",
       "reading": "かのじょのこえはぶたいできわだっています。",
       "english": "Her voice stands out on stage."
+    }
+  },
+  "雑える|まじえる": {
+    "written": "雑える",
+    "reading": "まじえる",
+    "meaning": "mix / include / exchange",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>雑<rt>まじ</rt></ruby>える",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "雑"
+      ],
+      "coversReadings": {
+        "雑": "まじえる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 雑える|まじえる, reading まじえる, and mix / combine / include senses with priority/commonness support (entrySeq=1271660; jmdictPriority=news1,nf16). It is retained as useful mixing/inclusion written-form recognition vocabulary for a clean 雑 -> まじえる support reading. 雑 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "冗談を雑えて話しました。",
+      "reading": "じょうだんをまじえてはなしました。",
+      "english": "I spoke while mixing in jokes."
+    }
+  },
+  "雑じる|まじる": {
+    "written": "雑じる",
+    "reading": "まじる",
+    "meaning": "be mixed / mingle / join",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>雑<rt>ま</rt></ruby>じる",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "雑"
+      ],
+      "coversReadings": {
+        "雑": "まじる"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 雑じる|まじる, reading まじる, and be-mixed / mingle / join senses with priority/commonness support (entrySeq=1603930; jmdictPriority=ichi1,news2,nf34). It is retained as useful mixing/mingling written-form recognition vocabulary for a clean 雑 -> まじる support reading. 雑 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "青と赤が雑じって紫になりました。",
+      "reading": "あおとあかがまじってむらさきになりました。",
+      "english": "Blue and red mixed and became purple."
     }
   },
   "雑煮|ぞうに": {
@@ -23653,6 +24463,33 @@
       "english": "I asked my friend to help me with my homework."
     }
   },
+  "額|ひたい": {
+    "written": "額",
+    "reading": "ひたい",
+    "meaning": "forehead / brow",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>額<rt>ひたい</rt></ruby>",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "額"
+      ],
+      "coversReadings": {
+        "額": "ひたい"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 額|ひたい, reading ひたい, and forehead / brow senses with priority/commonness support (entrySeq=1207510; jmdictPriority=ichi1). It is retained as useful body-part vocabulary vocabulary for a clean 額 -> ひたい support reading. 額 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "汗が額に光っています。",
+      "reading": "あせがひたいにひかっています。",
+      "english": "Sweat is shining on his forehead."
+    }
+  },
   "顔付き|かおつき": {
     "written": "顔付き",
     "reading": "かおつき",
@@ -23678,6 +24515,33 @@
       "japanese": "彼の顔付きが少し変わりました。",
       "reading": "かれのかおつきがすこしかわりました。",
       "english": "His expression changed a little."
+    }
+  },
+  "願い|ねがい": {
+    "written": "願い",
+    "reading": "ねがい",
+    "meaning": "wish / request / prayer",
+    "jlpt": 3,
+    "tags": [
+      "starter",
+      "common",
+      "n3"
+    ],
+    "readingBreakdown": "<ruby>願<rt>ねが</rt></ruby>い",
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "願"
+      ],
+      "coversReadings": {
+        "願": "ねがい"
+      }
+    },
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 願い|ねがい, reading ねがい, and wish / request / prayer senses with priority/commonness support (entrySeq=1217900; jmdictPriority=ichi1,news1,nf05). It is retained as useful wish/request vocabulary vocabulary for a clean 願 -> ねがい support reading. 願 is the N3 reading-gap focus.",
+    "exampleSentence": {
+      "japanese": "願いがかなう日を待っています。",
+      "reading": "ねがいがかなうひをまっています。",
+      "english": "I am waiting for the day my wish comes true."
     }
   },
   "願う|ねがう": {

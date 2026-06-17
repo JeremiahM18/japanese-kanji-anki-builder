@@ -13,6 +13,7 @@ const {
   scoreReadingPracticality,
   scoreGapPlanItem,
 } = require('../src/services/wordReadingGapPlanService');
+const { loadWordReadingGapTriageOverrides } = require('../src/datasets/wordReadingGapTriageOverrides');
 
 test('scoreGapPlanItem favors promotable curated examples over raw editorial gaps', () => {
   const promotable = {
@@ -102,6 +103,35 @@ test('buildWordReadingGapPlan hides deferred variants by default and ranks activ
   assert.equal(plan.items[0].suggestedAction, 'promote_curated_example');
   assert.equal(plan.items[1].suggestedAction, 'editorial_review');
   assert.deepEqual(plan.kanjiClusters.map((cluster) => cluster.kanji).sort(), ['強', '後']);
+});
+
+test('tracked N3 reading-gap overrides defer source-thin batch 119 rows', () => {
+  const overrides = loadWordReadingGapTriageOverrides();
+  for (const key of [
+    '奥|kun|くま',
+    '芸|kun|わざ',
+    '最|kun|つま',
+    '参|kun|みつ',
+    '処|kun|おる',
+    '存|kun|ある',
+    '存|kun|とう',
+    '両|kun|てる',
+    '解|kun|さとる',
+    '観|kun|しめす',
+    '芸|kun|うえる',
+    '権|kun|おもり',
+    '権|kun|はかる',
+    '号|kun|さけぶ',
+    '号|kun|よびな',
+    '歳|kun|よわい',
+    '参|kun|まじわる',
+    '賛|kun|たすける',
+    '残|kun|そこなう',
+    '師|kun|いくさ',
+  ]) {
+    assert.equal(overrides.N3[key].suggestedAction, 'defer_variant');
+    assert.match(overrides.N3[key].note, /Live local JMdict review/);
+  }
 });
 
 test('buildSuggestedWordCandidates ranks tracked sentence-backed words and surfaces labeling needs', () => {

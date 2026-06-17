@@ -851,6 +851,106 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Live local JMdict review found 対手|あいて, but the row is a less-common whole-word written form and not a clean decomposable 対 -> あいて support card. Defer rather than force misleading individual-kanji coverage."
+    },
+    "奥|kun|くま": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 奥まる|おくまる and 奥まって|おくまって, but くま crosses the 奥 -> おく plus following ま boundary; no clean exact row for 奥 -> くま was found. Defer rather than faking per-kanji coverage."
+    },
+    "芸|kun|わざ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 芸 carrying わざ. Defer this reading instead of borrowing 技 or 業 surfaces that do not contain the target kanji."
+    },
+    "最|kun|つま": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact learner-facing row with 最 carrying つま. Defer rather than forcing an unsupported archaic reading into N3 Silver."
+    },
+    "参|kun|みつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 参 carrying みつ. Defer rather than forcing name-like or unsupported coverage."
+    },
+    "処|kun|おる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 処 carrying おる. Defer rather than inventing a support card without governed source identity."
+    },
+    "存|kun|ある": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 存 carrying ある. Defer rather than borrowing existence vocabulary where 存 is not cleanly read ある."
+    },
+    "存|kun|とう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 凍結保存 and related rows, but とう belongs to 凍 while 存 is read ぞん in 保存. No clean exact row for 存 -> とう was found, so defer rather than faking per-kanji coverage."
+    },
+    "両|kun|てる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 両 carrying てる. Defer rather than inventing a support card without governed source identity."
+    },
+    "解|kun|さとる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 解 carrying さとる. Defer instead of borrowing 覚る|さとる, which does not contain 解."
+    },
+    "観|kun|しめす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 観 carrying しめす. Defer instead of borrowing 示す surfaces that do not contain the target kanji."
+    },
+    "芸|kun|うえる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 芸 carrying うえる. Defer instead of borrowing 植える|うえる, which does not contain 芸."
+    },
+    "権|kun|おもり": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 権 carrying おもり. Defer rather than adding unsupported or name-like coverage."
+    },
+    "権|kun|はかる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 権 carrying はかる. Defer rather than forcing unsupported governance/measure vocabulary."
+    },
+    "号|kun|さけぶ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 号 carrying さけぶ. Defer instead of borrowing 叫ぶ surfaces that do not contain 号."
+    },
+    "号|kun|よびな": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 号 carrying よびな. Defer instead of borrowing 呼び名 or other surfaces that do not contain 号."
+    },
+    "歳|kun|よわい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 歳 carrying よわい. Defer instead of borrowing 齢-style age vocabulary that does not use the target written form."
+    },
+    "参|kun|まじわる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 参 carrying まじわる. Defer instead of borrowing 交わる surfaces that do not contain 参."
+    },
+    "賛|kun|たすける": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 賛 carrying たすける. Defer instead of borrowing 助ける surfaces that do not contain 賛."
+    },
+    "残|kun|そこなう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 残 carrying そこなう. Defer instead of borrowing 損なう surfaces that do not contain 残."
+    },
+    "師|kun|いくさ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 師 carrying いくさ. Defer instead of borrowing 戦 or army/war surfaces that do not contain 師."
     }
   },
   "N4": {

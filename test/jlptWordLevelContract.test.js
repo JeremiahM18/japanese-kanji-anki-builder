@@ -97,7 +97,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 1065);
+    assert.equal(contract.inventoryCounts["3"], 1069);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
@@ -320,6 +320,10 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "労き|いたずき",
         "守|かみ",
         "政所|まんどころ",
+        "向いている|むいている",
+        "寝ぬ|いぬ",
+        "愛しい|かなしい",
+        "苦る|にがる",
     ]) {
         assert.equal(getJlptWordLevel(contract, key), 3);
     }

@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2126);
+    assert.equal(Object.keys(starterEntries).length, 2130);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 1065,
+        3: 1069,
         4: 700,
         5: 307,
     });
@@ -5109,6 +5109,46 @@ test("tracked starter word data includes the one hundred eighteenth N3 Silver so
     assert.match(starterEntries["法面|のりめん"].notes, /technical register/);
     assert.match(starterEntries["守|かみ"].notes, /historical register/);
     assert.equal(starterEntries["米酢|よねず"].exampleSentence.japanese, "米酢でドレッシングを作りました。");
+});
+
+test("tracked starter word data includes the one hundred nineteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["向いている|むいている", "向", "むい"],
+        ["寝ぬ|いぬ", "寝", "いぬ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["向いている|むいている", "both"],
+        ["寝ぬ|いぬ", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["向いている|むいている", "<ruby>向い<rt>むい</rt></ruby>ている"],
+        ["寝ぬ|いぬ", "<ruby>寝ぬ<rt>いぬ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["向いている|むいている"].notes, /aptitude\/suitability vocabulary/);
+    assert.match(starterEntries["寝ぬ|いぬ"].notes, /literary-form recognition vocabulary/);
+    assert.equal(starterEntries["向いている|むいている"].exampleSentence.japanese, "この仕事は彼に向いていると思います。");
+});
+
+test("tracked starter word data includes the one hundred twentieth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["愛しい|かなしい", "愛", "かなしい"],
+        ["苦る|にがる", "苦", "にがる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["愛しい|かなしい", "both"],
+        ["苦る|にがる", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["愛しい|かなしい", "<ruby>愛しい<rt>かなしい</rt></ruby>"],
+        ["苦る|にがる", "<ruby>苦<rt>にが</rt></ruby>る"],
+    ]);
+    assert.match(starterEntries["愛しい|かなしい"].notes, /historical\/alternate written-form recognition/);
+    assert.match(starterEntries["苦る|にがる"].notes, /expressive face\/reaction vocabulary/);
+    assert.equal(starterEntries["愛しい|かなしい"].exampleSentence.japanese, "その別れは愛しい出来事として語られました。");
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

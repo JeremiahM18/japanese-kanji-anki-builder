@@ -3344,6 +3344,12 @@
       "sourceReading": "みょうじ",
       "sourceAccent": "1"
     },
+    "向いている|むいている": {
+      "pattern": "3 [odaka] / 2 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "向いている",
+      "generatedReading": "むいている"
+    },
     "向かい|むかい": {
       "pattern": "3 [odaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -4758,6 +4764,12 @@
       "sourceReading": "ねかす",
       "sourceAccent": "0"
     },
+    "寝ぬ|いぬ": {
+      "pattern": "2 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "いぬ",
+      "generatedReading": "いぬ"
+    },
     "寝る|ねる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -6015,6 +6027,12 @@
       "sourceWord": "愛しい",
       "sourceReading": "いとしい",
       "sourceAccent": "3"
+    },
+    "愛しい|かなしい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "かなしい",
+      "generatedReading": "かなしい"
     },
     "愛しむ|おしむ": {
       "pattern": "2 [nakadaka]",
@@ -11316,6 +11334,12 @@
       "sourceWord": "苦しむ",
       "sourceReading": "くるしむ",
       "sourceAccent": "3"
+    },
+    "苦る|にがる": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "苦る",
+      "generatedReading": "にがる"
     },
     "苦労|くろう": {
       "pattern": "1 [atamadaka]",

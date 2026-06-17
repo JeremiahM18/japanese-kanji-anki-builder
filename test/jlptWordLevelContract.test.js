@@ -97,12 +97,44 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
 
     assert.equal(contract.inventoryCounts["1"], 26);
     assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 985);
+    assert.equal(contract.inventoryCounts["3"], 1017);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
     for (const key of [
         "羞恥|しゅうち",
+        "資本|しほん",
+        "事務|じむ",
+        "収穫|しゅうかく",
+        "就職|しゅうしょく",
+        "住宅|じゅうたく",
+        "収入|しゅうにゅう",
+        "宿泊|しゅくはく",
+        "手術|しゅじゅつ",
+        "手段|しゅだん",
+        "出席|しゅっせき",
+        "主婦|しゅふ",
+        "主要|しゅよう",
+        "需要|じゅよう",
+        "順調|じゅんちょう",
+        "障害|しょうがい",
+        "状況|じょうきょう",
+        "条件|じょうけん",
+        "常識|じょうしき",
+        "症状|しょうじょう",
+        "状態|じょうたい",
+        "上達|じょうたつ",
+        "冗談|じょうだん",
+        "上等|じょうとう",
+        "商人|しょうにん",
+        "承認|しょうにん",
+        "商売|しょうばい",
+        "消防|しょうぼう",
+        "情報|じょうほう",
+        "女王|じょおう",
+        "職|しょく",
+        "職業|しょくぎょう",
+        "食欲|しょくよく",
         "頂上|ちょうじょう",
         "正直|しょうじき",
         "直接|ちょくせつ",

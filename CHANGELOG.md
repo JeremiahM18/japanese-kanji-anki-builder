@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Added `deck:words:coverage-uplift`, a read-only word coverage diagnostic that reports whether harder word decks backfill a selected target level's kanji-reading coverage across any valid same-or-harder N1-N5 range without changing readiness, deferrals, review lanes, data, media, or proof ledgers.
+
 ### Changed
 
 - Expanded active N3 word Silver coverage from `359` to `1069` canonical rows. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold, Sapphire, and Platinum remain at `8/1069` current-standard in this lane, readiness remains incomplete, and no N3 word Obsidian proof is recorded.

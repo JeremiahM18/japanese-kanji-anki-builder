@@ -160,6 +160,7 @@
     "deck:words:completion:n2": "node scripts/reportWordDeckCompletion.js --level=2",
     "deck:words:completion:n1": "node scripts/reportWordDeckCompletion.js --level=1",
     "deck:words:level-anchor-audit": "node scripts/auditWordLevelAnchors.js",
+    "deck:words:coverage-uplift": "node scripts/reportWordCoverageUplift.js",
     "deck:words:reading-audit": "node scripts/reportWordReadingCoverage.js",
     "deck:words:reading-audit:n5": "node scripts/reportWordReadingCoverage.js --level=5",
     "deck:words:reading-audit:n4": "node scripts/reportWordReadingCoverage.js --level=4",

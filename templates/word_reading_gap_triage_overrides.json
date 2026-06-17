@@ -966,6 +966,91 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Live local JMdict review found no exact written-reading row with 数 carrying せめる. Same-reading useful words are 攻める and 責める, neither of which contains 数, so defer rather than creating false reading coverage."
+    },
+    "争|kun|いかでか": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 争 carrying いかでか. Defer rather than inventing a classical support card without governed learner-facing word evidence."
+    },
+    "存|kun|たもつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 存 carrying たもつ. Same-reading useful vocabulary is 保つ|たもつ, which does not contain 存, so defer instead of borrowing false coverage."
+    },
+    "対|kun|こたえる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 対 carrying こたえる. Same-reading rows such as 応える, 答える, and 報える use different written identities, so defer rather than forcing non-target kanji coverage."
+    },
+    "対|kun|そろい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 対 carrying そろい. Same-reading 揃い|そろい does not contain 対 and has no priority support in the governed TSV, so defer."
+    },
+    "対|kun|つれあい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 対 carrying つれあい. Same-reading 連れ合い|つれあい does not contain 対 and lacks priority support, so defer."
+    },
+    "対|kun|ならぶ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 対 carrying ならぶ. Same-reading rows such as 並ぶ, 列ぶ, and 双ぶ use different written identities, so defer rather than creating false coverage."
+    },
+    "断|kun|さだめる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 断 carrying さだめる. Same-reading useful vocabulary is 定める|さだめる, which does not contain 断, so defer."
+    },
+    "伝|kun|つだう": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 伝 carrying つだう. Defer rather than forcing unsupported coverage when useful 伝 readings are already covered by 伝う, 伝える, 伝わる, 伝手, and 川伝い."
+    },
+    "登|kun|あがる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 登 carrying あがる. Same-reading rows such as 上がる, 上る, 挙がる, and 騰がる use different written identities, so defer."
+    },
+    "忙|kun|おそれる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 忙 carrying おそれる. Same-reading rows such as 恐れる, 怖れる, and 畏れる use different written identities, so defer instead of borrowing non-target kanji coverage."
+    },
+    "夢|kun|くらい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 夢 carrying くらい. Same-reading rows such as 暗い and 昏い do not contain 夢, so defer."
+    },
+    "与|kun|ともに": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 与 carrying ともに. Same-reading rows such as 共に and 供に use different written identities, so defer."
+    },
+    "両|kun|ふたつ": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 両 carrying ふたつ. Same-reading rows such as 二つ and 双つ do not contain 両, so defer rather than creating false reading coverage."
+    },
+    "労|kun|つかれる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 労 carrying つかれる. Same-reading 疲れる|つかれる does not contain 労, so defer instead of borrowing a non-target written identity."
+    },
+    "録|kun|しるす": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 録 carrying しるす. Same-reading useful rows such as 記す, 誌す, and 識す use different written identities, so defer."
+    },
+    "数|kun|わずらわしい": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 数 carrying わずらわしい. Same-reading 煩わしい|わずらわしい does not contain 数, so defer."
+    },
+    "忙|kun|うれえるさま": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 忙 carrying うれえるさま. Defer rather than creating an unsupported archaic/descriptive support card."
     }
   },
   "N4": {

@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2130);
+    assert.equal(Object.keys(starterEntries).length, 2142);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 1069,
+        3: 1081,
         4: 700,
         5: 307,
     });
@@ -5149,6 +5149,92 @@ test("tracked starter word data includes the one hundred twentieth N3 Silver sou
     assert.match(starterEntries["愛しい|かなしい"].notes, /historical\/alternate written-form recognition/);
     assert.match(starterEntries["苦る|にがる"].notes, /expressive face\/reaction vocabulary/);
     assert.equal(starterEntries["愛しい|かなしい"].exampleSentence.japanese, "その別れは愛しい出来事として語られました。");
+});
+
+test("tracked starter word data includes the one hundred twenty-first N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["助手|じょしゅ", "助", "じょ"],
+        ["女優|じょゆう", "優", "ゆう"],
+        ["書類|しょるい", "類", "るい"],
+        ["神経|しんけい", "神", "しん"],
+        ["神経|しんけい", "経", "けい"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["助手|じょしゅ", "both"],
+        ["女優|じょゆう", "both"],
+        ["書類|しょるい", "both"],
+        ["神経|しんけい", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["助手|じょしゅ", "<ruby>助<rt>じょ</rt></ruby><ruby>手<rt>しゅ</rt></ruby>"],
+        ["女優|じょゆう", "<ruby>女<rt>じょ</rt></ruby><ruby>優<rt>ゆう</rt></ruby>"],
+        ["書類|しょるい", "<ruby>書<rt>しょ</rt></ruby><ruby>類<rt>るい</rt></ruby>"],
+        ["神経|しんけい", "<ruby>神<rt>しん</rt></ruby><ruby>経<rt>けい</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["助手|じょしゅ"].notes, /entrySeq=1344650/);
+    assert.match(starterEntries["女優|じょゆう"].notes, /N3 anchor is 優/);
+    assert.match(starterEntries["書類|しょるい"].notes, /jmdictPriority=ichi1,news1,nf05/);
+    assert.match(starterEntries["神経|しんけい"].notes, /Both 神 and 経 are N3 anchors/);
+    assert.equal(starterEntries["書類|しょるい"].exampleSentence.japanese, "必要な書類を机の上に置きました。");
+});
+
+test("tracked starter word data includes the one hundred twenty-second N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["信仰|しんこう", "信", "しん"],
+        ["信号|しんごう", "信", "しん"],
+        ["信号|しんごう", "号", "ごう"],
+        ["診察|しんさつ", "察", "さつ"],
+        ["人種|じんしゅ", "種", "しゅ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["信仰|しんこう", "both"],
+        ["信号|しんごう", "both"],
+        ["診察|しんさつ", "both"],
+        ["人種|じんしゅ", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["信仰|しんこう", "<ruby>信<rt>しん</rt></ruby><ruby>仰<rt>こう</rt></ruby>"],
+        ["信号|しんごう", "<ruby>信<rt>しん</rt></ruby><ruby>号<rt>ごう</rt></ruby>"],
+        ["診察|しんさつ", "<ruby>診<rt>しん</rt></ruby><ruby>察<rt>さつ</rt></ruby>"],
+        ["人種|じんしゅ", "<ruby>人<rt>じん</rt></ruby><ruby>種<rt>しゅ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["信仰|しんこう"].notes, /仰 is harder N1 support/);
+    assert.match(starterEntries["信号|しんごう"].notes, /Both 信 and 号 are N3 anchors/);
+    assert.match(starterEntries["診察|しんさつ"].notes, /診 is harder N1 support/);
+    assert.match(starterEntries["人種|じんしゅ"].notes, /neutral and non-stereotyping/);
+    assert.equal(starterEntries["信号|しんごう"].exampleSentence.japanese, "信号が青になってから渡りましょう。");
+});
+
+test("tracked starter word data includes the one hundred twenty-third N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["信じる|しんじる", "信", "しん"],
+        ["心配|しんぱい", "配", "ぱい"],
+        ["審判|しんぱん", "判", "ぱん"],
+        ["信用|しんよう", "信", "しん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["信じる|しんじる", "both"],
+        ["心配|しんぱい", "both"],
+        ["審判|しんぱん", "both"],
+        ["信用|しんよう", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["信じる|しんじる", "<ruby>信<rt>しん</rt></ruby>じる"],
+        ["心配|しんぱい", "<ruby>心<rt>しん</rt></ruby><ruby>配<rt>ぱい</rt></ruby>"],
+        ["審判|しんぱん", "<ruby>審<rt>しん</rt></ruby><ruby>判<rt>ぱん</rt></ruby>"],
+        ["信用|しんよう", "<ruby>信<rt>しん</rt></ruby><ruby>用<rt>よう</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["信じる|しんじる"].notes, /entrySeq=1359040/);
+    assert.match(starterEntries["心配|しんぱい"].notes, /N3 anchor is 配/);
+    assert.match(starterEntries["審判|しんぱん"].notes, /sports-referee sense/);
+    assert.match(starterEntries["信用|しんよう"].notes, /jmdictPriority=ichi1,news1,nf03/);
+    assert.equal(starterEntries["心配|しんぱい"].exampleSentence.japanese, "母は私の体調を心配しています。");
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

@@ -4,8 +4,34 @@ const { z } = require("zod");
 const triageOverrideSchema = z.object({
     suggestedAction: z.enum(["editorial_review", "promote_curated_example", "defer_variant"]),
     priority: z.enum(["high", "medium", "low"]).optional(),
+    targetLevel: z.number().int().min(1).max(5).optional(),
+    targetLevelReason: z.string().min(1).optional(),
     note: z.string().min(1).optional(),
-}).strict();
+}).strict().superRefine((override, ctx) => {
+    if (Number.isInteger(override.targetLevel) && override.suggestedAction !== "defer_variant") {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "targetLevel is only supported for defer_variant overrides.",
+            path: ["targetLevel"],
+        });
+    }
+
+    if (Number.isInteger(override.targetLevel) && !override.targetLevelReason) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "targetLevelReason is required when targetLevel is present.",
+            path: ["targetLevelReason"],
+        });
+    }
+
+    if (!Number.isInteger(override.targetLevel) && override.targetLevelReason) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "targetLevelReason requires targetLevel.",
+            path: ["targetLevelReason"],
+        });
+    }
+});
 
 const triageOverridesSchema = z.record(
     z.string().min(1),

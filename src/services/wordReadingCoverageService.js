@@ -411,6 +411,8 @@ function buildWordReadingGapTriage(report) {
         gapKind: readingEntry.gapKind || 'distinct',
         priority,
         suggestedAction,
+        targetLevel: override?.targetLevel,
+        targetLevelReason: override?.targetLevelReason || '',
         editorialNote: override?.note || '',
         curatedExampleCandidates: readingEntry.matchingExamples.map((example) => ({
           written: example.written,
@@ -568,6 +570,12 @@ function formatWordReadingGapTriage(triage, { maxItems = 50, includeVariants = f
     );
     lines.push(`  display anchor: ${item.displayWord}`);
     lines.push(`  curated candidates: ${candidateText}`);
+    if (Number.isInteger(item.targetLevel)) {
+      lines.push(`  deferred target level: N${item.targetLevel}`);
+      if (item.targetLevelReason) {
+        lines.push(`  target reason: ${item.targetLevelReason}`);
+      }
+    }
     if (item.editorialNote) {
       lines.push(`  editorial note: ${item.editorialNote}`);
     }

@@ -249,7 +249,7 @@ The gap planner ranks open reading coverage work and suggests candidate support 
 - sentence corpus rows
 - local kanjiapi word cache evidence
 
-Planner output is advisory. A suggested card still needs canonical contract coverage, explicit reading intent, cross-level labels, media, sentence review, and deck-policy validation before shipping.
+Planner output is advisory. A suggested card still needs canonical contract coverage, explicit reading intent, cross-level labels, media, sentence review, and deck-policy validation before shipping. Deferred reading gaps may carry explicit target-level routing metadata; a `defer_variant` row routed to N2 or N1 is not promoted by that routing alone and still needs exact target-level contract and starter-data review before any card exists.
 
 `deck:words:expansion-support:n4` adds the governed NLP expansion layer for the same level: tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, validation, and the NLP governance gate.
 

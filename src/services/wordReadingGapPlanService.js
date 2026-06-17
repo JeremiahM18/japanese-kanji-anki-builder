@@ -550,6 +550,8 @@ function toPlanItem(item, index, suggestionOptions = {}) {
     suggestedCandidateSummary: formatSuggestedCandidates({ suggestedWordCandidates }),
     suggestedWordCandidates,
     editorialNote: item.editorialNote || '',
+    targetLevel: item.targetLevel,
+    targetLevelReason: item.targetLevelReason || '',
   };
 }
 
@@ -590,6 +592,16 @@ function buildKanjiClusters(items) {
       suggestedActions: [...cluster.suggestedActions].sort(),
     }))
     .sort((a, b) => b.itemCount - a.itemCount || b.bestScore - a.bestScore || a.kanji.localeCompare(b.kanji, 'ja'));
+}
+
+function summarizeDeferredTargetLevels(items = []) {
+  return items
+    .filter((item) => item.suggestedAction === 'defer_variant' && Number.isInteger(item.targetLevel))
+    .reduce((summary, item) => {
+      const label = `N${item.targetLevel}`;
+      summary[label] = (summary[label] || 0) + 1;
+      return summary;
+    }, {});
 }
 
 function buildWordReadingGapPlan(triage, {
@@ -650,6 +662,7 @@ function buildWordReadingGapPlan(triage, {
       strongSuggestionItems: sourceItems.filter((item) => item.suggestedWordCandidates.some((candidate) => candidate.quality === 'strong')).length,
       reviewSuggestionItems: sourceItems.filter((item) => item.suggestedWordCandidates.some((candidate) => candidate.quality === 'review')).length,
       weakSuggestionItems: sourceItems.filter((item) => item.suggestedWordCandidates.some((candidate) => candidate.quality === 'weak')).length,
+      deferredTargetLevelCounts: summarizeDeferredTargetLevels(triage.items || []),
       only,
       minSuggestionQuality,
       coveredReadings: coverageSummary.coveredReadings,
@@ -689,6 +702,13 @@ function formatWordReadingGapPlan(plan) {
   lines.push(`  - Fast promotions: ${plan.summary.promoteCuratedExampleItems}`);
   lines.push(`  - Editorial research: ${plan.summary.editorialReviewItems}`);
   lines.push(`  - Deferred variants hidden: ${plan.summary.deferredHiddenItems}`);
+  const deferredTargetCounts = Object.entries(plan.summary.deferredTargetLevelCounts || {});
+  if (deferredTargetCounts.length > 0) {
+    lines.push(`  - Deferred target levels: ${deferredTargetCounts
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([level, count]) => `${level} ${count}`)
+      .join(', ')}`);
+  }
   lines.push(`  - Items with suggested candidates: ${plan.summary.suggestedCandidateItems}`);
   lines.push(`  - Suggested candidates shown: ${plan.summary.suggestedCandidateCount}`);
   lines.push(`  - Strong suggestion items: ${plan.summary.strongSuggestionItems}`);
@@ -714,6 +734,12 @@ function formatWordReadingGapPlan(plan) {
     lines.push(`   reason: ${item.reason}`);
     lines.push(`   candidates: ${item.candidateSummary}`);
     lines.push(`   suggested words: ${item.suggestedCandidateSummary}`);
+    if (Number.isInteger(item.targetLevel)) {
+      lines.push(`   deferred target level: N${item.targetLevel}`);
+      if (item.targetLevelReason) {
+        lines.push(`   target reason: ${item.targetLevelReason}`);
+      }
+    }
     if (item.editorialNote) {
       lines.push(`   note: ${item.editorialNote}`);
     }

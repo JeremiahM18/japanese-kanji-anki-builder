@@ -125,6 +125,8 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:completion:n3` | Audit N3 word Silver inventory and reading coverage |
 | `npm run deck:words:completion:n2` | Audit N2 word Silver inventory and reading coverage |
 | `npm run deck:words:completion:n1` | Audit N1 word Silver inventory and reading coverage |
+| `npm run deck:words:coverage-uplift -- --target-level=N5 --through-level=N1 --details` | Read-only diagnostic showing whether harder word decks backfill the selected target level's kanji-reading coverage; baseline counts only the target word deck, then layers harder decks down to `--through-level`; supports any valid same-or-harder N1-N5 range and does not change readiness, deferrals, review lanes, data, media, or proof ledgers |
+| `npm run deck:words:coverage-uplift -- --target-level=N4 --through-level=N1` | Same read-only uplift diagnostic for an N4 target through all harder word levels; `N5->N5`, `N5->N1`, `N4->N1`, `N3->N1`, `N2->N1`, and `N1->N1` are all valid shapes |
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
 | `npm run deck:words:reading-audit:n5` | Audit N5 word reading coverage |
 | `npm run deck:words:reading-audit:n3` | Audit N3 word reading coverage |

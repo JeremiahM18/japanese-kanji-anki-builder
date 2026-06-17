@@ -463,6 +463,30 @@ test("sortWordDeckEntriesForStudy interleaves focus kanji with a stable seeded o
     assert.ok(adjacentRepeats < firstPass.length / 2);
 });
 
+test("sortWordDeckEntriesForStudy applies the deterministic interleaved shuffle to N3", () => {
+    const entries = [
+        { candidate: { written: "信頼", pron: "しんらい", score: 100 }, sourceKanji: new Set(["信"]) },
+        { candidate: { written: "信号", pron: "しんごう", score: 100 }, sourceKanji: new Set(["信"]) },
+        { candidate: { written: "心配", pron: "しんぱい", score: 100 }, sourceKanji: new Set(["心"]) },
+        { candidate: { written: "心臓", pron: "しんぞう", score: 100 }, sourceKanji: new Set(["心"]) },
+        { candidate: { written: "書類", pron: "しょるい", score: 100 }, sourceKanji: new Set(["書"]) },
+        { candidate: { written: "書店", pron: "しょてん", score: 100 }, sourceKanji: new Set(["書"]) },
+    ];
+
+    const firstPass = sortWordDeckEntriesForStudy(entries, { levelNumber: 3, seed: "test-seed" });
+    const secondPass = sortWordDeckEntriesForStudy(entries, { levelNumber: 3, seed: "test-seed" });
+    const groupedOrder = entries.map((entry) => entry.candidate.written);
+    const studyOrder = firstPass.map((entry) => entry.candidate.written);
+
+    assert.deepEqual(studyOrder, secondPass.map((entry) => entry.candidate.written));
+    assert.notDeepEqual(studyOrder, groupedOrder);
+    const adjacentRepeats = firstPass
+        .slice(1)
+        .filter((entry, index) => getWordDeckStudyGroupKey(entry) === getWordDeckStudyGroupKey(firstPass[index]))
+        .length;
+    assert.ok(adjacentRepeats < firstPass.length / 2);
+});
+
 test("sortWordDeckEntriesForStudy keeps simple common words before complex support words", () => {
     const entries = [
         {

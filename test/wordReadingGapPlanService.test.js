@@ -172,6 +172,36 @@ test('tracked N3 reading-gap overrides defer source-thin batch 122 rows', () => 
   }
 });
 
+test('tracked N3 reading-gap deferrals carry explicit N2 or N1 target placement', () => {
+  const overrides = loadWordReadingGapTriageOverrides();
+  const n3Deferrals = Object.entries(overrides.N3 || {})
+    .filter(([, override]) => override.suggestedAction === 'defer_variant');
+  const targetCounts = n3Deferrals.reduce((counts, [, override]) => {
+    counts[override.targetLevel] = (counts[override.targetLevel] || 0) + 1;
+    return counts;
+  }, {});
+
+  assert.equal(n3Deferrals.length, 155);
+  assert.deepEqual(targetCounts, { 1: 152, 2: 3 });
+  assert.equal(overrides.N3['登|on|とう'].targetLevel, 2);
+  assert.match(overrides.N3['登|on|とう'].targetLevelReason, /登場\|とうじょう/);
+  assert.equal(overrides.N3['差|kun|さし'].targetLevel, 2);
+  assert.match(overrides.N3['差|kun|さし'].targetLevelReason, /差し支え\|さしつかえ/);
+  assert.equal(overrides.N3['達|on|たつ'].targetLevel, 2);
+  assert.match(overrides.N3['達|on|たつ'].targetLevelReason, /速達\|そくたつ/);
+  assert.equal(overrides.N3['指|kun|さし'].targetLevel, 1);
+  assert.match(overrides.N3['指|kun|さし'].targetLevelReason, /指図\|さしず/);
+  assert.equal(overrides.N3['遊|on|ゆ'].targetLevel, 1);
+  assert.match(overrides.N3['遊|on|ゆ'].targetLevelReason, /遊園地\|ゆうえんち/);
+  assert.equal(overrides.N3['和|on|か'].targetLevel, 1);
+  assert.match(overrides.N3['和|on|か'].targetLevelReason, /英和\|えいわ/);
+
+  for (const [key, override] of n3Deferrals) {
+    assert.ok([1, 2].includes(override.targetLevel), `${key} should route to N1 or N2`);
+    assert.ok(override.targetLevelReason, `${key} should explain its target placement`);
+  }
+});
+
 test('buildSuggestedWordCandidates ranks tracked sentence-backed words and surfaces labeling needs', () => {
   const item = {
     kanji: '汚',
@@ -420,13 +450,17 @@ test('buildWordReadingGapPlan can include deferred variants explicitly', () => {
         curatedExampleCandidates: [],
         deckExampleCandidates: [],
         editorialNote: 'Archaic reading; defer unless product scope changes.',
+        targetLevel: 1,
+        targetLevelReason: 'Route only to later-level review.',
       },
     ],
   }, { includeDeferred: true });
 
   assert.equal(plan.summary.deferredHiddenItems, 0);
+  assert.deepEqual(plan.summary.deferredTargetLevelCounts, { N1: 1 });
   assert.equal(plan.items.length, 1);
   assert.equal(plan.items[0].suggestedAction, 'defer_variant');
+  assert.equal(plan.items[0].targetLevel, 1);
 });
 
 test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
@@ -443,6 +477,7 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
       strongSuggestionItems: 1,
       reviewSuggestionItems: 0,
       weakSuggestionItems: 0,
+      deferredTargetLevelCounts: { N1: 1 },
       only: 'contract-extensions',
       minSuggestionQuality: 'strong',
       coveredReadings: 345,
@@ -465,6 +500,8 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
         reason: 'curated example already exists; distinct reading target',
         candidateSummary: '後ろ (うしろ)',
         suggestedCandidateSummary: '後方 (うしろ) [strong; add_governed_support_word; score 100; sentence-backed]',
+        targetLevel: 1,
+        targetLevelReason: 'Route only to later-level review.',
       },
     ],
     kanjiClusters: [
@@ -482,6 +519,8 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
   assert.match(text, /Recommended next batch \(1 item\)/);
   assert.match(text, /後 kun-reading うしろ/);
   assert.match(text, /suggested words: 後方/);
+  assert.match(text, /Deferred target levels: N1 1/);
+  assert.match(text, /deferred target level: N1/);
   assert.match(text, /Filter: contract-extensions/);
   assert.match(text, /Minimum suggestion quality: strong/);
   assert.match(text, /Highest-density kanji clusters/);

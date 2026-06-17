@@ -324,6 +324,33 @@ test('buildWordReadingGapTriage respects tracked editorial override dispositions
   assert.ok(n4Triage.items.some((item) => /合戦 is real and common/.test(item.editorialNote)));
   assert.ok(n4Triage.items.some((item) => /公園/.test(item.editorialNote)));
   assert.ok(n4Triage.items.some((item) => /No exact JMdict learner-facing 区 -> おう/.test(item.editorialNote)));
+
+  const n3Report = {
+    summary: { levelLabel: 'N3' },
+    kanji: [
+      {
+        kanji: '登',
+        displayWord: '登',
+        onCoverage: [
+          {
+            reading: 'とう',
+            status: 'missing_example',
+            coverageSource: 'none',
+            matchingExamples: [],
+            deckExamples: [],
+            gapKind: 'distinct',
+          },
+        ],
+        kunCoverage: [],
+      },
+    ],
+  };
+
+  const n3Triage = buildWordReadingGapTriage(n3Report);
+  assert.equal(n3Triage.items[0].suggestedAction, 'defer_variant');
+  assert.equal(n3Triage.items[0].targetLevel, 2);
+  assert.match(n3Triage.items[0].targetLevelReason, /Exact local Tanos N2 candidate 登場\|とうじょう/);
+  assert.match(formatWordReadingGapTriage(n3Triage, { includeVariants: true }), /deferred target level: N2/);
 });
 
 test('formatWordReadingGapTriage renders a practical backlog summary', () => {

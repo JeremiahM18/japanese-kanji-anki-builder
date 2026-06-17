@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2078);
+    assert.equal(Object.keys(starterEntries).length, 2102);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 1017,
+        3: 1041,
         4: 700,
         5: 307,
     });
@@ -4881,6 +4881,120 @@ test("tracked starter word data includes the one hundred twelfth N3 Silver sourc
     assert.match(starterEntries["承認|しょうにん"].notes, /entrySeq=1349520/);
     assert.match(starterEntries["女王|じょおう"].notes, /女 is easier N5 context/);
     assert.equal(starterEntries["職|しょく"].exampleSentence.japanese, "彼は新しい職を探しています。");
+});
+
+test("tracked starter word data includes the one hundred thirteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["失せる|うせる", "失", "うせる"],
+        ["怖じる|おじる", "怖", "おじる"],
+        ["退ける|しりぞける", "退", "しりぞける"],
+        ["省みる|かえりみる", "省", "かえりみる"],
+        ["頼もしい|たのもしい", "頼", "たのもしい"],
+        ["表れる|あらわれる", "表", "あらわれる"],
+        ["捕らわれる|とらわれる", "捕", "とらわれる"],
+        ["警める|いましめる", "警", "いましめる"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["失せる|うせる", "both"],
+        ["怖じる|おじる", "both"],
+        ["退ける|しりぞける", "both"],
+        ["省みる|かえりみる", "both"],
+        ["頼もしい|たのもしい", "both"],
+        ["表れる|あらわれる", "both"],
+        ["捕らわれる|とらわれる", "both"],
+        ["警める|いましめる", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["失せる|うせる", "<ruby>失<rt>う</rt></ruby>せる"],
+        ["怖じる|おじる", "<ruby>怖<rt>お</rt></ruby>じる"],
+        ["退ける|しりぞける", "<ruby>退<rt>しりぞ</rt></ruby>ける"],
+        ["省みる|かえりみる", "<ruby>省<rt>かえり</rt></ruby>みる"],
+        ["頼もしい|たのもしい", "<ruby>頼<rt>たの</rt></ruby>もしい"],
+        ["表れる|あらわれる", "<ruby>表<rt>あらわ</rt></ruby>れる"],
+        ["捕らわれる|とらわれる", "<ruby>捕<rt>と</rt></ruby>らわれる"],
+        ["警める|いましめる", "<ruby>警<rt>いまし</rt></ruby>める"],
+    ]);
+    assert.match(starterEntries["省みる|かえりみる"].notes, /entrySeq=2836356/);
+    assert.match(starterEntries["退ける|しりぞける"].notes, /separate written-reading identities/);
+    assert.equal(starterEntries["表れる|あらわれる"].exampleSentence.japanese, "努力の結果が少しずつ表れました。");
+});
+
+test("tracked starter word data includes the one hundred fourteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["和える|あえる", "和", "あえる"],
+        ["怒る|いかる", "怒", "いかる"],
+        ["遊ばす|あそばす", "遊", "あそばす"],
+        ["対う|むかう", "対", "むかう"],
+        ["亡ぶ|ほろぶ", "亡", "ほろぶ"],
+        ["約める|つづめる", "約", "つづめる"],
+        ["約まる|つづまる", "約", "つづまる"],
+        ["辺り|ほとり", "辺", "ほとり"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["和える|あえる", "both"],
+        ["怒る|いかる", "both"],
+        ["遊ばす|あそばす", "both"],
+        ["対う|むかう", "both"],
+        ["亡ぶ|ほろぶ", "both"],
+        ["約める|つづめる", "both"],
+        ["約まる|つづまる", "both"],
+        ["辺り|ほとり", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["和える|あえる", "<ruby>和<rt>あ</rt></ruby>える"],
+        ["怒る|いかる", "<ruby>怒<rt>いか</rt></ruby>る"],
+        ["遊ばす|あそばす", "<ruby>遊<rt>あそ</rt></ruby>ばす"],
+        ["対う|むかう", "<ruby>対<rt>む</rt></ruby>かう"],
+        ["亡ぶ|ほろぶ", "<ruby>亡<rt>ほろ</rt></ruby>ぶ"],
+        ["約める|つづめる", "<ruby>約<rt>つづ</rt></ruby>める"],
+        ["約まる|つづまる", "<ruby>約<rt>つづ</rt></ruby>まる"],
+        ["辺り|ほとり", "<ruby>辺り<rt>ほとり</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["対う|むかう"].notes, /alternate written form/);
+    assert.match(starterEntries["亡ぶ|ほろぶ"].notes, /less common written form/);
+    assert.equal(starterEntries["和える|あえる"].exampleSentence.japanese, "野菜をごまで和えます。");
+});
+
+test("tracked starter word data includes the one hundred fifteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["押っ始める|おっぱじめる", "押", "おっ"],
+        ["階|きざはし", "階", "きざはし"],
+        ["非ず|あらず", "非", "あらず"],
+        ["論う|あげつらう", "論", "あげつらう"],
+        ["戦く|おののく", "戦", "おののく"],
+        ["戦ぐ|そよぐ", "戦", "そよぐ"],
+        ["戦く|わななく", "戦", "わななく"],
+        ["当に|まさに", "当", "まさに"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["押っ始める|おっぱじめる", "both"],
+        ["階|きざはし", "both"],
+        ["非ず|あらず", "both"],
+        ["論う|あげつらう", "both"],
+        ["戦く|おののく", "both"],
+        ["戦ぐ|そよぐ", "both"],
+        ["戦く|わななく", "both"],
+        ["当に|まさに", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["押っ始める|おっぱじめる", "<ruby>押っ<rt>おっ</rt></ruby><ruby>始める<rt>ぱじめる</rt></ruby>"],
+        ["階|きざはし", "<ruby>階<rt>きざはし</rt></ruby>"],
+        ["非ず|あらず", "<ruby>非<rt>あら</rt></ruby>ず"],
+        ["論う|あげつらう", "<ruby>論<rt>あげつら</rt></ruby>う"],
+        ["戦く|おののく", "<ruby>戦<rt>おのの</rt></ruby>く"],
+        ["戦ぐ|そよぐ", "<ruby>戦<rt>そよ</rt></ruby>ぐ"],
+        ["戦く|わななく", "<ruby>戦<rt>わなな</rt></ruby>く"],
+        ["当に|まさに", "<ruby>当<rt>まさ</rt></ruby>に"],
+    ]);
+    assert.match(starterEntries["押っ始める|おっぱじめる"].notes, /colloquial register/);
+    assert.match(starterEntries["戦く|わななく"].notes, /separate exact written-reading identity/);
+    assert.equal(starterEntries["当に|まさに"].exampleSentence.japanese, "これは当に大切な問題です。");
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

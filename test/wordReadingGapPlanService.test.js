@@ -146,6 +146,32 @@ test('tracked N3 reading-gap overrides defer source-thin batch 121 rows', () => 
   }
 });
 
+test('tracked N3 reading-gap overrides defer source-thin batch 122 rows', () => {
+  const overrides = loadWordReadingGapTriageOverrides();
+  for (const key of [
+    '争|kun|いかでか',
+    '存|kun|たもつ',
+    '対|kun|こたえる',
+    '対|kun|そろい',
+    '対|kun|つれあい',
+    '対|kun|ならぶ',
+    '断|kun|さだめる',
+    '伝|kun|つだう',
+    '登|kun|あがる',
+    '忙|kun|おそれる',
+    '夢|kun|くらい',
+    '与|kun|ともに',
+    '両|kun|ふたつ',
+    '労|kun|つかれる',
+    '録|kun|しるす',
+    '数|kun|わずらわしい',
+    '忙|kun|うれえるさま',
+  ]) {
+    assert.equal(overrides.N3[key].suggestedAction, 'defer_variant');
+    assert.match(overrides.N3[key].note, /Live local JMdict review/);
+  }
+});
+
 test('buildSuggestedWordCandidates ranks tracked sentence-backed words and surfaces labeling needs', () => {
   const item = {
     kanji: '汚',

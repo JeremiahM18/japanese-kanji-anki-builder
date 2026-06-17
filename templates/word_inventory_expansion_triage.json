@@ -4057,6 +4057,78 @@
         "priority": "low",
         "reason": "Exact row has source support, but the standalone kanji adverb is lower learner value than cleaner N3 rows and the adjacent 直に|じかに card covers the direct/in-person adverbial use more clearly.",
         "nextStep": "Reconsider in a same-written or adverbial-usage pass after higher-value N3 vocabulary rows are reviewed."
+      },
+      "助手|じょしゅ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common assistant/helper word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and a clean N3 助 anchor with 手 as easier N4 context.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with assistant/helper meaning, exact reading breakdown, and teacher-assistant example."
+      },
+      "女優|じょゆう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common actress/female-actor word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and a clean N3 優 anchor with 女 as easier N5 context.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with film/actor example and visible N3 優 anchor."
+      },
+      "書類|しょるい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common documents/papers word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and a clean N3 類 anchor with 書 as easier N5 context.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with office/document example and visible N3 類 anchor."
+      },
+      "神経|しんけい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common nerve/sensitivity word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and two current-level N3 anchors 神 and 経.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with a sensitivity example and both N3 anchors preserved."
+      },
+      "信仰|しんこう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common faith/belief word with exact JMdict verification, priority/commonness support, exact Kanjium pitch, and a clean N3 信 anchor; 仰 is harder N1 support and must stay labeled.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with neutral faith/belief example and visible 仰=N1 support labeling."
+      },
+      "信号|しんごう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common signal/traffic-light word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and two current-level N3 anchors 信 and 号.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with traffic-light example and both N3 anchors preserved."
+      },
+      "診察|しんさつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common medical-examination/checkup word with exact JMdict verification, priority/commonness support, exact Kanjium pitch, and a clean N3 察 anchor; 診 is harder N1 support and must stay labeled.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with doctor/checkup example and visible 診=N1 support labeling."
+      },
+      "人種|じんしゅ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common race/type-of-person word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and a clean N3 種 anchor; sensitive sense requires neutral, non-stereotyping example treatment.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with neutral survey example and visible sensitive-sense note."
+      },
+      "信じる|しんじる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common believe/trust verb with exact JMdict verification, priority/commonness support, exact Kanjium pitch, and a clean N3 信 anchor.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with believe/trust meaning and exact verb reading breakdown."
+      },
+      "心配|しんぱい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common worry/concern word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and a clean N3 配 anchor with 心 as easier N4 context.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with worry/concern example and visible N3 配 anchor."
+      },
+      "審判|しんぱん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common referee/judgement word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and a clean N3 判 anchor; 審 is harder N1 support and must stay labeled.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with sports-referee sense chosen for learner clarity and visible 審=N1 support labeling."
+      },
+      "信用|しんよう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common trust/confidence/credit word with exact JMdict verification, strong priority/commonness support, exact Kanjium pitch, and a clean N3 信 anchor with 用 as easier N4 context.",
+        "nextStep": "Promoted in the N3 Silver source-expansion batch with trust/confidence example and visible N3 信 anchor."
       }
     }
   }

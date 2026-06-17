@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2046);
+    assert.equal(Object.keys(starterEntries).length, 2078);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 985,
+        3: 1017,
         4: 700,
         5: 307,
     });
@@ -4727,6 +4727,160 @@ test("tracked starter word data includes the one hundred eighth N3 Silver source
     assert.match(starterEntries["類|たぐい"].notes, /no JMdict priority marker is treated as a limitation/);
     assert.match(starterEntries["連ねる|つらねる"].notes, /list, membership, and connection vocabulary/);
     assert.match(starterEntries["予め|あらかじめ"].notes, /planning and preparation vocabulary/);
+});
+
+test("tracked starter word data includes the one hundred ninth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["資本|しほん", "資", "し"],
+        ["事務|じむ", "務", "む"],
+        ["収穫|しゅうかく", "収", "しゅう"],
+        ["就職|しゅうしょく", "職", "しょく"],
+        ["住宅|じゅうたく", "宅", "たく"],
+        ["収入|しゅうにゅう", "収", "しゅう"],
+        ["宿泊|しゅくはく", "宿", "しゅく"],
+        ["手術|しゅじゅつ", "術", "じゅつ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["資本|しほん", "both"],
+        ["事務|じむ", "both"],
+        ["収穫|しゅうかく", "both"],
+        ["就職|しゅうしょく", "both"],
+        ["住宅|じゅうたく", "both"],
+        ["収入|しゅうにゅう", "both"],
+        ["宿泊|しゅくはく", "both"],
+        ["手術|しゅじゅつ", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["資本|しほん", "<ruby>資<rt>し</rt></ruby><ruby>本<rt>ほん</rt></ruby>"],
+        ["事務|じむ", "<ruby>事<rt>じ</rt></ruby><ruby>務<rt>む</rt></ruby>"],
+        ["収穫|しゅうかく", "<ruby>収<rt>しゅう</rt></ruby><ruby>穫<rt>かく</rt></ruby>"],
+        ["就職|しゅうしょく", "<ruby>就<rt>しゅう</rt></ruby><ruby>職<rt>しょく</rt></ruby>"],
+        ["住宅|じゅうたく", "<ruby>住<rt>じゅう</rt></ruby><ruby>宅<rt>たく</rt></ruby>"],
+        ["収入|しゅうにゅう", "<ruby>収<rt>しゅう</rt></ruby><ruby>入<rt>にゅう</rt></ruby>"],
+        ["宿泊|しゅくはく", "<ruby>宿<rt>しゅく</rt></ruby><ruby>泊<rt>はく</rt></ruby>"],
+        ["手術|しゅじゅつ", "<ruby>手<rt>しゅ</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["収穫|しゅうかく"].notes, /entrySeq=1330510/);
+    assert.match(starterEntries["就職|しゅうしょく"].notes, /就 is harder N1 support/);
+    assert.equal(starterEntries["住宅|じゅうたく"].exampleSentence.japanese, "この地域には新しい住宅が増えています。");
+});
+
+test("tracked starter word data includes the one hundred tenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["手段|しゅだん", "段", "だん"],
+        ["出席|しゅっせき", "席", "せき"],
+        ["主婦|しゅふ", "婦", "ふ"],
+        ["主要|しゅよう", "要", "よう"],
+        ["需要|じゅよう", "要", "よう"],
+        ["順調|じゅんちょう", "調", "ちょう"],
+        ["障害|しょうがい", "害", "がい"],
+        ["状況|じょうきょう", "状", "じょう"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["手段|しゅだん", "both"],
+        ["出席|しゅっせき", "both"],
+        ["主婦|しゅふ", "both"],
+        ["主要|しゅよう", "both"],
+        ["需要|じゅよう", "both"],
+        ["順調|じゅんちょう", "both"],
+        ["障害|しょうがい", "both"],
+        ["状況|じょうきょう", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["手段|しゅだん", "<ruby>手<rt>しゅ</rt></ruby><ruby>段<rt>だん</rt></ruby>"],
+        ["出席|しゅっせき", "<ruby>出<rt>しゅっ</rt></ruby><ruby>席<rt>せき</rt></ruby>"],
+        ["主婦|しゅふ", "<ruby>主<rt>しゅ</rt></ruby><ruby>婦<rt>ふ</rt></ruby>"],
+        ["主要|しゅよう", "<ruby>主<rt>しゅ</rt></ruby><ruby>要<rt>よう</rt></ruby>"],
+        ["需要|じゅよう", "<ruby>需<rt>じゅ</rt></ruby><ruby>要<rt>よう</rt></ruby>"],
+        ["順調|じゅんちょう", "<ruby>順<rt>じゅん</rt></ruby><ruby>調<rt>ちょう</rt></ruby>"],
+        ["障害|しょうがい", "<ruby>障<rt>しょう</rt></ruby><ruby>害<rt>がい</rt></ruby>"],
+        ["状況|じょうきょう", "<ruby>状<rt>じょう</rt></ruby><ruby>況<rt>きょう</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["需要|じゅよう"].notes, /需 is harder N1 support/);
+    assert.match(starterEntries["状況|じょうきょう"].notes, /entrySeq=1356700/);
+    assert.equal(starterEntries["主婦|しゅふ"].exampleSentence.japanese, "母は主婦として家族を支えています。");
+});
+
+test("tracked starter word data includes the one hundred eleventh N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["条件|じょうけん", "件", "けん"],
+        ["常識|じょうしき", "常", "じょう"],
+        ["常識|じょうしき", "識", "しき"],
+        ["症状|しょうじょう", "状", "じょう"],
+        ["状態|じょうたい", "状", "じょう"],
+        ["上達|じょうたつ", "達", "たつ"],
+        ["冗談|じょうだん", "談", "だん"],
+        ["上等|じょうとう", "等", "とう"],
+        ["商人|しょうにん", "商", "しょう"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["条件|じょうけん", "both"],
+        ["常識|じょうしき", "both"],
+        ["症状|しょうじょう", "both"],
+        ["状態|じょうたい", "both"],
+        ["上達|じょうたつ", "both"],
+        ["冗談|じょうだん", "both"],
+        ["上等|じょうとう", "both"],
+        ["商人|しょうにん", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["条件|じょうけん", "<ruby>条<rt>じょう</rt></ruby><ruby>件<rt>けん</rt></ruby>"],
+        ["常識|じょうしき", "<ruby>常<rt>じょう</rt></ruby><ruby>識<rt>しき</rt></ruby>"],
+        ["症状|しょうじょう", "<ruby>症<rt>しょう</rt></ruby><ruby>状<rt>じょう</rt></ruby>"],
+        ["状態|じょうたい", "<ruby>状<rt>じょう</rt></ruby><ruby>態<rt>たい</rt></ruby>"],
+        ["上達|じょうたつ", "<ruby>上<rt>じょう</rt></ruby><ruby>達<rt>たつ</rt></ruby>"],
+        ["冗談|じょうだん", "<ruby>冗<rt>じょう</rt></ruby><ruby>談<rt>だん</rt></ruby>"],
+        ["上等|じょうとう", "<ruby>上<rt>じょう</rt></ruby><ruby>等<rt>とう</rt></ruby>"],
+        ["商人|しょうにん", "<ruby>商<rt>しょう</rt></ruby><ruby>人<rt>にん</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["条件|じょうけん"].notes, /entrySeq=1356510/);
+    assert.match(starterEntries["冗談|じょうだん"].notes, /冗 is harder N1 support/);
+    assert.equal(starterEntries["商人|しょうにん"].exampleSentence.japanese, "その町には多くの商人が集まりました。");
+});
+
+test("tracked starter word data includes the one hundred twelfth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["承認|しょうにん", "認", "にん"],
+        ["商売|しょうばい", "商", "しょう"],
+        ["消防|しょうぼう", "消", "しょう"],
+        ["情報|じょうほう", "情", "じょう"],
+        ["情報|じょうほう", "報", "ほう"],
+        ["女王|じょおう", "王", "おう"],
+        ["職|しょく", "職", "しょく"],
+        ["職業|しょくぎょう", "職", "しょく"],
+        ["食欲|しょくよく", "欲", "よく"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["承認|しょうにん", "both"],
+        ["商売|しょうばい", "both"],
+        ["消防|しょうぼう", "both"],
+        ["情報|じょうほう", "both"],
+        ["女王|じょおう", "both"],
+        ["職|しょく", "both"],
+        ["職業|しょくぎょう", "both"],
+        ["食欲|しょくよく", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["承認|しょうにん", "<ruby>承<rt>しょう</rt></ruby><ruby>認<rt>にん</rt></ruby>"],
+        ["商売|しょうばい", "<ruby>商<rt>しょう</rt></ruby><ruby>売<rt>ばい</rt></ruby>"],
+        ["消防|しょうぼう", "<ruby>消<rt>しょう</rt></ruby><ruby>防<rt>ぼう</rt></ruby>"],
+        ["情報|じょうほう", "<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>"],
+        ["女王|じょおう", "<ruby>女<rt>じょ</rt></ruby><ruby>王<rt>おう</rt></ruby>"],
+        ["職|しょく", "<ruby>職<rt>しょく</rt></ruby>"],
+        ["職業|しょくぎょう", "<ruby>職<rt>しょく</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>"],
+        ["食欲|しょくよく", "<ruby>食<rt>しょく</rt></ruby><ruby>欲<rt>よく</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["承認|しょうにん"].notes, /entrySeq=1349520/);
+    assert.match(starterEntries["女王|じょおう"].notes, /女 is easier N5 context/);
+    assert.equal(starterEntries["職|しょく"].exampleSentence.japanese, "彼は新しい職を探しています。");
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

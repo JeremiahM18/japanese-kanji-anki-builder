@@ -951,6 +951,21 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "Live local JMdict review found no exact written-reading row with 師 carrying いくさ. Defer instead of borrowing 戦 or army/war surfaces that do not contain 師."
+    },
+    "寝|kun|みたまや": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 寝 carrying みたまや. Same-reading rows such as 御霊屋|みたまや do not contain 寝 and are historical/specialized, so defer rather than forcing a confusing N3 support card."
+    },
+    "寝|kun|やめる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 寝 carrying やめる. Same-reading learner words such as 止める, 辞める, and 退める use different written identities, so defer instead of borrowing non-target kanji coverage."
+    },
+    "数|kun|せめる": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found no exact written-reading row with 数 carrying せめる. Same-reading useful words are 攻める and 責める, neither of which contains 数, so defer rather than creating false reading coverage."
     }
   },
   "N4": {

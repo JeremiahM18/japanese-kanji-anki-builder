@@ -134,6 +134,18 @@ test('tracked N3 reading-gap overrides defer source-thin batch 119 rows', () => 
   }
 });
 
+test('tracked N3 reading-gap overrides defer source-thin batch 121 rows', () => {
+  const overrides = loadWordReadingGapTriageOverrides();
+  for (const key of [
+    '寝|kun|みたまや',
+    '寝|kun|やめる',
+    '数|kun|せめる',
+  ]) {
+    assert.equal(overrides.N3[key].suggestedAction, 'defer_variant');
+    assert.match(overrides.N3[key].note, /Live local JMdict review/);
+  }
+});
+
 test('buildSuggestedWordCandidates ranks tracked sentence-backed words and surfaces labeling needs', () => {
   const item = {
     kanji: '汚',

@@ -841,6 +841,16 @@
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "娘|じょう exists with priority support but is suffix/title-style and not a clean learner-facing N3 support card; other 娘 -> じょう rows lack commonness or are technical. Defer instead of forcing 令嬢, which contains 嬢 rather than 娘."
+    },
+    "関|kun|からくり": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 機関|からくり and related rows, but the usable surfaces are whole-word/ateji-like readings. The readiness audit rejects assigning whole-word ruby to 関 alone, so defer rather than faking per-kanji coverage."
+    },
+    "対|kun|あいて": {
+      "suggestedAction": "defer_variant",
+      "priority": "low",
+      "note": "Live local JMdict review found 対手|あいて, but the row is a less-common whole-word written form and not a clean decomposable 対 -> あいて support card. Defer rather than force misleading individual-kanji coverage."
     }
   },
   "N4": {

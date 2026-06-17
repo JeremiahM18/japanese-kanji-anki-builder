@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2102);
+    assert.equal(Object.keys(starterEntries).length, 2126);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
-        3: 1041,
+        3: 1065,
         4: 700,
         5: 307,
     });
@@ -4995,6 +4995,120 @@ test("tracked starter word data includes the one hundred fifteenth N3 Silver sou
     assert.match(starterEntries["押っ始める|おっぱじめる"].notes, /colloquial register/);
     assert.match(starterEntries["戦く|わななく"].notes, /separate exact written-reading identity/);
     assert.equal(starterEntries["当に|まさに"].exampleSentence.japanese, "これは当に大切な問題です。");
+});
+
+test("tracked starter word data includes the one hundred sixteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["汚らわしい|けがらわしい", "汚", "けがらわしい"],
+        ["互に|かたみに", "互", "かたみに"],
+        ["会社勤め|かいしゃづとめ", "勤", "づとめ"],
+        ["済まない|すまない", "済", "すまない"],
+        ["賛える|たたえる", "賛", "たたえる"],
+        ["辞む|いなむ", "辞", "いなむ"],
+        ["数々|しばしば", "数", "しばしば"],
+        ["席|むしろ", "席", "むしろ"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["汚らわしい|けがらわしい", "both"],
+        ["互に|かたみに", "both"],
+        ["会社勤め|かいしゃづとめ", "both"],
+        ["済まない|すまない", "both"],
+        ["賛える|たたえる", "both"],
+        ["辞む|いなむ", "both"],
+        ["数々|しばしば", "both"],
+        ["席|むしろ", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["汚らわしい|けがらわしい", "<ruby>汚<rt>けが</rt></ruby>らわしい"],
+        ["互に|かたみに", "<ruby>互<rt>かたみ</rt></ruby>に"],
+        ["会社勤め|かいしゃづとめ", "<ruby>会<rt>かい</rt></ruby><ruby>社<rt>しゃ</rt></ruby><ruby>勤め<rt>づとめ</rt></ruby>"],
+        ["済まない|すまない", "<ruby>済まない<rt>すまない</rt></ruby>"],
+        ["賛える|たたえる", "<ruby>賛<rt>たた</rt></ruby>える"],
+        ["辞む|いなむ", "<ruby>辞<rt>いな</rt></ruby>む"],
+        ["数々|しばしば", "<ruby>数々<rt>しばしば</rt></ruby>"],
+        ["席|むしろ", "<ruby>席<rt>むしろ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["互に|かたみに"].notes, /older\/formal register/);
+    assert.match(starterEntries["賛える|たたえる"].notes, /recognition support/);
+    assert.equal(starterEntries["会社勤め|かいしゃづとめ"].exampleSentence.japanese, "兄は会社勤めをしています。");
+});
+
+test("tracked starter word data includes the one hundred seventeenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["生き存える|いきながらえる", "存", "ながらえる"],
+        ["末|うれ", "末", "うれ"],
+        ["直き|なおき", "直", "なおき"],
+        ["川伝い|かわづたい", "伝", "づたい"],
+        ["認める|したためる", "認", "したためる"],
+        ["反る|かえる", "反", "かえる"],
+        ["夫れ夫れ|それぞれ", "夫", "それ"],
+        ["権殿|かりどの", "権", "かり"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["生き存える|いきながらえる", "both"],
+        ["末|うれ", "both"],
+        ["直き|なおき", "both"],
+        ["川伝い|かわづたい", "both"],
+        ["認める|したためる", "both"],
+        ["反る|かえる", "both"],
+        ["夫れ夫れ|それぞれ", "both"],
+        ["権殿|かりどの", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["生き存える|いきながらえる", "<ruby>生き<rt>いき</rt></ruby><ruby>存える<rt>ながらえる</rt></ruby>"],
+        ["末|うれ", "<ruby>末<rt>うれ</rt></ruby>"],
+        ["直き|なおき", "<ruby>直き<rt>なおき</rt></ruby>"],
+        ["川伝い|かわづたい", "<ruby>川<rt>かわ</rt></ruby><ruby>伝い<rt>づたい</rt></ruby>"],
+        ["認める|したためる", "<ruby>認める<rt>したためる</rt></ruby>"],
+        ["反る|かえる", "<ruby>反<rt>かえ</rt></ruby>る"],
+        ["夫れ夫れ|それぞれ", "<ruby>夫れ<rt>それ</rt></ruby><ruby>夫れ<rt>ぞれ</rt></ruby>"],
+        ["権殿|かりどの", "<ruby>権<rt>かり</rt></ruby><ruby>殿<rt>どの</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["認める|したためる"].notes, /exact written-reading identity/);
+    assert.match(starterEntries["反る|かえる"].notes, /kept separate from 反る\|そる/);
+    assert.equal(starterEntries["川伝い|かわづたい"].exampleSentence.japanese, "川伝いに村まで歩きました。");
+});
+
+test("tracked starter word data includes the one hundred eighteenth N3 Silver source-expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assertCoverageReadings(starterEntries, [
+        ["婦|よめ", "婦", "よめ"],
+        ["米酢|よねず", "米", "よね"],
+        ["法面|のりめん", "法", "のり"],
+        ["亡い|ない", "亡", "ない"],
+        ["約やか|つづまやか", "約", "つづまやか"],
+        ["労き|いたずき", "労", "いたずき"],
+        ["守|かみ", "守", "かみ"],
+        ["政所|まんどころ", "政", "まん"],
+    ]);
+    assertCoverageRoles(starterEntries, [
+        ["婦|よめ", "both"],
+        ["米酢|よねず", "both"],
+        ["法面|のりめん", "both"],
+        ["亡い|ない", "both"],
+        ["約やか|つづまやか", "both"],
+        ["労き|いたずき", "both"],
+        ["守|かみ", "both"],
+        ["政所|まんどころ", "both"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["婦|よめ", "<ruby>婦<rt>よめ</rt></ruby>"],
+        ["米酢|よねず", "<ruby>米<rt>よね</rt></ruby><ruby>酢<rt>ず</rt></ruby>"],
+        ["法面|のりめん", "<ruby>法<rt>のり</rt></ruby><ruby>面<rt>めん</rt></ruby>"],
+        ["亡い|ない", "<ruby>亡<rt>な</rt></ruby>い"],
+        ["約やか|つづまやか", "<ruby>約<rt>つづ</rt></ruby>やか"],
+        ["労き|いたずき", "<ruby>労き<rt>いたずき</rt></ruby>"],
+        ["守|かみ", "<ruby>守<rt>かみ</rt></ruby>"],
+        ["政所|まんどころ", "<ruby>政<rt>まん</rt></ruby><ruby>所<rt>どころ</rt></ruby>"],
+    ]);
+    assert.match(starterEntries["法面|のりめん"].notes, /technical register/);
+    assert.match(starterEntries["守|かみ"].notes, /historical register/);
+    assert.equal(starterEntries["米酢|よねず"].exampleSentence.japanese, "米酢でドレッシングを作りました。");
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

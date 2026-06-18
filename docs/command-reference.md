@@ -99,6 +99,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; fails closed while generated rows lack matching current-standard Platinum entries; use `deck:sapphire:n1` for structure-only Sapphire |
 | `npm run deck:words:ready` | Build and package word TSV artifacts |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
+| `npm run deck:words:gold:scaffold -- --level=3 --limit=8` | Draft fail-closed Gold word expectation skeletons from live generated rows missing Gold review; writes no tracked templates and uses TODO sentinels for human-only review fields |
 | `npm run deck:words:sapphire:batch -- --level=5 --limit=8 --queue=missing-current-standard` | Build a read-only word Sapphire structural review packet for generated rows missing current-standard Sapphire coverage |
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word Platinum packet for Sapphire-eligible rows; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |

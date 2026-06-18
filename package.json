@@ -131,6 +131,7 @@
     "deck:words:ready": "node scripts/prepareWordDeck.js",
     "words:init": "node scripts/initWordStudyData.js",
     "deck:words:apkg": "python scripts/buildApkg.py --deck-kind=word --out-dir=out/word-build",
+    "deck:words:gold:scaffold": "node scripts/scaffoldGoldenWordExpectations.js",
     "deck:words:review:n5": "node scripts/reviewGoldenWordLevel.js --level=5 --require-all",
     "deck:words:review:n4": "node scripts/reviewGoldenWordLevel.js --level=4 --require-all",
     "deck:words:review:n3": "node scripts/reviewGoldenWordLevel.js --level=3 --require-all",

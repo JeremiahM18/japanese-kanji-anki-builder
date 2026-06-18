@@ -22,10 +22,18 @@ const {
     parseWordDeckEmbeddingRows,
 } = require("./nlpEmbeddingGenerationService");
 const { ensureDir } = require("../utils/fs");
+const {
+    buildArtifactInputHashes,
+    buildReuseResult,
+    inputHashesMatch,
+    parametersMatch,
+    tryReadReusableArtifact,
+} = require("./nlpArtifactReuseService");
 
 const DEFAULT_MODEL_ID = "paraphrase-multilingual-minilm-l12-v2-q8";
 const DEFAULT_LANE = "assistive-sense-fit-audit";
 const DEFAULT_CREATED_BY = "scripts/auditNlpSenseFit.js";
+const REUSE_POLICY_VERSION = 1;
 const SENSE_FIT_LIMITATIONS = Object.freeze([
     "Sense-fit warnings are assistive review signals only and must not replace human Japanese/pedagogy review.",
     "Embedding similarity can miss correct examples and can over-warn short, concrete, or culturally specific sentences.",
@@ -100,6 +108,105 @@ function assertSenseFitModel({ manifest, modelId, lane }) {
         throw new Error(`NLP sense-fit model ${modelId} does not allow lane ${lane}.`);
     }
     return model;
+}
+
+function buildSenseFitGeneratorParameters({ level, lane, limit, threshold }) {
+    const fullScope = !Number.isFinite(limit);
+    return {
+        task: "word-sense-fit-audit",
+        reusePolicyVersion: REUSE_POLICY_VERSION,
+        level,
+        lane,
+        fullScope,
+        limit: fullScope ? null : limit,
+        threshold,
+    };
+}
+
+function buildSenseFitReuseContext({
+    wordTsvPath,
+    embeddingArtifactPath,
+    manifestPath = buildDefaultNlpModelManifestPath(),
+    workspaceRoot = process.cwd(),
+    level = 5,
+    modelId = DEFAULT_MODEL_ID,
+    lane = DEFAULT_LANE,
+    limit = null,
+    threshold = 0.8,
+    loadManifestFn = loadNlpModelManifest,
+} = {}) {
+    if (!wordTsvPath) {
+        throw new Error("wordTsvPath is required for NLP sense-fit audit.");
+    }
+    if (!embeddingArtifactPath) {
+        throw new Error("embeddingArtifactPath is required for NLP sense-fit audit.");
+    }
+    if (!Number.isInteger(level) || level < 1 || level > 5) {
+        throw new Error("NLP sense-fit level must be an integer from 1 to 5.");
+    }
+    if (!Number.isFinite(threshold) || threshold < 0 || threshold > 1) {
+        throw new Error("NLP sense-fit threshold must be a number from 0 to 1.");
+    }
+
+    const resolvedWorkspaceRoot = path.resolve(workspaceRoot);
+    const resolvedWordTsvPath = path.resolve(wordTsvPath);
+    const resolvedEmbeddingArtifactPath = path.resolve(embeddingArtifactPath);
+    const resolvedManifestPath = path.resolve(manifestPath);
+    const manifest = loadManifestFn(resolvedManifestPath);
+    assertSenseFitModel({ manifest, modelId, lane });
+    const embeddingArtifact = parseNlpEmbeddingArtifact(JSON.parse(fs.readFileSync(resolvedEmbeddingArtifactPath, "utf8")));
+    if (embeddingArtifact.model.modelId !== modelId) {
+        throw new Error(`Embedding artifact model ${embeddingArtifact.model.modelId} does not match sense-fit model ${modelId}.`);
+    }
+    const wordTsvHash = sha256FileWithSize(resolvedWordTsvPath);
+    const embeddingArtifactHash = sha256FileWithSize(resolvedEmbeddingArtifactPath);
+    const manifestHash = sha256FileWithSize(resolvedManifestPath);
+    const inputHashes = buildArtifactInputHashes([
+        wordTsvHash,
+        embeddingArtifactHash,
+        manifestHash,
+    ], resolvedWorkspaceRoot);
+    const parameters = buildSenseFitGeneratorParameters({
+        level,
+        lane,
+        limit,
+        threshold,
+    });
+
+    return {
+        inputHashes,
+        lane,
+        level,
+        modelId,
+        parameters,
+        wordTsvHash,
+    };
+}
+
+function findReusableSenseFitArtifact(outPath, context) {
+    if (!context.parameters.fullScope) {
+        return null;
+    }
+    const artifact = tryReadReusableArtifact(outPath, parseNlpSuggestionArtifact);
+    if (!artifact) {
+        return null;
+    }
+    if (artifact.generator.modelId !== context.modelId) {
+        return null;
+    }
+    if (!parametersMatch(artifact.generator.parameters, context.parameters)) {
+        return null;
+    }
+    if (!inputHashesMatch(artifact.generator.inputHashes, context.inputHashes)) {
+        return null;
+    }
+    if (artifact.scope.deckKind !== "word"
+        || artifact.scope.lane !== context.lane
+        || artifact.scope.levels?.length !== 1
+        || artifact.scope.levels[0] !== context.level) {
+        return null;
+    }
+    return artifact;
 }
 
 async function scoreSenseFitRow({ row, anchorVector, embedTextFn }) {
@@ -230,6 +337,12 @@ async function buildNlpSenseFitArtifact({
     const wordTsvHash = sha256FileWithSize(resolvedWordTsvPath);
     const embeddingArtifactHash = sha256FileWithSize(resolvedEmbeddingArtifactPath);
     const manifestHash = sha256FileWithSize(resolvedManifestPath);
+    const parameters = buildSenseFitGeneratorParameters({
+        level,
+        lane,
+        limit,
+        threshold,
+    });
     const suggestions = [];
 
     for (const row of scopedRows) {
@@ -268,6 +381,7 @@ async function buildNlpSenseFitArtifact({
             runId: `${modelId}-sense-fit-n${level}-${wordTsvHash.sha256.slice(0, 12)}`,
             manifestPath: path.relative(resolvedWorkspaceRoot, resolvedManifestPath).replace(/\\/g, "/"),
             createdBy,
+            parameters,
             inputHashes: [wordTsvHash, embeddingArtifactHash, manifestHash].map((entry) => ({
                 path: path.relative(resolvedWorkspaceRoot, entry.path).replace(/\\/g, "/"),
                 sha256: entry.sha256,
@@ -294,21 +408,31 @@ async function writeNlpSenseFitArtifact({
     if (!outPath) {
         throw new Error("outPath is required for NLP sense-fit audit.");
     }
-    const artifact = await buildNlpSenseFitArtifact(options);
     const resolvedOutPath = path.resolve(outPath);
+    const context = buildSenseFitReuseContext(options);
+    const reusableArtifact = findReusableSenseFitArtifact(resolvedOutPath, context);
+    if (reusableArtifact) {
+        return buildReuseResult({
+            outPath: resolvedOutPath,
+            artifact: reusableArtifact,
+        });
+    }
+    const artifact = await buildNlpSenseFitArtifact(options);
     ensureDir(path.dirname(resolvedOutPath));
     fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
     return {
         outPath: resolvedOutPath,
         artifact,
+        skipped: false,
     };
 }
 
-function formatNlpSenseFitSummary({ outPath, artifact }) {
+function formatNlpSenseFitSummary({ outPath, artifact, skipped = false }) {
     return [
         "Japanese Kanji Builder NLP Sense-Fit Audit",
         "",
         `Artifact: ${outPath}`,
+        `Status: ${skipped ? "reused unchanged artifact" : "generated artifact"}`,
         `Model: ${artifact.generator.modelId}`,
         `Scope: ${artifact.scope.levels.map((level) => `N${level}`).join(", ")} ${artifact.scope.deckKind}`,
         `Warnings: ${artifact.suggestions.length}`,

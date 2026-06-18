@@ -28,6 +28,7 @@ const inputHashSchema = z.object({
     sha256: z.string().regex(/^[a-f0-9]{64}$/i),
     byteSize: z.number().int().positive(),
 }).strict();
+const generatorParameterValueSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
 
 const deterministicSchema = z.object({
     requiresPinnedModel: z.literal(true),
@@ -40,6 +41,7 @@ const generatorSchema = z.object({
     runId: z.string().min(1),
     manifestPath: z.string().min(1),
     createdBy: z.string().min(1),
+    parameters: z.record(z.string(), generatorParameterValueSchema).optional(),
     inputHashes: z.array(inputHashSchema).min(1),
 }).strict();
 

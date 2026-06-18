@@ -37,7 +37,7 @@ const REUSE_POLICY_VERSION = 1;
 const SENSE_FIT_LIMITATIONS = Object.freeze([
     "Sense-fit warnings are assistive review signals only and must not replace human Japanese/pedagogy review.",
     "Embedding similarity can miss correct examples and can over-warn short, concrete, or culturally specific sentences.",
-    "Warnings must not directly write tracked templates or certify Gold, Platinum, Obsidian, or release readiness.",
+    "Warnings must not directly write tracked templates or certify Gold, Sapphire, Platinum, Obsidian, or release readiness.",
 ]);
 
 function sha256FileWithSize(filePath) {

@@ -23,7 +23,7 @@ const DEFAULT_CREATED_BY = "scripts/discoverNlpReadingGapCandidates.js";
 const READING_GAP_CANDIDATE_LIMITATIONS = Object.freeze([
     "Reading-gap candidate discovery is an assistive review queue only and must not replace human Japanese/pedagogy review.",
     "Embedding similarity can prioritize candidates for review, but it does not prove commonness, level fit, naturalness, source truth, or card readiness.",
-    "Candidate artifacts must not directly write tracked templates or certify Gold, Platinum, Obsidian, or release readiness.",
+    "Candidate artifacts must not directly write tracked templates or certify Gold, Sapphire, Platinum, Obsidian, or release readiness.",
 ]);
 
 function sha256TextWithSize(pathLabel, text) {

@@ -16,7 +16,7 @@ const DEFAULT_RUNTIME_ID = "kuromoji-js";
 const DEFAULT_CREATED_BY = "scripts/generateNlpTokenization.js";
 const TOKENIZATION_LIMITATIONS = Object.freeze([
     "kuromoji.js tokenization is assistive-only and must be human-reviewed before any learner-facing card change.",
-    "Tokenization artifacts are not source evidence and do not certify Gold, Platinum, Obsidian, or release readiness.",
+    "Tokenization artifacts are not source evidence and do not certify Gold, Sapphire, Platinum, Obsidian, or release readiness.",
 ]);
 const KANJI_TOKENIZATION_LIMITATIONS = Object.freeze([
     ...TOKENIZATION_LIMITATIONS,

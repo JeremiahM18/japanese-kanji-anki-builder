@@ -30,7 +30,7 @@ const WORD_READING_EXCEPTION_SIGNAL_KIND = "word-card-tokenizer-reading-exceptio
 const REVIEW_PACKET_LIMITATIONS = Object.freeze([
     "Review packets aggregate assistive NLP signals only and must not replace human Japanese/pedagogy review.",
     "A packet can prioritize evidence for humans, but it does not certify card correctness, source truth, level fit, naturalness, pitch, audio, or release readiness.",
-    "Accepted changes must be promoted through tracked data, tests, and the existing Gold/Platinum/Obsidian workflows.",
+    "Accepted changes must be promoted through tracked data, tests, and the existing Gold/Sapphire/Platinum/Obsidian workflows.",
 ]);
 
 function buildDefaultNlpReviewPacketDir() {

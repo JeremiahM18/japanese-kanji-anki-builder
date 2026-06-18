@@ -20591,7 +20591,7 @@
   "訪う|とう": {
     "written": "訪う",
     "reading": "とう",
-    "meaning": "ask / inquire / call into question",
+    "meaning": "alternate written form of 問う: ask / inquire / call into question",
     "jlpt": 3,
     "tags": [
       "starter",
@@ -20608,11 +20608,11 @@
         "訪": "とう"
       }
     },
-    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 訪う|とう, reading とう, and ask / inquire / call-into-question senses with priority/commonness support (entrySeq=1536000; jmdictPriority=ichi1,news1,nf02). It is retained as useful inquiry/responsibility written-form recognition vocabulary for a clean 訪 -> とう support reading. 訪 is the N3 reading-gap focus.",
+    "notes": "N3 Silver editorial support word from the reading-gap queue; raw JMdict entry 1536000 lists 訪う|とう as an alternate written form for 問う senses (ask / inquire / blame / call into question), but the written-form priority markers attach to 問う while 訪う has no ke_pri marker. Retained only as 訪 -> とう written-form recognition; do not imply that 訪う is the common spelling for responsibility/question contexts. 訪 is the N3 reading-gap focus.",
     "exampleSentence": {
-      "japanese": "委員会は事故の責任を訪いました。",
-      "reading": "いいんかいはじこのせきにんをとういました。",
-      "english": "The committee questioned responsibility for the accident."
+      "japanese": "「訪う」は「問う」の別の書き方です。",
+      "reading": "とうはとうのべつのかきかたです。",
+      "english": "The spelling 訪う is another written form of 問う."
     }
   },
   "訪ねる|たずねる": {

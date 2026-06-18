@@ -209,7 +209,7 @@
         "下": "くだり"
       }
     },
-    "notes": "Deferred from the N5 word product because source review marks 下り as JLPT N3 and the train-direction sense is too specialized for beginner reading coverage.",
+    "notes": "N3 Silver deferred word from the N5 review lane; exact governed JMdict row verifies 下り|くだり, reading くだり, and down-train / outbound-line senses with priority/commonness support (entrySeq=1184370; jmdictPriority=ichi1,news1,nf08). Deferred from the N5 word product because source review marks 下り as JLPT N3 and the train-direction sense is too specialized for beginner reading coverage.",
     "exampleSentence": {
       "japanese": "下りの電車に乗ります。",
       "reading": "くだりのでんしゃにのります。",
@@ -1429,7 +1429,7 @@
         "余": "あまる"
       }
     },
-    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; the live generated N3 kanji row and tracked starter-curated source row verify 余る|あまる, reading あまる, and the remain/left-over learner sense.",
+    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; exact governed JMdict row verifies 余る|あまる, reading あまる, and remain / be-left-over / excess senses with priority/commonness support (entrySeq=1543910; jmdictPriority=ichi1,news1,nf16). It is retained as ordinary remain/left-over learner vocabulary for a clean 余 -> あまる support reading.",
     "exampleSentence": {
       "japanese": "時間が少し余っています。",
       "reading": "じかんがすこしあまっています。",
@@ -2387,7 +2387,7 @@
         "冷": "つめたい"
       }
     },
-    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; prior expansion triage records exact JMdict identity and priority/commonness support for 冷たい|つめたい. Keep this touch/object cold sense distinct from weather-cold 寒い.",
+    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; exact governed JMdict row verifies 冷たい|つめたい, reading つめたい, and cold-to-the-touch senses with priority/commonness support (entrySeq=1556730; jmdictPriority=ichi1,news2,nf28). Keep this touch/object cold sense distinct from weather-cold 寒い. 冷 is the N3 reading-gap focus.",
     "exampleSentence": {
       "japanese": "冷たい水を一杯ください。",
       "reading": "つめたいみずをいっぱいください。",
@@ -3592,7 +3592,7 @@
         "協": "きょう"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 協力|きょうりょく, reading きょうりょく, and cooperation/collaboration/help senses with priority/commonness support. 力 is easier N4 support, so the N3 anchor is 協.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 協力|きょうりょく, reading きょうりょく, and cooperation/collaboration/help senses with priority/commonness support (entrySeq=1591720; jmdictPriority=ichi1,news1,nf01). 力 is easier N4 support, so the N3 anchor is 協.",
     "exampleSentence": {
       "japanese": "みんなで協力して問題を解決しました。",
       "reading": "みんなできょうりょくしてもんだいをかいけつしました。",
@@ -3673,7 +3673,7 @@
         "危": "あやぶむ"
       }
     },
-    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 危ぶむ|あやぶむ, reading あやぶむ, and fear / doubt / have-misgivings-about senses with priority/commonness support (entrySeq=1218410; jmdictPriority=news1,nf15). It is retained as useful risk/concern vocabulary vocabulary for a clean 危 -> あやぶむ support reading. 危 is the N3 reading-gap focus.",
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 危ぶむ|あやぶむ, reading あやぶむ, and fear / doubt / have-misgivings-about senses with priority/commonness support (entrySeq=1218410; jmdictPriority=news1,nf15). It is retained as useful risk/concern vocabulary for a clean 危 -> あやぶむ support reading. 危 is the N3 reading-gap focus.",
     "exampleSentence": {
       "japanese": "専門家は計画の成功を危ぶんでいます。",
       "reading": "せんもんかはけいかくのせいこうをあやぶんでいます。",
@@ -5732,7 +5732,7 @@
         "約": "やく"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 契約|けいやく, reading けいやく, and contract/agreement senses with priority/commonness support. 契 is harder N1 support and must stay visibly labeled; the N3 anchor is 約.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 契約|けいやく, reading けいやく, and contract/agreement senses with priority/commonness support (entrySeq=1250190; jmdictPriority=ichi1,news1,nf01). 契 is harder N1 support and must stay visibly labeled; the N3 anchor is 約.",
     "exampleSentence": {
       "japanese": "会社と新しい契約をしました。",
       "reading": "かいしゃとあたらしいけいやくをしました。",
@@ -7517,7 +7517,7 @@
   "役|やく": {
     "written": "役",
     "reading": "やく",
-    "meaning": "role / part / usefulness",
+    "meaning": "role / part / function",
     "jlpt": 3,
     "tags": [
       "starter",
@@ -7534,7 +7534,7 @@
         "役": "やく"
       }
     },
-    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; the live generated N3 kanji row verifies 役|やく as the learner-facing role/usefulness noun. Do not promote phrase-shaped 役に立つ|やくにたつ without a separate expression policy.",
+    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; exact governed JMdict row verifies 役|やく, reading やく, and role / assignment / responsibility / duty / function / part senses with priority/commonness support (entrySeq=1537970; jmdictPriority=ichi1,news1,nf04). It is retained as learner-facing role/function noun vocabulary for a clean 役 -> やく support reading. Do not promote phrase-shaped 役に立つ|やくにたつ without a separate expression policy.",
     "exampleSentence": {
       "japanese": "彼は劇で大切な役を演じました。",
       "reading": "かれはげきでたいせつなやくをえんじました。",
@@ -7889,7 +7889,7 @@
         "適": "てき"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 快適|かいてき, reading かいてき, and comfortable/pleasant senses with priority/commonness support. 快 is harder N2 support and must stay visibly labeled; the N3 anchor is 適.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 快適|かいてき, reading かいてき, and comfortable/pleasant senses with priority/commonness support (entrySeq=1200120; jmdictPriority=news1,nf09). 快 is harder N2 support and must stay visibly labeled; the N3 anchor is 適.",
     "exampleSentence": {
       "japanese": "この部屋はとても快適です。",
       "reading": "このへやはとてもかいてきです。",
@@ -11352,7 +11352,7 @@
         "景": "けい"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 景気|けいき, reading けいき, and business-conditions/economic-climate/prosperity senses with priority/commonness support. 気 is easier N5 support, so the N3 anchor is 景.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 景気|けいき, reading けいき, and business-conditions/economic-climate/prosperity senses with priority/commonness support (entrySeq=1250830; jmdictPriority=ichi1,news1,nf01). 気 is easier N5 support, so the N3 anchor is 景.",
     "exampleSentence": {
       "japanese": "今年は景気が良くなりました。",
       "reading": "ことしはけいきがよくなりました。",
@@ -12360,7 +12360,7 @@
         "機": "き"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 機械|きかい, reading きかい, and machine/machinery senses with priority/commonness support. 械 is harder N2 support and must stay visibly labeled; the N3 anchor is 機.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 機械|きかい, reading きかい, and machine/machinery senses with priority/commonness support (entrySeq=1220810; jmdictPriority=ichi1,news1,nf03). 械 is harder N2 support and must stay visibly labeled; the N3 anchor is 機.",
     "exampleSentence": {
       "japanese": "この機械は音が大きいです。",
       "reading": "このきかいはおとがおおきいです。",
@@ -13183,7 +13183,7 @@
         "久": "きゅう"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 永久|えいきゅう, reading えいきゅう, and eternity/permanence senses with priority/commonness support. 永 is harder N2 support and must stay visibly labeled; the N3 anchor is 久.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 永久|えいきゅう, reading えいきゅう, and eternity/permanence senses with priority/commonness support (entrySeq=1576520; jmdictPriority=ichi1,news1,nf11). 永 is harder N2 support and must stay visibly labeled; the N3 anchor is 久.",
     "exampleSentence": {
       "japanese": "この記録は永久に残るでしょう。",
       "reading": "このきろくはえいきゅうにのこるでしょう。",
@@ -17648,7 +17648,7 @@
         "組": "くみ"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 組合|くみあい, reading くみあい, and association/union/guild senses with priority/commonness support. 合 is easier N4 support, so the N3 anchor is 組.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 組合|くみあい, reading くみあい, and association/union/guild senses with priority/commonness support (entrySeq=1397620; jmdictPriority=ichi1,news1,nf02). 合 is easier N4 support, so the N3 anchor is 組.",
     "exampleSentence": {
       "japanese": "彼は組合の会議に出ました。",
       "reading": "かれはくみあいのかいぎにでました。",
@@ -17783,7 +17783,7 @@
         "経": "けい"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 経営|けいえい, reading けいえい, and management/administration/running-a-business senses with priority/commonness support. 営 is harder N2 support and must stay visibly labeled; the N3 anchor is 経.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 経営|けいえい, reading けいえい, and management/administration/running-a-business senses with priority/commonness support (entrySeq=1251130; jmdictPriority=ichi1,news1,nf01). 営 is harder N2 support and must stay visibly labeled; the N3 anchor is 経.",
     "exampleSentence": {
       "japanese": "父は小さな店を経営しています。",
       "reading": "ちちはちいさなみせをけいえいしています。",
@@ -17920,7 +17920,7 @@
         "絡": "からむ"
       }
     },
-    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; the live generated N3 kanji row and tracked starter-curated source row verify 絡む|からむ, reading からむ, and the entangle/get-involved learner senses. 連絡|れんらく remains a separate common contact noun.",
+    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; exact governed JMdict row verifies 絡む|からむ, reading からむ, and the entangle/get-involved learner senses with priority/commonness support (entrySeq=1548520; jmdictPriority=ichi1,news2,nf31). 連絡|れんらく remains a separate common contact noun.",
     "exampleSentence": {
       "japanese": "コードが机の下で絡んでいます。",
       "reading": "コードがつくえのしたでからんでいます。",
@@ -17974,7 +17974,7 @@
         "給": "きゅう"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 給料|きゅうりょう, reading きゅうりょう, and salary/wages/pay senses with priority/commonness support. 料 is easier N4 support, so the N3 anchor is 給.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 給料|きゅうりょう, reading きゅうりょう, and salary/wages/pay senses with priority/commonness support (entrySeq=1230360; jmdictPriority=ichi1,news1,nf06). 料 is easier N4 support, so the N3 anchor is 給.",
     "exampleSentence": {
       "japanese": "今月の給料を受け取りました。",
       "reading": "こんげつのきゅうりょうをうけとりました。",
@@ -18028,7 +18028,7 @@
         "絵": "かい"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 絵画|かいが, reading かいが, and painting/picture senses with priority/commonness support. 画 is easier N4 support, so the N3 anchor is 絵.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 絵画|かいが, reading かいが, and painting/picture senses with priority/commonness support (entrySeq=1202300; jmdictPriority=ichi1,news1,nf03). 画 is easier N4 support, so the N3 anchor is 絵.",
     "exampleSentence": {
       "japanese": "美術館で絵画を見ました。",
       "reading": "びじゅつかんでかいがをみました。",
@@ -19052,7 +19052,7 @@
         "良": "よい"
       }
     },
-    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; the live generated N3 kanji row and tracked starter-curated source row verify 良い|よい, reading よい, and the ordinary good/favorable learner sense.",
+    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; exact governed JMdict row verifies 良い|よい, reading よい, and good / excellent / pleasant / beneficial senses with priority/commonness support (entrySeq=1605820; jmdictPriority=ichi1,news1,nf08). It is retained as ordinary good/favorable learner vocabulary for a clean 良 -> よい support reading.",
     "exampleSentence": {
       "japanese": "天気が良いので散歩に行きます。",
       "reading": "てんきがよいのでさんぽにいきます。",
@@ -19792,7 +19792,7 @@
         "当": "とう"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 見当|けんとう, reading けんとう, and aim/mark/estimate/guess senses with priority/commonness support. The card intentionally teaches the estimate/guess sense; 見 is easier N5 support, so the N3 anchor is 当.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 見当|けんとう, reading けんとう, and aim/mark/estimate/guess senses with priority/commonness support (entrySeq=1259930; jmdictPriority=ichi1,news1,nf19). The card intentionally teaches the estimate/guess sense; 見 is easier N5 support, so the N3 anchor is 当.",
     "exampleSentence": {
       "japanese": "駅までの時間は見当がつきません。",
       "reading": "えきまでのじかんはけんとうがつきません。",
@@ -21249,7 +21249,7 @@
         "議": "ぎ"
       }
     },
-    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 議員|ぎいん, reading ぎいん, and assembly-member/legislator senses with priority/commonness support. 員 is easier N4 support, so the N3 anchor is 議.",
+    "notes": "N3 Silver source-expansion word from the Tanos N3 candidate lane; exact governed JMdict row verifies 議員|ぎいん, reading ぎいん, and assembly-member/legislator senses with priority/commonness support (entrySeq=1226020; jmdictPriority=ichi1,news1,nf01). 員 is easier N4 support, so the N3 anchor is 議.",
     "exampleSentence": {
       "japanese": "その議員は市民の声を聞きました。",
       "reading": "そのぎいんはしみんのこえをききました。",
@@ -22904,7 +22904,7 @@
         "遊": "あそぶ"
       }
     },
-    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; prior expansion triage records exact JMdict identity and priority/commonness support for 遊ぶ|あそぶ.",
+    "notes": "N3 Silver reading-gap fast-promotion word from the curated N3 example lane; exact governed JMdict row verifies 遊ぶ|あそぶ, reading あそぶ, and play / hang out senses with priority/commonness support (entrySeq=1542160; jmdictPriority=ichi1,news2,nf25). It is retained as common play/hang-out vocabulary for a clean 遊 -> あそぶ support reading. 遊 is the N3 reading-gap focus.",
     "exampleSentence": {
       "japanese": "週末は友だちと遊ぶ予定です。",
       "reading": "しゅうまつはともだちとあそぶよていです。",
@@ -23725,7 +23725,7 @@
         "降": "くだす"
       }
     },
-    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 降す|くだす, reading くだす, and make-a-judgment / hand-down / defeat senses with priority/commonness support (entrySeq=1184320; jmdictPriority=ichi1,news2,nf39). It is retained as useful judgment/order vocabulary vocabulary for a clean 降 -> くだす support reading. 降 is the N3 reading-gap focus.",
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 降す|くだす, reading くだす, and make-a-judgment / hand-down / defeat senses with priority/commonness support (entrySeq=1184320; jmdictPriority=ichi1,news2,nf39). It is retained as useful judgment/order vocabulary for a clean 降 -> くだす support reading. 降 is the N3 reading-gap focus.",
     "exampleSentence": {
       "japanese": "先生が最後の判断を降しました。",
       "reading": "せんせいがさいごのはんだんをくだしました。",
@@ -24486,7 +24486,7 @@
         "額": "ひたい"
       }
     },
-    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 額|ひたい, reading ひたい, and forehead / brow senses with priority/commonness support (entrySeq=1207510; jmdictPriority=ichi1). It is retained as useful body-part vocabulary vocabulary for a clean 額 -> ひたい support reading. 額 is the N3 reading-gap focus.",
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 額|ひたい, reading ひたい, and forehead / brow senses with priority/commonness support (entrySeq=1207510; jmdictPriority=ichi1). It is retained as useful body-part vocabulary for a clean 額 -> ひたい support reading. 額 is the N3 reading-gap focus.",
     "exampleSentence": {
       "japanese": "汗が額に光っています。",
       "reading": "あせがひたいにひかっています。",
@@ -24540,7 +24540,7 @@
         "願": "ねがい"
       }
     },
-    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 願い|ねがい, reading ねがい, and wish / request / prayer senses with priority/commonness support (entrySeq=1217900; jmdictPriority=ichi1,news1,nf05). It is retained as useful wish/request vocabulary vocabulary for a clean 願 -> ねがい support reading. 願 is the N3 reading-gap focus.",
+    "notes": "N3 Silver editorial support word from the reading-gap queue; exact governed JMdict row verifies 願い|ねがい, reading ねがい, and wish / request / prayer senses with priority/commonness support (entrySeq=1217900; jmdictPriority=ichi1,news1,nf05). It is retained as useful wish/request vocabulary for a clean 願 -> ねがい support reading. 願 is the N3 reading-gap focus.",
     "exampleSentence": {
       "japanese": "願いがかなう日を待っています。",
       "reading": "ねがいがかなうひをまっています。",

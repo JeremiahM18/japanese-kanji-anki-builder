@@ -11,6 +11,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm test` | Run the full test suite |
 | `npm run lint` | Run ESLint |
 | `npm run typecheck` | Run the staged JSDoc typecheck gate |
+| `npm run docs:status-audit` | Compare tracked documentation status language against current review counts, generated denominators, npm command routing, and lane boundaries; fails when README, CHANGELOG, CLAUDE, workflow, command-reference, verification, architecture, or overview docs drift from tracked status or omit Silver/Gold/Sapphire/Platinum/Obsidian separation |
 | `npm run supply-chain:audit` | Verify lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, workflow permissions, and release artifact boundaries |
 | `npm run security:advisories` | Run the internet-backed npm advisory audit gate at `moderate` severity or higher |
 | `npm run security:branch-protection` | Verify tracked branch-protection policy, documentation, and CI required-check names stay aligned |
@@ -28,8 +29,11 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run bench:export` | Measure export-service performance for local regression investigation |
 | `npm run bench:obsidian-proof-etl` | Measure tracked Obsidian proof ledger validation, compatibility-view generation, and SQLite mirror generation |
 | `npm run bench:obsidian-proof-etl:gate` | Manual local Obsidian proof ETL performance guardrail; not a CI gate unless explicitly wired |
+| `npm run bench:build` | Measure local deck build/package performance for selected levels without applying a timing budget; use the gate variants for budget enforcement |
 | `npm run bench:build:gate` | Manual local-data build performance guardrail; requires a ready workspace and writes benchmark output; append `-- --repeat=3` before budget changes or stability claims |
 | `npm run bench:build:cold-apkg:gate` | Manual local-data cold native APKG package-performance guardrail; clears the generated APKG cache and gates the package phase; append `-- --repeat=3` before budget changes or stability claims |
+| `npm run data:benchmark:jlpt:sources` | Measure the JLPT kanji source-evidence workflow cost without applying the budget gate |
+| `npm run data:benchmark:jlpt:sources:gate` | Manual source-evidence workflow performance guardrail with the tracked default budget |
 | `npm run perf:memory:matrix` | Validate the tracked performance and memory audit matrix without running timing budgets |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |
@@ -54,7 +58,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run voicevox:start:fresh` | Recreate the local VOICEVOX Docker container with local host `127.0.0.1:50021` mapped to container `50121` plus required runtime hardening when the old container shape is wrong |
 | `npm run voicevox:stop` | Stop the local VOICEVOX Docker container after governed audio work |
 | `npm run deck:readiness` | Report per-level quality gates |
-| `npm run deck:closeout -- --levels=5,4,3,2,1` | Print a read-only closeout report with git state, kanji/word Silver/Gold/Sapphire/Platinum counts, count-complete gate reminders, expected coverage-failure gate classification, NLP governance status, CI/release/manual-QA hygiene, and proof-ledger worktree status; count-complete rows still require running the named gate and the command does not run Obsidian commands or write proof ledger events |
+| `npm run deck:closeout -- --levels=5,4,3,2,1` | Print a read-only closeout report with git state, a lower-lane kanji/word Silver/Gold/Sapphire/Platinum count matrix, count-complete gate reminders, expected coverage-failure gate classification, NLP governance status, CI/release/manual-QA hygiene, and proof-ledger worktree status; count-complete rows still require running the named gate and the command does not run Obsidian commands or write proof ledger events |
 | `npm run deck:preview` | Preview kanji cards |
 | `npm run deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard` | Build a read-only core-kanji Sapphire review packet for generated rows missing current-standard Sapphire coverage |
 | `npm run deck:sapphire:promote -- --level=1 --input=<reviewed-json>` | Validate and merge reviewed Sapphire candidate entries; writes only with `--write`, does not create Platinum or Obsidian proof |
@@ -64,6 +68,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
 | `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` | Classify kanji Platinum versus Obsidian proof; N5/N4/N3/N2 complete proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3,2` | Fail-closed kanji Obsidian certification status for the completed N5/N4/N3/N2 scope |
+| `npm run deck:kanji:platinum:certify-status -- --levels=5,4,3,2` | Compatibility alias for the kanji Obsidian certification status command; new proof work should use the Obsidian command name |
 | `npm run deck:ready` | Build and package kanji TSV artifacts |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
@@ -119,8 +124,11 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:platinum:n1` | Run the N1 word Platinum gate; fails closed until matching Gold, Sapphire, and Platinum rows exist |
 | `npm run deck:words:obsidian:rereview-status -- --levels=5,4` | Classify word Platinum versus Obsidian proof; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider, while native `deck:words:sapphire:*` owns word Sapphire coverage; prints local word-overlay path, mtime, staleness counts, and `stale_local_overlay` when starter-derived local rows are stale |
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider; prints local word-overlay path, mtime, staleness counts, and `stale_local_overlay` when starter-derived local rows are stale |
+| `npm run deck:words:platinum:rereview-status -- --levels=5,4` | Compatibility word proof-status alias for the Obsidian rereview-status posture; new proof work should use the Obsidian command name |
+| `npm run deck:words:platinum:certify-status -- --levels=5,4` | Compatibility word proof-status alias for the Obsidian certification posture; new proof work should use the Obsidian command name |
 | `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word source-family independence posture; command name remains legacy |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
+| `npm run deck:words:completion -- --level=3` | Audit word inventory, generated coverage, policy checks, card-back field coverage, pitch accent, and reading coverage for a selected level |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
 | `npm run deck:words:completion:n4` | Audit N4 word inventory and reading coverage |
 | `npm run deck:words:completion:n3` | Audit N3 word Silver inventory and reading coverage |
@@ -128,21 +136,25 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:completion:n1` | Audit N1 word Silver inventory and reading coverage |
 | `npm run deck:words:coverage-uplift -- --target-level=N5 --through-level=N1 --details` | Read-only diagnostic showing whether harder word decks backfill the selected target level's kanji-reading coverage; baseline counts only the target word deck, then layers harder decks down to `--through-level`; supports any valid same-or-harder N1-N5 range and does not change readiness, deferrals, review lanes, data, media, or proof ledgers |
 | `npm run deck:words:coverage-uplift -- --target-level=N4 --through-level=N1` | Same read-only uplift diagnostic for an N4 target through all harder word levels; `N5->N5`, `N5->N1`, `N4->N1`, `N3->N1`, `N2->N1`, and `N1->N1` are all valid shapes |
+| `npm run deck:words:reading-audit -- --level=3` | Audit word-deck reading coverage for a selected level |
 | `npm run deck:words:reading-audit:n4` | Audit N4 word reading coverage |
 | `npm run deck:words:reading-audit:n5` | Audit N5 word reading coverage |
 | `npm run deck:words:reading-audit:n3` | Audit N3 word reading coverage |
 | `npm run deck:words:reading-audit:n2` | Audit N2 word reading coverage |
 | `npm run deck:words:reading-audit:n1` | Audit N1 word reading coverage |
+| `npm run deck:words:triage -- --level=3` | Classify selected-level word reading gaps into active, deferred, resolved, or routed work queues |
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
 | `npm run deck:words:triage:n5` | Classify N5 word reading gaps |
 | `npm run deck:words:triage:n3` | Classify N3 word reading gaps |
 | `npm run deck:words:triage:n2` | Classify N2 word reading gaps |
 | `npm run deck:words:triage:n1` | Classify N1 word reading gaps |
+| `npm run deck:words:gap-plan -- --level=3 --limit=50` | Rank selected-level word reading gaps and candidate next work without changing source data, reviews, or proof |
 | `npm run deck:words:gap-plan:n5 -- --limit=50` | Rank the next N5 word coverage or enhancement batch |
 | `npm run deck:words:gap-plan:n4 -- --limit=50` | Rank the next N4 word coverage batch |
 | `npm run deck:words:gap-plan:n3 -- --limit=50` | Rank the current N3 word gap queue; generated candidate suggestions remain separate from source activation and review |
 | `npm run deck:words:gap-plan:n2 -- --limit=50` | Rank the current N2 word gap queue; generated candidate suggestions remain separate from source activation and review |
 | `npm run deck:words:gap-plan:n1 -- --limit=50` | Rank the current N1 word gap queue; generated candidate suggestions remain separate from source activation and review |
+| `npm run deck:words:expansion-candidates -- --level=3 --limit=50` | Diff the selected level's manifest-pinned source into read-only word expansion candidates |
 | `npm run deck:words:expansion-candidates:n4 -- --limit=50` | Diff the manifest-pinned level source into read-only word expansion candidates |
 | `npm run deck:words:expansion-candidates:n5 -- --limit=50` | Diff the manifest-pinned N5 source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=3` | Normalize ignored Tanos N3 extracted vocabulary text into the pinned local source TSV |

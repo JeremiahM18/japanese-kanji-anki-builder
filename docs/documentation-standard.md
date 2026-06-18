@@ -147,7 +147,7 @@ Before editing docs:
 
 After editing docs:
 
-1. Re-run the focused docs/governance test.
+1. Re-run the focused docs/governance test, including `npm run docs:status-audit` when status/count claims, review posture, command references, or lane-boundary language changed.
 2. Check Markdown local links.
 3. Run relevant command or parity gates for any status or command claim changed.
 4. Run `git diff --check`.

@@ -10,8 +10,8 @@ This document maps how the system turns governed inputs into deck exports, revie
 flowchart LR
     Inputs["Governed inputs<br/>contracts, curated data, media policy, source evidence"] --> Normalize["Normalization<br/>stable card identities + level scope"]
     Normalize --> Generate["Content generation<br/>deterministic card rows + package inputs"]
-    Generate --> Validate["Validation gates<br/>Gold, Sapphire, Platinum"]
-    Validate --> Prove["Proof + release control<br/>Obsidian JSONL, reconciliation, scoped locks"]
+    Generate --> Validate["Lower-lane validation<br/>Gold, Sapphire, Platinum"]
+    Validate --> Prove["Proof + natural-language certification<br/>Obsidian JSONL, reconciliation, scoped locks"]
     Prove --> Artifacts["Distribution artifacts<br/>TSV/APKG + audit reports"]
 ```
 
@@ -134,7 +134,7 @@ The architecture is product- and level-agnostic. The current repo snapshot prove
 | Product surface | Generated denominator | Obsidian-certified denominator | Boundary |
 | --- | ---: | ---: | --- |
 | Core kanji | 2212 | 982 | The scoped release lock covers the completed N5-N2 denominator. Remaining generated rows are not Obsidian-certified. |
-| Words | 1470 | 987 | The scoped release lock covers the completed N5-N4 denominator. Remaining generated rows are not Obsidian-certified. |
+| Words | 2122 | 987 | The scoped release lock covers the completed N5-N4 denominator. Remaining generated rows are not Obsidian-certified. |
 
 Obsidian counts for completed scopes are verified by fail-closed certification gates:
 

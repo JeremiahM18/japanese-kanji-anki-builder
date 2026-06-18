@@ -4269,6 +4269,8 @@ test("tracked starter word data includes the ninety-sixth N3 Silver source-expan
         ["願い|ねがい", "<ruby>願<rt>ねが</rt></ruby>い"],
     ]);
     assert.match(starterEntries["彼の|かの"].notes, /formal demonstrative recognition vocabulary/);
+    assert.equal(starterEntries["訪う|とう"].exampleSentence.japanese, "「訪う」は「問う」の別の書き方です。");
+    assert.match(starterEntries["訪う|とう"].notes, /訪う has no ke_pri marker/);
     assert.match(starterEntries["訪れる|おとずれる"].notes, /visit\/arrival vocabulary/);
     assert.match(starterEntries["願い|ねがい"].notes, /wish\/request vocabulary/);
 });

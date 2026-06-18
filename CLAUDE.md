@@ -100,9 +100,9 @@ Do not widen scope just because higher levels exist.
 
 Current posture:
 
-- N5 word work is stabilized through Gold, native Sapphire, Platinum, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
-- N4 word work is stabilized through Gold, native Sapphire, Platinum, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
-- N3/N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
+- N5 word work is strict Obsidian-certified; keep it frozen except for regressions or explicit editorial decisions
+- N4 word work is strict Obsidian-certified; keep it frozen except for regressions or explicit editorial decisions
+- N3 word work has a complete Silver generated surface plus partial Gold (`405/1081`), Sapphire (`8/1081`), and Platinum (`8/1081`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
 
@@ -117,9 +117,9 @@ Keep the review layers separate.
 - Read [docs/review-tier-governance.md](docs/review-tier-governance.md) before making tier claims.
 - Gold regression protects generated card output from drift. It checks reviewed learner-facing fields against the current governed contract.
 - Gold regression does not mean a card deserves to ship in version 1.
-- Sapphire is the current structural and card-quality gate.
+- Sapphire is the current structural gate.
 - Native Sapphire commands and manifests own core-kanji and word structural review. Current `platinum` commands and manifests are compatibility names only for legacy/proof-provider inputs or unmigrated additional surfaces.
-- Platinum content certification must inherit Sapphire and add stronger human content-review evidence under a dedicated schema.
+- Platinum is the current card-surface inspection lane after matching Gold and active current-standard Sapphire.
 - Sapphire requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
 - Obsidian requires explicit non-mechanical current-version rereview proof.
 - Deck Ready is mechanical artifact readiness only. It is not Silver, Gold, Sapphire, Platinum, Obsidian, source truth, release readiness, APKG import QA, accessibility QA, mobile QA, or listening QA.
@@ -131,7 +131,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 word rows are stabilized at the Gold regression, native Sapphire, Platinum, and strict Obsidian levels. The current generated-row denominator is `987/987` strict Obsidian proof across N5/N4, with N5 at `287/287` and N4 at `700/700`.
+N5 and N4 word rows are strict Obsidian-certified at the current generated-row denominator: `987/987` across N5/N4, with N5 at `287/287` and N4 at `700/700`. Lower-lane prerequisites are complete for that scoped proof, but Obsidian is the certification claim.
 
 That means:
 

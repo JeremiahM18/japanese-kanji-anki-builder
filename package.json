@@ -13,6 +13,7 @@
     "lint": "eslint src scripts test *.js",
     "test": "node scripts/runNodeTests.js",
     "typecheck": "tsc --noEmit -p jsconfig.json",
+    "docs:status-audit": "node scripts/auditDocumentationStatus.js",
     "supply-chain:audit": "node scripts/auditSupplyChain.js",
     "security:advisories": "npm audit --audit-level=moderate",
     "security:branch-protection": "node scripts/auditBranchProtection.js",

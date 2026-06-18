@@ -7,6 +7,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 ## Testing philosophy
 
 - [../test/repositoryGovernance.test.js](../test/repositoryGovernance.test.js) protects source-of-truth boundaries, README/source-lane consistency, CI contract names, supply-chain policy, CODEOWNERS coverage, and source-evidence routing.
+- [../test/documentationStatusAudit.test.js](../test/documentationStatusAudit.test.js) and `npm run docs:status-audit` compare tracked documentation status language against current review counts, generated denominators, npm command routing, and lane-boundary rules so stale README, CHANGELOG, CLAUDE, workflow, command-reference, architecture, and overview claims fail before another review batch lands.
 - The tracked [../examples/n5-mini](../examples/n5-mini) fixture locks exact generated TSV rows against the live note schemas so schema or export drift is visible immediately.
 - Candidate is a pre-trust workflow input, not a certification lane.
 - Gold regression protects generated card output from drift.
@@ -22,6 +23,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 npm test
 npm run lint
 npm run typecheck
+npm run docs:status-audit
 npm run supply-chain:audit
 npm run security:advisories
 npm run security:branch-protection

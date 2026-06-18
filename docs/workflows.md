@@ -270,6 +270,18 @@ Use this cadence only for one active word Silver/source-expansion lane. It is no
 - Keep the lane to N3 word Silver starter/source expansion. Do not write proof ledgers, record Obsidian proof, shrink denominators, certify downstream lanes, touch frozen N4/N5 word data, touch kanji lanes, or keep extra remote branches after merge cleanup.
 - The sentence corpus remains support infrastructure for examples and candidate assistance; it does not replace exact word-reading identity, governed source evidence, schema support, or reviewer promotion judgment.
 
+### N3 Gold word review cadence
+
+Use this cadence only after the N3 Silver generated surface exists and the thread is explicitly scoped to N3 word Gold review. It is not Silver/source expansion, Sapphire, Platinum, Obsidian, release QA, kanji work, or proof-ledger work.
+
+- Start from live generated rows and current missing Gold expectations. Use `npm run deck:words:gold:scaffold -- --level=3 --limit=10` only as a fail-closed drafting helper; it writes no tracked templates, uses TODO sentinels for judgment fields, and cannot auto-pass a card.
+- Review selected rows one at a time. The normal high-throughput shape is three to seven batches of ten only while focused gates stay clean; stop sooner when candidates expose drift, source weakness, or schema limits.
+- For each accepted row, verify exact written-reading identity, source identity, generated card text, reading, meaning, example sentence, audio, pitch, labels, card-back fields, and N3 learner fit before adding a Gold expectation.
+- Fill meaning, example, and provenance note assertions by human review. Do not leave TODO sentinels, bulk-accept scaffold text, shrink denominators, or convert missing unreviewed rows into regressions.
+- If Gold review exposes N3 starter/source/card drift, fix the upstream tracked N3 word data required to make the reviewed card true, then regenerate and rerun the focused gates. Do not touch frozen N4/N5 word data, kanji lanes, Sapphire, Platinum, Obsidian proof, or release-lock files unless the live N3 Gold gate proves a direct blocker.
+- Verify during and after the batch with `npm run deck:words:completion:n3`, `npm run deck:words:gap-plan:n3`, `npm run deck:words:reading-audit:n3`, `npm run deck:words:review:n3`, and `npm run nlp:governance-gate`; add `npm run words:init -- --refresh-starter` when starter-derived rows changed.
+- At the commit boundary, classify missing N3 Gold rows as expected coverage backlog, classify Sapphire/Platinum failures as expected downstream backlog, confirm no reviewed-row failures, and then run the normal lint, typecheck, `npm test`, security, diff, status, stat, and name-status checks.
+
 ## Check kanji NLP support before Obsidian rereview
 
 ```bash

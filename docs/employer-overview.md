@@ -11,7 +11,7 @@ For a hiring reviewer, the important signal is not "I made flashcards." The impo
 | What to inspect | Current verified state | Why it matters |
 | --- | --- | --- |
 | System type | Governed data pipeline and release-controlled content generation system for JLPT kanji and vocabulary. | Evaluates as backend/data/product engineering, not as a static content file. |
-| Governed surfaces | Current generated denominators cover `2212` core kanji rows and `1470` word rows across JLPT N5-N1. | The system is a multi-surface data product, not a single static deck. |
+| Governed surfaces | Current generated denominators cover `2212` core kanji rows and `2122` word rows across JLPT N5-N1. | The system is a multi-surface data product, not a single static deck. |
 | Locked certification scope | The scoped `v0.2.0` lock certifies `982` kanji rows and `987` word rows through Obsidian. | Release claims are explicit, bounded, and separate from ongoing work. |
 | Proof model | Canonical JSONL proof ledger validates with `1969` events across 6 ledger files. | Certification evidence is tracked, queryable, and replayable. |
 | Release discipline | `docs/releases/v0.2.0-scoped-obsidian-lock.md` freezes N5/N4 word and N5-N2 kanji scope. Future edits belong to the next version. | The repo has an explicit release boundary instead of an informal "current state." |
@@ -70,7 +70,7 @@ This is a scoped content/package release lock, not a blanket claim that every pr
 | Surface | Current generated denominator | Current Obsidian-certified denominator | Boundary |
 | --- | --- | --- | --- |
 | Core kanji | `2212/2212` across N5-N1 | `982/2212` | The lock covers N5-N2. Remaining generated kanji rows are not Obsidian-certified. |
-| Words | `1470/1470` across N5-N1 | `987/1470` | The lock covers N5-N4. Remaining generated word rows are not Obsidian-certified. |
+| Words | `2122/2122` across N5-N1 | `987/2122` | The lock covers N5-N4. Remaining generated word rows are not Obsidian-certified. |
 
 ## Why This Is More Than A Deck
 

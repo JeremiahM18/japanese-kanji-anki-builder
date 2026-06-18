@@ -28,10 +28,18 @@ const {
     normalizeJapaneseReading,
 } = require("../utils/japanese");
 const { ensureDir } = require("../utils/fs");
+const {
+    buildArtifactInputHashes,
+    buildReuseResult,
+    inputHashesMatch,
+    parametersMatch,
+    tryReadReusableArtifact,
+} = require("./nlpArtifactReuseService");
 
 const DEFAULT_MODEL_ID = "paraphrase-multilingual-minilm-l12-v2-q8";
 const DEFAULT_LANE = "assistive-example-reranking";
 const DEFAULT_CREATED_BY = "scripts/rerankNlpExamples.js";
+const REUSE_POLICY_VERSION = 1;
 const EXAMPLE_RERANKING_LIMITATIONS = Object.freeze([
     "Example reranking is an assistive review signal only and must not replace human Japanese/pedagogy review.",
     "High semantic similarity does not prove naturalness, level fit, reading accuracy, translation quality, or source truth.",
@@ -178,6 +186,109 @@ function assertExampleRerankingModel({ manifest, modelId, lane }) {
     return model;
 }
 
+function buildExampleRerankingGeneratorParameters({ level, lane, limit, minCandidates }) {
+    const fullScope = !Number.isFinite(limit);
+    return {
+        task: "word-example-reranking",
+        reusePolicyVersion: REUSE_POLICY_VERSION,
+        level,
+        lane,
+        fullScope,
+        limit: fullScope ? null : limit,
+        minCandidates,
+    };
+}
+
+function buildExampleRerankingReuseContext({
+    wordTsvPath,
+    sentenceCorpusPath,
+    embeddingArtifactPath,
+    manifestPath = buildDefaultNlpModelManifestPath(),
+    workspaceRoot = process.cwd(),
+    level = 5,
+    modelId = DEFAULT_MODEL_ID,
+    lane = DEFAULT_LANE,
+    limit = null,
+    minCandidates = 2,
+    loadManifestFn = loadNlpModelManifest,
+} = {}) {
+    if (!wordTsvPath) {
+        throw new Error("wordTsvPath is required for NLP example reranking.");
+    }
+    if (!sentenceCorpusPath) {
+        throw new Error("sentenceCorpusPath is required for NLP example reranking.");
+    }
+    if (!embeddingArtifactPath) {
+        throw new Error("embeddingArtifactPath is required for NLP example reranking.");
+    }
+    if (!Number.isInteger(level) || level < 1 || level > 5) {
+        throw new Error("NLP example reranking level must be an integer from 1 to 5.");
+    }
+
+    const resolvedWorkspaceRoot = path.resolve(workspaceRoot);
+    const resolvedWordTsvPath = path.resolve(wordTsvPath);
+    const resolvedSentenceCorpusPath = path.resolve(sentenceCorpusPath);
+    const resolvedEmbeddingArtifactPath = path.resolve(embeddingArtifactPath);
+    const resolvedManifestPath = path.resolve(manifestPath);
+    const manifest = loadManifestFn(resolvedManifestPath);
+    assertExampleRerankingModel({ manifest, modelId, lane });
+    const embeddingArtifact = parseNlpEmbeddingArtifact(JSON.parse(fs.readFileSync(resolvedEmbeddingArtifactPath, "utf8")));
+    if (embeddingArtifact.model.modelId !== modelId) {
+        throw new Error(`Embedding artifact model ${embeddingArtifact.model.modelId} does not match reranking model ${modelId}.`);
+    }
+    const wordTsvHash = sha256FileWithSize(resolvedWordTsvPath);
+    const sentenceCorpusHash = sha256FileWithSize(resolvedSentenceCorpusPath);
+    const embeddingArtifactHash = sha256FileWithSize(resolvedEmbeddingArtifactPath);
+    const manifestHash = sha256FileWithSize(resolvedManifestPath);
+    const inputHashes = buildArtifactInputHashes([
+        wordTsvHash,
+        sentenceCorpusHash,
+        embeddingArtifactHash,
+        manifestHash,
+    ], resolvedWorkspaceRoot);
+    const parameters = buildExampleRerankingGeneratorParameters({
+        level,
+        lane,
+        limit,
+        minCandidates,
+    });
+
+    return {
+        inputHashes,
+        lane,
+        level,
+        modelId,
+        parameters,
+        wordTsvHash,
+    };
+}
+
+function findReusableExampleRerankingArtifact(outPath, context) {
+    if (!context.parameters.fullScope) {
+        return null;
+    }
+    const artifact = tryReadReusableArtifact(outPath, parseNlpSuggestionArtifact);
+    if (!artifact) {
+        return null;
+    }
+    if (artifact.generator.modelId !== context.modelId) {
+        return null;
+    }
+    if (!parametersMatch(artifact.generator.parameters, context.parameters)) {
+        return null;
+    }
+    if (!inputHashesMatch(artifact.generator.inputHashes, context.inputHashes)) {
+        return null;
+    }
+    if (artifact.scope.deckKind !== "word"
+        || artifact.scope.lane !== context.lane
+        || artifact.scope.levels?.length !== 1
+        || artifact.scope.levels[0] !== context.level) {
+        return null;
+    }
+    return artifact;
+}
+
 function buildSuggestion({ row, topCandidate, rankedCandidates, index, level, lane, wordTsvPath, sentenceCorpusPath, embeddingArtifactPath, embeddingArtifactHash }) {
     const currentRank = rankedCandidates.find((candidate) => candidate.sourceType === "generated-row")?.rank || null;
     const rankText = currentRank ? `Current generated example rank: ${currentRank} of ${rankedCandidates.length}.` : "Current generated example was not rankable.";
@@ -285,6 +396,12 @@ async function buildNlpExampleRerankingArtifact({
     const sentenceCorpusHash = sha256FileWithSize(resolvedSentenceCorpusPath);
     const embeddingArtifactHash = sha256FileWithSize(resolvedEmbeddingArtifactPath);
     const manifestHash = sha256FileWithSize(resolvedManifestPath);
+    const parameters = buildExampleRerankingGeneratorParameters({
+        level,
+        lane,
+        limit,
+        minCandidates,
+    });
     const suggestions = [];
 
     for (const row of scopedRows) {
@@ -326,6 +443,7 @@ async function buildNlpExampleRerankingArtifact({
             runId: `${modelId}-example-rerank-n${level}-${wordTsvHash.sha256.slice(0, 12)}`,
             manifestPath: path.relative(resolvedWorkspaceRoot, resolvedManifestPath).replace(/\\/g, "/"),
             createdBy,
+            parameters,
             inputHashes: [wordTsvHash, sentenceCorpusHash, embeddingArtifactHash, manifestHash].map((entry) => ({
                 path: path.relative(resolvedWorkspaceRoot, entry.path).replace(/\\/g, "/"),
                 sha256: entry.sha256,
@@ -352,21 +470,31 @@ async function writeNlpExampleRerankingArtifact({
     if (!outPath) {
         throw new Error("outPath is required for NLP example reranking.");
     }
-    const artifact = await buildNlpExampleRerankingArtifact(options);
     const resolvedOutPath = path.resolve(outPath);
+    const context = buildExampleRerankingReuseContext(options);
+    const reusableArtifact = findReusableExampleRerankingArtifact(resolvedOutPath, context);
+    if (reusableArtifact) {
+        return buildReuseResult({
+            outPath: resolvedOutPath,
+            artifact: reusableArtifact,
+        });
+    }
+    const artifact = await buildNlpExampleRerankingArtifact(options);
     ensureDir(path.dirname(resolvedOutPath));
     fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
     return {
         outPath: resolvedOutPath,
         artifact,
+        skipped: false,
     };
 }
 
-function formatNlpExampleRerankingSummary({ outPath, artifact }) {
+function formatNlpExampleRerankingSummary({ outPath, artifact, skipped = false }) {
     return [
         "Japanese Kanji Builder NLP Example Reranking",
         "",
         `Artifact: ${outPath}`,
+        `Status: ${skipped ? "reused unchanged artifact" : "generated artifact"}`,
         `Model: ${artifact.generator.modelId}`,
         `Scope: ${artifact.scope.levels.map((level) => `N${level}`).join(", ")} ${artifact.scope.deckKind}`,
         `Suggestions: ${artifact.suggestions.length}`,

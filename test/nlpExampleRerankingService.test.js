@@ -292,3 +292,108 @@ test("writeNlpExampleRerankingArtifact writes artifacts accepted by the validato
     assert.equal(report.passed, true);
     assert.equal(report.counts.suggestions, 1);
 });
+
+test("writeNlpExampleRerankingArtifact skips unchanged full-scope reranking artifacts", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-example-rerank-"));
+    const wordTsvPath = writeWordTsv(dir);
+    const sentenceCorpusPath = writeSentenceCorpus(dir);
+    const embeddingArtifactPath = writeEmbeddingArtifact(dir);
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    const outPath = path.join(dir, "suggestions.json");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+
+    const first = await writeNlpExampleRerankingArtifact({
+        wordTsvPath,
+        sentenceCorpusPath,
+        embeddingArtifactPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => async (input) => input.includes("学びます") ? [1, 0, 0] : [0, 1, 0],
+    });
+    const firstText = fs.readFileSync(outPath, "utf8");
+
+    const second = await writeNlpExampleRerankingArtifact({
+        wordTsvPath,
+        sentenceCorpusPath,
+        embeddingArtifactPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => {
+            throw new Error("reranking model should not be rebuilt for unchanged inputs");
+        },
+    });
+
+    assert.equal(first.skipped, false);
+    assert.equal(first.artifact.generator.parameters.fullScope, true);
+    assert.equal(second.skipped, true);
+    assert.equal(second.skipReason, "unchanged-inputs");
+    assert.equal(second.artifact.suggestions.length, 1);
+    assert.equal(fs.readFileSync(outPath, "utf8"), firstText);
+});
+
+test("writeNlpExampleRerankingArtifact regenerates when min-candidates changes", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-example-rerank-"));
+    const wordTsvPath = writeWordTsv(dir);
+    const sentenceCorpusPath = writeSentenceCorpus(dir);
+    const embeddingArtifactPath = writeEmbeddingArtifact(dir);
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    const outPath = path.join(dir, "suggestions.json");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+    let modelBuilds = 0;
+    const buildEmbedTextFn = async () => {
+        modelBuilds += 1;
+        return async (input) => input.includes("学びます") ? [1, 0, 0] : [0, 1, 0];
+    };
+
+    await writeNlpExampleRerankingArtifact({
+        wordTsvPath,
+        sentenceCorpusPath,
+        embeddingArtifactPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn,
+    });
+    const changed = await writeNlpExampleRerankingArtifact({
+        wordTsvPath,
+        sentenceCorpusPath,
+        embeddingArtifactPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        minCandidates: 3,
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn,
+    });
+
+    assert.equal(changed.skipped, false);
+    assert.equal(changed.artifact.generator.parameters.minCandidates, 3);
+    assert.equal(changed.artifact.suggestions.length, 0);
+    assert.equal(modelBuilds, 2);
+});

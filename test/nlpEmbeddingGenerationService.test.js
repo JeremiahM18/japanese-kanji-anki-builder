@@ -158,3 +158,105 @@ test("writeNlpWordEmbeddingArtifact writes artifacts accepted by the validator",
     assert.equal(report.passed, true);
     assert.equal(report.counts.items, 2);
 });
+
+test("writeNlpWordEmbeddingArtifact skips unchanged full-scope artifacts without rebuilding embeddings", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-embedding-generation-"));
+    const wordTsvPath = writeWordTsv(dir);
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    const outPath = path.join(dir, "embeddings.json");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+    let embedCalls = 0;
+
+    const first = await writeNlpWordEmbeddingArtifact({
+        wordTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => async (text) => {
+            embedCalls += 1;
+            return text.includes("お金") ? [0.4, 0.5, 0.6] : [0.1, 0.2, 0.3];
+        },
+    });
+    const firstText = fs.readFileSync(outPath, "utf8");
+
+    const second = await writeNlpWordEmbeddingArtifact({
+        wordTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => {
+            throw new Error("embedding model should not be rebuilt for unchanged inputs");
+        },
+    });
+
+    assert.equal(first.skipped, false);
+    assert.equal(first.artifact.generator.parameters.fullScope, true);
+    assert.equal(second.skipped, true);
+    assert.equal(second.skipReason, "unchanged-inputs");
+    assert.equal(second.artifact.items.length, 2);
+    assert.equal(fs.readFileSync(outPath, "utf8"), firstText);
+    assert.equal(embedCalls, 2);
+});
+
+test("writeNlpWordEmbeddingArtifact does not reuse limited artifacts for full-scope output", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-embedding-generation-"));
+    const wordTsvPath = writeWordTsv(dir);
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    const outPath = path.join(dir, "embeddings.json");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+    let embedCalls = 0;
+
+    const limited = await writeNlpWordEmbeddingArtifact({
+        wordTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        limit: 1,
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => async () => {
+            embedCalls += 1;
+            return [0.1, 0.2, 0.3];
+        },
+    });
+    const full = await writeNlpWordEmbeddingArtifact({
+        wordTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => async (text) => {
+            embedCalls += 1;
+            return text.includes("お金") ? [0.4, 0.5, 0.6] : [0.1, 0.2, 0.3];
+        },
+    });
+
+    assert.equal(limited.artifact.items.length, 1);
+    assert.equal(limited.artifact.generator.parameters.fullScope, false);
+    assert.equal(full.skipped, false);
+    assert.equal(full.artifact.items.length, 2);
+    assert.equal(full.artifact.generator.parameters.fullScope, true);
+    assert.equal(embedCalls, 3);
+});

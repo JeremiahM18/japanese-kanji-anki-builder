@@ -150,7 +150,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:expansion-candidates:n2 -- --limit=50` | Diff the manifest-pinned Tanos N2 candidate-discovery source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=1` | Normalize ignored Tanos N1 Mnemosyne English and hiragana exports into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n1 -- --limit=50` | Diff the manifest-pinned Tanos N1 candidate-discovery source into read-only word expansion candidates |
-| `npm run deck:words:expansion-support -- --levels=5,4,3,2,1` | Run broad model-backed word NLP review amplification for selected word levels and finish with artifact validation plus the NLP governance gate; this cannot certify cards or write tracked templates |
+| `npm run deck:words:expansion-support -- --levels=5,4,3,2,1` | Run broad model-backed word NLP review amplification for selected word levels and finish with artifact validation plus the NLP governance gate; full-scope unchanged word embeddings, example reranking, and sense-fit artifacts are reused by hash/parameter guard; this cannot certify cards or write tracked templates |
 | `npm run deck:words:expansion-support:n5` | Run governed NLP expansion support for N5 word expansion/review |
 | `npm run deck:words:expansion-support:n4` | Run governed NLP expansion support for N4 word expansion/review |
 | `npm run deck:words:expansion-support:n3` | Run governed NLP expansion support for N3 word expansion/review |
@@ -172,10 +172,10 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run nlp:tokenization:validate` | Validate governed morphological tokenization artifacts under `out/nlp-tokenization/`; tokenization remains assistive-only and cannot certify cards |
 | `npm run nlp:tokenization:audit` | Summarize validated tokenization artifacts into assistive review-packet signals without certifying cards or writing tracked templates |
 | `npm run nlp:embeddings:evaluate` | Re-run the tracked Japanese smoke benchmark for the active local embedding model; evaluation remains assistive-only and cannot certify cards |
-| `npm run nlp:embeddings:generate -- --level=5` | Generate governed assistive-only word-card embedding artifacts from the generated word TSV |
+| `npm run nlp:embeddings:generate -- --level=5` | Generate governed assistive-only word-card embedding artifacts from the generated word TSV, or reuse an unchanged full-scope artifact when input hashes, model evidence, scope, target rows, and generation parameters still match |
 | `npm run nlp:embeddings:validate` | Validate governed embedding artifacts under `out/nlp-embeddings/`; embeddings remain assistive-only and require an active pinned embedding model before non-empty artifacts pass |
-| `npm run nlp:examples:rerank -- --level=5` | Generate assistive example-reranking suggestions from generated word rows, sentence corpus candidates, and validated word-card embeddings |
-| `npm run nlp:sense-fit:audit -- --level=5` | Generate assistive sense-fit warning suggestions for possible meaning/example/translation alignment risks |
+| `npm run nlp:examples:rerank -- --level=5` | Generate assistive example-reranking suggestions from generated word rows, sentence corpus candidates, and validated word-card embeddings, or reuse an unchanged full-scope artifact when hashes and generation parameters such as `minCandidates` still match |
+| `npm run nlp:sense-fit:audit -- --level=5` | Generate assistive sense-fit warning suggestions for possible meaning/example/translation alignment risks, or reuse an unchanged full-scope artifact when hashes and generation parameters such as `threshold` still match |
 | `npm run nlp:reading-gaps:discover -- --level=5 --include-deferred` | Generate assistive candidate-discovery suggestions from the governed word reading-gap plan without changing gap disposition or card certification |
 | `npm run nlp:suggestions:validate` | Validate governed NLP suggestion artifacts under `out/nlp-suggestions/`; artifacts remain assistive-only and require human promotion |
 | `npm run nlp:review-packets:generate -- --level=5` | Generate assistive governed review packets from validated suggestion artifacts and tokenization audit signals |

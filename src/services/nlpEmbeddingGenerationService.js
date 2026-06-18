@@ -14,10 +14,19 @@ const {
     buildTransformersEmbedTextFn,
 } = require("./nlpEmbeddingModelEvaluationService");
 const { ensureDir } = require("../utils/fs");
+const {
+    buildArtifactInputHashes,
+    buildReuseResult,
+    inputHashesMatch,
+    modelEvidenceMatches,
+    parametersMatch,
+    tryReadReusableArtifact,
+} = require("./nlpArtifactReuseService");
 
 const DEFAULT_MODEL_ID = "paraphrase-multilingual-minilm-l12-v2-q8";
 const DEFAULT_CREATED_BY = "scripts/generateNlpEmbeddings.js";
 const DEFAULT_LANE = "assistive-example-reranking";
+const REUSE_POLICY_VERSION = 1;
 const EMBEDDING_LIMITATIONS = Object.freeze([
     "Embedding artifacts are assistive-only review signals and must be human-reviewed before any learner-facing card change.",
     "Embedding artifacts are not source evidence and do not certify Gold, Platinum, Obsidian, or release readiness.",
@@ -113,6 +122,123 @@ function buildWordEmbeddingInput(row) {
     return parts.join("\n");
 }
 
+function buildWordEmbeddingGeneratorParameters({ level, lane, limit }) {
+    const fullScope = !Number.isFinite(limit);
+    return {
+        task: "word-embedding-generation",
+        reusePolicyVersion: REUSE_POLICY_VERSION,
+        level,
+        lane,
+        fullScope,
+        limit: fullScope ? null : limit,
+    };
+}
+
+function buildNlpWordEmbeddingRunContext({
+    wordTsvPath,
+    manifestPath = buildDefaultNlpModelManifestPath(),
+    workspaceRoot = process.cwd(),
+    level = 5,
+    modelId = DEFAULT_MODEL_ID,
+    lane = DEFAULT_LANE,
+    limit = null,
+    cacheDir = path.resolve("cache/nlp-models/transformers-js"),
+    allowRemoteModels = false,
+    createdBy = DEFAULT_CREATED_BY,
+    now = () => new Date(),
+    loadManifestFn = loadNlpModelManifest,
+    buildEmbedTextFn = buildTransformersEmbedTextFn,
+} = {}) {
+    if (!wordTsvPath) {
+        throw new Error("wordTsvPath is required for NLP word embedding generation.");
+    }
+    if (!Number.isInteger(level) || level < 1 || level > 5) {
+        throw new Error("NLP word embedding level must be an integer from 1 to 5.");
+    }
+
+    const resolvedWorkspaceRoot = path.resolve(workspaceRoot);
+    const resolvedWordTsvPath = path.resolve(wordTsvPath);
+    const resolvedManifestPath = path.resolve(manifestPath);
+    const manifest = loadManifestFn(resolvedManifestPath);
+    const model = assertEmbeddingModel({ manifest, modelId, lane });
+    const rows = parseWordDeckEmbeddingRows(fs.readFileSync(resolvedWordTsvPath, "utf8"));
+    const scopedRows = Number.isFinite(limit) ? rows.slice(0, limit) : rows;
+    const wordTsvHash = sha256FileWithSize(resolvedWordTsvPath);
+    const manifestHash = sha256FileWithSize(resolvedManifestPath);
+    const inputHashes = buildArtifactInputHashes([wordTsvHash, manifestHash], resolvedWorkspaceRoot);
+    const parameters = buildWordEmbeddingGeneratorParameters({ level, lane, limit });
+
+    return {
+        allowRemoteModels,
+        buildEmbedTextFn,
+        cacheDir,
+        createdBy,
+        inputHashes,
+        lane,
+        level,
+        manifest,
+        manifestPath: resolvedManifestPath,
+        model,
+        modelId,
+        now,
+        parameters,
+        rows,
+        scopedRows,
+        wordTsvHash,
+        workspaceRoot: resolvedWorkspaceRoot,
+    };
+}
+
+function wordEmbeddingItemsMatchRows(artifact, rows, level) {
+    if (!Array.isArray(artifact.items) || artifact.items.length !== rows.length) {
+        return false;
+    }
+    return rows.every((row, index) => {
+        const item = artifact.items[index];
+        const expectedInput = buildWordEmbeddingInput(row);
+        return item
+            && item.id === `n${level}-word-embedding-${String(index + 1).padStart(4, "0")}`
+            && item.target?.kind === "word-card"
+            && item.target?.deckKind === "word"
+            && item.target?.level === level
+            && item.target?.written === row.written
+            && item.target?.reading === row.reading
+            && item.inputText === expectedInput
+            && item.normalizedText === expectedInput;
+    });
+}
+
+function findReusableWordEmbeddingArtifact(outPath, context) {
+    if (!context.parameters.fullScope) {
+        return null;
+    }
+    const artifact = tryReadReusableArtifact(outPath, parseNlpEmbeddingArtifact);
+    if (!artifact) {
+        return null;
+    }
+    if (!parametersMatch(artifact.generator.parameters, context.parameters)) {
+        return null;
+    }
+    if (!inputHashesMatch(artifact.generator.inputHashes, context.inputHashes)) {
+        return null;
+    }
+    if (!modelEvidenceMatches(artifact.model, context.model, context.modelId)) {
+        return null;
+    }
+    if (artifact.scope.targetKind !== "word-card"
+        || artifact.scope.deckKind !== "word"
+        || artifact.scope.source !== "generated-word-rows"
+        || artifact.scope.lane !== context.lane
+        || artifact.scope.levels?.length !== 1
+        || artifact.scope.levels[0] !== context.level) {
+        return null;
+    }
+    if (!wordEmbeddingItemsMatchRows(artifact, context.rows, context.level)) {
+        return null;
+    }
+    return artifact;
+}
+
 function vectorMagnitude(vector = []) {
     return Math.sqrt(vector.reduce((sum, value) => sum + (value * value), 0));
 }
@@ -146,65 +272,36 @@ async function buildEmbeddingItems({ rows, level, embedTextFn }) {
 }
 
 async function buildNlpWordEmbeddingArtifact({
-    wordTsvPath,
-    manifestPath = buildDefaultNlpModelManifestPath(),
-    workspaceRoot = process.cwd(),
-    level = 5,
-    modelId = DEFAULT_MODEL_ID,
-    lane = DEFAULT_LANE,
-    limit = null,
-    cacheDir = path.resolve("cache/nlp-models/transformers-js"),
-    allowRemoteModels = false,
-    createdBy = DEFAULT_CREATED_BY,
-    now = () => new Date(),
-    loadManifestFn = loadNlpModelManifest,
-    buildEmbedTextFn = buildTransformersEmbedTextFn,
+    context = null,
+    ...options
 } = {}) {
-    if (!wordTsvPath) {
-        throw new Error("wordTsvPath is required for NLP word embedding generation.");
-    }
-    if (!Number.isInteger(level) || level < 1 || level > 5) {
-        throw new Error("NLP word embedding level must be an integer from 1 to 5.");
-    }
-
-    const resolvedWorkspaceRoot = path.resolve(workspaceRoot);
-    const resolvedWordTsvPath = path.resolve(wordTsvPath);
-    const resolvedManifestPath = path.resolve(manifestPath);
-    const manifest = loadManifestFn(resolvedManifestPath);
-    const model = assertEmbeddingModel({ manifest, modelId, lane });
-    const rows = parseWordDeckEmbeddingRows(fs.readFileSync(resolvedWordTsvPath, "utf8"));
-    const scopedRows = Number.isFinite(limit) ? rows.slice(0, limit) : rows;
-    const embedTextFn = await buildEmbedTextFn({
-        model,
-        cacheDir,
-        allowRemoteModels,
+    const runContext = context || buildNlpWordEmbeddingRunContext(options);
+    const embedTextFn = await runContext.buildEmbedTextFn({
+        model: runContext.model,
+        cacheDir: runContext.cacheDir,
+        allowRemoteModels: runContext.allowRemoteModels,
     });
-    const wordTsvHash = sha256FileWithSize(resolvedWordTsvPath);
-    const manifestHash = sha256FileWithSize(resolvedManifestPath);
     const artifact = {
         version: 1,
         artifactType: "nlp_embedding_batch",
-        generatedAt: now().toISOString(),
+        generatedAt: runContext.now().toISOString(),
         generator: {
-            modelId,
-            runId: `${modelId}-word-n${level}-${wordTsvHash.sha256.slice(0, 12)}`,
-            manifestPath: path.relative(resolvedWorkspaceRoot, resolvedManifestPath).replace(/\\/g, "/"),
-            createdBy,
-            inputHashes: [wordTsvHash, manifestHash].map((entry) => ({
-                path: path.relative(resolvedWorkspaceRoot, entry.path).replace(/\\/g, "/"),
-                sha256: entry.sha256,
-                byteSize: entry.byteSize,
-            })),
+            modelId: runContext.modelId,
+            runId: `${runContext.modelId}-word-n${runContext.level}-${runContext.wordTsvHash.sha256.slice(0, 12)}`,
+            manifestPath: path.relative(runContext.workspaceRoot, runContext.manifestPath).replace(/\\/g, "/"),
+            createdBy: runContext.createdBy,
+            parameters: runContext.parameters,
+            inputHashes: runContext.inputHashes,
         },
         model: {
-            modelId,
-            runtimeId: model.runtimeId,
-            modelFamily: model.modelFamily,
-            modelVersion: model.modelVersion,
-            embeddingDimension: model.embeddingConfig.embeddingDimension,
-            pooling: model.embeddingConfig.pooling,
-            normalized: model.embeddingConfig.normalized,
-            distanceMetric: model.embeddingConfig.distanceMetric,
+            modelId: runContext.modelId,
+            runtimeId: runContext.model.runtimeId,
+            modelFamily: runContext.model.modelFamily,
+            modelVersion: runContext.model.modelVersion,
+            embeddingDimension: runContext.model.embeddingConfig.embeddingDimension,
+            pooling: runContext.model.embeddingConfig.pooling,
+            normalized: runContext.model.embeddingConfig.normalized,
+            distanceMetric: runContext.model.embeddingConfig.distanceMetric,
             deterministic: {
                 requiresPinnedModel: true,
                 requiresPinnedRuntime: true,
@@ -215,14 +312,14 @@ async function buildNlpWordEmbeddingArtifact({
         scope: {
             targetKind: "word-card",
             deckKind: "word",
-            levels: [level],
+            levels: [runContext.level],
             source: "generated-word-rows",
-            lane,
-            description: `Generated word TSV embeddings for JLPT N${level} word-card review signals.`,
+            lane: runContext.lane,
+            description: `Generated word TSV embeddings for JLPT N${runContext.level} word-card review signals.`,
         },
         items: await buildEmbeddingItems({
-            rows: scopedRows,
-            level,
+            rows: runContext.scopedRows,
+            level: runContext.level,
             embedTextFn,
         }),
     };
@@ -237,21 +334,34 @@ async function writeNlpWordEmbeddingArtifact({
     if (!outPath) {
         throw new Error("outPath is required for NLP word embedding generation.");
     }
-    const artifact = await buildNlpWordEmbeddingArtifact(options);
     const resolvedOutPath = path.resolve(outPath);
+    const context = buildNlpWordEmbeddingRunContext(options);
+    const reusableArtifact = findReusableWordEmbeddingArtifact(resolvedOutPath, context);
+    if (reusableArtifact) {
+        return buildReuseResult({
+            outPath: resolvedOutPath,
+            artifact: reusableArtifact,
+        });
+    }
+    const artifact = await buildNlpWordEmbeddingArtifact({
+        ...options,
+        context,
+    });
     ensureDir(path.dirname(resolvedOutPath));
     fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
     return {
         outPath: resolvedOutPath,
         artifact,
+        skipped: false,
     };
 }
 
-function formatNlpEmbeddingGenerationSummary({ outPath, artifact }) {
+function formatNlpEmbeddingGenerationSummary({ outPath, artifact, skipped = false }) {
     return [
         "Japanese Kanji Builder NLP Embedding Generation",
         "",
         `Artifact: ${outPath}`,
+        `Status: ${skipped ? "reused unchanged artifact" : "generated artifact"}`,
         `Model: ${artifact.model.modelId}`,
         `Scope: ${artifact.scope.levels.map((level) => `N${level}`).join(", ")} ${artifact.scope.targetKind}`,
         `Lane: ${artifact.scope.lane}`,

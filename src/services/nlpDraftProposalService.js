@@ -45,7 +45,7 @@ const SUGGESTION_EVIDENCE_SOURCE_TYPES = new Set([
 const DRAFT_PROPOSAL_LIMITATIONS = Object.freeze([
     "Draft proposals are assistive review scaffolds only and must not replace human Japanese/pedagogy review.",
     "Drafted fields are not source truth, card certification, or release readiness evidence.",
-    "Any accepted draft must be manually promoted through tracked data, tests, and the existing Gold/Platinum/Obsidian workflows.",
+    "Any accepted draft must be manually promoted through tracked data, tests, and the existing Gold/Sapphire/Platinum/Obsidian workflows.",
 ]);
 
 function buildDefaultNlpDraftProposalDir() {
@@ -149,7 +149,7 @@ function buildCommonPromotionChecklist() {
         "Inspect the live generated row and current tracked data before using this draft.",
         "Verify every source identity, example, reading, meaning, pitch/audio implication, and learner-fit claim manually.",
         "Promote accepted content only through tracked templates/contracts and the established tests and gates.",
-        "Do not count this draft as Gold, Platinum, Obsidian, or release readiness evidence.",
+        "Do not count this draft as Gold, Sapphire, Platinum, Obsidian, or release readiness evidence.",
     ];
 }
 

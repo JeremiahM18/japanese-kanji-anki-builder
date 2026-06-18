@@ -100,8 +100,8 @@ Do not widen scope just because higher levels exist.
 
 Current posture:
 
-- N5 word work is stabilized through Gold, native Sapphire, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
-- N4 word work is stabilized through Gold, native Sapphire, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
+- N5 word work is stabilized through Gold, native Sapphire, Platinum, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
+- N4 word work is stabilized through Gold, native Sapphire, Platinum, and strict Obsidian proof; keep it frozen except for regressions or explicit editorial decisions
 - N3/N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
@@ -131,7 +131,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 word rows are stabilized at the Gold regression, native Sapphire, and strict Obsidian levels. The current generated-row denominator is `987/987` strict Obsidian proof across N5/N4, with N5 at `287/287` and N4 at `700/700`.
+N5 and N4 word rows are stabilized at the Gold regression, native Sapphire, Platinum, and strict Obsidian levels. The current generated-row denominator is `987/987` strict Obsidian proof across N5/N4, with N5 at `287/287` and N4 at `700/700`.
 
 That means:
 

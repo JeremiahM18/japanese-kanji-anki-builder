@@ -43,7 +43,7 @@ const REUSE_POLICY_VERSION = 1;
 const EXAMPLE_RERANKING_LIMITATIONS = Object.freeze([
     "Example reranking is an assistive review signal only and must not replace human Japanese/pedagogy review.",
     "High semantic similarity does not prove naturalness, level fit, reading accuracy, translation quality, or source truth.",
-    "Reranking artifacts must not directly write tracked templates or certify Gold, Platinum, Obsidian, or release readiness.",
+    "Reranking artifacts must not directly write tracked templates or certify Gold, Sapphire, Platinum, Obsidian, or release readiness.",
 ]);
 
 function sha256FileWithSize(filePath) {

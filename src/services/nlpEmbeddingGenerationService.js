@@ -29,7 +29,7 @@ const DEFAULT_LANE = "assistive-example-reranking";
 const REUSE_POLICY_VERSION = 1;
 const EMBEDDING_LIMITATIONS = Object.freeze([
     "Embedding artifacts are assistive-only review signals and must be human-reviewed before any learner-facing card change.",
-    "Embedding artifacts are not source evidence and do not certify Gold, Platinum, Obsidian, or release readiness.",
+    "Embedding artifacts are not source evidence and do not certify Gold, Sapphire, Platinum, Obsidian, or release readiness.",
     "Semantic similarity can miss Japanese sense, register, level-fit, and example-naturalness problems.",
 ]);
 

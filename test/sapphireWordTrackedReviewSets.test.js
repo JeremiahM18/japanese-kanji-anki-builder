@@ -179,7 +179,8 @@ test("native word Sapphire can lead Platinum without manufacturing Platinum cove
         })
     );
 
-    assert.equal(activeSapphireEntries.length, 18);
+    assert.equal(new Set(sapphireKeys).size, activeSapphireEntries.length, "N3 active Sapphire entries must remain one-per-word-reading");
+    assert.ok(activeSapphireEntries.length >= 28, "N3 active Sapphire coverage must not regress below the current batch baseline");
     assert.equal(activePlatinumEntries.length, 8);
     const sapphireKeySet = new Set(sapphireKeys);
     for (const platinumKey of platinumKeys) {

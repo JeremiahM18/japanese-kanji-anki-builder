@@ -36,8 +36,8 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     const report = auditDocumentationStatus({ rootDir: repoRoot });
 
     assert.equal(report.passed, true, report.failures.join("\n"));
-    assert.equal(report.snapshot.gold.ratio, "786/1081");
-    assert.equal(report.snapshot.gold.missing, 295);
+    assert.equal(report.snapshot.gold.ratio, "866/1081");
+    assert.equal(report.snapshot.gold.missing, 215);
     assert.equal(report.snapshot.sapphire.ratio, "8/1081");
     assert.equal(report.snapshot.platinum.ratio, "8/1081");
     assert.equal(report.snapshot.product.kanjiDenominator, 2212);
@@ -48,14 +48,14 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
 
 test("documentation status audit catches stale N3 word Gold counts", () => {
     const files = readDocumentationFiles();
-    files["README.md"] = files["README.md"].replace("786/1081", "315/1081").replace("`295` generated rows still missing Gold", "`766` generated rows still missing Gold");
-    files["CHANGELOG.md"] = files["CHANGELOG.md"].replace("786/1081", "315/1081").replace("`295` generated rows still missing", "`766` generated rows still missing");
+    files["README.md"] = files["README.md"].replace("866/1081", "315/1081").replace("`215` generated rows still missing Gold", "`766` generated rows still missing Gold");
+    files["CHANGELOG.md"] = files["CHANGELOG.md"].replace("866/1081", "315/1081").replace("`215` generated rows still missing", "`766` generated rows still missing");
 
     const report = auditDocumentationText({
         files,
         n3WordSnapshot: {
             denominator: 1081,
-            gold: { ratio: "786/1081", missing: 295 },
+            gold: { ratio: "866/1081", missing: 215 },
             sapphire: { ratio: "8/1081", missing: 1073 },
             platinum: { ratio: "8/1081", missing: 1073 },
             obsidianProofRecorded: false,
@@ -78,7 +78,7 @@ test("documentation status audit catches closeout wording that omits Obsidian", 
         files,
         n3WordSnapshot: {
             denominator: 1081,
-            gold: { ratio: "786/1081", missing: 295 },
+            gold: { ratio: "866/1081", missing: 215 },
             sapphire: { ratio: "8/1081", missing: 1073 },
             platinum: { ratio: "8/1081", missing: 1073 },
             obsidianProofRecorded: false,
@@ -103,7 +103,7 @@ test("documentation status audit catches a missing package script", () => {
         files,
         n3WordSnapshot: {
             denominator: 1081,
-            gold: { ratio: "786/1081", missing: 295 },
+            gold: { ratio: "866/1081", missing: 215 },
             sapphire: { ratio: "8/1081", missing: 1073 },
             platinum: { ratio: "8/1081", missing: 1073 },
             obsidianProofRecorded: false,
@@ -128,7 +128,7 @@ test("documentation status audit catches undocumented package scripts", () => {
         files,
         n3WordSnapshot: {
             denominator: 1081,
-            gold: { ratio: "786/1081", missing: 295 },
+            gold: { ratio: "866/1081", missing: 215 },
             sapphire: { ratio: "8/1081", missing: 1073 },
             platinum: { ratio: "8/1081", missing: 1073 },
             obsidianProofRecorded: false,
@@ -154,7 +154,7 @@ test("documentation status audit catches stale generated denominator docs", () =
         files,
         n3WordSnapshot: {
             denominator: 1081,
-            gold: { ratio: "786/1081", missing: 295 },
+            gold: { ratio: "866/1081", missing: 215 },
             sapphire: { ratio: "8/1081", missing: 1073 },
             platinum: { ratio: "8/1081", missing: 1073 },
             obsidianProofRecorded: false,
@@ -179,7 +179,7 @@ test("documentation status audit catches Obsidian-decentered completed status wo
         files,
         n3WordSnapshot: {
             denominator: 1081,
-            gold: { ratio: "786/1081", missing: 295 },
+            gold: { ratio: "866/1081", missing: 215 },
             sapphire: { ratio: "8/1081", missing: 1073 },
             platinum: { ratio: "8/1081", missing: 1073 },
             obsidianProofRecorded: false,

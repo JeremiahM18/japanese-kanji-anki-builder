@@ -14,6 +14,9 @@ const {
 const {
     parseSapphireWordReviewSet,
 } = require("../src/datasets/sapphireWordReviewSet");
+const {
+    promoteSapphireWordBatch,
+} = require("../src/services/sapphireWordPromotionService");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const TEMPLATES_DIR = path.join(ROOT_DIR, "templates");
@@ -176,9 +179,12 @@ test("native word Sapphire can lead Platinum without manufacturing Platinum cove
         })
     );
 
-    assert.equal(activeSapphireEntries.length, 8);
+    assert.equal(activeSapphireEntries.length, 18);
     assert.equal(activePlatinumEntries.length, 8);
-    assert.deepEqual(platinumKeys, sapphireKeys);
+    const sapphireKeySet = new Set(sapphireKeys);
+    for (const platinumKey of platinumKeys) {
+        assert.ok(sapphireKeySet.has(platinumKey), `${platinumKey} Platinum entry must have matching prior Sapphire`);
+    }
 
     for (const entry of activePlatinumEntries) {
         assert.equal(entry.reviewStandard, "word-platinum-v3-evidence-lanes");
@@ -396,5 +402,59 @@ test("Sapphire word schema rejects Platinum-shaped candidates and inline Obsidia
     assert.throws(
         () => parseSapphireWordReviewSet([proofShapedCandidate], "proof candidate"),
         /proof candidate failed schema validation/i
+    );
+});
+
+test("Sapphire word promoter merges reviewed input and fails closed on unsafe candidates", () => {
+    const wordPitchAccentData = loadJson(path.join("templates", "word_pitch_accent_data.json"));
+    const candidate = JSON.parse(JSON.stringify(
+        loadJson(path.join("templates", "sapphire_n5_word_review_set.json"))
+            .find((entry) => ACTIVE_WORD_SAPPHIRE_STATUSES.includes(entry.status))
+    ));
+    const goldenExpectations = loadJson(path.join("templates", "golden_n5_word_review_set.json"));
+    const rows = buildSyntheticWordRows([candidate], wordPitchAccentData);
+    const promoted = promoteSapphireWordBatch({
+        existingEntries: [],
+        candidateEntries: [candidate],
+        rows,
+        goldenExpectations,
+    });
+
+    assert.equal(promoted.summary.candidateEntries, 1);
+    assert.deepEqual(promoted.summary.promotedWords, [`${candidate.word}|${normalizeList(candidate.readingIncludes)[0]}`]);
+    assert.equal(promoted.summary.outputEntries, 1);
+
+    assert.throws(
+        () => promoteSapphireWordBatch({
+            existingEntries: [],
+            candidateEntries: [candidate, candidate],
+            rows,
+            goldenExpectations,
+        }),
+        /Duplicate Sapphire word candidate identities/
+    );
+    assert.throws(
+        () => promoteSapphireWordBatch({
+            existingEntries: [candidate],
+            candidateEntries: [candidate],
+            rows,
+            goldenExpectations,
+        }),
+        /already exist/
+    );
+
+    const platinumShapedCandidate = {
+        ...candidate,
+        status: "platinum",
+        reviewStandard: "word-platinum-v3-evidence-lanes",
+    };
+    assert.throws(
+        () => promoteSapphireWordBatch({
+            existingEntries: [],
+            candidateEntries: [platinumShapedCandidate],
+            rows,
+            goldenExpectations,
+        }),
+        /Sapphire word candidate batch failed schema validation/i
     );
 });

@@ -113,10 +113,10 @@ function buildN3WordStatusPhrases(snapshot) {
     const goldPosture = snapshot.gold.missing === 0 ? "complete Gold" : "partial Gold";
 
     return {
-        readmeGoldStatus: `Gold is \`${snapshot.gold.ratio}\` current-standard with \`${snapshot.gold.missing}\` generated rows still missing Gold; Sapphire and Platinum remain \`${snapshot.sapphire.ratio}\` current-standard with \`${snapshot.sapphire.missing}\` generated rows still missing each lane. Obsidian proof is not recorded for N3 words.`,
+        readmeGoldStatus: `Gold is \`${snapshot.gold.ratio}\` current-standard with \`${snapshot.gold.missing}\` generated rows still missing Gold; Sapphire is \`${snapshot.sapphire.ratio}\` current-standard with \`${snapshot.sapphire.missing}\` generated rows still missing Sapphire; Platinum remains \`${snapshot.platinum.ratio}\` current-standard with \`${snapshot.platinum.missing}\` generated rows still missing Platinum. Obsidian proof is not recorded for N3 words.`,
         changelogGoldStatus: `N3 word Gold review from \`8/${snapshot.denominator}\` to \`${snapshot.gold.ratio}\``,
         changelogGoldBacklog: `Gold now has \`${snapshot.gold.missing}\` generated rows still missing`,
-        claudeWordPosture: `N3 word work has a complete Silver generated surface plus ${goldPosture} (\`${snapshot.gold.ratio}\`), Sapphire (\`${snapshot.sapphire.ratio}\`), and Platinum (\`${snapshot.platinum.ratio}\`); N3 word Obsidian proof is not recorded.`,
+        claudeWordPosture: `N3 word work has a complete Silver generated surface plus ${goldPosture} (\`${snapshot.gold.ratio}\`), current-standard Sapphire structural review in progress (\`${snapshot.sapphire.ratio}\`), and Platinum (\`${snapshot.platinum.ratio}\`); N3 word Obsidian proof is not recorded.`,
         workflowGoldCadenceHeading: "### N3 Gold word review cadence",
         workflowGoldScaffoldCommand: "`npm run deck:words:gold:scaffold -- --level=3 --limit=10`",
         commandReferenceAuditCommand: "`npm run docs:status-audit`",

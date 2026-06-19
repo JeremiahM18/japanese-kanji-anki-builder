@@ -10,10 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Added `docs:status-audit`, a tracked documentation status guard that compares README, CHANGELOG, CLAUDE, workflow, command-reference, verification, architecture, and overview status language against current review counts, generated denominators, npm command routing, and Silver/Gold/Sapphire/Platinum/Obsidian boundaries.
 - Added `deck:words:coverage-uplift`, a read-only word coverage diagnostic that reports whether harder word decks backfill a selected target level's kanji-reading coverage across any valid same-or-harder N1-N5 range without changing readiness, deferrals, review lanes, data, media, or proof ledgers.
+- Added `deck:words:sapphire:promote`, a fail-closed reviewed-input merger for word Sapphire candidate JSON that validates live generated rows, matching Gold preconditions, and current-standard Sapphire evidence lanes before writing tracked word Sapphire manifests.
 
 ### Changed
 
-- Expanded active N3 word Silver coverage from `359` to `1081` canonical rows and N3 word Gold review from `8/1081` to `1081/1081`. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold now has `0` generated rows still missing; Sapphire and Platinum remain at `8/1081` current-standard with `1073` generated rows still missing each lane; N3-only reading readiness remains incomplete, and no N3 word Obsidian proof is recorded.
+- Expanded active N3 word Silver coverage from `359` to `1081` canonical rows, N3 word Gold review from `8/1081` to `1081/1081`, and N3 word Sapphire structural review from `8/1081` to `18/1081`. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold now has `0` generated rows still missing; Sapphire has `1063` generated rows still missing; Platinum remains at `8/1081` current-standard with `1073` generated rows still missing Platinum; N3-only reading readiness remains incomplete, and no N3 word Obsidian proof is recorded.
 
 Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active ongoing work until separately locked.
 

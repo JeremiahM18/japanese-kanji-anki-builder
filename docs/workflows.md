@@ -52,6 +52,7 @@ npm run deck:sapphire:batch -- --level=5 --kanji=父,生,男
 npm run deck:sapphire:promote -- --level=5 --input=<reviewed-json>
 npm run deck:words:sapphire:batch -- --level=5 --limit=8
 npm run deck:words:sapphire:batch -- --level=5 --words=今日:きょう,八日:ようか
+npm run deck:words:sapphire:promote -- --level=5 --input=<reviewed-json>
 npm run deck:words:gold:scaffold -- --level=3 --limit=8
 npm run deck:words:level-anchor-audit -- --level=5
 npm run deck:review:n5
@@ -73,7 +74,7 @@ npm run deck:words:sapphire:n5
 
 Lane names: candidate means proposed pre-trust work, not a certification lane; Silver means generated surface; Gold means regression protection; Sapphire means current-standard structural certification; Platinum means current-standard card-surface inspection; and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
 
-`deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:sapphire:batch` is the read-only word Sapphire pre-review report. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps.
+`deck:sapphire:batch` is the read-only core-kanji Sapphire pre-review report. `deck:words:sapphire:batch` is the read-only word Sapphire pre-review report. They do not create entries or prove release readiness. Use `--queue=missing-current-standard` only when intentionally inspecting current-standard structural coverage gaps. `deck:words:sapphire:promote` merges already-reviewed word Sapphire candidate JSON only after validating live generated rows, matching Gold preconditions, and current-standard Sapphire evidence lanes; it does not create Platinum, Obsidian proof, source truth, or release readiness.
 
 `deck:words:gold:scaffold` is a Gold-only draft helper. It reads live generated word rows and existing Gold expectations, selects rows missing Gold coverage, and emits draft skeletons with mechanical identity fields plus failing TODO sentinels for meaning, example, and provenance checks. It does not write tracked templates, shrink the generated denominator, approve Gold review, create Sapphire/Platinum entries, record Obsidian proof, or prove release readiness.
 

@@ -139,6 +139,7 @@
     "deck:words:review:n2": "node scripts/reviewGoldenWordLevel.js --level=2 --require-all",
     "deck:words:review:n1": "node scripts/reviewGoldenWordLevel.js --level=1 --require-all",
     "deck:words:sapphire:batch": "node scripts/sapphireWordBatchReport.js",
+    "deck:words:sapphire:promote": "node scripts/promoteWordSapphireBatch.js",
     "deck:words:sapphire:n5": "node scripts/reviewSapphireWordLevel.js --level=5 --require-all",
     "deck:words:sapphire:n4": "node scripts/reviewSapphireWordLevel.js --level=4 --require-all",
     "deck:words:sapphire:n3": "node scripts/reviewSapphireWordLevel.js --level=3 --require-all",

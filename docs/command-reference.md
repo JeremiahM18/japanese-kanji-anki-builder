@@ -106,6 +106,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:gold:scaffold -- --level=3 --limit=8` | Draft fail-closed Gold word expectation skeletons from live generated rows missing Gold review; writes no tracked templates and uses TODO sentinels for human-only review fields |
 | `npm run deck:words:sapphire:batch -- --level=5 --limit=8 --queue=missing-current-standard` | Build a read-only word Sapphire structural review packet for generated rows missing current-standard Sapphire coverage |
+| `npm run deck:words:sapphire:promote -- --level=3 --input=<reviewed-json> --write` | Merge reviewed word Sapphire candidate JSON into the tracked Sapphire manifest after validating live generated rows, matching Gold preconditions, and current-standard Sapphire evidence lanes; does not create Platinum, Obsidian proof, or release readiness |
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word Platinum packet for Sapphire-eligible rows; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
 | `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
 | `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |

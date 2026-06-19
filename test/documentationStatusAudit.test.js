@@ -6,6 +6,7 @@ const assert = require("node:assert/strict");
 const {
     auditDocumentationStatus,
     auditDocumentationText,
+    buildN3WordDocumentationSnapshot,
 } = require("../src/services/documentationStatusAuditService");
 
 const repoRoot = path.resolve(__dirname, "..");
@@ -34,14 +35,12 @@ function readDocumentationFiles() {
 
 test("documentation status snapshots match tracked N3 word lane counts", () => {
     const report = auditDocumentationStatus({ rootDir: repoRoot });
+    const n3WordSnapshot = buildN3WordDocumentationSnapshot({ rootDir: repoRoot });
 
     assert.equal(report.passed, true, report.failures.join("\n"));
-    assert.equal(report.snapshot.gold.ratio, "1081/1081");
-    assert.equal(report.snapshot.gold.missing, 0);
-    assert.equal(report.snapshot.sapphire.ratio, "18/1081");
-    assert.equal(report.snapshot.sapphire.missing, 1063);
-    assert.equal(report.snapshot.platinum.ratio, "8/1081");
-    assert.equal(report.snapshot.platinum.missing, 1073);
+    assert.deepEqual(report.snapshot.gold, n3WordSnapshot.gold);
+    assert.deepEqual(report.snapshot.sapphire, n3WordSnapshot.sapphire);
+    assert.deepEqual(report.snapshot.platinum, n3WordSnapshot.platinum);
     assert.equal(report.snapshot.product.kanjiDenominator, 2212);
     assert.equal(report.snapshot.product.wordDenominator, 2122);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);

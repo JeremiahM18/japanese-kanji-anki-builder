@@ -4975,7 +4975,7 @@ test("tracked starter word data includes the one hundred fifteenth N3 Silver sou
         ["当に|まさに", "当", "まさに"],
     ]);
     assertCoverageRoles(starterEntries, [
-        ["押っ始める|おっぱじめる", "both"],
+        ["押っ始める|おっぱじめる", "support"],
         ["階|きざはし", "both"],
         ["非ず|あらず", "both"],
         ["論う|あげつらう", "both"],

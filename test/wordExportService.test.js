@@ -948,6 +948,132 @@ test("buildBreakdownInference marks non-decomposable word readings as word scope
     assert.equal(result.meaningJP, "今日 （きょう） ／ today");
 });
 
+test("buildWordTsvForJlptLevel uses grouped repetition-mark ruby spans in kanji breakdown panels", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {
+            交: {
+                englishMeaning: "exchange / mix",
+                displayWord: { written: "交わす", pron: "かわす" },
+            },
+        },
+        wordStudyData: {
+            "悲喜交々|ひきこもごも": {
+                written: "悲喜交々",
+                reading: "ひきこもごも",
+                meaning: "bittersweet / mixed joy and sorrow",
+                jlpt: 3,
+                readingBreakdown: "<ruby>悲喜<rt>ひき</rt></ruby><ruby>交々<rt>こもごも</rt></ruby>",
+                coverage: {
+                    role: "support",
+                    focusKanji: ["交"],
+                    coversReadings: {
+                        交: "こもごも",
+                    },
+                },
+                exampleSentence: {
+                    japanese: "卒業式の日は悲喜交々の一日でした。",
+                    reading: "そつぎょうしきのひはひきこもごものいちにちでした。",
+                    english: "Graduation day was a day of mixed joy and sorrow.",
+                },
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 3,
+        jlptOnlyJson: {
+            悲: { jlpt: 3 },
+            喜: { jlpt: 2 },
+            交: { jlpt: 3 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "悲喜交々|ひきこもごも": { written: "悲喜交々", reading: "ひきこもごも", jlpt: 3 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                if (kanji === "悲") {
+                    return { meanings: ["sad"], on_readings: ["ヒ"], kun_readings: ["かな.しい"] };
+                }
+                if (kanji === "喜") {
+                    return { meanings: ["rejoice"], on_readings: ["キ"], kun_readings: ["よろこ.ぶ"] };
+                }
+                return { meanings: ["mix", "exchange"], on_readings: ["コウ"], kun_readings: ["かわ.す", "こもごも"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        concurrency: 1,
+    });
+
+    assert.match(result.tsv, /交々 （こもごも）/u);
+    assert.doesNotMatch(result.tsv, /交わす （かわす）/u);
+});
+
+test("buildWordTsvForJlptLevel keeps whole-word repetition-mark ruby spans out of group overrides", async () => {
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {
+            数: {
+                englishMeaning: "number / count",
+                displayWord: { written: "数字", pron: "すうじ" },
+            },
+        },
+        wordStudyData: {
+            "数々|しばしば": {
+                written: "数々",
+                reading: "しばしば",
+                meaning: "often / frequently / repeatedly",
+                jlpt: 3,
+                readingBreakdown: "<ruby>数々<rt>しばしば</rt></ruby>",
+                coverage: {
+                    role: "support",
+                    focusKanji: ["数"],
+                    coversReadings: {
+                        数: "しばしば",
+                    },
+                },
+                exampleSentence: {
+                    japanese: "古典にはその表現が数々出てきます。",
+                    reading: "こてんにはそのひょうげんがしばしばでてきます。",
+                    english: "That expression often appears in classical texts.",
+                },
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 3,
+        jlptOnlyJson: {
+            数: { jlpt: 3 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "数々|しばしば": { written: "数々", reading: "しばしば", jlpt: 3 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji() {
+                return { meanings: ["number", "count"], on_readings: ["スウ"], kun_readings: ["かず"] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        strokeOrderService: null,
+        audioService: null,
+        concurrency: 1,
+    });
+
+    assert.match(result.tsv, /数字 （すうじ）/u);
+    assert.doesNotMatch(result.tsv, /数々 （しばしば）/u);
+});
+
 test("buildBreakdownInference does not treat repetition-mark words as single-kanji contexts", () => {
     const result = buildBreakdownInference({
         kanji: "時",
@@ -2120,4 +2246,3 @@ test("buildWordTsvForJlptLevel does not let a stale curated JLPT tag override th
     assert.doesNotMatch(n4Result.tsv, /^今年\tことし\tthis year\tJLPT N4\t/m);
     assert.match(n5Result.tsv, /^今年\tことし\t[^\t]*\t\t\tthis year\tJLPT N5\t/m);
 });
-

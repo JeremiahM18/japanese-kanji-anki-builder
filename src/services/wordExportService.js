@@ -842,6 +842,7 @@ function buildWordReadingBreakdown({
 function extractRubyReadingContexts(readingBreakdown) {
     const contexts = [];
     const rubyPattern = /<ruby>([^<]+)<rt>([^<]+)<\/rt><\/ruby>/g;
+    const rawContexts = [];
     let match;
 
     while ((match = rubyPattern.exec(String(readingBreakdown || ""))) !== null) {
@@ -851,6 +852,12 @@ function extractRubyReadingContexts(readingBreakdown) {
         if (!surface || !reading || kanjiList.length === 0) {
             continue;
         }
+        rawContexts.push({ surface, reading, kanjiList });
+    }
+
+    const hasMultipleRubyContexts = rawContexts.length > 1;
+
+    for (const { surface, reading, kanjiList } of rawContexts) {
 
         if (kanjiList.length === 1 && !surface.includes("々")) {
             contexts.push({
@@ -862,7 +869,7 @@ function extractRubyReadingContexts(readingBreakdown) {
             continue;
         }
 
-        if (kanjiList.length > 1) {
+        if (kanjiList.length > 1 || (surface.includes("々") && hasMultipleRubyContexts)) {
             contexts.push({
                 type: "group",
                 surface,

@@ -102,7 +102,7 @@ Current posture:
 
 - N5 word work is strict Obsidian-certified; keep it frozen except for regressions or explicit editorial decisions
 - N4 word work is strict Obsidian-certified; keep it frozen except for regressions or explicit editorial decisions
-- N3 word work has a complete Silver generated surface plus complete Gold (`1081/1081`), current-standard Sapphire structural review in progress (`178/1081`), and Platinum (`8/1081`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
+- N3 word work has a complete Silver generated surface plus complete Gold (`1081/1081`), current-standard Sapphire structural review in progress (`258/1081`), and Platinum (`8/1081`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
 

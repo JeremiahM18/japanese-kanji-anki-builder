@@ -72,8 +72,62 @@ const GODAN_TE_TA_ENDINGS = new Map([
     ["る", ["って", "った"]],
 ]);
 
+const GODAN_NEGATIVE_STEM_ENDINGS = new Map([
+    ["う", "わ"],
+    ["く", "か"],
+    ["ぐ", "が"],
+    ["す", "さ"],
+    ["つ", "た"],
+    ["ぬ", "な"],
+    ["ぶ", "ば"],
+    ["む", "ま"],
+    ["る", "ら"],
+]);
+
+const GODAN_POTENTIAL_STEM_ENDINGS = new Map([
+    ["う", "え"],
+    ["く", "け"],
+    ["ぐ", "げ"],
+    ["す", "せ"],
+    ["つ", "て"],
+    ["ぬ", "ね"],
+    ["ぶ", "べ"],
+    ["む", "め"],
+    ["る", "れ"],
+]);
+
+const MASU_SUFFIXES = Object.freeze(["ます", "ました", "ません", "ましょう"]);
+const NEGATIVE_SUFFIXES = Object.freeze(["ない", "なかった"]);
+const ICHIDAN_RU_SUFFIXES = Object.freeze([
+    "て",
+    "た",
+    ...MASU_SUFFIXES,
+    ...NEGATIVE_SUFFIXES,
+    "られる",
+    "られます",
+    "られました",
+    "られない",
+]);
+const GODAN_POTENTIAL_SUFFIXES = Object.freeze([
+    "る",
+    "た",
+    "て",
+    ...MASU_SUFFIXES,
+    ...NEGATIVE_SUFFIXES,
+]);
+
 function containsHan(value = "") {
     return /\p{Script=Han}/u.test(String(value || ""));
+}
+
+function addSuffixedFragments(fragments, base = "", suffixes = []) {
+    if (!base) {
+        return;
+    }
+
+    for (const suffix of suffixes) {
+        fragments.add(`${base}${suffix}`);
+    }
 }
 
 function buildInflectionEvidenceFragments(value = "") {
@@ -92,19 +146,31 @@ function buildInflectionEvidenceFragments(value = "") {
         if (suruBase) {
             fragments.add(suruBase);
             fragments.add(`${suruBase}し`);
+            addSuffixedFragments(fragments, `${suruBase}し`, ["て", "た", ...MASU_SUFFIXES, ...NEGATIVE_SUFFIXES]);
         }
     }
 
     if (chars.length > 1 && GODAN_MASU_STEM_ENDINGS.has(last)) {
-        fragments.add(`${base}${GODAN_MASU_STEM_ENDINGS.get(last)}`);
+        const masuStem = `${base}${GODAN_MASU_STEM_ENDINGS.get(last)}`;
+        fragments.add(masuStem);
+        addSuffixedFragments(fragments, masuStem, MASU_SUFFIXES);
     }
     if (chars.length > 1 && GODAN_TE_TA_ENDINGS.has(last)) {
         for (const ending of GODAN_TE_TA_ENDINGS.get(last)) {
             fragments.add(`${base}${ending}`);
         }
     }
+    if (chars.length > 1 && GODAN_NEGATIVE_STEM_ENDINGS.has(last)) {
+        addSuffixedFragments(fragments, `${base}${GODAN_NEGATIVE_STEM_ENDINGS.get(last)}`, NEGATIVE_SUFFIXES);
+    }
+    if (chars.length > 1 && GODAN_POTENTIAL_STEM_ENDINGS.has(last)) {
+        addSuffixedFragments(fragments, `${base}${GODAN_POTENTIAL_STEM_ENDINGS.get(last)}`, GODAN_POTENTIAL_SUFFIXES);
+    }
     if (chars.length > 2 && last === "る") {
         fragments.add(base);
+    }
+    if (chars.length > 1 && last === "る") {
+        addSuffixedFragments(fragments, base, ICHIDAN_RU_SUFFIXES);
     }
     if (chars.length > 1 && last === "い") {
         fragments.add(base);

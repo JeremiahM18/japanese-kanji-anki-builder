@@ -250,8 +250,12 @@ test("scoped word batch report keeps formatted output focused on requested cards
 test("word batch sentence evidence allows normal inflected readings", () => {
     assert.equal(exampleSentenceContainsWrittenWord("赤ちゃんが春に生まれます。", "生まれる"), true);
     assert.equal(exampleSentenceContainsWrittenWord("毎朝新聞を読みます。", "読む"), true);
+    assert.equal(exampleSentenceContainsWrittenWord("番組を録って後で見ます。", "録る"), true);
+    assert.equal(exampleSentenceContainsWrittenWord("古い板が湿気で反っています。", "反る"), true);
     assert.equal(exampleReadingContainsWordReading("かいだんをあがります", "あがる"), true);
     assert.equal(exampleReadingContainsWordReading("ほんをよみます", "よむ"), true);
+    assert.equal(exampleReadingContainsWordReading("ばんぐみをとってあとでみます", "とる"), true);
+    assert.equal(exampleReadingContainsWordReading("ふるいいたがしっけでそっています", "そる"), true);
     assert.equal(exampleReadingContainsWordReading("へやがあかるくなります", "あかるい"), true);
     assert.equal(exampleReadingContainsWordReading("きょうはとしょかんへいきます", "あした"), false);
 });

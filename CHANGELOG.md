@@ -14,9 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- Expanded active N3 word Silver coverage from `359` to `1081` canonical rows, N3 word Gold review from `8/1081` to `1081/1081`, and N3 word Sapphire structural review from `8/1081` to `798/1081`. The scoped `0.2.0` lock remains limited to N5/N4 words plus N5/N4/N3/N2 core kanji; N3 word is not locked/released. Gold now has `0` generated rows still missing; Sapphire has `283` generated rows still missing; Platinum remains at `8/1081` current-standard with `1073` generated rows still missing Platinum; N3-only reading readiness remains incomplete, and no N3 word Obsidian proof is recorded.
+- Updated N3 word lane status after the latest Sapphire batch: active Silver coverage is `1081/1081` canonical rows after expansion from `359`, N3 word Gold review from `8/1081` to `1081/1081` is complete, and Sapphire advanced from `718/1081` to `798/1081`. Gold now has `0` generated rows still missing; Sapphire has `283` generated rows still missing; Platinum remains at `8/1081` current-standard with `1073` generated rows still missing Platinum; N3-only reading readiness remains incomplete; N3 word is not locked/released; and no N3 word Obsidian proof is recorded.
 
-Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active ongoing work until separately locked.
+Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active work until separately locked.
 
 ## [0.2.0] - 2026-06-10
 
@@ -35,12 +35,31 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Added source-derived tracked-source kanji TSV artifact gates: N5, N4, and N3 now build from tracked JLPT, KANJIDIC2 reading-reference, card-field source, and component contracts only, while the all-level gate reports N2/N1 as fail-closed until their governed field-source contracts exist. The N5 readiness checkpoint now runs the N5 kanji TSV gate, and the APKG/media/manual QA gate refuses release certification without packaging and human QA evidence.
 - Added a release QA evidence packet template and fail-closed `product:release-qa:evidence` validator for APKG import, managed media, manual Anki import, mobile, accessibility, listening QA, accepted source-governance posture while source depth is incomplete, and known blocker evidence.
 - Added explicit N4 and N3 tracked-source kanji preflight and TSV npm aliases so level release checks do not depend on memorized script arguments or an all-level gate that intentionally fails on uncontracted higher levels.
+- Added the repository `LICENSE` file for the declared ISC code license and documented the separate shipped-content attribution boundary.
 
 ### Changed
 
 - Raised the project runtime floor from Node 18 to Node 20 and updated CI, branch-protection policy, hosted required checks, and compatibility docs to verify Node 20/22 only.
 - Corrected the package metadata baseline from `1.0.0` to `0.1.0` because no matching git tag exists and product release readiness remains unclaimed.
-- Added the repository `LICENSE` file for the declared ISC code license and documented the separate shipped-content attribution boundary.
+- Migrated core-kanji structural review posture into native Sapphire: N5/N4/N3/N2 pass at full generated denominators, and N1 now reports `328/1230` current-standard Sapphire, `328/1230` current-standard Platinum card-surface inspection, `0/1230` Obsidian proof, and `902` rows still requiring fresh Sapphire and Platinum review before proof is recorded.
+- Clarified that scoped audio review packets are selected-card evidence only; full-level media completeness remains owned by `deck:ready` plus audio and stroke-order policy audits.
+- Completed the governed N3 core kanji Obsidian proof lane while keeping certification fail-closed: live N3 kanji is Obsidian-certified at `341/341`; N5/N4/N3 kanji Obsidian now totals `633/633`; lower-lane prerequisites are complete; and `0` generated rows are blocked/failing structurally. N3 kanji NLP packets remain assistive review context only, not certification proof.
+- Completed the governed N4 word Obsidian proof lane while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word Obsidian is `700/700`, total N5/N4 word Obsidian is `987/987`, lower-lane prerequisites are complete, `0` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
+- Clarified Obsidian as the current non-human governed native/fluent-quality content-certification lane, with future human/native review treated as human-reviewed provenance for the same standard rather than a different or higher content bar.
+- Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `233/344` (`67.7%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.
+- Expanded and governed the word inventory and reading-coverage work across N5/N4 while preserving separate Silver, Gold, Sapphire, Platinum, and Obsidian semantics; at the `0.2.0` lock point, N3 word remained active expansion work with `359` Silver rows and an initial `8/359` Gold, Sapphire, and Platinum current-standard batch, while N2/N1 word surfaces remained Silver starter material and no upper-word surface implied release certification.
+- Strengthened source/release governance around JLPT evidence, editorial policy, deterministic exports, CI, benchmark guardrails, and NLP assistive-only boundaries; NLP artifacts remain support context and cannot certify cards.
+
+### Fixed
+
+- Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.
+- Fixed native kanji Sapphire matching so escaped generated fields are checked against visible learner-facing text, restoring the fail-closed N5/N3 Sapphire, Platinum, and scoped Obsidian gates without loosening protected snippets.
+- Fixed native word Sapphire matching so escaped generated fields are checked against visible learner-facing text and legacy comma-joined breakdown snippets are matched as individual visible breakdown claims.
+- Corrected weak Sou Matome table-of-contents rows to non-voting source-access-gap status after live verification: current routed assignment files and pinned worksheet baselines contain Sou Matome `442` reviewed / `473` source-access-gap / `1297` pending rows, Shin Kanzen `406` reviewed / `236` source-access-gap / `1570` pending rows, and ASK Hajimete `208` reviewed / `0` source-access-gap / `0` pending rows.
+- Reworked the tracked kanji Platinum regression test so clean CI no longer reads ignored `data/kanji_jlpt_only.json`, and added a source-boundary guard that rejects tracked tests reading ignored root `data/*` inputs.
+- Corrected the N3 kanji `退|たい` support notes so every support vocabulary item contains the target kanji before recording Obsidian proof.
+- Corrected the N3 kanji `額|がく` support note and primary meaning lane so `がく` is centered on amount/frame while forehead remains in broader/support lanes before recording Obsidian proof.
+- Corrected the N4 word card support note for `自業自得|じごうじとく` so the higher-level constituent `得` is consistently identified as a JLPT N2 support kanji before Obsidian proof is counted.
 
 ### Security
 
@@ -69,28 +88,6 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Hardened Anki HTML rendering boundaries: generated kanji and word TSV exports now escape external text before it enters HTML-rendered fields while preserving the known-safe ruby, pitch-contour, audio, and stroke-order markup emitted by the exporter.
 - Hardened local XML source normalization by disabling entity expansion in the KANJIDIC2 parser and locking both KANJIDIC2 and JMdict entity-handling behavior with regression tests.
 - Added `SECURITY.md` plus a concise README security posture section documenting the local-only server threat model, VOICEVOX localhost expectation, untrusted local input boundary, and private vulnerability-reporting path.
-
-### Changed
-
-- Migrated core-kanji structural review posture into native Sapphire: N5/N4/N3/N2 pass at full generated denominators, and N1 now reports `328/1230` current-standard Sapphire, `328/1230` current-standard Platinum card-surface inspection, `0/1230` Obsidian proof, and `902` rows still requiring fresh Sapphire and Platinum review before proof is recorded.
-- Clarified that scoped audio review packets are selected-card evidence only; full-level media completeness remains owned by `deck:ready` plus audio and stroke-order policy audits.
-- Completed the governed N3 core kanji Obsidian proof lane while keeping certification fail-closed: live N3 kanji is Obsidian-certified at `341/341`; N5/N4/N3 kanji Obsidian now totals `633/633`; lower-lane prerequisites are complete; and `0` generated rows are blocked/failing structurally. N3 kanji NLP packets remain assistive review context only, not certification proof.
-- Fixed Gold/Platinum review matching so escaped Anki HTML fields are checked against their visible learner-facing text, preserving safer TSV output without invalidating existing review evidence that protects `kanji -> reading` notes and escaped example translations.
-- Fixed native kanji Sapphire matching so escaped generated fields are checked against visible learner-facing text, restoring the fail-closed N5/N3 Sapphire, Platinum, and scoped Obsidian gates without loosening protected snippets.
-- Fixed native word Sapphire matching so escaped generated fields are checked against visible learner-facing text and legacy comma-joined breakdown snippets are matched as individual visible breakdown claims.
-- Completed the governed N4 word Obsidian proof lane while keeping certification fail-closed: N5 word Obsidian is `287/287`, N4 word Obsidian is `700/700`, total N5/N4 word Obsidian is `987/987`, lower-lane prerequisites are complete, `0` N4 rows still need Obsidian proof, and `0` generated N5/N4 word rows are blocked/failing.
-- Clarified Obsidian as the current non-human governed native/fluent-quality content-certification lane, with future human/native review treated as human-reviewed provenance for the same standard rather than a different or higher content bar.
-- Kept N5/N4 word generation ready with deferred variants: live word generation reports `987` word notes, N5 reading coverage `233/344` (`67.7%`), N4 reading coverage `579/755` (`76.7%`), and word audio plus pitch fields ready for all `987` generated rows.
-- Expanded and governed the word inventory and reading-coverage work across N5/N4 while preserving separate Silver, Gold, Sapphire, Platinum, and Obsidian semantics; at the `0.2.0` lock point, N3 word remained active expansion work with `359` Silver rows and an initial `8/359` Gold, Sapphire, and Platinum current-standard batch, while N2/N1 word surfaces remained Silver starter material and no upper-word surface implied release certification.
-- Corrected weak Sou Matome table-of-contents rows to non-voting source-access-gap status after live verification: current routed assignment files and pinned worksheet baselines contain Sou Matome `442` reviewed / `473` source-access-gap / `1297` pending rows, Shin Kanzen `406` reviewed / `236` source-access-gap / `1570` pending rows, and ASK Hajimete `208` reviewed / `0` source-access-gap / `0` pending rows.
-- Strengthened source/release governance around JLPT evidence, editorial policy, deterministic exports, CI, benchmark guardrails, and NLP assistive-only boundaries; NLP artifacts remain support context and cannot certify cards.
-
-### Fixed
-
-- Reworked the tracked kanji Platinum regression test so clean CI no longer reads ignored `data/kanji_jlpt_only.json`, and added a source-boundary guard that rejects tracked tests reading ignored root `data/*` inputs.
-- Corrected the N3 kanji `退|たい` support notes so every support vocabulary item contains the target kanji before recording Obsidian proof.
-- Corrected the N3 kanji `額|がく` support note and primary meaning lane so `がく` is centered on amount/frame while forehead remains in broader/support lanes before recording Obsidian proof.
-- Corrected the N4 word card support note for `自業自得|じごうじとく` so the higher-level constituent `得` is consistently identified as a JLPT N2 support kanji before Obsidian proof is counted.
 
 ## [0.1.0] - 2026-03-31
 

@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- Updated N3 word lane status after the latest Sapphire batch: active Silver coverage is `1081/1081` canonical rows after expansion from `359`, N3 word Gold review from `8/1081` to `1081/1081` is complete, and Sapphire advanced from `718/1081` to `798/1081`. Gold now has `0` generated rows still missing; Sapphire has `283` generated rows still missing; Platinum remains at `8/1081` current-standard with `1073` generated rows still missing Platinum; N3-only reading readiness remains incomplete; N3 word is not locked/released; and no N3 word Obsidian proof is recorded.
+- Updated N3 word lane status after the latest Sapphire batches: active Silver coverage is `1081/1081` canonical rows after expansion from `359`, N3 word Gold review from `8/1081` to `1081/1081` is complete, and Sapphire advanced from `718/1081` to `878/1081`. Gold now has `0` generated rows still missing; Sapphire has `203` generated rows still missing; Platinum remains at `8/1081` current-standard with `1073` generated rows still missing Platinum; N3-only reading readiness remains incomplete; N3 word is not locked/released; and no N3 word Obsidian proof is recorded.
 
 Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active work until separately locked.
 

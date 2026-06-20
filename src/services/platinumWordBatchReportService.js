@@ -60,6 +60,18 @@ const GODAN_MASU_STEM_ENDINGS = new Map([
     ["る", "り"],
 ]);
 
+const GODAN_TE_TA_ENDINGS = new Map([
+    ["う", ["って", "った"]],
+    ["く", ["いて", "いた"]],
+    ["ぐ", ["いで", "いだ"]],
+    ["す", ["して", "した"]],
+    ["つ", ["って", "った"]],
+    ["ぬ", ["んで", "んだ"]],
+    ["ぶ", ["んで", "んだ"]],
+    ["む", ["んで", "んだ"]],
+    ["る", ["って", "った"]],
+]);
+
 function containsHan(value = "") {
     return /\p{Script=Han}/u.test(String(value || ""));
 }
@@ -85,6 +97,11 @@ function buildInflectionEvidenceFragments(value = "") {
 
     if (chars.length > 1 && GODAN_MASU_STEM_ENDINGS.has(last)) {
         fragments.add(`${base}${GODAN_MASU_STEM_ENDINGS.get(last)}`);
+    }
+    if (chars.length > 1 && GODAN_TE_TA_ENDINGS.has(last)) {
+        for (const ending of GODAN_TE_TA_ENDINGS.get(last)) {
+            fragments.add(`${base}${ending}`);
+        }
     }
     if (chars.length > 2 && last === "る") {
         fragments.add(base);

@@ -216,6 +216,8 @@ npm run deck:words:apkg -- --levels=5
 
 Run separate `deck:words:ready` invocations serially. The command writes through the shared `out/word-build` package directory, so parallel per-level runs can collide during media cleanup or package creation.
 
+For reading readiness, `deck:words:ready` expands each requested word level to its cumulative easier-level support stack while keeping the packaged deck scoped to the requested level. For example, `--levels=3` packages N3 word cards but evaluates N3 reading coverage with N5 + N4 + N3 word support.
+
 Word readiness reports:
 
 - shipped row governance
@@ -341,19 +343,19 @@ npm run deck:words:common-expansion -- --levels=5 --placement-mode=vocabulary-le
 
 The common-word selector is a read-only Silver planning report. It starts from each level's active `candidate-discovery` source, then adds JMdict dictionary verification and JMdict priority/commonness support from the governed word source manifest.
 
-The common-word queue is only active after the selected level's full first-stage word expansion signal is complete: no active reading-gap editorial or promote-curated-example items may remain, the configured source-list enhancement signal must be exhausted, and the word-placement audit must be resolved. Deferred variants and low-value readings remain recorded as reading-lane decisions; they do not become permission to bypass source governance.
+The common-word queue is only active after the selected level's reading-gap expansion signal is exhausted: no active reading-gap editorial or promote-curated-example items may remain. The configured source-list enhancement and word-placement signals are still reported as governance context, but they do not block the post-reading common-word queue from opening. Deferred variants and low-value readings remain recorded as reading-lane decisions; they do not become permission to bypass source governance.
 
 Version naming: call the post-reading common-word expansion for N5 and N4 the word `v2` path. For N3, N2, and N1, the same common-word expansion belongs to their word `v1` implementation because those levels have not shipped the same lower-lane frozen vocabulary surface. Do not use future-name placeholders for this work.
 
 Use the placement mode deliberately:
 
 - `kanji-anchor` is the default view. It preserves the older reading-coverage posture: a current-level word candidate must contain current-level kanji, and source rows with only harder kanji remain cross-level routing rows.
-- `vocabulary-level` is the expansion view for common N-level vocabulary after first-stage word expansion is fully complete. It keeps exact source-listed vocabulary eligible for that source JLPT level even when the written form contains harder support kanji, provided the row is dictionary verified, commonness supported, missing from the governed contract, and explicitly top-level triaged as `keep_candidate`.
+- `vocabulary-level` is the expansion view for common N-level vocabulary after reading-gap expansion is exhausted. It keeps exact source-listed vocabulary eligible for that source JLPT level even when the written form contains harder support kanji, provided the row is dictionary verified, commonness supported, missing from the governed contract, and explicitly top-level triaged as `keep_candidate`.
 - Top-level `move_candidate` decisions in [../templates/word_inventory_expansion_triage.json](../templates/word_inventory_expansion_triage.json) are authoritative in every selector view. They remain target-level routing work and must not be bypassed with placement-specific overrides.
 
 Selector rows are still pre-trust. A row marked `ready_for_editorial_review` has source identity, dictionary support, commonness support, and a keep-style triage decision; it still needs explicit card approval, starter/contract edits in a later scoped expansion, examples, reading breakdown, kanji labels, audio, pitch, Gold, Sapphire, Platinum, and readiness gates before it becomes a shipped word card.
 
-The selector reports `sourceUniverse.configuredSourceOnly: true` for every level. This is intentional: N5/N4 configured-source exhaustion means only that the currently pinned source list has no active current-level keep backlog, not that every common JLPT word in the world has been evaluated. For example, the current JLPTStudy discovery sources are 537 rows for N5 and 681 rows for N4, so they cannot settle broader common-vocabulary claims by themselves.
+The selector reports `sourceUniverse.configuredSourceOnly: true` for every level. This is intentional: N5/N4 configured-source exhaustion means only that the currently pinned source list has no active current-level keep backlog, not that every common JLPT word in the world has been evaluated. A zero-row ready queue is not source adequacy. If the editorial target is broader than the pinned source row count, add approved candidate-discovery sources before claiming all common words are covered. For example, the current JLPTStudy discovery sources are 537 rows for N5 and 681 rows for N4, so they cannot settle broader common-vocabulary claims by themselves.
 
 ## Check word expansion signals
 

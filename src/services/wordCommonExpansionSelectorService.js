@@ -146,7 +146,8 @@ function buildReadingExpansionGate({ level, signal = null, enforceReadingExpansi
         return {
             active: !enforceReadingExpansionGate,
             status: enforceReadingExpansionGate ? "inactive" : "not_evaluated",
-            fullyExpanded: !enforceReadingExpansionGate,
+            readingExhausted: enforceReadingExpansionGate ? false : null,
+            fullyExpanded: false,
             readingStatus: "not_evaluated",
             enhancementStatus: "not_evaluated",
             placementStatus: "not_evaluated",
@@ -168,24 +169,25 @@ function buildReadingExpansionGate({ level, signal = null, enforceReadingExpansi
     const readingSignal = fullSignal ? fullSignal.reading : signal;
     const enhancementSignal = fullSignal?.enhancement || null;
     const placementSignal = fullSignal?.placement || null;
-    const active = fullSignal
+    const readingExhausted = readingSignal.status === "exhausted";
+    const firstStageFullyExpanded = fullSignal
         ? fullSignal.fullyExpanded === true
-        : readingSignal.status === "exhausted";
+        : readingExhausted;
+    const active = readingExhausted;
     const gateReason = active
-        ? "First-stage word expansion is fully expanded; common-word expansion queue is active for this level."
+        ? "Reading expansion is exhausted; common-word expansion queue is active for this level. Enhancement and placement signals are reported as context, not activation blockers."
         : fullSignal
         ? [
-            `N${level} first-stage word expansion is not fully expanded; common-word expansion queue is inactive.`,
+            `N${level} reading expansion is not exhausted; common-word expansion queue is inactive.`,
             readingSignal.reason,
-            enhancementSignal?.reason,
-            placementSignal?.reason,
         ].filter(Boolean).join(" ")
         : (readingSignal.reason || `N${level} reading expansion is not exhausted; common-word expansion queue is inactive.`);
 
     return {
         active,
         status: active ? "active" : "inactive",
-        fullyExpanded: active,
+        readingExhausted,
+        fullyExpanded: firstStageFullyExpanded,
         readingStatus: readingSignal.status || "unknown",
         enhancementStatus: enhancementSignal?.status || "not_evaluated",
         placementStatus: placementSignal?.status || "not_evaluated",
@@ -200,11 +202,7 @@ function buildReadingExpansionGate({ level, signal = null, enforceReadingExpansi
         enhancementCrossLevelRoutingRows: enhancementSignal?.crossLevelRoutingRows ?? null,
         placementViolationCount: placementSignal?.violationCount ?? null,
         reason: gateReason,
-        blockers: [
-            ...(readingSignal.blockers || []),
-            ...(enhancementSignal?.blockers || []),
-            ...(placementSignal?.blockers || []),
-        ],
+        blockers: readingSignal.blockers || [],
     };
 }
 
@@ -544,7 +542,7 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
     lines.push("", "Common-word queue gate:");
     for (const levelReport of report.levelReports || []) {
         const gate = levelReport.commonWordQueue || {};
-        lines.push(`- ${levelReport.levelLabel}: ${gate.active ? "active" : "inactive"}; first-stage fully expanded ${gate.fullyExpanded ? "yes" : "no"}; reading ${gate.readingStatus || "not_evaluated"} active ${gate.activeItems ?? "-"}; enhancement ${gate.enhancementStatus || "not_evaluated"} keep ${gate.enhancementKeepCandidates ?? "-"} untriaged ${gate.enhancementUntriagedCandidates ?? "-"}; placement ${gate.placementStatus || "not_evaluated"} violations ${gate.placementViolationCount ?? "-"}; ${gate.reason || ""}`);
+        lines.push(`- ${levelReport.levelLabel}: ${gate.active ? "active" : "inactive"}; reading exhausted ${gate.readingExhausted ? "yes" : "no"}; first-stage fully expanded ${gate.fullyExpanded ? "yes" : "no"}; reading ${gate.readingStatus || "not_evaluated"} active ${gate.activeItems ?? "-"}; enhancement ${gate.enhancementStatus || "not_evaluated"} keep ${gate.enhancementKeepCandidates ?? "-"} untriaged ${gate.enhancementUntriagedCandidates ?? "-"}; placement ${gate.placementStatus || "not_evaluated"} violations ${gate.placementViolationCount ?? "-"}; ${gate.reason || ""}`);
     }
 
     const blockers = report.blockers || [];

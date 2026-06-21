@@ -21,41 +21,81 @@ function writeFixtureSource(dir, fileName, text) {
     };
 }
 
-function buildManifest({ candidateSource, dictionarySource, frequencySource }) {
+function buildCandidateSourceManifestEntry({ name, sourceId, candidateSource, levels }) {
+    return {
+        name,
+        tier: 4,
+        status: "active",
+        sourceType: "community_web_list",
+        origin: {
+            url: `https://example.com/${sourceId}`,
+            localPath: candidateSource.path,
+        },
+        licenseUse: {
+            status: "needs_review",
+            notes: "Fixture discovery source.",
+        },
+        checkedAt: "2026-06-21",
+        local: {
+            path: candidateSource.path,
+            format: "tsv",
+            byteSize: candidateSource.byteSize,
+            rowCount: candidateSource.rowCount,
+            columns: ["written", "reading", "meaning", "jlpt"],
+        },
+        intendedUse: ["candidate-discovery", "level-hint"],
+        allowedUse: ["candidate-discovery", "level-hint"],
+        disallowedUse: ["card-approval"],
+        candidatePolicy: {
+            levels,
+            kanjiScope: "known-jlpt",
+            requireSourceLevel: true,
+        },
+    };
+}
+
+function buildManifest({
+    candidateSource,
+    n3CandidateSource = null,
+    candidateSourcesByLevel = {},
+    dictionarySource,
+    frequencySource,
+}) {
+    const candidateSources = {};
+
+    if (candidateSource) {
+        candidateSources["fixture-n5"] = buildCandidateSourceManifestEntry({
+            name: "Fixture N5 vocabulary list",
+            sourceId: "n5",
+            candidateSource,
+            levels: [5],
+        });
+    }
+
+    if (n3CandidateSource) {
+        candidateSources["fixture-n3"] = buildCandidateSourceManifestEntry({
+            name: "Fixture N3 vocabulary list",
+            sourceId: "n3",
+            candidateSource: n3CandidateSource,
+            levels: [3],
+        });
+    }
+
+    for (const [levelLabel, source] of Object.entries(candidateSourcesByLevel || {})) {
+        const level = Number(levelLabel);
+        candidateSources[`fixture-n${level}`] = buildCandidateSourceManifestEntry({
+            name: `Fixture N${level} vocabulary list`,
+            sourceId: `n${level}`,
+            candidateSource: source,
+            levels: [level],
+        });
+    }
+
     return {
         version: 1,
         checkedAt: "2026-06-21",
         sources: {
-            "fixture-n5": {
-                name: "Fixture N5 vocabulary list",
-                tier: 4,
-                status: "active",
-                sourceType: "community_web_list",
-                origin: {
-                    url: "https://example.com/n5",
-                    localPath: candidateSource.path,
-                },
-                licenseUse: {
-                    status: "needs_review",
-                    notes: "Fixture discovery source.",
-                },
-                checkedAt: "2026-06-21",
-                local: {
-                    path: candidateSource.path,
-                    format: "tsv",
-                    byteSize: candidateSource.byteSize,
-                    rowCount: candidateSource.rowCount,
-                    columns: ["written", "reading", "meaning", "jlpt"],
-                },
-                intendedUse: ["candidate-discovery", "level-hint"],
-                allowedUse: ["candidate-discovery", "level-hint"],
-                disallowedUse: ["card-approval"],
-                candidatePolicy: {
-                    levels: [5],
-                    kanjiScope: "known-jlpt",
-                    requireSourceLevel: true,
-                },
-            },
+            ...candidateSources,
             "fixture-dictionary": {
                 name: "Fixture dictionary",
                 tier: 2,
@@ -110,6 +150,37 @@ function buildManifest({ candidateSource, dictionarySource, frequencySource }) {
     };
 }
 
+function buildExhaustedReadingSignal(level) {
+    return {
+        level,
+        levelLabel: `N${level}`,
+        fullyExpanded: true,
+        reading: {
+            status: "exhausted",
+            activeItems: 0,
+            editorialReviewItems: 0,
+            promoteCuratedExampleItems: 0,
+            deferVariantItems: 0,
+            totalItems: 0,
+            reason: "No active reading-gap triage items remain.",
+            blockers: [],
+        },
+        enhancement: {
+            status: "exhausted",
+            keepCandidates: 0,
+            untriagedCandidateRows: 0,
+            moveCandidates: 0,
+            crossLevelRoutingRows: 0,
+            blockers: [],
+        },
+        placement: {
+            status: "resolved",
+            violationCount: 0,
+            blockers: [],
+        },
+    };
+}
+
 test("buildWordCommonExpansionSelectorReport classifies governed common-word source rows without promotion", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
     const candidateSource = writeFixtureSource(
@@ -124,6 +195,7 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
             "かな\tかな\tkana\tN5",
             "既存\tきそん\texisting\tN5",
             "～山\t～やま\tmountain suffix\tN5",
+            "山\t～やま\tmountain suffix standalone kanji\tN5",
             "小山\tこやま\tsmall mountain\tN5",
             "山行\tさんこう\tmountain trip\tN5",
         ].join("\n")
@@ -215,6 +287,7 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.equal(rowsByKey.get("かな|かな").selectorStatus, "kana_only_out_of_scope");
     assert.equal(rowsByKey.get("既存|きそん").selectorStatus, "already_governed");
     assert.equal(rowsByKey.get("～山|～やま").selectorStatus, "blocked_identity");
+    assert.equal(rowsByKey.get("山|～やま").selectorStatus, "needs_triage");
     assert.equal(rowsByKey.get("小山|こやま").selectorStatus, "triaged_defer");
     assert.equal(rowsByKey.get("山行|さんこう").selectorStatus, "triaged_reject");
 
@@ -223,6 +296,7 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.equal(counts.blocked_missing_commonness, 1);
     assert.equal(counts.blocked_missing_dictionary, 1);
     assert.equal(counts.move_candidate, 1);
+    assert.equal(counts.needs_triage, 1);
     assert.equal(counts.kana_only_out_of_scope, 1);
     assert.equal(counts.already_governed, 1);
 
@@ -295,6 +369,244 @@ test("buildWordCommonExpansionSelectorReport keeps move_candidate authoritative 
     assert.equal(row.triageDecision.decision, "move_candidate");
     assert.equal(row.triageDecision.targetLevel, 4);
     assert.equal(row.sourceTriageDecision, null);
+});
+
+test("buildWordCommonExpansionSelectorReport routes missing move_candidate rows into target level queue", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "手紙\tてがみ\tletter\tN5",
+        ].join("\n")
+    );
+    const n3CandidateSource = writeFixtureSource(
+        dir,
+        "n3.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "手紙\tてがみ\tletter",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "手紙\tてがみ\tletter\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [3],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            3: {
+                level: 3,
+                levelLabel: "N3",
+                fullyExpanded: true,
+                reading: {
+                    status: "exhausted",
+                    activeItems: 0,
+                    editorialReviewItems: 0,
+                    promoteCuratedExampleItems: 0,
+                    deferVariantItems: 0,
+                    totalItems: 0,
+                    reason: "No active reading-gap triage items remain.",
+                    blockers: [],
+                },
+                enhancement: {
+                    status: "exhausted",
+                    keepCandidates: 0,
+                    untriagedCandidateRows: 0,
+                    moveCandidates: 0,
+                    crossLevelRoutingRows: 0,
+                    blockers: [],
+                },
+                placement: {
+                    status: "resolved",
+                    violationCount: 0,
+                    blockers: [],
+                },
+            },
+        },
+        manifest: buildManifest({ candidateSource, n3CandidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                手: 3,
+                紙: 3,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "手紙|てがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N3",
+                        priority: "high",
+                        reason: "N5 source row belongs in the N3 word deck.",
+                    },
+                },
+            },
+        },
+    });
+
+    assert.deepEqual(report.levels, [3]);
+    assert.deepEqual(report.routingSupportLevels, [5]);
+    assert.equal(report.blockers.length, 0);
+    assert.equal(report.summary.routedMoveCandidateRows, 1);
+    assert.equal(report.levelReports[0].summary.routedMoveCandidateRows, 1);
+    assert.equal(report.levelReports[0].routedMoveCandidateSummary.totalMoveCandidatesToTarget, 1);
+    assert.equal(report.levelReports[0].routedMoveCandidateSummary.targetQueueRows, 1);
+    assert.equal(report.levelReports[0].routedMoveCandidateSummary.addedTargetQueueRows, 1);
+
+    const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
+    assert.equal(row.selectorStatus, "needs_triage");
+    assert.equal(row.sourceDisposition, "routed_move_candidate");
+    assert.equal(row.targetLevel, 3);
+    assert.equal(row.sourceTriageDecision.decision, "move_candidate");
+    assert.equal(row.sourceTriageDecision.targetLevel, 3);
+    assert.equal(row.routing.sourceLevel, 5);
+    assert.equal(row.routing.targetLevel, 3);
+});
+
+test("buildWordCommonExpansionSelectorReport routes lower-source move candidates into all requested target levels", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const n5CandidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "鏡\tかがみ\tmirror\tN5",
+        ].join("\n")
+    );
+    const n4CandidateSource = writeFixtureSource(
+        dir,
+        "n4.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "髪\tかみ\thair\tN4",
+        ].join("\n")
+    );
+    const n2CandidateSource = writeFixtureSource(
+        dir,
+        "n2.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+        ].join("\n")
+    );
+    const n1CandidateSource = writeFixtureSource(
+        dir,
+        "n1.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "鏡\tかがみ\tmirror",
+            "髪\tかみ\thair",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "鏡\tかがみ\tmirror\t100",
+            "髪\tかみ\thair\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [2, 1],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            2: buildExhaustedReadingSignal(2),
+            1: buildExhaustedReadingSignal(1),
+        },
+        manifest: buildManifest({
+            candidateSource: n5CandidateSource,
+            candidateSourcesByLevel: {
+                4: n4CandidateSource,
+                2: n2CandidateSource,
+                1: n1CandidateSource,
+            },
+            dictionarySource,
+            frequencySource,
+        }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                鏡: 1,
+                髪: 2,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "鏡|かがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N1",
+                        priority: "high",
+                        reason: "N5 source row belongs in the N1 word deck.",
+                    },
+                },
+            },
+            N4: {
+                "fixture-n4": {
+                    "髪|かみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N2",
+                        priority: "high",
+                        reason: "N4 source row belongs in the N2 word deck.",
+                    },
+                },
+            },
+        },
+    });
+
+    assert.deepEqual(report.levels, [2, 1]);
+    assert.deepEqual(report.routingSupportLevels, [5, 4]);
+    assert.equal(report.summary.routedMoveCandidateRows, 2);
+
+    const reportsByLevel = new Map(report.levelReports.map((levelReport) => [levelReport.level, levelReport]));
+    const n2Row = reportsByLevel.get(2).rows.find((row) => row.key === "髪|かみ");
+    const n1Row = reportsByLevel.get(1).rows.find((row) => row.key === "鏡|かがみ");
+
+    assert.equal(n2Row.selectorStatus, "needs_triage");
+    assert.equal(n2Row.sourceDisposition, "routed_move_candidate");
+    assert.equal(n2Row.sourceTriageDecision.decision, "move_candidate");
+    assert.equal(n2Row.routing.sourceLevel, 4);
+    assert.equal(n2Row.routing.targetLevel, 2);
+
+    assert.equal(n1Row.selectorStatus, "needs_triage");
+    assert.equal(n1Row.sourceDisposition, "routed_move_candidate");
+    assert.equal(n1Row.sourceTriageDecision.decision, "move_candidate");
+    assert.equal(n1Row.routing.sourceLevel, 5);
+    assert.equal(n1Row.routing.targetLevel, 1);
 });
 
 test("buildWordCommonExpansionSelectorReport marks candidates inactive until reading expansion is exhausted", () => {

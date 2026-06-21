@@ -14,7 +14,6 @@ const {
     parseCandidateSourceText,
     parseDelimitedLine,
     parseSourceLevel,
-    resolveTriageDecisionForPlacementMode,
     resolveCrossLevelRoutingTargetLevel,
     splitReadingVariants,
 } = require("../src/services/wordInventoryExpansionCandidateService");
@@ -289,8 +288,8 @@ test("normalizeTriageDecisions keeps only decisions with a reason", () => {
     }), /Unsupported word expansion triage decision for 山川\|さんせん: maybe_candidate/);
 });
 
-test("normalizeTriageDecisions keeps placement-specific decisions without overwriting anchor moves", () => {
-    const normalized = normalizeTriageDecisions({
+test("normalizeTriageDecisions rejects placement-specific triage overrides", () => {
+    assert.throws(() => normalizeTriageDecisions({
         "手紙|てがみ": {
             decision: "move_candidate",
             targetLevel: "N4",
@@ -304,20 +303,7 @@ test("normalizeTriageDecisions keeps placement-specific decisions without overwr
                 },
             },
         },
-    }, { currentLevel: 5 });
-
-    const decision = normalized["手紙|てがみ"];
-    assert.equal(decision.decision, "move_candidate");
-    assert.equal(decision.targetLevel, 4);
-    assert.equal(decision.placementDecisions["vocabulary-level"].decision, "keep_candidate");
-    assert.equal(
-        resolveTriageDecisionForPlacementMode(decision, { placementMode: "kanji-anchor" }).decision,
-        "move_candidate"
-    );
-    assert.equal(
-        resolveTriageDecisionForPlacementMode(decision, { placementMode: "vocabulary-level" }).decision,
-        "keep_candidate"
-    );
+    }, { currentLevel: 5 }), /Placement-specific word expansion triage overrides are not supported for 手紙\|てがみ/);
 });
 
 test("source normalization splits slash readings into exact word identities", () => {
@@ -394,7 +380,7 @@ test("formatWordInventoryExpansionCandidateReport flags same-written governed re
     assert.match(text, /triage next step: Move only by adding the N4 contract and starter row\./);
 });
 
-test("vocabulary-level placement surfaces source-level words beyond kanji-anchor move triage", () => {
+test("vocabulary-level placement keeps move_candidate authoritative", () => {
     const report = buildWordInventoryExpansionCandidateReport({
         sourceRows: [{
             written: "手紙",
@@ -421,16 +407,16 @@ test("vocabulary-level placement surfaces source-level words beyond kanji-anchor
 
     assert.equal(report.summary.placementMode, "vocabulary-level");
     assert.equal(report.summary.reviewCandidateRows, 1);
-    assert.equal(report.summary.triagedCandidateRows, 0);
+    assert.equal(report.summary.triagedCandidateRows, 1);
     assert.equal(report.summary.crossLevelRoutingRows, 0);
     assert.equal(report.candidates[0].key, "手紙|てがみ");
-    assert.equal(report.candidates[0].triageDecision, null);
-    assert.equal(report.candidates[0].sourceTriageDecision.decision, "move_candidate");
-    assert.equal(report.candidates[0].sourceTriageDecision.targetLevel, 4);
+    assert.equal(report.candidates[0].triageDecision.decision, "move_candidate");
+    assert.equal(report.candidates[0].triageDecision.targetLevel, 4);
+    assert.equal(report.candidates[0].sourceTriageDecision, null);
     assert.match(report.candidates[0].reason, /source-listed vocabulary fits the requested JLPT vocabulary level/);
 
     const text = formatWordInventoryExpansionCandidateReport(report);
     assert.match(text, /Placement mode: vocabulary-level/);
-    assert.match(text, /triage: untriaged/);
-    assert.match(text, /anchor triage retained: move_candidate/);
+    assert.match(text, /triage: move_candidate/);
+    assert.match(text, /triage target level: N4/);
 });

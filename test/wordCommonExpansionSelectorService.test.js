@@ -1,0 +1,258 @@
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
+
+const {
+    SOURCE_UNIVERSE_WARNING,
+    buildWordCommonExpansionSelectorReport,
+    classifyCommonExpansionSelectorRow,
+    formatWordCommonExpansionSelectorReport,
+} = require("../src/services/wordCommonExpansionSelectorService");
+
+function writeFixtureSource(dir, fileName, text) {
+    const filePath = path.join(dir, fileName);
+    fs.writeFileSync(filePath, text);
+    return {
+        path: filePath,
+        byteSize: Buffer.byteLength(text),
+        rowCount: text.trim().split(/\r?\n/u).length - 1,
+    };
+}
+
+function buildManifest({ candidateSource, dictionarySource, frequencySource }) {
+    return {
+        version: 1,
+        checkedAt: "2026-06-21",
+        sources: {
+            "fixture-n5": {
+                name: "Fixture N5 vocabulary list",
+                tier: 4,
+                status: "active",
+                sourceType: "community_web_list",
+                origin: {
+                    url: "https://example.com/n5",
+                    localPath: candidateSource.path,
+                },
+                licenseUse: {
+                    status: "needs_review",
+                    notes: "Fixture discovery source.",
+                },
+                checkedAt: "2026-06-21",
+                local: {
+                    path: candidateSource.path,
+                    format: "tsv",
+                    byteSize: candidateSource.byteSize,
+                    rowCount: candidateSource.rowCount,
+                    columns: ["written", "reading", "meaning", "jlpt"],
+                },
+                intendedUse: ["candidate-discovery", "level-hint"],
+                allowedUse: ["candidate-discovery", "level-hint"],
+                disallowedUse: ["card-approval"],
+                candidatePolicy: {
+                    levels: [5],
+                    kanjiScope: "known-jlpt",
+                    requireSourceLevel: true,
+                },
+            },
+            "fixture-dictionary": {
+                name: "Fixture dictionary",
+                tier: 2,
+                status: "active",
+                sourceType: "dictionary",
+                origin: {
+                    url: "https://example.com/dict",
+                    localPath: dictionarySource.path,
+                },
+                licenseUse: {
+                    status: "approved",
+                    notes: "Fixture dictionary source.",
+                },
+                checkedAt: "2026-06-21",
+                local: {
+                    path: dictionarySource.path,
+                    format: "tsv",
+                    byteSize: dictionarySource.byteSize,
+                    rowCount: dictionarySource.rowCount,
+                    columns: ["written", "reading", "meaning"],
+                },
+                intendedUse: ["dictionary-verification"],
+                allowedUse: ["dictionary-verification", "reading-verification", "meaning-verification"],
+                disallowedUse: ["level-truth"],
+            },
+            "fixture-priority": {
+                name: "Fixture JMdict priority",
+                tier: 3,
+                status: "active",
+                sourceType: "dictionary_priority",
+                origin: {
+                    url: "https://example.com/priority",
+                    localPath: frequencySource.path,
+                },
+                licenseUse: {
+                    status: "approved",
+                    notes: "Fixture commonness source.",
+                },
+                checkedAt: "2026-06-21",
+                local: {
+                    path: frequencySource.path,
+                    format: "tsv",
+                    byteSize: frequencySource.byteSize,
+                    rowCount: frequencySource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+                intendedUse: ["frequency-sanity", "usefulness-support"],
+                allowedUse: ["frequency-sanity", "usefulness-support"],
+                disallowedUse: ["level-truth"],
+            },
+        },
+    };
+}
+
+test("buildWordCommonExpansionSelectorReport classifies governed common-word source rows without promotion", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "山川\tさんせん\tmountains and rivers\tN5",
+            "茶山\tちゃやま\ttea mountain\tN5",
+            "悪行\tあくぎょう\tbad act\tN5",
+            "手紙\tてがみ\tletter\tN5",
+            "かな\tかな\tkana\tN5",
+            "既存\tきそん\texisting\tN5",
+            "～山\t～やま\tmountain suffix\tN5",
+            "小山\tこやま\tsmall mountain\tN5",
+            "山行\tさんこう\tmountain trip\tN5",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "山川\tさんせん\tmountains and rivers",
+            "茶山\tちゃやま\ttea mountain",
+            "手紙\tてがみ\tletter",
+            "小山\tこやま\tsmall mountain",
+            "山行\tさんこう\tmountain trip",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "山川\tさんせん\tmountains and rivers\t100",
+            "手紙\tてがみ\tletter\t100",
+            "小山\tこやま\tsmall mountain\t120",
+            "山行\tさんこう\tmountain trip\t120",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        limit: 20,
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                山: 5,
+                川: 5,
+                茶: 5,
+                悪: 5,
+                行: 5,
+                手: 4,
+                紙: 4,
+                既: 5,
+                存: 5,
+                小: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "既存|きそん": { written: "既存", reading: "きそん", jlpt: 5 },
+            },
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "山川|さんせん": {
+                        decision: "keep_candidate",
+                        priority: "high",
+                        reason: "Common, useful fixture word.",
+                    },
+                    "手紙|てがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N4",
+                        reason: "All known anchors are N4.",
+                    },
+                    "小山|こやま": {
+                        decision: "defer_candidate",
+                        reason: "Lower learner value.",
+                    },
+                    "山行|さんこう": {
+                        decision: "reject_candidate",
+                        reason: "Wrong learner fit.",
+                    },
+                },
+            },
+        },
+    });
+
+    assert.equal(report.blockers.length, 0);
+    assert.equal(report.configuredSourceOnly, true);
+    assert.equal(report.levelReports[0].sourceUniverse.configuredSourceOnly, true);
+    assert.equal(report.levelReports[0].sourceUniverse.warning, SOURCE_UNIVERSE_WARNING);
+
+    const rowsByKey = new Map(report.levelReports[0].rows.map((row) => [row.key, row]));
+    assert.equal(rowsByKey.get("山川|さんせん").selectorStatus, "ready_for_editorial_review");
+    assert.equal(rowsByKey.get("茶山|ちゃやま").selectorStatus, "blocked_missing_commonness");
+    assert.equal(rowsByKey.get("悪行|あくぎょう").selectorStatus, "blocked_missing_dictionary");
+    assert.equal(rowsByKey.get("手紙|てがみ").selectorStatus, "move_candidate");
+    assert.equal(rowsByKey.get("かな|かな").selectorStatus, "kana_only_out_of_scope");
+    assert.equal(rowsByKey.get("既存|きそん").selectorStatus, "already_governed");
+    assert.equal(rowsByKey.get("～山|～やま").selectorStatus, "blocked_identity");
+    assert.equal(rowsByKey.get("小山|こやま").selectorStatus, "triaged_defer");
+    assert.equal(rowsByKey.get("山行|さんこう").selectorStatus, "triaged_reject");
+
+    const counts = report.levelReports[0].summary.selectorStatusCounts;
+    assert.equal(counts.ready_for_editorial_review, 1);
+    assert.equal(counts.blocked_missing_commonness, 1);
+    assert.equal(counts.blocked_missing_dictionary, 1);
+    assert.equal(counts.move_candidate, 1);
+    assert.equal(counts.kana_only_out_of_scope, 1);
+    assert.equal(counts.already_governed, 1);
+
+    const formatted = formatWordCommonExpansionSelectorReport(report);
+    assert.match(formatted, /Read-only report/);
+    assert.match(formatted, /Configured-source selector only/);
+    assert.match(formatted, /ready_for_editorial_review/);
+});
+
+test("classifyCommonExpansionSelectorRow treats triage as pre-trust routing", () => {
+    assert.equal(classifyCommonExpansionSelectorRow({
+        expansionRow: {
+            disposition: "review_candidate",
+            triageDecision: { decision: "reject_candidate" },
+        },
+        agreementRow: {
+            dictionaryVerified: true,
+            frequencySupported: true,
+            cleanIdentity: true,
+        },
+    }), "triaged_reject");
+
+    assert.equal(classifyCommonExpansionSelectorRow({
+        expansionRow: {
+            disposition: "review_candidate",
+        },
+        agreementRow: {
+            dictionaryVerified: true,
+            frequencySupported: true,
+            cleanIdentity: true,
+        },
+    }), "needs_triage");
+});

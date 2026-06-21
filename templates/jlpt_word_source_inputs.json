@@ -51,6 +51,58 @@
       },
       "integrityPolicy": "Pinned configured source only. No row is reviewed source-origin evidence until an exact permitted citation/evidenceRef is added."
     },
+    "tanos-n5-vocab": {
+      "sourceId": "tanos-n5-vocab",
+      "sourcePath": "downloads/tanos-n5-vocab.tsv",
+      "sourceLabel": "Tanos JLPT N5 vocabulary list",
+      "sourceUrl": "https://www.tanos.co.uk/jlpt/jlpt5/vocab/n5-vocab-kanji-eng.mem",
+      "format": "tsv",
+      "writtenColumn": "written",
+      "readingColumn": "reading",
+      "levelColumn": "jlpt",
+      "meaningColumn": "meaning",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "supportedLevels": [5],
+      "checkedAt": "2026-06-21",
+      "sha256": "8292b9d0a186c404d224ad65ca85f86c2c1d1bb6585908680f925f8741a92d0f",
+      "byteSize": 498957,
+      "rowCount": 677,
+      "expectedReviewStatusCounts": {
+        "reviewed": 667,
+        "needs_review": 10
+      },
+      "integrityPolicy": "Pinned Tanos N5 Mnemosyne source normalized from paired machine-readable exports after source-access review. Reviewed rows are source-origin evidence only, not card approval or broad vocabulary-universe completion."
+    },
+    "tanos-n4-vocab": {
+      "sourceId": "tanos-n4-vocab",
+      "sourcePath": "downloads/tanos-n4-vocab.tsv",
+      "sourceLabel": "Tanos JLPT N4 vocabulary list",
+      "sourceUrl": "https://www.tanos.co.uk/jlpt/jlpt4/vocab/n4-vocab-kanji-eng.mem",
+      "format": "tsv",
+      "writtenColumn": "written",
+      "readingColumn": "reading",
+      "levelColumn": "jlpt",
+      "meaningColumn": "meaning",
+      "reviewStatusColumn": "reviewStatus",
+      "citationColumn": "citation",
+      "evidenceRefColumn": "evidenceRef",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "supportedLevels": [4],
+      "checkedAt": "2026-06-21",
+      "sha256": "7e4910a6adb99d0caaed9e95942837d97a3ca1e0c883abac4cf51f825a2e7eb6",
+      "byteSize": 472024,
+      "rowCount": 638,
+      "expectedReviewStatusCounts": {
+        "reviewed": 634,
+        "needs_review": 4
+      },
+      "integrityPolicy": "Pinned Tanos N4 Mnemosyne source normalized from paired machine-readable exports after source-access review. Reviewed rows are source-origin evidence only, not card approval or broad vocabulary-universe completion."
+    },
     "tanos-n3-vocab": {
       "sourceId": "tanos-n3-vocab",
       "sourcePath": "downloads/tanos-n3-vocab.tsv",

@@ -26,12 +26,30 @@ const TANOS_WORD_LEVEL_SOURCES = Object.freeze({
         defaultInput: "downloads/tanos/n3/VocabList.N3.txt",
         defaultOutput: "downloads/tanos-n3-vocab.tsv",
     },
+    4: {
+        sourceId: "tanos-n4-vocab",
+        sourceLabel: "Tanos JLPT N4 vocabulary list",
+        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt4/vocab/n4-vocab-kanji-eng.mem",
+        defaultInput: "downloads/tanos/n4/n4-vocab-kanji-eng.mem",
+        defaultReadingInput: "downloads/tanos/n4/n4-vocab-kanji-hiragana.mem",
+        defaultInputKind: "mnemosyne-pair",
+        defaultOutput: "downloads/tanos-n4-vocab.tsv",
+    },
+    5: {
+        sourceId: "tanos-n5-vocab",
+        sourceLabel: "Tanos JLPT N5 vocabulary list",
+        sourceUrl: "https://www.tanos.co.uk/jlpt/jlpt5/vocab/n5-vocab-kanji-eng.mem",
+        defaultInput: "downloads/tanos/n5/n5-vocab-kanji-eng.mem",
+        defaultReadingInput: "downloads/tanos/n5/n5-vocab-kanji-hiragana.mem",
+        defaultInputKind: "mnemosyne-pair",
+        defaultOutput: "downloads/tanos-n5-vocab.tsv",
+    },
 });
 
 function normalizeLevel(value) {
     const level = Number.parseInt(String(value || "").replace(/^n/i, ""), 10);
     if (!Number.isInteger(level) || !TANOS_WORD_LEVEL_SOURCES[level]) {
-        throw new Error("Tanos JLPT word source level must be one of N1, N2, or N3.");
+        throw new Error("Tanos JLPT word source level must be one of N1, N2, N3, N4, or N5.");
     }
     return level;
 }
@@ -330,23 +348,73 @@ function escapeTsvCell(value) {
         .replace(/\t/g, " ");
 }
 
-function formatTanosWordRowsAsTsv(rows = []) {
-    const headers = ["written", "reading", "meaning", "jlpt", "source", "notes"];
+function applyReviewedEvidence(rows = [], reviewedEvidence = null) {
+    if (!reviewedEvidence) {
+        return rows;
+    }
+    const citation = String(reviewedEvidence.citation || "").trim();
+    const evidenceRefPrefix = String(reviewedEvidence.evidenceRefPrefix || "").trim();
+    if (!citation || !evidenceRefPrefix) {
+        throw new Error("Reviewed Tanos word source output requires citation and evidenceRefPrefix.");
+    }
+    const seenIdentities = new Set();
+    return rows.map((row, index) => ({
+        ...row,
+        ...(() => {
+            const identity = `${row.written}|${row.reading}`;
+            const duplicate = seenIdentities.has(identity);
+            seenIdentities.add(identity);
+            const evidenceRef = `${evidenceRefPrefix}; normalized paired row ${index + 1}`;
+            if (duplicate) {
+                return {
+                    reviewStatus: "needs_review",
+                    citation,
+                    evidenceRef,
+                    notes: `${row.notes} Duplicate exact identity in the normalized source input; not imported as reviewed evidence until manually reconciled.`,
+                };
+            }
+            return {
+                reviewStatus: "reviewed",
+                citation,
+                evidenceRef,
+            };
+        })(),
+    }));
+}
+
+function formatTanosWordRowsAsTsv(rows = [], { includeReviewColumns = false } = {}) {
+    const headers = [
+        "written",
+        "reading",
+        "meaning",
+        "jlpt",
+        "source",
+        ...(includeReviewColumns ? ["reviewStatus", "citation", "evidenceRef"] : []),
+        "notes",
+    ];
     return [
         headers.join("\t"),
         ...rows.map((row) => headers.map((header) => escapeTsvCell(row[header])).join("\t")),
     ].join("\n") + "\n";
 }
 
-function buildTanosJlptWordSource({ sourceText = "", level, sourceId = "", sourceLabel = "" } = {}) {
+function buildTanosJlptWordSource({
+    sourceText = "",
+    level,
+    sourceId = "",
+    sourceLabel = "",
+    reviewedEvidence = null,
+} = {}) {
     const parsed = parseTanosJlptWordRows(sourceText, {
         level,
         sourceId,
         sourceLabel,
     });
+    const rows = applyReviewedEvidence(parsed.rows, reviewedEvidence);
     return {
         ...parsed,
-        tsv: formatTanosWordRowsAsTsv(parsed.rows),
+        rows,
+        tsv: formatTanosWordRowsAsTsv(rows, { includeReviewColumns: Boolean(reviewedEvidence) }),
     };
 }
 
@@ -356,6 +424,7 @@ function buildTanosJlptWordSourceFromMnemosyne({
     level,
     sourceId = "",
     sourceLabel = "",
+    reviewedEvidence = null,
 } = {}) {
     const parsed = parseTanosJlptWordMnemosyneRows({
         englishMemText,
@@ -364,9 +433,11 @@ function buildTanosJlptWordSourceFromMnemosyne({
         sourceId,
         sourceLabel,
     });
+    const rows = applyReviewedEvidence(parsed.rows, reviewedEvidence);
     return {
         ...parsed,
-        tsv: formatTanosWordRowsAsTsv(parsed.rows),
+        rows,
+        tsv: formatTanosWordRowsAsTsv(rows, { includeReviewColumns: Boolean(reviewedEvidence) }),
     };
 }
 

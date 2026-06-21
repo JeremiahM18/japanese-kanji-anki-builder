@@ -174,19 +174,67 @@ test("parseTanosJlptWordMnemosyneRows pairs English and reading exports", () => 
     assert.match(built.tsv, /紅葉\tもみじ\tautumn colours,maple\tN2\tfixture-tanos-n2/);
 });
 
+test("buildTanosJlptWordSourceFromMnemosyne can emit reviewed source evidence columns", () => {
+    const result = buildTanosJlptWordSourceFromMnemosyne({
+        englishMemText: mnemosyneItem({ question: "水", answer: "water" }),
+        readingMemText: mnemosyneItem({ question: "水", answer: "みず" }),
+        level: "N5",
+        sourceId: "fixture-tanos-n5",
+        sourceLabel: "Fixture Tanos N5",
+        reviewedEvidence: {
+            citation: "Fixture Tanos N5 machine-readable export",
+            evidenceRefPrefix: "fixture paired exports",
+        },
+    });
+
+    assert.equal(result.rows[0].reviewStatus, "reviewed");
+    assert.equal(result.rows[0].citation, "Fixture Tanos N5 machine-readable export");
+    assert.equal(result.rows[0].evidenceRef, "fixture paired exports; normalized paired row 1");
+    assert.match(result.tsv, /^written\treading\tmeaning\tjlpt\tsource\treviewStatus\tcitation\tevidenceRef\tnotes\n/);
+    assert.match(result.tsv, /水\tみず\twater\tN5\tfixture-tanos-n5\treviewed\tFixture Tanos N5 machine-readable export\tfixture paired exports; normalized paired row 1/);
+});
+
+test("reviewed Tanos output leaves duplicate exact identities pending", () => {
+    const result = buildTanosJlptWordSourceFromMnemosyne({
+        englishMemText: [
+            mnemosyneItem({ question: "水", answer: "water" }),
+            mnemosyneItem({ question: "水", answer: "water duplicate" }),
+        ].join("\n"),
+        readingMemText: mnemosyneItem({ question: "水", answer: "みず" }),
+        level: "N5",
+        sourceId: "fixture-tanos-n5",
+        sourceLabel: "Fixture Tanos N5",
+        reviewedEvidence: {
+            citation: "Fixture citation",
+            evidenceRefPrefix: "fixture refs",
+        },
+    });
+
+    assert.equal(result.rows[0].reviewStatus, "reviewed");
+    assert.equal(result.rows[1].reviewStatus, "needs_review");
+    assert.match(result.rows[1].notes, /Duplicate exact identity/);
+    assert.match(result.tsv, /water duplicate\tN5\tfixture-tanos-n5\tneeds_review\tFixture citation\tfixture refs; normalized paired row 2/);
+});
+
 test("normalizeTanosJlptWordSource script parses args and reports read-only scope", () => {
     const options = parseArgs([
-        "--level=N2",
-        "--input=downloads/tanos/n2/n2-vocab-kanji-eng.mem",
-        "--reading-input=downloads/tanos/n2/n2-vocab-kanji-hiragana.mem",
-        "--out=downloads/tanos-n2-vocab.tsv",
+        "--level=N5",
+        "--input=downloads/tanos/n5/n5-vocab-kanji-eng.mem",
+        "--reading-input=downloads/tanos/n5/n5-vocab-kanji-hiragana.mem",
+        "--out=downloads/tanos-n5-vocab.tsv",
+        "--reviewed",
+        "--citation=Fixture citation",
+        "--evidence-ref=Fixture evidence ref",
         "--json",
     ]);
 
-    assert.equal(normalizeLevel(options.level), 2);
-    assert.equal(options.input, "downloads/tanos/n2/n2-vocab-kanji-eng.mem");
-    assert.equal(options.readingInput, "downloads/tanos/n2/n2-vocab-kanji-hiragana.mem");
-    assert.equal(options.out, "downloads/tanos-n2-vocab.tsv");
+    assert.equal(normalizeLevel(options.level), 5);
+    assert.equal(options.input, "downloads/tanos/n5/n5-vocab-kanji-eng.mem");
+    assert.equal(options.readingInput, "downloads/tanos/n5/n5-vocab-kanji-hiragana.mem");
+    assert.equal(options.out, "downloads/tanos-n5-vocab.tsv");
+    assert.equal(options.reviewed, true);
+    assert.equal(options.citation, "Fixture citation");
+    assert.equal(options.evidenceRef, "Fixture evidence ref");
     assert.equal(options.json, true);
 
     const text = formatNormalizeReport({

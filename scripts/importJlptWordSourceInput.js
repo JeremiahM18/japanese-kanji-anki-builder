@@ -24,6 +24,14 @@ const DEFAULT_CONFIG = "templates/jlpt_word_source_inputs.json";
 const DEFAULT_CONTRACT = "templates/jlpt_word_level_contract.json";
 const DEFAULT_EVIDENCE = "templates/jlpt_word_source_evidence.json";
 
+function buildDefaultAssignmentFile(sourceId) {
+    return ["jlpt_word_source_evidence", "assignments", `${sourceId}.json`].join("/");
+}
+
+function resolveManifestRelativePath(baseDir, relativePath) {
+    return path.resolve(baseDir, ...String(relativePath || "").split(/[\\/]/u));
+}
+
 function parseArgs(argv) {
     const options = {
         config: DEFAULT_CONFIG,
@@ -107,12 +115,12 @@ function run(options = {}) {
     };
     if (options.write) {
         const assignmentFile = manifest.assignmentFiles?.[options.source]
-            || path.join("jlpt_word_source_evidence", "assignments", `${options.source}.json`);
+            || buildDefaultAssignmentFile(options.source);
         manifest.assignmentFiles = {
             ...(manifest.assignmentFiles || {}),
             [options.source]: assignmentFile,
         };
-        const assignmentPath = path.resolve(path.dirname(evidencePath), assignmentFile);
+        const assignmentPath = resolveManifestRelativePath(path.dirname(evidencePath), assignmentFile);
         fs.mkdirSync(path.dirname(assignmentPath), { recursive: true });
         fs.writeFileSync(assignmentPath, formatWordSourceAssignmentFileJson({
             sourceId: options.source,

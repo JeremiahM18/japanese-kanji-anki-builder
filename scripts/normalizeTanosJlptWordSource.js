@@ -20,6 +20,9 @@ function parseArgs(argv) {
         input: "",
         readingInput: "",
         out: "",
+        reviewed: false,
+        citation: "",
+        evidenceRef: "",
         json: false,
         unknownArgs: [],
     };
@@ -35,6 +38,12 @@ function parseArgs(argv) {
             options.readingInput = parseStringOption(arg, "reading-input");
         } else if (arg.startsWith("--out=")) {
             options.out = parseStringOption(arg, "out");
+        } else if (arg === "--reviewed") {
+            options.reviewed = true;
+        } else if (arg.startsWith("--citation=")) {
+            options.citation = parseStringOption(arg, "citation");
+        } else if (arg.startsWith("--evidence-ref=")) {
+            options.evidenceRef = parseStringOption(arg, "evidence-ref");
         } else {
             collectUnknownArg(options, arg);
         }
@@ -95,6 +104,15 @@ function run(options = {}) {
     if (readingInputPath && !fs.existsSync(readingInputPath)) {
         throw new Error(`Missing Tanos N${level} reading vocabulary file: ${readingInputPath}`);
     }
+    if (options.reviewed && (!options.citation || !options.evidenceRef)) {
+        throw new Error("--reviewed requires --citation and --evidence-ref.");
+    }
+    const reviewedEvidence = options.reviewed
+        ? {
+            citation: options.citation,
+            evidenceRefPrefix: options.evidenceRef,
+        }
+        : null;
 
     const result = levelConfig.defaultInputKind === "mnemosyne-pair" || readingInputPath
         ? buildTanosJlptWordSourceFromMnemosyne({
@@ -103,12 +121,14 @@ function run(options = {}) {
             level,
             sourceId: levelConfig.sourceId,
             sourceLabel: levelConfig.sourceLabel,
+            reviewedEvidence,
         })
         : buildTanosJlptWordSource({
             sourceText: fs.readFileSync(inputPath, "utf8"),
             level,
             sourceId: levelConfig.sourceId,
             sourceLabel: levelConfig.sourceLabel,
+            reviewedEvidence,
         });
     if (readingInputPath) {
         result.readingInputPath = readingInputPath;

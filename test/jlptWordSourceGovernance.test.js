@@ -1,8 +1,12 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
 
 const {
     buildWordIdentity,
+    loadJlptWordSourceEvidence,
     normalizeJlptWordSourceEvidence,
 } = require("../src/datasets/jlptWordSourceEvidence");
 const { normalizeJlptWordSourceInputs } = require("../src/datasets/jlptWordSourceInputs");
@@ -380,4 +384,70 @@ test("word source adequacy separates governance validity from incomplete evidenc
     assert.equal(report.evidenceDepthValid, false);
     assert.equal(report.postureCounts.level_universe_standard, 1);
     assert.equal(report.postureCounts.source_origin_not_evaluated, 1);
+});
+
+test("word source assignment files resolve manifest-relative slash styles", () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-source-evidence-"));
+    const assignmentDir = path.join(tempDir, "assignments");
+    fs.mkdirSync(assignmentDir, { recursive: true });
+    fs.writeFileSync(path.join(assignmentDir, "source_a.json"), JSON.stringify({
+        sourceId: "source_a",
+        assignments: {
+            "食べる|たべる": {
+                written: "食べる",
+                reading: "たべる",
+                level: 5,
+                reviewStatus: "reviewed",
+                citation: "A",
+                evidenceRef: "row 1",
+            },
+        },
+    }), "utf8");
+    const manifestPath = path.join(tempDir, "manifest.json");
+    fs.writeFileSync(manifestPath, JSON.stringify({
+        version: 1,
+        checkedAt: "2026-06-21",
+        sourceTiers: {
+            discovery: {
+                label: "Discovery",
+                rank: 1,
+                role: "primary-discovery",
+                description: "Test discovery source.",
+            },
+        },
+        sourceLineages: {
+            lineage_a: {
+                label: "Lineage A",
+                role: "community-study-list",
+                description: "Test lineage.",
+            },
+        },
+        independenceGroups: {
+            family_a: {
+                label: "Family A",
+                description: "Test family.",
+            },
+        },
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "discovery",
+                evidenceLineage: "lineage_a",
+                independenceGroup: "family_a",
+                status: "active",
+                sourceKind: "candidate-discovery",
+                countsForConsensus: true,
+                licenseStatus: "approved",
+                allowedUse: ["candidate-discovery", "level-hint"],
+                canStoreWordAssignments: true,
+                licenseEvidenceUrl: "https://example.com/license-a",
+            },
+        },
+        assignmentFiles: {
+            source_a: "assignments\\source_a.json",
+        },
+    }), "utf8");
+
+    const evidence = loadJlptWordSourceEvidence(manifestPath);
+    assert.equal(evidence.assignments.source_a["食べる|たべる"].level, 5);
 });

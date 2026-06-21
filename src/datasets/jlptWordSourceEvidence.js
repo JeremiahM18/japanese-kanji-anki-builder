@@ -252,8 +252,12 @@ function validateSourceUse(sourceId, source = {}) {
     }
 }
 
+function resolveManifestRelativePath(manifestPath, relativePath) {
+    return path.resolve(path.dirname(manifestPath), ...String(relativePath || "").split(/[\\/]/u));
+}
+
 function readAssignmentFile({ manifestPath, relativePath }) {
-    const assignmentPath = path.resolve(path.dirname(manifestPath), relativePath);
+    const assignmentPath = resolveManifestRelativePath(manifestPath, relativePath);
     if (!fs.existsSync(assignmentPath)) {
         throw new Error(`Missing word source assignment file: ${assignmentPath}`);
     }

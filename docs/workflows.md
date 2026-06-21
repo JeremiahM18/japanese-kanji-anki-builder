@@ -341,11 +341,15 @@ npm run deck:words:common-expansion -- --levels=5 --placement-mode=vocabulary-le
 
 The common-word selector is a read-only Silver planning report. It starts from each level's active `candidate-discovery` source, then adds JMdict dictionary verification and JMdict priority/commonness support from the governed word source manifest.
 
+The common-word queue is only active after the selected level's full first-stage word expansion signal is complete: no active reading-gap editorial or promote-curated-example items may remain, the configured source-list enhancement signal must be exhausted, and the word-placement audit must be resolved. Deferred variants and low-value readings remain recorded as reading-lane decisions; they do not become permission to bypass source governance.
+
+Version naming: call the post-reading common-word expansion for N5 and N4 the word `v2` path. For N3, N2, and N1, the same common-word expansion belongs to their word `v1` implementation because those levels have not shipped the same lower-lane frozen vocabulary surface. Do not use future-name placeholders for this work.
+
 Use the placement mode deliberately:
 
 - `kanji-anchor` is the default view. It preserves the older reading-coverage posture: a current-level word candidate must contain current-level kanji, and source rows with only harder kanji remain cross-level routing rows.
-- `vocabulary-level` is the expansion view for common N-level vocabulary. It keeps exact source-listed vocabulary eligible for that source JLPT level even when the written form contains only harder support kanji, provided the row is still dictionary verified, commonness supported, triaged, and later recorded with `levelPlacement.mode: "vocabulary-level"` plus a reason.
-- Legacy top-level `move_candidate` decisions in [../templates/word_inventory_expansion_triage.json](../templates/word_inventory_expansion_triage.json) remain kanji-anchor evidence. Add `placementDecisions["vocabulary-level"]` when an anchor-moved source row is intentionally accepted for N-level vocabulary review.
+- `vocabulary-level` is the expansion view for common N-level vocabulary after first-stage word expansion is fully complete. It keeps exact source-listed vocabulary eligible for that source JLPT level even when the written form contains harder support kanji, provided the row is dictionary verified, commonness supported, missing from the governed contract, and explicitly top-level triaged as `keep_candidate`.
+- Top-level `move_candidate` decisions in [../templates/word_inventory_expansion_triage.json](../templates/word_inventory_expansion_triage.json) are authoritative in every selector view. They remain target-level routing work and must not be bypassed with placement-specific overrides.
 
 Selector rows are still pre-trust. A row marked `ready_for_editorial_review` has source identity, dictionary support, commonness support, and a keep-style triage decision; it still needs explicit card approval, starter/contract edits in a later scoped expansion, examples, reading breakdown, kanji labels, audio, pitch, Gold, Sapphire, Platinum, and readiness gates before it becomes a shipped word card.
 

@@ -232,7 +232,7 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.match(formatted, /ready_for_editorial_review/);
 });
 
-test("buildWordCommonExpansionSelectorReport uses vocabulary-level triage overrides beyond anchor moves", () => {
+test("buildWordCommonExpansionSelectorReport keeps move_candidate authoritative in vocabulary-level mode", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
     const candidateSource = writeFixtureSource(
         dir,
@@ -282,13 +282,6 @@ test("buildWordCommonExpansionSelectorReport uses vocabulary-level triage overri
                         targetLevel: "N4",
                         priority: "normal",
                         reason: "Anchor-mode routing belongs in N4.",
-                        placementDecisions: {
-                            "vocabulary-level": {
-                                decision: "keep_candidate",
-                                priority: "high",
-                                reason: "Source-listed N5 vocabulary is ready for N5 editorial review.",
-                            },
-                        },
                     },
                 },
             },
@@ -297,10 +290,199 @@ test("buildWordCommonExpansionSelectorReport uses vocabulary-level triage overri
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
     assert.equal(report.placementMode, "vocabulary-level");
-    assert.equal(row.selectorStatus, "ready_for_editorial_review");
+    assert.equal(row.selectorStatus, "move_candidate");
     assert.equal(row.sourceDisposition, "review_candidate");
-    assert.equal(row.triageDecision.decision, "keep_candidate");
-    assert.equal(row.sourceTriageDecision.decision, "move_candidate");
+    assert.equal(row.triageDecision.decision, "move_candidate");
+    assert.equal(row.triageDecision.targetLevel, 4);
+    assert.equal(row.sourceTriageDecision, null);
+});
+
+test("buildWordCommonExpansionSelectorReport marks candidates inactive until reading expansion is exhausted", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "山川\tさんせん\tmountains and rivers\tN5",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "山川\tさんせん\tmountains and rivers",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "山川\tさんせん\tmountains and rivers\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: {
+                level: 5,
+                levelLabel: "N5",
+                fullyExpanded: false,
+                reading: {
+                    status: "active",
+                    activeItems: 2,
+                    editorialReviewItems: 1,
+                    promoteCuratedExampleItems: 1,
+                    deferVariantItems: 0,
+                    totalItems: 2,
+                    reason: "Active reading-gap triage remains.",
+                    blockers: [],
+                },
+                enhancement: {
+                    status: "exhausted",
+                    keepCandidates: 0,
+                    untriagedCandidateRows: 0,
+                    moveCandidates: 0,
+                    crossLevelRoutingRows: 0,
+                    blockers: [],
+                },
+                placement: {
+                    status: "resolved",
+                    violationCount: 0,
+                    blockers: [],
+                },
+            },
+        },
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                山: 5,
+                川: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "山川|さんせん": {
+                        decision: "keep_candidate",
+                        priority: "high",
+                        reason: "Common, useful fixture word.",
+                    },
+                },
+            },
+        },
+    });
+
+    const row = report.levelReports[0].rows.find((candidate) => candidate.key === "山川|さんせん");
+    assert.equal(report.levelReports[0].commonWordQueue.active, false);
+    assert.equal(report.summary.inactiveReadingExpansionLevels, 1);
+    assert.equal(row.selectorStatus, "queue_inactive_reading_expansion");
+    assert.equal(report.levelReports[0].summary.selectorStatusCounts.ready_for_editorial_review, 0);
+    assert.equal(report.levelReports[0].summary.selectorStatusCounts.queue_inactive_reading_expansion, 1);
+});
+
+test("buildWordCommonExpansionSelectorReport keeps move_candidate visible while queue is inactive", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "手紙\tてがみ\tletter\tN5",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "手紙\tてがみ\tletter",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "手紙\tてがみ\tletter\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: {
+                level: 5,
+                levelLabel: "N5",
+                fullyExpanded: false,
+                reading: {
+                    status: "exhausted",
+                    activeItems: 0,
+                    editorialReviewItems: 0,
+                    promoteCuratedExampleItems: 0,
+                    deferVariantItems: 0,
+                    totalItems: 0,
+                    reason: "No active reading-gap triage items remain.",
+                    blockers: [],
+                },
+                enhancement: {
+                    status: "needs_triage",
+                    keepCandidates: 0,
+                    untriagedCandidateRows: 1,
+                    moveCandidates: 0,
+                    crossLevelRoutingRows: 0,
+                    reason: "Configured source-list enhancement review still has untriaged candidates.",
+                    blockers: [],
+                },
+                placement: {
+                    status: "resolved",
+                    violationCount: 0,
+                    blockers: [],
+                },
+            },
+        },
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                手: 4,
+                紙: 4,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "手紙|てがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N4",
+                        priority: "normal",
+                        reason: "Protect learner-fit routing.",
+                    },
+                },
+            },
+        },
+    });
+
+    const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
+    assert.equal(report.levelReports[0].commonWordQueue.active, false);
+    assert.equal(row.selectorStatus, "move_candidate");
+    assert.equal(report.levelReports[0].summary.selectorStatusCounts.queue_inactive_reading_expansion, 0);
+    assert.equal(report.levelReports[0].summary.selectorStatusCounts.move_candidate, 1);
 });
 
 test("classifyCommonExpansionSelectorRow treats triage as pre-trust routing", () => {

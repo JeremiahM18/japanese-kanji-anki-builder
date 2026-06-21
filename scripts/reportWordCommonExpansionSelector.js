@@ -19,6 +19,7 @@ const {
     loadTriageDecisionsByLevelSource,
     resolveManifestPath,
 } = require("./reportWordCandidateAgreement");
+const { buildWordExpansionSignalReport } = require("./reportWordExpansionSignals");
 
 function parseArgs(argv) {
     const options = {
@@ -81,12 +82,18 @@ async function main() {
     }
 
     const manifest = loadWordSourceManifest(resolveManifestPath(options.manifest));
+    const expansionSignalReport = buildWordExpansionSignalReport({ levels: options.levels });
+    const readingExpansionSignalsByLevel = Object.fromEntries(
+        expansionSignalReport.signals.map((signal) => [signal.level, signal])
+    );
     const report = buildWordCommonExpansionSelectorReport({
         levels: options.levels,
         manifest,
         limit,
         placementMode: normalizePlacementMode(options.placementMode),
         triageDecisionsByLevelSource: loadTriageDecisionsByLevelSource(options.triage),
+        readingExpansionSignalsByLevel,
+        enforceReadingExpansionGate: true,
         ...loadSharedInputs(),
     });
 
@@ -96,7 +103,11 @@ async function main() {
         process.stdout.write(formatWordCommonExpansionSelectorReport(report));
     }
 
-    if (options.strict && (report.blockers.length > 0 || report.placementAudit.violationCount > 0)) {
+    if (options.strict && (
+        report.blockers.length > 0
+        || report.placementAudit.violationCount > 0
+        || report.summary.inactiveReadingExpansionLevels > 0
+    )) {
         throw new Error("Word common expansion selector strict mode failed.");
     }
 }

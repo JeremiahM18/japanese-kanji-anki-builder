@@ -478,33 +478,15 @@ function normalizeTriageDecisionCore(decision, { key = "", currentLevel = null }
     return normalized;
 }
 
-function normalizePlacementTriageDecisions(decisions = {}, { key = "", currentLevel = null } = {}) {
-    const normalized = {};
-    for (const [mode, decision] of Object.entries(decisions || {})) {
-        const normalizedMode = normalizePlacementMode(mode);
-        const normalizedDecision = normalizeTriageDecisionCore(decision, {
-            key: key ? `${key}/${normalizedMode}` : normalizedMode,
-            currentLevel,
-        });
-        if (normalizedDecision) {
-            normalized[normalizedMode] = normalizedDecision;
-        }
-    }
-    return normalized;
-}
-
 function normalizeTriageDecision(decision, { key = "", currentLevel = null } = {}) {
     const normalized = normalizeTriageDecisionCore(decision, { key, currentLevel });
     if (!normalized) {
         return null;
     }
 
-    const placementDecisions = normalizePlacementTriageDecisions(
-        decision.placementDecisions || decision.modeDecisions || {},
-        { key, currentLevel }
-    );
-    if (Object.keys(placementDecisions).length > 0) {
-        normalized.placementDecisions = placementDecisions;
+    if (decision.placementDecisions || decision.modeDecisions) {
+        const context = key ? ` for ${key}` : "";
+        throw new Error(`Placement-specific word expansion triage overrides are not supported${context}; top-level move_candidate/defer/reject/keep decisions are authoritative.`);
     }
 
     return normalized;
@@ -525,10 +507,8 @@ function formatEffectiveTriageDecision(decision, metadata = {}) {
     if (!decision) {
         return null;
     }
-    const rest = { ...decision };
-    delete rest.placementDecisions;
     return {
-        ...rest,
+        ...decision,
         ...metadata,
     };
 }
@@ -538,49 +518,12 @@ function resolveTriageDecisionForPlacementMode(decision, { placementMode = "kanj
         return null;
     }
 
-    const normalizedMode = normalizePlacementMode(placementMode);
-    const modeDecision = decision.placementDecisions?.[normalizedMode];
-    if (modeDecision) {
-        return formatEffectiveTriageDecision(modeDecision, {
-            placementMode: normalizedMode,
-            triageSource: "placementDecisions",
-        });
-    }
-
-    if (normalizedMode === "vocabulary-level" && decision.decision === "move_candidate") {
-        return null;
-    }
+    normalizePlacementMode(placementMode);
 
     return formatEffectiveTriageDecision(decision, {
-        placementMode: "kanji-anchor",
-        triageSource: "legacy",
+        placementMode: "top-level",
+        triageSource: "top-level",
     });
-}
-
-function resolveLegacyTriageDecisionForPlacementMode(decision, { placementMode = "kanji-anchor" } = {}) {
-    if (!decision) {
-        return null;
-    }
-
-    const normalizedMode = normalizePlacementMode(placementMode);
-    const effectiveDecision = resolveTriageDecisionForPlacementMode(decision, { placementMode: normalizedMode });
-    const legacyDecision = formatEffectiveTriageDecision(decision, {
-        placementMode: "kanji-anchor",
-        triageSource: "legacy",
-    });
-    if (!effectiveDecision) {
-        return legacyDecision;
-    }
-    if (
-        normalizedMode !== "kanji-anchor"
-        && (
-            legacyDecision.decision !== effectiveDecision.decision
-            || legacyDecision.targetLevel !== effectiveDecision.targetLevel
-        )
-    ) {
-        return legacyDecision;
-    }
-    return null;
 }
 
 function buildWordInventoryExpansionCandidateReport({
@@ -628,9 +571,6 @@ function buildWordInventoryExpansionCandidateReport({
             const triageDecision = resolveTriageDecisionForPlacementMode(normalizedTriageDecision, {
                 placementMode: normalizedPlacementMode,
             });
-            const sourceTriageDecision = resolveLegacyTriageDecisionForPlacementMode(normalizedTriageDecision, {
-                placementMode: normalizedPlacementMode,
-            });
             const classified = classifyCandidateDisposition(row, {
                 targetLevel,
                 kanjiScope,
@@ -652,7 +592,7 @@ function buildWordInventoryExpansionCandidateReport({
                 outsideJlptKanji: classified.scope.outsideJlptKanji.map((entry) => entry.kanji),
                 sameWrittenContractEntries: findSameWrittenContractEntries(row, sameWrittenContractIndex),
                 triageDecision,
-                sourceTriageDecision,
+                sourceTriageDecision: null,
             };
         })
         .sort(compareCandidateRows);
@@ -729,13 +669,6 @@ function appendTriageLines(lines, row) {
         }
     } else {
         lines.push("   triage: untriaged");
-    }
-    if (row.sourceTriageDecision) {
-        lines.push(`   anchor triage retained: ${row.sourceTriageDecision.decision} [${row.sourceTriageDecision.priority}]`);
-        if (Number.isInteger(row.sourceTriageDecision.targetLevel)) {
-            lines.push(`   anchor triage target level: N${row.sourceTriageDecision.targetLevel}`);
-        }
-        lines.push(`   anchor triage reason: ${row.sourceTriageDecision.reason}`);
     }
 }
 

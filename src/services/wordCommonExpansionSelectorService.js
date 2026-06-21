@@ -16,6 +16,7 @@ const SOURCE_UNIVERSE_WARNING = "Configured-source selector only; not an officia
 
 const SELECTOR_STATUSES = [
     "ready_for_editorial_review",
+    "queue_inactive_reading_expansion",
     "needs_triage",
     "blocked_identity",
     "blocked_missing_dictionary",
@@ -93,6 +94,9 @@ function classifyCommonExpansionSelectorRow({ expansionRow = {}, agreementRow = 
     if (triageStatus === "reject_candidate") {
         return "triaged_reject";
     }
+    if (expansionRow.readingExpansionQueueActive === false) {
+        return "queue_inactive_reading_expansion";
+    }
     if (
         expansionRow.disposition === "source_template"
         || expansionRow.disposition === "likely_phrase"
@@ -128,11 +132,79 @@ function summarizeSelectorRows(rows = []) {
         selectedRows: rows.length,
         selectorStatusCounts,
         readyForEditorialReviewRows: selectorStatusCounts.ready_for_editorial_review,
+        inactiveReadingExpansionRows: selectorStatusCounts.queue_inactive_reading_expansion,
         needsTriageRows: selectorStatusCounts.needs_triage,
         blockedRows: selectorStatusCounts.blocked_identity
             + selectorStatusCounts.blocked_missing_dictionary
             + selectorStatusCounts.blocked_missing_commonness,
         preTrustRows: rows.length,
+    };
+}
+
+function buildReadingExpansionGate({ level, signal = null, enforceReadingExpansionGate = false } = {}) {
+    if (!signal) {
+        return {
+            active: !enforceReadingExpansionGate,
+            status: enforceReadingExpansionGate ? "inactive" : "not_evaluated",
+            fullyExpanded: !enforceReadingExpansionGate,
+            readingStatus: "not_evaluated",
+            enhancementStatus: "not_evaluated",
+            placementStatus: "not_evaluated",
+            activeItems: null,
+            editorialReviewItems: null,
+            promoteCuratedExampleItems: null,
+            deferVariantItems: null,
+            totalItems: null,
+            reason: enforceReadingExpansionGate
+                ? `N${level} common-word expansion is inactive until reading expansion is evaluated and exhausted.`
+                : "Reading expansion gate was not provided to this in-memory report.",
+            blockers: enforceReadingExpansionGate
+                ? ["reading expansion gate was not provided."]
+                : [],
+        };
+    }
+
+    const fullSignal = signal.reading ? signal : null;
+    const readingSignal = fullSignal ? fullSignal.reading : signal;
+    const enhancementSignal = fullSignal?.enhancement || null;
+    const placementSignal = fullSignal?.placement || null;
+    const active = fullSignal
+        ? fullSignal.fullyExpanded === true
+        : readingSignal.status === "exhausted";
+    const gateReason = active
+        ? "First-stage word expansion is fully expanded; common-word expansion queue is active for this level."
+        : fullSignal
+        ? [
+            `N${level} first-stage word expansion is not fully expanded; common-word expansion queue is inactive.`,
+            readingSignal.reason,
+            enhancementSignal?.reason,
+            placementSignal?.reason,
+        ].filter(Boolean).join(" ")
+        : (readingSignal.reason || `N${level} reading expansion is not exhausted; common-word expansion queue is inactive.`);
+
+    return {
+        active,
+        status: active ? "active" : "inactive",
+        fullyExpanded: active,
+        readingStatus: readingSignal.status || "unknown",
+        enhancementStatus: enhancementSignal?.status || "not_evaluated",
+        placementStatus: placementSignal?.status || "not_evaluated",
+        activeItems: readingSignal.activeItems ?? null,
+        editorialReviewItems: readingSignal.editorialReviewItems ?? null,
+        promoteCuratedExampleItems: readingSignal.promoteCuratedExampleItems ?? null,
+        deferVariantItems: readingSignal.deferVariantItems ?? null,
+        totalItems: readingSignal.totalItems ?? null,
+        enhancementKeepCandidates: enhancementSignal?.keepCandidates ?? null,
+        enhancementUntriagedCandidates: enhancementSignal?.untriagedCandidateRows ?? null,
+        enhancementMoveCandidates: enhancementSignal?.moveCandidates ?? null,
+        enhancementCrossLevelRoutingRows: enhancementSignal?.crossLevelRoutingRows ?? null,
+        placementViolationCount: placementSignal?.violationCount ?? null,
+        reason: gateReason,
+        blockers: [
+            ...(readingSignal.blockers || []),
+            ...(enhancementSignal?.blockers || []),
+            ...(placementSignal?.blockers || []),
+        ],
     };
 }
 
@@ -175,7 +247,7 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         learnerFitRisks: agreementRow?.learnerFitRisks || [],
         sameWrittenConflicts: agreementRow?.sameWrittenConflicts || expansionRow.sameWrittenContractEntries || [],
         triageDecision: expansionRow.triageDecision || agreementRow?.triageDecisions?.[0] || null,
-        sourceTriageDecision: expansionRow.sourceTriageDecision || null,
+        sourceTriageDecision: null,
         contractStatus: agreementRow?.contractStatus || null,
         targetKanji: expansionRow.targetKanji || agreementRow?.targetKanji || [],
         constituentKanji: expansionRow.constituentKanji || [],
@@ -227,16 +299,25 @@ function buildLevelSelectorReport({
     triageDecisionsByLevelSource = {},
     limit = 40,
     placementMode = "kanji-anchor",
+    readingExpansionSignal = null,
+    enforceReadingExpansionGate = false,
     readFile = fs.readFileSync,
 } = {}) {
     const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const candidateSources = getCandidateDiscoverySourcesForLevel(manifest, level);
     const blockers = [];
+    const readingExpansionGate = buildReadingExpansionGate({
+        level,
+        signal: readingExpansionSignal,
+        enforceReadingExpansionGate,
+    });
+    blockers.push(...readingExpansionGate.blockers.map((blocker) => `N${level}: ${blocker}`));
     if (candidateSources.length !== 1) {
         blockers.push(`N${level}: expected exactly one active candidate-discovery source, found ${candidateSources.length}.`);
         return {
             level,
             levelLabel: `N${level}`,
+            commonWordQueue: readingExpansionGate,
             sourceUniverse: null,
             sourceCandidateSummary: null,
             summary: summarizeSelectorRows([]),
@@ -259,6 +340,7 @@ function buildLevelSelectorReport({
         return {
             level,
             levelLabel: `N${level}`,
+            commonWordQueue: readingExpansionGate,
             sourceUniverse,
             sourceCandidateSummary: null,
             summary: summarizeSelectorRows([]),
@@ -285,7 +367,10 @@ function buildLevelSelectorReport({
     const agreementRowsByKey = buildAgreementRowIndex(agreementLevelReport);
     const rows = expansionReport.allRows
         .map((expansionRow) => buildSelectorRow({
-            expansionRow,
+            expansionRow: {
+                ...expansionRow,
+                readingExpansionQueueActive: readingExpansionGate.active,
+            },
             agreementRow: agreementRowsByKey.get(expansionRow.key) || null,
             sourceUniverse,
         }))
@@ -302,6 +387,7 @@ function buildLevelSelectorReport({
     return {
         level,
         levelLabel: `N${level}`,
+        commonWordQueue: readingExpansionGate,
         sourceUniverse: {
             ...sourceUniverse,
             rowCount: loadedSource.integrity?.rowCount ?? sourceUniverse.rowCount,
@@ -326,6 +412,8 @@ function buildWordCommonExpansionSelectorReport({
     triageDecisionsByLevelSource = {},
     limit = 40,
     placementMode = "kanji-anchor",
+    readingExpansionSignalsByLevel = {},
+    enforceReadingExpansionGate = false,
     readFile = fs.readFileSync,
 } = {}) {
     const normalizedPlacementMode = normalizePlacementMode(placementMode);
@@ -353,6 +441,8 @@ function buildWordCommonExpansionSelectorReport({
         triageDecisionsByLevelSource,
         limit,
         placementMode: normalizedPlacementMode,
+        readingExpansionSignal: readingExpansionSignalsByLevel?.[level] || null,
+        enforceReadingExpansionGate,
         readFile,
     }));
     const blockers = [
@@ -376,8 +466,10 @@ function buildWordCommonExpansionSelectorReport({
             levels: levelReports.length,
             rows: levelReports.reduce((total, levelReport) => total + levelReport.summary.selectedRows, 0),
             readyForEditorialReviewRows: levelReports.reduce((total, levelReport) => total + levelReport.summary.readyForEditorialReviewRows, 0),
+            inactiveReadingExpansionRows: levelReports.reduce((total, levelReport) => total + levelReport.summary.inactiveReadingExpansionRows, 0),
             needsTriageRows: levelReports.reduce((total, levelReport) => total + levelReport.summary.needsTriageRows, 0),
             blockedRows: levelReports.reduce((total, levelReport) => total + levelReport.summary.blockedRows, 0),
+            inactiveReadingExpansionLevels: levelReports.filter((levelReport) => levelReport.commonWordQueue?.active === false).length,
             blockerCount: blockers.length,
         },
         levelReports,
@@ -424,16 +516,18 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
     lines.push(
         "",
         "Selector summary:",
-        "| Level | Rows | Ready | Needs triage | Move | Defer | Reject | Blocked identity | Missing dictionary | Missing commonness | Already governed | Already excluded | Kana-only out of scope |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"
+        "| Level | Queue | Rows | Ready | Inactive | Needs triage | Move | Defer | Reject | Blocked identity | Missing dictionary | Missing commonness | Already governed | Already excluded | Kana-only out of scope |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"
     );
 
     for (const levelReport of report.levelReports || []) {
         const counts = levelReport.summary.selectorStatusCounts || {};
         lines.push([
             `| ${levelReport.levelLabel}`,
+            levelReport.commonWordQueue?.active ? "active" : "inactive",
             levelReport.summary.selectedRows,
             counts.ready_for_editorial_review || 0,
+            counts.queue_inactive_reading_expansion || 0,
             counts.needs_triage || 0,
             counts.move_candidate || 0,
             counts.triaged_defer || 0,
@@ -445,6 +539,12 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             counts.already_excluded || 0,
             counts.kana_only_out_of_scope || 0,
         ].join(" | ") + " |");
+    }
+
+    lines.push("", "Common-word queue gate:");
+    for (const levelReport of report.levelReports || []) {
+        const gate = levelReport.commonWordQueue || {};
+        lines.push(`- ${levelReport.levelLabel}: ${gate.active ? "active" : "inactive"}; first-stage fully expanded ${gate.fullyExpanded ? "yes" : "no"}; reading ${gate.readingStatus || "not_evaluated"} active ${gate.activeItems ?? "-"}; enhancement ${gate.enhancementStatus || "not_evaluated"} keep ${gate.enhancementKeepCandidates ?? "-"} untriaged ${gate.enhancementUntriagedCandidates ?? "-"}; placement ${gate.placementStatus || "not_evaluated"} violations ${gate.placementViolationCount ?? "-"}; ${gate.reason || ""}`);
     }
 
     const blockers = report.blockers || [];
@@ -471,12 +571,6 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
                     lines.push(`   triage target level: N${row.triageDecision.targetLevel}`);
                 }
             }
-            if (row.sourceTriageDecision) {
-                lines.push(`   anchor triage retained: ${row.sourceTriageDecision.decision} [${row.sourceTriageDecision.priority || "normal"}] - ${row.sourceTriageDecision.reason}`);
-                if (Number.isInteger(row.sourceTriageDecision.targetLevel)) {
-                    lines.push(`   anchor triage target level: N${row.sourceTriageDecision.targetLevel}`);
-                }
-            }
             if (row.sameWrittenConflicts.length > 0) {
                 lines.push(`   same-written conflicts: ${row.sameWrittenConflicts.map((entry) => `${entry.reading} (${entry.status || entry.type}${entry.jlpt ? ` N${entry.jlpt}` : ""})`).join(", ")}`);
             }
@@ -496,6 +590,7 @@ module.exports = {
     SELECTOR_STATUSES,
     SOURCE_UNIVERSE_WARNING,
     buildLevelSelectorReport,
+    buildReadingExpansionGate,
     buildSourceUniverse,
     buildWordCommonExpansionSelectorReport,
     classifyCommonExpansionSelectorRow,

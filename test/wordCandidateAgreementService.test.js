@@ -272,7 +272,7 @@ test("buildWordCandidateAgreementReport surfaces moved candidates with target le
     assert.match(text, /triage target level: N4/);
 });
 
-test("buildWordCandidateAgreementReport suppresses legacy anchor moves in vocabulary-level mode", () => {
+test("buildWordCandidateAgreementReport keeps move_candidate authoritative in vocabulary-level mode", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
     const candidateSource = writeFixtureSource(
         dir,
@@ -321,11 +321,12 @@ test("buildWordCandidateAgreementReport suppresses legacy anchor moves in vocabu
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
     assert.equal(report.placementMode, "vocabulary-level");
-    assert.equal(row.triageStatus, "untriaged");
-    assert.equal(row.candidateStatus, "untriaged_candidate");
+    assert.equal(row.triageStatus, "move_candidate");
+    assert.equal(row.candidateStatus, "move_candidate");
     assert.equal(row.dictionaryVerified, true);
     assert.equal(row.frequencySupported, true);
-    assert.deepEqual(row.triageDecisions, []);
+    assert.equal(row.triageDecisions[0].decision, "move_candidate");
+    assert.equal(row.triageDecisions[0].targetLevel, 4);
 });
 
 test("buildWordCandidateAgreementReport ranks candidates with more ready evidence before alphabetical order", () => {

@@ -99,7 +99,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(contract.inventoryCounts["2"], 28);
     assert.equal(contract.inventoryCounts["3"], 1081);
     assert.equal(contract.inventoryCounts["4"], 700);
-    assert.equal(contract.inventoryCounts["5"], 297);
+    assert.equal(contract.inventoryCounts["5"], 287);
     assert.equal(contract.excludedCounts["5"], 20);
     for (const key of [
         "羞恥|しゅうち",

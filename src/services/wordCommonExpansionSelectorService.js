@@ -504,6 +504,7 @@ function buildLevelSelectorReport({
     limit = 40,
     placementMode = "kanji-anchor",
     readingExpansionSignal = null,
+    sourceAdequacy = null,
     enforceReadingExpansionGate = false,
     readFile = fs.readFileSync,
 } = {}) {
@@ -522,6 +523,7 @@ function buildLevelSelectorReport({
             level,
             levelLabel: `N${level}`,
             commonWordQueue: readingExpansionGate,
+            sourceAdequacy,
             sourceUniverse: null,
             sourceCandidateSummary: null,
             summary: summarizeSelectorRows([]),
@@ -545,6 +547,7 @@ function buildLevelSelectorReport({
             level,
             levelLabel: `N${level}`,
             commonWordQueue: readingExpansionGate,
+            sourceAdequacy,
             sourceUniverse,
             sourceCandidateSummary: null,
             summary: summarizeSelectorRows([]),
@@ -592,6 +595,7 @@ function buildLevelSelectorReport({
         level,
         levelLabel: `N${level}`,
         commonWordQueue: readingExpansionGate,
+        sourceAdequacy,
         sourceUniverse: {
             ...sourceUniverse,
             rowCount: loadedSource.integrity?.rowCount ?? sourceUniverse.rowCount,
@@ -617,6 +621,7 @@ function buildWordCommonExpansionSelectorReport({
     limit = 40,
     placementMode = "kanji-anchor",
     readingExpansionSignalsByLevel = {},
+    sourceAdequacyByLevel = {},
     enforceReadingExpansionGate = false,
     readFile = fs.readFileSync,
 } = {}) {
@@ -651,6 +656,7 @@ function buildWordCommonExpansionSelectorReport({
         limit,
         placementMode: normalizedPlacementMode,
         readingExpansionSignal: readingExpansionSignalsByLevel?.[level] || null,
+        sourceAdequacy: sourceAdequacyByLevel?.[level] || null,
         enforceReadingExpansionGate: reportLevels.includes(level) ? enforceReadingExpansionGate : false,
         readFile,
     }));
@@ -673,6 +679,7 @@ function buildWordCommonExpansionSelectorReport({
         placementMode: normalizedPlacementMode,
         configuredSourceOnly: true,
         warning: SOURCE_UNIVERSE_WARNING,
+        sourceAdequacyByLevel,
         levels: reportLevels,
         routingSupportLevels: analysisLevels.filter((level) => !reportLevels.includes(level)),
         placementAudit: agreementReport.placementAudit,
@@ -711,6 +718,21 @@ function formatSourceUniverse(sourceUniverse = {}) {
     ].join("; ");
 }
 
+function formatSourceAdequacy(sourceAdequacy = null) {
+    if (!sourceAdequacy) {
+        return "not evaluated";
+    }
+    return [
+        sourceAdequacy.sourceDepthComplete ? "source-depth complete" : "source-depth incomplete",
+        `checked ${sourceAdequacy.checked ?? 0}`,
+        `universe ${sourceAdequacy.levelUniverseStandardRows ?? 0}`,
+        `not evaluated ${sourceAdequacy.sourceOriginNotEvaluatedRows ?? 0}`,
+        `single-family ${sourceAdequacy.singleSourceFamilyRows ?? 0}`,
+        `multi-source ${sourceAdequacy.multiSourceSupportedRows ?? 0}`,
+        `disputed ${sourceAdequacy.disputedLevelClaimRows ?? 0}`,
+    ].join("; ");
+}
+
 function formatWordCommonExpansionSelectorReport(report = {}) {
     const lines = [
         "Japanese Kanji Builder Governed Common-Word Silver Selector",
@@ -730,6 +752,16 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
 
     for (const levelReport of report.levelReports || []) {
         lines.push(`| ${levelReport.levelLabel} | ${formatSourceUniverse(levelReport.sourceUniverse)} |`);
+    }
+
+    lines.push(
+        "",
+        "Level source adequacy:",
+        "| Level | Source adequacy |",
+        "| --- | --- |"
+    );
+    for (const levelReport of report.levelReports || []) {
+        lines.push(`| ${levelReport.levelLabel} | ${formatSourceAdequacy(levelReport.sourceAdequacy)} |`);
     }
 
     lines.push(

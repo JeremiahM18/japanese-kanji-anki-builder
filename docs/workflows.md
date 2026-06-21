@@ -359,6 +359,25 @@ Standalone one-kanji written forms are queue-eligible when the level gate is act
 
 The selector reports `sourceUniverse.configuredSourceOnly: true` for every level. This is intentional: N5/N4 configured-source exhaustion means only that the currently pinned source list has no active current-level keep backlog, not that every common JLPT word in the world has been evaluated. A zero-row ready queue is not source adequacy. If the editorial target is broader than the pinned source row count, add approved candidate-discovery sources before claiming all common words are covered. For example, the current JLPTStudy discovery sources are 537 rows for N5 and 681 rows for N4, so they cannot settle broader common-vocabulary claims by themselves.
 
+## Govern word source adequacy
+
+```bash
+npm run data:audit:jlpt:word-sources -- --governance-strict
+npm run deck:words:source-adequacy -- --levels=5,4,3,2,1
+npm run deck:words:source-access
+npm run data:audit:jlpt:word-source-inputs -- --source=jlptstudy.net-n5 --strict
+npm run data:template:jlpt:word-source-input -- --source=textbook-word-list
+npm run data:packet:jlpt:word-source-access -- --source=textbook-word-list --surface-type=exact-textbook-index-page --title="<title>" --citation="<citation>" --evidence-ref="<page/row>"
+npm run data:merge:jlpt:word-source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>
+npm run data:import:jlpt:word-source-input -- --source=<source-id>
+```
+
+Word source adequacy is a separate source-governance lane, parallel to kanji source evidence. It tracks exact `written|reading` identities, source tiers, source lineages, independent source families, reviewed source-access surfaces, and source-origin posture. It does not add Silver rows, edit starter data, move denominators, certify review tiers, or touch kanji lanes.
+
+The current word source posture is expected to be source-depth incomplete. Existing JLPTStudy and Tanos source files are configured and pinned discovery inputs, not broad common-vocabulary universe proof. A level may say "configured source evaluated" when its pinned source list has been exhausted; it may not say "all common JLPT words covered" until the word source-evidence audit reaches `level_universe_standard` for that level.
+
+Reviewed word source-input rows require exact source-level evidence: an exact word-list table, exact dictionary entry, official correction row, exact textbook/index assignment page, target-entry page, or permitted machine-readable source. Marketing pages, grammar/can-do-only surfaces, example-only pages, copied unlicensed raw lists, and vague common-vocabulary summaries must be rejected or marked `source_access_gap` / `license_blocked`.
+
 ## Check word expansion signals
 
 ```bash

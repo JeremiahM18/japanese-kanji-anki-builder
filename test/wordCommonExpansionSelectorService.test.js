@@ -232,6 +232,77 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.match(formatted, /ready_for_editorial_review/);
 });
 
+test("buildWordCommonExpansionSelectorReport uses vocabulary-level triage overrides beyond anchor moves", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "手紙\tてがみ\tletter\tN5",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "手紙\tてがみ\tletter",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "手紙\tてがみ\tletter\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                手: 4,
+                紙: 4,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "手紙|てがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N4",
+                        priority: "normal",
+                        reason: "Anchor-mode routing belongs in N4.",
+                        placementDecisions: {
+                            "vocabulary-level": {
+                                decision: "keep_candidate",
+                                priority: "high",
+                                reason: "Source-listed N5 vocabulary is ready for N5 editorial review.",
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    });
+
+    const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
+    assert.equal(report.placementMode, "vocabulary-level");
+    assert.equal(row.selectorStatus, "ready_for_editorial_review");
+    assert.equal(row.sourceDisposition, "review_candidate");
+    assert.equal(row.triageDecision.decision, "keep_candidate");
+    assert.equal(row.sourceTriageDecision.decision, "move_candidate");
+});
+
 test("classifyCommonExpansionSelectorRow treats triage as pre-trust routing", () => {
     assert.equal(classifyCommonExpansionSelectorRow({
         expansionRow: {

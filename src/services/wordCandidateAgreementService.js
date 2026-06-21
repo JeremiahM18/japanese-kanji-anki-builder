@@ -10,6 +10,7 @@ const {
     normalizeCandidateSourceRows,
     normalizeTriageDecision,
     parseCandidateSourceText,
+    resolveTriageDecisionForPlacementMode,
 } = require("./wordInventoryExpansionCandidateService");
 
 function sourceAllows(source = {}, use) {
@@ -50,6 +51,14 @@ function normalizeLevels(levels = [5, 4]) {
         throw new Error("At least one word candidate agreement level is required.");
     }
     return normalized;
+}
+
+function normalizePlacementMode(value = "kanji-anchor") {
+    const mode = String(value || "kanji-anchor").trim();
+    if (mode === "kanji-anchor" || mode === "vocabulary-level") {
+        return mode;
+    }
+    throw new Error("Word candidate agreement placementMode must be one of: kanji-anchor, vocabulary-level.");
 }
 
 function createSameWrittenContractIndex(jlptWordLevelContract = {}) {
@@ -112,13 +121,16 @@ function getSameWrittenConflicts(row, sameWrittenIndex) {
         ));
 }
 
-function rowMatchesLevelPolicy({ row, source, targetLevel, scope }) {
+function rowMatchesLevelPolicy({ row, source, targetLevel, scope, placementMode = "kanji-anchor" }) {
     const policy = source.candidatePolicy || {};
     if (Array.isArray(policy.levels) && policy.levels.length > 0 && !policy.levels.includes(targetLevel)) {
         return false;
     }
     if (policy.requireSourceLevel && row.sourceLevel !== targetLevel) {
         return false;
+    }
+    if (placementMode === "vocabulary-level") {
+        return true;
     }
     if (scope.constituentKanji.length === 0 || scope.targetKanji.length === 0) {
         return false;
@@ -268,8 +280,10 @@ function addSourceRowsToLevels({
     starterEntries,
     wordPitchAccentData,
     triageDecisionsByLevelSource = {},
+    placementMode = "kanji-anchor",
 }) {
     const sameWrittenIndex = createSameWrittenContractIndex(jlptWordLevelContract);
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const rowsByLevel = new Map(levels.map((level) => [level, new Map()]));
     const normalizedRowsBySourceId = {};
 
@@ -294,7 +308,7 @@ function addSourceRowsToLevels({
         for (const row of normalizedRows) {
             for (const targetLevel of levels) {
                 const scope = classifyKanjiScope(row, { targetLevel, jlptLevelContract });
-                if (!rowMatchesLevelPolicy({ row, source, targetLevel, scope })) {
+                if (!rowMatchesLevelPolicy({ row, source, targetLevel, scope, placementMode: normalizedPlacementMode })) {
                     continue;
                 }
 
@@ -331,6 +345,7 @@ function addSourceRowsToLevels({
                 addSourceAppearance(candidate, sourceId, source, row, {
                     targetLevel,
                     triageDecisionsByLevelSource,
+                    placementMode: normalizedPlacementMode,
                 });
             }
         }
@@ -348,6 +363,7 @@ function addSourceRowsToLevels({
                     addSourceAppearance(candidate, sourceId, source, row, {
                         targetLevel,
                         triageDecisionsByLevelSource,
+                        placementMode: normalizedPlacementMode,
                     });
                 }
             }
@@ -374,17 +390,25 @@ function addSourceRowsToLevels({
     ]));
 }
 
-function getTriageDecision({ triageDecisionsByLevelSource = {}, targetLevel, sourceId, key }) {
+function getTriageDecision({
+    triageDecisionsByLevelSource = {},
+    targetLevel,
+    sourceId,
+    key,
+    placementMode = "kanji-anchor",
+}) {
     const decision = triageDecisionsByLevelSource?.[`N${targetLevel}`]?.[sourceId]?.[key] || null;
-    return normalizeTriageDecision(decision, {
+    const normalizedDecision = normalizeTriageDecision(decision, {
         key: `N${targetLevel}/${sourceId}/${key}`,
         currentLevel: targetLevel,
     });
+    return resolveTriageDecisionForPlacementMode(normalizedDecision, { placementMode });
 }
 
 function addSourceAppearance(candidate, sourceId, source, row, {
     targetLevel,
     triageDecisionsByLevelSource = {},
+    placementMode = "kanji-anchor",
 } = {}) {
     if (!candidate.sourceAppearances.some((appearance) => appearance.sourceId === sourceId)) {
         candidate.sourceAppearances.push({
@@ -401,6 +425,7 @@ function addSourceAppearance(candidate, sourceId, source, row, {
         targetLevel,
         sourceId,
         key: row.key,
+        placementMode,
     });
     if (triageDecision && !candidate.triageDecisions.some((decision) => (
         decision.sourceId === sourceId && decision.decision === triageDecision.decision
@@ -539,9 +564,11 @@ function buildWordCandidateAgreementReport({
     wordPitchAccentData = {},
     triageDecisionsByLevelSource = {},
     limit = 40,
+    placementMode = "kanji-anchor",
     readFile,
 } = {}) {
     const normalizedLevels = normalizeLevels(levels);
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const sourceReport = buildSourceSummaries({ manifest, readFile });
     const rowsByLevel = addSourceRowsToLevels({
         levels: normalizedLevels,
@@ -552,6 +579,7 @@ function buildWordCandidateAgreementReport({
         starterEntries,
         wordPitchAccentData,
         triageDecisionsByLevelSource,
+        placementMode: normalizedPlacementMode,
     });
     const placementAudit = auditWordLevelAnchors({
         wordLevels: jlptWordLevelContract.wordLevels,
@@ -562,6 +590,7 @@ function buildWordCandidateAgreementReport({
     return {
         manifestVersion: manifest.version,
         manifestCheckedAt: manifest.checkedAt,
+        placementMode: normalizedPlacementMode,
         levels: normalizedLevels,
         placementAudit: {
             checked: placementAudit.checked,
@@ -599,6 +628,7 @@ function formatWordCandidateAgreementReport(report = {}) {
         "",
         "Read-only report: this does not promote words, change contracts, generate decks, or approve cards.",
         "Candidate approval still requires dictionary/source verification, learner-fit review, examples, labels, audio, pitch, golden, platinum, and placement gates.",
+        `Placement mode: ${report.placementMode || "kanji-anchor"}`,
         "",
         `Manifest: version ${report.manifestVersion}; checked ${report.manifestCheckedAt}`,
         `Placement gate: ${report.placementAudit.violationCount}/${report.placementAudit.checked} word-level placement violations`,
@@ -690,6 +720,7 @@ module.exports = {
     buildSourceFileIntegrity,
     buildWordCandidateAgreementReport,
     formatWordCandidateAgreementReport,
+    normalizePlacementMode,
     normalizeLevels,
     sourceAllows,
     validateSourceIntegrity,

@@ -2024,7 +2024,7 @@ test("buildWordTsvForJlptLevel supports higher-level constituent kanji when supp
     assert.match(result.tsv, /JLPT N3 kanji/u);
 });
 
-test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower-level word decks while keeping multi-kanji support words", async () => {
+test("buildWordTsvForJlptLevel keeps governed standalone vocabulary rows and contract levels", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [],
         wordStudyData: {
@@ -2061,6 +2061,29 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
                     english: "Soil got on my hand.",
                 },
             },
+            "塩|しお": {
+                written: "塩",
+                reading: "しお",
+                meaning: "salt",
+                jlpt: 5,
+                tags: ["common", "n5"],
+                coverage: {
+                    role: "core",
+                    focusKanji: ["塩"],
+                    coversReadings: {
+                        塩: "しお",
+                    },
+                },
+                levelPlacement: {
+                    mode: "vocabulary-level",
+                    reason: "Source-listed N5 vocabulary with 塩 labeled as N2 support kanji.",
+                },
+                exampleSentence: {
+                    japanese: "料理に塩を少し入れます。",
+                    reading: "りょうりにしおをすこしいれます。",
+                    english: "I put a little salt in the food.",
+                },
+            },
         },
     });
 
@@ -2070,6 +2093,7 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
             子: { jlpt: 5, meanings: ["child"], on_readings: ["シ"], kun_readings: ["こ"] },
             猫: { jlpt: 4, meanings: ["cat"], on_readings: ["ビョウ"], kun_readings: ["ねこ"] },
             兄: { jlpt: 4, meanings: ["older brother"], on_readings: ["キョウ"], kun_readings: ["あに"] },
+            塩: { jlpt: 2, meanings: ["salt"], on_readings: ["エン"], kun_readings: ["しお"] },
         },
         jlptWordLevelContract: {
             wordLevels: {
@@ -2088,6 +2112,11 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
                     reading: "つち",
                     jlpt: 4,
                 },
+                "塩|しお": {
+                    written: "塩",
+                    reading: "しお",
+                    jlpt: 5,
+                },
             },
         },
         kanjiApiClient: {
@@ -2097,6 +2126,9 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
                 }
                 if (kanji === "猫") {
                     return { meanings: ["cat"], on_readings: ["ビョウ"], kun_readings: ["ねこ"] };
+                }
+                if (kanji === "塩") {
+                    return { meanings: ["salt"], on_readings: ["エン"], kun_readings: ["しお"] };
                 }
                 return { meanings: ["child"], on_readings: ["シ"], kun_readings: ["こ"] };
             },
@@ -2143,7 +2175,9 @@ test("buildWordTsvForJlptLevel excludes standalone higher-level kanji from lower
 
     assert.doesNotMatch(result.tsv, /^兄\tあに\tolder brother\t/m);
     assert.match(result.tsv, /^子猫\tこねこ\t[^\t]*\t\t\tkitten\tJLPT N5\t/m);
+    assert.match(result.tsv, /^塩\tしお\t[^\t]*\t\t\tsalt\tJLPT N5\t/m);
     assert.match(result.tsv, /JLPT N4 kanji/u);
+    assert.match(result.tsv, /JLPT N2 kanji/u);
     assert.match(n4Result.tsv, /^土\tつち\t[^\t]*\t\t\tsoil \/ earth\tJLPT N4\t/m);
     assert.match(n4Result.tsv, /JLPT N5 kanji/u);
 });

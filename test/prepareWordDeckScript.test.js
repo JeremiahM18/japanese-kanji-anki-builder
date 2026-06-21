@@ -160,7 +160,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /covered by earlier decks: 0/);
     assert.match(text, /covered by this deck level: 181/);
     assert.match(text, /distinct missing targets: 147, variant-style gaps: 16/);
-    assert.match(text, /deck policy: 0 word level placement violations, 0 standalone wrong-level cards, 0 missing labels/);
+    assert.match(text, /deck policy: 0 word level placement violations, standalone-kanji block disabled, 0 missing labels/);
     assert.match(text, /sentence orthography review: 2 suspicious kana-only examples/);
     assert.match(text, /example reading alignment: 0 mismatches/);
     assert.match(text, /reading breakdown review: 0 blanks, 0 non-ruby kanji breakdowns/);

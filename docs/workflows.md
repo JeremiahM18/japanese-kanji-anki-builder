@@ -335,9 +335,17 @@ When `--source` is omitted, the report resolves the single active `candidate-dis
 
 ```bash
 npm run deck:words:common-expansion -- --levels=5,4,3,2,1
+npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1
+npm run deck:words:common-expansion -- --levels=5 --placement-mode=vocabulary-level --limit=40
 ```
 
 The common-word selector is a read-only Silver planning report. It starts from each level's active `candidate-discovery` source, then adds JMdict dictionary verification and JMdict priority/commonness support from the governed word source manifest.
+
+Use the placement mode deliberately:
+
+- `kanji-anchor` is the default view. It preserves the older reading-coverage posture: a current-level word candidate must contain current-level kanji, and source rows with only harder kanji remain cross-level routing rows.
+- `vocabulary-level` is the expansion view for common N-level vocabulary. It keeps exact source-listed vocabulary eligible for that source JLPT level even when the written form contains only harder support kanji, provided the row is still dictionary verified, commonness supported, triaged, and later recorded with `levelPlacement.mode: "vocabulary-level"` plus a reason.
+- Legacy top-level `move_candidate` decisions in [../templates/word_inventory_expansion_triage.json](../templates/word_inventory_expansion_triage.json) remain kanji-anchor evidence. Add `placementDecisions["vocabulary-level"]` when an anchor-moved source row is intentionally accepted for N-level vocabulary review.
 
 Selector rows are still pre-trust. A row marked `ready_for_editorial_review` has source identity, dictionary support, commonness support, and a keep-style triage decision; it still needs explicit card approval, starter/contract edits in a later scoped expansion, examples, reading breakdown, kanji labels, audio, pitch, Gold, Sapphire, Platinum, and readiness gates before it becomes a shipped word card.
 

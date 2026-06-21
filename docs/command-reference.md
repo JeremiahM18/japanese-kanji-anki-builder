@@ -164,7 +164,8 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:expansion-candidates:n2 -- --limit=50` | Diff the manifest-pinned Tanos N2 candidate-discovery source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=1` | Normalize ignored Tanos N1 Mnemosyne English and hiragana exports into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n1 -- --limit=50` | Diff the manifest-pinned Tanos N1 candidate-discovery source into read-only word expansion candidates |
-| `npm run deck:words:common-expansion -- --levels=5,4,3,2,1` | Build the read-only governed common-word Silver selector from active candidate-discovery sources plus JMdict dictionary/commonness support; selector rows are pre-trust and do not add Silver rows or change denominators |
+| `npm run deck:words:common-expansion -- --levels=5,4,3,2,1` | Build the read-only governed common-word Silver selector from active candidate-discovery sources plus JMdict dictionary/commonness support in the default kanji-anchor placement view; selector rows are pre-trust and do not add Silver rows or change denominators |
+| `npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1` | Run the same selector in vocabulary-level placement mode so every N-level can review common source-listed vocabulary beyond current-level kanji-reading coverage; legacy `move_candidate` triage remains anchor-mode evidence unless a vocabulary-level override is recorded |
 | `npm run deck:words:expansion-support -- --levels=5,4,3,2,1` | Run broad model-backed word NLP review amplification for selected word levels and finish with artifact validation plus the NLP governance gate; full-scope unchanged word embeddings, example reranking, and sense-fit artifacts are reused by hash/parameter guard; this cannot certify cards or write tracked templates |
 | `npm run deck:words:expansion-support:n5` | Run governed NLP expansion support for N5 word expansion/review |
 | `npm run deck:words:expansion-support:n4` | Run governed NLP expansion support for N4 word expansion/review |
@@ -178,7 +179,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:kanji:nlp-signals:n2` | Run governed kanji-card NLP signal support for N2 kanji |
 | `npm run deck:kanji:nlp-signals:n1` | Run governed kanji-card NLP signal support for N1 kanji |
 | `npm run data:normalize:words:jmdict` | Normalize ignored local JMdict XML into the pinned word dictionary/commonness TSV shape |
-| `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals |
+| `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals; add `--placement-mode=vocabulary-level` when reviewing source-level vocabulary beyond kanji-anchor coverage |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and configured-source enhancement exhaustion without claiming global common-vocabulary coverage or release readiness |
 | `npm run nlp:models:audit` | Validate the assistive-only NLP model registry before model-backed suggestion or draft lanes are trusted |
 | `npm run nlp:doctor` | Preflight NLP runtimes, package-lock integrity, installed package metadata, tokenizer dictionaries, pinned model files or directory bundles, and assistive-only release boundaries |

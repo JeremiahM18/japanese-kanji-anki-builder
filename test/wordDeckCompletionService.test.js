@@ -689,7 +689,7 @@ test("buildWordDeckReadiness stays incomplete when pitch accent source verificat
     assert.equal(report.hasPitchAccentViolations, true);
 });
 
-test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing constituent badges", () => {
+test("buildWordDeckPolicyAudit reports placement and badge gaps without standalone-kanji hard blocks", () => {
     const audit = buildWordDeckPolicyAudit({
         level: 5,
         wordRows: [
@@ -713,12 +713,18 @@ test("buildWordDeckPolicyAudit rejects standalone higher-level cards and missing
 
     assert.equal(audit.valid, false);
     assert.equal(audit.sameLevelAnchorViolationCount, 1);
-    assert.equal(audit.standaloneViolationCount, 1);
-    assert.equal(audit.badgeViolationCount, 1);
+    assert.equal(audit.standaloneViolationCount, 0);
+    assert.equal(audit.badgeViolationCount, 2);
     assert.equal(audit.sameLevelAnchorViolations[0].word, "兄");
-    assert.equal(audit.standaloneViolations[0].word, "兄");
-    assert.equal(audit.badgeViolations[0].word, "子猫");
-    assert.equal(audit.badgeViolations[0].expectedLabel, "JLPT N4 kanji");
+    assert.deepEqual(audit.standaloneViolations, []);
+    assert.deepEqual(
+        audit.badgeViolations.map((violation) => violation.word).sort(),
+        ["兄", "子猫"]
+    );
+    assert.equal(
+        audit.badgeViolations.find((violation) => violation.word === "子猫").expectedLabel,
+        "JLPT N4 kanji"
+    );
     assert.equal(audit.focusViolationCount, 0);
 });
 
@@ -773,6 +779,37 @@ test("buildWordDeckPolicyAudit rejects words placed earlier than their kanji anc
     assert.equal(audit.badgeViolationCount, 0);
     assert.equal(audit.sameLevelAnchorViolations[0].placementStatus, "too_easy_for_kanji");
     assert.deepEqual(audit.sameLevelAnchorViolations[0].kanjiLevels, [{ kanji: "安", level: 4 }]);
+});
+
+test("buildWordDeckPolicyAudit accepts vocabulary-level support-kanji placement with tracked reason", () => {
+    const audit = buildWordDeckPolicyAudit({
+        level: 5,
+        wordRows: [
+            {
+                Word: "塩",
+                Reading: "しお",
+                KanjiBreakdown: "<div class=\"kanji-breakdown-item\">塩</div><div class=\"kanji-level-badge\">JLPT N2 kanji</div>",
+            },
+        ],
+        starterEntries: {
+            "塩|しお": {
+                levelPlacement: {
+                    mode: "vocabulary-level",
+                    reason: "Source-listed N5 vocabulary with 塩 labeled as N2 support kanji.",
+                },
+            },
+        },
+        jlptLevelContract: {
+            kanjiLevels: {
+                塩: 2,
+            },
+        },
+    });
+
+    assert.equal(audit.valid, true);
+    assert.equal(audit.sameLevelAnchorViolationCount, 0);
+    assert.equal(audit.standaloneViolationCount, 0);
+    assert.equal(audit.badgeViolationCount, 0);
 });
 
 test("buildWordDeckPolicyAudit requires learner-fit reasons for later placement", () => {
@@ -1019,7 +1056,7 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     assert.match(text, /Coverage counted from decks: N5 \+ N4/);
     assert.match(text, /Remaining open items are deferred variants only: yes/);
     assert.match(text, /Built starter-eligible rows: 1 \(50%\)/);
-    assert.match(text, /Standalone wrong-level cards: 0/);
+    assert.match(text, /Standalone-kanji hard block: disabled/);
     assert.match(text, /Missing cross-level\/outside-level badges: 0/);
     assert.match(text, /Suspicious kana-only examples: 1/);
     assert.match(text, /Rows missing reading breakdowns: 1/);

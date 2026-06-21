@@ -20,6 +20,7 @@ const wordStudyCoverageSchema = z.object({
 }).strict();
 
 const wordLevelPlacementSchema = z.object({
+    mode: z.enum(["learner-fit", "vocabulary-level"]).optional(),
     reason: z.string().min(1),
 }).strict();
 
@@ -127,6 +128,7 @@ function normalizeWordLevelPlacement(levelPlacement) {
     }
 
     return wordLevelPlacementSchema.parse({
+        mode: cleanString(levelPlacement.mode),
         reason: cleanString(levelPlacement.reason),
     });
 }

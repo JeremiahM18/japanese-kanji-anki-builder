@@ -637,7 +637,6 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract, starterE
         };
     }
 
-    const standaloneViolations = [];
     const badgeViolations = [];
     const focusViolations = [];
     const sameLevelAnchorViolations = [];
@@ -646,14 +645,13 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract, starterE
         const written = String(row?.Word || row?.word || "").trim();
         const reading = String(row?.Reading || row?.reading || "").trim();
         const breakdown = String(row?.KanjiBreakdown || row?.kanjiBreakdown || "");
-        const writtenChars = Array.from(written);
         const kanjiList = extractConstituentKanji(written);
         const focusKanji = String(row?.FocusKanji || row?.focusKanji || "")
             .split("、")
             .map((kanji) => kanji.trim())
             .filter(Boolean);
         const key = buildWordStudyEntryKey({ written, reading });
-        const learnerFitReason = starterEntries?.[key]?.levelPlacement?.reason || "";
+        const levelPlacement = starterEntries?.[key]?.levelPlacement || {};
 
         if (kanjiList.length === 0) {
             continue;
@@ -662,7 +660,8 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract, starterE
         const anchorResult = buildWordLevelAnchorResult({
             written,
             deckLevel,
-            learnerFitReason,
+            placementMode: levelPlacement.mode,
+            learnerFitReason: levelPlacement.reason,
             kanjiLevelData: jlptLevelContract,
         });
         if (!anchorResult.valid) {
@@ -673,6 +672,7 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract, starterE
                 anchorLevel: anchorResult.anchorLevel,
                 placementStatus: anchorResult.placementStatus,
                 kanjiLevels: anchorResult.kanjiLevels,
+                placementMode: anchorResult.placementMode,
                 learnerFitReason: anchorResult.learnerFitReason,
             });
         }
@@ -685,20 +685,6 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract, starterE
                     focusKanji: focusKanji.join("、"),
                 });
             }
-        }
-
-        if (writtenChars.length === 1 && kanjiList.length === 1) {
-            const kanji = kanjiList[0];
-            const actualLevel = jlptLevelContract?.kanjiLevels?.[kanji] ?? null;
-
-            if (!Number.isInteger(actualLevel) || actualLevel !== deckLevel) {
-                standaloneViolations.push({
-                    word: written,
-                    kanji,
-                    actualLevel,
-                });
-            }
-            continue;
         }
 
         for (const kanji of kanjiList) {
@@ -724,17 +710,16 @@ function buildWordDeckPolicyAudit({ level, wordRows, jlptLevelContract, starterE
 
     return {
         valid: sameLevelAnchorViolations.length === 0
-            && standaloneViolations.length === 0
             && badgeViolations.length === 0
             && focusViolations.length === 0,
         sameLevelAnchorViolationCount: sameLevelAnchorViolations.length,
         levelPlacementViolationCount: sameLevelAnchorViolations.length,
-        standaloneViolationCount: standaloneViolations.length,
+        standaloneViolationCount: 0,
         badgeViolationCount: badgeViolations.length,
         focusViolationCount: focusViolations.length,
         sameLevelAnchorViolations,
         levelPlacementViolations: sameLevelAnchorViolations,
-        standaloneViolations,
+        standaloneViolations: [],
         badgeViolations,
         focusViolations,
     };
@@ -955,7 +940,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         "",
         "Deck policy audit:",
         `- Word level placement violations: ${report.policyAudit.levelPlacementViolationCount || 0}`,
-        `- Standalone wrong-level cards: ${report.policyAudit.standaloneViolationCount}`,
+        "- Standalone-kanji hard block: disabled",
         `- Missing cross-level/outside-level badges: ${report.policyAudit.badgeViolationCount}`,
         `- Focus kanji outside written word: ${report.policyAudit.focusViolationCount || 0}`,
         "",

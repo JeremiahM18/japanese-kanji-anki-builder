@@ -5,6 +5,7 @@ const {
     buildWordCommonExpansionSelectorReport,
     formatWordCommonExpansionSelectorReport,
 } = require("../src/services/wordCommonExpansionSelectorService");
+const { normalizePlacementMode } = require("../src/services/wordCandidateAgreementService");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
@@ -25,6 +26,7 @@ function parseArgs(argv) {
         levels: [5, 4, 3, 2, 1],
         limit: 40,
         manifest: DEFAULT_WORD_SOURCE_MANIFEST,
+        placementMode: process.env.JKB_WORD_PLACEMENT_MODE || "kanji-anchor",
         strict: false,
         triage: "templates/word_inventory_expansion_triage.json",
         unknownArgs: [],
@@ -43,6 +45,10 @@ function parseArgs(argv) {
             options.limit = parseNumericOption(arg, "limit");
         } else if (arg.startsWith("--manifest=")) {
             options.manifest = String(arg.slice("--manifest=".length) || "").trim();
+        } else if (arg.startsWith("--placement-mode=")) {
+            options.placementMode = String(arg.slice("--placement-mode=".length) || "").trim();
+        } else if (arg.startsWith("--placement=")) {
+            options.placementMode = String(arg.slice("--placement=".length) || "").trim();
         } else if (arg.startsWith("--triage=")) {
             options.triage = String(arg.slice("--triage=".length) || "").trim();
         } else {
@@ -79,6 +85,7 @@ async function main() {
         levels: options.levels,
         manifest,
         limit,
+        placementMode: normalizePlacementMode(options.placementMode),
         triageDecisionsByLevelSource: loadTriageDecisionsByLevelSource(options.triage),
         ...loadSharedInputs(),
     });

@@ -21,10 +21,22 @@ test("parseArgs supports word candidate agreement report options", () => {
         levels: [5, 4],
         limit: 25,
         manifest: "templates/word-source.json",
+        placementMode: "kanji-anchor",
         strict: true,
         triage: "templates/triage.json",
         unknownArgs: [],
     });
+});
+
+test("parseArgs supports vocabulary-level candidate agreement mode", () => {
+    assert.equal(
+        parseArgs(["--placement-mode=vocabulary-level"]).placementMode,
+        "vocabulary-level"
+    );
+    assert.equal(
+        parseArgs(["--placement=vocabulary-level"]).placementMode,
+        "vocabulary-level"
+    );
 });
 
 test("resolveManifestPath defaults to tracked word source manifest", () => {

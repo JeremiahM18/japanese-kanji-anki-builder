@@ -331,13 +331,25 @@ Tracked triage decisions live in [../templates/word_inventory_expansion_triage.j
 
 When `--source` is omitted, the report resolves the single active `candidate-discovery` source for the requested level from [../templates/word_source_manifest.json](../templates/word_source_manifest.json), applies its source label, format, candidate policy, and local integrity pins, then fails instead of trusting a mismatched ignored TSV.
 
+## Select governed common-word expansion candidates
+
+```bash
+npm run deck:words:common-expansion -- --levels=5,4,3,2,1
+```
+
+The common-word selector is a read-only Silver planning report. It starts from each level's active `candidate-discovery` source, then adds JMdict dictionary verification and JMdict priority/commonness support from the governed word source manifest.
+
+Selector rows are still pre-trust. A row marked `ready_for_editorial_review` has source identity, dictionary support, commonness support, and a keep-style triage decision; it still needs explicit card approval, starter/contract edits in a later scoped expansion, examples, reading breakdown, kanji labels, audio, pitch, Gold, Sapphire, Platinum, and readiness gates before it becomes a shipped word card.
+
+The selector reports `sourceUniverse.configuredSourceOnly: true` for every level. This is intentional: N5/N4 configured-source exhaustion means only that the currently pinned source list has no active current-level keep backlog, not that every common JLPT word in the world has been evaluated. For example, the current JLPTStudy discovery sources are 537 rows for N5 and 681 rows for N4, so they cannot settle broader common-vocabulary claims by themselves.
+
 ## Check word expansion signals
 
 ```bash
 npm run deck:words:expansion-signals -- --levels=5,4
 ```
 
-The expansion signal command answers the narrow "fully expanded under current restraints?" question for each selected word level.
+The expansion signal command answers the narrow "fully expanded under current restraints?" question for each selected word level. It must not be read as global common-vocabulary exhaustion.
 
 It has three separate signals:
 

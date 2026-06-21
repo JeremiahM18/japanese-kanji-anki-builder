@@ -102,7 +102,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; use `deck:sapphire:n3` for structure-only Sapphire |
 | `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; use `deck:sapphire:n2` for structure-only Sapphire |
 | `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; fails closed while generated rows lack matching current-standard Platinum entries; use `deck:sapphire:n1` for structure-only Sapphire |
-| `npm run deck:words:ready` | Build and package word TSV artifacts |
+| `npm run deck:words:ready` | Build and package requested word TSV artifacts; reading-readiness for a selected harder/lower-numbered level uses its cumulative easier-level support stack, such as N3 counting N5 + N4 + N3 |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:gold:scaffold -- --level=3 --limit=8` | Draft fail-closed Gold word expectation skeletons from live generated rows missing Gold review; writes no tracked templates and uses TODO sentinels for human-only review fields |
 | `npm run deck:words:sapphire:batch -- --level=5 --limit=8 --queue=missing-current-standard` | Build a read-only word Sapphire structural review packet for generated rows missing current-standard Sapphire coverage |
@@ -165,7 +165,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run data:normalize:tanos-jlpt-words -- --level=1` | Normalize ignored Tanos N1 Mnemosyne English and hiragana exports into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n1 -- --limit=50` | Diff the manifest-pinned Tanos N1 candidate-discovery source into read-only word expansion candidates |
 | `npm run deck:words:common-expansion -- --levels=5,4,3,2,1` | Build the read-only governed common-word Silver selector from active candidate-discovery sources plus JMdict dictionary/commonness support in the default kanji-anchor placement view; selector rows are pre-trust and do not add Silver rows or change denominators |
-| `npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1` | Run the same selector in vocabulary-level placement mode for post-reading-expansion common source-listed vocabulary; the queue is inactive until the level's full first-stage word expansion signal is complete, and top-level `move_candidate` stays authoritative in every placement mode |
+| `npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1` | Run the same selector in vocabulary-level placement mode for post-reading-expansion common source-listed vocabulary; the queue is inactive until the level's reading-gap expansion signal is exhausted, and top-level `move_candidate` stays authoritative in every placement mode |
 | `npm run deck:words:expansion-support -- --levels=5,4,3,2,1` | Run broad model-backed word NLP review amplification for selected word levels and finish with artifact validation plus the NLP governance gate; full-scope unchanged word embeddings, example reranking, and sense-fit artifacts are reused by hash/parameter guard; this cannot certify cards or write tracked templates |
 | `npm run deck:words:expansion-support:n5` | Run governed NLP expansion support for N5 word expansion/review |
 | `npm run deck:words:expansion-support:n4` | Run governed NLP expansion support for N4 word expansion/review |

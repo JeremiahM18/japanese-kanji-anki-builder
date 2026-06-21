@@ -22,6 +22,13 @@ function buildCoverageLevels(level, { availableLevels = null } = {}) {
   return [5, 4, 3, 2, 1].filter((candidateLevel) => candidateLevel >= targetLevel);
 }
 
+function buildRequiredCoverageLevels(levels = []) {
+  return normalizeCoverageLevels(
+    (Array.isArray(levels) ? levels : [])
+      .flatMap((level) => buildCoverageLevels(level))
+  );
+}
+
 function buildCoverageLabel(levels = []) {
   return levels.map((level) => `N${level}`).join(' + ');
 }
@@ -63,6 +70,7 @@ function buildCoverageWordRows({ level, wordTsvByLevel = {}, availableLevels = n
 module.exports = {
   buildCoverageLabel,
   buildCoverageLevels,
+  buildRequiredCoverageLevels,
   buildCoverageWordRows,
   normalizeCoverageLevels,
 };

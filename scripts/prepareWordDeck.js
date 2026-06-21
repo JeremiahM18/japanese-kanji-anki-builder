@@ -14,7 +14,11 @@ const { loadAudioSourcePolicy } = require("../src/datasets/audioSourcePolicy");
 const { buildWordCoverageContractSummary } = require("../src/datasets/wordStudyData");
 const { buildStarterWordGovernanceSummary } = require("../src/datasets/jlptWordLevelContract");
 const { buildWordDeckCompletionReport, formatCardBackFieldCoverage } = require("../src/services/wordDeckCompletionService");
-const { buildCoverageLevels } = require("../src/services/wordDeckCoverageScopeService");
+const {
+    buildCoverageLabel,
+    buildCoverageLevels,
+    buildRequiredCoverageLevels,
+} = require("../src/services/wordDeckCoverageScopeService");
 const { buildWordAudioReviewReport } = require("../src/services/wordAudioReviewService");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
 const { buildDeckPackage } = require("../src/services/deckPackageService");
@@ -186,6 +190,7 @@ function formatWordDeckReadyReport(summary, doctorReport) {
         ...(summary.package.ankiPackage?.skipped ? [`Anki package status: skipped (${summary.package.ankiPackage.skipReason})`] : []),
         `Levels: ${summary.levels.map((level) => `N${level}`).join(", ")}`,
         `Package staging: rebuilt for --levels=${levelArgument}`,
+        `Reading coverage support: ${buildCoverageLabel(summary.coverageSupportLevels || summary.levels)}`,
         `Word mode: ${summary.settings.includeInferred ? "curated + inferred" : "curated only"}`,
         `Exports generated: ${summary.exports.length}`,
         `Word notes generated: ${summary.exports.reduce((total, item) => total + item.rows, 0)}`,
@@ -295,6 +300,8 @@ async function main() {
     const { strokeOrderService, audioService } = createMediaServices(config);
     const wordExportService = createWordExportService({ sentenceCorpus, curatedStudyData, wordStudyData, wordPitchAccentData });
     const levels = options.levels || [5];
+    const selectedLevelSet = new Set(levels);
+    const coverageSupportLevels = buildRequiredCoverageLevels(levels);
     const concurrency = Number.isFinite(options.concurrency) ? options.concurrency : config.exportConcurrency;
     const selectedKanjiByLevel = buildSelectedKanjiByLevel({
         jlptOnlyJson,
@@ -302,7 +309,13 @@ async function main() {
         limit: Number.isFinite(options.limit) ? options.limit : null,
         selectKanjiForSyncFn: selectKanjiForSync,
     });
-    const syncKanjiList = [...new Set(Object.values(selectedKanjiByLevel).flatMap((list) => list))];
+    const coverageKanjiByLevel = buildSelectedKanjiByLevel({
+        jlptOnlyJson,
+        levels: coverageSupportLevels,
+        limit: Number.isFinite(options.limit) ? options.limit : null,
+        selectKanjiForSyncFn: selectKanjiForSync,
+    });
+    const syncKanjiList = [...new Set(Object.values(coverageKanjiByLevel).flatMap((list) => list))];
 
     await syncMediaForKanjiList({
         kanjiList: syncKanjiList,
@@ -319,7 +332,7 @@ async function main() {
     const readingGapTriageByLevel = {};
     const wordAudioReviewByLevel = {};
     const pitchAccentReviewByLevel = {};
-    for (const level of levels) {
+    for (const level of coverageSupportLevels) {
         const result = await wordExportService.buildWordTsvForJlptLevel({
             levelNumber: level,
             jlptOnlyJson,
@@ -337,6 +350,10 @@ async function main() {
         const filePath = path.join(buildPaths.exportsDir, `jlpt-n${level}-words.tsv`);
         writeText(filePath, `${result.tsv}\n`);
         currentWordTsvByLevel[level] = result.tsv;
+
+        if (!selectedLevelSet.has(level)) {
+            continue;
+        }
 
         exports.push({
             level,
@@ -364,9 +381,7 @@ async function main() {
                     level,
                     outDir: buildPaths.root,
                     currentWordTsvByLevel,
-                    coverageLevels: levels,
                 }),
-                coverageLevels: levels,
             });
             readingCoverageAuditByLevel[`N${level}`] = completionReport.readingCoverage;
             readingGapTriageByLevel[`N${level}`] = completionReport.triage;
@@ -409,6 +424,7 @@ async function main() {
         generatedAt: new Date().toISOString(),
         outDir: buildPaths.root,
         levels,
+        coverageSupportLevels,
         exports,
         governance: {
             canonicalRows: exports.reduce((total, artifact) => total + (artifact.governance?.canonicalRows || 0), 0),

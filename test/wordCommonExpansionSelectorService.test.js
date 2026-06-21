@@ -390,7 +390,7 @@ test("buildWordCommonExpansionSelectorReport marks candidates inactive until rea
     assert.equal(report.levelReports[0].summary.selectorStatusCounts.queue_inactive_reading_expansion, 1);
 });
 
-test("buildWordCommonExpansionSelectorReport keeps move_candidate visible while queue is inactive", () => {
+test("buildWordCommonExpansionSelectorReport does not block common-word queue on enhancement backlog", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
     const candidateSource = writeFixtureSource(
         dir,
@@ -479,7 +479,105 @@ test("buildWordCommonExpansionSelectorReport keeps move_candidate visible while 
     });
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
+    assert.equal(report.levelReports[0].commonWordQueue.active, true);
+    assert.equal(report.levelReports[0].commonWordQueue.readingExhausted, true);
+    assert.equal(report.levelReports[0].commonWordQueue.fullyExpanded, false);
+    assert.equal(report.levelReports[0].commonWordQueue.enhancementStatus, "needs_triage");
+    assert.equal(row.selectorStatus, "move_candidate");
+    assert.equal(report.levelReports[0].summary.selectorStatusCounts.queue_inactive_reading_expansion, 0);
+    assert.equal(report.levelReports[0].summary.selectorStatusCounts.move_candidate, 1);
+});
+
+test("buildWordCommonExpansionSelectorReport keeps move_candidate visible while reading queue is inactive", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "手紙\tてがみ\tletter\tN5",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "手紙\tてがみ\tletter",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "手紙\tてがみ\tletter\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: {
+                level: 5,
+                levelLabel: "N5",
+                fullyExpanded: false,
+                reading: {
+                    status: "active",
+                    activeItems: 1,
+                    editorialReviewItems: 1,
+                    promoteCuratedExampleItems: 0,
+                    deferVariantItems: 0,
+                    totalItems: 1,
+                    reason: "Active reading-gap triage remains.",
+                    blockers: [],
+                },
+                enhancement: {
+                    status: "exhausted",
+                    keepCandidates: 0,
+                    untriagedCandidateRows: 0,
+                    moveCandidates: 0,
+                    crossLevelRoutingRows: 0,
+                    blockers: [],
+                },
+                placement: {
+                    status: "resolved",
+                    violationCount: 0,
+                    blockers: [],
+                },
+            },
+        },
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                手: 4,
+                紙: 4,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "手紙|てがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N4",
+                        priority: "normal",
+                        reason: "Protect learner-fit routing.",
+                    },
+                },
+            },
+        },
+    });
+
+    const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
     assert.equal(report.levelReports[0].commonWordQueue.active, false);
+    assert.equal(report.levelReports[0].commonWordQueue.readingExhausted, false);
     assert.equal(row.selectorStatus, "move_candidate");
     assert.equal(report.levelReports[0].summary.selectorStatusCounts.queue_inactive_reading_expansion, 0);
     assert.equal(report.levelReports[0].summary.selectorStatusCounts.move_candidate, 1);

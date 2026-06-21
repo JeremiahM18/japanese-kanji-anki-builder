@@ -8,6 +8,8 @@ const {
 } = require("./wordCandidateAgreementService");
 const {
     buildWordInventoryExpansionCandidateReport,
+    classifyKanjiScope,
+    normalizeMoveTargetLevel,
     parseCandidateSourceText,
 } = require("./wordInventoryExpansionCandidateService");
 const { normalizePlacementMode } = require("./wordCandidateAgreementService");
@@ -30,6 +32,12 @@ const SELECTOR_STATUSES = [
 ];
 
 const STATUS_ORDER = Object.fromEntries(SELECTOR_STATUSES.map((status, index) => [status, index]));
+const HAN_CHARACTER_PATTERN = /^\p{Script=Han}$/u;
+
+function isStandaloneKanjiWritten(value = "") {
+    const chars = [...String(value || "")];
+    return chars.length === 1 && HAN_CHARACTER_PATTERN.test(chars[0]);
+}
 
 function sourceAllows(source = {}, use) {
     return Array.isArray(source.allowedUse) && source.allowedUse.includes(use);
@@ -97,9 +105,14 @@ function classifyCommonExpansionSelectorRow({ expansionRow = {}, agreementRow = 
     if (expansionRow.readingExpansionQueueActive === false) {
         return "queue_inactive_reading_expansion";
     }
+    if (expansionRow.disposition === "source_template") {
+        const written = expansionRow.written || agreementRow?.written || "";
+        return isStandaloneKanjiWritten(written)
+            ? "needs_triage"
+            : "blocked_identity";
+    }
     if (
-        expansionRow.disposition === "source_template"
-        || expansionRow.disposition === "likely_phrase"
+        expansionRow.disposition === "likely_phrase"
         || expansionRow.disposition === "source_level_mismatch"
         || expansionRow.disposition === "kanji_scope_mismatch"
         || agreementRow?.cleanIdentity === false
@@ -139,6 +152,42 @@ function summarizeSelectorRows(rows = []) {
             + selectorStatusCounts.blocked_missing_commonness,
         preTrustRows: rows.length,
     };
+}
+
+function normalizeReportLevels(levels = [5, 4, 3, 2, 1]) {
+    const normalized = [...new Set(
+        (Array.isArray(levels) ? levels : [levels])
+            .map((level) => Number(level))
+            .filter((level) => Number.isInteger(level) && level >= 1 && level <= 5)
+    )];
+    return normalized.length > 0 ? normalized : [5, 4, 3, 2, 1];
+}
+
+function collectRoutingSupportLevels({ levels = [], triageDecisionsByLevelSource = {} } = {}) {
+    const targetLevels = new Set(normalizeReportLevels(levels));
+    const supportLevels = new Set(targetLevels);
+
+    for (const [sourceLevelLabel, bySource] of Object.entries(triageDecisionsByLevelSource || {})) {
+        const sourceLevel = normalizeMoveTargetLevel(sourceLevelLabel);
+        if (!Number.isInteger(sourceLevel)) {
+            continue;
+        }
+        for (const decisions of Object.values(bySource || {})) {
+            for (const decision of Object.values(decisions || {})) {
+                if (decision?.decision !== "move_candidate") {
+                    continue;
+                }
+                const targetLevel = normalizeMoveTargetLevel(
+                    decision.targetLevel ?? decision.moveToLevel ?? decision.targetJlpt
+                );
+                if (targetLevels.has(targetLevel) && targetLevel !== sourceLevel) {
+                    supportLevels.add(sourceLevel);
+                }
+            }
+        }
+    }
+
+    return [5, 4, 3, 2, 1].filter((level) => supportLevels.has(level));
 }
 
 function buildReadingExpansionGate({ level, signal = null, enforceReadingExpansionGate = false } = {}) {
@@ -214,6 +263,163 @@ function compareSelectorRows(a, b) {
         || a.written.localeCompare(b.written, "ja")
         || a.reading.localeCompare(b.reading, "ja")
     );
+}
+
+function buildTargetLearnerFitRisks({ scope = {}, sameWrittenConflicts = [] } = {}) {
+    const risks = [];
+    if ((scope.harderKanji || []).length > 0) {
+        risks.push(`harder support kanji ${scope.harderKanji.map((entry) => `${entry.kanji}=N${entry.level}`).join(", ")}`);
+    }
+    if ((scope.outsideJlptKanji || []).length > 0) {
+        risks.push(`outside-JLPT kanji ${scope.outsideJlptKanji.map((entry) => entry.kanji).join(", ")}`);
+    }
+    if ((sameWrittenConflicts || []).length > 0) {
+        risks.push("same-written alternate already tracked");
+    }
+    return risks;
+}
+
+function classifyRoutedMoveCandidateRow({ sourceRow = {}, targetGate = {} } = {}) {
+    if (targetGate.active === false) {
+        return "queue_inactive_reading_expansion";
+    }
+    if (sourceRow.cleanIdentity === false || (sourceRow.identityRisks || []).length > 0) {
+        return "blocked_identity";
+    }
+    if (!sourceRow.dictionaryVerified) {
+        return "blocked_missing_dictionary";
+    }
+    if (!sourceRow.frequencySupported) {
+        return "blocked_missing_commonness";
+    }
+    return "needs_triage";
+}
+
+function buildRoutedMoveCandidateRow({ sourceRow = {}, targetLevel, targetGate = {}, jlptLevelContract = {} } = {}) {
+    const scope = classifyKanjiScope(sourceRow, { targetLevel, jlptLevelContract });
+    const triageDecision = sourceRow.triageDecision || null;
+    const sameWrittenConflicts = sourceRow.sameWrittenConflicts || [];
+    return {
+        ...sourceRow,
+        selectorStatus: classifyRoutedMoveCandidateRow({ sourceRow, targetGate }),
+        sourceDisposition: "routed_move_candidate",
+        sourceReason: `source-level move_candidate routed this row to N${targetLevel}; physical target-level starter/contract placement is still missing`,
+        targetLevel,
+        routedFromLevel: sourceRow.targetLevel || sourceRow.sourceLevel || null,
+        routedFromSourceLevel: sourceRow.sourceLevel || null,
+        routedFromSourceIds: sourceRow.sourceIds || [],
+        targetKanji: scope.targetKanji.map((entry) => entry.kanji),
+        constituentKanji: scope.constituentKanji,
+        kanjiLevels: scope.kanjiLevels,
+        learnerFitRisks: buildTargetLearnerFitRisks({ scope, sameWrittenConflicts }),
+        triageDecision,
+        sourceTriageDecision: triageDecision,
+        routing: {
+            type: "move_candidate_target_queue",
+            sourceLevel: sourceRow.targetLevel || null,
+            sourceJlptLevel: sourceRow.sourceLevel || null,
+            targetLevel,
+            decision: triageDecision?.decision || "",
+            reason: triageDecision?.reason || "",
+        },
+    };
+}
+
+function mergeRoutedMoveCandidatesIntoTargetReport({
+    targetReport,
+    sourceReports = [],
+    jlptLevelContract = {},
+    limit = 40,
+} = {}) {
+    if (!targetReport) {
+        return targetReport;
+    }
+    const targetLevel = targetReport.level;
+    const rowsByKey = new Map((targetReport.rows || []).map((row) => [row.key, row]));
+    const routedRows = [];
+    const routedSummary = {
+        totalMoveCandidatesToTarget: 0,
+        alreadyGovernedOrExcluded: 0,
+        alreadyVisibleInTargetRows: 0,
+        targetQueueRows: 0,
+        addedTargetQueueRows: 0,
+    };
+
+    for (const sourceReport of sourceReports || []) {
+        if (!sourceReport || sourceReport.level === targetLevel) {
+            continue;
+        }
+        for (const sourceRow of sourceReport.rows || []) {
+            const triageDecision = sourceRow.triageDecision || null;
+            if (triageDecision?.decision !== "move_candidate" || triageDecision.targetLevel !== targetLevel) {
+                continue;
+            }
+            routedSummary.totalMoveCandidatesToTarget += 1;
+
+            const contractStatus = sourceRow.contractStatus?.status || "not_governed";
+            if (contractStatus === "already_governed" || contractStatus === "already_excluded") {
+                routedSummary.alreadyGovernedOrExcluded += 1;
+                continue;
+            }
+            if (rowsByKey.has(sourceRow.key)) {
+                const existingRow = rowsByKey.get(sourceRow.key);
+                existingRow.sourceTriageDecision = existingRow.sourceTriageDecision || triageDecision;
+                existingRow.routing = existingRow.routing || {
+                    type: "move_candidate_target_queue",
+                    sourceLevel: sourceReport.level,
+                    sourceJlptLevel: sourceRow.sourceLevel || null,
+                    targetLevel,
+                    decision: triageDecision.decision,
+                    reason: triageDecision.reason || "",
+                };
+                routedSummary.alreadyVisibleInTargetRows += 1;
+                routedSummary.targetQueueRows += 1;
+                continue;
+            }
+
+            const routedRow = buildRoutedMoveCandidateRow({
+                sourceRow,
+                targetLevel,
+                targetGate: targetReport.commonWordQueue || {},
+                jlptLevelContract,
+            });
+            rowsByKey.set(routedRow.key, routedRow);
+            routedRows.push(routedRow);
+            routedSummary.targetQueueRows += 1;
+            routedSummary.addedTargetQueueRows += 1;
+        }
+    }
+
+    if (routedSummary.totalMoveCandidatesToTarget === 0) {
+        return {
+            ...targetReport,
+            routedMoveCandidateSummary: routedSummary,
+            routedMoveCandidateRows: [],
+        };
+    }
+
+    const rows = [...rowsByKey.values()].sort(compareSelectorRows);
+    return {
+        ...targetReport,
+        summary: {
+            ...targetReport.summary,
+            ...summarizeSelectorRows(rows),
+            sourceRows: targetReport.summary.sourceRows,
+            normalizedRows: targetReport.summary.normalizedRows,
+            uniqueRows: targetReport.summary.uniqueRows,
+            duplicateSourceRows: targetReport.summary.duplicateSourceRows,
+            sourceDispositionCounts: {
+                ...(targetReport.summary.sourceDispositionCounts || {}),
+                routed_move_candidate: routedSummary.addedTargetQueueRows,
+            },
+            routedMoveCandidateRows: routedSummary.targetQueueRows,
+            addedRoutedMoveCandidateRows: routedSummary.addedTargetQueueRows,
+        },
+        rows,
+        shownRows: rows.slice(0, limit),
+        routedMoveCandidateSummary: routedSummary,
+        routedMoveCandidateRows: routedRows.sort(compareSelectorRows),
+    };
 }
 
 function buildAgreementRowIndex(agreementLevelReport = {}) {
@@ -415,8 +621,13 @@ function buildWordCommonExpansionSelectorReport({
     readFile = fs.readFileSync,
 } = {}) {
     const normalizedPlacementMode = normalizePlacementMode(placementMode);
+    const reportLevels = normalizeReportLevels(levels);
+    const analysisLevels = collectRoutingSupportLevels({
+        levels: reportLevels,
+        triageDecisionsByLevelSource,
+    });
     const agreementReport = buildWordCandidateAgreementReport({
-        levels,
+        levels: analysisLevels,
         manifest,
         jlptLevelContract,
         jlptWordLevelContract,
@@ -429,7 +640,7 @@ function buildWordCommonExpansionSelectorReport({
     });
     const sourceSummariesById = new Map(agreementReport.sourceSummaries.map((summary) => [summary.sourceId, summary]));
     const agreementReportsByLevel = new Map(agreementReport.levelReports.map((levelReport) => [levelReport.level, levelReport]));
-    const levelReports = levels.map((level) => buildLevelSelectorReport({
+    const analysisLevelReports = analysisLevels.map((level) => buildLevelSelectorReport({
         level,
         manifest,
         sourceSummariesById,
@@ -440,12 +651,19 @@ function buildWordCommonExpansionSelectorReport({
         limit,
         placementMode: normalizedPlacementMode,
         readingExpansionSignal: readingExpansionSignalsByLevel?.[level] || null,
-        enforceReadingExpansionGate,
+        enforceReadingExpansionGate: reportLevels.includes(level) ? enforceReadingExpansionGate : false,
         readFile,
+    }));
+    const analysisReportsByLevel = new Map(analysisLevelReports.map((levelReport) => [levelReport.level, levelReport]));
+    const levelReports = reportLevels.map((level) => mergeRoutedMoveCandidatesIntoTargetReport({
+        targetReport: analysisReportsByLevel.get(level),
+        sourceReports: analysisLevelReports,
+        jlptLevelContract,
+        limit,
     }));
     const blockers = [
         ...agreementReport.sourceBlockers,
-        ...levelReports.flatMap((levelReport) => levelReport.blockers || []),
+        ...analysisLevelReports.flatMap((levelReport) => levelReport.blockers || []),
     ];
 
     return {
@@ -455,7 +673,8 @@ function buildWordCommonExpansionSelectorReport({
         placementMode: normalizedPlacementMode,
         configuredSourceOnly: true,
         warning: SOURCE_UNIVERSE_WARNING,
-        levels,
+        levels: reportLevels,
+        routingSupportLevels: analysisLevels.filter((level) => !reportLevels.includes(level)),
         placementAudit: agreementReport.placementAudit,
         sourceSummaries: agreementReport.sourceSummaries,
         sourceBlockers: agreementReport.sourceBlockers,
@@ -467,6 +686,7 @@ function buildWordCommonExpansionSelectorReport({
             inactiveReadingExpansionRows: levelReports.reduce((total, levelReport) => total + levelReport.summary.inactiveReadingExpansionRows, 0),
             needsTriageRows: levelReports.reduce((total, levelReport) => total + levelReport.summary.needsTriageRows, 0),
             blockedRows: levelReports.reduce((total, levelReport) => total + levelReport.summary.blockedRows, 0),
+            routedMoveCandidateRows: levelReports.reduce((total, levelReport) => total + (levelReport.summary.routedMoveCandidateRows || 0), 0),
             inactiveReadingExpansionLevels: levelReports.filter((levelReport) => levelReport.commonWordQueue?.active === false).length,
             blockerCount: blockers.length,
         },
@@ -498,6 +718,7 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
         "Read-only report: this does not add Silver rows, change contracts, move denominators, approve cards, or certify review lanes.",
         `Source scope: ${report.warning}`,
         `Placement mode: ${report.placementMode || "kanji-anchor"}`,
+        `Routing support levels: ${(report.routingSupportLevels || []).length > 0 ? report.routingSupportLevels.map((level) => `N${level}`).join(", ") : "none"}`,
         "",
         `Manifest: version ${report.manifestVersion}; checked ${report.manifestCheckedAt}`,
         `Placement gate: ${report.placementAudit?.violationCount || 0}/${report.placementAudit?.checked || 0} word-level placement violations`,
@@ -514,8 +735,8 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
     lines.push(
         "",
         "Selector summary:",
-        "| Level | Queue | Rows | Ready | Inactive | Needs triage | Move | Defer | Reject | Blocked identity | Missing dictionary | Missing commonness | Already governed | Already excluded | Kana-only out of scope |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"
+        "| Level | Queue | Rows | Ready | Inactive | Needs triage | Routed moves | Move | Defer | Reject | Blocked identity | Missing dictionary | Missing commonness | Already governed | Already excluded | Kana-only out of scope |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"
     );
 
     for (const levelReport of report.levelReports || []) {
@@ -527,6 +748,7 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             counts.ready_for_editorial_review || 0,
             counts.queue_inactive_reading_expansion || 0,
             counts.needs_triage || 0,
+            levelReport.summary.routedMoveCandidateRows || 0,
             counts.move_candidate || 0,
             counts.triaged_defer || 0,
             counts.triaged_reject || 0,

@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "policy": {
+    "noDeckMutation": true,
+    "requirePinnedIntegrity": true,
+    "requireKnownEvidenceSource": true,
+    "notes": "Word source-input preflight is read-only. Reviewed rows may become source-origin evidence only after exact citation/evidenceRef review; default configured source rows remain needs_review."
+  },
+  "inputs": {
+    "jlptstudy.net-n5": {
+      "sourceId": "jlptstudy.net-n5",
+      "sourcePath": "downloads/n5-vocab.tsv",
+      "sourceLabel": "JLPTStudy N5 vocabulary list",
+      "sourceUrl": "https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+      "format": "tsv",
+      "writtenColumn": "written",
+      "readingColumn": "reading",
+      "levelColumn": "jlpt",
+      "meaningColumn": "meaning",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "supportedLevels": [5],
+      "checkedAt": "2026-05-05",
+      "sha256": "b933dd6f2ca08b4866e6668d2c354a506afff6641b3440e55ac7a4fd26b40de3",
+      "byteSize": 30570,
+      "rowCount": 537,
+      "expectedReviewStatusCounts": {
+        "needs_review": 537
+      },
+      "integrityPolicy": "Pinned configured source only. No row is reviewed source-origin evidence until an exact permitted citation/evidenceRef is added."
+    },
+    "jlptstudy.net-n4": {
+      "sourceId": "jlptstudy.net-n4",
+      "sourcePath": "downloads/n4-vocab.tsv",
+      "sourceLabel": "JLPTStudy N4 vocabulary list",
+      "sourceUrl": "https://jlptstudy.net/N4/lists/n4_vocab-list.html",
+      "format": "tsv",
+      "writtenColumn": "written",
+      "readingColumn": "reading",
+      "levelColumn": "jlpt",
+      "meaningColumn": "meaning",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "supportedLevels": [4],
+      "checkedAt": "2026-05-05",
+      "sha256": "fe78e99a34beb9f8ac9481e7874ec36488f079479aa9b26bde9069ed27655dc4",
+      "byteSize": 44521,
+      "rowCount": 681,
+      "expectedReviewStatusCounts": {
+        "needs_review": 681
+      },
+      "integrityPolicy": "Pinned configured source only. No row is reviewed source-origin evidence until an exact permitted citation/evidenceRef is added."
+    },
+    "tanos-n3-vocab": {
+      "sourceId": "tanos-n3-vocab",
+      "sourcePath": "downloads/tanos-n3-vocab.tsv",
+      "sourceLabel": "Tanos JLPT N3 vocabulary list",
+      "sourceUrl": "https://www.tanos.co.uk/jlpt/jlpt3/vocab/VocabList.N3.pdf",
+      "format": "tsv",
+      "writtenColumn": "written",
+      "readingColumn": "reading",
+      "levelColumn": "jlpt",
+      "meaningColumn": "meaning",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "supportedLevels": [3],
+      "checkedAt": "2026-05-17",
+      "sha256": "528412527fa54fcb5a1853ae9d3da80553cc16b5c683fd21c6a8cf86ae282404",
+      "byteSize": 689451,
+      "rowCount": 1832,
+      "expectedReviewStatusCounts": {
+        "needs_review": 1832
+      },
+      "integrityPolicy": "Pinned configured source only. Reviewed rows require exact citation/evidenceRef and remain one source family."
+    },
+    "tanos-n2-vocab": {
+      "sourceId": "tanos-n2-vocab",
+      "sourcePath": "downloads/tanos-n2-vocab.tsv",
+      "sourceLabel": "Tanos JLPT N2 vocabulary list",
+      "sourceUrl": "https://www.tanos.co.uk/jlpt/jlpt2/vocab/n2-vocab-kanji-eng.mem",
+      "format": "tsv",
+      "writtenColumn": "written",
+      "readingColumn": "reading",
+      "levelColumn": "jlpt",
+      "meaningColumn": "meaning",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "supportedLevels": [2],
+      "checkedAt": "2026-05-17",
+      "sha256": "19a827aaf110b06601dc48908151c698f41f46eb141a5b908eb014582b3d52e9",
+      "byteSize": 730252,
+      "rowCount": 1835,
+      "expectedReviewStatusCounts": {
+        "needs_review": 1835
+      },
+      "integrityPolicy": "Pinned configured source only. Reviewed rows require exact citation/evidenceRef and remain one source family."
+    },
+    "tanos-n1-vocab": {
+      "sourceId": "tanos-n1-vocab",
+      "sourcePath": "downloads/tanos-n1-vocab.tsv",
+      "sourceLabel": "Tanos JLPT N1 vocabulary list",
+      "sourceUrl": "https://www.tanos.co.uk/jlpt/jlpt1/vocab/n1-vocab-kanji-eng.mem",
+      "format": "tsv",
+      "writtenColumn": "written",
+      "readingColumn": "reading",
+      "levelColumn": "jlpt",
+      "meaningColumn": "meaning",
+      "notesColumn": "notes",
+      "defaultReviewStatus": "needs_review",
+      "supportedLevels": [1],
+      "checkedAt": "2026-05-17",
+      "sha256": "7cfbcd253d088249d27a7d41e567b22a662b92fc02fa835512112c1bba8c7032",
+      "byteSize": 1400489,
+      "rowCount": 3494,
+      "expectedReviewStatusCounts": {
+        "needs_review": 3494
+      },
+      "integrityPolicy": "Pinned configured source only. Reviewed rows require exact citation/evidenceRef and remain one source family."
+    }
+  }
+}

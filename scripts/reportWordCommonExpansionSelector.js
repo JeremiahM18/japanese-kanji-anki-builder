@@ -1,6 +1,12 @@
 const path = require("node:path");
 
+const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
+const { loadJlptWordSourceEvidence } = require("../src/datasets/jlptWordSourceEvidence");
 const { loadWordSourceManifest } = require("../src/datasets/wordSourceManifest");
+const {
+    auditJlptWordSourceEvidence,
+    buildSourceAdequacyByLevel,
+} = require("../src/services/jlptWordSourceEvidenceService");
 const {
     buildWordCommonExpansionSelectorReport,
     formatWordCommonExpansionSelectorReport,
@@ -28,6 +34,7 @@ function parseArgs(argv) {
         limit: 40,
         manifest: DEFAULT_WORD_SOURCE_MANIFEST,
         placementMode: process.env.JKB_WORD_PLACEMENT_MODE || "kanji-anchor",
+        sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: false,
         triage: "templates/word_inventory_expansion_triage.json",
         unknownArgs: [],
@@ -50,6 +57,8 @@ function parseArgs(argv) {
             options.placementMode = String(arg.slice("--placement-mode=".length) || "").trim();
         } else if (arg.startsWith("--placement=")) {
             options.placementMode = String(arg.slice("--placement=".length) || "").trim();
+        } else if (arg.startsWith("--source-evidence=")) {
+            options.sourceEvidence = String(arg.slice("--source-evidence=".length) || "").trim();
         } else if (arg.startsWith("--triage=")) {
             options.triage = String(arg.slice("--triage=".length) || "").trim();
         } else {
@@ -71,6 +80,11 @@ function validateLevels(levels = []) {
     }
 }
 
+function hasStrictFailure(report = {}) {
+    return (report.blockers?.length || 0) > 0
+        || (report.placementAudit?.violationCount || 0) > 0;
+}
+
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("deck:words:common-expansion", options.unknownArgs);
@@ -86,6 +100,12 @@ async function main() {
     const readingExpansionSignalsByLevel = Object.fromEntries(
         expansionSignalReport.signals.map((signal) => [signal.level, signal])
     );
+    const sharedInputs = loadSharedInputs();
+    const wordSourceEvidenceReport = auditJlptWordSourceEvidence({
+        contract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),
+        evidence: loadJlptWordSourceEvidence(path.resolve(process.cwd(), options.sourceEvidence)),
+        limit: Number.MAX_SAFE_INTEGER,
+    });
     const report = buildWordCommonExpansionSelectorReport({
         levels: options.levels,
         manifest,
@@ -93,8 +113,9 @@ async function main() {
         placementMode: normalizePlacementMode(options.placementMode),
         triageDecisionsByLevelSource: loadTriageDecisionsByLevelSource(options.triage),
         readingExpansionSignalsByLevel,
+        sourceAdequacyByLevel: buildSourceAdequacyByLevel(wordSourceEvidenceReport),
         enforceReadingExpansionGate: true,
-        ...loadSharedInputs(),
+        ...sharedInputs,
     });
 
     if (options.json) {
@@ -103,11 +124,7 @@ async function main() {
         process.stdout.write(formatWordCommonExpansionSelectorReport(report));
     }
 
-    if (options.strict && (
-        report.blockers.length > 0
-        || report.placementAudit.violationCount > 0
-        || report.summary.inactiveReadingExpansionLevels > 0
-    )) {
+    if (options.strict && hasStrictFailure(report)) {
         throw new Error("Word common expansion selector strict mode failed.");
     }
 }
@@ -121,6 +138,7 @@ if (require.main === module) {
 
 module.exports = {
     DEFAULT_WORD_SOURCE_MANIFEST,
+    hasStrictFailure,
     main,
     parseArgs,
     resolveManifestPath: (manifestPath = DEFAULT_WORD_SOURCE_MANIFEST) => path.resolve(process.cwd(), manifestPath || DEFAULT_WORD_SOURCE_MANIFEST),

@@ -1,0 +1,422 @@
+{
+  "version": 1,
+  "checkedAt": "2026-06-21",
+  "policy": {
+    "minimumIndependentSources": 3,
+    "minimumIndependentEvidenceLineages": 2,
+    "minimumJapanesePublishedOrPermissionedLearnerSources": 1,
+    "requireDictionaryIdentitySupport": true,
+    "requireCommonnessSupport": true
+  },
+  "sourceTiers": {
+    "configured-discovery": {
+      "label": "Configured discovery source",
+      "rank": 4,
+      "role": "primary-discovery",
+      "description": "Pinned candidate-discovery input used by selectors, not enough by itself for broad vocabulary-universe claims."
+    },
+    "support-dictionary": {
+      "label": "Dictionary support",
+      "rank": 2,
+      "role": "identity-support",
+      "description": "Dictionary source for exact written-reading identity and meaning support."
+    },
+    "support-commonness": {
+      "label": "Commonness support",
+      "rank": 3,
+      "role": "commonness-support",
+      "description": "Commonness or priority support for usefulness; not JLPT level truth."
+    },
+    "support-pitch": {
+      "label": "Pitch support",
+      "rank": 3,
+      "role": "identity-support",
+      "description": "Pitch-accent support only."
+    },
+    "registered-future": {
+      "label": "Registered future source",
+      "rank": 5,
+      "role": "background-only",
+      "description": "Source family registered for future review; no active evidence contribution."
+    }
+  },
+  "sourceLineages": {
+    "jlptstudy-community-list": {
+      "label": "JLPTStudy community vocabulary lists",
+      "role": "community-study-list",
+      "description": "Public community JLPT vocabulary lists; configured discovery only until license/source-origin review is complete."
+    },
+    "tanos-vocab-list": {
+      "label": "Tanos vocabulary lists",
+      "role": "legacy-jlpt-estimate",
+      "description": "Tanos JLPT vocabulary lists; useful discovery signal but not a complete post-2010 official JLPT universe."
+    },
+    "edrdg-jmdict": {
+      "label": "EDRDG JMdict",
+      "role": "dictionary",
+      "description": "JMdict dictionary and priority markers for identity/commonness support, not JLPT level truth."
+    },
+    "kanjium-pitch": {
+      "label": "Kanjium pitch accent",
+      "role": "pitch-accent",
+      "description": "Pitch accent support only."
+    },
+    "future-textbook-word-list": {
+      "label": "Future textbook word-list review",
+      "role": "textbook",
+      "description": "Placeholder for Japanese-published or permissioned learner sources reviewed through exact source-access packets."
+    },
+    "blocked-frequency": {
+      "label": "Blocked frequency source",
+      "role": "frequency-sanity",
+      "description": "Frequency source blocked or unavailable for governed use."
+    }
+  },
+  "independenceGroups": {
+    "jlptstudy": {
+      "label": "JLPTStudy",
+      "description": "Single JLPTStudy source family."
+    },
+    "tanos": {
+      "label": "Tanos",
+      "description": "Single Tanos source family."
+    },
+    "edrdg": {
+      "label": "EDRDG",
+      "description": "EDRDG/JMdict dictionary family."
+    },
+    "kanjium": {
+      "label": "Kanjium",
+      "description": "Kanjium pitch-accent family."
+    },
+    "future-textbook": {
+      "label": "Future textbook source family",
+      "description": "Reserved for individually reviewed Japanese-published or permissioned learner sources."
+    },
+    "blocked-frequency": {
+      "label": "Blocked frequency family",
+      "description": "Blocked or unapproved frequency inputs."
+    }
+  },
+  "postureLabels": {
+    "configured_source_only": {
+      "releaseMeaning": "Only the configured pinned source list has been evaluated; this is not a broad vocabulary-universe claim.",
+      "blocksUniverseClaim": true
+    },
+    "candidate_discovery_governed": {
+      "releaseMeaning": "At least one governed candidate-discovery assignment exists, but source-depth is incomplete.",
+      "blocksUniverseClaim": true
+    },
+    "single_source_family": {
+      "releaseMeaning": "Reviewed evidence comes from one independent source family only.",
+      "blocksUniverseClaim": true
+    },
+    "multi_source_supported": {
+      "releaseMeaning": "Multiple independent source signals exist, but full source-depth policy is not met.",
+      "blocksUniverseClaim": true
+    },
+    "level_universe_standard": {
+      "releaseMeaning": "This identity meets the configured broad word-source universe standard.",
+      "blocksUniverseClaim": false
+    },
+    "source_access_gap": {
+      "releaseMeaning": "A source may exist, but exact permitted access/evidence is missing.",
+      "blocksUniverseClaim": true
+    },
+    "license_blocked": {
+      "releaseMeaning": "Source-use terms block governed use.",
+      "blocksUniverseClaim": true
+    },
+    "source_origin_not_evaluated": {
+      "releaseMeaning": "No reviewed source-origin assignment exists for this word identity.",
+      "blocksUniverseClaim": true
+    },
+    "disputed_level_claim": {
+      "releaseMeaning": "Reviewed source level claims are tied or conflicting.",
+      "blocksUniverseClaim": true
+    }
+  },
+  "sources": {
+    "jlptstudy.net-n5": {
+      "name": "JLPTStudy N5 vocabulary list",
+      "tier": "configured-discovery",
+      "evidenceLineage": "jlptstudy-community-list",
+      "independenceGroup": "jlptstudy",
+      "status": "in_review",
+      "sourceKind": "candidate-discovery",
+      "sourceType": "community_web_list",
+      "url": "https://jlptstudy.net/N5/lists/n5_vocab-list.html",
+      "levels": [5],
+      "japanesePublished": false,
+      "permissionedLearnerSource": false,
+      "countsForConsensus": false,
+      "licenseStatus": "needs_review",
+      "allowedUse": ["candidate-discovery", "level-hint"],
+      "disallowedUse": ["dictionary-verification", "commonness-support", "pitch-verification"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "checkedAt": "2026-05-05",
+      "local": {
+        "path": "downloads/n5-vocab.tsv",
+        "format": "tsv",
+        "sha256": "b933dd6f2ca08b4866e6668d2c354a506afff6641b3440e55ac7a4fd26b40de3",
+        "byteSize": 30570,
+        "rowCount": 537
+      },
+      "notes": "Configured selector input only. Do not claim broad N5 vocabulary-universe adequacy from this source family."
+    },
+    "jlptstudy.net-n4": {
+      "name": "JLPTStudy N4 vocabulary list",
+      "tier": "configured-discovery",
+      "evidenceLineage": "jlptstudy-community-list",
+      "independenceGroup": "jlptstudy",
+      "status": "in_review",
+      "sourceKind": "candidate-discovery",
+      "sourceType": "community_web_list",
+      "url": "https://jlptstudy.net/N4/lists/n4_vocab-list.html",
+      "levels": [4],
+      "countsForConsensus": false,
+      "licenseStatus": "needs_review",
+      "allowedUse": ["candidate-discovery", "level-hint"],
+      "disallowedUse": ["dictionary-verification", "commonness-support", "pitch-verification"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "checkedAt": "2026-05-05",
+      "local": {
+        "path": "downloads/n4-vocab.tsv",
+        "format": "tsv",
+        "sha256": "fe78e99a34beb9f8ac9481e7874ec36488f079479aa9b26bde9069ed27655dc4",
+        "byteSize": 44521,
+        "rowCount": 681
+      },
+      "notes": "Configured selector input only. Do not claim broad N4 vocabulary-universe adequacy from this source family."
+    },
+    "tanos-n3-vocab": {
+      "name": "Tanos JLPT N3 vocabulary list",
+      "tier": "configured-discovery",
+      "evidenceLineage": "tanos-vocab-list",
+      "independenceGroup": "tanos",
+      "status": "in_review",
+      "sourceKind": "candidate-discovery",
+      "sourceType": "jlpt_level_list",
+      "url": "https://www.tanos.co.uk/jlpt/jlpt3/vocab/VocabList.N3.pdf",
+      "levels": [3],
+      "countsForConsensus": false,
+      "licenseStatus": "approved",
+      "allowedUse": ["candidate-discovery", "level-hint"],
+      "disallowedUse": ["dictionary-verification", "commonness-support", "pitch-verification"],
+      "canStoreWordAssignments": true,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "licenseEvidenceUrl": "https://www.tanos.co.uk/jlpt/sharing/",
+      "licenseReviewedAt": "2026-05-17",
+      "checkedAt": "2026-05-17",
+      "local": {
+        "path": "downloads/tanos-n3-vocab.tsv",
+        "format": "tsv",
+        "sha256": "528412527fa54fcb5a1853ae9d3da80553cc16b5c683fd21c6a8cf86ae282404",
+        "byteSize": 689451,
+        "rowCount": 1832
+      },
+      "notes": "Configured selector input; source-depth still requires independent corroboration before broad N3 claims."
+    },
+    "tanos-n2-vocab": {
+      "name": "Tanos JLPT N2 vocabulary list",
+      "tier": "configured-discovery",
+      "evidenceLineage": "tanos-vocab-list",
+      "independenceGroup": "tanos",
+      "status": "in_review",
+      "sourceKind": "candidate-discovery",
+      "sourceType": "jlpt_level_list",
+      "url": "https://www.tanos.co.uk/jlpt/jlpt2/vocab/n2-vocab-kanji-eng.mem",
+      "levels": [2],
+      "countsForConsensus": false,
+      "licenseStatus": "approved",
+      "allowedUse": ["candidate-discovery", "level-hint"],
+      "disallowedUse": ["dictionary-verification", "commonness-support", "pitch-verification"],
+      "canStoreWordAssignments": true,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "licenseEvidenceUrl": "https://www.tanos.co.uk/jlpt/sharing/",
+      "licenseReviewedAt": "2026-05-17",
+      "checkedAt": "2026-05-17",
+      "local": {
+        "path": "downloads/tanos-n2-vocab.tsv",
+        "format": "tsv",
+        "sha256": "19a827aaf110b06601dc48908151c698f41f46eb141a5b908eb014582b3d52e9",
+        "byteSize": 730252,
+        "rowCount": 1835
+      }
+    },
+    "tanos-n1-vocab": {
+      "name": "Tanos JLPT N1 vocabulary list",
+      "tier": "configured-discovery",
+      "evidenceLineage": "tanos-vocab-list",
+      "independenceGroup": "tanos",
+      "status": "in_review",
+      "sourceKind": "candidate-discovery",
+      "sourceType": "jlpt_level_list",
+      "url": "https://www.tanos.co.uk/jlpt/jlpt1/vocab/n1-vocab-kanji-eng.mem",
+      "levels": [1],
+      "countsForConsensus": false,
+      "licenseStatus": "approved",
+      "allowedUse": ["candidate-discovery", "level-hint"],
+      "disallowedUse": ["dictionary-verification", "commonness-support", "pitch-verification"],
+      "canStoreWordAssignments": true,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "licenseEvidenceUrl": "https://www.tanos.co.uk/jlpt/sharing/",
+      "licenseReviewedAt": "2026-05-17",
+      "checkedAt": "2026-05-17",
+      "local": {
+        "path": "downloads/tanos-n1-vocab.tsv",
+        "format": "tsv",
+        "sha256": "7cfbcd253d088249d27a7d41e567b22a662b92fc02fa835512112c1bba8c7032",
+        "byteSize": 1400489,
+        "rowCount": 3494
+      }
+    },
+    "jmdict": {
+      "name": "JMdict English dictionary source",
+      "tier": "support-dictionary",
+      "evidenceLineage": "edrdg-jmdict",
+      "independenceGroup": "edrdg",
+      "status": "active",
+      "sourceKind": "dictionary",
+      "sourceType": "dictionary",
+      "url": "https://www.edrdg.org/jmdict/j_jmdict.html",
+      "countsForConsensus": false,
+      "licenseStatus": "approved",
+      "allowedUse": ["dictionary-verification", "reading-verification", "meaning-verification"],
+      "disallowedUse": ["level-hint", "candidate-discovery", "commonness-support", "pitch-verification"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "licenseEvidenceUrl": "https://www.edrdg.org/edrdg/licence.html",
+      "licenseReviewedAt": "2026-05-11",
+      "checkedAt": "2026-05-11",
+      "local": {
+        "path": "downloads/jmdict-word-verification.tsv",
+        "format": "tsv",
+        "sha256": "a540658623d32afdc1315091db494a4c9dcaf5c4cfe1add95ec65965e5228fe2",
+        "byteSize": 57660320,
+        "rowCount": 255738
+      }
+    },
+    "jmdict-priority-commonness": {
+      "name": "JMdict priority/commonness signal",
+      "tier": "support-commonness",
+      "evidenceLineage": "edrdg-jmdict",
+      "independenceGroup": "edrdg",
+      "status": "active",
+      "sourceKind": "dictionary-priority",
+      "sourceType": "dictionary_priority",
+      "url": "https://www.edrdg.org/jmdict/j_jmdict.html",
+      "countsForConsensus": false,
+      "licenseStatus": "approved",
+      "allowedUse": ["commonness-support", "frequency-sanity"],
+      "disallowedUse": ["level-hint", "candidate-discovery", "dictionary-verification", "pitch-verification"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "licenseEvidenceUrl": "https://www.edrdg.org/edrdg/licence.html",
+      "licenseReviewedAt": "2026-05-11",
+      "checkedAt": "2026-05-11",
+      "local": {
+        "path": "downloads/jmdict-word-verification.tsv",
+        "format": "tsv",
+        "sha256": "a540658623d32afdc1315091db494a4c9dcaf5c4cfe1add95ec65965e5228fe2",
+        "byteSize": 57660320,
+        "rowCount": 255738
+      }
+    },
+    "kanjium-pitch-accent": {
+      "name": "Kanjium pitch accent database",
+      "tier": "support-pitch",
+      "evidenceLineage": "kanjium-pitch",
+      "independenceGroup": "kanjium",
+      "status": "active",
+      "sourceKind": "pitch",
+      "sourceType": "pitch_accent",
+      "url": "https://github.com/mifunetoshiro/kanjium",
+      "countsForConsensus": false,
+      "licenseStatus": "approved",
+      "allowedUse": ["pitch-verification"],
+      "disallowedUse": ["level-hint", "candidate-discovery", "dictionary-verification", "commonness-support"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "licenseEvidenceUrl": "https://github.com/mifunetoshiro/kanjium",
+      "licenseReviewedAt": "2026-05-11",
+      "checkedAt": "2026-05-11"
+    },
+    "jpdb-frequency": {
+      "name": "jpdb frequency signal",
+      "tier": "registered-future",
+      "evidenceLineage": "blocked-frequency",
+      "independenceGroup": "blocked-frequency",
+      "status": "blocked",
+      "sourceKind": "frequency",
+      "sourceType": "corpus_frequency",
+      "url": "https://jpdb.io/terms-of-use",
+      "countsForConsensus": false,
+      "licenseStatus": "blocked",
+      "allowedUse": [],
+      "disallowedUse": ["candidate-discovery", "level-hint", "commonness-support", "frequency-sanity"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "checkedAt": "2026-05-11"
+    },
+    "core-deck-frequency": {
+      "name": "Core deck frequency or common-vocabulary source",
+      "tier": "registered-future",
+      "evidenceLineage": "blocked-frequency",
+      "independenceGroup": "blocked-frequency",
+      "status": "planned",
+      "sourceKind": "frequency",
+      "sourceType": "corpus_frequency",
+      "countsForConsensus": false,
+      "licenseStatus": "needs_review",
+      "allowedUse": ["needs_review"],
+      "disallowedUse": ["candidate-discovery", "level-hint", "commonness-support", "frequency-sanity"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "checkedAt": "2026-05-11"
+    },
+    "textbook-word-list": {
+      "name": "Japanese learning textbook word-list lane",
+      "tier": "registered-future",
+      "evidenceLineage": "future-textbook-word-list",
+      "independenceGroup": "future-textbook",
+      "status": "planned",
+      "sourceKind": "textbook-word-list",
+      "sourceType": "textbook_word_list",
+      "countsForConsensus": false,
+      "licenseStatus": "needs_review",
+      "allowedUse": ["needs_review"],
+      "disallowedUse": ["candidate-discovery", "level-hint", "learner-fit-support"],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "checkedAt": "2026-05-11"
+    }
+  },
+  "assignmentFiles": {},
+  "assignments": {},
+  "words": {}
+}

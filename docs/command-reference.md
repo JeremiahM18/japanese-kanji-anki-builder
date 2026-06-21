@@ -158,6 +158,8 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:expansion-candidates -- --level=3 --limit=50` | Diff the selected level's manifest-pinned source into read-only word expansion candidates |
 | `npm run deck:words:expansion-candidates:n4 -- --limit=50` | Diff the manifest-pinned level source into read-only word expansion candidates |
 | `npm run deck:words:expansion-candidates:n5 -- --limit=50` | Diff the manifest-pinned N5 source into read-only word expansion candidates |
+| `npm run data:normalize:tanos-jlpt-words -- --level=5 --reviewed --citation="<citation>" --evidence-ref="<paired export refs>"` | Normalize ignored Tanos N5 Mnemosyne English and hiragana exports into a reviewed, pinned word source-input TSV after source-access review |
+| `npm run data:normalize:tanos-jlpt-words -- --level=4 --reviewed --citation="<citation>" --evidence-ref="<paired export refs>"` | Normalize ignored Tanos N4 Mnemosyne English and hiragana exports into a reviewed, pinned word source-input TSV after source-access review |
 | `npm run data:normalize:tanos-jlpt-words -- --level=3` | Normalize ignored Tanos N3 extracted vocabulary text into the pinned local source TSV |
 | `npm run deck:words:expansion-candidates:n3 -- --limit=50` | Diff the manifest-pinned Tanos N3 candidate-discovery source into read-only word expansion candidates |
 | `npm run data:normalize:tanos-jlpt-words -- --level=2` | Normalize ignored Tanos N2 Mnemosyne English and hiragana exports into the pinned local source TSV |

@@ -272,6 +272,62 @@ test("buildWordCandidateAgreementReport surfaces moved candidates with target le
     assert.match(text, /triage target level: N4/);
 });
 
+test("buildWordCandidateAgreementReport suppresses legacy anchor moves in vocabulary-level mode", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "jlpt.tsv",
+        "written\treading\tmeaning\tjlpt\n手紙\tてがみ\tletter\tN5\n"
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        "written\treading\tmeaning\n手紙\tてがみ\tletter\n"
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        "written\treading\tmeaning\tfrequencyRank\n手紙\tてがみ\tletter\t100\n"
+    );
+
+    const report = buildWordCandidateAgreementReport({
+        levels: [5],
+        limit: 10,
+        placementMode: "vocabulary-level",
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                手: 4,
+                紙: 4,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-jlpt": {
+                    "手紙|てがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N4",
+                        priority: "normal",
+                        reason: "Anchor-mode routing belongs in N4.",
+                    },
+                },
+            },
+        },
+    });
+
+    const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
+    assert.equal(report.placementMode, "vocabulary-level");
+    assert.equal(row.triageStatus, "untriaged");
+    assert.equal(row.candidateStatus, "untriaged_candidate");
+    assert.equal(row.dictionaryVerified, true);
+    assert.equal(row.frequencySupported, true);
+    assert.deepEqual(row.triageDecisions, []);
+});
+
 test("buildWordCandidateAgreementReport ranks candidates with more ready evidence before alphabetical order", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
     const candidateSource = writeFixtureSource(

@@ -80,7 +80,7 @@ A word level ships only when all criteria are true:
 - Platinum card-surface inspection is complete for the shipped word level.
 - Obsidian content certification passes for the shipped word level, unless the release is explicitly labeled as a non-certified preview.
 - Word-level placement audit passes for the shipped word level.
-- No standalone wrong-level cards ship in the deck.
+- No word cards ship outside the governed word-level contract and source policy; standalone kanji written forms are allowed when the word identity is governed, and cross-level/outside-level kanji are explicitly labeled on the card.
 - Constituent kanji are visibly labeled with JLPT level or outside-JLPT status.
 - Reading coverage is reported honestly against the selected word-product level scope, including whether a target is covered by an earlier, same-level, or harder selected deck.
 - `ReadingBreakdown`, `CoversReading`, and `KanjiBreakdown` agree: safe per-kanji ruby can drive constituent readings, but whole-word ruby is labeled as word-level reading and is not counted as per-kanji coverage.

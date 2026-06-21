@@ -40,15 +40,26 @@ function normalizeLearnerFitReason(value) {
     return String(value || "").trim();
 }
 
+function normalizePlacementMode(value) {
+    const mode = String(value || "").trim();
+    return mode === "vocabulary-level" || mode === "learner-fit" ? mode : "";
+}
+
 function resolvePlacementStatus({
     deckLevel,
     anchorLevel,
     sameLevelKanji = [],
     knownLevels = [],
+    placementMode = "",
     learnerFitReason = "",
 } = {}) {
     if (!Number.isInteger(deckLevel)) {
         return "invalid_deck_level";
+    }
+    if (normalizePlacementMode(placementMode) === "vocabulary-level") {
+        return normalizeLearnerFitReason(learnerFitReason)
+            ? "vocabulary_level_with_support_kanji"
+            : "vocabulary_level_missing_reason";
     }
     if (!Array.isArray(knownLevels) || knownLevels.length === 0) {
         return "no_known_jlpt_kanji";
@@ -74,6 +85,7 @@ function resolvePlacementStatus({
 function buildWordLevelAnchorResult({
     written = "",
     deckLevel = null,
+    placementMode = "",
     learnerFitReason = "",
     kanjiLevelData = {},
     kanjiLevelMap = normalizeKanjiLevelMap(kanjiLevelData),
@@ -95,17 +107,21 @@ function buildWordLevelAnchorResult({
     const anchorKanji = kanjiLevels
         .filter((entry) => entry.level === anchorLevel)
         .map((entry) => entry.kanji);
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const normalizedLearnerFitReason = normalizeLearnerFitReason(learnerFitReason);
     const placementStatus = resolvePlacementStatus({
         deckLevel: level,
         anchorLevel,
         sameLevelKanji,
         knownLevels,
+        placementMode: normalizedPlacementMode,
         learnerFitReason: normalizedLearnerFitReason,
     });
 
     return {
-        valid: placementStatus === "anchor_level" || placementStatus === "later_with_learner_fit_reason",
+        valid: placementStatus === "anchor_level"
+            || placementStatus === "later_with_learner_fit_reason"
+            || placementStatus === "vocabulary_level_with_support_kanji",
         written: String(written || "").trim(),
         deckLevel: level,
         anchorLevel,
@@ -113,6 +129,7 @@ function buildWordLevelAnchorResult({
         kanjiLevels,
         sameLevelKanji,
         anchorKanji,
+        placementMode: normalizedPlacementMode,
         learnerFitReason: normalizedLearnerFitReason,
         placementStatus,
     };
@@ -140,6 +157,9 @@ function formatWordLevelAnchorFailure(result = {}) {
     if (result.placementStatus === "later_missing_learner_fit_reason") {
         return `later learner-fit placement from all-easier kanji anchor ${anchorLabel} to ${levelLabel} requires levelPlacement.reason: ${formatKanjiLevelList(result.kanjiLevels)}`;
     }
+    if (result.placementStatus === "vocabulary_level_missing_reason") {
+        return `vocabulary-level placement for ${levelLabel} requires levelPlacement.reason: ${formatKanjiLevelList(result.kanjiLevels)}`;
+    }
 
     return `word level placement is invalid for ${levelLabel}; kanji anchor ${anchorLabel}: ${formatKanjiLevelList(result.kanjiLevels)}`;
 }
@@ -158,9 +178,17 @@ function createPlacementStatusCounts() {
     return {
         too_easy_for_kanji: 0,
         later_missing_learner_fit_reason: 0,
+        vocabulary_level_missing_reason: 0,
         no_known_jlpt_kanji: 0,
         invalid_deck_level: 0,
     };
+}
+
+function resolvePlacementMode({ key, wordEntry = {}, wordStudyData = {} } = {}) {
+    return normalizePlacementMode(
+        wordEntry?.levelPlacement?.mode
+        || wordStudyData?.[key]?.levelPlacement?.mode
+    );
 }
 
 function resolveLearnerFitReason({ key, wordEntry = {}, wordStudyData = {} } = {}) {
@@ -191,6 +219,7 @@ function auditWordLevelAnchors({ wordLevels = {}, wordStudyData = {}, kanjiLevel
         const result = buildWordLevelAnchorResult({
             written: entry?.written,
             deckLevel,
+            placementMode: resolvePlacementMode({ key, wordEntry: entry, wordStudyData }),
             learnerFitReason: resolveLearnerFitReason({ key, wordEntry: entry, wordStudyData }),
             kanjiLevelMap,
         });
@@ -213,6 +242,7 @@ function auditWordLevelAnchors({ wordLevels = {}, wordStudyData = {}, kanjiLevel
             anchorLevel: result.anchorLevel,
             placementStatus: result.placementStatus,
             kanjiLevels: result.kanjiLevels,
+            placementMode: result.placementMode,
             learnerFitReason: result.learnerFitReason,
             message: formatWordLevelAnchorFailure(result),
         });
@@ -236,4 +266,5 @@ module.exports = {
     formatKanjiLevelList,
     formatWordLevelAnchorFailure,
     normalizeKanjiLevelMap,
+    normalizePlacementMode,
 };

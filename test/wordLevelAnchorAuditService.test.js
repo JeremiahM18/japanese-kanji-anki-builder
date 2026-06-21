@@ -111,6 +111,38 @@ test("buildWordLevelAnchorResult rejects support kanji without a current-level a
     assert.equal(result.placementStatus, "too_easy_for_kanji");
 });
 
+test("buildWordLevelAnchorResult accepts vocabulary-level support-kanji placement with a reason", () => {
+    const result = buildWordLevelAnchorResult({
+        written: "塩",
+        deckLevel: 5,
+        placementMode: "vocabulary-level",
+        learnerFitReason: "Source-listed N5 vocabulary with 塩 labeled as N2 support kanji.",
+        kanjiLevelData: {
+            塩: { jlpt: 2 },
+        },
+    });
+
+    assert.equal(result.valid, true);
+    assert.equal(result.placementMode, "vocabulary-level");
+    assert.equal(result.anchorLevel, 2);
+    assert.equal(result.placementStatus, "vocabulary_level_with_support_kanji");
+});
+
+test("buildWordLevelAnchorResult rejects vocabulary-level support-kanji placement without a reason", () => {
+    const result = buildWordLevelAnchorResult({
+        written: "塩",
+        deckLevel: 5,
+        placementMode: "vocabulary-level",
+        kanjiLevelData: {
+            塩: { jlpt: 2 },
+        },
+    });
+
+    assert.equal(result.valid, false);
+    assert.equal(result.placementMode, "vocabulary-level");
+    assert.equal(result.placementStatus, "vocabulary_level_missing_reason");
+});
+
 test("auditWordLevelAnchors reports canonical rows assigned to the wrong deck level", () => {
     const report = auditWordLevelAnchors({
         level: 5,

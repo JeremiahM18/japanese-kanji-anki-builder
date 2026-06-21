@@ -22,16 +22,29 @@ test("parseArgs supports common expansion selector options", () => {
         levels: [5, 4, 3],
         limit: 25,
         manifest: "templates/word-source.json",
+        placementMode: "kanji-anchor",
         strict: true,
         triage: "templates/triage.json",
         unknownArgs: [],
     });
 });
 
+test("parseArgs supports vocabulary-level selector mode", () => {
+    assert.equal(
+        parseArgs(["--placement-mode=vocabulary-level"]).placementMode,
+        "vocabulary-level"
+    );
+    assert.equal(
+        parseArgs(["--placement=vocabulary-level"]).placementMode,
+        "vocabulary-level"
+    );
+});
+
 test("common expansion selector defaults to all JLPT levels", () => {
     const options = parseArgs([]);
     assert.deepEqual(options.levels, [5, 4, 3, 2, 1]);
     assert.equal(options.manifest, DEFAULT_WORD_SOURCE_MANIFEST);
+    assert.equal(options.placementMode, "kanji-anchor");
     assert.equal(
         resolveManifestPath(""),
         path.resolve(process.cwd(), DEFAULT_WORD_SOURCE_MANIFEST)

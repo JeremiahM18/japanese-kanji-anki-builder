@@ -441,6 +441,39 @@
       "english": "On rainy days I read books at home."
     }
   },
+  "泳ぐ|およぐ": {
+    "written": "泳ぐ",
+    "reading": "およぐ",
+    "readingBreakdown": "<ruby>泳<rt>およ</rt></ruby>ぐ",
+    "meaning": "to swim",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "泳"
+      ],
+      "coversReadings": {
+        "泳": "およ"
+      }
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common vocabulary in the N5 deck while labeling 泳 as N2 support kanji."
+    },
+    "notes": "N5 vNext common-vocabulary card. Source-listed as N5 vocabulary and JMdict-priority supported; 泳 is N2 support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "プールで泳ぎます。",
+      "reading": "ぷーるでおよぎます。",
+      "english": "I swim in the pool."
+    }
+  },
   "英語|えいご": {
     "written": "英語",
     "reading": "えいご",
@@ -542,6 +575,71 @@
       "japanese": "今は円高です。",
       "reading": "いまはえんだかです。",
       "english": "The yen is strong now."
+    }
+  },
+  "鉛筆|えんぴつ": {
+    "written": "鉛筆",
+    "reading": "えんぴつ",
+    "readingBreakdown": "<ruby>鉛筆<rt>えんぴつ</rt></ruby>",
+    "meaning": "pencil",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "鉛",
+        "筆"
+      ],
+      "coversReadings": {}
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common school vocabulary in N5 while labeling 鉛 as N1 and 筆 as N2 support kanji."
+    },
+    "notes": "N5 vNext common school word. Source-listed as N5 vocabulary and JMdict-priority supported; 鉛 and 筆 are higher-level support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "鉛筆で名前を書きます。",
+      "reading": "えんぴつでなまえをかきます。",
+      "english": "I write my name with a pencil."
+    }
+  },
+  "塩|しお": {
+    "written": "塩",
+    "reading": "しお",
+    "readingBreakdown": "<ruby>塩<rt>しお</rt></ruby>",
+    "meaning": "salt",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "塩"
+      ],
+      "coversReadings": {
+        "塩": "しお"
+      }
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common food vocabulary in N5 while labeling 塩 as N2 support kanji."
+    },
+    "notes": "N5 vNext common food word. Source-listed as N5 vocabulary and JMdict-priority supported; 塩 is N2 support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "料理に塩を少し入れます。",
+      "reading": "りょうりにしおをすこしいれます。",
+      "english": "I put a little salt in the food."
     }
   },
   "音読|おんどく": {
@@ -770,6 +868,39 @@
       "english": "It is very quiet inside the house."
     }
   },
+  "暇|ひま": {
+    "written": "暇",
+    "reading": "ひま",
+    "readingBreakdown": "<ruby>暇<rt>ひま</rt></ruby>",
+    "meaning": "free time / leisure",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "暇"
+      ],
+      "coversReadings": {
+        "暇": "ひま"
+      }
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common daily-life vocabulary in N5 while labeling 暇 as N1 support kanji."
+    },
+    "notes": "N5 vNext common daily-life word. Source-listed as N5 vocabulary and JMdict-priority supported; 暇 is N1 support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "今日は暇です。",
+      "reading": "きょうはひまです。",
+      "english": "I am free today."
+    }
+  },
   "火|ひ": {
     "written": "火",
     "reading": "ひ",
@@ -894,6 +1025,71 @@
       "japanese": "海の水はしょっぱいです。",
       "reading": "うみのみずはしょっぱいです。",
       "english": "Sea water is salty."
+    }
+  },
+  "皆さん|みなさん": {
+    "written": "皆さん",
+    "reading": "みなさん",
+    "readingBreakdown": "<ruby>皆<rt>みな</rt></ruby>さん",
+    "meaning": "everyone / everybody",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "皆"
+      ],
+      "coversReadings": {
+        "皆": "みな"
+      }
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common classroom/social vocabulary in N5 while labeling 皆 as N3 support kanji."
+    },
+    "notes": "N5 vNext common classroom and greeting word. Source-listed as N5 vocabulary and JMdict-priority supported; 皆 is N3 support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "皆さん、こんにちは。",
+      "reading": "みなさん、こんにちは。",
+      "english": "Hello, everyone."
+    }
+  },
+  "階段|かいだん": {
+    "written": "階段",
+    "reading": "かいだん",
+    "readingBreakdown": "<ruby>階段<rt>かいだん</rt></ruby>",
+    "meaning": "stairs / staircase",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "階",
+        "段"
+      ],
+      "coversReadings": {}
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common place vocabulary in N5 while labeling 階 and 段 as N3 support kanji."
+    },
+    "notes": "N5 vNext common place word. Source-listed as N5 vocabulary and JMdict-priority supported; 階 and 段 are N3 support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "階段を上ります。",
+      "reading": "かいだんをのぼります。",
+      "english": "I go up the stairs."
     }
   },
   "外|そと": {
@@ -1098,6 +1294,39 @@
       "english": "I will travel to Kansai in the spring."
     }
   },
+  "机|つくえ": {
+    "written": "机",
+    "reading": "つくえ",
+    "readingBreakdown": "<ruby>机<rt>つくえ</rt></ruby>",
+    "meaning": "desk",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "机"
+      ],
+      "coversReadings": {
+        "机": "つくえ"
+      }
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common classroom vocabulary in N5 while labeling 机 as N2 support kanji."
+    },
+    "notes": "N5 vNext common classroom word. Source-listed as N5 vocabulary and JMdict-priority supported; 机 is N2 support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "机の上に本があります。",
+      "reading": "つくえのうえにほんがあります。",
+      "english": "There is a book on the desk."
+    }
+  },
   "休み|やすみ": {
     "written": "休み",
     "reading": "やすみ",
@@ -1210,6 +1439,39 @@
       "english": "I went to Japan last year."
     },
     "notes": "Core beginner time word for last year; 去 is higher-level support and the N5 focus remains 年 -> ねん."
+  },
+  "橋|はし": {
+    "written": "橋",
+    "reading": "はし",
+    "readingBreakdown": "<ruby>橋<rt>はし</rt></ruby>",
+    "meaning": "bridge",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "橋"
+      ],
+      "coversReadings": {
+        "橋": "はし"
+      }
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common place/travel vocabulary in N5 while labeling 橋 as N2 support kanji."
+    },
+    "notes": "N5 vNext common travel/place word. Source-listed as N5 vocabulary and JMdict-priority supported; 橋 is N2 support kanji and must stay visibly labeled; keep distinct from 箸.",
+    "exampleSentence": {
+      "japanese": "橋を渡ります。",
+      "reading": "はしをわたります。",
+      "english": "I cross the bridge."
+    }
   },
   "金具|かなぐ": {
     "written": "金具",
@@ -1375,6 +1637,39 @@
       "japanese": "九日に学校へ行きます。",
       "reading": "ここのかにがっこうへいきます。",
       "english": "I go to school on the ninth."
+    }
+  },
+  "靴|くつ": {
+    "written": "靴",
+    "reading": "くつ",
+    "readingBreakdown": "<ruby>靴<rt>くつ</rt></ruby>",
+    "meaning": "shoes / footwear",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "靴"
+      ],
+      "coversReadings": {
+        "靴": "くつ"
+      }
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common clothing vocabulary in N5 while labeling 靴 as N3 support kanji."
+    },
+    "notes": "N5 vNext common clothing word. Source-listed as N5 vocabulary and JMdict-priority supported; 靴 is N3 support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "新しい靴を買いました。",
+      "reading": "あたらしいくつをかいました。",
+      "english": "I bought new shoes."
     }
   },
   "靴下|くつした": {
@@ -2376,6 +2671,38 @@
       "japanese": "ここで左折します。",
       "reading": "ここでさせつします。",
       "english": "I turn left here."
+    }
+  },
+  "砂糖|さとう": {
+    "written": "砂糖",
+    "reading": "さとう",
+    "readingBreakdown": "<ruby>砂糖<rt>さとう</rt></ruby>",
+    "meaning": "sugar",
+    "jlpt": 5,
+    "source": "jlptstudy.net-n5",
+    "tags": [
+      "starter",
+      "common",
+      "n5",
+      "vnext-vocabulary"
+    ],
+    "coverage": {
+      "role": "core",
+      "focusKanji": [
+        "砂",
+        "糖"
+      ],
+      "coversReadings": {}
+    },
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common food vocabulary in N5 while labeling 砂 as N2 and 糖 as N1 support kanji."
+    },
+    "notes": "N5 vNext common food word. Source-listed as N5 vocabulary and JMdict-priority supported; 砂 and 糖 are higher-level support kanji and must stay visibly labeled.",
+    "exampleSentence": {
+      "japanese": "コーヒーに砂糖を入れます。",
+      "reading": "こーひーにさとうをいれます。",
+      "english": "I put sugar in coffee."
     }
   },
   "昨日|きのう": {

@@ -4,6 +4,14 @@ const { extractConstituentKanji, isLikelyPhraseCard } = require("./wordExportSer
 const LEVEL_RE = /^\s*(?:jlpt\s*)?n?\s*([1-5])\s*$/i;
 const TRIAGE_DECISIONS = new Set(["keep_candidate", "move_candidate", "defer_candidate", "reject_candidate"]);
 
+function normalizePlacementMode(value = "kanji-anchor") {
+    const mode = String(value || "kanji-anchor").trim();
+    if (mode === "kanji-anchor" || mode === "vocabulary-level") {
+        return mode;
+    }
+    throw new Error("Word inventory expansion placementMode must be one of: kanji-anchor, vocabulary-level.");
+}
+
 function normalizeHeader(value) {
     return String(value || "")
         .trim()
@@ -239,10 +247,12 @@ function classifyCandidateDisposition(row, {
     jlptLevelContract,
     jlptWordLevelContract,
     requireSourceLevel = false,
+    placementMode = "kanji-anchor",
 }) {
     const scope = classifyKanjiScope(row, { targetLevel, jlptLevelContract });
     const governedEntry = jlptWordLevelContract?.wordLevels?.[row.key] || null;
     const excludedEntry = jlptWordLevelContract?.excludedWordLevels?.[row.key] || null;
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
 
     if (governedEntry) {
         return {
@@ -279,17 +289,36 @@ function classifyCandidateDisposition(row, {
             scope,
         };
     }
-    if (scope.targetKanji.length === 0) {
-        return {
-            disposition: "no_target_kanji",
-            reason: `does not contain N${targetLevel} kanji`,
-            scope,
-        };
-    }
     if (isLikelyPhraseCard(row)) {
         return {
             disposition: "likely_phrase",
             reason: "looks phrase-shaped rather than lexicalized",
+            scope,
+        };
+    }
+    if (normalizedPlacementMode === "vocabulary-level") {
+        const reviewNeeds = [];
+        if (scope.harderKanji.length > 0) {
+            reviewNeeds.push(`harder support-kanji labels ${scope.harderKanji.map((entry) => `${entry.kanji}=N${entry.level}`).join(", ")}`);
+        }
+        if (scope.outsideJlptKanji.length > 0) {
+            reviewNeeds.push(`outside-JLPT labels ${scope.outsideJlptKanji.map((entry) => entry.kanji).join(", ")}`);
+        }
+        if (scope.targetKanji.length === 0) {
+            reviewNeeds.push(`no N${targetLevel} kanji anchor; vocabulary-level placement reason required`);
+        }
+
+        return {
+            disposition: "review_candidate",
+            reason: "not governed yet; source-listed vocabulary fits the requested JLPT vocabulary level and needs editorial review"
+                + (reviewNeeds.length > 0 ? `; ${reviewNeeds.join("; ")}` : ""),
+            scope,
+        };
+    }
+    if (scope.targetKanji.length === 0) {
+        return {
+            disposition: "no_target_kanji",
+            reason: `does not contain N${targetLevel} kanji`,
             scope,
         };
     }
@@ -412,7 +441,7 @@ function normalizeMoveTargetLevel(value) {
     return match ? Number(match[1]) : null;
 }
 
-function normalizeTriageDecision(decision, { key = "", currentLevel = null } = {}) {
+function normalizeTriageDecisionCore(decision, { key = "", currentLevel = null } = {}) {
     if (!decision || typeof decision !== "object") {
         return null;
     }
@@ -449,6 +478,38 @@ function normalizeTriageDecision(decision, { key = "", currentLevel = null } = {
     return normalized;
 }
 
+function normalizePlacementTriageDecisions(decisions = {}, { key = "", currentLevel = null } = {}) {
+    const normalized = {};
+    for (const [mode, decision] of Object.entries(decisions || {})) {
+        const normalizedMode = normalizePlacementMode(mode);
+        const normalizedDecision = normalizeTriageDecisionCore(decision, {
+            key: key ? `${key}/${normalizedMode}` : normalizedMode,
+            currentLevel,
+        });
+        if (normalizedDecision) {
+            normalized[normalizedMode] = normalizedDecision;
+        }
+    }
+    return normalized;
+}
+
+function normalizeTriageDecision(decision, { key = "", currentLevel = null } = {}) {
+    const normalized = normalizeTriageDecisionCore(decision, { key, currentLevel });
+    if (!normalized) {
+        return null;
+    }
+
+    const placementDecisions = normalizePlacementTriageDecisions(
+        decision.placementDecisions || decision.modeDecisions || {},
+        { key, currentLevel }
+    );
+    if (Object.keys(placementDecisions).length > 0) {
+        normalized.placementDecisions = placementDecisions;
+    }
+
+    return normalized;
+}
+
 function normalizeTriageDecisions(triageDecisions = {}, { currentLevel = null } = {}) {
     const normalized = {};
     for (const [key, decision] of Object.entries(triageDecisions || {})) {
@@ -458,6 +519,68 @@ function normalizeTriageDecisions(triageDecisions = {}, { currentLevel = null } 
         }
     }
     return normalized;
+}
+
+function formatEffectiveTriageDecision(decision, metadata = {}) {
+    if (!decision) {
+        return null;
+    }
+    const rest = { ...decision };
+    delete rest.placementDecisions;
+    return {
+        ...rest,
+        ...metadata,
+    };
+}
+
+function resolveTriageDecisionForPlacementMode(decision, { placementMode = "kanji-anchor" } = {}) {
+    if (!decision) {
+        return null;
+    }
+
+    const normalizedMode = normalizePlacementMode(placementMode);
+    const modeDecision = decision.placementDecisions?.[normalizedMode];
+    if (modeDecision) {
+        return formatEffectiveTriageDecision(modeDecision, {
+            placementMode: normalizedMode,
+            triageSource: "placementDecisions",
+        });
+    }
+
+    if (normalizedMode === "vocabulary-level" && decision.decision === "move_candidate") {
+        return null;
+    }
+
+    return formatEffectiveTriageDecision(decision, {
+        placementMode: "kanji-anchor",
+        triageSource: "legacy",
+    });
+}
+
+function resolveLegacyTriageDecisionForPlacementMode(decision, { placementMode = "kanji-anchor" } = {}) {
+    if (!decision) {
+        return null;
+    }
+
+    const normalizedMode = normalizePlacementMode(placementMode);
+    const effectiveDecision = resolveTriageDecisionForPlacementMode(decision, { placementMode: normalizedMode });
+    const legacyDecision = formatEffectiveTriageDecision(decision, {
+        placementMode: "kanji-anchor",
+        triageSource: "legacy",
+    });
+    if (!effectiveDecision) {
+        return legacyDecision;
+    }
+    if (
+        normalizedMode !== "kanji-anchor"
+        && (
+            legacyDecision.decision !== effectiveDecision.decision
+            || legacyDecision.targetLevel !== effectiveDecision.targetLevel
+        )
+    ) {
+        return legacyDecision;
+    }
+    return null;
 }
 
 function buildWordInventoryExpansionCandidateReport({
@@ -470,6 +593,7 @@ function buildWordInventoryExpansionCandidateReport({
     requireSourceLevel = false,
     sourceLabel = "external",
     triageDecisions = {},
+    placementMode = "kanji-anchor",
 } = {}) {
     if (!Number.isInteger(targetLevel) || targetLevel < 1 || targetLevel > 5) {
         throw new Error("Target level must be an integer from 1 to 5.");
@@ -496,15 +620,24 @@ function buildWordInventoryExpansionCandidateReport({
     });
 
     const sameWrittenContractIndex = buildSameWrittenContractIndex(jlptWordLevelContract);
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const normalizedTriageDecisions = normalizeTriageDecisions(triageDecisions, { currentLevel: targetLevel });
     const reviewedRows = [...rowsByKey.values()]
         .map((row) => {
+            const normalizedTriageDecision = normalizedTriageDecisions[row.key] || null;
+            const triageDecision = resolveTriageDecisionForPlacementMode(normalizedTriageDecision, {
+                placementMode: normalizedPlacementMode,
+            });
+            const sourceTriageDecision = resolveLegacyTriageDecisionForPlacementMode(normalizedTriageDecision, {
+                placementMode: normalizedPlacementMode,
+            });
             const classified = classifyCandidateDisposition(row, {
                 targetLevel,
                 kanjiScope,
                 jlptLevelContract,
                 jlptWordLevelContract,
                 requireSourceLevel,
+                placementMode: normalizedPlacementMode,
             });
             return {
                 ...row,
@@ -518,7 +651,8 @@ function buildWordInventoryExpansionCandidateReport({
                 easierKanji: classified.scope.easierKanji,
                 outsideJlptKanji: classified.scope.outsideJlptKanji.map((entry) => entry.kanji),
                 sameWrittenContractEntries: findSameWrittenContractEntries(row, sameWrittenContractIndex),
-                triageDecision: normalizedTriageDecisions[row.key] || null,
+                triageDecision,
+                sourceTriageDecision,
             };
         })
         .sort(compareCandidateRows);
@@ -543,6 +677,7 @@ function buildWordInventoryExpansionCandidateReport({
             uniqueRows: rowsByKey.size,
             duplicateSourceRows,
             kanjiScope,
+            placementMode: normalizedPlacementMode,
             requireSourceLevel,
             reviewCandidateRows: candidateRows.length,
             shownCandidateRows: Math.min(candidateRows.length, limit),
@@ -595,6 +730,13 @@ function appendTriageLines(lines, row) {
     } else {
         lines.push("   triage: untriaged");
     }
+    if (row.sourceTriageDecision) {
+        lines.push(`   anchor triage retained: ${row.sourceTriageDecision.decision} [${row.sourceTriageDecision.priority}]`);
+        if (Number.isInteger(row.sourceTriageDecision.targetLevel)) {
+            lines.push(`   anchor triage target level: N${row.sourceTriageDecision.targetLevel}`);
+        }
+        lines.push(`   anchor triage reason: ${row.sourceTriageDecision.reason}`);
+    }
 }
 
 function formatWordInventoryExpansionCandidateReport(report) {
@@ -606,6 +748,7 @@ function formatWordInventoryExpansionCandidateReport(report) {
     lines.push("");
     lines.push(`Source: ${report.sourceLabel}`);
     lines.push(`Kanji scope: ${report.summary.kanjiScope}`);
+    lines.push(`Placement mode: ${report.summary.placementMode || "kanji-anchor"}`);
     lines.push(`Source rows: ${report.summary.sourceRows}`);
     lines.push(`Normalized written-reading rows: ${report.summary.normalizedRows}`);
     lines.push(`Unique written-reading rows: ${report.summary.uniqueRows}`);
@@ -693,6 +836,8 @@ module.exports = {
     normalizeTriageDecisions,
     normalizeCandidateSourceRow,
     normalizeCandidateSourceRows,
+    normalizePlacementMode,
+    resolveTriageDecisionForPlacementMode,
     parseCandidateSourceText,
     parseDelimitedLine,
     parseSourceLevel,

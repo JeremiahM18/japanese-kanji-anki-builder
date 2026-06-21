@@ -487,9 +487,17 @@
       "鉛筆|えんぴつ": {
         "decision": "move_candidate",
         "targetLevel": "N2",
-        "priority": "medium",
-        "reason": "Common pencil noun with exact governed JMdict identity support, but it has no N5 anchor; 筆 is N2 and 鉛 is harder N1 support that must stay visibly labeled.",
-        "nextStep": "Route only through the N2 word contract and starter-data review; require explicit support-kanji labeling for 鉛 before any promotion."
+        "priority": "high",
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the nearest support-kanji anchor is 筆=N2, with 鉛=N1 also present.",
+        "nextStep": "Anchor-mode expansion should route this row through N2; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common school vocabulary in N5 while labeling 鉛 as N1 and 筆 as N2 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "置く|おく": {
         "decision": "move_candidate",
@@ -578,9 +586,17 @@
       "泳ぐ|およぐ": {
         "decision": "move_candidate",
         "targetLevel": "N2",
-        "priority": "medium",
-        "reason": "Common swim verb with exact JMdict verification and priority support, but the only kanji anchor is N2 泳 and existing pond/swan examples do not create an exact 泳ぐ word card.",
-        "nextStep": "Route only through the N2 word contract and starter-data review with a clean swimming example."
+        "priority": "high",
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the only kanji anchor is 泳=N2.",
+        "nextStep": "Anchor-mode expansion should route this row through N2; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common vocabulary in the N5 deck while labeling 泳 as N2 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "降りる|おりる": {
         "decision": "move_candidate",
@@ -599,8 +615,16 @@
         "decision": "move_candidate",
         "targetLevel": "N3",
         "priority": "high",
-        "reason": "Common stairs/staircase noun with exact JMdict verification and priority support, but both kanji anchors are N3 階 and 段 with no N5 anchor.",
-        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete stairs/staircase example."
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the kanji anchors are 階=N3 and 段=N3.",
+        "nextStep": "Anchor-mode expansion should route this row through N3; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common place vocabulary in N5 while labeling 階 and 段 as N3 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "返す|かえす": {
         "decision": "move_candidate",
@@ -697,8 +721,16 @@
         "decision": "move_candidate",
         "targetLevel": "N3",
         "priority": "high",
-        "reason": "Common shoe/footwear noun with exact JMdict verification and priority support, but the only kanji anchor is N3 靴; governed 靴下|くつした does not cover the standalone 靴 word identity.",
-        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete shoe/footwear example."
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the only kanji anchor is 靴=N3.",
+        "nextStep": "Anchor-mode expansion should route this row through N3; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common clothing vocabulary in N5 while labeling 靴 as N3 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "曇り|くもり": {
         "decision": "move_candidate",
@@ -822,8 +854,16 @@
         "decision": "move_candidate",
         "targetLevel": "N2",
         "priority": "high",
-        "reason": "Common sugar noun with exact JMdict verification and priority support, but it has no N5 anchor; 砂 is N2 and 糖 is harder N1 support that must stay visibly labeled.",
-        "nextStep": "Route only through the N2 word contract and starter-data review with explicit support-kanji labeling for 糖."
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the nearest support-kanji anchor is 砂=N2, with 糖=N1 also present.",
+        "nextStep": "Anchor-mode expansion should route this row through N2; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common food vocabulary in N5 while labeling 砂 as N2 and 糖 as N1 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "散歩|さんぽ（する）": {
         "decision": "reject_candidate",
@@ -834,9 +874,17 @@
       "塩|しお": {
         "decision": "move_candidate",
         "targetLevel": "N2",
-        "priority": "medium",
-        "reason": "Common salt noun with exact JMdict verification and priority support, but the only kanji anchor is N2 塩 and no current lower-level card covers this exact word identity.",
-        "nextStep": "Route only through the N2 word contract and starter-data review with a simple table-salt or cooking example."
+        "priority": "high",
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the only kanji anchor is 塩=N2.",
+        "nextStep": "Anchor-mode expansion should route this row through N2; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common food vocabulary in N5 while labeling 塩 as N2 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "静か|しずか": {
         "decision": "move_candidate",
@@ -961,8 +1009,16 @@
         "decision": "move_candidate",
         "targetLevel": "N2",
         "priority": "high",
-        "reason": "Common desk noun with exact JMdict verification and priority support, but the only kanji anchor is N2 机 and no current lower-level card covers this exact word identity.",
-        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete desk example."
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the only kanji anchor is 机=N2.",
+        "nextStep": "Anchor-mode expansion should route this row through N2; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common classroom vocabulary in N5 while labeling 机 as N2 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "勤める|つとめる": {
         "decision": "move_candidate",
@@ -1108,8 +1164,16 @@
         "decision": "move_candidate",
         "targetLevel": "N2",
         "priority": "high",
-        "reason": "Common bridge noun with exact JMdict verification and priority support, but the only kanji anchor is N2 橋 and no current lower-level card covers this exact word identity.",
-        "nextStep": "Route only through the N2 word contract and starter-data review with a bridge example; keep it distinct from homophones such as 箸."
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the only kanji anchor is 橋=N2.",
+        "nextStep": "Anchor-mode expansion should route this row through N2; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common place/travel vocabulary in N5 while labeling 橋 as N2 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "初め/始め|はじめ": {
         "decision": "reject_candidate",
@@ -1175,9 +1239,17 @@
       "暇|ひま": {
         "decision": "move_candidate",
         "targetLevel": "N1",
-        "priority": "medium",
-        "reason": "Common free-time/leisure noun or adjectival noun with exact JMdict verification and priority support, but the only kanji anchor is N1 暇 and no current lower-level card covers this exact word identity.",
-        "nextStep": "Route only through the N1 word contract and starter-data review with a simple free-time example."
+        "priority": "high",
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the only kanji anchor is 暇=N1.",
+        "nextStep": "Anchor-mode expansion should route this row through N1; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common daily-life vocabulary in N5 while labeling 暇 as N1 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "昼御飯|ひるごはん": {
         "decision": "reject_candidate",
@@ -1293,8 +1365,16 @@
         "decision": "move_candidate",
         "targetLevel": "N3",
         "priority": "high",
-        "reason": "Common polite everyone/everybody word with exact JMdict verification and priority support, but the only kanji anchor is N3 皆 and no current lower-level card covers this exact word identity.",
-        "nextStep": "Route only through the N3 word contract and starter-data review; compare with 皆|みんな and kana-first みなさん before promotion."
+        "reason": "Kanji-anchor triage keeps this source-listed N5 word out of anchor-mode N5 because the only kanji anchor is 皆=N3.",
+        "nextStep": "Anchor-mode expansion should route this row through N3; vocabulary-level N5 promotion is recorded under placementDecisions.vocabulary-level.",
+        "placementDecisions": {
+          "vocabulary-level": {
+            "decision": "keep_candidate",
+            "priority": "high",
+            "reason": "JLPTStudy N5 discovery row with exact JMdict identity and priority support; N5 vNext keeps common classroom/social vocabulary in N5 while labeling 皆 as N3 support kanji.",
+            "nextStep": "Promoted in the N5 vNext vocabulary-level Silver test batch; continue through generated Silver, Gold, Sapphire, Platinum, audio, pitch, and Obsidian gates before release claims."
+          }
+        }
       },
       "耳|みみ": {
         "decision": "move_candidate",

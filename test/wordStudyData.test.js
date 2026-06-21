@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2142);
+    assert.equal(Object.keys(starterEntries).length, 2152);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
         3: 1081,
         4: 700,
-        5: 307,
+        5: 317,
     });
 });
 
@@ -5383,12 +5383,14 @@ test("normalizeWordStudyData keeps explicit learner-fit level placement reasons"
             meaning: "popularity / popular",
             jlpt: 4,
             levelPlacement: {
+                mode: "vocabulary-level",
                 reason: " Common and useful, but N4 is a better learner-fit introduction than N5. ",
             },
         },
     });
 
     assert.deepEqual(normalized["人気|にんき"].levelPlacement, {
+        mode: "vocabulary-level",
         reason: "Common and useful, but N4 is a better learner-fit introduction than N5.",
     });
 });
@@ -7264,6 +7266,35 @@ test("tracked starter word data includes the final N5 source expansion keepers",
     assert.equal(starterEntries["留学生|りゅうがくせい"].source, "jlptstudy.net-n5");
     assert.match(starterEntries["本棚|ほんだな"].notes, /higher-level kanji/);
     assert.match(starterEntries["留学生|りゅうがくせい"].notes, /higher-level kanji/);
+});
+
+test("tracked starter word data includes the N5 vNext common-vocabulary batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const expectedRows = [
+        ["泳ぐ|およぐ", ["泳"], { 泳: "およ" }],
+        ["鉛筆|えんぴつ", ["鉛", "筆"], {}],
+        ["塩|しお", ["塩"], { 塩: "しお" }],
+        ["暇|ひま", ["暇"], { 暇: "ひま" }],
+        ["皆さん|みなさん", ["皆"], { 皆: "みな" }],
+        ["階段|かいだん", ["階", "段"], {}],
+        ["机|つくえ", ["机"], { 机: "つくえ" }],
+        ["橋|はし", ["橋"], { 橋: "はし" }],
+        ["靴|くつ", ["靴"], { 靴: "くつ" }],
+        ["砂糖|さとう", ["砂", "糖"], {}],
+    ];
+
+    for (const [key, focusKanji, coversReadings] of expectedRows) {
+        const entry = starterEntries[key];
+
+        assert.equal(entry?.source, "jlptstudy.net-n5");
+        assert.equal(entry?.jlpt, 5);
+        assert.equal(entry?.coverage?.role, "core");
+        assert.deepEqual(entry?.coverage?.focusKanji, focusKanji);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level");
+        assert.match(entry?.levelPlacement?.reason || "", /JLPTStudy N5 discovery row/);
+        assert.equal(entry?.tags?.includes("vnext-vocabulary"), true);
+        assert.deepEqual(entry?.coverage?.coversReadings, coversReadings);
+    }
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

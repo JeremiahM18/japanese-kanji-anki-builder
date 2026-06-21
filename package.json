@@ -220,6 +220,7 @@
     "deck:words:expansion-candidates:n1": "node scripts/reportWordInventoryExpansionCandidates.js --level=1",
     "deck:words:candidate-agreement": "node scripts/reportWordCandidateAgreement.js",
     "deck:words:common-expansion": "node scripts/reportWordCommonExpansionSelector.js",
+    "deck:words:vocab-expansion": "node scripts/reportWordCommonExpansionSelector.js --placement-mode=vocabulary-level",
     "deck:words:expansion-signals": "node scripts/reportWordExpansionSignals.js",
     "ci:smoke": "node scripts/ciSmoke.js",
     "release:gate": "node scripts/releaseGate.js",

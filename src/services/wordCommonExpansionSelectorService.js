@@ -10,6 +10,7 @@ const {
     buildWordInventoryExpansionCandidateReport,
     parseCandidateSourceText,
 } = require("./wordInventoryExpansionCandidateService");
+const { normalizePlacementMode } = require("./wordCandidateAgreementService");
 
 const SOURCE_UNIVERSE_WARNING = "Configured-source selector only; not an official or global JLPT vocabulary universe.";
 
@@ -174,6 +175,7 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         learnerFitRisks: agreementRow?.learnerFitRisks || [],
         sameWrittenConflicts: agreementRow?.sameWrittenConflicts || expansionRow.sameWrittenContractEntries || [],
         triageDecision: expansionRow.triageDecision || agreementRow?.triageDecisions?.[0] || null,
+        sourceTriageDecision: expansionRow.sourceTriageDecision || null,
         contractStatus: agreementRow?.contractStatus || null,
         targetKanji: expansionRow.targetKanji || agreementRow?.targetKanji || [],
         constituentKanji: expansionRow.constituentKanji || [],
@@ -224,8 +226,10 @@ function buildLevelSelectorReport({
     jlptWordLevelContract,
     triageDecisionsByLevelSource = {},
     limit = 40,
+    placementMode = "kanji-anchor",
     readFile = fs.readFileSync,
 } = {}) {
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const candidateSources = getCandidateDiscoverySourcesForLevel(manifest, level);
     const blockers = [];
     if (candidateSources.length !== 1) {
@@ -275,6 +279,7 @@ function buildLevelSelectorReport({
         triageDecisions: triageDecisionsByLevelSource?.[`N${level}`]?.[sourceId] || {},
         jlptLevelContract,
         jlptWordLevelContract,
+        placementMode: normalizedPlacementMode,
     });
 
     const agreementRowsByKey = buildAgreementRowIndex(agreementLevelReport);
@@ -320,8 +325,10 @@ function buildWordCommonExpansionSelectorReport({
     wordPitchAccentData = {},
     triageDecisionsByLevelSource = {},
     limit = 40,
+    placementMode = "kanji-anchor",
     readFile = fs.readFileSync,
 } = {}) {
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const agreementReport = buildWordCandidateAgreementReport({
         levels,
         manifest,
@@ -331,6 +338,7 @@ function buildWordCommonExpansionSelectorReport({
         wordPitchAccentData,
         triageDecisionsByLevelSource,
         limit: Number.MAX_SAFE_INTEGER,
+        placementMode: normalizedPlacementMode,
         readFile,
     });
     const sourceSummariesById = new Map(agreementReport.sourceSummaries.map((summary) => [summary.sourceId, summary]));
@@ -344,6 +352,7 @@ function buildWordCommonExpansionSelectorReport({
         jlptWordLevelContract,
         triageDecisionsByLevelSource,
         limit,
+        placementMode: normalizedPlacementMode,
         readFile,
     }));
     const blockers = [
@@ -355,6 +364,7 @@ function buildWordCommonExpansionSelectorReport({
         reportName: "word-common-expansion-selector",
         manifestVersion: agreementReport.manifestVersion,
         manifestCheckedAt: agreementReport.manifestCheckedAt,
+        placementMode: normalizedPlacementMode,
         configuredSourceOnly: true,
         warning: SOURCE_UNIVERSE_WARNING,
         levels,
@@ -397,6 +407,7 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
         "",
         "Read-only report: this does not add Silver rows, change contracts, move denominators, approve cards, or certify review lanes.",
         `Source scope: ${report.warning}`,
+        `Placement mode: ${report.placementMode || "kanji-anchor"}`,
         "",
         `Manifest: version ${report.manifestVersion}; checked ${report.manifestCheckedAt}`,
         `Placement gate: ${report.placementAudit?.violationCount || 0}/${report.placementAudit?.checked || 0} word-level placement violations`,
@@ -458,6 +469,12 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
                 lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority || "normal"}] - ${row.triageDecision.reason}`);
                 if (Number.isInteger(row.triageDecision.targetLevel)) {
                     lines.push(`   triage target level: N${row.triageDecision.targetLevel}`);
+                }
+            }
+            if (row.sourceTriageDecision) {
+                lines.push(`   anchor triage retained: ${row.sourceTriageDecision.decision} [${row.sourceTriageDecision.priority || "normal"}] - ${row.sourceTriageDecision.reason}`);
+                if (Number.isInteger(row.sourceTriageDecision.targetLevel)) {
+                    lines.push(`   anchor triage target level: N${row.sourceTriageDecision.targetLevel}`);
                 }
             }
             if (row.sameWrittenConflicts.length > 0) {

@@ -347,6 +347,8 @@ The common-word selector is a read-only Silver planning report. It starts from e
 
 The common-word queue is only active after the selected level's reading-gap expansion signal is exhausted: no active reading-gap editorial or promote-curated-example items may remain. The configured source-list enhancement and word-placement signals are still reported as governance context, but they do not block the post-reading common-word queue from opening. Deferred variants and low-value readings remain recorded as reading-lane decisions; they do not become permission to bypass source governance.
 
+Fallback/free-source expansion is a later lane, not a shortcut. Do not activate an extra free/permitted source family until both prerequisites are true for the level: reading expansion is exhausted, and the current new-word selector has no `ready_for_editorial_review`, no `needs_triage`, and no `move_candidate` rows left to resolve in target levels. Extra source-family rows must be visibly labeled `Source level claim unverified`; the label means "this free/permitted source claims N-level placement, but the claim is not official JLPT truth and is still pre-trust."
+
 Version naming: call the post-reading common-word expansion for N5 and N4 the word `v2` path. For N3, N2, and N1, the same common-word expansion belongs to their word `v1` implementation because those levels have not shipped the same lower-lane frozen vocabulary surface. Do not use future-name placeholders for this work.
 
 Use the placement mode deliberately:
@@ -357,9 +359,11 @@ Use the placement mode deliberately:
 
 Selector rows are still pre-trust. A row marked `ready_for_editorial_review` has source identity, dictionary support, commonness support, and a keep-style triage decision; it still needs explicit card approval, starter/contract edits in a later scoped expansion, examples, reading breakdown, kanji labels, audio, pitch, Gold, Sapphire, Platinum, and readiness gates before it becomes a shipped word card.
 
+Every selector row carries a source-level label. For free/permitted candidate-discovery sources, the label is `Source level claim unverified`; do not remove, hide, or soften it for fallback rows. The label is separate from learner usefulness: a word can be useful/common/learner-friendly and still need the unverified source-level label until source adequacy reaches the governed universe standard.
+
 Standalone one-kanji written forms are queue-eligible when the level gate is active; do not block them only because the word is one kanji. If the active source row uses template notation in the reading, keep it as `needs_triage` until editorial review resolves whether the notation represents a useful card identity.
 
-The selector reports `sourceUniverse.configuredSourceOnly: true` for every level. This is intentional: N5/N4 configured-source exhaustion means only that the currently pinned source list has no active current-level keep backlog, not that every common JLPT word in the world has been evaluated. A zero-row ready queue is not source adequacy. If the editorial target is broader than the pinned source row count, add approved candidate-discovery sources before claiming all common words are covered. For example, the current JLPTStudy discovery sources are 537 rows for N5 and 681 rows for N4, so they cannot settle broader common-vocabulary claims by themselves.
+The selector reports `sourceUniverse.configuredSourceOnly: true` for every level. This is intentional: N5/N4 configured-source exhaustion means only that the currently pinned source list has no active current-level keep backlog, not that every common JLPT word in the world has been evaluated. A zero-row ready queue is not source adequacy. If the editorial target is broader than the pinned source row count, add approved candidate-discovery sources only after prior selector work is exhausted, and keep the extra rows labeled as unverified source-level claims. For example, the current JLPTStudy discovery sources are 537 rows for N5 and 681 rows for N4, so they cannot settle broader common-vocabulary claims by themselves.
 
 ## Govern word source adequacy
 

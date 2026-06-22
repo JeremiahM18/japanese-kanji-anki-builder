@@ -1468,6 +1468,182 @@
         "reason": "Common cross/go-across verb with exact JMdict verification and priority support, but the only kanji anchor is N3 渡 and it is distinct from 渡す.",
         "nextStep": "Route only through the N3 word contract and starter-data review with an example that teaches the intransitive crossing sense."
       }
+    },
+    "tanos-n5-vocab": {
+      "さ来年|さらいねん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source spelling is mixed-kana and weaker than the usual exact vocabulary identity for year-after-next; adding it from the extra Tanos N5 source would risk alternate-spelling clutter.",
+        "nextStep": "Do not promote this exact source row; review a cleaner year-after-next written form separately only if a later source path justifies it."
+      },
+      "もう一度|もういちど": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-friendly again/one-more-time expression with exact Tanos N5 discovery, JMdict dictionary verification, and JMdict priority/commonness support; 度 is N4 support and should be labeled rather than used as a blocker.",
+        "nextStep": "Promote only through a future N5 word v2 extra-source Silver batch with the Source level claim unverified label, explicit 度=N4 support labeling, a simple repeat/again example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "一月|ひとつき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Useful duration idea, but the written front is ambiguous with January and cleaner beginner surfaces such as 一か月 should be reviewed first.",
+        "nextStep": "Do not promote this exact Tanos extra-source row in the first N5 v2 expansion pass."
+      },
+      "一昨日|おととい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful day-before-yesterday word with exact Tanos N5 discovery, JMdict dictionary verification, and JMdict priority/commonness support; 昨 is N3 support and should be visibly labeled rather than blocking the vocabulary-level row.",
+        "nextStep": "Promote only through a future N5 word v2 extra-source Silver batch with the Source level claim unverified label, explicit 昨=N3 support labeling, whole-word reading treatment, a simple time example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "一昨年|おととし": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful year-before-last time word with exact Tanos N5 discovery, JMdict dictionary verification, and JMdict priority/commonness support; 昨 is N3 support and should be visibly labeled rather than blocking the vocabulary-level row.",
+        "nextStep": "Promote only through a future N5 word v2 extra-source Silver batch with the Source level claim unverified label, explicit 昨=N3 support labeling, whole-word reading treatment, a simple past-year example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "何|なん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 何|なに; useful なん contexts are already taught more clearly through words such as 何時 and 何ですか.",
+        "nextStep": "Do not add a duplicate standalone front unless a future review proves the ambiguity is worth teaching."
+      },
+      "九|く": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 九|きゅう; useful く contexts are already better taught through words such as 九時.",
+        "nextStep": "Do not add a duplicate standalone number card for this N5 v2 extra-source pass."
+      },
+      "御飯|ごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact JMdict identity exists, but governed N4 ご飯|ごはん already teaches the learner-facing meal/cooked-rice word with the common mixed spelling; full-kanji 御飯 adds spelling-variant load.",
+        "nextStep": "Do not promote this full-kanji Tanos extra-source variant row; keep ご飯|ごはん as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "行く|ゆく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 行く|いく and the ゆく reading is a lower-value variant for this learner deck.",
+        "nextStep": "Do not promote unless a future product scope explicitly teaches alternate or literary readings."
+      },
+      "四|し": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 四|よん; useful し contexts are already better taught through words such as 四月.",
+        "nextStep": "Do not add a duplicate standalone number card for this N5 v2 extra-source pass."
+      },
+      "私|わたくし": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed N4 私|わたし; わたくし is a useful formal/humble variant, but it is lower priority than new non-duplicate N5 vocabulary rows for this extra-source pass.",
+        "nextStep": "Reconsider in a later pronoun/register variant pass with explicit learner-facing formality notes, not in the first N5 v2 extra-source triage set."
+      },
+      "自動車|じどうしゃ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Useful source-listed automobile word, but 車|くるま already covers the everyday beginner car word and 自動車 adds 自=N4 and 動=N4 support labels; this is less urgent than simpler non-duplicate N5 rows.",
+        "nextStep": "Reconsider in a future transportation expansion after higher-value N5 v2 extra-source gaps are handled."
+      },
+      "七|しち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 七|なな; useful しち contexts are already better taught through words such as 七時.",
+        "nextStep": "Do not add a duplicate standalone number card for this N5 v2 extra-source pass."
+      },
+      "終る|おわる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact JMdict identity exists, but governed N4 終わる|おわる already teaches the learner-facing finish/end verb with the standard okurigana spelling.",
+        "nextStep": "Do not promote this exact spelling-variant row; keep 終わる|おわる as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "小さな|ちいさな": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Governed 小さい already teaches the beginner adjective; the prenominal form adds grammar value but is not urgent enough for the first N5 v2 extra-source pass.",
+        "nextStep": "Reconsider later if the word deck adds adjective form-family expansion."
+      },
+      "大きな|おおきな": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Governed 大きい already teaches the beginner adjective; the prenominal form adds grammar value but is not urgent enough for the first N5 v2 extra-source pass.",
+        "nextStep": "Reconsider later if the word deck adds adjective form-family expansion."
+      },
+      "大丈夫|だいじょうぶ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common learner-friendly all-right/okay word with exact Tanos N5 discovery, JMdict dictionary verification, and JMdict priority/commonness support; 丈 is outside-JLPT and 夫=N3 support, but vocabulary-level expansion should label those supports rather than block the word.",
+        "nextStep": "Promote only through a future N5 word v2 extra-source Silver batch with the Source level claim unverified label, explicit 丈 outside-JLPT and 夫=N3 support labeling, a simple okay/safe example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "昼御飯|ひるごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source and JMdict row exists, but governed 昼ご飯|ひるごはん already teaches the learner-facing lunch word with the common mixed spelling and avoids extra N2 御 spelling load.",
+        "nextStep": "Do not promote this full-kanji Tanos extra-source variant row; keep 昼ご飯|ひるごはん as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "朝御飯|あさごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source row uses the full-kanji 朝御飯 spelling, duplicates governed N4 朝ご飯|あさごはん, and adds N2 御 spelling load without enough learner value.",
+        "nextStep": "Do not promote this full-kanji Tanos extra-source variant row; keep 朝ご飯|あさごはん as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "賑やか|にぎやか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-friendly lively/busy adjective with exact Tanos N5 discovery, JMdict dictionary verification, and JMdict priority/commonness support; outside-JLPT 賑 should be visibly labeled rather than used as an automatic blocker.",
+        "nextStep": "Promote only through a future N5 word v2 extra-source Silver batch with the Source level claim unverified label, explicit 賑 outside-JLPT support labeling, a simple lively/busy place example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "背|せ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful learner-facing height/stature word with exact Tanos N5 discovery, JMdict dictionary verification, and JMdict priority/commonness support; 背 is N3 support and the same-written 背|せい card is a different governed reading/sense rather than a duplicate exact identity.",
+        "nextStep": "Promote only through a future N5 word v2 extra-source Silver batch with the Source level claim unverified label, explicit 背=N3 support labeling, a simple height example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "煩い|うるさい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "The word うるさい is common and useful, but the exact kanji spelling 煩い is a high-friction N1-support surface for beginners and is lower priority than cleaner N5 vocabulary-level rows.",
+        "nextStep": "Reconsider only if the product adds a kana/common-spelling or alternate-kanji-spelling lane; do not promote this exact Tanos extra-source row in the first N5 v2 pass."
+      },
+      "晩御飯|ばんごはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source and JMdict row exists, but governed 晩ご飯|ばんごはん already teaches the learner-facing dinner word with the common mixed spelling and avoids extra N2 御 spelling load.",
+        "nextStep": "Do not promote this full-kanji Tanos extra-source variant row; keep 晩ご飯|ばんごはん as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "毎月|まいげつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 毎月|まいつき; the extra reading is useful but not necessary for the first N5 v2 extra-source pass.",
+        "nextStep": "Reconsider only after higher-value non-duplicate words are reviewed."
+      },
+      "毎年|まいねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same written front as governed 毎年|まいとし; the extra reading is useful but not necessary for the first N5 v2 extra-source pass.",
+        "nextStep": "Reconsider only after higher-value non-duplicate words are reviewed."
+      },
+      "万年筆|まんねんひつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Source-listed and valid, but fountain pen is lower immediate learner value than the higher-priority N5 v2 extra-source vocabulary rows and adds 筆=N2 support.",
+        "nextStep": "Reconsider in a school-supplies expansion only if learner usefulness remains clear."
+      },
+      "明い|あかるい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos row uses the nonstandard/variant 明い spelling while governed N4 明るい|あかるい already teaches the learner-facing bright/cheerful adjective with the standard okurigana spelling.",
+        "nextStep": "Do not promote this exact spelling-variant row; keep 明るい|あかるい as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "明日|あした": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Core beginner tomorrow word with exact Tanos N5 discovery, JMdict dictionary verification, and JMdict priority/commonness support; it shares written 明日 with governed N4 明日|あす, so promotion must be a deliberate duplicate-reading vocabulary decision with 明=N4 support labeling.",
+        "nextStep": "Promote only through a future N5 word v2 extra-source Silver batch with the Source level claim unverified label, explicit 明=N4 support labeling, duplicate-reading review against 明日|あす, a simple tomorrow example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "友達|ともだち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Governed 友だち|ともだち already teaches the beginner friend word with the learner-friendly mixed spelling; full-kanji 友達 adds duplicate spelling load.",
+        "nextStep": "Reconsider only if the word product adds spelling-variant cards."
+      }
     }
   },
   "N4": {

@@ -103,11 +103,11 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2148);
+    assert.equal(Object.keys(starterEntries).length, 2211);
     assert.deepEqual(countsByLevel, {
-        1: 26,
-        2: 28,
-        3: 1081,
+        1: 38,
+        2: 61,
+        3: 1099,
         4: 700,
         5: 313,
     });
@@ -5237,6 +5237,159 @@ test("tracked starter word data includes the one hundred twenty-third N3 Silver 
     assert.match(starterEntries["審判|しんぱん"].notes, /sports-referee sense/);
     assert.match(starterEntries["信用|しんよう"].notes, /jmdictPriority=ichi1,news1,nf03/);
     assert.equal(starterEntries["心配|しんぱい"].exampleSentence.japanese, "母は私の体調を心配しています。");
+});
+
+test("tracked starter word data includes the first N5 routed move-candidate target-level batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "お弁当|おべんとう",
+        "泳ぐ|およぐ",
+        "鉛筆|えんぴつ",
+        "塩|しお",
+        "奥さん|おくさん",
+        "温い|ぬるい",
+        "暇|ひま",
+        "灰皿|はいざら",
+        "皆さん|みなさん",
+        "階段|かいだん",
+        "角|かど",
+    ];
+
+    assert.equal(starterEntries["お弁当|おべんとう"].jlpt, 3);
+    assert.equal(starterEntries["泳ぐ|およぐ"].jlpt, 2);
+    assert.equal(starterEntries["鉛筆|えんぴつ"].jlpt, 2);
+    assert.equal(starterEntries["塩|しお"].jlpt, 2);
+    assert.equal(starterEntries["奥さん|おくさん"].jlpt, 3);
+    assert.equal(starterEntries["温い|ぬるい"].jlpt, 3);
+    assert.equal(starterEntries["暇|ひま"].jlpt, 1);
+    assert.equal(starterEntries["灰皿|はいざら"].jlpt, 2);
+    assert.equal(starterEntries["皆さん|みなさん"].jlpt, 3);
+    assert.equal(starterEntries["階段|かいだん"].jlpt, 3);
+    assert.equal(starterEntries["角|かど"].jlpt, 2);
+    assertCoverageReadings(starterEntries, [
+        ["お弁当|おべんとう", "当", "とう"],
+        ["泳ぐ|およぐ", "泳", "およぐ"],
+        ["鉛筆|えんぴつ", "筆", "ぴつ"],
+        ["塩|しお", "塩", "しお"],
+        ["奥さん|おくさん", "奥", "おく"],
+        ["温い|ぬるい", "温", "ぬるい"],
+        ["暇|ひま", "暇", "ひま"],
+        ["灰皿|はいざら", "灰", "はい"],
+        ["灰皿|はいざら", "皿", "ざら"],
+        ["皆さん|みなさん", "皆", "みな"],
+        ["階段|かいだん", "階", "かい"],
+        ["階段|かいだん", "段", "だん"],
+        ["角|かど", "角", "かど"],
+    ]);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "both"]));
+    assertReadingBreakdowns(starterEntries, [
+        ["お弁当|おべんとう", "お<ruby>弁<rt>べん</rt></ruby><ruby>当<rt>とう</rt></ruby>"],
+        ["泳ぐ|およぐ", "<ruby>泳<rt>およ</rt></ruby>ぐ"],
+        ["鉛筆|えんぴつ", "<ruby>鉛<rt>えん</rt></ruby><ruby>筆<rt>ぴつ</rt></ruby>"],
+        ["塩|しお", "<ruby>塩<rt>しお</rt></ruby>"],
+        ["奥さん|おくさん", "<ruby>奥<rt>おく</rt></ruby>さん"],
+        ["温い|ぬるい", "<ruby>温<rt>ぬる</rt></ruby>い"],
+        ["暇|ひま", "<ruby>暇<rt>ひま</rt></ruby>"],
+        ["灰皿|はいざら", "<ruby>灰<rt>はい</rt></ruby><ruby>皿<rt>ざら</rt></ruby>"],
+        ["皆さん|みなさん", "<ruby>皆<rt>みな</rt></ruby>さん"],
+        ["階段|かいだん", "<ruby>階<rt>かい</rt></ruby><ruby>段<rt>だん</rt></ruby>"],
+        ["角|かど", "<ruby>角<rt>かど</rt></ruby>"],
+    ]);
+    for (const key of batchKeys) {
+        assert.match(starterEntries[key].notes, /JLPTStudy N5 candidate lane/);
+        assert.match(starterEntries[key].notes, /source level claim is unverified/);
+        assert.match(starterEntries[key].notes, /priority\/commonness support/);
+    }
+    assert.match(starterEntries["お弁当|おべんとう"].notes, /弁 is harder N1 support/);
+    assert.match(starterEntries["鉛筆|えんぴつ"].notes, /鉛 is harder N1 support/);
+    assert.match(starterEntries["奥さん|おくさん"].notes, /not self-reference/);
+    assert.match(starterEntries["灰皿|はいざら"].notes, /neutral object example/);
+    assert.match(starterEntries["角|かど"].notes, /かど corner sense/);
+    assert.equal(starterEntries["暇|ひま"].exampleSentence.japanese, "週末は少し暇があります。");
+    assert.equal(starterEntries["階段|かいだん"].exampleSentence.japanese, "駅の階段を上りました。");
+});
+
+test("tracked starter word data includes all N5 routed move-candidate target-level batches", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const routedTargets = {
+        "お弁当|おべんとう": 3,
+        "泳ぐ|およぐ": 2,
+        "鉛筆|えんぴつ": 2,
+        "塩|しお": 2,
+        "奥さん|おくさん": 3,
+        "温い|ぬるい": 3,
+        "暇|ひま": 1,
+        "灰皿|はいざら": 2,
+        "皆さん|みなさん": 3,
+        "階段|かいだん": 3,
+        "角|かど": 2,
+        "甘い|あまい": 2,
+        "机|つくえ": 2,
+        "居る|いる": 2,
+        "橋|はし": 2,
+        "狭い|せまい": 1,
+        "曲る|まがる": 2,
+        "靴|くつ": 3,
+        "警官|けいかん": 3,
+        "結構|けっこう": 3,
+        "嫌|いや": 1,
+        "嫌い|きらい": 1,
+        "玄関|げんかん": 3,
+        "戸|と": 2,
+        "交差点|こうさてん": 3,
+        "厚い|あつい": 2,
+        "困る|こまる": 2,
+        "差す|さす": 3,
+        "砂糖|さとう": 2,
+        "細い|ほそい": 2,
+        "咲く|さく": 2,
+        "撮る|とる": 1,
+        "雑誌|ざっし": 3,
+        "傘|かさ": 1,
+        "歯|は": 2,
+        "取る|とる": 3,
+        "暑い|あつい": 1,
+        "辛い|からい": 2,
+        "晴れ|はれ": 2,
+        "晴れる|はれる": 2,
+        "静か|しずか": 2,
+        "脱ぐ|ぬぐ": 1,
+        "弾く|ひく": 1,
+        "暖かい|あたたかい": 1,
+        "締める|しめる": 1,
+        "曇り|くもり": 2,
+        "曇る|くもる": 2,
+        "難しい|むずかしい": 2,
+        "背|せい": 3,
+        "薄い|うすい": 2,
+        "鼻|はな": 2,
+        "封筒|ふうとう": 2,
+        "返す|かえす": 3,
+        "磨く|みがく": 2,
+        "卵|たまご": 2,
+        "涼しい|すずしい": 2,
+        "隣|となり": 1,
+        "冷蔵庫|れいぞうこ": 3,
+        "零|れい": 2,
+        "お皿|おさら": 2,
+        "お酒|おさけ": 3,
+        "結婚|けっこん": 3,
+        "掃除|そうじ": 2,
+    };
+
+    assert.equal(Object.keys(routedTargets).length, 63);
+    for (const [key, level] of Object.entries(routedTargets)) {
+        assert.equal(starterEntries[key]?.jlpt, level, `${key} should be routed to N${level}`);
+        assert.equal(starterEntries[key]?.coverage?.role, "both", `${key} should retain a Silver coverage role`);
+        assert.match(starterEntries[key]?.notes || "", /JLPTStudy N5 candidate lane/);
+        assert.match(starterEntries[key]?.notes || "", /source level claim is unverified/);
+    }
+    assert.equal(starterEntries["結婚|けっこん"].reading, "けっこん");
+    assert.equal(starterEntries["掃除|そうじ"].reading, "そうじ");
+    assert.match(starterEntries["結婚|けっこん"].notes, /parenthetical する marker/);
+    assert.match(starterEntries["掃除|そうじ"].notes, /parenthetical する marker/);
+    assert.match(starterEntries["お皿|おさら"].notes, /jmdictPriority=none/);
+    assert.match(starterEntries["お酒|おさけ"].notes, /jmdictPriority=none/);
 });
 
 test("tracked starter word data includes the first N2 Silver source-expansion batch", () => {

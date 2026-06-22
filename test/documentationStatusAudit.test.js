@@ -42,7 +42,7 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     assert.deepEqual(report.snapshot.sapphire, n3WordSnapshot.sapphire);
     assert.deepEqual(report.snapshot.platinum, n3WordSnapshot.platinum);
     assert.equal(report.snapshot.product.kanjiDenominator, 2212);
-    assert.equal(report.snapshot.product.wordDenominator, 2128);
+    assert.equal(report.snapshot.product.wordDenominator, 2191);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);
     assert.equal(report.snapshot.product.wordObsidianProof, 987);
 });
@@ -146,10 +146,10 @@ test("documentation status audit catches undocumented package scripts", () => {
 test("documentation status audit catches stale generated denominator docs", () => {
     const files = readDocumentationFiles();
     files["docs/employer-overview.md"] = files["docs/employer-overview.md"]
-        .replace("`2128` word rows", "`1470` word rows")
-        .replace("`2128/2128` across N5-N1 | `987/2128`", "`1470/1470` across N5-N1 | `987/1470`");
+        .replace("`2191` word rows", "`1470` word rows")
+        .replace("`2191/2191` across N5-N1 | `987/2191`", "`1470/1470` across N5-N1 | `987/1470`");
     files["docs/system-architecture.md"] = files["docs/system-architecture.md"]
-        .replace("| Words | 2128 | 987 |", "| Words | 1470 | 987 |");
+        .replace("| Words | 2191 | 987 |", "| Words | 1470 | 987 |");
 
     const report = auditDocumentationText({
         files,

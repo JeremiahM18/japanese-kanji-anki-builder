@@ -102,7 +102,7 @@ const wordEvidenceSourceSchema = z.object({
     tier: z.string().min(1),
     evidenceLineage: z.string().min(1),
     independenceGroup: z.string().min(1),
-    status: z.enum(["planned", "in_review", "active", "blocked", "deprecated"]).default("planned"),
+    status: z.enum(["planned", "registered", "in_review", "active", "blocked", "deprecated"]).default("planned"),
     sourceKind: jlptWordSourceKindSchema,
     sourceType: z.string().min(1).optional(),
     url: z.string().min(1).optional(),

@@ -16,7 +16,10 @@ const {
     validateWordSourceAccessPacket,
 } = require("../src/services/jlptWordSourceAccessPacketService");
 const { buildJlptWordSourceBatchMerge } = require("../src/services/jlptWordSourceBatchService");
-const { auditJlptWordSourceEvidence } = require("../src/services/jlptWordSourceEvidenceService");
+const {
+    auditJlptWordSourceEvidence,
+    buildSourceAccessReport,
+} = require("../src/services/jlptWordSourceEvidenceService");
 const {
     run: runWordSourceAccessPacketCommand,
 } = require("../scripts/createJlptWordSourceAccessPacket");
@@ -384,6 +387,45 @@ test("word source adequacy separates governance validity from incomplete evidenc
     assert.equal(report.evidenceDepthValid, false);
     assert.equal(report.postureCounts.level_universe_standard, 1);
     assert.equal(report.postureCounts.source_origin_not_evaluated, 1);
+});
+
+test("word source access report keeps registered future lanes out of review loops", () => {
+    const evidence = buildEvidence({
+        sources: {
+            registered_future: {
+                name: "Registered future source",
+                tier: "discovery",
+                evidenceLineage: "lineage_a",
+                independenceGroup: "family_a",
+                status: "registered",
+                sourceKind: "textbook-word-list",
+                countsForConsensus: false,
+                licenseStatus: "needs_review",
+                allowedUse: [],
+                canStoreWordAssignments: false,
+            },
+            reviewable_source: {
+                name: "Reviewable source",
+                tier: "discovery",
+                evidenceLineage: "lineage_b",
+                independenceGroup: "family_b",
+                status: "in_review",
+                sourceKind: "candidate-discovery",
+                countsForConsensus: false,
+                licenseStatus: "needs_review",
+                allowedUse: ["candidate-discovery", "level-hint"],
+                canStoreWordAssignments: false,
+            },
+        },
+        assignments: {},
+    });
+    const report = buildSourceAccessReport({ evidence });
+    const sourcesById = new Map(report.sources.map((source) => [source.sourceId, source]));
+
+    assert.equal(sourcesById.get("registered_future").recommendedAction, "registered_no_current_source_access");
+    assert.equal(sourcesById.get("reviewable_source").recommendedAction, "review_source_access_and_pin_input");
+    assert.equal(report.actionCounts.registered_no_current_source_access, 1);
+    assert.equal(report.actionCounts.review_source_access_and_pin_input, 1);
 });
 
 test("word source assignment files resolve manifest-relative slash styles", () => {

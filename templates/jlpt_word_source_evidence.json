@@ -642,7 +642,7 @@
       "tier": "registered-future",
       "evidenceLineage": "blocked-frequency",
       "independenceGroup": "blocked-frequency",
-      "status": "planned",
+      "status": "registered",
       "sourceKind": "frequency",
       "sourceType": "corpus_frequency",
       "levels": [],
@@ -665,15 +665,16 @@
       "canStoreExcerpts": false,
       "requiresCitation": true,
       "positiveEvidenceOnly": false,
-      "checkedAt": "2026-05-11",
-      "derivedFromSources": []
+      "checkedAt": "2026-06-22",
+      "derivedFromSources": [],
+      "notes": "Registered future lane only. Do not spend another free/public source-search pass here unless a specific permitted source surface, paid/private intake, or publisher permission is available."
     },
     "textbook-word-list": {
       "name": "Japanese learning textbook word-list lane",
       "tier": "registered-future",
       "evidenceLineage": "future-textbook-word-list",
       "independenceGroup": "future-textbook",
-      "status": "planned",
+      "status": "registered",
       "sourceKind": "textbook-word-list",
       "sourceType": "textbook_word_list",
       "levels": [],
@@ -695,8 +696,9 @@
       "canStoreExcerpts": false,
       "requiresCitation": true,
       "positiveEvidenceOnly": false,
-      "checkedAt": "2026-05-11",
-      "derivedFromSources": []
+      "checkedAt": "2026-06-22",
+      "derivedFromSources": [],
+      "notes": "Registered future lane only. Do not spend another free/public source-search pass here unless a specific permitted source surface, paid/private intake, or publisher permission is available."
     }
   },
   "assignmentFiles": {

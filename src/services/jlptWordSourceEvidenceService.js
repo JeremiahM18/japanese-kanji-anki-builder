@@ -109,6 +109,7 @@ function buildSourceCoverage(evidence = {}) {
             status: source.status,
             tier: source.tier,
             sourceKind: source.sourceKind,
+            levels: source.levels || [],
             allowedUse: source.allowedUse || [],
             countsForConsensus: source.countsForConsensus === true,
             canStoreWordAssignments: source.canStoreWordAssignments === true,
@@ -238,7 +239,7 @@ function buildGovernanceIssues(evidence = {}) {
     };
 
     for (const [sourceId, source] of Object.entries(evidence.sources || {})) {
-        if (source.status !== "blocked" && source.status !== "deprecated" && (!Array.isArray(source.allowedUse) || source.allowedUse.length === 0)) {
+        if (!["blocked", "deprecated", "registered"].includes(source.status) && (!Array.isArray(source.allowedUse) || source.allowedUse.length === 0)) {
             issues.missingSourceUseProfiles.push({ sourceId });
         }
         if (!source.licenseEvidenceUrl && ["approved", "restricted"].includes(source.licenseStatus)) {
@@ -432,7 +433,9 @@ function buildSourceAccessReport({ evidence = {} } = {}) {
     const sourceCoverage = buildSourceCoverage(evidence);
     const sources = Object.values(sourceCoverage).map((source) => {
         let recommendedAction = "no_action";
-        if (source.status === "planned" || source.status === "in_review") {
+        if (source.status === "registered") {
+            recommendedAction = "registered_no_current_source_access";
+        } else if (source.status === "planned" || source.status === "in_review") {
             recommendedAction = "review_source_access_and_pin_input";
         } else if (source.status === "active" && source.countsForConsensus && source.reviewedAssignmentCount === 0) {
             recommendedAction = "import_reviewed_word_assignments";

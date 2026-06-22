@@ -9,6 +9,7 @@ const {
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_UNIVERSE_WARNING,
     buildExpansionWorkOrder,
+    buildExtraSourceAccessByLevel,
     buildWordCommonExpansionSelectorReport,
     classifyCommonExpansionSelectorRow,
     formatWordCommonExpansionSelectorReport,
@@ -420,6 +421,83 @@ test("expansion work order makes extra source lane readiness explicit after curr
     assert.match(formatted, /Extra source-family lane/);
     assert.match(formatted, /READY - source input needed/);
     assert.match(formatted, /work is not done/i);
+});
+
+test("expansion work order avoids repeated source hunting when no actionable extra source is registered", () => {
+    const manifest = {
+        sources: {
+            "current-n5": {
+                status: "active",
+                allowedUse: ["candidate-discovery"],
+                candidatePolicy: {
+                    levels: [5],
+                },
+            },
+        },
+    };
+    const sourceAccessReport = {
+        sources: [
+            {
+                sourceId: "current-n5",
+                status: "in_review",
+                sourceKind: "candidate-discovery",
+                levels: [5],
+                allowedUse: ["candidate-discovery", "level-hint"],
+                recommendedAction: "review_source_access_and_pin_input",
+            },
+            {
+                sourceId: "future-textbook",
+                status: "registered",
+                sourceKind: "textbook-word-list",
+                levels: [],
+                allowedUse: [],
+                recommendedAction: "registered_no_current_source_access",
+            },
+        ],
+    };
+    const extraSourceAccessByLevel = buildExtraSourceAccessByLevel({
+        sourceAccessReport,
+        manifest,
+        levels: [5],
+    });
+    const workOrder = buildExpansionWorkOrder({
+        level: 5,
+        levelLabel: "N5",
+        commonWordQueue: {
+            active: true,
+            promoteCuratedExampleItems: 0,
+            editorialReviewItems: 0,
+            deferVariantItems: 0,
+        },
+        fallbackSourceGate: {
+            active: true,
+            blockers: [],
+        },
+        extraSourceAccess: extraSourceAccessByLevel[5],
+        summary: {
+            selectorStatusCounts: {
+                ready_for_editorial_review: 0,
+                needs_triage: 0,
+                move_candidate: 0,
+                blocked_identity: 0,
+                blocked_missing_dictionary: 0,
+                blocked_missing_commonness: 0,
+                triaged_defer: 0,
+                triaged_reject: 0,
+            },
+        },
+    });
+
+    assert.equal(extraSourceAccessByLevel[5].actionableExtraSourceCount, 0);
+    assert.deepEqual(extraSourceAccessByLevel[5].currentConfiguredSourcePendingIds, ["current-n5"]);
+    assert.deepEqual(extraSourceAccessByLevel[5].registeredNoCurrentAccessSourceIds, ["future-textbook"]);
+    assert.equal(workOrder.status, "extra_source_family");
+    assert.equal(workOrder.extraSourceLaneReady, true);
+    assert.equal(workOrder.extraSourceLaneActionable, false);
+    assert.equal(workOrder.nextCommand, "");
+    assert.match(workOrder.nextAction, /no actionable extra free\/permitted source family/);
+    assert.match(workOrder.nextAction, /do not repeat source hunting/);
+    assert.match(workOrder.nextAction, /Source level claim unverified/);
 });
 
 test("expansion work order prioritizes active reading work before extra sources", () => {

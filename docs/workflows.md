@@ -346,7 +346,7 @@ npm run deck:words:common-expansion -- --levels=5 --placement-mode=vocabulary-le
 
 The common-word selector is a read-only Silver planning report. It starts from each level's active `candidate-discovery` source, then adds JMdict dictionary verification and JMdict priority/commonness support from the governed word source manifest.
 
-Use `deck:words:expansion-status` when the question is "what work is next for this N-level?" The report prints an expansion work order in priority order: reading fast promotions, reading editorial research, current selector ready rows, current selector triage rows, move-candidate routing, blocked/deferred recorded backlog, then the extra free/permitted source-family lane. This makes an exhausted current selector explicit instead of quiet: when the prerequisites are clear, the extra lane says it is ready for source-access/input work and still warns that work is not done.
+Use `deck:words:expansion-status` when the question is "what work is next for this N-level?" The report prints an expansion work order in priority order: reading fast promotions, reading editorial research, current selector ready rows, current selector triage rows, move-candidate routing, blocked/deferred recorded backlog, then the extra free/permitted source-family lane. This makes an exhausted current selector explicit instead of quiet: when the prerequisites are clear, the extra lane says it is ready and still warns that work is not done. If the source-access registry has no actionable extra free/permitted source family, the report must say that directly instead of sending reviewers through another source-hunting loop.
 
 The common-word queue is only active after the selected level's reading-gap expansion signal is exhausted: no active reading-gap editorial or promote-curated-example items may remain. The configured source-list enhancement and word-placement signals are still reported as governance context, but they do not block the post-reading common-word queue from opening. Deferred variants and low-value readings remain recorded as reading-lane decisions; they do not become permission to bypass source governance.
 
@@ -395,6 +395,8 @@ npm run data:packet:jlpt:word-source-access -- --source=textbook-word-list --sur
 npm run data:merge:jlpt:word-source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>
 npm run data:import:jlpt:word-source-input -- --source=<source-id>
 ```
+
+`deck:words:source-access` distinguishes actionable review work from registered future placeholders. `registered_no_current_source_access` means the family is tracked for future use, but current free/public access has no governed work to spend time on. Do not repeat source discovery just to get the same answer; reopen that lane only with a specific newly permitted source surface, paid/private source intake, publisher permission, or a completed source-access packet for an exact surface.
 
 Word source adequacy is a separate source-governance lane, parallel to kanji source evidence. It tracks exact `written|reading` identities, source tiers, source lineages, independent source families, reviewed source-access surfaces, and source-origin posture. It does not add Silver rows, edit starter data, move denominators, certify review tiers, or touch kanji lanes.
 

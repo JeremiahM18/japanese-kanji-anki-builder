@@ -218,11 +218,79 @@ function buildWorkOrderItem({
         label,
         count,
         status,
-        active: status === "active" || status === "ready",
+        active: status === "active" || status === "ready" || status === "ready_no_actionable_source",
         blocksExtraLane,
         command,
         reason,
     };
+}
+
+function sourceSupportsLevel(source = {}, level) {
+    const levels = Array.isArray(source.levels) ? source.levels : [];
+    return levels.length === 0 || levels.includes(level);
+}
+
+function sourceIsCandidateDiscoveryLike(source = {}) {
+    if (["candidate-discovery", "textbook-word-list"].includes(source.sourceKind)) {
+        return true;
+    }
+    const allowedUse = source.allowedUse || [];
+    return allowedUse.includes("candidate-discovery")
+        || allowedUse.includes("level-hint")
+        || allowedUse.includes("learner-fit-support");
+}
+
+function getActiveConfiguredDiscoverySourceIdsForLevel({ manifest = {}, level } = {}) {
+    return new Set(Object.entries(manifest.sources || {})
+        .filter(([, source]) => source.status === "active")
+        .filter(([, source]) => (source.allowedUse || []).includes("candidate-discovery"))
+        .filter(([, source]) => {
+            const levels = source.candidatePolicy?.levels || source.levels || [];
+            return levels.includes(level);
+        })
+        .map(([sourceId]) => sourceId));
+}
+
+function buildExtraSourceAccessByLevel({ sourceAccessReport = null, manifest = {}, levels = [5, 4, 3, 2, 1] } = {}) {
+    const sources = sourceAccessReport?.sources || [];
+    const result = {};
+
+    for (const level of levels) {
+        const currentConfiguredSourceIds = getActiveConfiguredDiscoverySourceIdsForLevel({ manifest, level });
+        const levelCandidateSources = sources
+            .filter((source) => sourceSupportsLevel(source, level))
+            .filter((source) => sourceIsCandidateDiscoveryLike(source));
+        const extraCandidateSources = levelCandidateSources
+            .filter((source) => !currentConfiguredSourceIds.has(source.sourceId));
+        const actionableSources = extraCandidateSources
+            .filter((source) => [
+                "review_source_access_and_pin_input",
+                "import_reviewed_word_assignments",
+                "resolve_license_before_voting",
+            ].includes(source.recommendedAction));
+        const registeredNoCurrentAccessSources = extraCandidateSources
+            .filter((source) => source.recommendedAction === "registered_no_current_source_access");
+        const blockedSources = extraCandidateSources
+            .filter((source) => source.recommendedAction === "keep_blocked");
+        const currentConfiguredPendingSources = levelCandidateSources
+            .filter((source) => currentConfiguredSourceIds.has(source.sourceId))
+            .filter((source) => source.recommendedAction && source.recommendedAction !== "no_action");
+
+        result[level] = {
+            hasSourceAccessContext: true,
+            currentConfiguredSourceIds: [...currentConfiguredSourceIds].sort(),
+            actionableExtraSourceCount: actionableSources.length,
+            actionableExtraSourceIds: actionableSources.map((source) => source.sourceId).sort(),
+            registeredNoCurrentAccessSourceCount: registeredNoCurrentAccessSources.length,
+            registeredNoCurrentAccessSourceIds: registeredNoCurrentAccessSources.map((source) => source.sourceId).sort(),
+            blockedExtraSourceCount: blockedSources.length,
+            blockedExtraSourceIds: blockedSources.map((source) => source.sourceId).sort(),
+            currentConfiguredSourcePendingCount: currentConfiguredPendingSources.length,
+            currentConfiguredSourcePendingIds: currentConfiguredPendingSources.map((source) => source.sourceId).sort(),
+        };
+    }
+
+    return result;
 }
 
 function buildExpansionWorkOrder(levelReport = {}) {
@@ -231,6 +299,9 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const counts = levelReport.summary?.selectorStatusCounts || {};
     const gate = levelReport.commonWordQueue || {};
     const fallbackGate = levelReport.fallbackSourceGate || {};
+    const extraSourceAccess = levelReport.extraSourceAccess || {};
+    const hasSourceAccessContext = extraSourceAccess.hasSourceAccessContext === true;
+    const actionableExtraSourceCount = countValue(extraSourceAccess.actionableExtraSourceCount);
     const readingFastPromotions = countValue(gate.promoteCuratedExampleItems);
     const readingEditorialResearch = countValue(gate.editorialReviewItems);
     const readingDeferredVariants = countValue(gate.deferVariantItems);
@@ -246,6 +317,25 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const selectorCommand = `npm run deck:words:vocab-expansion -- --levels=${level} --strict --limit=80`;
     const allLevelSelectorCommand = "npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1 --strict --limit=80";
     const sourceAccessCommand = "npm run deck:words:source-access";
+    const extraSourceStatus = fallbackGate.active
+        ? (hasSourceAccessContext && actionableExtraSourceCount === 0 ? "ready_no_actionable_source" : "ready")
+        : "closed";
+    const extraSourceReason = (() => {
+        if (!fallbackGate.active) {
+            return (fallbackGate.blockers || []).join(" ") || "Closed until reading expansion and the current selector are exhausted.";
+        }
+        if (hasSourceAccessContext && actionableExtraSourceCount === 0) {
+            return [
+                "READY but no actionable extra free/permitted source family is registered right now; do not repeat source hunting for the same result.",
+                "Reopen this lane only with a specific newly permitted source, paid/private source intake, publisher permission, or a source-access packet for an exact surface.",
+                "Any extra rows must keep the Source level claim unverified label.",
+            ].join(" ");
+        }
+        if (hasSourceAccessContext && actionableExtraSourceCount > 0) {
+            return `READY: ${actionableExtraSourceCount} actionable extra source family record(s) need source-access/input review; every extra row must keep the Source level claim unverified label.`;
+        }
+        return "READY: work is not done. Add the next free/permitted source family through source-access/input review; every extra row must keep the Source level claim unverified label.";
+    })();
 
     const items = [
         buildWorkOrderItem({
@@ -335,17 +425,16 @@ function buildExpansionWorkOrder(levelReport = {}) {
             lane: "extra_source_family",
             label: "Extra source-family lane",
             count: null,
-            status: fallbackGate.active ? "ready" : "closed",
+            status: extraSourceStatus,
             blocksExtraLane: false,
-            command: sourceAccessCommand,
-            reason: fallbackGate.active
-                ? "READY: work is not done. Add the next free/permitted source family through source-access/input review; every extra row must keep the Source level claim unverified label."
-                : (fallbackGate.blockers || []).join(" ") || "Closed until reading expansion and the current selector are exhausted.",
+            command: extraSourceStatus === "ready_no_actionable_source" ? "" : sourceAccessCommand,
+            reason: extraSourceReason,
         }),
     ];
 
     const nextItem = items.find((item) => item.status === "active")
         || items.find((item) => item.lane === "extra_source_family" && item.status === "ready")
+        || items.find((item) => item.lane === "extra_source_family" && item.status === "ready_no_actionable_source")
         || items.find((item) => item.status === "blocked_backlog")
         || null;
     const activeBlockers = items.filter((item) => item.blocksExtraLane && item.count > 0);
@@ -360,15 +449,32 @@ function buildExpansionWorkOrder(levelReport = {}) {
             : "No active expansion work is visible under current governed inputs.",
         nextCommand: nextItem?.command || "",
         activeBlockingLaneCount: activeBlockers.length,
-        extraSourceLaneReady: extraLane?.status === "ready",
+        extraSourceLaneReady: extraLane?.status === "ready" || extraLane?.status === "ready_no_actionable_source",
+        extraSourceLaneOpen: extraLane?.status === "ready" || extraLane?.status === "ready_no_actionable_source",
+        extraSourceLaneActionable: extraLane?.status === "ready",
+        extraSourceAccess,
         items,
     };
 }
 
 function attachExpansionWorkOrder(levelReport = {}) {
-    return {
+    const extraSourceAccess = levelReport.extraSourceAccess || {};
+    const fallbackSourceGate = levelReport.fallbackSourceGate || {};
+    const adjustedFallbackSourceGate = fallbackSourceGate.active === true
+        && extraSourceAccess.hasSourceAccessContext === true
+        && countValue(extraSourceAccess.actionableExtraSourceCount) === 0
+        ? {
+            ...fallbackSourceGate,
+            reason: "Reading expansion and the current new-word selector are exhausted; the extra free/permitted source-family lane is READY, but no actionable extra free/permitted source family is registered right now. Do not repeat source hunting for the same result. Reopen only with a specific newly permitted source, paid/private source intake, publisher permission, or a source-access packet for an exact surface. Imported extra rows must keep explicit unverified source-level labels.",
+        }
+        : fallbackSourceGate;
+    const adjustedLevelReport = {
         ...levelReport,
-        expansionWorkOrder: buildExpansionWorkOrder(levelReport),
+        fallbackSourceGate: adjustedFallbackSourceGate,
+    };
+    return {
+        ...adjustedLevelReport,
+        expansionWorkOrder: buildExpansionWorkOrder(adjustedLevelReport),
     };
 }
 
@@ -869,6 +975,7 @@ function buildWordCommonExpansionSelectorReport({
     placementMode = "kanji-anchor",
     readingExpansionSignalsByLevel = {},
     sourceAdequacyByLevel = {},
+    extraSourceAccessByLevel = {},
     enforceReadingExpansionGate = false,
     readFile = fs.readFileSync,
 } = {}) {
@@ -915,6 +1022,10 @@ function buildWordCommonExpansionSelectorReport({
             jlptLevelContract,
             limit,
         }))
+        .map((levelReport) => ({
+            ...levelReport,
+            extraSourceAccess: extraSourceAccessByLevel?.[levelReport.level] || null,
+        }))
         .map(attachExpansionWorkOrder);
     const blockers = [
         ...agreementReport.sourceBlockers,
@@ -929,6 +1040,7 @@ function buildWordCommonExpansionSelectorReport({
         configuredSourceOnly: true,
         warning: SOURCE_UNIVERSE_WARNING,
         sourceAdequacyByLevel,
+        extraSourceAccessByLevel,
         levels: reportLevels,
         routingSupportLevels: analysisLevels.filter((level) => !reportLevels.includes(level)),
         placementAudit: agreementReport.placementAudit,
@@ -964,6 +1076,16 @@ function formatWorkOrderLabel(item = null) {
     }
     const count = item.count === null || item.count === undefined ? "" : ` (${item.count})`;
     return `${item.label}${count}`;
+}
+
+function formatExtraSourceLaneStatus(item = {}) {
+    if (item.status === "ready") {
+        return "READY - source input needed";
+    }
+    if (item.status === "ready_no_actionable_source") {
+        return "READY - no actionable free source";
+    }
+    return "closed";
 }
 
 function formatSourceUniverse(sourceUniverse = {}) {
@@ -1075,7 +1197,7 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             formatWorkOrderCount(itemsByLane.get("current_selector_triage")?.count),
             formatWorkOrderCount(itemsByLane.get("move_candidate_routing")?.count),
             formatWorkOrderCount(itemsByLane.get("deferred_or_rejected_current_rows")?.count),
-            extraItem.status === "ready" ? "READY - source input needed" : "closed",
+            formatExtraSourceLaneStatus(extraItem),
         ].join(" | ") + " |");
     }
 
@@ -1146,6 +1268,7 @@ module.exports = {
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_LEVEL_CLAIM_WARNING,
     SOURCE_UNIVERSE_WARNING,
+    buildExtraSourceAccessByLevel,
     buildLevelSelectorReport,
     buildExpansionWorkOrder,
     buildReadingExpansionGate,

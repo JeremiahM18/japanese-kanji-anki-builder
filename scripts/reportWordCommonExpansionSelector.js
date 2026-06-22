@@ -5,9 +5,11 @@ const { loadJlptWordSourceEvidence } = require("../src/datasets/jlptWordSourceEv
 const { loadWordSourceManifest } = require("../src/datasets/wordSourceManifest");
 const {
     auditJlptWordSourceEvidence,
+    buildSourceAccessReport,
     buildSourceAdequacyByLevel,
 } = require("../src/services/jlptWordSourceEvidenceService");
 const {
+    buildExtraSourceAccessByLevel,
     buildWordCommonExpansionSelectorReport,
     formatWordCommonExpansionSelectorReport,
 } = require("../src/services/wordCommonExpansionSelectorService");
@@ -101,10 +103,14 @@ async function main() {
         expansionSignalReport.signals.map((signal) => [signal.level, signal])
     );
     const sharedInputs = loadSharedInputs();
+    const wordSourceEvidence = loadJlptWordSourceEvidence(path.resolve(process.cwd(), options.sourceEvidence));
     const wordSourceEvidenceReport = auditJlptWordSourceEvidence({
         contract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),
-        evidence: loadJlptWordSourceEvidence(path.resolve(process.cwd(), options.sourceEvidence)),
+        evidence: wordSourceEvidence,
         limit: Number.MAX_SAFE_INTEGER,
+    });
+    const sourceAccessReport = buildSourceAccessReport({
+        evidence: wordSourceEvidence,
     });
     const report = buildWordCommonExpansionSelectorReport({
         levels: options.levels,
@@ -114,6 +120,11 @@ async function main() {
         triageDecisionsByLevelSource: loadTriageDecisionsByLevelSource(options.triage),
         readingExpansionSignalsByLevel,
         sourceAdequacyByLevel: buildSourceAdequacyByLevel(wordSourceEvidenceReport),
+        extraSourceAccessByLevel: buildExtraSourceAccessByLevel({
+            sourceAccessReport,
+            manifest,
+            levels: options.levels,
+        }),
         enforceReadingExpansionGate: true,
         ...sharedInputs,
     });

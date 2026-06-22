@@ -354,6 +354,7 @@ function applyReviewedEvidence(rows = [], reviewedEvidence = null) {
     }
     const citation = String(reviewedEvidence.citation || "").trim();
     const evidenceRefPrefix = String(reviewedEvidence.evidenceRefPrefix || "").trim();
+    const evidenceRefRowLabel = String(reviewedEvidence.evidenceRefRowLabel || "normalized source row").trim();
     if (!citation || !evidenceRefPrefix) {
         throw new Error("Reviewed Tanos word source output requires citation and evidenceRefPrefix.");
     }
@@ -362,9 +363,18 @@ function applyReviewedEvidence(rows = [], reviewedEvidence = null) {
         ...row,
         ...(() => {
             const identity = `${row.written}|${row.reading}`;
+            const missingIdentity = !row.written || !row.reading;
             const duplicate = seenIdentities.has(identity);
+            const evidenceRef = `${evidenceRefPrefix}; ${evidenceRefRowLabel} ${index + 1}`;
+            if (missingIdentity) {
+                return {
+                    reviewStatus: "needs_review",
+                    citation,
+                    evidenceRef,
+                    notes: `${row.notes} Missing exact written|reading identity in the normalized source input; not imported as reviewed evidence until manually reconciled.`,
+                };
+            }
             seenIdentities.add(identity);
-            const evidenceRef = `${evidenceRefPrefix}; normalized paired row ${index + 1}`;
             if (duplicate) {
                 return {
                     reviewStatus: "needs_review",
@@ -410,7 +420,9 @@ function buildTanosJlptWordSource({
         sourceId,
         sourceLabel,
     });
-    const rows = applyReviewedEvidence(parsed.rows, reviewedEvidence);
+    const rows = applyReviewedEvidence(parsed.rows, reviewedEvidence
+        ? { ...reviewedEvidence, evidenceRefRowLabel: "normalized extracted PDF row" }
+        : null);
     return {
         ...parsed,
         rows,
@@ -433,7 +445,9 @@ function buildTanosJlptWordSourceFromMnemosyne({
         sourceId,
         sourceLabel,
     });
-    const rows = applyReviewedEvidence(parsed.rows, reviewedEvidence);
+    const rows = applyReviewedEvidence(parsed.rows, reviewedEvidence
+        ? { ...reviewedEvidence, evidenceRefRowLabel: "normalized paired row" }
+        : null);
     return {
         ...parsed,
         rows,

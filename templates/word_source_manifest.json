@@ -225,22 +225,25 @@
         "license": "CC BY",
         "notes": "Tanos sharing terms permit non-sold site data sharing with attribution. Keep raw/extracted files and normalized list content ignored; use only as a local discovery signal, not card approval or dictionary evidence."
       },
-      "checkedAt": "2026-05-17",
+      "checkedAt": "2026-06-21",
       "levels": [
         3
       ],
       "local": {
         "path": "downloads/tanos-n3-vocab.tsv",
         "format": "tsv",
-        "sha256": "528412527fa54fcb5a1853ae9d3da80553cc16b5c683fd21c6a8cf86ae282404",
-        "byteSize": 689451,
-        "rowCount": 1832,
+        "sha256": "2539f7e2d4090533d5c902abddac4b9a7967319eef7a5cd0c7c6e0c716ea624e",
+        "byteSize": 1227424,
+        "rowCount": 1841,
         "columns": [
           "written",
           "reading",
           "meaning",
           "jlpt",
           "source",
+          "reviewStatus",
+          "citation",
+          "evidenceRef",
           "notes"
         ]
       },
@@ -283,15 +286,15 @@
         "license": "CC BY",
         "notes": "Tanos sharing terms permit non-sold site data sharing with attribution. Keep raw/extracted files and normalized list content ignored; use only as a local discovery signal, not card approval or dictionary evidence."
       },
-      "checkedAt": "2026-05-17",
+      "checkedAt": "2026-06-21",
       "levels": [
         2
       ],
       "local": {
         "path": "downloads/tanos-n2-vocab.tsv",
         "format": "tsv",
-        "sha256": "19a827aaf110b06601dc48908151c698f41f46eb141a5b908eb014582b3d52e9",
-        "byteSize": 730252,
+        "sha256": "2022d72b7a303205a0a5541e1d921f943840731a8897f7af6812e1b6a0b4e86b",
+        "byteSize": 1382575,
         "rowCount": 1835,
         "columns": [
           "written",
@@ -299,6 +302,9 @@
           "meaning",
           "jlpt",
           "source",
+          "reviewStatus",
+          "citation",
+          "evidenceRef",
           "notes"
         ]
       },
@@ -341,15 +347,15 @@
         "license": "CC BY",
         "notes": "Tanos sharing terms permit non-sold site data sharing with attribution. Keep raw/extracted files and normalized list content ignored; use only as a local discovery signal, not card approval or dictionary evidence."
       },
-      "checkedAt": "2026-05-17",
+      "checkedAt": "2026-06-21",
       "levels": [
         1
       ],
       "local": {
         "path": "downloads/tanos-n1-vocab.tsv",
         "format": "tsv",
-        "sha256": "7cfbcd253d088249d27a7d41e567b22a662b92fc02fa835512112c1bba8c7032",
-        "byteSize": 1400489,
+        "sha256": "d9ab4bd35b9ca149ffbf1377472c982eb04c4156e60ead869303472341810c2e",
+        "byteSize": 2645476,
         "rowCount": 3494,
         "columns": [
           "written",
@@ -357,6 +363,9 @@
           "meaning",
           "jlpt",
           "source",
+          "reviewStatus",
+          "citation",
+          "evidenceRef",
           "notes"
         ]
       },

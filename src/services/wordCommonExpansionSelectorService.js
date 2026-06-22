@@ -15,6 +15,9 @@ const {
 const { normalizePlacementMode } = require("./wordCandidateAgreementService");
 
 const SOURCE_UNIVERSE_WARNING = "Configured-source selector only; not an official or global JLPT vocabulary universe.";
+const SOURCE_LEVEL_CLAIM_STATUS = "source_level_claim_unverified";
+const SOURCE_LEVEL_CLAIM_LABEL = "Source level claim unverified";
+const SOURCE_LEVEL_CLAIM_WARNING = "Source JLPT level is a discovery hint from a free/permitted source, not official or verified JLPT truth.";
 
 const SELECTOR_STATUSES = [
     "ready_for_editorial_review",
@@ -77,6 +80,9 @@ function buildSourceUniverse({ sourceId = "", source = {}, sourceSummary = null 
         byteSize: Number.isInteger(integrity.byteSize) ? integrity.byteSize : null,
         configuredSourceOnly: true,
         warning: SOURCE_UNIVERSE_WARNING,
+        levelClaimStatus: SOURCE_LEVEL_CLAIM_STATUS,
+        levelClaimLabel: SOURCE_LEVEL_CLAIM_LABEL,
+        levelClaimWarning: SOURCE_LEVEL_CLAIM_WARNING,
     };
 }
 
@@ -151,6 +157,44 @@ function summarizeSelectorRows(rows = []) {
             + selectorStatusCounts.blocked_missing_dictionary
             + selectorStatusCounts.blocked_missing_commonness,
         preTrustRows: rows.length,
+    };
+}
+
+function buildFallbackSourceGate({ level, commonWordQueue = {}, summary = {}, sourceBlockers = [] } = {}) {
+    const counts = summary.selectorStatusCounts || {};
+    const readyRows = counts.ready_for_editorial_review || 0;
+    const needsTriageRows = counts.needs_triage || 0;
+    const moveCandidateRows = counts.move_candidate || 0;
+    const blockers = [];
+
+    if (commonWordQueue.active !== true) {
+        blockers.push(`N${level} reading expansion is not exhausted.`);
+    }
+    if ((sourceBlockers || []).length > 0) {
+        blockers.push("Current source selector has unresolved blockers.");
+    }
+    if (readyRows > 0) {
+        blockers.push(`Current new-word selector still has ${readyRows} ready row(s).`);
+    }
+    if (needsTriageRows > 0) {
+        blockers.push(`Current new-word selector still has ${needsTriageRows} needs-triage row(s).`);
+    }
+    if (moveCandidateRows > 0) {
+        blockers.push(`Current new-word selector still has ${moveCandidateRows} move-candidate row(s) to resolve in target levels.`);
+    }
+
+    const active = blockers.length === 0;
+    return {
+        active,
+        status: active ? "active_after_current_selector_exhausted" : "inactive_prior_work_remaining",
+        prerequisite: "after_reading_expansion_and_current_new_word_selector_exhausted",
+        readyRows,
+        needsTriageRows,
+        moveCandidateRows,
+        blockers,
+        reason: active
+            ? "Reading expansion and the current new-word selector are exhausted; a later free/permitted fallback source lane may be considered with explicit unverified source-level labels."
+            : "Fallback/free-source expansion is closed until reading expansion and the current new-word selector are exhausted.",
     };
 }
 
@@ -399,24 +443,30 @@ function mergeRoutedMoveCandidatesIntoTargetReport({
     }
 
     const rows = [...rowsByKey.values()].sort(compareSelectorRows);
+    const mergedSummary = {
+        ...targetReport.summary,
+        ...summarizeSelectorRows(rows),
+        sourceRows: targetReport.summary.sourceRows,
+        normalizedRows: targetReport.summary.normalizedRows,
+        uniqueRows: targetReport.summary.uniqueRows,
+        duplicateSourceRows: targetReport.summary.duplicateSourceRows,
+        sourceDispositionCounts: {
+            ...(targetReport.summary.sourceDispositionCounts || {}),
+            routed_move_candidate: routedSummary.addedTargetQueueRows,
+        },
+        routedMoveCandidateRows: routedSummary.targetQueueRows,
+        addedRoutedMoveCandidateRows: routedSummary.addedTargetQueueRows,
+    };
     return {
         ...targetReport,
-        summary: {
-            ...targetReport.summary,
-            ...summarizeSelectorRows(rows),
-            sourceRows: targetReport.summary.sourceRows,
-            normalizedRows: targetReport.summary.normalizedRows,
-            uniqueRows: targetReport.summary.uniqueRows,
-            duplicateSourceRows: targetReport.summary.duplicateSourceRows,
-            sourceDispositionCounts: {
-                ...(targetReport.summary.sourceDispositionCounts || {}),
-                routed_move_candidate: routedSummary.addedTargetQueueRows,
-            },
-            routedMoveCandidateRows: routedSummary.targetQueueRows,
-            addedRoutedMoveCandidateRows: routedSummary.addedTargetQueueRows,
-        },
+        summary: mergedSummary,
         rows,
         shownRows: rows.slice(0, limit),
+        fallbackSourceGate: buildFallbackSourceGate({
+            level: targetLevel,
+            commonWordQueue: targetReport.commonWordQueue || {},
+            summary: mergedSummary,
+        }),
         routedMoveCandidateSummary: routedSummary,
         routedMoveCandidateRows: routedRows.sort(compareSelectorRows),
     };
@@ -442,6 +492,9 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         sourceLevel: expansionRow.sourceLevel ?? sourceAppearance?.sourceLevel ?? null,
         sourceIds: agreementRow?.sourceIds || [sourceUniverse.sourceId].filter(Boolean),
         sourceAppearances: agreementRow?.sourceAppearances || [],
+        sourceLevelClaimStatus: sourceUniverse.levelClaimStatus || SOURCE_LEVEL_CLAIM_STATUS,
+        sourceLevelClaimLabel: sourceUniverse.levelClaimLabel || SOURCE_LEVEL_CLAIM_LABEL,
+        sourceLevelClaimWarning: sourceUniverse.levelClaimWarning || SOURCE_LEVEL_CLAIM_WARNING,
         dictionaryVerified: Boolean(agreementRow?.dictionaryVerified),
         frequencySupported: Boolean(agreementRow?.frequencySupported),
         sentenceSupported: Boolean(agreementRow?.sentenceSupported),
@@ -519,14 +572,21 @@ function buildLevelSelectorReport({
     blockers.push(...readingExpansionGate.blockers.map((blocker) => `N${level}: ${blocker}`));
     if (candidateSources.length !== 1) {
         blockers.push(`N${level}: expected exactly one active candidate-discovery source, found ${candidateSources.length}.`);
+        const summary = summarizeSelectorRows([]);
         return {
             level,
             levelLabel: `N${level}`,
             commonWordQueue: readingExpansionGate,
+            fallbackSourceGate: buildFallbackSourceGate({
+                level,
+                commonWordQueue: readingExpansionGate,
+                summary,
+                sourceBlockers: blockers,
+            }),
             sourceAdequacy,
             sourceUniverse: null,
             sourceCandidateSummary: null,
-            summary: summarizeSelectorRows([]),
+            summary,
             rows: [],
             shownRows: [],
             blockers,
@@ -543,14 +603,21 @@ function buildLevelSelectorReport({
     });
 
     if (loadedSource.blockers.length > 0) {
+        const summary = summarizeSelectorRows([]);
         return {
             level,
             levelLabel: `N${level}`,
             commonWordQueue: readingExpansionGate,
+            fallbackSourceGate: buildFallbackSourceGate({
+                level,
+                commonWordQueue: readingExpansionGate,
+                summary,
+                sourceBlockers: blockers,
+            }),
             sourceAdequacy,
             sourceUniverse,
             sourceCandidateSummary: null,
-            summary: summarizeSelectorRows([]),
+            summary,
             rows: [],
             shownRows: [],
             blockers,
@@ -595,6 +662,12 @@ function buildLevelSelectorReport({
         level,
         levelLabel: `N${level}`,
         commonWordQueue: readingExpansionGate,
+        fallbackSourceGate: buildFallbackSourceGate({
+            level,
+            commonWordQueue: readingExpansionGate,
+            summary,
+            sourceBlockers: blockers,
+        }),
         sourceAdequacy,
         sourceUniverse: {
             ...sourceUniverse,
@@ -715,6 +788,7 @@ function formatSourceUniverse(sourceUniverse = {}) {
         `rows ${sourceUniverse.rowCount ?? "-"}`,
         sourceUniverse.sha256 ? `sha ${sourceUniverse.sha256.slice(0, 12)}` : "sha -",
         `license ${sourceUniverse.licenseStatus || "-"}`,
+        `level ${sourceUniverse.levelClaimStatus || SOURCE_LEVEL_CLAIM_STATUS}`,
     ].join("; ");
 }
 
@@ -799,6 +873,15 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
         lines.push(`- ${levelReport.levelLabel}: ${gate.active ? "active" : "inactive"}; reading exhausted ${gate.readingExhausted ? "yes" : "no"}; first-stage fully expanded ${gate.fullyExpanded ? "yes" : "no"}; reading ${gate.readingStatus || "not_evaluated"} active ${gate.activeItems ?? "-"}; enhancement ${gate.enhancementStatus || "not_evaluated"} keep ${gate.enhancementKeepCandidates ?? "-"} untriaged ${gate.enhancementUntriagedCandidates ?? "-"}; placement ${gate.placementStatus || "not_evaluated"} violations ${gate.placementViolationCount ?? "-"}; ${gate.reason || ""}`);
     }
 
+    lines.push("", "Fallback/free-source gate:");
+    for (const levelReport of report.levelReports || []) {
+        const gate = levelReport.fallbackSourceGate || {};
+        lines.push(`- ${levelReport.levelLabel}: ${gate.active ? "active" : "inactive"}; prerequisite ${gate.prerequisite || "after_reading_expansion_and_current_new_word_selector_exhausted"}; ready ${gate.readyRows ?? 0}; needs triage ${gate.needsTriageRows ?? 0}; move ${gate.moveCandidateRows ?? 0}; ${gate.reason || ""}`);
+        for (const blocker of gate.blockers || []) {
+            lines.push(`  - ${blocker}`);
+        }
+    }
+
     const blockers = report.blockers || [];
     if (blockers.length > 0) {
         lines.push("", "Selector blockers:");
@@ -816,6 +899,7 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
         levelReport.shownRows.forEach((row, index) => {
             lines.push(`${index + 1}. ${row.written} (${row.reading})`);
             lines.push(`   status: ${row.selectorStatus}; source disposition: ${row.sourceDisposition}`);
+            lines.push(`   source level label: ${row.sourceLevelClaimLabel || SOURCE_LEVEL_CLAIM_LABEL} (${row.sourceLevelClaimStatus || SOURCE_LEVEL_CLAIM_STATUS})`);
             lines.push(`   support: dictionary ${formatBoolean(row.dictionaryVerified)}, commonness ${formatBoolean(row.frequencySupported)}, sentence ${formatBoolean(row.sentenceSupported)}, pitch ${formatBoolean(row.pitchSupported)}, clean identity ${formatBoolean(row.cleanIdentity)}`);
             if (row.triageDecision) {
                 lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority || "normal"}] - ${row.triageDecision.reason}`);
@@ -840,6 +924,9 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
 
 module.exports = {
     SELECTOR_STATUSES,
+    SOURCE_LEVEL_CLAIM_LABEL,
+    SOURCE_LEVEL_CLAIM_STATUS,
+    SOURCE_LEVEL_CLAIM_WARNING,
     SOURCE_UNIVERSE_WARNING,
     buildLevelSelectorReport,
     buildReadingExpansionGate,

@@ -1,6 +1,54 @@
 {
   "N5": {
     "jlptstudy.net-n5": {
+      "飴|あめ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful N5 food/sweets word with exact JLPTStudy N5 discovery, reviewed Tanos N5 support, and JMdict priority/commonness support; outside-JLPT 飴 should be taught as a visible support label, not used as a blocker.",
+        "nextStep": "Promote only through an N5 word v2 Silver batch with explicit 飴 outside-JLPT labeling, a simple candy/sweets example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "石鹸|せっけん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Useful everyday soap word with exact JLPTStudy N5 discovery and JMdict priority/commonness support; Tanos places the exact kanji spelling at N2, so the N5 card needs deliberate learner-fit review with 石=N2 and 鹸 outside-JLPT labels rather than automatic blocking.",
+        "nextStep": "Promote only if the N5 v2 batch accepts the kanji spelling as learner-friendly enough with visible higher/outside-JLPT labels and a concrete washing/soap example."
+      },
+      "誰|だれ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Core beginner question word with exact JLPTStudy N5 discovery, reviewed Tanos N5 support, and JMdict priority/commonness support; outside-JLPT 誰 is a label requirement, not a reason to block a useful standalone word.",
+        "nextStep": "Promote through an N5 word v2 Silver batch with explicit 誰 outside-JLPT labeling, a short who-question example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "誰か|だれか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common beginner someone/somebody word with exact JLPTStudy N5 discovery and JMdict priority/commonness support; Tanos has related N5 誰|だれか evidence and exact 誰か|だれか at N3, so this needs visible source-level nuance rather than a blind move.",
+        "nextStep": "Review alongside 誰|だれ and promote in N5 v2 only if the card notes preserve the exact 誰か identity, the source-level disagreement, and the outside-JLPT 誰 label."
+      },
+      "側|～がわ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "The concept is useful, but the exact source row is a template/suffix pattern with the reading ～がわ rather than a clean word-card identity; the learner-friendly forms are governed 側|かわ and 側|そば in N3, or a future clean 側|がわ review.",
+        "nextStep": "Do not promote this exact template row. If がわ side vocabulary is needed, review clean 側|がわ through the N3 word contract and starter-data path with exact dictionary, pitch, audio, and example evidence."
+      },
+      "貼る|はる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common classroom/daily-life verb with exact JLPTStudy N5 discovery, reviewed Tanos N5 support, and JMdict priority/commonness support; outside-JLPT 貼 should be kept as a visible support label, not treated as a blocker.",
+        "nextStep": "Promote through an N5 word v2 Silver batch with a simple stick/paste example, explicit 貼 outside-JLPT labeling, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "無くす|なくす": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common lose/get-rid-of verb with exact JLPTStudy N5 discovery, reviewed Tanos N5 support, and JMdict priority/commonness support; outside-JLPT 無 is a label requirement, not a product reason to block the word.",
+        "nextStep": "Promote through an N5 word v2 Silver batch with a concrete losing-something example, explicit 無 outside-JLPT labeling, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "屋|～や": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "The shop/seller suffix is useful, but this exact source row uses the template reading ～や; the clean learner-friendly identity 屋|や is already governed in N4 with examples and pitch.",
+        "nextStep": "Do not promote this exact template row or duplicate the governed N4 card. Keep any further shop-suffix work on clean identities such as 屋|や, 本屋, 花屋, or 魚屋."
+      },
       "後|あと": {
         "decision": "keep_candidate",
         "priority": "high",

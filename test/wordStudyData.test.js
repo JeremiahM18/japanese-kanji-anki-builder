@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2142);
+    assert.equal(Object.keys(starterEntries).length, 2148);
     assert.deepEqual(countsByLevel, {
         1: 26,
         2: 28,
         3: 1081,
         4: 700,
-        5: 307,
+        5: 313,
     });
 });
 
@@ -7266,6 +7266,47 @@ test("tracked starter word data includes the final N5 source expansion keepers",
     assert.equal(starterEntries["留学生|りゅうがくせい"].source, "jlptstudy.net-n5");
     assert.match(starterEntries["本棚|ほんだな"].notes, /higher-level kanji/);
     assert.match(starterEntries["留学生|りゅうがくせい"].notes, /higher-level kanji/);
+});
+
+test("tracked starter word data includes the first N5 word v2 common expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "飴|あめ",
+        "石鹸|せっけん",
+        "誰|だれ",
+        "誰か|だれか",
+        "貼る|はる",
+        "無くす|なくす",
+    ];
+
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+    assertCoverageReadings(starterEntries, [
+        ["飴|あめ", "飴", "あめ"],
+        ["石鹸|せっけん", "石鹸", "せっけん"],
+        ["誰|だれ", "誰", "だれ"],
+        ["誰か|だれか", "誰", "だれ"],
+        ["貼る|はる", "貼", "はる"],
+        ["無くす|なくす", "無", "なくす"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["飴|あめ", "<ruby>飴<rt>あめ</rt></ruby>"],
+        ["石鹸|せっけん", "<ruby>石鹸<rt>せっけん</rt></ruby>"],
+        ["誰|だれ", "<ruby>誰<rt>だれ</rt></ruby>"],
+        ["誰か|だれか", "<ruby>誰<rt>だれ</rt></ruby>か"],
+        ["貼る|はる", "<ruby>貼<rt>は</rt></ruby>る"],
+        ["無くす|なくす", "<ruby>無<rt>な</rt></ruby>くす"],
+    ]);
+
+    for (const key of batchKeys) {
+        assert.equal(starterEntries[key].source, "jlptstudy.net-n5");
+        assert.equal(starterEntries[key].levelPlacement.mode, "vocabulary-level");
+        assert.match(starterEntries[key].levelPlacement.reason, /N5 word v2 vocabulary-level placement/);
+        assert.match(starterEntries[key].notes, /source level claim is unverified/);
+        assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+    }
+    assert.match(starterEntries["飴|あめ"].notes, /standalone kanji word stays eligible/);
+    assert.match(starterEntries["誰|だれ"].notes, /standalone word is learner-friendly and must not be blocked/);
+    assert.match(starterEntries["誰か|だれか"].notes, /separate exact word identity/);
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

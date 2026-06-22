@@ -5,6 +5,8 @@ const os = require("node:os");
 const path = require("node:path");
 
 const {
+    SOURCE_LEVEL_CLAIM_LABEL,
+    SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_UNIVERSE_WARNING,
     buildWordCommonExpansionSelectorReport,
     classifyCommonExpansionSelectorRow,
@@ -181,6 +183,19 @@ function buildExhaustedReadingSignal(level) {
     };
 }
 
+function assertAllSelectorRowsCarrySourceLevelLabels(report) {
+    for (const levelReport of report.levelReports) {
+        assert.ok(levelReport.fallbackSourceGate, `N${levelReport.level} missing fallback source gate`);
+        assert.equal(levelReport.sourceUniverse.levelClaimStatus, SOURCE_LEVEL_CLAIM_STATUS);
+        assert.equal(levelReport.sourceUniverse.levelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
+
+        for (const row of levelReport.rows) {
+            assert.equal(row.sourceLevelClaimStatus, SOURCE_LEVEL_CLAIM_STATUS, `${row.key} missing source claim status`);
+            assert.equal(row.sourceLevelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL, `${row.key} missing source claim label`);
+        }
+    }
+}
+
 test("buildWordCommonExpansionSelectorReport classifies governed common-word source rows without promotion", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
     const candidateSource = writeFixtureSource(
@@ -278,9 +293,13 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.equal(report.configuredSourceOnly, true);
     assert.equal(report.levelReports[0].sourceUniverse.configuredSourceOnly, true);
     assert.equal(report.levelReports[0].sourceUniverse.warning, SOURCE_UNIVERSE_WARNING);
+    assert.equal(report.levelReports[0].sourceUniverse.levelClaimStatus, SOURCE_LEVEL_CLAIM_STATUS);
+    assert.equal(report.levelReports[0].sourceUniverse.levelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
+    assertAllSelectorRowsCarrySourceLevelLabels(report);
 
     const rowsByKey = new Map(report.levelReports[0].rows.map((row) => [row.key, row]));
     assert.equal(rowsByKey.get("山川|さんせん").selectorStatus, "ready_for_editorial_review");
+    assert.equal(rowsByKey.get("山川|さんせん").sourceLevelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
     assert.equal(rowsByKey.get("茶山|ちゃやま").selectorStatus, "blocked_missing_commonness");
     assert.equal(rowsByKey.get("悪行|あくぎょう").selectorStatus, "blocked_missing_dictionary");
     assert.equal(rowsByKey.get("手紙|てがみ").selectorStatus, "move_candidate");
@@ -303,6 +322,8 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     const formatted = formatWordCommonExpansionSelectorReport(report);
     assert.match(formatted, /Read-only report/);
     assert.match(formatted, /Configured-source selector only/);
+    assert.match(formatted, /Source level claim unverified/);
+    assert.match(formatted, /Fallback\/free-source gate/);
     assert.match(formatted, /ready_for_editorial_review/);
 });
 
@@ -364,6 +385,7 @@ test("buildWordCommonExpansionSelectorReport keeps move_candidate authoritative 
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
     assert.equal(report.placementMode, "vocabulary-level");
+    assertAllSelectorRowsCarrySourceLevelLabels(report);
     assert.equal(row.selectorStatus, "move_candidate");
     assert.equal(row.sourceDisposition, "review_candidate");
     assert.equal(row.triageDecision.decision, "move_candidate");
@@ -469,6 +491,7 @@ test("buildWordCommonExpansionSelectorReport routes missing move_candidate rows 
     assert.deepEqual(report.routingSupportLevels, [5]);
     assert.equal(report.blockers.length, 0);
     assert.equal(report.summary.routedMoveCandidateRows, 1);
+    assertAllSelectorRowsCarrySourceLevelLabels(report);
     assert.equal(report.levelReports[0].summary.routedMoveCandidateRows, 1);
     assert.equal(report.levelReports[0].routedMoveCandidateSummary.totalMoveCandidatesToTarget, 1);
     assert.equal(report.levelReports[0].routedMoveCandidateSummary.targetQueueRows, 1);
@@ -591,6 +614,7 @@ test("buildWordCommonExpansionSelectorReport routes lower-source move candidates
     assert.deepEqual(report.levels, [2, 1]);
     assert.deepEqual(report.routingSupportLevels, [5, 4]);
     assert.equal(report.summary.routedMoveCandidateRows, 2);
+    assertAllSelectorRowsCarrySourceLevelLabels(report);
 
     const reportsByLevel = new Map(report.levelReports.map((levelReport) => [levelReport.level, levelReport]));
     const n2Row = reportsByLevel.get(2).rows.find((row) => row.key === "髪|かみ");
@@ -696,6 +720,7 @@ test("buildWordCommonExpansionSelectorReport marks candidates inactive until rea
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "山川|さんせん");
     assert.equal(report.levelReports[0].commonWordQueue.active, false);
+    assertAllSelectorRowsCarrySourceLevelLabels(report);
     assert.equal(report.summary.inactiveReadingExpansionLevels, 1);
     assert.equal(row.selectorStatus, "queue_inactive_reading_expansion");
     assert.equal(report.levelReports[0].summary.selectorStatusCounts.ready_for_editorial_review, 0);
@@ -792,6 +817,7 @@ test("buildWordCommonExpansionSelectorReport does not block common-word queue on
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
     assert.equal(report.levelReports[0].commonWordQueue.active, true);
+    assertAllSelectorRowsCarrySourceLevelLabels(report);
     assert.equal(report.levelReports[0].commonWordQueue.readingExhausted, true);
     assert.equal(report.levelReports[0].commonWordQueue.fullyExpanded, false);
     assert.equal(report.levelReports[0].commonWordQueue.enhancementStatus, "needs_triage");
@@ -889,6 +915,7 @@ test("buildWordCommonExpansionSelectorReport keeps move_candidate visible while 
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "手紙|てがみ");
     assert.equal(report.levelReports[0].commonWordQueue.active, false);
+    assertAllSelectorRowsCarrySourceLevelLabels(report);
     assert.equal(report.levelReports[0].commonWordQueue.readingExhausted, false);
     assert.equal(row.selectorStatus, "move_candidate");
     assert.equal(report.levelReports[0].summary.selectorStatusCounts.queue_inactive_reading_expansion, 0);

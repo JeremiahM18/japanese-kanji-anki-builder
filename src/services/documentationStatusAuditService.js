@@ -287,7 +287,7 @@ function auditDocumentationText({
     const phrases = buildN3WordStatusPhrases(snapshot);
     const product = productSnapshot || snapshot.product || {
         kanjiDenominator: 2212,
-        wordDenominator: 2122,
+        wordDenominator: 2191,
         kanjiLockedDenominator: 982,
         wordLockedDenominator: 987,
         kanjiObsidianProof: 982,

@@ -651,7 +651,8 @@
       "japanese": "ドアを閉めます。",
       "reading": "ドアをしめます。",
       "english": "I close the door."
-    }
+    },
+    "notes": "N2 starter word entry for the close/shut sense of 閉める|しめる. Kept distinct from N1 routed 締める|しめる, which teaches the fasten/tighten sense."
   },
   "編む|あむ": {
     "written": "編む",
@@ -761,6 +762,903 @@
     },
     "levelPlacement": {
       "reason": "N2 learner-fit placement: formal ask/question verb built from N4 問, register-sensitive and later than basic 質問/聞く."
+    }
+  },
+  "泳ぐ|およぐ": {
+    "written": "泳ぐ",
+    "reading": "およぐ",
+    "meaning": "to swim",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>泳<rt>およ</rt></ruby>ぐ",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "泳"
+      ],
+      "coversReadings": {
+        "泳": "およぐ"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 泳ぐ|およぐ, reading およぐ, and the swim sense with priority/commonness support (entrySeq=1174340; jmdictPriority=ichi1,news1,nf20). The only kanji anchor is 泳, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "夏にプールで泳ぎます。",
+      "reading": "なつにプールでおよぎます。",
+      "english": "I swim in the pool in summer."
+    }
+  },
+  "鉛筆|えんぴつ": {
+    "written": "鉛筆",
+    "reading": "えんぴつ",
+    "meaning": "pencil",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>鉛<rt>えん</rt></ruby><ruby>筆<rt>ぴつ</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "筆"
+      ],
+      "coversReadings": {
+        "筆": "ぴつ"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 鉛筆|えんぴつ, reading えんぴつ, and pencil sense with priority/commonness support (entrySeq=1178590; jmdictPriority=ichi1,news1,nf12). 鉛 is harder N1 support and must stay visibly labeled; the N2 anchor is 筆.",
+    "exampleSentence": {
+      "japanese": "鉛筆で名前を書きました。",
+      "reading": "えんぴつでなまえをかきました。",
+      "english": "I wrote my name with a pencil."
+    }
+  },
+  "塩|しお": {
+    "written": "塩",
+    "reading": "しお",
+    "meaning": "salt",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>塩<rt>しお</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "塩"
+      ],
+      "coversReadings": {
+        "塩": "しお"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 塩|しお, reading しお, and salt/table-salt senses with priority/commonness support (entrySeq=1576630; jmdictPriority=ichi1,news1,nf06). The only kanji anchor is 塩, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "スープに塩を少し入れました。",
+      "reading": "スープにしおをすこしいれました。",
+      "english": "I put a little salt in the soup."
+    }
+  },
+  "灰皿|はいざら": {
+    "written": "灰皿",
+    "reading": "はいざら",
+    "meaning": "ashtray",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>灰<rt>はい</rt></ruby><ruby>皿<rt>ざら</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "灰",
+        "皿"
+      ],
+      "coversReadings": {
+        "灰": "はい",
+        "皿": "ざら"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 灰皿|はいざら, reading はいざら, and ashtray sense with priority/commonness support (entrySeq=1201940; jmdictPriority=ichi1,news1,nf21). Both 灰 and 皿 are N2 anchors; the card stays in N2 and uses a neutral object example.",
+    "exampleSentence": {
+      "japanese": "灰皿はテーブルの上にあります。",
+      "reading": "はいざらはテーブルのうえにあります。",
+      "english": "The ashtray is on the table."
+    }
+  },
+  "角|かど": {
+    "written": "角",
+    "reading": "かど",
+    "meaning": "corner / edge",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>角<rt>かど</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "角"
+      ],
+      "coversReadings": {
+        "角": "かど"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 角|かど, reading かど, and corner/edge senses with priority/commonness support (entrySeq=1206110; jmdictPriority=ichi1,news1,nf06). The written form has multiple common readings, so this card deliberately teaches the かど corner sense.",
+    "exampleSentence": {
+      "japanese": "次の角を右に曲がってください。",
+      "reading": "つぎのかどをみぎにまがってください。",
+      "english": "Please turn right at the next corner."
+    }
+  },
+  "甘い|あまい": {
+    "written": "甘い",
+    "reading": "あまい",
+    "meaning": "sweet",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>甘<rt>あま</rt></ruby>い",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "甘"
+      ],
+      "coversReadings": {
+        "甘": "あまい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 甘い|あまい, reading あまい, and sweet/generous senses with priority/commonness support (entrySeq=1213400; jmdictPriority=ichi1,news1,nf19). The only kanji anchor is 甘, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The card chooses the learner-facing sweet taste sense.",
+    "exampleSentence": {
+      "japanese": "このケーキは甘いです。",
+      "reading": "このケーキはあまいです。",
+      "english": "This cake is sweet."
+    }
+  },
+  "机|つくえ": {
+    "written": "机",
+    "reading": "つくえ",
+    "meaning": "desk",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>机<rt>つくえ</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "机"
+      ],
+      "coversReadings": {
+        "机": "つくえ"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 机|つくえ, reading つくえ, and desk sense with priority/commonness support (entrySeq=1220210; jmdictPriority=ichi1,news1,nf07). The only kanji anchor is 机, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "机の上に本があります。",
+      "reading": "つくえのうえにほんがあります。",
+      "english": "There is a book on the desk."
+    }
+  },
+  "居る|いる": {
+    "written": "居る",
+    "reading": "いる",
+    "meaning": "to be / exist (animate)",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>居<rt>い</rt></ruby>る",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "居"
+      ],
+      "coversReadings": {
+        "居": "いる"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 居る|いる, reading いる, and animate-existence sense with priority/commonness support (entrySeq=1577980; jmdictPriority=ichi1). The only kanji anchor is 居, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The card teaches the animate-existence sense and keeps it distinct from 要る|いる.",
+    "exampleSentence": {
+      "japanese": "公園に子どもが居ます。",
+      "reading": "こうえんにこどもがいます。",
+      "english": "There are children in the park."
+    }
+  },
+  "橋|はし": {
+    "written": "橋",
+    "reading": "はし",
+    "meaning": "bridge",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>橋<rt>はし</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "橋"
+      ],
+      "coversReadings": {
+        "橋": "はし"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 橋|はし, reading はし, and bridge sense with priority/commonness support (entrySeq=1237410; jmdictPriority=ichi1,news1,nf05). The only kanji anchor is 橋, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "橋を渡ります。",
+      "reading": "はしをわたります。",
+      "english": "I cross the bridge."
+    }
+  },
+  "曲る|まがる": {
+    "written": "曲る",
+    "reading": "まがる",
+    "meaning": "to turn / bend",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>曲<rt>まが</rt></ruby>る",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "曲"
+      ],
+      "coversReadings": {
+        "曲": "まがる"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 曲る|まがる, reading まがる, and turn/bend senses with priority/commonness support (entrySeq=1239730; jmdictPriority=ichi1,news2,nf28). The only kanji anchor is 曲, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The source/JMdict identity uses sparse okurigana 曲る; the learner-facing sense is turn/bend.",
+    "exampleSentence": {
+      "japanese": "道は左へ曲ります。",
+      "reading": "みちはひだりへまがります。",
+      "english": "The road turns left."
+    }
+  },
+  "戸|と": {
+    "written": "戸",
+    "reading": "と",
+    "meaning": "Japanese-style door / shutter",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>戸<rt>と</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "戸"
+      ],
+      "coversReadings": {
+        "戸": "と"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 戸|と, reading と, and Japanese-style door/shutter sense with priority/commonness support (entrySeq=1266970; jmdictPriority=ichi1,news1,nf07). The only kanji anchor is 戸, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "古い戸を開けました。",
+      "reading": "ふるいとをあけました。",
+      "english": "I opened the old sliding door."
+    }
+  },
+  "厚い|あつい": {
+    "written": "厚い",
+    "reading": "あつい",
+    "meaning": "thick / deep",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>厚<rt>あつ</rt></ruby>い",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "厚"
+      ],
+      "coversReadings": {
+        "厚": "あつい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 厚い|あつい, reading あつい, and thick/deep senses with priority/commonness support (entrySeq=1275320; jmdictPriority=ichi1,news2,nf29). The only kanji anchor is 厚, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The card chooses the physical thick/deep sense, not the warm-hearted sense.",
+    "exampleSentence": {
+      "japanese": "この本は厚いです。",
+      "reading": "このほんはあついです。",
+      "english": "This book is thick."
+    }
+  },
+  "困る|こまる": {
+    "written": "困る",
+    "reading": "こまる",
+    "meaning": "to be troubled / have difficulty",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>困<rt>こま</rt></ruby>る",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "困"
+      ],
+      "coversReadings": {
+        "困": "こまる"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 困る|こまる, reading こまる, and be-troubled/have-difficulty senses with priority/commonness support (entrySeq=1289590; jmdictPriority=ichi1,news2,nf30). The only kanji anchor is 困, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "道に迷って困りました。",
+      "reading": "みちにまよってこまりました。",
+      "english": "I got lost and was in trouble."
+    }
+  },
+  "砂糖|さとう": {
+    "written": "砂糖",
+    "reading": "さとう",
+    "meaning": "sugar",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>砂<rt>さ</rt></ruby><ruby>糖<rt>とう</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "砂"
+      ],
+      "coversReadings": {
+        "砂": "さ"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 砂糖|さとう, reading さとう, and sugar sense with priority/commonness support (entrySeq=1291600; jmdictPriority=ichi1,news1,nf08). 糖 is harder N1 support and must stay visibly labeled; the N2 anchor is 砂.",
+    "exampleSentence": {
+      "japanese": "コーヒーに砂糖を入れます。",
+      "reading": "コーヒーにさとうをいれます。",
+      "english": "I put sugar in coffee."
+    }
+  },
+  "細い|ほそい": {
+    "written": "細い",
+    "reading": "ほそい",
+    "meaning": "thin / slender",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>細<rt>ほそ</rt></ruby>い",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "細"
+      ],
+      "coversReadings": {
+        "細": "ほそい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 細い|ほそい, reading ほそい, and thin/slender/fine senses with priority/commonness support (entrySeq=1295510; jmdictPriority=ichi1,news1,nf16). The only kanji anchor is 細, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "細い道を歩きました。",
+      "reading": "ほそいみちをあるきました。",
+      "english": "I walked along a narrow path."
+    }
+  },
+  "咲く|さく": {
+    "written": "咲く",
+    "reading": "さく",
+    "meaning": "to bloom",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>咲<rt>さ</rt></ruby>く",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "咲"
+      ],
+      "coversReadings": {
+        "咲": "さく"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 咲く|さく, reading さく, and bloom sense with priority/commonness support (entrySeq=1297210; jmdictPriority=ichi1). The only kanji anchor is 咲, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "春に花が咲きます。",
+      "reading": "はるにはながさきます。",
+      "english": "Flowers bloom in spring."
+    }
+  },
+  "歯|は": {
+    "written": "歯",
+    "reading": "は",
+    "meaning": "tooth",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>歯<rt>は</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "歯"
+      ],
+      "coversReadings": {
+        "歯": "は"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 歯|は, reading は, and tooth sense with priority/commonness support (entrySeq=1313000; jmdictPriority=ichi1,news1,nf05). The only kanji anchor is 歯, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "歯を磨きます。",
+      "reading": "はをみがきます。",
+      "english": "I brush my teeth."
+    }
+  },
+  "辛い|からい": {
+    "written": "辛い",
+    "reading": "からい",
+    "meaning": "spicy / hot",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>辛<rt>から</rt></ruby>い",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "辛"
+      ],
+      "coversReadings": {
+        "辛": "からい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 辛い|からい, reading からい, and spicy/hot sense with priority/commonness support (entrySeq=1365850; jmdictPriority=ichi1,news1,nf24). The only kanji anchor is 辛, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The card chooses the spicy taste sense.",
+    "exampleSentence": {
+      "japanese": "この料理は辛いです。",
+      "reading": "このりょうりはからいです。",
+      "english": "This dish is spicy."
+    }
+  },
+  "晴れ|はれ": {
+    "written": "晴れ",
+    "reading": "はれ",
+    "meaning": "clear weather",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>晴<rt>は</rt></ruby>れ",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "晴"
+      ],
+      "coversReadings": {
+        "晴": "はれ"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 晴れ|はれ, reading はれ, and clear-weather sense with priority/commonness support (entrySeq=1376460; jmdictPriority=ichi1,news1,nf15). The only kanji anchor is 晴, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The noun is reviewed alongside 晴れる but remains a separate exact identity.",
+    "exampleSentence": {
+      "japanese": "明日は晴れです。",
+      "reading": "あしたははれです。",
+      "english": "Tomorrow will be clear weather."
+    }
+  },
+  "晴れる|はれる": {
+    "written": "晴れる",
+    "reading": "はれる",
+    "meaning": "to become sunny / clear up",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>晴<rt>は</rt></ruby>れる",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "晴"
+      ],
+      "coversReadings": {
+        "晴": "はれる"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 晴れる|はれる, reading はれる, and clear-up/be-sunny sense with priority/commonness support (entrySeq=1376470; jmdictPriority=ichi1,news2,nf26). The only kanji anchor is 晴, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The verb is reviewed alongside 晴れ but remains a separate exact identity.",
+    "exampleSentence": {
+      "japanese": "午後には空が晴れます。",
+      "reading": "ごごにはそらがはれます。",
+      "english": "The sky will clear up in the afternoon."
+    }
+  },
+  "静か|しずか": {
+    "written": "静か",
+    "reading": "しずか",
+    "meaning": "quiet / calm",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>静<rt>しず</rt></ruby>か",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "静"
+      ],
+      "coversReadings": {
+        "静": "しずか"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 静か|しずか, reading しずか, and quiet/calm sense with priority/commonness support (entrySeq=1381820; jmdictPriority=ichi1,news1,nf05). The only kanji anchor is 静, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "図書館は静かです。",
+      "reading": "としょかんはしずかです。",
+      "english": "The library is quiet."
+    }
+  },
+  "曇り|くもり": {
+    "written": "曇り",
+    "reading": "くもり",
+    "meaning": "cloudy weather / cloudiness",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>曇<rt>くも</rt></ruby>り",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "曇"
+      ],
+      "coversReadings": {
+        "曇": "くもり"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 曇り|くもり, reading くもり, and cloudy-weather/cloudiness sense with priority/commonness support (entrySeq=1592340; jmdictPriority=ichi1,news1,nf20). The only kanji anchor is 曇, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The noun is reviewed alongside 曇る but remains a separate exact identity.",
+    "exampleSentence": {
+      "japanese": "今日は曇りです。",
+      "reading": "きょうはくもりです。",
+      "english": "Today is cloudy."
+    }
+  },
+  "曇る|くもる": {
+    "written": "曇る",
+    "reading": "くもる",
+    "meaning": "to become cloudy",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>曇<rt>くも</rt></ruby>る",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "曇"
+      ],
+      "coversReadings": {
+        "曇": "くもる"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 曇る|くもる, reading くもる, and become-cloudy sense with priority/commonness support (entrySeq=1457560; jmdictPriority=ichi1,news2,nf43). The only kanji anchor is 曇, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The verb is reviewed alongside 曇り but remains a separate exact identity.",
+    "exampleSentence": {
+      "japanese": "午後から空が曇ります。",
+      "reading": "ごごからそらがくもります。",
+      "english": "The sky will become cloudy from the afternoon."
+    }
+  },
+  "難しい|むずかしい": {
+    "written": "難しい",
+    "reading": "むずかしい",
+    "meaning": "difficult",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>難<rt>むずか</rt></ruby>しい",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "難"
+      ],
+      "coversReadings": {
+        "難": "むずかしい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 難しい|むずかしい, reading むずかしい, and difficult sense with priority/commonness support (entrySeq=1460850; jmdictPriority=ichi1,news1,nf07). The only kanji anchor is 難, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "この問題は難しいです。",
+      "reading": "このもんだいはむずかしいです。",
+      "english": "This problem is difficult."
+    }
+  },
+  "薄い|うすい": {
+    "written": "薄い",
+    "reading": "うすい",
+    "meaning": "thin / weak",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>薄<rt>うす</rt></ruby>い",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "薄"
+      ],
+      "coversReadings": {
+        "薄": "うすい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 薄い|うすい, reading うすい, and thin/weak senses with priority/commonness support (entrySeq=1475480; jmdictPriority=ichi1,news1,nf20). The only kanji anchor is 薄, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The example chooses the physical thin sense from the broader entry.",
+    "exampleSentence": {
+      "japanese": "薄い紙を使います。",
+      "reading": "うすいかみをつかいます。",
+      "english": "I use thin paper."
+    }
+  },
+  "鼻|はな": {
+    "written": "鼻",
+    "reading": "はな",
+    "meaning": "nose",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>鼻<rt>はな</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "鼻"
+      ],
+      "coversReadings": {
+        "鼻": "はな"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 鼻|はな, reading はな, and nose sense with priority/commonness support (entrySeq=1486720; jmdictPriority=ichi1,news1,nf08). The only kanji anchor is 鼻, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. This same-reading body-part word stays distinct from 花|はな.",
+    "exampleSentence": {
+      "japanese": "鼻が少し痛いです。",
+      "reading": "はながすこしいたいです。",
+      "english": "My nose hurts a little."
+    }
+  },
+  "封筒|ふうとう": {
+    "written": "封筒",
+    "reading": "ふうとう",
+    "meaning": "envelope",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>封<rt>ふう</rt></ruby><ruby>筒<rt>とう</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "封",
+        "筒"
+      ],
+      "coversReadings": {
+        "封": "ふう",
+        "筒": "とう"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 封筒|ふうとう, reading ふうとう, and envelope sense with priority/commonness support (entrySeq=1499690; jmdictPriority=ichi1,news1,nf11). Both 封 and 筒 are N2 anchors, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "手紙を封筒に入れました。",
+      "reading": "てがみをふうとうにいれました。",
+      "english": "I put the letter in an envelope."
+    }
+  },
+  "磨く|みがく": {
+    "written": "磨く",
+    "reading": "みがく",
+    "meaning": "to brush / polish",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>磨<rt>みが</rt></ruby>く",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "磨"
+      ],
+      "coversReadings": {
+        "磨": "みがく"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 磨く|みがく, reading みがく, and brush/polish sense with priority/commonness support (entrySeq=1523940; jmdictPriority=ichi1). The only kanji anchor is 磨, so this N5 source row is physically placed in the N2 word deck rather than forced into N5. The example chooses the tooth-brushing sense.",
+    "exampleSentence": {
+      "japanese": "毎朝、歯を磨きます。",
+      "reading": "まいあさ、はをみがきます。",
+      "english": "I brush my teeth every morning."
+    }
+  },
+  "卵|たまご": {
+    "written": "卵",
+    "reading": "たまご",
+    "meaning": "egg",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>卵<rt>たまご</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "卵"
+      ],
+      "coversReadings": {
+        "卵": "たまご"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 卵|たまご, reading たまご, and egg sense with priority/commonness support (entrySeq=1549140; jmdictPriority=ichi1,news1,nf05,spec1). The only kanji anchor is 卵, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "朝ご飯に卵を食べます。",
+      "reading": "あさごはんにたまごをたべます。",
+      "english": "I eat eggs for breakfast."
+    }
+  },
+  "涼しい|すずしい": {
+    "written": "涼しい",
+    "reading": "すずしい",
+    "meaning": "cool / refreshing",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>涼<rt>すず</rt></ruby>しい",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "涼"
+      ],
+      "coversReadings": {
+        "涼": "すずしい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 涼しい|すずしい, reading すずしい, and cool/refreshing sense with priority/commonness support (entrySeq=1553070; jmdictPriority=ichi1,news1,nf23). The only kanji anchor is 涼, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "夕方は涼しいです。",
+      "reading": "ゆうがたはすずしいです。",
+      "english": "It is cool in the evening."
+    }
+  },
+  "零|れい": {
+    "written": "零",
+    "reading": "れい",
+    "meaning": "zero",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>零<rt>れい</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "零"
+      ],
+      "coversReadings": {
+        "零": "れい"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 零|れい, reading れい, and zero sense with priority/commonness support (entrySeq=1556740; jmdictPriority=ichi1,news1,nf10). The only kanji anchor is 零, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "答えは零です。",
+      "reading": "こたえはれいです。",
+      "english": "The answer is zero."
+    }
+  },
+  "お皿|おさら": {
+    "written": "お皿",
+    "reading": "おさら",
+    "meaning": "plate / dish",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "お<ruby>皿<rt>さら</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "皿"
+      ],
+      "coversReadings": {
+        "皿": "さら"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies お皿|おさら, reading おさら, and polite plate/dish sense (entrySeq=1299685; jmdictPriority=none). Exact-form JMdict priority is missing, so this row is labeled as a target-level routing resolution, not broad commonness proof. The only kanji anchor is 皿, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "お皿をテーブルに置きます。",
+      "reading": "おさらをテーブルにおきます。",
+      "english": "I put the plate on the table."
+    }
+  },
+  "掃除|そうじ": {
+    "written": "掃除",
+    "reading": "そうじ",
+    "meaning": "cleaning / sweeping",
+    "jlpt": 2,
+    "tags": [
+      "starter",
+      "common",
+      "n2"
+    ],
+    "readingBreakdown": "<ruby>掃<rt>そう</rt></ruby><ruby>除<rt>じ</rt></ruby>",
+    "coverage": {
+      "role": "both",
+      "focusKanji": [
+        "掃",
+        "除"
+      ],
+      "coversReadings": {
+        "掃": "そう",
+        "除": "じ"
+      }
+    },
+    "notes": "N2 word v1 Silver moved-candidate expansion from the JLPTStudy N5 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict row verifies 掃除|そうじ, reading そうじ, and cleaning/sweeping sense with priority/commonness support (entrySeq=1399790; jmdictPriority=ichi1,news1,nf09). The source reading includes a parenthetical する marker, so the governed card is normalized to 掃除|そうじ rather than storing 掃除|そうじ（する）. Both 掃 and 除 are N2 anchors, so this N5 source row is physically placed in the N2 word deck rather than forced into N5.",
+    "exampleSentence": {
+      "japanese": "日曜日に部屋の掃除をします。",
+      "reading": "にちようびにへやのそうじをします。",
+      "english": "I clean my room on Sundays."
     }
   }
 }

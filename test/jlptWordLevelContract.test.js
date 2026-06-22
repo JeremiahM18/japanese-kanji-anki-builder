@@ -95,12 +95,81 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "十|じゅう",
     ];
 
-    assert.equal(contract.inventoryCounts["1"], 26);
-    assert.equal(contract.inventoryCounts["2"], 28);
-    assert.equal(contract.inventoryCounts["3"], 1081);
+    assert.equal(contract.inventoryCounts["1"], 38);
+    assert.equal(contract.inventoryCounts["2"], 61);
+    assert.equal(contract.inventoryCounts["3"], 1099);
     assert.equal(contract.inventoryCounts["4"], 700);
     assert.equal(contract.inventoryCounts["5"], 293);
     assert.equal(contract.excludedCounts["5"], 20);
+    const n5RoutedMoveTargets = {
+        "お弁当|おべんとう": 3,
+        "泳ぐ|およぐ": 2,
+        "鉛筆|えんぴつ": 2,
+        "塩|しお": 2,
+        "奥さん|おくさん": 3,
+        "温い|ぬるい": 3,
+        "暇|ひま": 1,
+        "灰皿|はいざら": 2,
+        "皆さん|みなさん": 3,
+        "階段|かいだん": 3,
+        "角|かど": 2,
+        "甘い|あまい": 2,
+        "机|つくえ": 2,
+        "居る|いる": 2,
+        "橋|はし": 2,
+        "狭い|せまい": 1,
+        "曲る|まがる": 2,
+        "靴|くつ": 3,
+        "警官|けいかん": 3,
+        "結構|けっこう": 3,
+        "嫌|いや": 1,
+        "嫌い|きらい": 1,
+        "玄関|げんかん": 3,
+        "戸|と": 2,
+        "交差点|こうさてん": 3,
+        "厚い|あつい": 2,
+        "困る|こまる": 2,
+        "差す|さす": 3,
+        "砂糖|さとう": 2,
+        "細い|ほそい": 2,
+        "咲く|さく": 2,
+        "撮る|とる": 1,
+        "雑誌|ざっし": 3,
+        "傘|かさ": 1,
+        "歯|は": 2,
+        "取る|とる": 3,
+        "暑い|あつい": 1,
+        "辛い|からい": 2,
+        "晴れ|はれ": 2,
+        "晴れる|はれる": 2,
+        "静か|しずか": 2,
+        "脱ぐ|ぬぐ": 1,
+        "弾く|ひく": 1,
+        "暖かい|あたたかい": 1,
+        "締める|しめる": 1,
+        "曇り|くもり": 2,
+        "曇る|くもる": 2,
+        "難しい|むずかしい": 2,
+        "背|せい": 3,
+        "薄い|うすい": 2,
+        "鼻|はな": 2,
+        "封筒|ふうとう": 2,
+        "返す|かえす": 3,
+        "磨く|みがく": 2,
+        "卵|たまご": 2,
+        "涼しい|すずしい": 2,
+        "隣|となり": 1,
+        "冷蔵庫|れいぞうこ": 3,
+        "零|れい": 2,
+        "お皿|おさら": 2,
+        "お酒|おさけ": 3,
+        "結婚|けっこん": 3,
+        "掃除|そうじ": 2,
+    };
+    assert.equal(Object.keys(n5RoutedMoveTargets).length, 63);
+    for (const [key, level] of Object.entries(n5RoutedMoveTargets)) {
+        assert.equal(contract.wordLevels[key]?.jlpt, level, `${key} should be governed in N${level}`);
+    }
     for (const key of [
         "羞恥|しゅうち",
         "資本|しほん",
@@ -324,6 +393,11 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "寝ぬ|いぬ",
         "愛しい|かなしい",
         "苦る|にがる",
+        "お弁当|おべんとう",
+        "奥さん|おくさん",
+        "温い|ぬるい",
+        "皆さん|みなさん",
+        "階段|かいだん",
     ]) {
         assert.equal(getJlptWordLevel(contract, key), 3);
     }
@@ -1233,6 +1307,17 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "乗せる|のせる"), 4);
     assert.equal(getJlptWordLevel(contract, "進める|すすめる"), 4);
     assert.equal(getJlptWordLevel(contract, "低める|ひくめる"), 4);
+    assert.equal(getJlptWordLevel(contract, "お弁当|おべんとう"), 3);
+    assert.equal(getJlptWordLevel(contract, "泳ぐ|およぐ"), 2);
+    assert.equal(getJlptWordLevel(contract, "鉛筆|えんぴつ"), 2);
+    assert.equal(getJlptWordLevel(contract, "塩|しお"), 2);
+    assert.equal(getJlptWordLevel(contract, "奥さん|おくさん"), 3);
+    assert.equal(getJlptWordLevel(contract, "温い|ぬるい"), 3);
+    assert.equal(getJlptWordLevel(contract, "暇|ひま"), 1);
+    assert.equal(getJlptWordLevel(contract, "灰皿|はいざら"), 2);
+    assert.equal(getJlptWordLevel(contract, "皆さん|みなさん"), 3);
+    assert.equal(getJlptWordLevel(contract, "階段|かいだん"), 3);
+    assert.equal(getJlptWordLevel(contract, "角|かど"), 2);
     assert.equal(getJlptWordLevel(contract, "後|あと"), 5);
     assert.equal(getJlptWordLevel(contract, "男の子|おとこのこ"), 5);
     assert.equal(getJlptWordLevel(contract, "大人|おとな"), 5);

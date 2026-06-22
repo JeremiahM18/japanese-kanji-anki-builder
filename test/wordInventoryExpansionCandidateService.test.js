@@ -86,6 +86,39 @@ test("normalizeCandidateSourceRow maps common external vocab headers", () => {
     assert.equal(parseSourceLevel(""), null);
 });
 
+test("classifyCandidateDisposition resolves source reading parenthetical suru markers to governed identities", () => {
+    const contract = {
+        wordLevels: {
+            "結婚|けっこん": { written: "結婚", reading: "けっこん", jlpt: 3 },
+            "掃除|そうじ": { written: "掃除", reading: "そうじ", jlpt: 2 },
+        },
+    };
+
+    const marriage = classifyCandidateDisposition(
+        { written: "結婚", reading: "けっこん（する）", key: "結婚|けっこん（する）" },
+        {
+            targetLevel: 5,
+            kanjiScope: "at-or-below",
+            jlptLevelContract,
+            jlptWordLevelContract: contract,
+        }
+    );
+    const cleaning = classifyCandidateDisposition(
+        { written: "掃除", reading: "そうじ(する)", key: "掃除|そうじ(する)" },
+        {
+            targetLevel: 5,
+            kanjiScope: "at-or-below",
+            jlptLevelContract,
+            jlptWordLevelContract: contract,
+        }
+    );
+
+    assert.equal(marriage.disposition, "already_governed");
+    assert.equal(marriage.reason, "source reading normalizes to governed 結婚|けっこん in N3");
+    assert.equal(cleaning.disposition, "already_governed");
+    assert.equal(cleaning.reason, "source reading normalizes to governed 掃除|そうじ in N2");
+});
+
 test("buildWordInventoryExpansionCandidateReport keeps only new source words that match the requested kanji scope", () => {
     const sourceRows = [
         { written: "学校", reading: "がっこう", meaning: "school", jlpt: "N5" },

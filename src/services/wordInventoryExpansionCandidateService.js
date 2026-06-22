@@ -173,6 +173,27 @@ function splitReadingVariants(reading) {
     return variants.length > 0 ? variants : [String(reading || "").trim()];
 }
 
+function stripSuruReadingMarker(reading = "") {
+    return String(reading || "")
+        .trim()
+        .replace(/[（(]\s*する\s*[）)]$/u, "")
+        .trim();
+}
+
+function buildGovernedResolutionKey(row = {}) {
+    const directKey = row.key || buildWordStudyEntryKey({ written: row.written, reading: row.reading });
+    const normalizedReading = stripSuruReadingMarker(row.reading);
+    const normalizedKey = normalizedReading && normalizedReading !== row.reading
+        ? buildWordStudyEntryKey({ written: row.written, reading: normalizedReading })
+        : directKey;
+    return {
+        directKey,
+        normalizedKey,
+        normalizedReading,
+        normalized: normalizedKey !== directKey,
+    };
+}
+
 function normalizeCandidateSourceRows(row, { sourceLabel = "external" } = {}) {
     const normalized = normalizeCandidateSourceRow(row, { sourceLabel });
     if (!normalized) {
@@ -250,14 +271,21 @@ function classifyCandidateDisposition(row, {
     placementMode = "kanji-anchor",
 }) {
     const scope = classifyKanjiScope(row, { targetLevel, jlptLevelContract });
-    const governedEntry = jlptWordLevelContract?.wordLevels?.[row.key] || null;
-    const excludedEntry = jlptWordLevelContract?.excludedWordLevels?.[row.key] || null;
+    const resolution = buildGovernedResolutionKey(row);
+    const governedEntry = jlptWordLevelContract?.wordLevels?.[resolution.directKey]
+        || jlptWordLevelContract?.wordLevels?.[resolution.normalizedKey]
+        || null;
+    const excludedEntry = jlptWordLevelContract?.excludedWordLevels?.[resolution.directKey]
+        || jlptWordLevelContract?.excludedWordLevels?.[resolution.normalizedKey]
+        || null;
     const normalizedPlacementMode = normalizePlacementMode(placementMode);
 
     if (governedEntry) {
         return {
             disposition: "already_governed",
-            reason: `already governed in N${governedEntry.jlpt}`,
+            reason: resolution.normalized && jlptWordLevelContract?.wordLevels?.[resolution.normalizedKey]
+                ? `source reading normalizes to governed ${resolution.normalizedKey} in N${governedEntry.jlpt}`
+                : `already governed in N${governedEntry.jlpt}`,
             scope,
         };
     }

@@ -307,13 +307,13 @@ npm run deck:words:expansion-candidates:n4 -- --limit=50
 npm run deck:words:expansion-support:n4
 npm run data:normalize:tanos-jlpt-words -- --level=5 --reviewed --citation="<citation>" --evidence-ref="<paired export refs>"
 npm run data:normalize:tanos-jlpt-words -- --level=4 --reviewed --citation="<citation>" --evidence-ref="<paired export refs>"
-npm run data:normalize:tanos-jlpt-words -- --level=3
+npm run data:normalize:tanos-jlpt-words -- --level=3 --reviewed --citation="<citation>" --evidence-ref="<PDF ref>"
 npm run deck:words:expansion-candidates:n3 -- --limit=50
 npm run deck:words:expansion-support:n3
-npm run data:normalize:tanos-jlpt-words -- --level=2
+npm run data:normalize:tanos-jlpt-words -- --level=2 --reviewed --citation="<citation>" --evidence-ref="<paired export refs>"
 npm run deck:words:expansion-candidates:n2 -- --limit=50
 npm run deck:words:expansion-support:n2
-npm run data:normalize:tanos-jlpt-words -- --level=1
+npm run data:normalize:tanos-jlpt-words -- --level=1 --reviewed --citation="<citation>" --evidence-ref="<paired export refs>"
 npm run deck:words:expansion-candidates:n1 -- --limit=50
 npm run deck:words:expansion-support:n1
 ```
@@ -374,6 +374,15 @@ npm run data:import:jlpt:word-source-input -- --source=tanos-n5-vocab
 npm run data:packet:jlpt:word-source-access -- --source=tanos-n4-vocab --surface-type=permitted-machine-readable-source --title="Tanos JLPT N4 vocabulary Mnemosyne exports" --citation="<Tanos N4 page and CC BY sharing statement>" --evidence-ref="<paired export URLs>"
 npm run data:audit:jlpt:word-source-inputs -- --source=tanos-n4-vocab --strict
 npm run data:import:jlpt:word-source-input -- --source=tanos-n4-vocab
+npm run data:packet:jlpt:word-source-access -- --source=tanos-n3-vocab --surface-type=exact-word-list-table --title="Tanos JLPT N3 vocabulary PDF" --citation="<Tanos N3 PDF and CC BY sharing statement>" --evidence-ref="<PDF URL>"
+npm run data:audit:jlpt:word-source-inputs -- --source=tanos-n3-vocab --strict
+npm run data:import:jlpt:word-source-input -- --source=tanos-n3-vocab
+npm run data:packet:jlpt:word-source-access -- --source=tanos-n2-vocab --surface-type=permitted-machine-readable-source --title="Tanos JLPT N2 vocabulary Mnemosyne exports" --citation="<Tanos N2 page and CC BY sharing statement>" --evidence-ref="<paired export URLs>"
+npm run data:audit:jlpt:word-source-inputs -- --source=tanos-n2-vocab --strict
+npm run data:import:jlpt:word-source-input -- --source=tanos-n2-vocab
+npm run data:packet:jlpt:word-source-access -- --source=tanos-n1-vocab --surface-type=permitted-machine-readable-source --title="Tanos JLPT N1 vocabulary Mnemosyne exports" --citation="<Tanos N1 page and CC BY sharing statement>" --evidence-ref="<paired export URLs>"
+npm run data:audit:jlpt:word-source-inputs -- --source=tanos-n1-vocab --strict
+npm run data:import:jlpt:word-source-input -- --source=tanos-n1-vocab
 npm run data:template:jlpt:word-source-input -- --source=textbook-word-list
 npm run data:packet:jlpt:word-source-access -- --source=textbook-word-list --surface-type=exact-textbook-index-page --title="<title>" --citation="<citation>" --evidence-ref="<page/row>"
 npm run data:merge:jlpt:word-source-batch -- --source=<source-id> --batch=<ignored-batch.tsv>

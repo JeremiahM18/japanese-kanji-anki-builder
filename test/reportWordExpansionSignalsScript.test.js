@@ -222,8 +222,8 @@ test("tracked expansion signal sources include the active N3 candidate lane", ()
     assert.equal(n3.sourcePath, "downloads/tanos-n3-vocab.tsv");
     assert.equal(n3.kanjiScope, "known-jlpt");
     assert.equal(n3.requireSourceLevel, true);
-    assert.equal(n3.rowCount, 1832);
-    assert.equal(n3.sha256, "528412527fa54fcb5a1853ae9d3da80553cc16b5c683fd21c6a8cf86ae282404");
+    assert.equal(n3.rowCount, 1841);
+    assert.equal(n3.sha256, "2539f7e2d4090533d5c902abddac4b9a7967319eef7a5cd0c7c6e0c716ea624e");
 });
 
 test("tracked expansion signal sources include the active N2 candidate lane", () => {
@@ -235,7 +235,7 @@ test("tracked expansion signal sources include the active N2 candidate lane", ()
     assert.equal(n2.kanjiScope, "known-jlpt");
     assert.equal(n2.requireSourceLevel, true);
     assert.equal(n2.rowCount, 1835);
-    assert.equal(n2.sha256, "19a827aaf110b06601dc48908151c698f41f46eb141a5b908eb014582b3d52e9");
+    assert.equal(n2.sha256, "2022d72b7a303205a0a5541e1d921f943840731a8897f7af6812e1b6a0b4e86b");
 });
 
 test("tracked expansion signal sources include the active N1 candidate lane", () => {
@@ -247,7 +247,7 @@ test("tracked expansion signal sources include the active N1 candidate lane", ()
     assert.equal(n1.kanjiScope, "known-jlpt");
     assert.equal(n1.requireSourceLevel, true);
     assert.equal(n1.rowCount, 3494);
-    assert.equal(n1.sha256, "7cfbcd253d088249d27a7d41e567b22a662b92fc02fa835512112c1bba8c7032");
+    assert.equal(n1.sha256, "d9ab4bd35b9ca149ffbf1377472c982eb04c4156e60ead869303472341810c2e");
 });
 
 test("formatted expansion signal report does not overclaim release readiness", () => {

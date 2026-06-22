@@ -111,6 +111,28 @@ test("buildTanosJlptWordSource formats normalized TSV", () => {
     assert.match(result.tsv, new RegExp(DEFAULT_ATTRIBUTION.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 });
 
+test("buildTanosJlptWordSource can emit reviewed PDF extraction source evidence columns", () => {
+    const result = buildTanosJlptWordSource({
+        level: "N3",
+        sourceText: [
+            "愛",
+            "あい",
+            "love",
+        ].join("\n"),
+        sourceId: "fixture-tanos-n3",
+        sourceLabel: "Fixture Tanos N3",
+        reviewedEvidence: {
+            citation: "Fixture Tanos N3 PDF",
+            evidenceRefPrefix: "fixture PDF",
+        },
+    });
+
+    assert.equal(result.rows[0].reviewStatus, "reviewed");
+    assert.equal(result.rows[0].citation, "Fixture Tanos N3 PDF");
+    assert.equal(result.rows[0].evidenceRef, "fixture PDF; normalized extracted PDF row 1");
+    assert.match(result.tsv, /^written\treading\tmeaning\tjlpt\tsource\treviewStatus\tcitation\tevidenceRef\tnotes\n/);
+});
+
 function mnemosyneItem({ question, answer }) {
     return [
         "(imnemosyne.core.mnemosyne_core",
@@ -214,6 +236,24 @@ test("reviewed Tanos output leaves duplicate exact identities pending", () => {
     assert.equal(result.rows[1].reviewStatus, "needs_review");
     assert.match(result.rows[1].notes, /Duplicate exact identity/);
     assert.match(result.tsv, /water duplicate\tN5\tfixture-tanos-n5\tneeds_review\tFixture citation\tfixture refs; normalized paired row 2/);
+});
+
+test("reviewed Tanos output leaves missing exact identities pending", () => {
+    const result = buildTanosJlptWordSourceFromMnemosyne({
+        englishMemText: mnemosyneItem({ question: "けれど/けれども", answer: "but" }),
+        readingMemText: mnemosyneItem({ question: "けれど/けれども", answer: "" }),
+        level: "N2",
+        sourceId: "fixture-tanos-n2",
+        sourceLabel: "Fixture Tanos N2",
+        reviewedEvidence: {
+            citation: "Fixture citation",
+            evidenceRefPrefix: "fixture refs",
+        },
+    });
+
+    assert.equal(result.rows[0].reviewStatus, "needs_review");
+    assert.match(result.rows[0].notes, /Missing exact written\|reading identity/);
+    assert.match(result.tsv, /けれど\/けれども\t\tbut\tN2\tfixture-tanos-n2\tneeds_review\tFixture citation\tfixture refs; normalized paired row 1/);
 });
 
 test("normalizeTanosJlptWordSource script parses args and reports read-only scope", () => {

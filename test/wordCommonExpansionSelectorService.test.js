@@ -8,6 +8,7 @@ const {
     SOURCE_LEVEL_CLAIM_LABEL,
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_UNIVERSE_WARNING,
+    buildExpansionWorkOrder,
     buildWordCommonExpansionSelectorReport,
     classifyCommonExpansionSelectorRow,
     formatWordCommonExpansionSelectorReport,
@@ -324,7 +325,136 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.match(formatted, /Configured-source selector only/);
     assert.match(formatted, /Source level claim unverified/);
     assert.match(formatted, /Fallback\/free-source gate/);
+    assert.match(formatted, /Expansion work order/);
     assert.match(formatted, /ready_for_editorial_review/);
+});
+
+test("expansion work order makes extra source lane readiness explicit after current selector exhaustion", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "水\tみず\twater\tN5",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "水\tみず\twater",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "水\tみず\twater\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: {
+                level: 5,
+                levelLabel: "N5",
+                fullyExpanded: true,
+                reading: {
+                    status: "exhausted",
+                    activeItems: 0,
+                    editorialReviewItems: 0,
+                    promoteCuratedExampleItems: 0,
+                    deferVariantItems: 12,
+                    totalItems: 12,
+                    reason: "No active reading-gap triage items remain.",
+                    blockers: [],
+                },
+                enhancement: {
+                    status: "exhausted",
+                    keepCandidates: 0,
+                    untriagedCandidateRows: 0,
+                    moveCandidates: 0,
+                    crossLevelRoutingRows: 0,
+                    blockers: [],
+                },
+                placement: {
+                    status: "resolved",
+                    violationCount: 0,
+                    blockers: [],
+                },
+            },
+        },
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                水: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "水|みず": { written: "水", reading: "みず", jlpt: 5 },
+            },
+            excludedWordLevels: {},
+        },
+    });
+
+    const levelReport = report.levelReports[0];
+    assert.equal(levelReport.summary.selectorStatusCounts.ready_for_editorial_review, 0);
+    assert.equal(levelReport.summary.selectorStatusCounts.needs_triage, 0);
+    assert.equal(levelReport.summary.selectorStatusCounts.move_candidate, 0);
+    assert.equal(levelReport.fallbackSourceGate.active, true);
+    assert.equal(levelReport.expansionWorkOrder.status, "extra_source_family");
+    assert.equal(levelReport.expansionWorkOrder.extraSourceLaneReady, true);
+    assert.match(levelReport.expansionWorkOrder.nextAction, /READY/);
+    assert.match(levelReport.expansionWorkOrder.nextAction, /work is not done/i);
+    assert.match(levelReport.expansionWorkOrder.nextAction, /Source level claim unverified/);
+
+    const formatted = formatWordCommonExpansionSelectorReport(report);
+    assert.match(formatted, /Extra source-family lane/);
+    assert.match(formatted, /READY - source input needed/);
+    assert.match(formatted, /work is not done/i);
+});
+
+test("expansion work order prioritizes active reading work before extra sources", () => {
+    const workOrder = buildExpansionWorkOrder({
+        level: 5,
+        levelLabel: "N5",
+        commonWordQueue: {
+            active: false,
+            promoteCuratedExampleItems: 2,
+            editorialReviewItems: 3,
+            deferVariantItems: 4,
+        },
+        fallbackSourceGate: {
+            active: false,
+            blockers: ["N5 reading expansion is not exhausted."],
+        },
+        summary: {
+            selectorStatusCounts: {
+                ready_for_editorial_review: 0,
+                needs_triage: 0,
+                move_candidate: 0,
+                blocked_identity: 0,
+                blocked_missing_dictionary: 0,
+                blocked_missing_commonness: 0,
+                triaged_defer: 0,
+                triaged_reject: 0,
+            },
+        },
+    });
+
+    assert.equal(workOrder.status, "reading_fast_promotions");
+    assert.equal(workOrder.activeBlockingLaneCount, 2);
+    assert.equal(workOrder.extraSourceLaneReady, false);
+    assert.match(workOrder.nextCommand, /deck:words:gap-plan:n5/);
+    assert.match(workOrder.nextAction, /Fast\/easy reading work/);
 });
 
 test("buildWordCommonExpansionSelectorReport keeps move_candidate authoritative in vocabulary-level mode", () => {

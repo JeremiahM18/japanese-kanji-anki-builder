@@ -193,8 +193,182 @@ function buildFallbackSourceGate({ level, commonWordQueue = {}, summary = {}, so
         moveCandidateRows,
         blockers,
         reason: active
-            ? "Reading expansion and the current new-word selector are exhausted; a later free/permitted fallback source lane may be considered with explicit unverified source-level labels."
+            ? "Reading expansion and the current new-word selector are exhausted; the extra free/permitted source-family lane is READY for source-access/input work. Work is not done: imported extra rows must keep explicit unverified source-level labels."
             : "Fallback/free-source expansion is closed until reading expansion and the current new-word selector are exhausted.",
+    };
+}
+
+function countValue(value) {
+    return Number.isInteger(value) ? value : 0;
+}
+
+function buildWorkOrderItem({
+    rank,
+    lane,
+    label,
+    count = 0,
+    status,
+    blocksExtraLane = false,
+    command = "",
+    reason = "",
+} = {}) {
+    return {
+        rank,
+        lane,
+        label,
+        count,
+        status,
+        active: status === "active" || status === "ready",
+        blocksExtraLane,
+        command,
+        reason,
+    };
+}
+
+function buildExpansionWorkOrder(levelReport = {}) {
+    const level = levelReport.level;
+    const levelLabel = levelReport.levelLabel || `N${level}`;
+    const counts = levelReport.summary?.selectorStatusCounts || {};
+    const gate = levelReport.commonWordQueue || {};
+    const fallbackGate = levelReport.fallbackSourceGate || {};
+    const readingFastPromotions = countValue(gate.promoteCuratedExampleItems);
+    const readingEditorialResearch = countValue(gate.editorialReviewItems);
+    const readingDeferredVariants = countValue(gate.deferVariantItems);
+    const readyRows = countValue(counts.ready_for_editorial_review);
+    const needsTriageRows = countValue(counts.needs_triage);
+    const moveRows = countValue(counts.move_candidate) + countValue(levelReport.summary?.routedMoveCandidateRows);
+    const blockedRows = countValue(counts.blocked_identity)
+        + countValue(counts.blocked_missing_dictionary)
+        + countValue(counts.blocked_missing_commonness);
+    const selectorDeferredRows = countValue(counts.triaged_defer);
+    const rejectedRows = countValue(counts.triaged_reject);
+    const gapPlanCommand = `npm run deck:words:gap-plan:n${level} -- --limit=50`;
+    const selectorCommand = `npm run deck:words:vocab-expansion -- --levels=${level} --strict --limit=80`;
+    const allLevelSelectorCommand = "npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1 --strict --limit=80";
+    const sourceAccessCommand = "npm run deck:words:source-access";
+
+    const items = [
+        buildWorkOrderItem({
+            rank: 1,
+            lane: "reading_fast_promotions",
+            label: "Reading fast promotions",
+            count: readingFastPromotions,
+            status: readingFastPromotions > 0 ? "active" : "clear",
+            blocksExtraLane: readingFastPromotions > 0,
+            command: gapPlanCommand,
+            reason: readingFastPromotions > 0
+                ? "Fast/easy reading work exists: curated or tracked support can likely be promoted after review."
+                : "No fast/easy reading promotions are active.",
+        }),
+        buildWorkOrderItem({
+            rank: 2,
+            lane: "reading_editorial_research",
+            label: "Reading editorial research",
+            count: readingEditorialResearch,
+            status: readingEditorialResearch > 0 ? "active" : "clear",
+            blocksExtraLane: readingEditorialResearch > 0,
+            command: gapPlanCommand,
+            reason: readingEditorialResearch > 0
+                ? "Reading gaps still need learner-facing source/card research before common-word expansion should be treated as the main lane."
+                : "No active reading editorial research remains.",
+        }),
+        buildWorkOrderItem({
+            rank: 3,
+            lane: "current_selector_ready",
+            label: "Current source ready rows",
+            count: readyRows,
+            status: readyRows > 0 ? "active" : "clear",
+            blocksExtraLane: readyRows > 0,
+            command: selectorCommand,
+            reason: readyRows > 0
+                ? "Governed selector rows are ready for editorial Silver review; still pre-trust and not card approvals."
+                : "No ready rows remain in the current governed selector.",
+        }),
+        buildWorkOrderItem({
+            rank: 4,
+            lane: "current_selector_triage",
+            label: "Current source triage",
+            count: needsTriageRows,
+            status: needsTriageRows > 0 ? "active" : "clear",
+            blocksExtraLane: needsTriageRows > 0,
+            command: selectorCommand,
+            reason: needsTriageRows > 0
+                ? "Current source rows still need keep/defer/reject/move decisions before extra sources open."
+                : "No needs-triage rows remain in the current governed selector.",
+        }),
+        buildWorkOrderItem({
+            rank: 5,
+            lane: "move_candidate_routing",
+            label: "Move-candidate routing",
+            count: moveRows,
+            status: moveRows > 0 ? "active" : "clear",
+            blocksExtraLane: moveRows > 0,
+            command: allLevelSelectorCommand,
+            reason: moveRows > 0
+                ? "Move candidates remain authoritative and must be resolved in their target level, not bypassed."
+                : "No move-candidate routing rows remain for this level view.",
+        }),
+        buildWorkOrderItem({
+            rank: 6,
+            lane: "blocked_or_ineligible_current_rows",
+            label: "Blocked or ineligible current rows",
+            count: blockedRows,
+            status: blockedRows > 0 ? "blocked_backlog" : "clear",
+            blocksExtraLane: false,
+            command: selectorCommand,
+            reason: blockedRows > 0
+                ? "These rows are not promotion-ready; review only if identity, dictionary, commonness, or source policy evidence changes."
+                : "No blocked identity/dictionary/commonness rows are active.",
+        }),
+        buildWorkOrderItem({
+            rank: 7,
+            lane: "deferred_or_rejected_current_rows",
+            label: "Deferred or rejected current rows",
+            count: readingDeferredVariants + selectorDeferredRows + rejectedRows,
+            status: (readingDeferredVariants + selectorDeferredRows + rejectedRows) > 0 ? "recorded_backlog" : "clear",
+            blocksExtraLane: false,
+            command: `npm run deck:words:gap-plan:n${level} -- --include-deferred --limit=50`,
+            reason: "Deferred/rejected rows stay recorded as policy/editorial backlog; they do not silently become promotion work.",
+        }),
+        buildWorkOrderItem({
+            rank: 8,
+            lane: "extra_source_family",
+            label: "Extra source-family lane",
+            count: null,
+            status: fallbackGate.active ? "ready" : "closed",
+            blocksExtraLane: false,
+            command: sourceAccessCommand,
+            reason: fallbackGate.active
+                ? "READY: work is not done. Add the next free/permitted source family through source-access/input review; every extra row must keep the Source level claim unverified label."
+                : (fallbackGate.blockers || []).join(" ") || "Closed until reading expansion and the current selector are exhausted.",
+        }),
+    ];
+
+    const nextItem = items.find((item) => item.status === "active")
+        || items.find((item) => item.lane === "extra_source_family" && item.status === "ready")
+        || items.find((item) => item.status === "blocked_backlog")
+        || null;
+    const activeBlockers = items.filter((item) => item.blocksExtraLane && item.count > 0);
+    const extraLane = items.find((item) => item.lane === "extra_source_family");
+
+    return {
+        level,
+        levelLabel,
+        status: nextItem?.lane || "no_active_expansion_work",
+        nextAction: nextItem
+            ? `${nextItem.label}: ${nextItem.reason}`
+            : "No active expansion work is visible under current governed inputs.",
+        nextCommand: nextItem?.command || "",
+        activeBlockingLaneCount: activeBlockers.length,
+        extraSourceLaneReady: extraLane?.status === "ready",
+        items,
+    };
+}
+
+function attachExpansionWorkOrder(levelReport = {}) {
+    return {
+        ...levelReport,
+        expansionWorkOrder: buildExpansionWorkOrder(levelReport),
     };
 }
 
@@ -734,12 +908,14 @@ function buildWordCommonExpansionSelectorReport({
         readFile,
     }));
     const analysisReportsByLevel = new Map(analysisLevelReports.map((levelReport) => [levelReport.level, levelReport]));
-    const levelReports = reportLevels.map((level) => mergeRoutedMoveCandidatesIntoTargetReport({
-        targetReport: analysisReportsByLevel.get(level),
-        sourceReports: analysisLevelReports,
-        jlptLevelContract,
-        limit,
-    }));
+    const levelReports = reportLevels
+        .map((level) => mergeRoutedMoveCandidatesIntoTargetReport({
+            targetReport: analysisReportsByLevel.get(level),
+            sourceReports: analysisLevelReports,
+            jlptLevelContract,
+            limit,
+        }))
+        .map(attachExpansionWorkOrder);
     const blockers = [
         ...agreementReport.sourceBlockers,
         ...analysisLevelReports.flatMap((levelReport) => levelReport.blockers || []),
@@ -776,6 +952,18 @@ function buildWordCommonExpansionSelectorReport({
 
 function formatBoolean(value) {
     return value ? "yes" : "no";
+}
+
+function formatWorkOrderCount(count) {
+    return count === null || count === undefined ? "-" : String(count);
+}
+
+function formatWorkOrderLabel(item = null) {
+    if (!item) {
+        return "none";
+    }
+    const count = item.count === null || item.count === undefined ? "" : ` (${item.count})`;
+    return `${item.label}${count}`;
 }
 
 function formatSourceUniverse(sourceUniverse = {}) {
@@ -867,6 +1055,36 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
         ].join(" | ") + " |");
     }
 
+    lines.push(
+        "",
+        "Expansion work order:",
+        "| Level | Next work | Reading fast | Reading editorial | Selector ready | Selector triage | Move routing | Deferred/backlog | Extra source lane |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |"
+    );
+    for (const levelReport of report.levelReports || []) {
+        const workOrder = levelReport.expansionWorkOrder || buildExpansionWorkOrder(levelReport);
+        const itemsByLane = new Map((workOrder.items || []).map((item) => [item.lane, item]));
+        const nextItem = (workOrder.items || []).find((item) => item.lane === workOrder.status) || null;
+        const extraItem = itemsByLane.get("extra_source_family") || {};
+        lines.push([
+            `| ${levelReport.levelLabel}`,
+            formatWorkOrderLabel(nextItem),
+            formatWorkOrderCount(itemsByLane.get("reading_fast_promotions")?.count),
+            formatWorkOrderCount(itemsByLane.get("reading_editorial_research")?.count),
+            formatWorkOrderCount(itemsByLane.get("current_selector_ready")?.count),
+            formatWorkOrderCount(itemsByLane.get("current_selector_triage")?.count),
+            formatWorkOrderCount(itemsByLane.get("move_candidate_routing")?.count),
+            formatWorkOrderCount(itemsByLane.get("deferred_or_rejected_current_rows")?.count),
+            extraItem.status === "ready" ? "READY - source input needed" : "closed",
+        ].join(" | ") + " |");
+    }
+
+    lines.push("", "Expansion next commands:");
+    for (const levelReport of report.levelReports || []) {
+        const workOrder = levelReport.expansionWorkOrder || buildExpansionWorkOrder(levelReport);
+        lines.push(`- ${levelReport.levelLabel}: ${workOrder.nextCommand || "(no command)"}; ${workOrder.nextAction}`);
+    }
+
     lines.push("", "Common-word queue gate:");
     for (const levelReport of report.levelReports || []) {
         const gate = levelReport.commonWordQueue || {};
@@ -929,6 +1147,7 @@ module.exports = {
     SOURCE_LEVEL_CLAIM_WARNING,
     SOURCE_UNIVERSE_WARNING,
     buildLevelSelectorReport,
+    buildExpansionWorkOrder,
     buildReadingExpansionGate,
     buildSourceUniverse,
     buildWordCommonExpansionSelectorReport,

@@ -44,7 +44,8 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     assert.equal(report.snapshot.product.kanjiDenominator, 2212);
     assert.equal(report.snapshot.product.wordDenominator, 2198);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);
-    assert.equal(report.snapshot.product.wordObsidianProof, 987);
+    assert.equal(report.snapshot.product.wordLockedDenominator, 1000);
+    assert.equal(report.snapshot.product.wordObsidianProof, 1000);
 });
 
 test("documentation status audit catches stale N3 word Gold counts", () => {
@@ -147,9 +148,9 @@ test("documentation status audit catches stale generated denominator docs", () =
     const files = readDocumentationFiles();
     files["docs/employer-overview.md"] = files["docs/employer-overview.md"]
         .replace("`2198` word rows", "`1470` word rows")
-        .replace("`2198/2198` across N5-N1 | `987/2198`", "`1470/1470` across N5-N1 | `987/1470`");
+        .replace("`2198/2198` across N5-N1 | `1000/2198`", "`1470/1470` across N5-N1 | `987/1470`");
     files["docs/system-architecture.md"] = files["docs/system-architecture.md"]
-        .replace("| Words | 2198 | 987 |", "| Words | 1470 | 987 |");
+        .replace("| Words | 2198 | 1000 |", "| Words | 1470 | 987 |");
 
     const report = auditDocumentationText({
         files,
@@ -172,8 +173,8 @@ test("documentation status audit catches stale generated denominator docs", () =
 test("documentation status audit catches Obsidian-decentered completed status wording", () => {
     const files = readDocumentationFiles();
     files["README.md"] = files["README.md"].replace(
-        "`287/287` strict word Obsidian-certified",
-        "`287` canonical rows. Gold, readiness, tracked-source artifact, native Sapphire structural coverage, Platinum, and strict word Obsidian content certification pass at `287/287`",
+        "`300/300` strict word Obsidian-certified",
+        "`300` canonical rows. Gold, readiness, tracked-source artifact, native Sapphire structural coverage, Platinum, and strict word Obsidian content certification pass at `300/300`",
     );
 
     const report = auditDocumentationText({

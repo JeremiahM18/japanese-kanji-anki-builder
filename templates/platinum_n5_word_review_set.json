@@ -37228,5 +37228,1681 @@
         "detail": "Current-standard whole-card revalidation with separated evidence lanes for 留学生|りゅうがくせい checked generated surface, Japanese-source evidence from JMdict entrySeq 1552750, example sentence クラスに留学生がいます。, reading クラスにりゅうがくせいがいます。, translation There is an international student in the class., notes/support surface Common learner-relevant school word; 留 is a higher-level kanji and must stay labeled on the N5 card., reading breakdown 留 （りゅう） ／ study abroad / stay; 学 （がく） ／ study / learning; 生 （せい） ／ life / birth, meaning international student / overseas student, labels JLPT N5; JLPT core + reading coverage; focus 留、学、生; covers 留: りゅう ／ 学: がく ／ 生: せい, audio word-reading-留学生-りゅうがくせい, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] / 4 [nakadaka] rendered Pitch 1: 3 / Pitch 2: 4, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ]
+  },
+  {
+    "word": "無くす",
+    "status": "platinum",
+    "readingIncludes": [
+      "なくす"
+    ],
+    "meaningIncludes": [
+      "lose",
+      "misplace"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "無"
+    ],
+    "coversReadingIncludes": [
+      "無: なくす"
+    ],
+    "breakdownIncludes": [
+      "無 （な）"
+    ],
+    "exampleIncludes": [
+      "かぎを無くしました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 無くす|なくす",
+      "source level claim is unverified"
+    ],
+    "selectionRationale": "Common beginner verb for losing or misplacing items; useful in everyday classroom and home contexts, with 無 visibly labeled as higher support.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common beginner verb for losing or misplacing items; useful in everyday classroom and home contexts, with 無 visibly labeled as higher support."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 無くす|なくす: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1529530; jmdictPriority=ichi1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 無くす|なくす, reading なくす, dictionary meaning to lose (something); to get rid of; to eliminate; to remove; to eradicate; to abolish, priority/commonness frequencyRank 110; product review kept learner meaning lose / misplace and checked example sentence かぎを無くしました。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 無くす|なくす: word 無くす, reading なくす, meaning to lose / misplace, example かぎを無くしました。, audio word-reading-無くす-なくす, reading breakdown 無 （な）, labels JLPT N5; Reading coverage support; focus 無; covers 無: なくす, pitch accent Pitch 1: 3 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 無くす|なくす / source level claim is unverified."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 無くす|なくす; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 無くす|なくす: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common beginner verb for losing or misplacing items; useful in everyday classroom and home contexts, with 無 visibly labeled as higher support."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 無くす|なくす; media export includes exact word audio word-reading-無くす-なくす, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 無くす|なくす; expected audio fragment word-reading-無くす-なくす matches word and reading なくす exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 無くす|なくす; sourceId voicevox-nemo-accent-query; pattern 3 [odaka]; rendered labels Pitch 1: 3 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 無くす|なくす: JLPT JLPT N5; coverage role Reading coverage support; focus 無; covers 無: なくす; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 無くす|なくす, reading なくす, example sentence かぎを無くしました。, reading line かぎをなくしました。, English line I lost my key., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 無くす|なくす common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading なくす, meaning lose / misplace, example sentence かぎを無くしました。, notes/support surface Exact governed JMdict/commonness verification supports 無くす|なくす / source level claim is unverified, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 無くす|なくす checked generated surface, Japanese-source evidence from JMdict entrySeq=1529530; jmdictPriority=ichi1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence かぎを無くしました。, reading かぎをなくしました。, translation I lost my key., notes/support surface Exact governed JMdict/commonness verification supports 無くす|なくす / source level claim is unverified, reading breakdown 無 （な）, meaning lose / misplace, labels JLPT N5; Reading coverage support; focus 無; covers 無: なくす, audio word-reading-無くす-なくす, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "誰か",
+    "status": "platinum",
+    "readingIncludes": [
+      "だれか"
+    ],
+    "meaningIncludes": [
+      "someone",
+      "anyone"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "誰"
+    ],
+    "coversReadingIncludes": [
+      "誰: だれ"
+    ],
+    "breakdownIncludes": [
+      "誰 （だれ）"
+    ],
+    "exampleIncludes": [
+      "誰かいますか。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 誰か|だれか",
+      "separate exact word identity"
+    ],
+    "selectionRationale": "Common beginner indefinite pronoun; useful in basic presence and help questions and distinct from 誰|だれ.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common beginner indefinite pronoun; useful in basic presence and help questions and distinct from 誰|だれ."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 誰か|だれか: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1416840; jmdictPriority=ichi1,news2,nf28; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 誰か|だれか, reading だれか, dictionary meaning someone; somebody, priority/commonness frequencyRank 110; product review kept learner meaning someone / anyone and checked example sentence 誰かいますか。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 誰か|だれか: word 誰か, reading だれか, meaning someone / anyone, example 誰かいますか。, audio word-reading-誰か-だれか, reading breakdown 誰 （だれ）, labels JLPT N5; Reading coverage support; focus 誰; covers 誰: だれ, pitch accent Pitch 1: 1 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 誰か|だれか / separate exact word identity."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 誰か|だれか; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 誰か|だれか: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common beginner indefinite pronoun; useful in basic presence and help questions and distinct from 誰|だれ."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 誰か|だれか; media export includes exact word audio word-reading-誰か-だれか, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 誰か|だれか; expected audio fragment word-reading-誰か-だれか matches word and reading だれか exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 誰か|だれか; sourceId voicevox-nemo-accent-query; pattern 1 [atamadaka]; rendered labels Pitch 1: 1 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 誰か|だれか: JLPT JLPT N5; coverage role Reading coverage support; focus 誰; covers 誰: だれ; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 誰か|だれか, reading だれか, example sentence 誰かいますか。, reading line だれかいますか。, English line Is anyone there?, and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 誰か|だれか common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading だれか, meaning someone / anyone, example sentence 誰かいますか。, notes/support surface Exact governed JMdict/commonness verification supports 誰か|だれか / separate exact word identity, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 誰か|だれか checked generated surface, Japanese-source evidence from JMdict entrySeq=1416840; jmdictPriority=ichi1,news2,nf28; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 誰かいますか。, reading だれかいますか。, translation Is anyone there?, notes/support surface Exact governed JMdict/commonness verification supports 誰か|だれか / separate exact word identity, reading breakdown 誰 （だれ）, meaning someone / anyone, labels JLPT N5; Reading coverage support; focus 誰; covers 誰: だれ, audio word-reading-誰か-だれか, pitch accent source voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "貼る",
+    "status": "platinum",
+    "readingIncludes": [
+      "はる"
+    ],
+    "meaningIncludes": [
+      "stick",
+      "paste"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "貼"
+    ],
+    "coversReadingIncludes": [
+      "貼: はる"
+    ],
+    "breakdownIncludes": [
+      "貼 （は）"
+    ],
+    "exampleIncludes": [
+      "ノートにシールを貼ります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 貼る|はる",
+      "common and learner-friendly enough to keep"
+    ],
+    "selectionRationale": "Common action verb for stickers and notices; learner-friendly despite outside-JLPT 貼 because the card labels the support kanji.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common action verb for stickers and notices; learner-friendly despite outside-JLPT 貼 because the card labels the support kanji."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 貼る|はる: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1427900; jmdictPriority=ichi1,news1,nf13; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 貼る|はる, reading はる, dictionary meaning to stick; to paste; to affix; to stretch; to spread; to strain; to tighten; to put up (e.g. a tent); to form (e.g. ice on a pond); to fill; to swell; to stick out, priority/commonness frequencyRank 100; product review kept learner meaning stick / paste and checked example sentence ノートにシールを貼ります。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 貼る|はる: word 貼る, reading はる, meaning to stick / paste / put up, example ノートにシールを貼ります。, audio word-reading-貼る-はる, reading breakdown 貼 （は）, labels JLPT N5; Reading coverage support; focus 貼; covers 貼: はる, pitch accent Pitch 1: 2 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 貼る|はる / common and learner-friendly enough to keep."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 貼る|はる; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 貼る|はる: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common action verb for stickers and notices; learner-friendly despite outside-JLPT 貼 because the card labels the support kanji."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 貼る|はる; media export includes exact word audio word-reading-貼る-はる, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 貼る|はる; expected audio fragment word-reading-貼る-はる matches word and reading はる exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 貼る|はる; sourceId voicevox-nemo-accent-query; pattern 2 [odaka]; rendered labels Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 貼る|はる: JLPT JLPT N5; coverage role Reading coverage support; focus 貼; covers 貼: はる; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 貼る|はる, reading はる, example sentence ノートにシールを貼ります。, reading line ノートにシールをはります。, English line I put a sticker in my notebook., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 貼る|はる common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading はる, meaning stick / paste, example sentence ノートにシールを貼ります。, notes/support surface Exact governed JMdict/commonness verification supports 貼る|はる / common and learner-friendly enough to keep, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 貼る|はる checked generated surface, Japanese-source evidence from JMdict entrySeq=1427900; jmdictPriority=ichi1,news1,nf13; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence ノートにシールを貼ります。, reading ノートにシールをはります。, translation I put a sticker in my notebook., notes/support surface Exact governed JMdict/commonness verification supports 貼る|はる / common and learner-friendly enough to keep, reading breakdown 貼 （は）, meaning stick / paste, labels JLPT N5; Reading coverage support; focus 貼; covers 貼: はる, audio word-reading-貼る-はる, pitch accent source voicevox-nemo-accent-query pattern 2 [odaka] rendered Pitch 1: 2 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "賑やか",
+    "status": "platinum",
+    "readingIncludes": [
+      "にぎやか"
+    ],
+    "meaningIncludes": [
+      "lively",
+      "busy"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "賑"
+    ],
+    "coversReadingIncludes": [
+      "賑: にぎやか"
+    ],
+    "breakdownIncludes": [
+      "賑 （にぎ）"
+    ],
+    "exampleIncludes": [
+      "駅の前は賑やかです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 賑やか|にぎやか",
+      "learner-friendly and should be labeled rather than automatically blocked"
+    ],
+    "selectionRationale": "Common beginner adjective for lively or busy places; useful for town and station descriptions with outside-JLPT 賑 labeled.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common beginner adjective for lively or busy places; useful for town and station descriptions with outside-JLPT 賑 labeled."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 賑やか|にぎやか: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1463480; jmdictPriority=ichi1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 賑やか|にぎやか, reading にぎやか, dictionary meaning bustling; busy; crowded; lively; prosperous; thriving; lively (party, voices, etc.); loud; noisy; merry; cheerful, priority/commonness frequencyRank 110; product review kept learner meaning lively / busy and checked example sentence 駅の前は賑やかです。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 賑やか|にぎやか: word 賑やか, reading にぎやか, meaning lively / busy, example 駅の前は賑やかです。, audio word-reading-賑やか-にぎやか, reading breakdown 賑 （にぎ）, labels JLPT N5; Reading coverage support; focus 賑; covers 賑: にぎやか, pitch accent Pitch 1: 2 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 賑やか|にぎやか / learner-friendly and should be labeled rather than automatically blocked."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 賑やか|にぎやか; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 賑やか|にぎやか: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common beginner adjective for lively or busy places; useful for town and station descriptions with outside-JLPT 賑 labeled."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 賑やか|にぎやか; media export includes exact word audio word-reading-賑やか-にぎやか, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 賑やか|にぎやか; expected audio fragment word-reading-賑やか-にぎやか matches word and reading にぎやか exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 賑やか|にぎやか; sourceId voicevox-nemo-accent-query; pattern 2 [nakadaka]; rendered labels Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 賑やか|にぎやか: JLPT JLPT N5; coverage role Reading coverage support; focus 賑; covers 賑: にぎやか; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 賑やか|にぎやか, reading にぎやか, example sentence 駅の前は賑やかです。, reading line えきのまえはにぎやかです。, English line The area in front of the station is lively., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 賑やか|にぎやか common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading にぎやか, meaning lively / busy, example sentence 駅の前は賑やかです。, notes/support surface Exact governed JMdict/commonness verification supports 賑やか|にぎやか / learner-friendly and should be labeled rather than automatically blocked, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 賑やか|にぎやか checked generated surface, Japanese-source evidence from JMdict entrySeq=1463480; jmdictPriority=ichi1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 駅の前は賑やかです。, reading えきのまえはにぎやかです。, translation The area in front of the station is lively., notes/support surface Exact governed JMdict/commonness verification supports 賑やか|にぎやか / learner-friendly and should be labeled rather than automatically blocked, reading breakdown 賑 （にぎ）, meaning lively / busy, labels JLPT N5; Reading coverage support; focus 賑; covers 賑: にぎやか, audio word-reading-賑やか-にぎやか, pitch accent source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "背",
+    "status": "platinum",
+    "readingIncludes": [
+      "せ"
+    ],
+    "meaningIncludes": [
+      "height",
+      "stature"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "背"
+    ],
+    "coversReadingIncludes": [
+      "背: せ"
+    ],
+    "breakdownIncludes": [
+      "背 （せ）"
+    ],
+    "exampleIncludes": [
+      "父は背が高いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 背|せ",
+      "distinct from governed N3 背|せい"
+    ],
+    "selectionRationale": "Common body and description noun for height; learner-friendly N5 vocabulary even though 背 is N3 support and the card labels it.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common body and description noun for height; learner-friendly N5 vocabulary even though 背 is N3 support and the card labels it."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 背|せ: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=2147990; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 背|せ, reading せ, dictionary meaning back; reverse; rear side; back (e.g. of a chair); spine (of a book); height; stature; ridge (of a mountain), priority/commonness frequencyRank 120; product review kept learner meaning height / stature and checked example sentence 父は背が高いです。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 背|せ: word 背, reading せ, meaning height / stature, example 父は背が高いです。, audio word-reading-背-せ, reading breakdown 背 （せ）, labels JLPT N5; Reading coverage support; focus 背; covers 背: せ, pitch accent Pitch 1: 1 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 背|せ / distinct from governed N3 背|せい."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 背|せ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 背|せ: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common body and description noun for height; learner-friendly N5 vocabulary even though 背 is N3 support and the card labels it."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 背|せ; media export includes exact word audio word-reading-背-せ, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 背|せ; expected audio fragment word-reading-背-せ matches word and reading せ exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 背|せ; sourceId voicevox-nemo-accent-query; pattern 1 [atamadaka]; rendered labels Pitch 1: 1 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 背|せ: JLPT JLPT N5; coverage role Reading coverage support; focus 背; covers 背: せ; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 背|せ, reading せ, example sentence 父は背が高いです。, reading line ちちはせがたかいです。, English line My father is tall., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 背|せ common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading せ, meaning height / stature, example sentence 父は背が高いです。, notes/support surface Exact governed JMdict/commonness verification supports 背|せ / distinct from governed N3 背|せい, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 背|せ checked generated surface, Japanese-source evidence from JMdict entrySeq=2147990; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 父は背が高いです。, reading ちちはせがたかいです。, translation My father is tall., notes/support surface Exact governed JMdict/commonness verification supports 背|せ / distinct from governed N3 背|せい, reading breakdown 背 （せ）, meaning height / stature, labels JLPT N5; Reading coverage support; focus 背; covers 背: せ, audio word-reading-背-せ, pitch accent source voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "飴",
+    "status": "platinum",
+    "readingIncludes": [
+      "あめ"
+    ],
+    "meaningIncludes": [
+      "candy",
+      "sweets"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "飴"
+    ],
+    "coversReadingIncludes": [
+      "飴: あめ"
+    ],
+    "breakdownIncludes": [
+      "飴 （あめ）"
+    ],
+    "exampleIncludes": [
+      "子どもに飴を一つあげました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 飴|あめ",
+      "standalone kanji word stays eligible"
+    ],
+    "selectionRationale": "Common concrete noun for candy and sweets; a learner-friendly standalone kanji word with outside-JLPT support labeled.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common concrete noun for candy and sweets; a learner-friendly standalone kanji word with outside-JLPT support labeled."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 飴|あめ: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1153520; jmdictPriority=ichi1,news2,nf44; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 飴|あめ, reading あめ, dictionary meaning (hard) candy; toffee; rice-sugar; sugar made from the starch of rice, potatoes, etc.; amber; yellowish-brown, priority/commonness frequencyRank 110; product review kept learner meaning candy / sweets and checked example sentence 子どもに飴を一つあげました。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 飴|あめ: word 飴, reading あめ, meaning candy / sweets, example 子どもに飴を一つあげました。, audio word-reading-飴-あめ, reading breakdown 飴 （あめ）, labels JLPT N5; Reading coverage support; focus 飴; covers 飴: あめ, pitch accent Pitch 1: 2 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 飴|あめ / standalone kanji word stays eligible."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 飴|あめ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 飴|あめ: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common concrete noun for candy and sweets; a learner-friendly standalone kanji word with outside-JLPT support labeled."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 飴|あめ; media export includes exact word audio word-reading-飴-あめ, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 飴|あめ; expected audio fragment word-reading-飴-あめ matches word and reading あめ exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 飴|あめ; sourceId voicevox-nemo-accent-query; pattern 2 [odaka]; rendered labels Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 飴|あめ: JLPT JLPT N5; coverage role Reading coverage support; focus 飴; covers 飴: あめ; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 飴|あめ, reading あめ, example sentence 子どもに飴を一つあげました。, reading line こどもにあめをひとつあげました。, English line I gave one piece of candy to the child., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 飴|あめ common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading あめ, meaning candy / sweets, example sentence 子どもに飴を一つあげました。, notes/support surface Exact governed JMdict/commonness verification supports 飴|あめ / standalone kanji word stays eligible, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 飴|あめ checked generated surface, Japanese-source evidence from JMdict entrySeq=1153520; jmdictPriority=ichi1,news2,nf44; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 子どもに飴を一つあげました。, reading こどもにあめをひとつあげました。, translation I gave one piece of candy to the child., notes/support surface Exact governed JMdict/commonness verification supports 飴|あめ / standalone kanji word stays eligible, reading breakdown 飴 （あめ）, meaning candy / sweets, labels JLPT N5; Reading coverage support; focus 飴; covers 飴: あめ, audio word-reading-飴-あめ, pitch accent source voicevox-nemo-accent-query pattern 2 [odaka] rendered Pitch 1: 2 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "誰",
+    "status": "platinum",
+    "readingIncludes": [
+      "だれ"
+    ],
+    "meaningIncludes": [
+      "who"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "誰"
+    ],
+    "coversReadingIncludes": [
+      "誰: だれ"
+    ],
+    "breakdownIncludes": [
+      "誰 （だれ）"
+    ],
+    "exampleIncludes": [
+      "あの人は誰ですか。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 誰|だれ",
+      "standalone word is learner-friendly and must not be blocked"
+    ],
+    "selectionRationale": "Core beginner question word; useful for basic identity questions and eligible as a standalone kanji word with the support label.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Core beginner question word; useful for basic identity questions and eligible as a standalone kanji word with the support label."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 誰|だれ: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1416830; jmdictPriority=ichi1,news1,nf13; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 誰|だれ, reading だれ, dictionary meaning who, priority/commonness frequencyRank 100; product review kept learner meaning who and checked example sentence あの人は誰ですか。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 誰|だれ: word 誰, reading だれ, meaning who, example あの人は誰ですか。, audio word-reading-誰-だれ, reading breakdown 誰 （だれ）, labels JLPT N5; Reading coverage support; focus 誰; covers 誰: だれ, pitch accent Pitch 1: 1 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 誰|だれ / standalone word is learner-friendly and must not be blocked."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 誰|だれ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 誰|だれ: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Core beginner question word; useful for basic identity questions and eligible as a standalone kanji word with the support label."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 誰|だれ; media export includes exact word audio word-reading-誰-だれ, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 誰|だれ; expected audio fragment word-reading-誰-だれ matches word and reading だれ exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 誰|だれ; sourceId voicevox-nemo-accent-query; pattern 1 [atamadaka]; rendered labels Pitch 1: 1 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 誰|だれ: JLPT JLPT N5; coverage role Reading coverage support; focus 誰; covers 誰: だれ; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 誰|だれ, reading だれ, example sentence あの人は誰ですか。, reading line あのひとはだれですか。, English line Who is that person?, and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 誰|だれ common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading だれ, meaning who, example sentence あの人は誰ですか。, notes/support surface Exact governed JMdict/commonness verification supports 誰|だれ / standalone word is learner-friendly and must not be blocked, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 誰|だれ checked generated surface, Japanese-source evidence from JMdict entrySeq=1416830; jmdictPriority=ichi1,news1,nf13; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence あの人は誰ですか。, reading あのひとはだれですか。, translation Who is that person?, notes/support surface Exact governed JMdict/commonness verification supports 誰|だれ / standalone word is learner-friendly and must not be blocked, reading breakdown 誰 （だれ）, meaning who, labels JLPT N5; Reading coverage support; focus 誰; covers 誰: だれ, audio word-reading-誰-だれ, pitch accent source voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "明日",
+    "status": "platinum",
+    "readingIncludes": [
+      "あした"
+    ],
+    "meaningIncludes": [
+      "tomorrow"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "明",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "明日: あした"
+    ],
+    "breakdownIncludes": [
+      "明日 （あした）"
+    ],
+    "exampleIncludes": [
+      "明日、学校へ行きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 明日|あした",
+      "distinct from governed N4 明日|あす"
+    ],
+    "selectionRationale": "Core beginner time word for tomorrow; useful despite N4 明 support and distinct from 明日|あす.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Core beginner time word for tomorrow; useful despite N4 明 support and distinct from 明日|あす."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 明日|あした: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1584660; jmdictPriority=ichi1,news1,nf05; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 明日|あした, reading あした, dictionary meaning tomorrow, priority/commonness frequencyRank 100; product review kept learner meaning tomorrow and checked example sentence 明日、学校へ行きます。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 明日|あした: word 明日, reading あした, meaning tomorrow, example 明日、学校へ行きます。, audio word-reading-明日-あした, reading breakdown 明日 （あした）, labels JLPT N5; Reading coverage support; focus 明 / 日; covers 明日: あした, pitch accent Pitch 1: 3 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 明日|あした / distinct from governed N4 明日|あす."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 明日|あした; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 明日|あした: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Core beginner time word for tomorrow; useful despite N4 明 support and distinct from 明日|あす."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 明日|あした; media export includes exact word audio word-reading-明日-あした, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 明日|あした; expected audio fragment word-reading-明日-あした matches word and reading あした exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 明日|あした; sourceId voicevox-nemo-accent-query; pattern 3 [odaka]; rendered labels Pitch 1: 3 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 明日|あした: JLPT JLPT N5; coverage role Reading coverage support; focus 明 / 日; covers 明日: あした; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 明日|あした, reading あした, example sentence 明日、学校へ行きます。, reading line あした、がっこうへいきます。, English line I will go to school tomorrow., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 明日|あした common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading あした, meaning tomorrow, example sentence 明日、学校へ行きます。, notes/support surface Exact governed JMdict/commonness verification supports 明日|あした / distinct from governed N4 明日|あす, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 明日|あした checked generated surface, Japanese-source evidence from JMdict entrySeq=1584660; jmdictPriority=ichi1,news1,nf05; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 明日、学校へ行きます。, reading あした、がっこうへいきます。, translation I will go to school tomorrow., notes/support surface Exact governed JMdict/commonness verification supports 明日|あした / distinct from governed N4 明日|あす, reading breakdown 明日 （あした）, meaning tomorrow, labels JLPT N5; Reading coverage support; focus 明 / 日; covers 明日: あした, audio word-reading-明日-あした, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "石鹸",
+    "status": "platinum",
+    "readingIncludes": [
+      "せっけん"
+    ],
+    "meaningIncludes": [
+      "soap"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "石",
+      "鹸"
+    ],
+    "coversReadingIncludes": [
+      "石鹸: せっけん"
+    ],
+    "breakdownIncludes": [
+      "石鹸 （せっけん）"
+    ],
+    "exampleIncludes": [
+      "石鹸で手を洗います。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 石鹸|せっけん",
+      "whole-word reading"
+    ],
+    "selectionRationale": "Common everyday object noun for soap; useful in hygiene examples with whole-word reading and support kanji labels.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common everyday object noun for soap; useful in hygiene examples with whole-word reading and support kanji labels."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 石鹸|せっけん: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1382590; jmdictPriority=ichi1,news2,nf32,spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 石鹸|せっけん, reading せっけん, dictionary meaning soap, priority/commonness frequencyRank 110; product review kept learner meaning soap and checked example sentence 石鹸で手を洗います。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 石鹸|せっけん: word 石鹸, reading せっけん, meaning soap, example 石鹸で手を洗います。, audio word-reading-石鹸-せっけん, reading breakdown 石鹸 （せっけん）, labels JLPT N5; Reading coverage support; focus 石 / 鹸; covers 石鹸: せっけん, pitch accent Pitch 1: 4 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 石鹸|せっけん / whole-word reading."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 石鹸|せっけん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 石鹸|せっけん: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common everyday object noun for soap; useful in hygiene examples with whole-word reading and support kanji labels."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 石鹸|せっけん; media export includes exact word audio word-reading-石鹸-せっけん, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 石鹸|せっけん; expected audio fragment word-reading-石鹸-せっけん matches word and reading せっけん exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 石鹸|せっけん; sourceId voicevox-nemo-accent-query; pattern 4 [odaka]; rendered labels Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 石鹸|せっけん: JLPT JLPT N5; coverage role Reading coverage support; focus 石 / 鹸; covers 石鹸: せっけん; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 石鹸|せっけん, reading せっけん, example sentence 石鹸で手を洗います。, reading line せっけんでてをあらいます。, English line I wash my hands with soap., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 石鹸|せっけん common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading せっけん, meaning soap, example sentence 石鹸で手を洗います。, notes/support surface Exact governed JMdict/commonness verification supports 石鹸|せっけん / whole-word reading, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 石鹸|せっけん checked generated surface, Japanese-source evidence from JMdict entrySeq=1382590; jmdictPriority=ichi1,news2,nf32,spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 石鹸で手を洗います。, reading せっけんでてをあらいます。, translation I wash my hands with soap., notes/support surface Exact governed JMdict/commonness verification supports 石鹸|せっけん / whole-word reading, reading breakdown 石鹸 （せっけん）, meaning soap, labels JLPT N5; Reading coverage support; focus 石 / 鹸; covers 石鹸: せっけん, audio word-reading-石鹸-せっけん, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "もう一度",
+    "status": "platinum",
+    "readingIncludes": [
+      "もういちど"
+    ],
+    "meaningIncludes": [
+      "once more",
+      "again"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "一",
+      "度"
+    ],
+    "coversReadingIncludes": [
+      "一: いち",
+      "度: ど"
+    ],
+    "breakdownIncludes": [
+      "一 （いち）",
+      "度 （ど）"
+    ],
+    "exampleIncludes": [
+      "もう一度言ってください。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch 2: 2",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports もう一度|もういちど",
+      "vocabulary-level N5 expansion"
+    ],
+    "selectionRationale": "Common classroom request expression for once more or again; useful for learner interaction even with N4 度 support.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common classroom request expression for once more or again; useful for learner interaction even with N4 度 support."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for もう一度|もういちど: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=2005860; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies もう一度|もういちど, reading もういちど, dictionary meaning once more; again, priority/commonness frequencyRank 120; product review kept learner meaning once more / again and checked example sentence もう一度言ってください。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for もう一度|もういちど: word もう一度, reading もういちど, meaning once more / again, example もう一度言ってください。, audio word-reading-もう一度-もういちど, reading breakdown 一 （いち） / 度 （ど）, labels JLPT N5; Reading coverage support; focus 一 / 度; covers 一: いち / 度: ど, pitch accent Pitch 1: 1 / Pitch 2: 2 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports もう一度|もういちど / vocabulary-level N5 expansion."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked もう一度|もういちど; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for もう一度|もういちど: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common classroom request expression for once more or again; useful for learner interaction even with N4 度 support."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked もう一度|もういちど; media export includes exact word audio word-reading-もう一度-もういちど, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked もう一度|もういちど; expected audio fragment word-reading-もう一度-もういちど matches word and reading もういちど exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked もう一度|もういちど; sourceId voicevox-nemo-reading-query; pattern 1 [atamadaka] / 2 [nakadaka]; rendered labels Pitch 1: 1 / Pitch 2: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked もう一度|もういちど: JLPT JLPT N5; coverage role Reading coverage support; focus 一 / 度; covers 一: いち / 度: ど; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked もう一度|もういちど, reading もういちど, example sentence もう一度言ってください。, reading line もういちどいってください。, English line Please say it one more time., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged もう一度|もういちど common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading もういちど, meaning once more / again, example sentence もう一度言ってください。, notes/support surface Exact governed JMdict/commonness verification supports もう一度|もういちど / vocabulary-level N5 expansion, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for もう一度|もういちど checked generated surface, Japanese-source evidence from JMdict entrySeq=2005860; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence もう一度言ってください。, reading もういちどいってください。, translation Please say it one more time., notes/support surface Exact governed JMdict/commonness verification supports もう一度|もういちど / vocabulary-level N5 expansion, reading breakdown 一 （いち） / 度 （ど）, meaning once more / again, labels JLPT N5; Reading coverage support; focus 一 / 度; covers 一: いち / 度: ど, audio word-reading-もう一度-もういちど, pitch accent source voicevox-nemo-reading-query pattern 1 [atamadaka] / 2 [nakadaka] rendered Pitch 1: 1 / Pitch 2: 2 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "一昨日",
+    "status": "platinum",
+    "readingIncludes": [
+      "おととい"
+    ],
+    "meaningIncludes": [
+      "day before yesterday"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "一",
+      "昨",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "一昨日: おととい"
+    ],
+    "breakdownIncludes": [
+      "一昨日 （おととい）"
+    ],
+    "exampleIncludes": [
+      "一昨日、学校へ行きました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 一昨日|おととい",
+      "whole-word reading"
+    ],
+    "selectionRationale": "Common time word for day before yesterday; useful for basic past-time conversation with whole-word reading support.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common time word for day before yesterday; useful for basic past-time conversation with whole-word reading support."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 一昨日|おととい: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1576050; jmdictPriority=ichi1,news2,nf40; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 一昨日|おととい, reading おととい, dictionary meaning day before yesterday, priority/commonness frequencyRank 110; product review kept learner meaning day before yesterday and checked example sentence 一昨日、学校へ行きました。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一昨日|おととい: word 一昨日, reading おととい, meaning day before yesterday, example 一昨日、学校へ行きました。, audio word-reading-一昨日-おととい, reading breakdown 一昨日 （おととい）, labels JLPT N5; Reading coverage support; focus 一 / 昨 / 日; covers 一昨日: おととい, pitch accent Pitch 1: 3 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 一昨日|おととい / whole-word reading."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 一昨日|おととい; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 一昨日|おととい: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common time word for day before yesterday; useful for basic past-time conversation with whole-word reading support."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一昨日|おととい; media export includes exact word audio word-reading-一昨日-おととい, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一昨日|おととい; expected audio fragment word-reading-一昨日-おととい matches word and reading おととい exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一昨日|おととい; sourceId voicevox-nemo-accent-query; pattern 3 [nakadaka]; rendered labels Pitch 1: 3 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一昨日|おととい: JLPT JLPT N5; coverage role Reading coverage support; focus 一 / 昨 / 日; covers 一昨日: おととい; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一昨日|おととい, reading おととい, example sentence 一昨日、学校へ行きました。, reading line おととい、がっこうへいきました。, English line I went to school the day before yesterday., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一昨日|おととい common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading おととい, meaning day before yesterday, example sentence 一昨日、学校へ行きました。, notes/support surface Exact governed JMdict/commonness verification supports 一昨日|おととい / whole-word reading, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一昨日|おととい checked generated surface, Japanese-source evidence from JMdict entrySeq=1576050; jmdictPriority=ichi1,news2,nf40; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 一昨日、学校へ行きました。, reading おととい、がっこうへいきました。, translation I went to school the day before yesterday., notes/support surface Exact governed JMdict/commonness verification supports 一昨日|おととい / whole-word reading, reading breakdown 一昨日 （おととい）, meaning day before yesterday, labels JLPT N5; Reading coverage support; focus 一 / 昨 / 日; covers 一昨日: おととい, audio word-reading-一昨日-おととい, pitch accent source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "大丈夫",
+    "status": "platinum",
+    "readingIncludes": [
+      "だいじょうぶ"
+    ],
+    "meaningIncludes": [
+      "all right",
+      "okay",
+      "safe"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "大",
+      "丈",
+      "夫"
+    ],
+    "coversReadingIncludes": [
+      "大: だい",
+      "丈: じょう",
+      "夫: ぶ"
+    ],
+    "breakdownIncludes": [
+      "大 （だい）",
+      "丈 （じょう）",
+      "夫 （ぶ）"
+    ],
+    "exampleIncludes": [
+      "大丈夫ですか。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 大丈夫|だいじょうぶ",
+      "labeled vocabulary-level N5 expansion"
+    ],
+    "selectionRationale": "Core beginner expression for okay, all right, or safe; high learner utility despite mixed support kanji labels.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Core beginner expression for okay, all right, or safe; high learner utility despite mixed support kanji labels."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 大丈夫|だいじょうぶ: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1414150; jmdictPriority=ichi1,news1,nf06; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 大丈夫|だいじょうぶ, reading だいじょうぶ, dictionary meaning safe; secure; sound; problem-free; without fear; all right; alright; OK; okay; certainly; surely; undoubtedly, priority/commonness frequencyRank 100; product review kept learner meaning all right / okay / safe and checked example sentence 大丈夫ですか。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 大丈夫|だいじょうぶ: word 大丈夫, reading だいじょうぶ, meaning all right / okay / safe, example 大丈夫ですか。, audio word-reading-大丈夫-だいじょうぶ, reading breakdown 大 （だい） / 丈 （じょう） / 夫 （ぶ）, labels JLPT N5; Reading coverage support; focus 大 / 丈 / 夫; covers 大: だい / 丈: じょう / 夫: ぶ, pitch accent Pitch 1: 3 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 大丈夫|だいじょうぶ / labeled vocabulary-level N5 expansion."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 大丈夫|だいじょうぶ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 大丈夫|だいじょうぶ: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Core beginner expression for okay, all right, or safe; high learner utility despite mixed support kanji labels."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 大丈夫|だいじょうぶ; media export includes exact word audio word-reading-大丈夫-だいじょうぶ, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 大丈夫|だいじょうぶ; expected audio fragment word-reading-大丈夫-だいじょうぶ matches word and reading だいじょうぶ exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 大丈夫|だいじょうぶ; sourceId voicevox-nemo-reading-query; pattern 3 [nakadaka]; rendered labels Pitch 1: 3 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 大丈夫|だいじょうぶ: JLPT JLPT N5; coverage role Reading coverage support; focus 大 / 丈 / 夫; covers 大: だい / 丈: じょう / 夫: ぶ; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 大丈夫|だいじょうぶ, reading だいじょうぶ, example sentence 大丈夫ですか。, reading line だいじょうぶですか。, English line Are you okay?, and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 大丈夫|だいじょうぶ common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading だいじょうぶ, meaning all right / okay / safe, example sentence 大丈夫ですか。, notes/support surface Exact governed JMdict/commonness verification supports 大丈夫|だいじょうぶ / labeled vocabulary-level N5 expansion, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 大丈夫|だいじょうぶ checked generated surface, Japanese-source evidence from JMdict entrySeq=1414150; jmdictPriority=ichi1,news1,nf06; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 大丈夫ですか。, reading だいじょうぶですか。, translation Are you okay?, notes/support surface Exact governed JMdict/commonness verification supports 大丈夫|だいじょうぶ / labeled vocabulary-level N5 expansion, reading breakdown 大 （だい） / 丈 （じょう） / 夫 （ぶ）, meaning all right / okay / safe, labels JLPT N5; Reading coverage support; focus 大 / 丈 / 夫; covers 大: だい / 丈: じょう / 夫: ぶ, audio word-reading-大丈夫-だいじょうぶ, pitch accent source voicevox-nemo-reading-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
+  },
+  {
+    "word": "一昨年",
+    "status": "platinum",
+    "readingIncludes": [
+      "おととし"
+    ],
+    "meaningIncludes": [
+      "year before last"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "一",
+      "昨",
+      "年"
+    ],
+    "coversReadingIncludes": [
+      "一昨年: おととし"
+    ],
+    "breakdownIncludes": [
+      "一昨年 （おととし）"
+    ],
+    "exampleIncludes": [
+      "一昨年、日本へ来ました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Generated pitch (unverified)"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 一昨年|おととし",
+      "whole-word reading"
+    ],
+    "selectionRationale": "Common time word for year before last; useful for basic past-time conversation with whole-word reading support.",
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common time word for year before last; useful for basic past-time conversation with whole-word reading support."
+    },
+    "reviewedAt": "2026-06-22",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-06-22",
+    "revalidationSummary": "Substantive current-standard Platinum card-surface review for 一昨年|おととし: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1576060; jmdictPriority=ichi1,news1,nf02; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 一昨年|おととし, reading おととし, dictionary meaning year before last, priority/commonness frequencyRank 100; product review kept learner meaning year before last and checked example sentence 一昨年、日本へ来ました。 for the shipped word-card surface."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 一昨年|おととし: word 一昨年, reading おととし, meaning year before last, example 一昨年、日本へ来ました。, audio word-reading-一昨年-おととし, reading breakdown 一昨年 （おととし）, labels JLPT N5; Reading coverage support; focus 一 / 昨 / 年; covers 一昨年: おととし, pitch accent Pitch 1: 2 / Generated pitch (unverified), and notes/support surface Exact governed JMdict/commonness verification supports 一昨年|おととし / whole-word reading."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 一昨年|おととし; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and generated N5 export",
+        "detail": "Level contract checked for 一昨年|おととし: JLPT JLPT N5; N5 word v2 vocabulary-level placement after reading-coverage exhaustion: Common time word for year before last; useful for basic past-time conversation with whole-word reading support."
+      },
+      {
+        "type": "media-audit",
+        "source": "npm run deck:words:ready -- --levels=5 --require-no-active-triage",
+        "detail": "Managed media provenance audit checked 一昨年|おととし; media export includes exact word audio word-reading-一昨年-おととし, pitch accent, kanji media references, and no silent fallback for release media."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 一昨年|おととし; expected audio fragment word-reading-一昨年-おととし matches word and reading おととし exactly."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 一昨年|おととし; sourceId voicevox-nemo-reading-query; pattern 2 [nakadaka]; rendered labels Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 一昨年|おととし: JLPT JLPT N5; coverage role Reading coverage support; focus 一 / 昨 / 年; covers 一昨年: おととし; visible support-kanji labels retained where applicable."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "product Japanese example review",
+        "detail": "Example review checked 一昨年|おととし, reading おととし, example sentence 一昨年、日本へ来ました。, reading line おととし、にほんへきました。, English line I came to Japan the year before last., and the exported reading line for release quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "platinum product review",
+        "detail": "Manual review judged 一昨年|おととし common, useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading おととし, meaning year before last, example sentence 一昨年、日本へ来ました。, notes/support surface Exact governed JMdict/commonness verification supports 一昨年|おととし / whole-word reading, and no active verification limitations."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一昨年|おととし checked generated surface, Japanese-source evidence from JMdict entrySeq=1576060; jmdictPriority=ichi1,news1,nf02; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only, example sentence 一昨年、日本へ来ました。, reading おととし、にほんへきました。, translation I came to Japan the year before last., notes/support surface Exact governed JMdict/commonness verification supports 一昨年|おととし / whole-word reading, reading breakdown 一昨年 （おととし）, meaning year before last, labels JLPT N5; Reading coverage support; focus 一 / 昨 / 年; covers 一昨年: おととし, audio word-reading-一昨年-おととし, pitch accent source voicevox-nemo-reading-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    }
   }
 ]

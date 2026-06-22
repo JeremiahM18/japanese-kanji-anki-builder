@@ -160,6 +160,12 @@
       "sourceReading": "へそのお",
       "sourceAccent": "4,0,3"
     },
+    "もう一度|もういちど": {
+      "pattern": "1 [atamadaka] / 2 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "もういちど",
+      "generatedReading": "もおいちど"
+    },
     "一|いち": {
       "pattern": "2 [odaka]",
       "sourceId": "wiktionary-ja-pronunciation",
@@ -213,6 +219,18 @@
       "sourceWord": "一日",
       "sourceReading": "ついたち",
       "sourceAccent": "4"
+    },
+    "一昨年|おととし": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "おととし",
+      "generatedReading": "おととし"
+    },
+    "一昨日|おととい": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "一昨日",
+      "generatedReading": "おととい"
     },
     "一時|いちじ": {
       "pattern": "2 [nakadaka]",
@@ -4209,6 +4227,12 @@
       "sourceReading": "おおきい",
       "sourceAccent": "3"
     },
+    "大丈夫|だいじょうぶ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "だいじょうぶ",
+      "generatedReading": "だいじょおぶ"
+    },
     "大事|だいじ": {
       "pattern": "1 [atamadaka] / 3 [odaka] / 0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -7332,6 +7356,12 @@
       "sourceWord": "明るむ",
       "sourceReading": "あかるむ",
       "sourceAccent": "3"
+    },
+    "明日|あした": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "明日",
+      "generatedReading": "あした"
     },
     "明日|あす": {
       "pattern": "2 [odaka]",
@@ -11435,6 +11465,12 @@
       "sourceReading": "はぐくむ",
       "sourceAccent": "3"
     },
+    "背|せ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "背",
+      "generatedReading": "せ"
+    },
     "背|せい": {
       "pattern": "1 [atamadaka]",
       "sourceId": "voicevox-nemo-reading-query",
@@ -12843,6 +12879,12 @@
       "sourceWord": "資源",
       "sourceReading": "しげん",
       "sourceAccent": "1"
+    },
+    "賑やか|にぎやか": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "賑やか",
+      "generatedReading": "にぎやか"
     },
     "賛える|たたえる": {
       "pattern": "4 [odaka]",

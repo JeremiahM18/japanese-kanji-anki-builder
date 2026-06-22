@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2211);
+    assert.equal(Object.keys(starterEntries).length, 2218);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 700,
-        5: 313,
+        5: 320,
     });
 });
 
@@ -7460,6 +7460,56 @@ test("tracked starter word data includes the first N5 word v2 common expansion b
     assert.match(starterEntries["飴|あめ"].notes, /standalone kanji word stays eligible/);
     assert.match(starterEntries["誰|だれ"].notes, /standalone word is learner-friendly and must not be blocked/);
     assert.match(starterEntries["誰か|だれか"].notes, /separate exact word identity/);
+});
+
+test("tracked starter word data includes the N5 Tanos extra-source Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "もう一度|もういちど",
+        "一昨日|おととい",
+        "一昨年|おととし",
+        "大丈夫|だいじょうぶ",
+        "賑やか|にぎやか",
+        "背|せ",
+        "明日|あした",
+    ];
+
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+    assertCoverageReadings(starterEntries, [
+        ["もう一度|もういちど", "一", "いち"],
+        ["もう一度|もういちど", "度", "ど"],
+        ["一昨日|おととい", "一昨日", "おととい"],
+        ["一昨年|おととし", "一昨年", "おととし"],
+        ["大丈夫|だいじょうぶ", "大", "だい"],
+        ["大丈夫|だいじょうぶ", "丈", "じょう"],
+        ["大丈夫|だいじょうぶ", "夫", "ぶ"],
+        ["賑やか|にぎやか", "賑", "にぎやか"],
+        ["背|せ", "背", "せ"],
+        ["明日|あした", "明日", "あした"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["もう一度|もういちど", "もう<ruby>一<rt>いち</rt></ruby><ruby>度<rt>ど</rt></ruby>"],
+        ["一昨日|おととい", "<ruby>一昨日<rt>おととい</rt></ruby>"],
+        ["一昨年|おととし", "<ruby>一昨年<rt>おととし</rt></ruby>"],
+        ["大丈夫|だいじょうぶ", "<ruby>大<rt>だい</rt></ruby><ruby>丈<rt>じょう</rt></ruby><ruby>夫<rt>ぶ</rt></ruby>"],
+        ["賑やか|にぎやか", "<ruby>賑<rt>にぎ</rt></ruby>やか"],
+        ["背|せ", "<ruby>背<rt>せ</rt></ruby>"],
+        ["明日|あした", "<ruby>明日<rt>あした</rt></ruby>"],
+    ]);
+
+    for (const key of batchKeys) {
+        assert.equal(starterEntries[key].source, "tanos-n5-vocab");
+        assert.equal(starterEntries[key].levelPlacement.mode, "vocabulary-level");
+        assert.match(starterEntries[key].levelPlacement.reason, /N5 word v2 vocabulary-level placement/);
+        assert.match(starterEntries[key].notes, /source level claim is unverified/);
+        assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+    }
+    assert.match(starterEntries["一昨日|おととい"].notes, /whole-word reading/);
+    assert.match(starterEntries["一昨年|おととし"].notes, /whole-word reading/);
+    assert.match(starterEntries["大丈夫|だいじょうぶ"].notes, /丈 is outside the current JLPT kanji contract/);
+    assert.match(starterEntries["賑やか|にぎやか"].notes, /labeled rather than automatically blocked/);
+    assert.match(starterEntries["背|せ"].notes, /distinct from governed N3 背\|せい/);
+    assert.match(starterEntries["明日|あした"].notes, /distinct from governed N4 明日\|あす/);
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

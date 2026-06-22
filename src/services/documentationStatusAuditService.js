@@ -133,12 +133,12 @@ function buildProductStatusPhrases(productSnapshot = {}) {
         readmeN4KanjiObsidian: "| N4 kanji | `212/212` Obsidian-certified",
         readmeN3KanjiObsidian: "| N3 kanji | `341/341` Obsidian-certified",
         readmeN2KanjiObsidian: "| N2 kanji | `349/349` Obsidian-certified",
-        readmeN5WordObsidian: "| N5 word | `287/287` strict word Obsidian-certified",
+        readmeN5WordObsidian: "| N5 word | `300/300` strict word Obsidian-certified",
         readmeN4WordObsidian: "| N4 word | `700/700` strict word Obsidian-certified",
         claudeFrozenWordObsidian: "N5 and N4 word rows are strict Obsidian-certified at the current generated-row denominator",
-        productExitN5WordObsidian: "N5 word: strict non-human governed native/fluent-quality word Obsidian content certification passes at `287/287`",
+        productExitN5WordObsidian: "N5 word: strict non-human governed native/fluent-quality word Obsidian content certification passes at `300/300`",
         productExitN4WordObsidian: "N4 word: strict non-human governed native/fluent-quality word Obsidian content certification passes at `700/700`",
-        releaseQaWordObsidian: "N5 word is strict non-human governed native/fluent-quality Obsidian-certified at `287/287`; N4 word is strict non-human governed native/fluent-quality Obsidian-certified at `700/700`",
+        releaseQaWordObsidian: "N5 word is strict non-human governed native/fluent-quality Obsidian-certified at `300/300`; N4 word is strict non-human governed native/fluent-quality Obsidian-certified at `700/700`",
         releaseProcessObsidianFirst: "first confirm the fail-closed Obsidian native/fluent-quality content-certification gate and its lower-lane prerequisite gates",
         systemObsidianProofNode: "Proof + natural-language certification",
         closeoutLowerLaneMatrix: "lower-lane Silver/Gold/Sapphire/Platinum count matrix",
@@ -287,11 +287,11 @@ function auditDocumentationText({
     const phrases = buildN3WordStatusPhrases(snapshot);
     const product = productSnapshot || snapshot.product || {
         kanjiDenominator: 2212,
-        wordDenominator: 2191,
+        wordDenominator: 2198,
         kanjiLockedDenominator: 982,
-        wordLockedDenominator: 987,
+        wordLockedDenominator: 1000,
         kanjiObsidianProof: 982,
-        wordObsidianProof: 987,
+        wordObsidianProof: 1000,
     };
     const productPhrases = buildProductStatusPhrases(product);
     const failures = [];

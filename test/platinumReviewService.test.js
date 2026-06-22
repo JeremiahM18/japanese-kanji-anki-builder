@@ -410,6 +410,131 @@ test("evaluatePlatinumWordReviewSet rejects active entries placed easier than th
     assert.match(report.results[0].failures.join("\n"), /lacks a current-level kanji anchor for N5; harder support floor N4: 今:N4, 日:N4/);
 });
 
+test("evaluatePlatinumWordReviewSet accepts explicit vocabulary-level placement with support kanji", () => {
+    const wordLabel = "背|せ";
+    const audioFragment = "word-reading-背-せ";
+    const currentStandardDetail = [
+        `Current-standard whole-card revalidation for ${wordLabel} checked separated evidence lanes, generated surface, Japanese-source evidence, example sentence 背が高いです。, notes/support surface N5 word v2 vocabulary-level placement with explicit support-kanji label., reading breakdown 背 （せ）, meaning height, labels JLPT N5, JLPT common-word expansion, focus 背, covers 背: せ, audio ${audioFragment}, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations.`,
+    ].join(" ");
+    const entry = {
+        word: "背",
+        status: "platinum",
+        readingIncludes: ["せ"],
+        meaningIncludes: ["height"],
+        jlptLevelIncludes: ["JLPT N5"],
+        coverageRoleIncludes: ["JLPT common-word expansion"],
+        focusIncludes: ["背"],
+        coversReadingIncludes: ["背: せ"],
+        breakdownIncludes: ["背 （せ）"],
+        exampleIncludes: ["背が高いです。"],
+        pitchAccentIncludes: ["Pitch 1: 1"],
+        notesIncludes: ["N5 word v2 vocabulary-level placement with explicit support-kanji label."],
+        selectionRationale: "Common and useful N5 word v2 vocabulary-level noun for height with an explicit support-kanji label.",
+        levelPlacement: {
+            mode: "vocabulary-level",
+            reason: "N5 word v2 vocabulary-level placement: common standalone vocabulary word with support kanji visibly labeled.",
+        },
+        reviewedAt: "2026-06-22",
+        reviewer: "codex-platinum-review",
+        reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        revalidatedAt: "2026-06-22",
+        revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word platinum standard.",
+        sourceEvidence: [{
+            type: "japanese-source",
+            source: "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+            detail: `JMdict dictionary source verified ${wordLabel}, reading せ, learner meaning height, and example 背が高いです。 for the shipped word-card surface.`,
+        }],
+        internalChecks: [
+            {
+                type: "generated-surface",
+                source: "generated N5 word TSV surface",
+                detail: `Generated word-card surface inspected for ${wordLabel}: word 背, reading せ, meaning height, example 背が高いです。, audio ${audioFragment}.`,
+            },
+            {
+                type: "golden-regression",
+                source: "templates/golden_n5_word_review_set.json",
+                detail: `Separate golden regression gate checked ${wordLabel}; this regression gate protects generated fields but is not source truth and not source evidence.`,
+            },
+            {
+                type: "level-contract",
+                source: "templates/jlpt_word_level_contract.json",
+                detail: `Level contract checked for ${wordLabel}: JLPT N5 with vocabulary-level placement reason.`,
+            },
+            {
+                type: "media-audit",
+                source: "managed media audit",
+                detail: `Media audit checked ${wordLabel}; media audio fragment ${audioFragment} is present.`,
+            },
+            {
+                type: "audio-review",
+                source: "managed word audio artifact",
+                detail: `Audio review checked ${wordLabel}; expected audio fragment ${audioFragment}.`,
+            },
+            {
+                type: "pitch-accent-review",
+                source: "templates/word_pitch_accent_data.json",
+                detail: `Pitch accent review checked ${wordLabel}; sourceId kanjium-cc-by-sa-4.0; pattern 1 [atamadaka]; visible pitch labels Pitch 1: 1.`,
+            },
+            {
+                type: "label-review",
+                source: "generated labels",
+                detail: `Label review checked ${wordLabel}: JLPT N5, coverage role JLPT common-word expansion, focus 背, covers 背: せ.`,
+            },
+        ],
+        reviewEvidence: [
+            {
+                type: "example-review",
+                source: "product Japanese example review",
+                detail: `Example review checked ${wordLabel}, reading せ, and sentence 背が高いです。 Natural, useful, learner-friendly, and level-appropriate.`,
+            },
+            {
+                type: "manual-review",
+                source: "platinum product review",
+                detail: `Manual review judged ${wordLabel} common and learner-friendly with explicit vocabulary-level placement support.`,
+            },
+            {
+                type: "current-standard-review",
+                source: "manual current-standard word review",
+                detail: currentStandardDetail,
+            },
+        ],
+        qualityGates: buildQualityGates(),
+    };
+    const report = evaluateWordPlatinum({
+        rows: [buildRow({
+            word: "背",
+            reading: "せ",
+            readingBreakdown: "背 （せ）",
+            audio: `[sound:${audioFragment}.wav]`,
+            pitchAccent: "<span aria-label=\"Pitch 1: 1\">せ: Atamadaka</span>",
+            meaning: "height",
+            jlptLevel: "JLPT N5",
+            coverageRole: "JLPT common-word expansion",
+            focusKanji: "背",
+            coversReading: "背: せ",
+            kanjiBreakdown: "背 （せ） ／ height / back",
+            exampleSentence: "背が高いです。",
+            notes: "N5 word v2 vocabulary-level placement with explicit support-kanji label.",
+        })],
+        entries: [entry],
+        wordPitchAccentData: buildWordPitchAccentData({
+            "背|せ": {
+                pattern: "1 [atamadaka]",
+                sourceId: "kanjium-cc-by-sa-4.0",
+                sourceWord: "背",
+                sourceReading: "せ",
+                sourceAccent: "1",
+            },
+        }),
+        kanjiLevelData: {
+            背: { jlpt: 3 },
+        },
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.equal(report.passed, true, report.results[0]?.failures.join("\n") || "");
+});
+
 test("evaluatePlatinumWordReviewSet accepts later learner-fit placement with active rationale", () => {
     const report = evaluateWordPlatinum({
         rows: [buildRow({ jlptLevel: "JLPT N4" })],

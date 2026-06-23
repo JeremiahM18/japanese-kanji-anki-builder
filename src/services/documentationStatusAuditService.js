@@ -145,6 +145,16 @@ function buildProductStatusPhrases(productSnapshot = {}) {
     };
 }
 
+function buildWordExpansionDoctrinePhrases() {
+    return {
+        sourceDepthClaimLimiter: "Source-depth is not a Silver blocker; it is a claim limiter.",
+        sourceAdequacyNonBlocker: "`deck:words:source-adequacy` may fail evidence depth while free labeled expansion remains allowed.",
+        dictionaryDiscoveryRoute: "JMdict containment/commonness discovery",
+        dictionaryDiscoveryLabels: "Dictionary-discovery rows must remain labeled `DICTIONARY DISCOVERY` plus `Source level claim unverified`.",
+        paidSourceBoundary: "Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion.",
+    };
+}
+
 function extractChangelogUnreleased(changelogText = "") {
     const start = changelogText.indexOf("## [Unreleased]");
     if (start === -1) {
@@ -309,6 +319,7 @@ function auditDocumentationText({
     const systemArchitecture = files?.["docs/system-architecture.md"] || "";
     const packageJson = files?.["package.json"] || "";
     const unreleased = extractChangelogUnreleased(changelog);
+    const wordExpansionDoctrine = buildWordExpansionDoctrinePhrases();
 
     addFailure(failures, readme.includes(phrases.readmeGoldStatus), `README.md N3 word status must include: ${phrases.readmeGoldStatus}`);
     addFailure(failures, !/Gold is `315\/1081` current-standard/u.test(readme), "README.md still contains stale N3 word Gold ratio 315/1081.");
@@ -325,6 +336,13 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(phrases.workflowGoldCadenceHeading), "docs/workflows.md must document the N3 Gold word review cadence.");
     addFailure(failures, workflows.includes(phrases.workflowGoldScaffoldCommand), `docs/workflows.md must name ${phrases.workflowGoldScaffoldCommand}.`);
     addFailure(failures, commandReference.includes(phrases.commandReferenceAuditCommand), "docs/command-reference.md must document docs:status-audit.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/workflows.md must state that word source-depth is a claim limiter, not a Silver blocker.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.sourceAdequacyNonBlocker), "docs/workflows.md must state that incomplete word source-adequacy evidence does not block free labeled expansion.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryDiscoveryRoute), "docs/workflows.md must document the JMdict containment/commonness dictionary-discovery route.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryDiscoveryLabels), "docs/workflows.md must require DICTIONARY DISCOVERY and Source level claim unverified labels for dictionary-discovery rows.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/workflows.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/command-reference.md must state that word source-depth is a claim limiter, not a Silver blocker.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/command-reference.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, documentationStandard.includes(phrases.commandReferenceAuditCommand), "docs/documentation-standard.md must require docs:status-audit for status/count doc edits.");
     addFailure(failures, verification.includes(phrases.commandReferenceAuditCommand), "docs/verification.md must route documentation status audits through docs:status-audit.");
     addFailure(failures, readme.includes(phrases.commandReferenceAuditCommand), "README.md update triggers must name docs:status-audit.");
@@ -472,6 +490,7 @@ module.exports = {
     buildN3WordStatusPhrases,
     buildProductDocumentationSnapshot,
     buildProductStatusPhrases,
+    buildWordExpansionDoctrinePhrases,
     extractChangelogUnreleased,
     findUndocumentedPackageScripts,
     auditMarkdownLocalLinks,

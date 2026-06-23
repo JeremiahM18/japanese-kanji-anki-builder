@@ -372,6 +372,26 @@ Standalone one-kanji written forms are queue-eligible when the level gate is act
 
 The selector reports `sourceUniverse.configuredSourceOnly: true` for every level. This is intentional: N5/N4 configured-source exhaustion means only that the currently pinned source list has no active current-level keep backlog, not that every common JLPT word in the world has been evaluated. A zero-row ready queue is not source adequacy. If the editorial target is broader than the pinned source row count, add approved candidate-discovery sources only after prior selector work is exhausted, and keep the extra rows labeled as unverified source-level claims. For example, the current JLPTStudy discovery sources are 537 rows for N5 and 681 rows for N4, so they cannot settle broader common-vocabulary claims by themselves.
 
+### Free word expansion doctrine
+
+The word expansion goal is learner usefulness after coverage: once a level's reading expansion is fully exhausted, keep adding useful, common, free, verifiable words that are missing from that level's governed word deck. This is the answer to the "words containing 本" case: the deck should not stop just because one reading has already been represented by one card.
+
+Source-depth is not a Silver blocker; it is a claim limiter. `deck:words:source-adequacy` may fail evidence depth while free labeled expansion remains allowed. That incomplete source-depth posture blocks only claims such as "all common JLPT words are covered" or "the broad vocabulary universe is represented." It does not block a labeled, dictionary-verified, commonness-supported, learner-friendly Silver candidate from entering review after its lane gates open.
+
+The free word expansion order is:
+
+1. Finish the reading-gap expansion lane for the level.
+2. Exhaust the configured source-list selector for the level.
+3. Exhaust any reviewed extra/free source-family selector for the level.
+4. Open dictionary-discovery work for missing useful/common words that contain level-relevant kanji or otherwise fit the level's vocabulary deck policy.
+5. Promote only through normal Silver card review, then Gold, Sapphire, Platinum, and Obsidian catch-up gates.
+
+Dictionary discovery is not a license to import a dictionary. It is a governed review route that uses permitted dictionary and commonness signals, such as JMdict containment/commonness discovery, to surface exact `written|reading` identities that are not already governed or excluded. Dictionary-discovery rows must remain labeled `DICTIONARY DISCOVERY` plus `Source level claim unverified`. The label is what keeps the source claim honest; it is not a reason to block the row when the word is useful, common, learner-friendly, and otherwise passes card review.
+
+Dictionary-discovery review must still reject weak rows: unclear written/reading identity, missing dictionary verification, missing commonness support, kana-only rows outside the active policy, duplicate governed identities, adult or unsafe content, narrow proper nouns, highly specialized technical terms, bad learner fit, unnatural examples, missing media, missing pitch policy handling, or unresolved level-placement risk. If a word belongs in another N-level, route it with the authoritative `move_candidate` mechanism and place it in that target level's word JSON before promotion.
+
+Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion. Do not recommend paid source acquisition as the next step when the real unblocker is finishing the active reading/current-source/extra/dictionary queue. Broad source-depth work may resume later if a specific permitted source surface appears, but the free expansion lane remains valid with clear labels and normal review gates.
+
 ## Govern word source adequacy
 
 ```bash
@@ -400,7 +420,7 @@ npm run data:merge:jlpt:word-source-batch -- --source=<source-id> --batch=<ignor
 npm run data:import:jlpt:word-source-input -- --source=<source-id>
 ```
 
-`deck:words:source-access` distinguishes actionable review work from registered future placeholders. `registered_no_current_source_access` means the family is tracked for future use, but current free/public access has no governed work to spend time on. Do not repeat source discovery just to get the same answer; reopen that lane only with a specific newly permitted source surface, paid/private source intake, publisher permission, or a completed source-access packet for an exact surface.
+`deck:words:source-access` distinguishes actionable review work from registered future placeholders. `registered_no_current_source_access` means the family is tracked for future use, but current free/public access has no governed work to spend time on. Do not repeat source discovery just to get the same answer; reopen broad source-depth research only with a specific newly permitted source surface, publisher permission, or a completed source-access packet for an exact surface. Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion.
 
 Word source adequacy is a separate source-governance lane, parallel to kanji source evidence. It tracks exact `written|reading` identities, source tiers, source lineages, independent source families, reviewed source-access surfaces, and source-origin posture. It does not add Silver rows, edit starter data, move denominators, certify review tiers, or touch kanji lanes.
 

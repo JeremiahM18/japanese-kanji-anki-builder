@@ -156,6 +156,10 @@ function buildWordExpansionDoctrinePhrases() {
         dictionaryCommonPoolQualityFilter: "The default dictionary common-pool view is an editorial shortlist over an audit-visible raw pool, not the raw pool itself.",
         dictionaryCommonPoolOutsideSupport: "Outside-JLPT and higher-level support kanji are label/review needs, not automatic common-pool deprioritization.",
         dictionaryCommonPoolRawCommand: "`--common-pool-mode=raw`",
+        expansionTargetMinimums: "Expansion targets are useful minimums, not hard caps or approval quotas: N5 ~800, N4 ~1000, N3 ~2250, N2 ~2250, and N1 ~4000 unique governed words.",
+        expansionTargetActivation: "Target-progress reporting starts after reading expansion; it must not activate common-word expansion before reading work is exhausted.",
+        expansionTargetQualityBoundary: "Missing a target is never permission to accept weak rows",
+        expansionStatusTargetProgress: "Show governed unique word progress against the useful-minimum expansion targets",
         paidSourceBoundary: "Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion.",
     };
 }
@@ -348,10 +352,14 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLabels), "docs/workflows.md must require DICTIONARY COMMON POOL and Source level claim unverified labels for common-pool rows.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolQualityFilter), "docs/workflows.md must state that the default dictionary common-pool queue is an editorial shortlist over an audit-visible raw pool.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolOutsideSupport), "docs/workflows.md must state that outside-JLPT/higher-level support kanji are label needs, not automatic common-pool deprioritization.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetMinimums), "docs/workflows.md must preserve the word expansion target minimums as useful minimums, not hard caps or quotas.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetActivation), "docs/workflows.md must preserve that target-progress reporting does not activate common-word expansion before reading exhaustion.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetQualityBoundary), "docs/workflows.md must preserve that missing target counts do not permit weak word rows.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/workflows.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/command-reference.md must state that word source-depth is a claim limiter, not a Silver blocker.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolCommandReference), "docs/command-reference.md must document common-pool work as the same extra expansion lane.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolRawCommand), "docs/command-reference.md must document dictionary common-pool raw audit mode.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.expansionStatusTargetProgress), "docs/command-reference.md must document expansion-status target-progress reporting.");
     addFailure(failures, commandReference.includes("do not automatically deprioritize outside-JLPT or higher-level support kanji"), "docs/command-reference.md must document that outside-JLPT/higher-level support kanji are not automatically deprioritized.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/command-reference.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, documentationStandard.includes(phrases.commandReferenceAuditCommand), "docs/documentation-standard.md must require docs:status-audit for status/count doc edits.");

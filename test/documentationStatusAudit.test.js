@@ -295,6 +295,31 @@ test("documentation status audit catches missing word common-pool quality filter
     );
 });
 
+test("documentation status audit catches missing word expansion target doctrine", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"].replace(
+        "Expansion targets are useful minimums, not hard caps or approval quotas: N5 ~800, N4 ~1000, N3 ~2250, N2 ~2250, and N1 ~4000 unique governed words.",
+        "Expansion targets are flexible.",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("word expansion target minimums")),
+        true,
+    );
+});
+
 test("documentation status audit catches outside support kanji common-pool drift", () => {
     const files = readDocumentationFiles();
     files["docs/workflows.md"] = files["docs/workflows.md"].replace(

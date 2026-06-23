@@ -30,6 +30,14 @@ const DICTIONARY_COMMON_POOL_COMMAND_SOURCE = "common-pool";
 const DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT = 200;
 const COMMON_POOL_QUALITY_MODE_EDITORIAL = "editorial";
 const COMMON_POOL_QUALITY_MODE_RAW = "raw";
+const WORD_EXPANSION_TARGET_MINIMUMS = Object.freeze({
+    5: 800,
+    4: 1000,
+    3: 2250,
+    2: 2250,
+    1: 4000,
+});
+const WORD_EXPANSION_TARGET_POLICY = "useful_minimum_not_hard_limit";
 
 const SELECTOR_STATUSES = [
     "ready_for_editorial_review",
@@ -184,6 +192,40 @@ function summarizeSelectorRows(rows = []) {
             + selectorStatusCounts.blocked_missing_dictionary
             + selectorStatusCounts.blocked_missing_commonness,
         preTrustRows: rows.length,
+    };
+}
+
+function buildWordExpansionTargetProgressForLevel({ level, jlptWordLevelContract = {} } = {}) {
+    const identities = new Set();
+    for (const [key, entry] of Object.entries(jlptWordLevelContract.wordLevels || {})) {
+        const entryLevel = Number(entry?.jlpt ?? entry?.level ?? entry?.jlptLevel);
+        if (entryLevel !== level) {
+            continue;
+        }
+        const written = String(entry?.written || "").trim();
+        const reading = String(entry?.reading || "").trim();
+        identities.add(written && reading ? `${written}|${reading}` : key);
+    }
+
+    const targetMinimum = WORD_EXPANSION_TARGET_MINIMUMS[level] ?? null;
+    const currentUniqueGovernedWords = identities.size;
+    const remainingToTarget = Number.isInteger(targetMinimum)
+        ? Math.max(0, targetMinimum - currentUniqueGovernedWords)
+        : null;
+
+    return {
+        level,
+        levelLabel: `N${level}`,
+        currentUniqueGovernedWords,
+        targetMinimum,
+        targetApproximate: Number.isInteger(targetMinimum),
+        remainingToTarget,
+        targetMet: Number.isInteger(targetMinimum)
+            ? currentUniqueGovernedWords >= targetMinimum
+            : null,
+        policy: WORD_EXPANSION_TARGET_POLICY,
+        activationBoundary: "after_reading_expansion_exhausted",
+        qualityBoundary: "high_quality_common_useful_learner_friendly_non_duplicate_only",
     };
 }
 
@@ -1359,6 +1401,10 @@ function buildLevelSelectorReport({
     const normalizedPlacementMode = normalizePlacementMode(placementMode);
     const candidateSources = getCandidateDiscoverySourcesForLevel(manifest, level);
     const blockers = [];
+    const targetProgress = buildWordExpansionTargetProgressForLevel({
+        level,
+        jlptWordLevelContract,
+    });
     const readingExpansionGate = buildReadingExpansionGate({
         level,
         signal: readingExpansionSignal,
@@ -1380,6 +1426,7 @@ function buildLevelSelectorReport({
                 isExtraSourceSelector: false,
             }),
             sourceAdequacy,
+            targetProgress,
             sourceUniverse: null,
             sourceCandidateSummary: null,
             summary,
@@ -1418,6 +1465,7 @@ function buildLevelSelectorReport({
                 sourceBlockers: blockers,
             }),
             sourceAdequacy,
+            targetProgress,
             sourceUniverse,
             sourceCandidateSummary: null,
             summary,
@@ -1481,6 +1529,7 @@ function buildLevelSelectorReport({
             isExtraSourceSelector: source.extraSourceLane === true,
         }),
         sourceAdequacy,
+        targetProgress,
         sourceUniverse: {
             ...sourceUniverse,
             rowCount: loadedSource.effectiveRowCount ?? sourceUniverse.rowCount,
@@ -1576,6 +1625,8 @@ function buildWordCommonExpansionSelectorReport({
         placementMode: normalizedPlacementMode,
         configuredSourceOnly: true,
         warning: SOURCE_UNIVERSE_WARNING,
+        wordExpansionTargetPolicy: WORD_EXPANSION_TARGET_POLICY,
+        wordExpansionTargetMinimums: WORD_EXPANSION_TARGET_MINIMUMS,
         sourceAdequacyByLevel,
         extraSourceAccessByLevel,
         levels: reportLevels,
@@ -1702,6 +1753,16 @@ function formatSourceAdequacy(sourceAdequacy = null) {
     ].join("; ");
 }
 
+function formatWordExpansionTargetStatus(targetProgress = null) {
+    if (!targetProgress || !Number.isInteger(targetProgress.targetMinimum)) {
+        return "not configured";
+    }
+    if (targetProgress.targetMet) {
+        return "target floor met; continue quality-only";
+    }
+    return `below target floor by ${targetProgress.remainingToTarget}`;
+}
+
 function formatWordCommonExpansionSelectorReport(report = {}) {
     const hasExtraSelector = (report.levelReports || [])
         .some((levelReport) => levelReport.sourceUniverse?.extraSource === true);
@@ -1736,6 +1797,24 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
     );
     for (const levelReport of report.levelReports || []) {
         lines.push(`| ${levelReport.levelLabel} | ${formatSourceAdequacy(levelReport.sourceAdequacy)} |`);
+    }
+
+    lines.push(
+        "",
+        "Deck target progress:",
+        "| Level | Current governed unique words | Target minimum | Remaining to target | Status | Policy |",
+        "| --- | ---: | ---: | ---: | --- | --- |"
+    );
+    for (const levelReport of report.levelReports || []) {
+        const targetProgress = levelReport.targetProgress || {};
+        lines.push([
+            `| ${levelReport.levelLabel}`,
+            targetProgress.currentUniqueGovernedWords ?? "-",
+            targetProgress.targetMinimum ?? "-",
+            targetProgress.remainingToTarget ?? "-",
+            formatWordExpansionTargetStatus(targetProgress),
+            "useful minimum, not a hard cap or quota",
+        ].join(" | ") + " |");
     }
 
     lines.push(
@@ -1878,6 +1957,8 @@ module.exports = {
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_LEVEL_CLAIM_WARNING,
     SOURCE_UNIVERSE_WARNING,
+    WORD_EXPANSION_TARGET_MINIMUMS,
+    WORD_EXPANSION_TARGET_POLICY,
     DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
     DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     DICTIONARY_COMMON_POOL_SOURCE_ID,
@@ -1887,6 +1968,7 @@ module.exports = {
     buildReadingExpansionGate,
     buildSourceUniverse,
     buildWordCommonExpansionSelectorReport,
+    buildWordExpansionTargetProgressForLevel,
     classifyCommonExpansionSelectorRow,
     formatWordCommonExpansionSelectorReport,
     getCandidateDiscoverySourcesForLevel,

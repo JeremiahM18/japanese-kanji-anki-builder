@@ -9,6 +9,10 @@ const {
     buildSourceAdequacyByLevel,
 } = require("../src/services/jlptWordSourceEvidenceService");
 const {
+    DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+    DICTIONARY_COMMON_POOL_SOURCE_ID,
+    SOURCE_POOL_DICTIONARY_COMMON,
+    SOURCE_POOL_DICTIONARY_COMMON_LABEL,
     buildExtraSourceAccessByLevel,
     buildWordCommonExpansionSelectorReport,
     formatWordCommonExpansionSelectorReport,
@@ -91,6 +95,112 @@ function sourceAllowsCandidateDiscovery(source = {}) {
     return (source.allowedUse || []).includes("candidate-discovery");
 }
 
+function normalizeSelectorSourceId(sourceId = "") {
+    const normalized = String(sourceId || "").trim();
+    if ([
+        DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+        DICTIONARY_COMMON_POOL_SOURCE_ID,
+        "jmdict-common-pool",
+        "dictionary-common-pool",
+    ].includes(normalized)) {
+        return DICTIONARY_COMMON_POOL_SOURCE_ID;
+    }
+    return normalized;
+}
+
+function assertActiveApprovedManifestSource(sourceId, source = {}, requiredUse = "") {
+    if (!source) {
+        throw new Error(`Dictionary common pool requires ${sourceId} in the word source manifest.`);
+    }
+    if (source.status !== "active") {
+        throw new Error(`Dictionary common pool requires ${sourceId} to be active.`);
+    }
+    if (source.licenseUse?.status !== "approved") {
+        throw new Error(`Dictionary common pool requires approved source-use posture for ${sourceId}.`);
+    }
+    if (requiredUse && !(source.allowedUse || []).includes(requiredUse)) {
+        throw new Error(`Dictionary common pool requires ${sourceId} allowedUse ${requiredUse}.`);
+    }
+}
+
+function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = []) {
+    const dictionarySource = manifest.sources?.jmdict || null;
+    const commonnessSource = manifest.sources?.["jmdict-priority-commonness"] || null;
+    assertActiveApprovedManifestSource("jmdict", dictionarySource, "dictionary-verification");
+    assertActiveApprovedManifestSource("jmdict-priority-commonness", commonnessSource, "frequency-sanity");
+    if (!dictionarySource.local?.path || !commonnessSource.local?.path) {
+        throw new Error("Dictionary common pool requires pinned local JMdict dictionary/commonness paths.");
+    }
+    if (dictionarySource.local.path !== commonnessSource.local.path) {
+        throw new Error("Dictionary common pool requires JMdict dictionary and priority sources to share the same pinned local TSV.");
+    }
+
+    return {
+        name: "JMdict dictionary common pool",
+        tier: 3,
+        status: "active",
+        sourceType: SOURCE_POOL_DICTIONARY_COMMON,
+        origin: {
+            url: dictionarySource.origin?.url || commonnessSource.origin?.url || "",
+            localPath: dictionarySource.local.path,
+            notes: "Virtual extra expansion pool synthesized from pinned JMdict exact identity rows with priority/commonness markers; no raw dictionary rows are tracked.",
+        },
+        licenseUse: {
+            status: "approved",
+            license: dictionarySource.licenseUse?.license || commonnessSource.licenseUse?.license || "CC BY-SA 4.0",
+            notes: "Extra expansion discovery only. JMdict verifies exact written/reading/meaning identity and priority markers support commonness; neither proves JLPT level or approves cards.",
+        },
+        checkedAt: dictionarySource.checkedAt || commonnessSource.checkedAt || "",
+        levels,
+        local: {
+            ...(dictionarySource.local || {}),
+            columns: dictionarySource.local?.columns || [
+                "written",
+                "reading",
+                "meaning",
+                "frequencyRank",
+                "source",
+                "notes",
+            ],
+        },
+        intendedUse: [
+            "candidate-discovery",
+            "dictionary-verification",
+            "reading-verification",
+            "meaning-verification",
+            "frequency-sanity",
+            "usefulness-support",
+        ],
+        allowedUse: [
+            "candidate-discovery",
+            "dictionary-verification",
+            "reading-verification",
+            "meaning-verification",
+            "frequency-sanity",
+            "usefulness-support",
+        ],
+        disallowedUse: [
+            "card-approval",
+            "level-truth",
+            "pitch-verification",
+        ],
+        candidatePolicy: {
+            levels,
+            kanjiScope: "known-jlpt",
+            requireSourceLevel: false,
+        },
+        extraSourceLane: true,
+        extraSourcePool: SOURCE_POOL_DICTIONARY_COMMON,
+        extraSourcePoolLabel: SOURCE_POOL_DICTIONARY_COMMON_LABEL,
+        commonPool: {
+            type: SOURCE_POOL_DICTIONARY_COMMON,
+            requireCommonness: true,
+            excludeKanaOnly: true,
+            requireTargetKanji: true,
+        },
+    };
+}
+
 function buildManifestSourceFromEvidence(sourceId, source = {}, levels = []) {
     if (!source.local?.path) {
         throw new Error(`Source ${sourceId} does not have a local source path.`);
@@ -151,7 +261,7 @@ function buildSelectorManifestForSource({
     sourceId = "",
     levels = [],
 } = {}) {
-    const normalizedSourceId = String(sourceId || "").trim();
+    const normalizedSourceId = normalizeSelectorSourceId(sourceId);
     if (!normalizedSourceId) {
         return manifest;
     }
@@ -161,7 +271,9 @@ function buildSelectorManifestForSource({
     const evidenceSource = wordSourceEvidence.sources?.[normalizedSourceId] || null;
     const existingSource = selectorManifest.sources[normalizedSourceId] || null;
     if (!existingSource && !evidenceSource) {
-        throw new Error(`Unknown word selector source: ${normalizedSourceId}`);
+        if (normalizedSourceId !== DICTIONARY_COMMON_POOL_SOURCE_ID) {
+            throw new Error(`Unknown word selector source: ${normalizedSourceId}`);
+        }
     }
 
     for (const source of Object.values(selectorManifest.sources)) {
@@ -170,16 +282,18 @@ function buildSelectorManifestForSource({
         }
     }
 
-    const overrideSource = existingSource ? {
-        ...existingSource,
-        status: "active",
-        candidatePolicy: {
-            ...(existingSource.candidatePolicy || {}),
-            levels: existingSource.candidatePolicy?.levels || existingSource.levels || levels,
-            requireSourceLevel: existingSource.candidatePolicy?.requireSourceLevel ?? true,
-        },
-        extraSourceLane: true,
-    } : buildManifestSourceFromEvidence(normalizedSourceId, evidenceSource, levels);
+    const overrideSource = normalizedSourceId === DICTIONARY_COMMON_POOL_SOURCE_ID
+        ? buildDictionaryCommonPoolManifestSource(selectorManifest, levels)
+        : (existingSource ? {
+            ...existingSource,
+            status: "active",
+            candidatePolicy: {
+                ...(existingSource.candidatePolicy || {}),
+                levels: existingSource.candidatePolicy?.levels || existingSource.levels || levels,
+                requireSourceLevel: existingSource.candidatePolicy?.requireSourceLevel ?? true,
+            },
+            extraSourceLane: true,
+        } : buildManifestSourceFromEvidence(normalizedSourceId, evidenceSource, levels));
     selectorManifest.sources[normalizedSourceId] = overrideSource;
     return selectorManifest;
 }
@@ -258,10 +372,12 @@ if (require.main === module) {
 
 module.exports = {
     DEFAULT_WORD_SOURCE_MANIFEST,
+    buildDictionaryCommonPoolManifestSource,
     buildManifestSourceFromEvidence,
     buildSelectorManifestForSource,
     hasStrictFailure,
     main,
+    normalizeSelectorSourceId,
     parseArgs,
     resolveManifestPath: (manifestPath = DEFAULT_WORD_SOURCE_MANIFEST) => path.resolve(process.cwd(), manifestPath || DEFAULT_WORD_SOURCE_MANIFEST),
     sourceAllowsCandidateDiscovery,

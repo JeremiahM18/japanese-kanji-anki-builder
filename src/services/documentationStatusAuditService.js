@@ -149,8 +149,10 @@ function buildWordExpansionDoctrinePhrases() {
     return {
         sourceDepthClaimLimiter: "Source-depth is not a Silver blocker; it is a claim limiter.",
         sourceAdequacyNonBlocker: "`deck:words:source-adequacy` may fail evidence depth while free labeled expansion remains allowed.",
-        dictionaryDiscoveryRoute: "JMdict containment/commonness discovery",
-        dictionaryDiscoveryLabels: "Dictionary-discovery rows must remain labeled `DICTIONARY DISCOVERY` plus `Source level claim unverified`.",
+        dictionaryCommonPoolExtraLane: "The dictionary common pool is part of the extra expansion lane, not a separate source-depth lane.",
+        dictionaryCommonPoolRoute: "JMdict containment/commonness discovery",
+        dictionaryCommonPoolLabels: "Dictionary common-pool rows must remain labeled `DICTIONARY COMMON POOL` plus `Source level claim unverified`.",
+        dictionaryCommonPoolCommandReference: "Continue the same extra expansion lane with the `DICTIONARY COMMON POOL`",
         paidSourceBoundary: "Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion.",
     };
 }
@@ -338,10 +340,12 @@ function auditDocumentationText({
     addFailure(failures, commandReference.includes(phrases.commandReferenceAuditCommand), "docs/command-reference.md must document docs:status-audit.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/workflows.md must state that word source-depth is a claim limiter, not a Silver blocker.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.sourceAdequacyNonBlocker), "docs/workflows.md must state that incomplete word source-adequacy evidence does not block free labeled expansion.");
-    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryDiscoveryRoute), "docs/workflows.md must document the JMdict containment/commonness dictionary-discovery route.");
-    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryDiscoveryLabels), "docs/workflows.md must require DICTIONARY DISCOVERY and Source level claim unverified labels for dictionary-discovery rows.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolExtraLane), "docs/workflows.md must state that the dictionary common pool is part of the extra expansion lane, not a source-depth lane.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolRoute), "docs/workflows.md must document the JMdict containment/commonness common-pool route.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLabels), "docs/workflows.md must require DICTIONARY COMMON POOL and Source level claim unverified labels for common-pool rows.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/workflows.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/command-reference.md must state that word source-depth is a claim limiter, not a Silver blocker.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolCommandReference), "docs/command-reference.md must document common-pool work as the same extra expansion lane.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/command-reference.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, documentationStandard.includes(phrases.commandReferenceAuditCommand), "docs/documentation-standard.md must require docs:status-audit for status/count doc edits.");
     addFailure(failures, verification.includes(phrases.commandReferenceAuditCommand), "docs/verification.md must route documentation status audits through docs:status-audit.");

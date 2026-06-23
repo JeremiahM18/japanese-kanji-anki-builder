@@ -10,6 +10,7 @@ const {
     buildWordInventoryExpansionCandidateReport,
     classifyKanjiScope,
     normalizeMoveTargetLevel,
+    normalizeCandidateSourceRows,
     parseCandidateSourceText,
 } = require("./wordInventoryExpansionCandidateService");
 const { normalizePlacementMode } = require("./wordCandidateAgreementService");
@@ -22,6 +23,10 @@ const SOURCE_LANE_CONFIGURED = "configured_source";
 const SOURCE_LANE_EXTRA = "extra_source_family";
 const SOURCE_LANE_CONFIGURED_LABEL = "CURRENT CONFIGURED SOURCE";
 const SOURCE_LANE_EXTRA_LABEL = "EXTRA SOURCE FAMILY";
+const SOURCE_POOL_DICTIONARY_COMMON = "dictionary_common_pool";
+const SOURCE_POOL_DICTIONARY_COMMON_LABEL = "DICTIONARY COMMON POOL";
+const DICTIONARY_COMMON_POOL_SOURCE_ID = "dictionary-common-pool";
+const DICTIONARY_COMMON_POOL_COMMAND_SOURCE = "common-pool";
 
 const SELECTOR_STATUSES = [
     "ready_for_editorial_review",
@@ -40,6 +45,13 @@ const SELECTOR_STATUSES = [
 
 const STATUS_ORDER = Object.fromEntries(SELECTOR_STATUSES.map((status, index) => [status, index]));
 const HAN_CHARACTER_PATTERN = /^\p{Script=Han}$/u;
+const COMMON_POOL_MEANING_NOISE_RE = /\b(?:surname|given name|place name|company name|archaism|archaic|obsolete|vulgar|obscene|derogatory|Buddhist term|physics|chemistry|botany|zoology|astronomy|mathematics)\b/iu;
+const COMMON_POOL_PRIORITY_MEANING_RE = /\b(?:grand shrine|famous shrine|lunar calendar|proofreading|first proof|station|railway line|district|province|clan|company|university)\b/iu;
+const DIGIT_WRITTEN_PATTERN = /[0-9０-９]/u;
+const LATIN_WRITTEN_PATTERN = /[A-Za-zＡ-Ｚａ-ｚ]/u;
+const HAN_ANY_PATTERN = /\p{Script=Han}/u;
+const KANJI_NUMERIC_EXPRESSION_WRITTEN_PATTERN = /^[一二三四五六七八九十百千万億兆〇零壱弐参年月日円本冊枚台匹人個件点度回階杯校時分秒週番号]+$/u;
+const CAPITALIZED_PROPER_PHRASE_PATTERN = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b/u;
 
 function isStandaloneKanjiWritten(value = "") {
     const chars = [...String(value || "")];
@@ -66,6 +78,8 @@ function getCandidateDiscoverySourcesForLevel(manifest = {}, level) {
 
 function buildSourceUniverse({ sourceId = "", source = {}, sourceSummary = null } = {}) {
     const integrity = sourceSummary?.integrity || source.local || {};
+    const sourceLane = source.extraSourceLane === true ? SOURCE_LANE_EXTRA : SOURCE_LANE_CONFIGURED;
+    const sourceLaneLabel = source.extraSourceLane === true ? SOURCE_LANE_EXTRA_LABEL : SOURCE_LANE_CONFIGURED_LABEL;
     return {
         sourceId,
         name: source.name || "",
@@ -84,8 +98,10 @@ function buildSourceUniverse({ sourceId = "", source = {}, sourceSummary = null 
         byteSize: Number.isInteger(integrity.byteSize) ? integrity.byteSize : null,
         configuredSourceOnly: true,
         warning: SOURCE_UNIVERSE_WARNING,
-        sourceLane: source.extraSourceLane === true ? SOURCE_LANE_EXTRA : SOURCE_LANE_CONFIGURED,
-        sourceLaneLabel: source.extraSourceLane === true ? SOURCE_LANE_EXTRA_LABEL : SOURCE_LANE_CONFIGURED_LABEL,
+        sourceLane,
+        sourceLaneLabel,
+        sourcePool: source.extraSourcePool || sourceLane,
+        sourcePoolLabel: source.extraSourcePoolLabel || sourceLaneLabel,
         extraSource: source.extraSourceLane === true,
         levelClaimStatus: SOURCE_LEVEL_CLAIM_STATUS,
         levelClaimLabel: SOURCE_LEVEL_CLAIM_LABEL,
@@ -233,6 +249,8 @@ function buildFallbackSourceGate({
     }
 
     const active = blockers.length === 0;
+    const selectedExtraPriorGateBlocked = isExtraSourceSelector
+        && (commonWordQueue.active !== true || (sourceBlockers || []).length > 0);
     return {
         active,
         status: isExtraSourceSelector
@@ -250,7 +268,11 @@ function buildFallbackSourceGate({
             ? (
                 active
                     ? "Selected EXTRA source-family selector is exhausted under the current filters; rows still remain pre-trust and labeled."
-                    : "Selected EXTRA source-family selector is open; finish its ready/triage/move work before treating this extra source as exhausted."
+                    : (
+                        selectedExtraPriorGateBlocked
+                            ? "Selected EXTRA source-family selector was requested, but the extra expansion lane is still closed by prior gate blockers; resolve the listed blockers before treating this extra source as active or exhausted."
+                            : "Selected EXTRA source-family selector is open; finish its ready/triage/move work before treating this extra source as exhausted."
+                    )
             )
             : (
                 active
@@ -283,6 +305,7 @@ function buildWorkOrderItem({
         active: status === "active"
             || status === "ready"
             || status === "ready_extra_source_available"
+            || status === "ready_dictionary_common_pool"
             || status === "ready_no_actionable_source"
             || status === "selected_extra_source",
         blocksExtraLane,
@@ -319,7 +342,22 @@ function getActiveConfiguredDiscoverySourceIdsForLevel({ manifest = {}, level } 
 
 function buildExtraSourceAccessByLevel({ sourceAccessReport = null, manifest = {}, levels = [5, 4, 3, 2, 1] } = {}) {
     const sources = sourceAccessReport?.sources || [];
+    const sourcesById = new Map(sources.map((source) => [source.sourceId, source]));
     const result = {};
+    const dictionarySource = sourcesById.get("jmdict") || null;
+    const commonnessSource = sourcesById.get("jmdict-priority-commonness") || null;
+    const dictionaryCommonPoolAvailable = (
+        dictionarySource?.status === "active"
+        && dictionarySource.licenseStatus === "approved"
+        && (dictionarySource.allowedUse || []).includes("dictionary-verification")
+        && commonnessSource?.status === "active"
+        && commonnessSource.licenseStatus === "approved"
+        && (
+            (commonnessSource.allowedUse || []).includes("frequency-sanity")
+            || (commonnessSource.allowedUse || []).includes("commonness-support")
+            || (commonnessSource.allowedUse || []).includes("usefulness-support")
+        )
+    );
 
     for (const level of levels) {
         const currentConfiguredSourceIds = getActiveConfiguredDiscoverySourceIdsForLevel({ manifest, level });
@@ -369,6 +407,9 @@ function buildExtraSourceAccessByLevel({ sourceAccessReport = null, manifest = {
             blockedExtraSourceIds: blockedSources.map((source) => source.sourceId).sort(),
             currentConfiguredSourcePendingCount: currentConfiguredPendingSources.length,
             currentConfiguredSourcePendingIds: currentConfiguredPendingSources.map((source) => source.sourceId).sort(),
+            dictionaryCommonPoolAvailable,
+            dictionaryCommonPoolSourceId: DICTIONARY_COMMON_POOL_SOURCE_ID,
+            dictionaryCommonPoolCommandSource: DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
         };
     }
 
@@ -383,14 +424,21 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const fallbackGate = levelReport.fallbackSourceGate || {};
     const extraSourceAccess = levelReport.extraSourceAccess || {};
     const isExtraSourceSelector = levelReport.sourceUniverse?.extraSource === true;
-    const selectorSourceArg = isExtraSourceSelector && levelReport.sourceUniverse?.sourceId
-        ? ` --source=${levelReport.sourceUniverse.sourceId}`
+    const isDictionaryCommonPoolSelector = levelReport.sourceUniverse?.sourcePool === SOURCE_POOL_DICTIONARY_COMMON;
+    const selectorSourceId = isDictionaryCommonPoolSelector
+        ? DICTIONARY_COMMON_POOL_COMMAND_SOURCE
+        : levelReport.sourceUniverse?.sourceId;
+    const selectorSourceArg = isExtraSourceSelector && selectorSourceId
+        ? ` --source=${selectorSourceId}`
         : "";
-    const selectorScopeLabel = isExtraSourceSelector ? "EXTRA source" : "Current source";
+    const selectorScopeLabel = isExtraSourceSelector
+        ? (isDictionaryCommonPoolSelector ? SOURCE_POOL_DICTIONARY_COMMON_LABEL : "EXTRA source")
+        : "Current source";
     const hasSourceAccessContext = extraSourceAccess.hasSourceAccessContext === true;
     const actionableExtraSourceCount = countValue(extraSourceAccess.actionableExtraSourceCount);
     const availableReviewedExtraSourceCount = countValue(extraSourceAccess.availableReviewedExtraSourceCount);
     const availableReviewedExtraSourceIds = extraSourceAccess.availableReviewedExtraSourceIds || [];
+    const dictionaryCommonPoolAvailable = extraSourceAccess.dictionaryCommonPoolAvailable === true;
     const availableReviewedExtraSourceRowCount = countValue(extraSourceAccess.availableReviewedExtraSourceRowCount);
     const availableReviewedExtraSourceAssignmentCount = countValue(extraSourceAccess.availableReviewedExtraSourceAssignmentCount);
     const readingFastPromotions = countValue(gate.promoteCuratedExampleItems);
@@ -413,21 +461,42 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const selectorCommand = `npm run deck:words:vocab-expansion -- --levels=${level}${selectorSourceArg} --strict --limit=80`;
     const allLevelSelectorCommand = "npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1 --strict --limit=80";
     const sourceAccessCommand = "npm run deck:words:source-access";
+    const dictionaryCommonPoolCommand = `npm run deck:words:vocab-expansion -- --levels=${level} --source=${DICTIONARY_COMMON_POOL_COMMAND_SOURCE} --strict --limit=80`;
     const extraSourceCommand = availableReviewedExtraSourceIds.length === 1
         ? `npm run deck:words:vocab-expansion -- --levels=${level} --source=${availableReviewedExtraSourceIds[0]} --strict --limit=80`
-        : sourceAccessCommand;
+        : (dictionaryCommonPoolAvailable ? dictionaryCommonPoolCommand : sourceAccessCommand);
     const extraSourceStatus = isExtraSourceSelector
-        ? "selected_extra_source"
+        ? (
+            !isDictionaryCommonPoolSelector && fallbackGate.active && dictionaryCommonPoolAvailable
+                ? "ready_dictionary_common_pool"
+                : "selected_extra_source"
+        )
         : (fallbackGate.active
         ? (
             hasSourceAccessContext && availableReviewedExtraSourceCount > 0
                 ? "ready_extra_source_available"
-                : (hasSourceAccessContext && actionableExtraSourceCount === 0 ? "ready_no_actionable_source" : "ready")
+                : (
+                    dictionaryCommonPoolAvailable
+                        ? "ready_dictionary_common_pool"
+                        : (hasSourceAccessContext && actionableExtraSourceCount === 0 ? "ready_no_actionable_source" : "ready")
+                )
         )
         : "closed");
     const extraSourceReason = (() => {
+        if (extraSourceStatus === "ready_dictionary_common_pool") {
+            const prefix = isExtraSourceSelector
+                ? "Selected extra source-family selector is exhausted under the current filters."
+                : "No reviewed extra source-family selector has priority over the common pool right now.";
+            return [
+                prefix,
+                "Continue the same extra expansion lane with the DICTIONARY COMMON POOL.",
+                "Rows come from pinned JMdict priority/commonness data, exclude exact governed/excluded duplicates and kana-only rows by default, keep the Source level claim unverified label, and still require normal triage before Silver.",
+            ].join(" ");
+        }
         if (isExtraSourceSelector) {
-            return "The selected source is already the EXTRA source-family preview; rows must keep the Source level claim unverified label and still require normal triage before Silver.";
+            return isDictionaryCommonPoolSelector
+                ? "The selected source is the DICTIONARY COMMON POOL inside the extra expansion lane; rows must keep the Source level claim unverified label and still require normal triage before Silver."
+                : "The selected source is already the EXTRA source-family preview; rows must keep the Source level claim unverified label and still require normal triage before Silver.";
         }
         if (!fallbackGate.active) {
             return (fallbackGate.blockers || []).join(" ") || "Closed until reading expansion and the current selector are exhausted.";
@@ -442,7 +511,7 @@ function buildExpansionWorkOrder(levelReport = {}) {
         if (hasSourceAccessContext && actionableExtraSourceCount === 0) {
             return [
                 "READY but no actionable extra free/permitted source family is registered right now; do not repeat source hunting for the same result.",
-                "Reopen this lane only with a specific newly permitted source, paid/private source intake, publisher permission, or a source-access packet for an exact surface.",
+                "Reopen broad source-depth work only with a specific newly permitted source, publisher permission, or a source-access packet for an exact surface.",
                 "Any extra rows must keep the Source level claim unverified label.",
             ].join(" ");
         }
@@ -542,11 +611,13 @@ function buildExpansionWorkOrder(levelReport = {}) {
         buildWorkOrderItem({
             rank: 8,
             lane: "extra_source_family",
-            label: "Extra source-family lane",
+            label: "Extra expansion lane",
             count: null,
             status: extraSourceStatus,
             blocksExtraLane: false,
-            command: extraSourceStatus === "ready_no_actionable_source" ? "" : extraSourceCommand,
+            command: extraSourceStatus === "ready_dictionary_common_pool"
+                ? dictionaryCommonPoolCommand
+                : (extraSourceStatus === "ready_no_actionable_source" ? "" : extraSourceCommand),
             reason: extraSourceReason,
         }),
     ];
@@ -554,6 +625,7 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const nextItem = items.find((item) => item.status === "active")
         || items.find((item) => item.lane === "extra_source_family" && item.status === "ready")
         || items.find((item) => item.lane === "extra_source_family" && item.status === "ready_extra_source_available")
+        || items.find((item) => item.lane === "extra_source_family" && item.status === "ready_dictionary_common_pool")
         || items.find((item) => item.lane === "extra_source_family" && item.status === "ready_no_actionable_source")
         || items.find((item) => item.status === "blocked_backlog")
         || null;
@@ -571,14 +643,17 @@ function buildExpansionWorkOrder(levelReport = {}) {
         activeBlockingLaneCount: activeBlockers.length,
         extraSourceLaneReady: extraLane?.status === "ready"
             || extraLane?.status === "ready_extra_source_available"
+            || extraLane?.status === "ready_dictionary_common_pool"
             || extraLane?.status === "ready_no_actionable_source"
             || extraLane?.status === "selected_extra_source",
         extraSourceLaneOpen: extraLane?.status === "ready"
             || extraLane?.status === "ready_extra_source_available"
+            || extraLane?.status === "ready_dictionary_common_pool"
             || extraLane?.status === "ready_no_actionable_source"
             || extraLane?.status === "selected_extra_source",
         extraSourceLaneActionable: extraLane?.status === "ready"
-            || extraLane?.status === "ready_extra_source_available",
+            || extraLane?.status === "ready_extra_source_available"
+            || extraLane?.status === "ready_dictionary_common_pool",
         extraSourceAccess,
         items,
     };
@@ -710,11 +785,62 @@ function buildReadingExpansionGate({ level, signal = null, enforceReadingExpansi
 function compareSelectorRows(a, b) {
     return (
         (STATUS_ORDER[a.selectorStatus] ?? 99) - (STATUS_ORDER[b.selectorStatus] ?? 99)
+        || getCommonPoolQueuePriority(a) - getCommonPoolQueuePriority(b)
         || a.reviewReadiness.nextEvidenceCount - b.reviewReadiness.nextEvidenceCount
         || b.reviewReadiness.supportedEvidenceCount - a.reviewReadiness.supportedEvidenceCount
+        || a.reviewReadiness.learnerFitRiskCount - b.reviewReadiness.learnerFitRiskCount
+        || a.reviewReadiness.sameWrittenConflictCount - b.reviewReadiness.sameWrittenConflictCount
+        || a.reviewReadiness.identityRiskCount - b.reviewReadiness.identityRiskCount
+        || getWrittenShapePriority(a) - getWrittenShapePriority(b)
+        || getComparableFrequencyRank(a) - getComparableFrequencyRank(b)
         || a.written.localeCompare(b.written, "ja")
         || a.reading.localeCompare(b.reading, "ja")
     );
+}
+
+function hasCommonPoolNumericExpressionWrittenForm(row = {}) {
+    return KANJI_NUMERIC_EXPRESSION_WRITTEN_PATTERN.test(String(row.written || ""));
+}
+
+function hasCommonPoolProperOrSpecializedPrioritySignal(row = {}) {
+    const meaning = String(row.meaning || "");
+    return COMMON_POOL_PRIORITY_MEANING_RE.test(meaning) || CAPITALIZED_PROPER_PHRASE_PATTERN.test(meaning);
+}
+
+function getCommonPoolQueuePriority(row = {}) {
+    if (row.sourcePool !== SOURCE_POOL_DICTIONARY_COMMON) {
+        return 0;
+    }
+    let priority = 0;
+    if (hasCommonPoolNumericExpressionWrittenForm(row)) {
+        priority += 6;
+    }
+    if (hasCommonPoolProperOrSpecializedPrioritySignal(row)) {
+        priority += 4;
+    }
+    priority += Math.min(row.reviewReadiness?.learnerFitRiskCount || 0, 3) * 2;
+    priority += Math.min(row.reviewReadiness?.sameWrittenConflictCount || 0, 3);
+    priority += Math.min(row.reviewReadiness?.identityRiskCount || 0, 3);
+    return priority;
+}
+
+function getWrittenShapePriority(row = {}) {
+    const text = String(row.written || "").trim();
+    const chars = [...text];
+    if (chars.length > 0 && chars.every((char) => HAN_CHARACTER_PATTERN.test(char))) {
+        return 0;
+    }
+    if (chars.length > 0 && HAN_CHARACTER_PATTERN.test(chars[0]) && HAN_ANY_PATTERN.test(text)) {
+        return 1;
+    }
+    if (HAN_ANY_PATTERN.test(text)) {
+        return 2;
+    }
+    return 3;
+}
+
+function getComparableFrequencyRank(row = {}) {
+    return Number.isInteger(row.frequencyRank) && row.frequencyRank > 0 ? row.frequencyRank : Number.MAX_SAFE_INTEGER;
 }
 
 function buildTargetLearnerFitRisks({ scope = {}, sameWrittenConflicts = [] } = {}) {
@@ -888,6 +1014,9 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
     const selectorStatus = classifyCommonExpansionSelectorRow({ expansionRow, agreementRow });
     const sourceAppearance = (agreementRow?.sourceAppearances || [])
         .find((appearance) => appearance.sourceId === sourceUniverse.sourceId) || null;
+    const frequencyRanks = (agreementRow?.sourceAppearances || [])
+        .map((appearance) => appearance.frequencyRank)
+        .filter((rank) => Number.isInteger(rank) && rank > 0);
     return {
         key: expansionRow.key,
         written: expansionRow.written,
@@ -902,6 +1031,8 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         sourceAppearances: agreementRow?.sourceAppearances || [],
         sourceLane: sourceUniverse.sourceLane || SOURCE_LANE_CONFIGURED,
         sourceLaneLabel: sourceUniverse.sourceLaneLabel || SOURCE_LANE_CONFIGURED_LABEL,
+        sourcePool: sourceUniverse.sourcePool || sourceUniverse.sourceLane || SOURCE_LANE_CONFIGURED,
+        sourcePoolLabel: sourceUniverse.sourcePoolLabel || sourceUniverse.sourceLaneLabel || SOURCE_LANE_CONFIGURED_LABEL,
         extraSource: sourceUniverse.extraSource === true,
         sourceLevelClaimStatus: sourceUniverse.levelClaimStatus || SOURCE_LEVEL_CLAIM_STATUS,
         sourceLevelClaimLabel: sourceUniverse.levelClaimLabel || SOURCE_LEVEL_CLAIM_LABEL,
@@ -910,6 +1041,9 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         frequencySupported: Boolean(agreementRow?.frequencySupported),
         sentenceSupported: Boolean(agreementRow?.sentenceSupported),
         pitchSupported: Boolean(agreementRow?.pitchSupported),
+        frequencyRank: Number.isInteger(sourceAppearance?.frequencyRank)
+            ? sourceAppearance.frequencyRank
+            : (frequencyRanks.length > 0 ? Math.min(...frequencyRanks) : null),
         cleanIdentity: Boolean(agreementRow?.cleanIdentity) || expansionRow.disposition === "review_candidate",
         identityRisks: agreementRow?.identityRisks || [],
         learnerFitRisks: agreementRow?.learnerFitRisks || [],
@@ -932,7 +1066,113 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
     };
 }
 
-function loadSourceRows({ sourceId, source, readFile = fs.readFileSync } = {}) {
+function isDictionaryCommonPoolSource(source = {}) {
+    return source.extraSourcePool === SOURCE_POOL_DICTIONARY_COMMON
+        || source.commonPool?.type === SOURCE_POOL_DICTIONARY_COMMON
+        || source.sourceType === SOURCE_POOL_DICTIONARY_COMMON;
+}
+
+function hasCommonPoolMeaningNoise(row = {}) {
+    return COMMON_POOL_MEANING_NOISE_RE.test(String(row.meaning || ""));
+}
+
+function hasDigitWrittenForm(row = {}) {
+    return DIGIT_WRITTEN_PATTERN.test(String(row.written || ""));
+}
+
+function hasLatinWrittenForm(row = {}) {
+    return LATIN_WRITTEN_PATTERN.test(String(row.written || ""));
+}
+
+function hasCommonnessRank(row = {}) {
+    return Number.isInteger(row.frequencyRank) && row.frequencyRank > 0;
+}
+
+function isAlreadyGovernedOrExcluded(row = {}, jlptWordLevelContract = {}) {
+    return Boolean(
+        jlptWordLevelContract.wordLevels?.[row.key]
+        || jlptWordLevelContract.excludedWordLevels?.[row.key]
+    );
+}
+
+function filterDictionaryCommonPoolRows({
+    sourceRows = [],
+    sourceId = DICTIONARY_COMMON_POOL_SOURCE_ID,
+    targetLevel,
+    source = {},
+    jlptLevelContract = {},
+    jlptWordLevelContract = {},
+} = {}) {
+    const maxFrequencyRank = Number.isInteger(source.commonPool?.maxFrequencyRank)
+        ? source.commonPool.maxFrequencyRank
+        : null;
+    const normalizedRows = sourceRows
+        .flatMap((row) => normalizeCandidateSourceRows(row, { sourceLabel: sourceId }))
+        .filter(Boolean);
+    const rows = [];
+    const filteredCounts = {
+        sourceRows: normalizedRows.length,
+        missingCommonness: 0,
+        aboveMaxFrequencyRank: 0,
+        kanaOnly: 0,
+        noTargetKanji: 0,
+        alreadyGovernedOrExcluded: 0,
+        meaningNoise: 0,
+        digitWrittenForm: 0,
+        latinWrittenForm: 0,
+    };
+
+    for (const row of normalizedRows) {
+        if (!hasCommonnessRank(row)) {
+            filteredCounts.missingCommonness += 1;
+            continue;
+        }
+        if (Number.isInteger(maxFrequencyRank) && row.frequencyRank > maxFrequencyRank) {
+            filteredCounts.aboveMaxFrequencyRank += 1;
+            continue;
+        }
+        const scope = classifyKanjiScope(row, { targetLevel, jlptLevelContract });
+        if (scope.constituentKanji.length === 0) {
+            filteredCounts.kanaOnly += 1;
+            continue;
+        }
+        if (scope.targetKanji.length === 0) {
+            filteredCounts.noTargetKanji += 1;
+            continue;
+        }
+        if (isAlreadyGovernedOrExcluded(row, jlptWordLevelContract)) {
+            filteredCounts.alreadyGovernedOrExcluded += 1;
+            continue;
+        }
+        if (hasDigitWrittenForm(row)) {
+            filteredCounts.digitWrittenForm += 1;
+            continue;
+        }
+        if (hasLatinWrittenForm(row)) {
+            filteredCounts.latinWrittenForm += 1;
+            continue;
+        }
+        if (hasCommonPoolMeaningNoise(row)) {
+            filteredCounts.meaningNoise += 1;
+            continue;
+        }
+        rows.push(row);
+    }
+
+    return {
+        rows,
+        filteredCounts,
+    };
+}
+
+function loadSourceRows({
+    sourceId,
+    source,
+    level = null,
+    jlptLevelContract = {},
+    jlptWordLevelContract = {},
+    readFile = fs.readFileSync,
+} = {}) {
     const sourcePath = path.resolve(process.cwd(), source.local?.path || "");
     if (!source.local?.path || !fs.existsSync(sourcePath)) {
         return {
@@ -944,15 +1184,27 @@ function loadSourceRows({ sourceId, source, readFile = fs.readFileSync } = {}) {
 
     const sourceBuffer = readFile(sourcePath);
     const buffer = Buffer.isBuffer(sourceBuffer) ? sourceBuffer : Buffer.from(String(sourceBuffer || ""), "utf8");
-    const sourceRows = parseCandidateSourceText(buffer.toString("utf8"), {
+    const parsedSourceRows = parseCandidateSourceText(buffer.toString("utf8"), {
         format: source.local.format || "auto",
     });
-    const integrity = buildSourceFileIntegrity({ sourceBuffer: buffer, sourceRows });
+    const integrity = buildSourceFileIntegrity({ sourceBuffer: buffer, sourceRows: parsedSourceRows });
     const blockers = validateSourceIntegrity(source, integrity).map((blocker) => `${sourceId}: ${blocker}`);
+    const commonPool = isDictionaryCommonPoolSource(source) && Number.isInteger(level)
+        ? filterDictionaryCommonPoolRows({
+            sourceRows: parsedSourceRows,
+            sourceId,
+            targetLevel: level,
+            source,
+            jlptLevelContract,
+            jlptWordLevelContract,
+        })
+        : null;
 
     return {
-        sourceRows,
+        sourceRows: commonPool?.rows || parsedSourceRows,
         integrity,
+        effectiveRowCount: commonPool?.rows.length ?? integrity.rowCount,
+        commonPoolSummary: commonPool?.filteredCounts || null,
         blockers,
     };
 }
@@ -1006,7 +1258,14 @@ function buildLevelSelectorReport({
     }
 
     const [sourceId, source] = candidateSources[0];
-    const loadedSource = loadSourceRows({ sourceId, source, readFile });
+    const loadedSource = loadSourceRows({
+        sourceId,
+        source,
+        level,
+        jlptLevelContract,
+        jlptWordLevelContract,
+        readFile,
+    });
     blockers.push(...loadedSource.blockers);
     const sourceUniverse = buildSourceUniverse({
         sourceId,
@@ -1092,9 +1351,11 @@ function buildLevelSelectorReport({
         sourceAdequacy,
         sourceUniverse: {
             ...sourceUniverse,
-            rowCount: loadedSource.integrity?.rowCount ?? sourceUniverse.rowCount,
+            rowCount: loadedSource.effectiveRowCount ?? sourceUniverse.rowCount,
+            rawRowCount: loadedSource.integrity?.rowCount ?? sourceUniverse.rowCount,
             sha256: loadedSource.integrity?.sha256 || sourceUniverse.sha256,
             byteSize: loadedSource.integrity?.byteSize ?? sourceUniverse.byteSize,
+            commonPoolSummary: loadedSource.commonPoolSummary || null,
         },
         sourceCandidateSummary: expansionReport.summary,
         summary,
@@ -1229,6 +1490,9 @@ function formatExtraSourceLaneStatus(item = {}) {
     if (item.status === "ready_extra_source_available") {
         return "READY - extra source available";
     }
+    if (item.status === "ready_dictionary_common_pool") {
+        return "READY - dictionary common pool";
+    }
     if (item.status === "ready_no_actionable_source") {
         return "READY - no actionable free source";
     }
@@ -1242,7 +1506,7 @@ function formatSourceUniverse(sourceUniverse = {}) {
     if (!sourceUniverse) {
         return "none";
     }
-    return [
+    const parts = [
         sourceUniverse.sourceLaneLabel || SOURCE_LANE_CONFIGURED_LABEL,
         sourceUniverse.sourceId,
         sourceUniverse.localPath,
@@ -1250,7 +1514,11 @@ function formatSourceUniverse(sourceUniverse = {}) {
         sourceUniverse.sha256 ? `sha ${sourceUniverse.sha256.slice(0, 12)}` : "sha -",
         `license ${sourceUniverse.licenseStatus || "-"}`,
         `level ${sourceUniverse.levelClaimStatus || SOURCE_LEVEL_CLAIM_STATUS}`,
-    ].join("; ");
+    ];
+    if (sourceUniverse.sourcePoolLabel && sourceUniverse.sourcePoolLabel !== sourceUniverse.sourceLaneLabel) {
+        parts.splice(1, 0, `pool ${sourceUniverse.sourcePoolLabel}`);
+    }
+    return parts.join("; ");
 }
 
 function formatSourceAdequacy(sourceAdequacy = null) {
@@ -1269,11 +1537,16 @@ function formatSourceAdequacy(sourceAdequacy = null) {
 }
 
 function formatWordCommonExpansionSelectorReport(report = {}) {
+    const hasExtraSelector = (report.levelReports || [])
+        .some((levelReport) => levelReport.sourceUniverse?.extraSource === true);
+    const sourceScopeWarning = hasExtraSelector
+        ? "Configured/extra-source selector only; not an official or global JLPT vocabulary universe."
+        : report.warning;
     const lines = [
         "Japanese Kanji Builder Governed Common-Word Silver Selector",
         "",
         "Read-only report: this does not add Silver rows, change contracts, move denominators, approve cards, or certify review lanes.",
-        `Source scope: ${report.warning}`,
+        `Source scope: ${sourceScopeWarning}`,
         `Placement mode: ${report.placementMode || "kanji-anchor"}`,
         `Routing support levels: ${(report.routingSupportLevels || []).length > 0 ? report.routingSupportLevels.map((level) => `N${level}`).join(", ") : "none"}`,
         "",
@@ -1394,7 +1667,13 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             lines.push(`${index + 1}. ${row.written} (${row.reading})`);
             lines.push(`   status: ${row.selectorStatus}; source disposition: ${row.sourceDisposition}`);
             lines.push(`   source lane: ${row.sourceLaneLabel || SOURCE_LANE_CONFIGURED_LABEL}`);
+            if (row.sourcePoolLabel && row.sourcePoolLabel !== row.sourceLaneLabel) {
+                lines.push(`   source pool: ${row.sourcePoolLabel}`);
+            }
             lines.push(`   source level label: ${row.sourceLevelClaimLabel || SOURCE_LEVEL_CLAIM_LABEL} (${row.sourceLevelClaimStatus || SOURCE_LEVEL_CLAIM_STATUS})`);
+            if (Number.isInteger(row.frequencyRank)) {
+                lines.push(`   commonness rank: ${row.frequencyRank}`);
+            }
             lines.push(`   support: dictionary ${formatBoolean(row.dictionaryVerified)}, commonness ${formatBoolean(row.frequencySupported)}, sentence ${formatBoolean(row.sentenceSupported)}, pitch ${formatBoolean(row.pitchSupported)}, clean identity ${formatBoolean(row.cleanIdentity)}`);
             if (row.triageDecision) {
                 lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority || "normal"}] - ${row.triageDecision.reason}`);
@@ -1423,10 +1702,14 @@ module.exports = {
     SOURCE_LANE_CONFIGURED_LABEL,
     SOURCE_LANE_EXTRA,
     SOURCE_LANE_EXTRA_LABEL,
+    SOURCE_POOL_DICTIONARY_COMMON,
+    SOURCE_POOL_DICTIONARY_COMMON_LABEL,
     SOURCE_LEVEL_CLAIM_LABEL,
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_LEVEL_CLAIM_WARNING,
     SOURCE_UNIVERSE_WARNING,
+    DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+    DICTIONARY_COMMON_POOL_SOURCE_ID,
     buildExtraSourceAccessByLevel,
     buildLevelSelectorReport,
     buildExpansionWorkOrder,

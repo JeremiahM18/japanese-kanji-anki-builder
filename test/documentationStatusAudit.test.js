@@ -220,11 +220,11 @@ test("documentation status audit catches word source-depth blocker drift", () =>
     );
 });
 
-test("documentation status audit catches missing word dictionary-discovery labels", () => {
+test("documentation status audit catches word common-pool lane drift", () => {
     const files = readDocumentationFiles();
     files["docs/workflows.md"] = files["docs/workflows.md"].replace(
-        "Dictionary-discovery rows must remain labeled `DICTIONARY DISCOVERY` plus `Source level claim unverified`.",
-        "Dictionary-discovery rows need normal review labels.",
+        "The dictionary common pool is part of the extra expansion lane, not a separate source-depth lane.",
+        "The dictionary common pool is separate source-depth work.",
     );
 
     const report = auditDocumentationText({
@@ -240,7 +240,32 @@ test("documentation status audit catches missing word dictionary-discovery label
 
     assert.equal(report.passed, false);
     assert.equal(
-        report.failures.some((failure) => failure.includes("DICTIONARY DISCOVERY and Source level claim unverified labels")),
+        report.failures.some((failure) => failure.includes("dictionary common pool is part of the extra expansion lane")),
+        true,
+    );
+});
+
+test("documentation status audit catches missing word common-pool labels", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"].replace(
+        "Dictionary common-pool rows must remain labeled `DICTIONARY COMMON POOL` plus `Source level claim unverified`.",
+        "Dictionary common-pool rows need normal review labels.",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("DICTIONARY COMMON POOL and Source level claim unverified labels")),
         true,
     );
 });

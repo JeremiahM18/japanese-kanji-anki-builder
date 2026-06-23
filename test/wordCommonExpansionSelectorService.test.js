@@ -5,8 +5,11 @@ const os = require("node:os");
 const path = require("node:path");
 
 const {
+    DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+    DICTIONARY_COMMON_POOL_SOURCE_ID,
     SOURCE_LANE_CONFIGURED_LABEL,
     SOURCE_LANE_EXTRA_LABEL,
+    SOURCE_POOL_DICTIONARY_COMMON_LABEL,
     SOURCE_LEVEL_CLAIM_LABEL,
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_UNIVERSE_WARNING,
@@ -19,6 +22,7 @@ const {
 } = require("../src/services/wordCommonExpansionSelectorService");
 const {
     buildSelectorManifestForSource,
+    normalizeSelectorSourceId,
     parseArgs,
 } = require("../scripts/reportWordCommonExpansionSelector");
 
@@ -427,7 +431,7 @@ test("expansion work order makes extra source lane readiness explicit after curr
     assert.match(levelReport.expansionWorkOrder.nextAction, /Source level claim unverified/);
 
     const formatted = formatWordCommonExpansionSelectorReport(report);
-    assert.match(formatted, /Extra source-family lane/);
+    assert.match(formatted, /Extra expansion lane/);
     assert.match(formatted, /READY - source input needed/);
     assert.match(formatted, /work is not done/i);
 });
@@ -591,6 +595,93 @@ test("expansion work order surfaces already-reviewed extra source family with ex
     assert.match(workOrder.nextAction, /Source level claim unverified/);
 });
 
+test("extra expansion work order opens dictionary common pool after selected extra family is exhausted", () => {
+    const manifest = {
+        sources: {
+            "current-n5": {
+                status: "active",
+                allowedUse: ["candidate-discovery"],
+                candidatePolicy: {
+                    levels: [5],
+                },
+            },
+        },
+    };
+    const sourceAccessReport = {
+        sources: [
+            {
+                sourceId: "current-n5",
+                status: "in_review",
+                sourceKind: "candidate-discovery",
+                levels: [5],
+                allowedUse: ["candidate-discovery", "level-hint"],
+                recommendedAction: "review_source_access_and_pin_input",
+            },
+            {
+                sourceId: "jmdict",
+                status: "active",
+                licenseStatus: "approved",
+                allowedUse: ["dictionary-verification", "reading-verification", "meaning-verification"],
+                recommendedAction: "no_action",
+            },
+            {
+                sourceId: "jmdict-priority-commonness",
+                status: "active",
+                licenseStatus: "approved",
+                allowedUse: ["frequency-sanity", "usefulness-support"],
+                recommendedAction: "no_action",
+            },
+        ],
+    };
+    const extraSourceAccessByLevel = buildExtraSourceAccessByLevel({
+        sourceAccessReport,
+        manifest,
+        levels: [5],
+    });
+    const workOrder = buildExpansionWorkOrder({
+        level: 5,
+        levelLabel: "N5",
+        sourceUniverse: {
+            sourceId: "tanos-n5-vocab",
+            extraSource: true,
+            sourceLaneLabel: SOURCE_LANE_EXTRA_LABEL,
+            sourcePoolLabel: SOURCE_LANE_EXTRA_LABEL,
+        },
+        commonWordQueue: {
+            active: true,
+            promoteCuratedExampleItems: 0,
+            editorialReviewItems: 0,
+            deferVariantItems: 0,
+        },
+        fallbackSourceGate: {
+            active: true,
+            blockers: [],
+        },
+        extraSourceAccess: extraSourceAccessByLevel[5],
+        summary: {
+            selectorStatusCounts: {
+                ready_for_editorial_review: 0,
+                needs_triage: 0,
+                move_candidate: 0,
+                blocked_identity: 0,
+                blocked_missing_dictionary: 13,
+                blocked_missing_commonness: 0,
+                triaged_defer: 14,
+                triaged_reject: 8,
+            },
+        },
+    });
+
+    assert.equal(extraSourceAccessByLevel[5].dictionaryCommonPoolAvailable, true);
+    assert.equal(workOrder.status, "extra_source_family");
+    assert.equal(workOrder.extraSourceLaneReady, true);
+    assert.equal(workOrder.extraSourceLaneActionable, true);
+    assert.equal(workOrder.nextCommand, "npm run deck:words:vocab-expansion -- --levels=5 --source=common-pool --strict --limit=80");
+    assert.match(workOrder.nextAction, /DICTIONARY COMMON POOL/);
+    assert.match(workOrder.nextAction, /same extra expansion lane/);
+    assert.match(workOrder.nextAction, /exclude exact governed\/excluded duplicates and kana-only rows/);
+});
+
 test("source override manifest marks selected reviewed source as EXTRA", () => {
     const parsed = parseArgs(["--levels=4", "--source=tanos-n4-vocab", "--strict"]);
     assert.deepEqual(parsed.levels, [4]);
@@ -645,6 +736,220 @@ test("source override manifest marks selected reviewed source as EXTRA", () => {
 
     assert.equal(sourceUniverse.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
     assert.equal(sourceUniverse.levelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
+});
+
+test("common-pool source override is an EXTRA expansion pool backed by pinned JMdict sources", () => {
+    assert.equal(normalizeSelectorSourceId("common-pool"), DICTIONARY_COMMON_POOL_SOURCE_ID);
+    assert.equal(normalizeSelectorSourceId("jmdict-common-pool"), DICTIONARY_COMMON_POOL_SOURCE_ID);
+
+    const manifest = {
+        sources: {
+            "current-n5": {
+                status: "active",
+                allowedUse: ["candidate-discovery", "level-hint"],
+                candidatePolicy: {
+                    levels: [5],
+                },
+            },
+            jmdict: {
+                status: "active",
+                origin: {
+                    url: "https://example.com/jmdict",
+                },
+                licenseUse: {
+                    status: "approved",
+                    license: "CC BY-SA 4.0",
+                },
+                checkedAt: "2026-06-21",
+                allowedUse: ["dictionary-verification", "reading-verification", "meaning-verification"],
+                local: {
+                    path: "downloads/jmdict-word-verification.tsv",
+                    format: "tsv",
+                    sha256: "abc",
+                    byteSize: 123,
+                    rowCount: 5,
+                },
+            },
+            "jmdict-priority-commonness": {
+                status: "active",
+                origin: {
+                    url: "https://example.com/jmdict",
+                },
+                licenseUse: {
+                    status: "approved",
+                    license: "CC BY-SA 4.0",
+                },
+                checkedAt: "2026-06-21",
+                allowedUse: ["frequency-sanity", "usefulness-support"],
+                local: {
+                    path: "downloads/jmdict-word-verification.tsv",
+                    format: "tsv",
+                    sha256: "abc",
+                    byteSize: 123,
+                    rowCount: 5,
+                },
+            },
+        },
+    };
+
+    const selectorManifest = buildSelectorManifestForSource({
+        manifest,
+        wordSourceEvidence: { sources: {} },
+        sourceId: DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+        levels: [5],
+    });
+
+    const commonPool = selectorManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID];
+    assert.equal(selectorManifest.sources["current-n5"].status, "inactive");
+    assert.equal(commonPool.status, "active");
+    assert.equal(commonPool.extraSourceLane, true);
+    assert.equal(commonPool.extraSourcePoolLabel, SOURCE_POOL_DICTIONARY_COMMON_LABEL);
+    assert.equal(commonPool.candidatePolicy.requireSourceLevel, false);
+    assert.deepEqual(commonPool.candidatePolicy.levels, [5]);
+    assert.ok(commonPool.allowedUse.includes("candidate-discovery"));
+    assert.ok(commonPool.allowedUse.includes("dictionary-verification"));
+    assert.ok(commonPool.allowedUse.includes("frequency-sanity"));
+});
+
+test("dictionary common pool filters to common non-duplicate kanji candidates inside the extra lane", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const commonPoolSource = writeFixtureSource(
+        dir,
+        "jmdict.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "本屋\tほんや\tbookstore\t100",
+            "山川\tさんせん\tmountains and rivers\t120",
+            "一月\tいちがつ\tJanuary\t100",
+            "大社\tおおやしろ\tIzumo Grand Shrine\t90",
+            "かな\tかな\tkana\t100",
+            "既存\tきそん\texisting\t100",
+            "珍語\tちんご\trare coined word\t",
+            "東京\tとうきょう\tTokyo; place name\t100",
+            "手紙\tてがみ\tletter\t100",
+        ].join("\n")
+    );
+
+    const manifest = {
+        version: 1,
+        checkedAt: "2026-06-21",
+        sources: {
+            [DICTIONARY_COMMON_POOL_SOURCE_ID]: {
+                name: "Fixture dictionary common pool",
+                tier: 3,
+                status: "active",
+                sourceType: "dictionary_common_pool",
+                origin: {
+                    url: "https://example.com/jmdict",
+                    localPath: commonPoolSource.path,
+                },
+                licenseUse: {
+                    status: "approved",
+                    license: "CC BY-SA 4.0",
+                },
+                checkedAt: "2026-06-21",
+                local: {
+                    path: commonPoolSource.path,
+                    format: "tsv",
+                    byteSize: commonPoolSource.byteSize,
+                    rowCount: commonPoolSource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+                intendedUse: [
+                    "candidate-discovery",
+                    "dictionary-verification",
+                    "frequency-sanity",
+                    "usefulness-support",
+                ],
+                allowedUse: [
+                    "candidate-discovery",
+                    "dictionary-verification",
+                    "frequency-sanity",
+                    "usefulness-support",
+                ],
+                disallowedUse: ["card-approval", "level-truth"],
+                candidatePolicy: {
+                    levels: [5],
+                    kanjiScope: "known-jlpt",
+                    requireSourceLevel: false,
+                },
+                extraSourceLane: true,
+                extraSourcePool: "dictionary_common_pool",
+                extraSourcePoolLabel: SOURCE_POOL_DICTIONARY_COMMON_LABEL,
+                commonPool: {
+                    type: "dictionary_common_pool",
+                },
+            },
+        },
+    };
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: buildExhaustedReadingSignal(5),
+        },
+        manifest,
+        jlptLevelContract: {
+            kanjiLevels: {
+                本: 5,
+                屋: 4,
+                一: 5,
+                月: 5,
+                大: 5,
+                社: 4,
+                山: 5,
+                川: 5,
+                既: 5,
+                存: 5,
+                珍: 5,
+                語: 5,
+                東: 5,
+                京: 5,
+                手: 4,
+                紙: 4,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "既存|きそん": { written: "既存", reading: "きそん", jlpt: 5 },
+            },
+            excludedWordLevels: {},
+        },
+    });
+
+    const levelReport = report.levelReports[0];
+    const rowsByKey = new Map(levelReport.rows.map((row) => [row.key, row]));
+
+    assert.equal(levelReport.sourceUniverse.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
+    assert.equal(levelReport.sourceUniverse.sourcePoolLabel, SOURCE_POOL_DICTIONARY_COMMON_LABEL);
+    assert.equal(levelReport.sourceUniverse.rowCount, 4);
+    assert.equal(levelReport.sourceUniverse.rawRowCount, 9);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.kanaOnly, 1);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.alreadyGovernedOrExcluded, 1);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.missingCommonness, 1);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.meaningNoise, 1);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.noTargetKanji, 1);
+    assert.deepEqual([...rowsByKey.keys()], ["山川|さんせん", "本屋|ほんや", "一月|いちがつ", "大社|おおやしろ"]);
+
+    for (const row of rowsByKey.values()) {
+        assert.equal(row.selectorStatus, "needs_triage");
+        assert.equal(row.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
+        assert.equal(row.sourcePoolLabel, SOURCE_POOL_DICTIONARY_COMMON_LABEL);
+        assert.equal(row.sourceLevelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
+        assert.equal(row.dictionaryVerified, true);
+        assert.equal(row.frequencySupported, true);
+        assert.equal(Number.isInteger(row.frequencyRank), true);
+    }
+    assert.equal(rowsByKey.get("本屋|ほんや").frequencyRank, 100);
+    assert.equal(rowsByKey.get("山川|さんせん").frequencyRank, 120);
+
+    const formatted = formatWordCommonExpansionSelectorReport(report);
+    assert.match(formatted, /pool DICTIONARY COMMON POOL/);
+    assert.match(formatted, /source pool: DICTIONARY COMMON POOL/);
+    assert.match(formatted, /commonness rank: 100/);
 });
 
 test("selected extra source work order labels triage as EXTRA work", () => {
@@ -1134,6 +1439,8 @@ test("buildWordCommonExpansionSelectorReport marks candidates inactive until rea
             "山川\tさんせん\tmountains and rivers\t100",
         ].join("\n")
     );
+    const manifest = buildManifest({ candidateSource, dictionarySource, frequencySource });
+    manifest.sources["fixture-n5"].extraSourceLane = true;
 
     const report = buildWordCommonExpansionSelectorReport({
         levels: [5],
@@ -1169,7 +1476,7 @@ test("buildWordCommonExpansionSelectorReport marks candidates inactive until rea
                 },
             },
         },
-        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        manifest,
         jlptLevelContract: {
             kanjiLevels: {
                 山: 5,
@@ -1195,11 +1502,18 @@ test("buildWordCommonExpansionSelectorReport marks candidates inactive until rea
 
     const row = report.levelReports[0].rows.find((candidate) => candidate.key === "山川|さんせん");
     assert.equal(report.levelReports[0].commonWordQueue.active, false);
-    assertAllSelectorRowsCarrySourceLevelLabels(report);
+    assert.equal(report.levelReports[0].sourceUniverse.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
+    assert.equal(report.levelReports[0].sourceUniverse.levelClaimStatus, SOURCE_LEVEL_CLAIM_STATUS);
+    assert.equal(report.levelReports[0].sourceUniverse.levelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
+    assert.equal(row.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
+    assert.equal(row.sourceLevelClaimStatus, SOURCE_LEVEL_CLAIM_STATUS);
+    assert.equal(row.sourceLevelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
     assert.equal(report.summary.inactiveReadingExpansionLevels, 1);
     assert.equal(row.selectorStatus, "queue_inactive_reading_expansion");
     assert.equal(report.levelReports[0].summary.selectorStatusCounts.ready_for_editorial_review, 0);
     assert.equal(report.levelReports[0].summary.selectorStatusCounts.queue_inactive_reading_expansion, 1);
+    assert.equal(report.levelReports[0].fallbackSourceGate.active, false);
+    assert.match(report.levelReports[0].fallbackSourceGate.reason, /closed by prior gate blockers/);
 });
 
 test("buildWordCommonExpansionSelectorReport does not block common-word queue on enhancement backlog", () => {

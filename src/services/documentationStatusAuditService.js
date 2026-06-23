@@ -153,6 +153,9 @@ function buildWordExpansionDoctrinePhrases() {
         dictionaryCommonPoolRoute: "JMdict containment/commonness discovery",
         dictionaryCommonPoolLabels: "Dictionary common-pool rows must remain labeled `DICTIONARY COMMON POOL` plus `Source level claim unverified`.",
         dictionaryCommonPoolCommandReference: "Continue the same extra expansion lane with the `DICTIONARY COMMON POOL`",
+        dictionaryCommonPoolQualityFilter: "The default dictionary common-pool view is an editorial shortlist over an audit-visible raw pool, not the raw pool itself.",
+        dictionaryCommonPoolOutsideSupport: "Outside-JLPT and higher-level support kanji are label/review needs, not automatic common-pool deprioritization.",
+        dictionaryCommonPoolRawCommand: "`--common-pool-mode=raw`",
         paidSourceBoundary: "Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion.",
     };
 }
@@ -343,9 +346,13 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolExtraLane), "docs/workflows.md must state that the dictionary common pool is part of the extra expansion lane, not a source-depth lane.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolRoute), "docs/workflows.md must document the JMdict containment/commonness common-pool route.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLabels), "docs/workflows.md must require DICTIONARY COMMON POOL and Source level claim unverified labels for common-pool rows.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolQualityFilter), "docs/workflows.md must state that the default dictionary common-pool queue is an editorial shortlist over an audit-visible raw pool.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolOutsideSupport), "docs/workflows.md must state that outside-JLPT/higher-level support kanji are label needs, not automatic common-pool deprioritization.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/workflows.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/command-reference.md must state that word source-depth is a claim limiter, not a Silver blocker.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolCommandReference), "docs/command-reference.md must document common-pool work as the same extra expansion lane.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolRawCommand), "docs/command-reference.md must document dictionary common-pool raw audit mode.");
+    addFailure(failures, commandReference.includes("do not automatically deprioritize outside-JLPT or higher-level support kanji"), "docs/command-reference.md must document that outside-JLPT/higher-level support kanji are not automatically deprioritized.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/command-reference.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, documentationStandard.includes(phrases.commandReferenceAuditCommand), "docs/documentation-standard.md must require docs:status-audit for status/count doc edits.");
     addFailure(failures, verification.includes(phrases.commandReferenceAuditCommand), "docs/verification.md must route documentation status audits through docs:status-audit.");

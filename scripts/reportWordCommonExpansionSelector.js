@@ -10,6 +10,7 @@ const {
 } = require("../src/services/jlptWordSourceEvidenceService");
 const {
     DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+    DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     DICTIONARY_COMMON_POOL_SOURCE_ID,
     SOURCE_POOL_DICTIONARY_COMMON,
     SOURCE_POOL_DICTIONARY_COMMON_LABEL,
@@ -41,6 +42,8 @@ function parseArgs(argv) {
         manifest: DEFAULT_WORD_SOURCE_MANIFEST,
         placementMode: process.env.JKB_WORD_PLACEMENT_MODE || "kanji-anchor",
         source: "",
+        commonPoolLimit: DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
+        commonPoolMode: "editorial",
         sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: false,
         triage: "templates/word_inventory_expansion_triage.json",
@@ -68,6 +71,14 @@ function parseArgs(argv) {
             options.source = String(arg.slice("--source=".length) || "").trim();
         } else if (arg.startsWith("--candidate-source=")) {
             options.source = String(arg.slice("--candidate-source=".length) || "").trim();
+        } else if (arg.startsWith("--common-pool-limit=")) {
+            options.commonPoolLimit = parseNumericOption(arg, "common-pool-limit");
+        } else if (arg.startsWith("--pool-limit=")) {
+            options.commonPoolLimit = parseNumericOption(arg, "pool-limit");
+        } else if (arg.startsWith("--common-pool-mode=")) {
+            options.commonPoolMode = String(arg.slice("--common-pool-mode=".length) || "").trim();
+        } else if (arg.startsWith("--pool-mode=")) {
+            options.commonPoolMode = String(arg.slice("--pool-mode=".length) || "").trim();
         } else if (arg.startsWith("--source-evidence=")) {
             options.sourceEvidence = String(arg.slice("--source-evidence=".length) || "").trim();
         } else if (arg.startsWith("--triage=")) {
@@ -88,6 +99,15 @@ function validateLevels(levels = []) {
         if (!Number.isInteger(level) || level < 1 || level > 5) {
             throw new Error("Common expansion selector levels must be 1-5.");
         }
+    }
+}
+
+function validateCommonPoolOptions({ commonPoolMode = "editorial", commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT } = {}) {
+    if (!["editorial", "raw"].includes(commonPoolMode)) {
+        throw new Error("Common expansion selector --common-pool-mode must be one of: editorial, raw.");
+    }
+    if (!Number.isInteger(commonPoolLimit) || commonPoolLimit < 1) {
+        throw new Error("Common expansion selector --common-pool-limit must be a positive integer.");
     }
 }
 
@@ -123,7 +143,10 @@ function assertActiveApprovedManifestSource(sourceId, source = {}, requiredUse =
     }
 }
 
-function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = []) {
+function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = [], {
+    commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
+    commonPoolMode = "editorial",
+} = {}) {
     const dictionarySource = manifest.sources?.jmdict || null;
     const commonnessSource = manifest.sources?.["jmdict-priority-commonness"] || null;
     assertActiveApprovedManifestSource("jmdict", dictionarySource, "dictionary-verification");
@@ -197,6 +220,9 @@ function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = []) {
             requireCommonness: true,
             excludeKanaOnly: true,
             requireTargetKanji: true,
+            qualityMode: commonPoolMode,
+            editorialQueueLimit: commonPoolLimit,
+            outsideJlptSupportPolicy: "label_not_deprioritize",
         },
     };
 }
@@ -260,6 +286,8 @@ function buildSelectorManifestForSource({
     wordSourceEvidence = {},
     sourceId = "",
     levels = [],
+    commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
+    commonPoolMode = "editorial",
 } = {}) {
     const normalizedSourceId = normalizeSelectorSourceId(sourceId);
     if (!normalizedSourceId) {
@@ -283,7 +311,7 @@ function buildSelectorManifestForSource({
     }
 
     const overrideSource = normalizedSourceId === DICTIONARY_COMMON_POOL_SOURCE_ID
-        ? buildDictionaryCommonPoolManifestSource(selectorManifest, levels)
+        ? buildDictionaryCommonPoolManifestSource(selectorManifest, levels, { commonPoolLimit, commonPoolMode })
         : (existingSource ? {
             ...existingSource,
             status: "active",
@@ -307,6 +335,7 @@ async function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("deck:words:common-expansion", options.unknownArgs);
     validateLevels(options.levels);
+    validateCommonPoolOptions(options);
 
     const limit = Number(options.limit);
     if (!Number.isInteger(limit) || limit < 1) {
@@ -325,6 +354,8 @@ async function main() {
         wordSourceEvidence,
         sourceId: options.source,
         levels: options.levels,
+        commonPoolLimit: options.commonPoolLimit,
+        commonPoolMode: options.commonPoolMode,
     });
     const wordSourceEvidenceReport = auditJlptWordSourceEvidence({
         contract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),
@@ -381,5 +412,6 @@ module.exports = {
     parseArgs,
     resolveManifestPath: (manifestPath = DEFAULT_WORD_SOURCE_MANIFEST) => path.resolve(process.cwd(), manifestPath || DEFAULT_WORD_SOURCE_MANIFEST),
     sourceAllowsCandidateDiscovery,
+    validateCommonPoolOptions,
     validateLevels,
 };

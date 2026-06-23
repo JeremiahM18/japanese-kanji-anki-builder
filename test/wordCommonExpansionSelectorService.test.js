@@ -14,10 +14,13 @@ const {
     SOURCE_LEVEL_CLAIM_LABEL,
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_UNIVERSE_WARNING,
+    WORD_EXPANSION_TARGET_MINIMUMS,
+    WORD_EXPANSION_TARGET_POLICY,
     buildExpansionWorkOrder,
     buildExtraSourceAccessByLevel,
     buildSourceUniverse,
     buildWordCommonExpansionSelectorReport,
+    buildWordExpansionTargetProgressForLevel,
     classifyCommonExpansionSelectorRow,
     formatWordCommonExpansionSelectorReport,
 } = require("../src/services/wordCommonExpansionSelectorService");
@@ -341,7 +344,34 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.match(formatted, /Source level claim unverified/);
     assert.match(formatted, /Fallback\/free-source gate/);
     assert.match(formatted, /Expansion work order/);
+    assert.match(formatted, /Deck target progress/);
+    assert.match(formatted, /\| N5 \| 1 \| 800 \| 799 \| below target floor by 799 \| useful minimum, not a hard cap or quota \|/);
     assert.match(formatted, /ready_for_editorial_review/);
+});
+
+test("word expansion target progress counts unique governed words without changing queue gates", () => {
+    const progress = buildWordExpansionTargetProgressForLevel({
+        level: 5,
+        jlptWordLevelContract: {
+            wordLevels: {
+                "水|みず": { written: "水", reading: "みず", jlpt: 5 },
+                "水|みず#duplicate-source-shape": { written: "水", reading: "みず", jlpt: 5 },
+                "本|ほん": { written: "本", reading: "ほん", jlpt: 5 },
+                "勉強|べんきょう": { written: "勉強", reading: "べんきょう", jlpt: 3 },
+            },
+            excludedWordLevels: {
+                "火|ひ": { written: "火", reading: "ひ", jlpt: 5 },
+            },
+        },
+    });
+
+    assert.equal(WORD_EXPANSION_TARGET_MINIMUMS[5], 800);
+    assert.equal(WORD_EXPANSION_TARGET_POLICY, "useful_minimum_not_hard_limit");
+    assert.equal(progress.currentUniqueGovernedWords, 2);
+    assert.equal(progress.targetMinimum, 800);
+    assert.equal(progress.remainingToTarget, 798);
+    assert.equal(progress.targetMet, false);
+    assert.equal(progress.activationBoundary, "after_reading_expansion_exhausted");
 });
 
 test("expansion work order makes extra source lane readiness explicit after current selector exhaustion", () => {

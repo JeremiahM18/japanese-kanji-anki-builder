@@ -18,6 +18,7 @@ const {
     WORD_EXPANSION_TARGET_POLICY,
     buildExpansionWorkOrder,
     buildExtraSourceAccessByLevel,
+    buildLearnerUtilityScore,
     buildSourceUniverse,
     buildWordCommonExpansionSelectorReport,
     buildWordExpansionTargetProgressForLevel,
@@ -1162,6 +1163,131 @@ test("dictionary common pool editorial mode caps review queue without penalizing
     assert.equal(rawReport.levelReports[0].summary.selectedRows, 5);
     assert.equal(rawReport.levelReports[0].sourceUniverse.commonPoolSummary.qualityMode, "raw");
     assert.equal(rawReport.levelReports[0].sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 0);
+});
+
+test("dictionary common pool shortlist uses transparent learner utility before the queue cap", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const commonPoolSource = writeFixtureSource(
+        dir,
+        "jmdict.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "一月\tいちがつ\tJanuary\t100",
+            "大社\tおおやしろ\tIzumo Grand Shrine\t100",
+            "本店\tほんてん\tmain store\t100",
+            "山川\tさんせん\tmountains and rivers\t100",
+        ].join("\n")
+    );
+    const manifest = {
+        version: 1,
+        checkedAt: "2026-06-21",
+        sources: {
+            [DICTIONARY_COMMON_POOL_SOURCE_ID]: {
+                name: "Fixture dictionary common pool",
+                tier: 3,
+                status: "active",
+                sourceType: "dictionary_common_pool",
+                origin: {
+                    url: "https://example.com/jmdict",
+                    localPath: commonPoolSource.path,
+                },
+                licenseUse: {
+                    status: "approved",
+                    license: "CC BY-SA 4.0",
+                },
+                checkedAt: "2026-06-21",
+                local: {
+                    path: commonPoolSource.path,
+                    format: "tsv",
+                    byteSize: commonPoolSource.byteSize,
+                    rowCount: commonPoolSource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+                allowedUse: [
+                    "candidate-discovery",
+                    "dictionary-verification",
+                    "frequency-sanity",
+                    "usefulness-support",
+                ],
+                candidatePolicy: {
+                    levels: [5],
+                    kanjiScope: "known-jlpt",
+                    requireSourceLevel: false,
+                },
+                extraSourceLane: true,
+                extraSourcePool: "dictionary_common_pool",
+                extraSourcePoolLabel: SOURCE_POOL_DICTIONARY_COMMON_LABEL,
+                commonPool: {
+                    type: "dictionary_common_pool",
+                    qualityMode: "editorial",
+                    editorialQueueLimit: 2,
+                },
+            },
+        },
+    };
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        manifest,
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: buildExhaustedReadingSignal(5),
+        },
+        jlptLevelContract: {
+            kanjiLevels: {
+                一: 5,
+                月: 5,
+                大: 5,
+                社: 4,
+                本: 5,
+                店: 4,
+                山: 5,
+                川: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+    });
+
+    const levelReport = report.levelReports[0];
+    const selectedKeys = levelReport.rows.map((row) => row.key);
+    assert.deepEqual(selectedKeys, ["本店|ほんてん", "山川|さんせん"]);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.eligibleRowsBeforeEditorialFilter, 4);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.editorialQueueRows, 2);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 2);
+    assert.equal(levelReport.summary.learnerUtility.scoredRows, 2);
+    assert.equal(levelReport.rows[0].learnerUtility.policy, "review_ordering_signal_not_card_approval");
+    assert.equal(levelReport.rows[0].learnerUtility.components.everydayUsefulness.reason, "highest JMdict commonness tier (100)");
+    assert.match(formatWordCommonExpansionSelectorReport(report), /learner utility: \d+\/100/);
+});
+
+test("learner utility score reports component reasons and penalties without approving cards", () => {
+    const utility = buildLearnerUtilityScore({
+        written: "一月",
+        reading: "いちがつ",
+        meaning: "January",
+        frequencyRank: 100,
+        targetLevel: 5,
+        targetKanji: ["一", "月"],
+        constituentKanji: ["一", "月"],
+        kanjiLevels: [{ kanji: "一", level: 5 }, { kanji: "月", level: 5 }],
+        sourcePool: "dictionary_common_pool",
+        dictionaryVerified: true,
+        frequencySupported: true,
+        cleanIdentity: true,
+    });
+
+    assert.equal(utility.max, 100);
+    assert.equal(utility.policy, "review_ordering_signal_not_card_approval");
+    assert.equal(utility.components.targetKanjiReinforcement.score, 19);
+    assert.equal(
+        utility.penalties.some((penalty) => penalty.includes("numeric-expression written form")),
+        true,
+    );
 });
 
 test("selected extra source work order labels triage as EXTRA work", () => {

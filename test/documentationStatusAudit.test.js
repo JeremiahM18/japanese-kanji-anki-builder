@@ -42,9 +42,9 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     assert.deepEqual(report.snapshot.sapphire, n3WordSnapshot.sapphire);
     assert.deepEqual(report.snapshot.platinum, n3WordSnapshot.platinum);
     assert.equal(report.snapshot.product.kanjiDenominator, 2212);
-    assert.equal(report.snapshot.product.wordDenominator, 2215);
+    assert.equal(report.snapshot.product.wordDenominator, 2217);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);
-    assert.equal(report.snapshot.product.wordLockedDenominator, 1017);
+    assert.equal(report.snapshot.product.wordLockedDenominator, 1019);
     assert.equal(report.snapshot.product.wordObsidianProof, 1000);
 });
 
@@ -147,10 +147,10 @@ test("documentation status audit catches undocumented package scripts", () => {
 test("documentation status audit catches stale generated denominator docs", () => {
     const files = readDocumentationFiles();
     files["docs/employer-overview.md"] = files["docs/employer-overview.md"]
-        .replace("`2215` word rows", "`1470` word rows")
-        .replace("`2215/2215` across N5-N1 | `1000/2215`", "`1470/1470` across N5-N1 | `987/1470`");
+        .replace("`2217` word rows", "`1470` word rows")
+        .replace("`2217/2217` across N5-N1 | `1000/2217`", "`1470/1470` across N5-N1 | `987/1470`");
     files["docs/system-architecture.md"] = files["docs/system-architecture.md"]
-        .replace("| Words | 2215 | 1000 |", "| Words | 1470 | 987 |");
+        .replace("| Words | 2217 | 1000 |", "| Words | 1470 | 987 |");
 
     const report = auditDocumentationText({
         files,
@@ -291,6 +291,44 @@ test("documentation status audit catches missing word common-pool quality filter
     assert.equal(report.passed, false);
     assert.equal(
         report.failures.some((failure) => failure.includes("editorial shortlist over an audit-visible raw pool")),
+        true,
+    );
+});
+
+test("documentation status audit catches missing word common-pool learner utility scoring doctrine", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"]
+        .replace(
+            "Dictionary common-pool editorial queues are ordered by a transparent learner-utility score before the `200`-row cap is applied.",
+            "Dictionary common-pool editorial queues are ordered by default sorting.",
+        )
+        .replace(
+            "The score is an ordering signal only, never card approval.",
+            "The score approves strong rows.",
+        );
+    files["docs/command-reference.md"] = files["docs/command-reference.md"].replace(
+        "everyday usefulness, concrete/common domain fit, target-kanji reinforcement value, duplicate or near-duplicate safety, specialized/proper-noun penalty signals, exampleability, and pitch/audio/media readiness",
+        "general quality signals",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("learner-utility scoring components")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("ordering only, not card approval")),
         true,
     );
 });

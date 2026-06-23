@@ -134,12 +134,12 @@ The architecture is product- and level-agnostic. The current repo snapshot prove
 | Product surface | Generated denominator | Obsidian-certified denominator | Boundary |
 | --- | ---: | ---: | --- |
 | Core kanji | 2212 | 982 | The scoped release lock covers the completed N5-N2 denominator. Remaining generated rows are not Obsidian-certified. |
-| Words | 2215 | 1000 | The scoped release lock covers N5 plus the 700-row N4 Obsidian-certified subset. Current N4 word v2 Silver additions are generated-ready but not Obsidian-certified. |
+| Words | 2217 | 1000 | The scoped release lock covers N5 plus the 700-row N4 Obsidian-certified subset. Current N4 word v2 Silver additions are generated-ready but not Obsidian-certified. |
 
 Obsidian counts for completed scopes are verified by fail-closed certification gates:
 
 - Kanji locked scope: `982/982` Obsidian certified.
-- Word locked scope: `1000/1017` Obsidian certified for current N5/N4 generated rows; the 17 current N4 word v2 Silver additions are not Obsidian-certified.
+- Word locked scope: `1000/1019` Obsidian certified for current N5/N4 generated rows; the 19 current N4 word v2 Silver additions are not Obsidian-certified.
 - Proof ledger validation: `1982` events across 6 JSONL files.
 
 ## Expansion Workflow Pattern

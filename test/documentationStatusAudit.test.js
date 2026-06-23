@@ -194,3 +194,53 @@ test("documentation status audit catches Obsidian-decentered completed status wo
         true,
     );
 });
+
+test("documentation status audit catches word source-depth blocker drift", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"].replace(
+        "Source-depth is not a Silver blocker; it is a claim limiter.",
+        "Source-depth must pass before free Silver expansion.",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("claim limiter, not a Silver blocker")),
+        true,
+    );
+});
+
+test("documentation status audit catches missing word dictionary-discovery labels", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"].replace(
+        "Dictionary-discovery rows must remain labeled `DICTIONARY DISCOVERY` plus `Source level claim unverified`.",
+        "Dictionary-discovery rows need normal review labels.",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("DICTIONARY DISCOVERY and Source level claim unverified labels")),
+        true,
+    );
+});

@@ -24,6 +24,7 @@ test("parseArgs supports common expansion selector options", () => {
         limit: 25,
         manifest: "templates/word-source.json",
         placementMode: "kanji-anchor",
+        source: "",
         sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: true,
         triage: "templates/triage.json",

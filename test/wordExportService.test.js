@@ -948,6 +948,78 @@ test("buildBreakdownInference marks non-decomposable word readings as word scope
     assert.equal(result.meaningJP, "今日 （きょう） ／ today");
 });
 
+test("buildBreakdownInference keeps exact whole-word ruby groups ahead of same-written overrides", () => {
+    const result = buildBreakdownInference({
+        kanji: "分",
+        contextWord: "十分",
+        contextCandidate: {
+            written: "十分",
+            reading: "じゅうぶん",
+            meaning: "enough / sufficient",
+        },
+        contextReadingGroup: {
+            surface: "十分",
+            reading: "じゅうぶん",
+        },
+        inference: {
+            candidates: [{ written: "分", pron: "ふん", gloss: "minute", score: 100 }],
+            primaryReading: "ふん",
+            englishMeaning: "minute",
+            meaningJP: "分 （ふん） ／ minute",
+            onReading: "オン: フン、 ブン",
+            kunReading: "くん: わ.かる",
+        },
+        curatedEntry: {
+            englishMeaning: "minute",
+            displayWord: { written: "分", pron: "ふん" },
+            breakdownOverrides: [
+                {
+                    matchWord: "十分",
+                    displayWord: { written: "分", pron: "ぷん" },
+                    englishMeaning: "minute",
+                },
+            ],
+        },
+    });
+
+    assert.equal(result.primaryReading, "じゅうぶん");
+    assert.equal(result.primaryReadingScope, "word");
+    assert.equal(result.meaningJP, "十分 （じゅうぶん） ／ enough / sufficient");
+});
+
+test("buildBreakdownInference keeps curated kanji meaning inside whole-word readings", () => {
+    const result = buildBreakdownInference({
+        kanji: "夜",
+        contextWord: "昨夜",
+        contextCandidate: {
+            written: "昨夜",
+            reading: "ゆうべ",
+            meaning: "last night / yesterday evening",
+        },
+        contextReadingGroup: {
+            surface: "昨夜",
+            reading: "ゆうべ",
+        },
+        inference: {
+            candidates: [{ written: "夜", pron: "よる", gloss: "night", score: 100 }],
+            primaryReading: "よる",
+            englishMeaning: "night",
+            meaningJP: "夜 （よる） ／ night",
+            onReading: "オン: ヤ",
+            kunReading: "くん: よ、 よる",
+        },
+        curatedEntry: {
+            englishMeaning: "night",
+            breakdownEnglishMeaning: "night",
+            breakdownDisplayWord: { written: "夜", pron: "よる" },
+        },
+    });
+
+    assert.equal(result.primaryReading, "ゆうべ");
+    assert.equal(result.primaryReadingScope, "word");
+    assert.equal(result.meaningJP, "昨夜 （ゆうべ） ／ night");
+});
+
 test("buildWordTsvForJlptLevel uses grouped repetition-mark ruby spans in kanji breakdown panels", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [],

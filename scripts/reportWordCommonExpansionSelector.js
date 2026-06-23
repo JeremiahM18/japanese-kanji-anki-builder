@@ -36,6 +36,7 @@ function parseArgs(argv) {
         limit: 40,
         manifest: DEFAULT_WORD_SOURCE_MANIFEST,
         placementMode: process.env.JKB_WORD_PLACEMENT_MODE || "kanji-anchor",
+        source: "",
         sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: false,
         triage: "templates/word_inventory_expansion_triage.json",
@@ -59,6 +60,10 @@ function parseArgs(argv) {
             options.placementMode = String(arg.slice("--placement-mode=".length) || "").trim();
         } else if (arg.startsWith("--placement=")) {
             options.placementMode = String(arg.slice("--placement=".length) || "").trim();
+        } else if (arg.startsWith("--source=")) {
+            options.source = String(arg.slice("--source=".length) || "").trim();
+        } else if (arg.startsWith("--candidate-source=")) {
+            options.source = String(arg.slice("--candidate-source=".length) || "").trim();
         } else if (arg.startsWith("--source-evidence=")) {
             options.sourceEvidence = String(arg.slice("--source-evidence=".length) || "").trim();
         } else if (arg.startsWith("--triage=")) {
@@ -80,6 +85,103 @@ function validateLevels(levels = []) {
             throw new Error("Common expansion selector levels must be 1-5.");
         }
     }
+}
+
+function sourceAllowsCandidateDiscovery(source = {}) {
+    return (source.allowedUse || []).includes("candidate-discovery");
+}
+
+function buildManifestSourceFromEvidence(sourceId, source = {}, levels = []) {
+    if (!source.local?.path) {
+        throw new Error(`Source ${sourceId} does not have a local source path.`);
+    }
+    return {
+        name: source.name || sourceId,
+        tier: 4,
+        status: "active",
+        sourceType: source.sourceType || source.sourceKind || "jlpt_level_list",
+        origin: {
+            url: source.url || "",
+            localPath: source.local.path,
+            notes: "Extra/free source-family selector preview; discovery and weak level hints only.",
+        },
+        licenseUse: {
+            status: source.licenseStatus || "needs_review",
+            license: source.licenseStatus === "approved" ? "CC BY" : "",
+            notes: "Source is used only as candidate discovery and weak level-hint evidence, not card approval, dictionary evidence, meaning evidence, pitch evidence, or frequency evidence.",
+        },
+        checkedAt: source.checkedAt || "",
+        levels: source.levels || levels,
+        local: {
+            ...(source.local || {}),
+            columns: source.local?.columns || [
+                "written",
+                "reading",
+                "meaning",
+                "jlpt",
+                "source",
+                "reviewStatus",
+                "citation",
+                "evidenceRef",
+                "notes",
+            ],
+        },
+        intendedUse: source.allowedUse || ["candidate-discovery", "level-hint"],
+        allowedUse: source.allowedUse || ["candidate-discovery", "level-hint"],
+        disallowedUse: [
+            "card-approval",
+            "dictionary-verification",
+            "reading-verification",
+            "meaning-verification",
+            "pitch-verification",
+            "frequency-sanity",
+        ],
+        candidatePolicy: {
+            levels: source.levels || levels,
+            kanjiScope: "known-jlpt",
+            requireSourceLevel: true,
+        },
+        extraSourceLane: true,
+    };
+}
+
+function buildSelectorManifestForSource({
+    manifest = {},
+    wordSourceEvidence = {},
+    sourceId = "",
+    levels = [],
+} = {}) {
+    const normalizedSourceId = String(sourceId || "").trim();
+    if (!normalizedSourceId) {
+        return manifest;
+    }
+
+    const selectorManifest = JSON.parse(JSON.stringify(manifest || {}));
+    selectorManifest.sources = selectorManifest.sources || {};
+    const evidenceSource = wordSourceEvidence.sources?.[normalizedSourceId] || null;
+    const existingSource = selectorManifest.sources[normalizedSourceId] || null;
+    if (!existingSource && !evidenceSource) {
+        throw new Error(`Unknown word selector source: ${normalizedSourceId}`);
+    }
+
+    for (const source of Object.values(selectorManifest.sources)) {
+        if (source.status === "active" && sourceAllowsCandidateDiscovery(source)) {
+            source.status = "inactive";
+        }
+    }
+
+    const overrideSource = existingSource ? {
+        ...existingSource,
+        status: "active",
+        candidatePolicy: {
+            ...(existingSource.candidatePolicy || {}),
+            levels: existingSource.candidatePolicy?.levels || existingSource.levels || levels,
+            requireSourceLevel: existingSource.candidatePolicy?.requireSourceLevel ?? true,
+        },
+        extraSourceLane: true,
+    } : buildManifestSourceFromEvidence(normalizedSourceId, evidenceSource, levels);
+    selectorManifest.sources[normalizedSourceId] = overrideSource;
+    return selectorManifest;
 }
 
 function hasStrictFailure(report = {}) {
@@ -104,6 +206,12 @@ async function main() {
     );
     const sharedInputs = loadSharedInputs();
     const wordSourceEvidence = loadJlptWordSourceEvidence(path.resolve(process.cwd(), options.sourceEvidence));
+    const selectorManifest = buildSelectorManifestForSource({
+        manifest,
+        wordSourceEvidence,
+        sourceId: options.source,
+        levels: options.levels,
+    });
     const wordSourceEvidenceReport = auditJlptWordSourceEvidence({
         contract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),
         evidence: wordSourceEvidence,
@@ -114,7 +222,7 @@ async function main() {
     });
     const report = buildWordCommonExpansionSelectorReport({
         levels: options.levels,
-        manifest,
+        manifest: selectorManifest,
         limit,
         placementMode: normalizePlacementMode(options.placementMode),
         triageDecisionsByLevelSource: loadTriageDecisionsByLevelSource(options.triage),
@@ -126,6 +234,7 @@ async function main() {
             levels: options.levels,
         }),
         enforceReadingExpansionGate: true,
+        includeRoutingSupportLevels: !options.source,
         ...sharedInputs,
     });
 
@@ -149,9 +258,12 @@ if (require.main === module) {
 
 module.exports = {
     DEFAULT_WORD_SOURCE_MANIFEST,
+    buildManifestSourceFromEvidence,
+    buildSelectorManifestForSource,
     hasStrictFailure,
     main,
     parseArgs,
     resolveManifestPath: (manifestPath = DEFAULT_WORD_SOURCE_MANIFEST) => path.resolve(process.cwd(), manifestPath || DEFAULT_WORD_SOURCE_MANIFEST),
+    sourceAllowsCandidateDiscovery,
     validateLevels,
 };

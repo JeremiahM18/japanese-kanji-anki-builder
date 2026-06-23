@@ -5,15 +5,22 @@ const os = require("node:os");
 const path = require("node:path");
 
 const {
+    SOURCE_LANE_CONFIGURED_LABEL,
+    SOURCE_LANE_EXTRA_LABEL,
     SOURCE_LEVEL_CLAIM_LABEL,
     SOURCE_LEVEL_CLAIM_STATUS,
     SOURCE_UNIVERSE_WARNING,
     buildExpansionWorkOrder,
     buildExtraSourceAccessByLevel,
+    buildSourceUniverse,
     buildWordCommonExpansionSelectorReport,
     classifyCommonExpansionSelectorRow,
     formatWordCommonExpansionSelectorReport,
 } = require("../src/services/wordCommonExpansionSelectorService");
+const {
+    buildSelectorManifestForSource,
+    parseArgs,
+} = require("../scripts/reportWordCommonExpansionSelector");
 
 function writeFixtureSource(dir, fileName, text) {
     const filePath = path.join(dir, fileName);
@@ -188,10 +195,12 @@ function buildExhaustedReadingSignal(level) {
 function assertAllSelectorRowsCarrySourceLevelLabels(report) {
     for (const levelReport of report.levelReports) {
         assert.ok(levelReport.fallbackSourceGate, `N${levelReport.level} missing fallback source gate`);
+        assert.equal(levelReport.sourceUniverse.sourceLaneLabel, SOURCE_LANE_CONFIGURED_LABEL);
         assert.equal(levelReport.sourceUniverse.levelClaimStatus, SOURCE_LEVEL_CLAIM_STATUS);
         assert.equal(levelReport.sourceUniverse.levelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
 
         for (const row of levelReport.rows) {
+            assert.equal(row.sourceLaneLabel, SOURCE_LANE_CONFIGURED_LABEL, `${row.key} missing configured-source lane label`);
             assert.equal(row.sourceLevelClaimStatus, SOURCE_LEVEL_CLAIM_STATUS, `${row.key} missing source claim status`);
             assert.equal(row.sourceLevelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL, `${row.key} missing source claim label`);
         }
@@ -498,6 +507,188 @@ test("expansion work order avoids repeated source hunting when no actionable ext
     assert.match(workOrder.nextAction, /no actionable extra free\/permitted source family/);
     assert.match(workOrder.nextAction, /do not repeat source hunting/);
     assert.match(workOrder.nextAction, /Source level claim unverified/);
+});
+
+test("expansion work order surfaces already-reviewed extra source family with explicit extra command", () => {
+    const manifest = {
+        sources: {
+            "current-n4": {
+                status: "active",
+                allowedUse: ["candidate-discovery"],
+                candidatePolicy: {
+                    levels: [4],
+                },
+            },
+        },
+    };
+    const sourceAccessReport = {
+        sources: [
+            {
+                sourceId: "current-n4",
+                status: "in_review",
+                sourceKind: "candidate-discovery",
+                levels: [4],
+                allowedUse: ["candidate-discovery", "level-hint"],
+                recommendedAction: "review_source_access_and_pin_input",
+            },
+            {
+                sourceId: "tanos-n4-vocab",
+                status: "active",
+                sourceKind: "candidate-discovery",
+                levels: [4],
+                allowedUse: ["candidate-discovery", "level-hint"],
+                licenseStatus: "approved",
+                local: {
+                    rowCount: 638,
+                },
+                reviewedAssignmentCount: 634,
+                recommendedAction: "no_action",
+            },
+        ],
+    };
+    const extraSourceAccessByLevel = buildExtraSourceAccessByLevel({
+        sourceAccessReport,
+        manifest,
+        levels: [4],
+    });
+    const workOrder = buildExpansionWorkOrder({
+        level: 4,
+        levelLabel: "N4",
+        commonWordQueue: {
+            active: true,
+            promoteCuratedExampleItems: 0,
+            editorialReviewItems: 0,
+            deferVariantItems: 0,
+        },
+        fallbackSourceGate: {
+            active: true,
+            blockers: [],
+        },
+        extraSourceAccess: extraSourceAccessByLevel[4],
+        summary: {
+            selectorStatusCounts: {
+                ready_for_editorial_review: 0,
+                needs_triage: 0,
+                move_candidate: 0,
+                blocked_identity: 0,
+                blocked_missing_dictionary: 0,
+                blocked_missing_commonness: 0,
+                triaged_defer: 0,
+                triaged_reject: 0,
+            },
+        },
+    });
+
+    assert.equal(extraSourceAccessByLevel[4].availableReviewedExtraSourceCount, 1);
+    assert.deepEqual(extraSourceAccessByLevel[4].availableReviewedExtraSourceIds, ["tanos-n4-vocab"]);
+    assert.equal(extraSourceAccessByLevel[4].availableReviewedExtraSourceRowCount, 638);
+    assert.equal(extraSourceAccessByLevel[4].availableReviewedExtraSourceAssignmentCount, 634);
+    assert.equal(workOrder.status, "extra_source_family");
+    assert.equal(workOrder.extraSourceLaneReady, true);
+    assert.equal(workOrder.extraSourceLaneActionable, true);
+    assert.equal(workOrder.nextCommand, "npm run deck:words:vocab-expansion -- --levels=4 --source=tanos-n4-vocab --strict --limit=80");
+    assert.match(workOrder.nextAction, /already-reviewed extra source family/);
+    assert.match(workOrder.nextAction, /Source level claim unverified/);
+});
+
+test("source override manifest marks selected reviewed source as EXTRA", () => {
+    const parsed = parseArgs(["--levels=4", "--source=tanos-n4-vocab", "--strict"]);
+    assert.deepEqual(parsed.levels, [4]);
+    assert.equal(parsed.source, "tanos-n4-vocab");
+
+    const manifest = {
+        sources: {
+            "current-n4": {
+                status: "active",
+                allowedUse: ["candidate-discovery", "level-hint"],
+                candidatePolicy: {
+                    levels: [4],
+                },
+            },
+        },
+    };
+    const selectorManifest = buildSelectorManifestForSource({
+        manifest,
+        wordSourceEvidence: {
+            sources: {
+                "tanos-n4-vocab": {
+                    name: "Tanos N4",
+                    status: "active",
+                    sourceKind: "candidate-discovery",
+                    sourceType: "jlpt_level_list",
+                    url: "https://example.com/tanos-n4",
+                    levels: [4],
+                    allowedUse: ["candidate-discovery", "level-hint"],
+                    licenseStatus: "approved",
+                    local: {
+                        path: "downloads/tanos-n4-vocab.tsv",
+                        format: "tsv",
+                        rowCount: 638,
+                    },
+                    checkedAt: "2026-06-21",
+                },
+            },
+        },
+        sourceId: "tanos-n4-vocab",
+        levels: [4],
+    });
+
+    assert.equal(selectorManifest.sources["current-n4"].status, "inactive");
+    assert.equal(selectorManifest.sources["tanos-n4-vocab"].status, "active");
+    assert.equal(selectorManifest.sources["tanos-n4-vocab"].extraSourceLane, true);
+    assert.deepEqual(selectorManifest.sources["tanos-n4-vocab"].candidatePolicy.levels, [4]);
+
+    const sourceUniverse = buildSourceUniverse({
+        sourceId: "tanos-n4-vocab",
+        source: selectorManifest.sources["tanos-n4-vocab"],
+    });
+
+    assert.equal(sourceUniverse.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
+    assert.equal(sourceUniverse.levelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
+});
+
+test("selected extra source work order labels triage as EXTRA work", () => {
+    const workOrder = buildExpansionWorkOrder({
+        level: 4,
+        levelLabel: "N4",
+        sourceUniverse: {
+            sourceId: "tanos-n4-vocab",
+            extraSource: true,
+            sourceLaneLabel: SOURCE_LANE_EXTRA_LABEL,
+        },
+        commonWordQueue: {
+            active: true,
+            promoteCuratedExampleItems: 0,
+            editorialReviewItems: 0,
+            deferVariantItems: 0,
+        },
+        fallbackSourceGate: {
+            active: false,
+            blockers: ["Current new-word selector still has 171 needs-triage row(s)."],
+        },
+        extraSourceAccess: {
+            hasSourceAccessContext: true,
+        },
+        summary: {
+            selectorStatusCounts: {
+                ready_for_editorial_review: 0,
+                needs_triage: 171,
+                move_candidate: 0,
+                blocked_identity: 28,
+                blocked_missing_dictionary: 2,
+                blocked_missing_commonness: 4,
+                triaged_defer: 0,
+                triaged_reject: 0,
+            },
+        },
+    });
+
+    assert.equal(workOrder.status, "current_selector_triage");
+    assert.equal(workOrder.nextAction, "EXTRA source triage: EXTRA source rows still need keep/defer/reject/move decisions before Silver.");
+    assert.equal(workOrder.nextCommand, "npm run deck:words:vocab-expansion -- --levels=4 --source=tanos-n4-vocab --strict --limit=80");
+    const extraLane = workOrder.items.find((item) => item.lane === "extra_source_family");
+    assert.equal(extraLane.status, "selected_extra_source");
+    assert.match(extraLane.reason, /selected source is already the EXTRA source-family preview/);
 });
 
 test("expansion work order prioritizes active reading work before extra sources", () => {

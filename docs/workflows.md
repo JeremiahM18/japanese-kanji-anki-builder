@@ -341,10 +341,14 @@ When `--source` is omitted, the report resolves the single active `candidate-dis
 npm run deck:words:common-expansion -- --levels=5,4,3,2,1
 npm run deck:words:expansion-status -- --levels=5,4,3,2,1
 npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1
+npm run deck:words:vocab-expansion -- --levels=5 --source=tanos-n5-vocab --strict --limit=80
+npm run deck:words:vocab-expansion -- --levels=4 --source=tanos-n4-vocab --strict --limit=80
 npm run deck:words:common-expansion -- --levels=5 --placement-mode=vocabulary-level --limit=40
 ```
 
 The common-word selector is a read-only Silver planning report. It starts from each level's active `candidate-discovery` source, then adds JMdict dictionary verification and JMdict priority/commonness support from the governed word source manifest.
+
+Use `--source=<source-id>` only to preview an already reviewed fallback/free-source family after the level's normal prerequisites open that lane. This mode marks the source universe and every shown row as `EXTRA SOURCE FAMILY` and still carries `Source level claim unverified`; it is a triage queue, not a Silver promotion, source-depth completion claim, or release claim. Current reviewed examples are `tanos-n5-vocab` and `tanos-n4-vocab`; N3/N2/N1 already use their Tanos sources as the configured source family, so the source-access report must show a separate permitted family before those levels have an analogous extra-source preview.
 
 Use `deck:words:expansion-status` when the question is "what work is next for this N-level?" The report prints an expansion work order in priority order: reading fast promotions, reading editorial research, current selector ready rows, current selector triage rows, move-candidate routing, blocked/deferred recorded backlog, then the extra free/permitted source-family lane. This makes an exhausted current selector explicit instead of quiet: when the prerequisites are clear, the extra lane says it is ready and still warns that work is not done. If the source-access registry has no actionable extra free/permitted source family, the report must say that directly instead of sending reviewers through another source-hunting loop.
 

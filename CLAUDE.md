@@ -101,7 +101,7 @@ Do not widen scope just because higher levels exist.
 Current posture:
 
 - N5 word work is strict Obsidian-certified; keep it frozen except for regressions or explicit editorial decisions
-- N4 word work is strict Obsidian-certified; keep it frozen except for regressions or explicit editorial decisions
+- N4 word work has a `700/717` strict Obsidian-certified subset plus 17 current word v2 Silver additions; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the new Silver rows as downstream-certified
 - N3 word work has a complete Silver generated surface plus partial Gold (`1081/1099`), current-standard Sapphire structural review in progress (`1038/1099`), and Platinum (`8/1099`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
@@ -131,11 +131,11 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 word rows are strict Obsidian-certified at the current generated-row denominator: `987/987` across N5/N4, with N5 at `287/287` and N4 at `700/700`. Lower-lane prerequisites are complete for that scoped proof, but Obsidian is the certification claim.
+N5 word rows and the N4 Obsidian-certified subset are strict Obsidian-certified at `1000/1017` across current N5/N4 generated rows, with N5 at `300/300` and N4 at `700/717`. Lower-lane prerequisites are complete for that certified subset, but the 17 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
 
 That means:
 
-- keep N5 and N4 word rows frozen except for regressions, Sapphire decisions, or explicit editorial decisions
+- keep N5 rows and the N4 Obsidian-certified subset frozen except for regressions, Sapphire decisions, or explicit editorial decisions
 - do not churn word rows just to move a metric once the active triage backlog is cleared
 - use `npm run deck:words:ready -- --levels=5 --require-no-active-triage` as the normal N5 word guard before and after changes that could affect the shared word-deck pipeline
 - use `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` as the normal N4 word guard before and after changes that could affect the shared word-deck pipeline

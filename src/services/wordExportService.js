@@ -1260,19 +1260,25 @@ function buildBreakdownInference({ kanji, inference, curatedEntry = null, contex
         && exactPron
         && !KATAKANA_ONLY_RE.test(exactPron)
         && exactPron === inferredPrimaryReading;
-    const displayWord = (contextOverrideMatchesContext ? contextOverrideDisplayWord : null)
+    const displayWord = contextualGroupDisplayWord
+        || (contextOverrideMatchesContext ? contextOverrideDisplayWord : null)
         || contextDisplayWord
         || contextualDisplayWord
-        || contextualGroupDisplayWord
         || curatedDisplayWord
         || (useExactCandidate
         ? { written: kanji, pron: exactPron }
         : { written: kanji, pron: "" });
+    const hasBreakdownSpecificCuratedMeaning = Boolean(
+        curatedEntry?.breakdownEnglishMeaning
+        || curatedEntry?.breakdownDisplayWord?.written
+    );
+    const contextualGroupMeaningWins = Boolean(contextualGroupDisplayWord)
+        && (contextOverrideMatchesContext || !hasBreakdownSpecificCuratedMeaning);
     const englishMeaning = String(
-        (((useBreakdownOverrides || contextOverrideMatchesContext) && contextOverride?.englishMeaning) ? contextOverride.englishMeaning : "")
+        (contextualGroupMeaningWins ? contextCandidate?.meaning || contextCandidate?.gloss || "" : "")
+        || (((useBreakdownOverrides || contextOverrideMatchesContext) && contextOverride?.englishMeaning) ? contextOverride.englishMeaning : "")
         || ((useBreakdownOverrides && breakdownOverrideMatchesContext) ? curatedEntry?.breakdownEnglishMeaning : "")
         || (isSingleKanjiWordContext ? contextCandidate?.meaning || contextCandidate?.gloss || "" : "")
-        || (contextualGroupDisplayWord ? contextCandidate?.meaning || contextCandidate?.gloss || "" : "")
         || curatedEntry?.englishMeaning
         || inference?.englishMeaning
         || extractEnglishMeaningFromMeaningJP(inference?.meaningJP)

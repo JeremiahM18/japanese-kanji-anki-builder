@@ -103,12 +103,12 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2218);
+    assert.equal(Object.keys(starterEntries).length, 2235);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
-        4: 700,
+        4: 717,
         5: 320,
     });
 });
@@ -7510,6 +7510,112 @@ test("tracked starter word data includes the N5 Tanos extra-source Silver batch"
     assert.match(starterEntries["賑やか|にぎやか"].notes, /labeled rather than automatically blocked/);
     assert.match(starterEntries["背|せ"].notes, /distinct from governed N3 背\|せい/);
     assert.match(starterEntries["明日|あした"].notes, /distinct from governed N4 明日\|あす/);
+});
+
+test("tracked starter word data includes the first N4 word v2 common expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "噛む|かむ",
+        "気|き",
+        "気分|きぶん",
+        "見つかる|みつかる",
+        "見つける|みつける",
+        "高校生|こうこうせい",
+        "子|こ",
+        "十分|じゅうぶん",
+    ];
+
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+    assertCoverageReadings(starterEntries, [
+        ["噛む|かむ", "噛", "かむ"],
+        ["気|き", "気", "き"],
+        ["気分|きぶん", "気", "き"],
+        ["気分|きぶん", "分", "ぶん"],
+        ["見つかる|みつかる", "見", "み"],
+        ["見つける|みつける", "見", "み"],
+        ["高校生|こうこうせい", "高", "こう"],
+        ["高校生|こうこうせい", "校", "こう"],
+        ["高校生|こうこうせい", "生", "せい"],
+        ["子|こ", "子", "こ"],
+        ["十分|じゅうぶん", "十分", "じゅうぶん"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["噛む|かむ", "<ruby>噛<rt>か</rt></ruby>む"],
+        ["気|き", "<ruby>気<rt>き</rt></ruby>"],
+        ["気分|きぶん", "<ruby>気<rt>き</rt></ruby><ruby>分<rt>ぶん</rt></ruby>"],
+        ["見つかる|みつかる", "<ruby>見<rt>み</rt></ruby>つかる"],
+        ["見つける|みつける", "<ruby>見<rt>み</rt></ruby>つける"],
+        ["高校生|こうこうせい", "<ruby>高<rt>こう</rt></ruby><ruby>校<rt>こう</rt></ruby><ruby>生<rt>せい</rt></ruby>"],
+        ["子|こ", "<ruby>子<rt>こ</rt></ruby>"],
+        ["十分|じゅうぶん", "<ruby>十分<rt>じゅうぶん</rt></ruby>"],
+    ]);
+
+    for (const key of batchKeys) {
+        assert.equal(starterEntries[key].source, "jlptstudy.net-n4");
+        assert.equal(starterEntries[key].levelPlacement.mode, "vocabulary-level");
+        assert.match(starterEntries[key].levelPlacement.reason, /N4 word v2 vocabulary-level placement/);
+        assert.match(starterEntries[key].notes, /source level claim is unverified/);
+        assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+    }
+    assert.match(starterEntries["十分|じゅうぶん"].notes, /distinct from governed 十分\|じゅっぷん/);
+});
+
+test("tracked starter word data includes the second N4 word v2 common expansion batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "凄い|すごい",
+        "赤ん坊|あかんぼう",
+        "大学生|だいがくせい",
+        "大分|だいぶ",
+        "中々|なかなか",
+        "中学校|ちゅうがっこう",
+        "味噌|みそ",
+        "無くなる|なくなる",
+        "無理|むり",
+    ];
+
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+    assertCoverageReadings(starterEntries, [
+        ["凄い|すごい", "凄", "すごい"],
+        ["赤ん坊|あかんぼう", "赤", "あか"],
+        ["赤ん坊|あかんぼう", "坊", "ぼう"],
+        ["大学生|だいがくせい", "大", "だい"],
+        ["大学生|だいがくせい", "学", "がく"],
+        ["大学生|だいがくせい", "生", "せい"],
+        ["大分|だいぶ", "大", "だい"],
+        ["大分|だいぶ", "分", "ぶ"],
+        ["中々|なかなか", "中", "なか"],
+        ["中学校|ちゅうがっこう", "中", "ちゅう"],
+        ["中学校|ちゅうがっこう", "学", "がっ"],
+        ["中学校|ちゅうがっこう", "校", "こう"],
+        ["味噌|みそ", "味", "み"],
+        ["味噌|みそ", "噌", "そ"],
+        ["無くなる|なくなる", "無", "なく"],
+        ["無理|むり", "無", "む"],
+        ["無理|むり", "理", "り"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["凄い|すごい", "<ruby>凄い<rt>すごい</rt></ruby>"],
+        ["赤ん坊|あかんぼう", "<ruby>赤<rt>あか</rt></ruby>ん<ruby>坊<rt>ぼう</rt></ruby>"],
+        ["大学生|だいがくせい", "<ruby>大<rt>だい</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>"],
+        ["大分|だいぶ", "<ruby>大<rt>だい</rt></ruby><ruby>分<rt>ぶ</rt></ruby>"],
+        ["中々|なかなか", "<ruby>中<rt>なか</rt></ruby><ruby>々<rt>なか</rt></ruby>"],
+        ["中学校|ちゅうがっこう", "<ruby>中<rt>ちゅう</rt></ruby><ruby>学<rt>がっ</rt></ruby><ruby>校<rt>こう</rt></ruby>"],
+        ["味噌|みそ", "<ruby>味<rt>み</rt></ruby><ruby>噌<rt>そ</rt></ruby>"],
+        ["無くなる|なくなる", "<ruby>無く<rt>なく</rt></ruby>なる"],
+        ["無理|むり", "<ruby>無<rt>む</rt></ruby><ruby>理<rt>り</rt></ruby>"],
+    ]);
+
+    for (const key of batchKeys) {
+        assert.equal(starterEntries[key].source, "jlptstudy.net-n4");
+        assert.equal(starterEntries[key].levelPlacement.mode, "vocabulary-level");
+        assert.match(starterEntries[key].levelPlacement.reason, /N4 word v2 vocabulary-level placement/);
+        assert.match(starterEntries[key].notes, /source level claim is unverified/);
+        assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+    }
+    assert.match(starterEntries["凄い|すごい"].notes, /outside the JLPT kanji contract/);
+    assert.match(starterEntries["味噌|みそ"].notes, /outside the JLPT kanji contract/);
+    assert.match(starterEntries["無理|むり"].notes, /outside the JLPT kanji contract/);
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

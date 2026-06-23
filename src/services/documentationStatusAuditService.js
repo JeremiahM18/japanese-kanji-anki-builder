@@ -134,11 +134,11 @@ function buildProductStatusPhrases(productSnapshot = {}) {
         readmeN3KanjiObsidian: "| N3 kanji | `341/341` Obsidian-certified",
         readmeN2KanjiObsidian: "| N2 kanji | `349/349` Obsidian-certified",
         readmeN5WordObsidian: "| N5 word | `300/300` strict word Obsidian-certified",
-        readmeN4WordObsidian: "| N4 word | `700/717` strict word Obsidian-certified",
-        claudeFrozenWordObsidian: "N5 word rows and the N4 Obsidian-certified subset are strict Obsidian-certified at `1000/1017` across current N5/N4 generated rows",
+        readmeN4WordObsidian: "| N4 word | `700/719` strict word Obsidian-certified",
+        claudeFrozenWordObsidian: "N5 word rows and the N4 Obsidian-certified subset are strict Obsidian-certified at `1000/1019` across current N5/N4 generated rows",
         productExitN5WordObsidian: "N5 word: strict non-human governed native/fluent-quality word Obsidian content certification passes at `300/300`",
-        productExitN4WordObsidian: "N4 word: strict non-human governed native/fluent-quality word Obsidian content certification covers `700/717` current generated rows",
-        releaseQaWordObsidian: "N5 word is strict non-human governed native/fluent-quality Obsidian-certified at `300/300`; N4 word is strict non-human governed native/fluent-quality Obsidian-certified at `700/717`",
+        productExitN4WordObsidian: "N4 word: strict non-human governed native/fluent-quality word Obsidian content certification covers `700/719` current generated rows",
+        releaseQaWordObsidian: "N5 word is strict non-human governed native/fluent-quality Obsidian-certified at `300/300`; N4 word is strict non-human governed native/fluent-quality Obsidian-certified at `700/719`",
         releaseProcessObsidianFirst: "first confirm the fail-closed Obsidian native/fluent-quality content-certification gate and its lower-lane prerequisite gates",
         systemObsidianProofNode: "Proof + natural-language certification",
         closeoutLowerLaneMatrix: "lower-lane Silver/Gold/Sapphire/Platinum count matrix",
@@ -154,6 +154,9 @@ function buildWordExpansionDoctrinePhrases() {
         dictionaryCommonPoolLabels: "Dictionary common-pool rows must remain labeled `DICTIONARY COMMON POOL` plus `Source level claim unverified`.",
         dictionaryCommonPoolCommandReference: "Continue the same extra expansion lane with the `DICTIONARY COMMON POOL`",
         dictionaryCommonPoolQualityFilter: "The default dictionary common-pool view is an editorial shortlist over an audit-visible raw pool, not the raw pool itself.",
+        dictionaryCommonPoolLearnerUtilityOrder: "Dictionary common-pool editorial queues are ordered by a transparent learner-utility score before the `200`-row cap is applied.",
+        dictionaryCommonPoolLearnerUtilityComponents: "everyday usefulness, concrete/common domain fit, target-kanji reinforcement value, duplicate or near-duplicate safety, specialized/proper-noun penalty signals, exampleability, and pitch/audio/media readiness",
+        dictionaryCommonPoolLearnerUtilityBoundary: "The score is an ordering signal only, never card approval.",
         dictionaryCommonPoolOutsideSupport: "Outside-JLPT and higher-level support kanji are label/review needs, not automatic common-pool deprioritization.",
         dictionaryCommonPoolRawCommand: "`--common-pool-mode=raw`",
         expansionTargetMinimums: "Expansion targets are useful minimums, not hard caps or approval quotas: N5 ~800, N4 ~1000, N3 ~2250, N2 ~2250, and N1 ~4000 unique governed words.",
@@ -351,6 +354,9 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolRoute), "docs/workflows.md must document the JMdict containment/commonness common-pool route.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLabels), "docs/workflows.md must require DICTIONARY COMMON POOL and Source level claim unverified labels for common-pool rows.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolQualityFilter), "docs/workflows.md must state that the default dictionary common-pool queue is an editorial shortlist over an audit-visible raw pool.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityOrder), "docs/workflows.md must state that common-pool editorial queues are ordered by transparent learner-utility score before the 200-row cap.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/workflows.md must list the learner-utility scoring components.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityBoundary), "docs/workflows.md must state learner-utility score is ordering only, not card approval.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolOutsideSupport), "docs/workflows.md must state that outside-JLPT/higher-level support kanji are label needs, not automatic common-pool deprioritization.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetMinimums), "docs/workflows.md must preserve the word expansion target minimums as useful minimums, not hard caps or quotas.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetActivation), "docs/workflows.md must preserve that target-progress reporting does not activate common-word expansion before reading exhaustion.");
@@ -359,6 +365,7 @@ function auditDocumentationText({
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/command-reference.md must state that word source-depth is a claim limiter, not a Silver blocker.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolCommandReference), "docs/command-reference.md must document common-pool work as the same extra expansion lane.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolRawCommand), "docs/command-reference.md must document dictionary common-pool raw audit mode.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/command-reference.md must document learner-utility scoring components for common-pool work.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.expansionStatusTargetProgress), "docs/command-reference.md must document expansion-status target-progress reporting.");
     addFailure(failures, commandReference.includes("do not automatically deprioritize outside-JLPT or higher-level support kanji"), "docs/command-reference.md must document that outside-JLPT/higher-level support kanji are not automatically deprioritized.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/command-reference.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");

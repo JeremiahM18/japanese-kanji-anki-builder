@@ -887,6 +887,40 @@
       "english": "I put the letter in the desk drawer."
     }
   },
+  "引き出す|ひきだす": {
+    "written": "引き出す",
+    "reading": "ひきだす",
+    "readingBreakdown": "<ruby>引き<rt>ひき</rt></ruby><ruby>出す<rt>だす</rt></ruby>",
+    "meaning": "to withdraw / draw out",
+    "jlpt": 4,
+    "source": "tanos-n4-vocab",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: practical withdraw/draw-out verb from the reviewed Tanos N4 extra-source selector; 引 anchors N4 and 出 is easier support."
+    },
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "引",
+        "出"
+      ],
+      "coversReadings": {
+        "引": "ひき",
+        "出": "だす"
+      }
+    },
+    "notes": "N4 word v2 Silver common-word expansion from the Tanos N4 extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 引き出す|ひきだす as withdraw/draw-out vocabulary. The card is learner-friendly daily-life vocabulary rather than a new reading-coverage requirement.",
+    "exampleSentence": {
+      "japanese": "銀行でお金を引き出しました。",
+      "reading": "ぎんこうでおかねをひきだしました。",
+      "english": "I withdrew money at the bank."
+    }
+  },
   "引く|ひく": {
     "written": "引く",
     "reading": "ひく",
@@ -15688,6 +15722,38 @@
       "japanese": "長い旅行で疲労がたまりました。",
       "reading": "ながいりょこうでひろうがたまりました。",
       "english": "Fatigue built up during the long trip."
+    }
+  },
+  "痩せる|やせる": {
+    "written": "痩せる",
+    "reading": "やせる",
+    "readingBreakdown": "<ruby>痩<rt>や</rt></ruby>せる",
+    "meaning": "to lose weight / become thin",
+    "jlpt": 4,
+    "source": "tanos-n4-vocab",
+    "tags": [
+      "starter",
+      "common",
+      "n4"
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: common lose-weight/become-thin verb from the reviewed Tanos N4 extra-source selector; 痩 is outside the current JLPT kanji contract and must stay visibly labeled."
+    },
+    "coverage": {
+      "role": "support",
+      "focusKanji": [
+        "痩"
+      ],
+      "coversReadings": {
+        "痩": "や"
+      }
+    },
+    "notes": "N4 word v2 Silver common-word expansion from the Tanos N4 extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 痩せる|やせる as lose-weight/become-thin vocabulary. 痩 is outside the current JLPT kanji contract, so the word is kept only as labeled vocabulary-level N4 expansion with outside-JLPT support kanji.",
+    "exampleSentence": {
+      "japanese": "健康のために、少し痩せました。",
+      "reading": "けんこうのために、すこしやせました。",
+      "english": "I lost a little weight for my health."
     }
   },
   "美術館|びじゅつかん": {

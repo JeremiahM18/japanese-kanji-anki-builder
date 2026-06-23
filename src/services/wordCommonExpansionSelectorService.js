@@ -58,12 +58,22 @@ const STATUS_ORDER = Object.fromEntries(SELECTOR_STATUSES.map((status, index) =>
 const HAN_CHARACTER_PATTERN = /^\p{Script=Han}$/u;
 const COMMON_POOL_MEANING_NOISE_RE = /\b(?:surname|given name|place name|company name|archaism|archaic|obsolete|vulgar|obscene|derogatory|Buddhist term|physics|chemistry|botany|zoology|astronomy|mathematics)\b/iu;
 const COMMON_POOL_PRIORITY_MEANING_RE = /\b(?:grand shrine|famous shrine|lunar calendar|proofreading|first proof|station|railway line|district|province|clan|company|university)\b/iu;
+const LEARNER_UTILITY_EVERYDAY_DOMAIN_RE = /\b(?:home|house|family|friend|school|class|lesson|teacher|student|work|job|office|shop|store|bookstore|bookshelf|money|bank|food|meal|drink|water|weather|rain|snow|health|body|doctor|hospital|train|station|bus|car|street|road|city|town|room|book|clothes|phone|letter|language|time|day|week|month|year|morning|night|travel|trip)\b/iu;
+const LEARNER_UTILITY_ABSTRACT_DOMAIN_RE = /\b(?:analysis|analytical|parse|parsing|theory|policy|system|principle|ideology|philosophy|economics|politics|administration|legal|statistical|technical|specialized)\b/iu;
+const LEARNER_UTILITY_SPECIALIZED_OR_PROPER_RE = /\b(?:archaism|archaic|obsolete|vulgar|obscene|derogatory|Buddhist term|physics|chemistry|botany|zoology|astronomy|mathematics|literature|prefecture|ministry|bureau|agency|grand shrine|famous shrine|solar term|lunar calendar|proofreading|first proof|railway line|district|province|clan|company|university|one-off payment|lump sum)\b/iu;
 const DIGIT_WRITTEN_PATTERN = /[0-9０-９]/u;
 const LATIN_WRITTEN_PATTERN = /[A-Za-zＡ-Ｚａ-ｚ]/u;
 const HAN_ANY_PATTERN = /\p{Script=Han}/u;
 const KANJI_NUMERIC_EXPRESSION_WRITTEN_PATTERN = /^[一二三四五六七八九十百千万億兆〇零壱弐参年月日円本冊枚台匹人個件点度回階杯校時分秒週番号]+$/u;
 const CAPITALIZED_PROPER_PHRASE_PATTERN = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b/u;
+const CAPITALIZED_SINGLE_PROPER_HEAD_PATTERN = /^[A-Z][a-z]+(?:\s*\(|\s*$)/u;
 const SUPPORT_LABEL_LEARNER_FIT_RE = /^(?:harder support kanji|outside-JLPT kanji)\b/u;
+const LEARNER_UTILITY_BANDS = [
+    { min: 80, label: "strong_review_candidate" },
+    { min: 65, label: "good_review_candidate" },
+    { min: 50, label: "fair_review_candidate" },
+    { min: 0, label: "low_priority_review_candidate" },
+];
 
 function isStandaloneKanjiWritten(value = "") {
     const chars = [...String(value || "")];
@@ -178,13 +188,30 @@ function classifyCommonExpansionSelectorRow({ expansionRow = {}, agreementRow = 
 
 function summarizeSelectorRows(rows = []) {
     const selectorStatusCounts = Object.fromEntries(SELECTOR_STATUSES.map((status) => [status, 0]));
+    const learnerUtilityBandCounts = Object.fromEntries(LEARNER_UTILITY_BANDS.map((band) => [band.label, 0]));
+    const utilityScores = [];
     for (const row of rows) {
         const status = SELECTOR_STATUSES.includes(row.selectorStatus) ? row.selectorStatus : "needs_triage";
         selectorStatusCounts[status] += 1;
+        if (Number.isFinite(row.learnerUtility?.score)) {
+            utilityScores.push(row.learnerUtility.score);
+            const band = row.learnerUtility.band || getUtilityBand(row.learnerUtility.score);
+            learnerUtilityBandCounts[band] = (learnerUtilityBandCounts[band] || 0) + 1;
+        }
     }
     return {
         selectedRows: rows.length,
         selectorStatusCounts,
+        learnerUtility: {
+            scoredRows: utilityScores.length,
+            averageScore: utilityScores.length > 0
+                ? Number((utilityScores.reduce((total, score) => total + score, 0) / utilityScores.length).toFixed(1))
+                : null,
+            maxScore: utilityScores.length > 0 ? Math.max(...utilityScores) : null,
+            minScore: utilityScores.length > 0 ? Math.min(...utilityScores) : null,
+            bandCounts: learnerUtilityBandCounts,
+            policy: "review_ordering_signal_not_card_approval",
+        },
         readyForEditorialReviewRows: selectorStatusCounts.ready_for_editorial_review,
         inactiveReadingExpansionRows: selectorStatusCounts.queue_inactive_reading_expansion,
         needsTriageRows: selectorStatusCounts.needs_triage,
@@ -844,9 +871,396 @@ function buildReadingExpansionGate({ level, signal = null, enforceReadingExpansi
     };
 }
 
+function clampNumber(value, min, max) {
+    return Math.max(min, Math.min(max, Number(value || 0)));
+}
+
+function formatKanjiList(entries = []) {
+    return entries
+        .map((entry) => (typeof entry === "string" ? entry : entry?.kanji))
+        .filter(Boolean)
+        .join(", ");
+}
+
+function getUtilityBand(score) {
+    const boundedScore = clampNumber(score, 0, 100);
+    return LEARNER_UTILITY_BANDS.find((band) => boundedScore >= band.min)?.label || "low_priority_review_candidate";
+}
+
+function getRowKanjiScope(row = {}, explicitScope = null) {
+    if (explicitScope) {
+        return explicitScope;
+    }
+    const targetLevel = Number(row.targetLevel || row.sourceLevel || 0);
+    const kanjiLevels = Array.isArray(row.kanjiLevels) ? row.kanjiLevels : [];
+    const constituentKanji = Array.isArray(row.constituentKanji)
+        ? row.constituentKanji
+        : kanjiLevels.map((entry) => entry.kanji).filter(Boolean);
+    const targetKanji = Array.isArray(row.targetKanji) && row.targetKanji.length > 0
+        ? row.targetKanji.map((kanji) => (typeof kanji === "string" ? { kanji, level: targetLevel || null } : kanji))
+        : kanjiLevels.filter((entry) => entry.level === targetLevel);
+    const harderKanji = Array.isArray(row.harderKanji)
+        ? row.harderKanji.map((entry) => (typeof entry === "string" ? { kanji: entry, level: null } : entry))
+        : kanjiLevels.filter((entry) => Number.isInteger(entry.level) && Number.isInteger(targetLevel) && entry.level < targetLevel);
+    const outsideJlptKanji = Array.isArray(row.outsideJlptKanji)
+        ? row.outsideJlptKanji.map((entry) => (typeof entry === "string" ? { kanji: entry, level: null } : entry))
+        : kanjiLevels.filter((entry) => !Number.isInteger(entry.level));
+    return {
+        constituentKanji,
+        kanjiLevels,
+        targetKanji,
+        harderKanji,
+        outsideJlptKanji,
+    };
+}
+
+function findSameWrittenContractConflicts(row = {}, jlptWordLevelContract = {}) {
+    const written = String(row.written || "").trim();
+    const key = row.key || `${written}|${row.reading || ""}`;
+    if (!written) {
+        return [];
+    }
+    return Object.entries(jlptWordLevelContract.wordLevels || {})
+        .filter(([entryKey, entry]) => entryKey !== key && String(entry?.written || "").trim() === written)
+        .map(([entryKey, entry]) => ({
+            key: entryKey,
+            reading: entry?.reading || "",
+            jlpt: Number(entry?.jlpt ?? entry?.level ?? entry?.jlptLevel) || null,
+        }));
+}
+
+function buildSameWrittenSourceRowsByWritten(sourceRows = []) {
+    const rowsByWritten = new Map();
+    for (const sourceRow of Array.isArray(sourceRows) ? sourceRows : []) {
+        const written = String(sourceRow?.written || "").trim();
+        if (!written) {
+            continue;
+        }
+        const entry = {
+            key: sourceRow.key || `${sourceRow.written || ""}|${sourceRow.reading || ""}`,
+            reading: sourceRow.reading || "",
+            source: sourceRow.source || sourceRow.sourceId || null,
+        };
+        rowsByWritten.set(written, [...(rowsByWritten.get(written) || []), entry]);
+    }
+    return rowsByWritten;
+}
+
+function findSameWrittenSourceConflicts(row = {}, sourceRowsByWritten = new Map()) {
+    const written = String(row.written || "").trim();
+    const key = row.key || `${written}|${row.reading || ""}`;
+    if (!written) {
+        return [];
+    }
+    const sourceRows = sourceRowsByWritten instanceof Map ? sourceRowsByWritten.get(written) || [] : [];
+    return sourceRows.filter((sourceRow) => sourceRow.key !== key);
+}
+
+function buildLearnerUtilityComponent({ score, max, reason }) {
+    return {
+        score: clampNumber(score, 0, max),
+        max,
+        reason,
+    };
+}
+
+function isLearnerUtilityPenaltyReason(reason = "") {
+    const text = String(reason || "");
+    if (
+        /^no exact duplicate/iu.test(text)
+        || /^no harder\/outside support label needed/iu.test(text)
+        || /^clean identity can proceed/iu.test(text)
+        || /^highest JMdict commonness tier/iu.test(text)
+        || /^strong JMdict commonness tier/iu.test(text)
+        || /^moderate JMdict commonness tier/iu.test(text)
+        || /^everyday concrete domain signal/iu.test(text)
+        || /^reinforces target kanji/iu.test(text)
+        || /^sentence evidence already present/iu.test(text)
+        || /^pitch support already present/iu.test(text)
+    ) {
+        return false;
+    }
+    return /missing|needs|needed|must|risk|conflict|specialized|numeric|longer|weak|lower|no target|no explicit everyday/iu.test(text);
+}
+
+function hasLearnerUtilitySpecializedOrProperSignal(row = {}) {
+    const meaning = String(row.meaning || "");
+    return (
+        LEARNER_UTILITY_SPECIALIZED_OR_PROPER_RE.test(meaning)
+        || COMMON_POOL_PRIORITY_MEANING_RE.test(meaning)
+        || CAPITALIZED_PROPER_PHRASE_PATTERN.test(meaning)
+        || CAPITALIZED_SINGLE_PROPER_HEAD_PATTERN.test(meaning)
+    );
+}
+
+function hasLearnerUtilityEverydayDomainSignal(row = {}) {
+    const meaning = String(row.meaning || "");
+    if (!LEARNER_UTILITY_EVERYDAY_DOMAIN_RE.test(meaning)) {
+        return false;
+    }
+    return !LEARNER_UTILITY_ABSTRACT_DOMAIN_RE.test(meaning);
+}
+
+function getJmdictNfRank(row = {}) {
+    const match = String(row.notes || "").match(/\bnf(\d{1,2})\b/iu);
+    if (!match) {
+        return Number.MAX_SAFE_INTEGER;
+    }
+    const rank = Number(match[1]);
+    return Number.isInteger(rank) && rank > 0 ? rank : Number.MAX_SAFE_INTEGER;
+}
+
+function formatJmdictNfReason(row = {}) {
+    const rank = getJmdictNfRank(row);
+    return rank === Number.MAX_SAFE_INTEGER ? "" : `JMdict nf${String(rank).padStart(2, "0")} priority`;
+}
+
+function scoreEverydayUsefulness(row = {}) {
+    const rank = getComparableFrequencyRank(row);
+    if (rank === Number.MAX_SAFE_INTEGER) {
+        return buildLearnerUtilityComponent({
+            score: 0,
+            max: 25,
+            reason: "missing numeric commonness rank",
+        });
+    }
+    let score;
+    let reason;
+    if (rank <= 100) {
+        const nfRank = getJmdictNfRank(row);
+        if (nfRank <= 5) {
+            score = 25;
+        } else if (nfRank <= 15) {
+            score = 23;
+        } else if (nfRank !== Number.MAX_SAFE_INTEGER) {
+            score = 21;
+        } else {
+            score = 22;
+        }
+        reason = `highest JMdict commonness tier (${rank})`;
+    } else if (rank <= 200) {
+        score = 20;
+        reason = `strong JMdict commonness tier (${rank})`;
+    } else if (rank <= 500) {
+        score = 16;
+        reason = `moderate JMdict commonness tier (${rank})`;
+    } else if (rank <= 1000) {
+        score = 12;
+        reason = `lower JMdict commonness tier (${rank})`;
+    } else {
+        score = 8;
+        reason = `weak JMdict commonness tier (${rank})`;
+    }
+    const reasons = [reason];
+    const nfReason = formatJmdictNfReason(row);
+    if (nfReason) {
+        reasons.push(nfReason);
+    }
+    if (hasLearnerUtilitySpecializedOrProperSignal(row)) {
+        score -= 5;
+        reasons.push("proper/specialized signal lowers everyday usefulness");
+    }
+    if (LEARNER_UTILITY_ABSTRACT_DOMAIN_RE.test(String(row.meaning || ""))) {
+        score -= 3;
+        reasons.push("abstract/technical signal lowers everyday usefulness");
+    }
+    return buildLearnerUtilityComponent({ score, max: 25, reason: reasons.join("; ") });
+}
+
+function scoreConcreteCommonDomain(row = {}) {
+    const writtenLength = [...String(row.written || "")].length;
+    let score = 7;
+    const reasons = [];
+    if (hasLearnerUtilityEverydayDomainSignal(row)) {
+        score += 6;
+        reasons.push("everyday concrete domain signal");
+    } else {
+        reasons.push("no explicit everyday-domain boost");
+    }
+    if (LEARNER_UTILITY_ABSTRACT_DOMAIN_RE.test(String(row.meaning || ""))) {
+        score -= 5;
+        reasons.push("abstract/specialized domain signal");
+    }
+    if (hasCommonPoolNumericExpressionWrittenForm(row)) {
+        score -= 8;
+        reasons.push("numeric-expression written form");
+    }
+    if (hasLearnerUtilitySpecializedOrProperSignal(row)) {
+        score -= 6;
+        reasons.push("proper/specialized meaning signal");
+    }
+    if (writtenLength >= 5) {
+        score -= 2;
+        reasons.push("longer compound");
+    } else if (writtenLength === 4) {
+        score -= 1;
+        reasons.push("medium-length compound needs example fit review");
+    }
+    return buildLearnerUtilityComponent({
+        score,
+        max: 15,
+        reason: reasons.join("; "),
+    });
+}
+
+function scoreTargetKanjiReinforcement(row = {}, scope = null) {
+    const resolvedScope = getRowKanjiScope(row, scope);
+    const targetCount = resolvedScope.targetKanji.length;
+    if (targetCount === 0) {
+        return buildLearnerUtilityComponent({
+            score: 0,
+            max: 20,
+            reason: "no target-level kanji anchor",
+        });
+    }
+    let score = 11 + Math.min(targetCount, 2) * 3;
+    const reasons = [`reinforces target kanji ${formatKanjiList(resolvedScope.targetKanji)}`];
+    if (resolvedScope.harderKanji.length === 0 && resolvedScope.outsideJlptKanji.length === 0) {
+        score += 2;
+        reasons.push("no harder/outside support label needed");
+    } else {
+        if (resolvedScope.harderKanji.length > 0) {
+            reasons.push(`harder support label needed for ${formatKanjiList(resolvedScope.harderKanji)}`);
+        }
+        if (resolvedScope.outsideJlptKanji.length > 0) {
+            reasons.push(`outside-JLPT support label needed for ${formatKanjiList(resolvedScope.outsideJlptKanji)}`);
+        }
+    }
+    return buildLearnerUtilityComponent({
+        score,
+        max: 20,
+        reason: reasons.join("; "),
+    });
+}
+
+function scoreDuplicateSafety(row = {}, sameWrittenConflicts = []) {
+    const identityRisks = Array.isArray(row.identityRisks) ? row.identityRisks : [];
+    const conflicts = Array.isArray(sameWrittenConflicts) && sameWrittenConflicts.length > 0
+        ? sameWrittenConflicts
+        : (Array.isArray(row.sameWrittenConflicts) ? row.sameWrittenConflicts : []);
+    const sourceConflicts = Array.isArray(row.sameWrittenSourceConflicts) ? row.sameWrittenSourceConflicts : [];
+    let score = 15;
+    const reasons = [];
+    if (identityRisks.length > 0) {
+        score -= Math.min(identityRisks.length * 4, 8);
+        reasons.push(`${identityRisks.length} identity risk(s)`);
+    }
+    if (conflicts.length > 0) {
+        score -= Math.min(conflicts.length * 3, 9);
+        reasons.push(`${conflicts.length} same-written governed conflict(s)`);
+    }
+        if (sourceConflicts.length > 0) {
+            score -= Math.min(sourceConflicts.length * 2, 6);
+            reasons.push(`${sourceConflicts.length} same-written source-pool conflict(s)`);
+        }
+    if (reasons.length === 0) {
+        reasons.push("no exact duplicate or same-written conflict detected");
+    }
+    return buildLearnerUtilityComponent({
+        score,
+        max: 15,
+        reason: reasons.join("; "),
+    });
+}
+
+function scoreExampleability(row = {}) {
+    const meaning = String(row.meaning || "");
+    let score = 6;
+    const reasons = [];
+    if (row.sentenceSupported) {
+        score += 4;
+        reasons.push("sentence evidence already present");
+    } else {
+        reasons.push("needs curated example sentence");
+    }
+    if (!meaning) {
+        score -= 4;
+        reasons.push("missing learner-facing meaning");
+    } else if (meaning.length > 120 || meaning.split(";").length > 4) {
+        score -= 3;
+        reasons.push("broad/multi-sense meaning needs tighter example review");
+    }
+    if (hasCommonPoolMeaningNoise(row) || hasLearnerUtilitySpecializedOrProperSignal(row)) {
+        score -= 4;
+        reasons.push("meaning has noisy or specialized review signal");
+    }
+    return buildLearnerUtilityComponent({
+        score,
+        max: 10,
+        reason: reasons.join("; "),
+    });
+}
+
+function scoreMediaReadiness(row = {}) {
+    let score = 8;
+    const reasons = [];
+    if (row.pitchSupported) {
+        score += 4;
+        reasons.push("pitch support already present");
+    } else {
+        reasons.push("pitch must be verified/generated during Silver");
+    }
+    if (row.cleanIdentity === false || (row.identityRisks || []).length > 0) {
+        score -= 5;
+        reasons.push("identity risk can block audio/media generation");
+    } else {
+        reasons.push("clean identity can proceed to audio/media review");
+    }
+    if (!row.dictionaryVerified && row.sourcePool !== SOURCE_POOL_DICTIONARY_COMMON) {
+        score -= 3;
+        reasons.push("dictionary verification still needed before media work");
+    }
+    return buildLearnerUtilityComponent({
+        score,
+        max: 15,
+        reason: reasons.join("; "),
+    });
+}
+
+function buildLearnerUtilityScore(row = {}, {
+    scope = null,
+    sameWrittenConflicts = [],
+} = {}) {
+    const resolvedSameWrittenConflicts = Array.isArray(sameWrittenConflicts) && sameWrittenConflicts.length > 0
+        ? sameWrittenConflicts
+        : (Array.isArray(row.sameWrittenConflicts) ? row.sameWrittenConflicts : []);
+    const components = {
+        everydayUsefulness: scoreEverydayUsefulness(row),
+        concreteCommonDomain: scoreConcreteCommonDomain(row),
+        targetKanjiReinforcement: scoreTargetKanjiReinforcement(row, scope),
+        duplicateOrNearDuplicateSafety: scoreDuplicateSafety(row, resolvedSameWrittenConflicts),
+        exampleability: scoreExampleability(row),
+        pitchAudioMediaReadiness: scoreMediaReadiness(row),
+    };
+    const componentValues = Object.values(components);
+    const score = clampNumber(componentValues.reduce((total, component) => total + component.score, 0), 0, 100);
+    const reasons = componentValues
+        .map((component) => component.reason)
+        .filter(Boolean);
+    const reasonFragments = reasons
+        .flatMap((reason) => String(reason || "").split(";"))
+        .map((reason) => reason.trim())
+        .filter(Boolean);
+    const penalties = reasonFragments.filter(isLearnerUtilityPenaltyReason);
+    return {
+        score,
+        max: 100,
+        band: getUtilityBand(score),
+        components,
+        reasons,
+        penalties,
+        policy: "review_ordering_signal_not_card_approval",
+    };
+}
+
+function getLearnerUtilityComparableScore(row = {}) {
+    return Number.isFinite(row.learnerUtility?.score) ? row.learnerUtility.score : -1;
+}
+
 function compareSelectorRows(a, b) {
     return (
         (STATUS_ORDER[a.selectorStatus] ?? 99) - (STATUS_ORDER[b.selectorStatus] ?? 99)
+        || getLearnerUtilityComparableScore(b) - getLearnerUtilityComparableScore(a)
         || getCommonPoolQueuePriority(a) - getCommonPoolQueuePriority(b)
         || a.reviewReadiness.nextEvidenceCount - b.reviewReadiness.nextEvidenceCount
         || b.reviewReadiness.supportedEvidenceCount - a.reviewReadiness.supportedEvidenceCount
@@ -968,7 +1382,7 @@ function buildRoutedMoveCandidateRow({ sourceRow = {}, targetLevel, targetGate =
     const scope = classifyKanjiScope(sourceRow, { targetLevel, jlptLevelContract });
     const triageDecision = sourceRow.triageDecision || null;
     const sameWrittenConflicts = sourceRow.sameWrittenConflicts || [];
-    return {
+    const routedRow = {
         ...sourceRow,
         selectorStatus: classifyRoutedMoveCandidateRow({ sourceRow, targetGate }),
         sourceDisposition: "routed_move_candidate",
@@ -991,6 +1405,10 @@ function buildRoutedMoveCandidateRow({ sourceRow = {}, targetLevel, targetGate =
             decision: triageDecision?.decision || "",
             reason: triageDecision?.reason || "",
         },
+    };
+    return {
+        ...routedRow,
+        learnerUtility: buildLearnerUtilityScore(routedRow, { scope, sameWrittenConflicts }),
     };
 }
 
@@ -1110,11 +1528,22 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         .filter((rank) => Number.isInteger(rank) && rank > 0);
     const targetLevel = expansionRow.targetLevel || agreementRow?.targetLevel || null;
     const kanjiLevels = expansionRow.kanjiLevels || agreementRow?.kanjiLevels || [];
-    return {
+    const sameWrittenConflicts = agreementRow?.sameWrittenConflicts || expansionRow.sameWrittenContractEntries || [];
+    const learnerFitRisks = agreementRow?.learnerFitRisks || [];
+    const reviewReadiness = agreementRow?.reviewReadiness || {
+        supportedEvidenceCount: 0,
+        supportedEvidenceTotal: 5,
+        nextEvidenceCount: 0,
+        learnerFitRiskCount: 0,
+        sameWrittenConflictCount: 0,
+        identityRiskCount: 0,
+    };
+    const selectorRow = {
         key: expansionRow.key,
         written: expansionRow.written,
         reading: expansionRow.reading,
         meaning: expansionRow.meaning || agreementRow?.meaning || "",
+        notes: expansionRow.notes || sourceAppearance?.notes || "",
         selectorStatus,
         sourceDisposition: expansionRow.disposition,
         sourceReason: expansionRow.reason,
@@ -1139,8 +1568,9 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
             : (frequencyRanks.length > 0 ? Math.min(...frequencyRanks) : null),
         cleanIdentity: Boolean(agreementRow?.cleanIdentity) || expansionRow.disposition === "review_candidate",
         identityRisks: agreementRow?.identityRisks || [],
-        learnerFitRisks: agreementRow?.learnerFitRisks || [],
-        sameWrittenConflicts: agreementRow?.sameWrittenConflicts || expansionRow.sameWrittenContractEntries || [],
+        learnerFitRisks,
+        sameWrittenConflicts,
+        sameWrittenSourceConflicts: expansionRow.sameWrittenSourceConflicts || [],
         triageDecision: expansionRow.triageDecision || agreementRow?.triageDecisions?.[0] || null,
         sourceTriageDecision: null,
         contractStatus: agreementRow?.contractStatus || null,
@@ -1148,15 +1578,12 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         constituentKanji: expansionRow.constituentKanji || [],
         kanjiLevels,
         supportLabelNeeds: buildSupportLabelNeeds({ kanjiLevels, targetLevel }),
-        reviewReadiness: agreementRow?.reviewReadiness || {
-            supportedEvidenceCount: 0,
-            supportedEvidenceTotal: 5,
-            nextEvidenceCount: 0,
-            learnerFitRiskCount: 0,
-            sameWrittenConflictCount: 0,
-            identityRiskCount: 0,
-        },
+        reviewReadiness,
         nextRequiredEvidence: agreementRow?.nextRequiredEvidence || [],
+    };
+    return {
+        ...selectorRow,
+        learnerUtility: buildLearnerUtilityScore(selectorRow, { sameWrittenConflicts }),
     };
 }
 
@@ -1189,7 +1616,9 @@ function getDictionaryCommonPoolSourcePriority(row = {}) {
 
 function compareDictionaryCommonPoolSourceRows(a = {}, b = {}) {
     return (
-        getDictionaryCommonPoolSourcePriority(a) - getDictionaryCommonPoolSourcePriority(b)
+        getLearnerUtilityComparableScore(b) - getLearnerUtilityComparableScore(a)
+        || getJmdictNfRank(a) - getJmdictNfRank(b)
+        || getDictionaryCommonPoolSourcePriority(a) - getDictionaryCommonPoolSourcePriority(b)
         || getComparableFrequencyRank(a) - getComparableFrequencyRank(b)
         || getWrittenShapePriority(a) - getWrittenShapePriority(b)
         || String(a.written || "").localeCompare(String(b.written || ""), "ja")
@@ -1234,6 +1663,7 @@ function filterDictionaryCommonPoolRows({
     const normalizedRows = sourceRows
         .flatMap((row) => normalizeCandidateSourceRows(row, { sourceLabel: sourceId }))
         .filter(Boolean);
+    const sourceRowsByWritten = buildSameWrittenSourceRowsByWritten(normalizedRows);
     const rows = [];
     const filteredCounts = {
         sourceRows: normalizedRows.length,
@@ -1310,7 +1740,27 @@ function filterDictionaryCommonPoolRows({
         if (scope.outsideJlptKanji.length === 0 && scope.harderKanji.length === 0) {
             filteredCounts.targetOnlyRows += 1;
         }
-        rows.push(row);
+        const sameWrittenConflicts = findSameWrittenContractConflicts(row, jlptWordLevelContract);
+        const sameWrittenSourceConflicts = findSameWrittenSourceConflicts(row, sourceRowsByWritten);
+        rows.push({
+            ...row,
+            sameWrittenSourceConflicts,
+            learnerUtility: buildLearnerUtilityScore({
+                ...row,
+                sourcePool: SOURCE_POOL_DICTIONARY_COMMON,
+                targetLevel,
+                targetKanji: scope.targetKanji.map((entry) => entry.kanji),
+                constituentKanji: scope.constituentKanji,
+                kanjiLevels: scope.kanjiLevels,
+                harderKanji: scope.harderKanji,
+                outsideJlptKanji: scope.outsideJlptKanji.map((entry) => entry.kanji),
+                sameWrittenConflicts,
+                sameWrittenSourceConflicts,
+                dictionaryVerified: true,
+                frequencySupported: true,
+                cleanIdentity: true,
+            }, { scope, sameWrittenConflicts }),
+        });
     }
 
     const sortedRows = rows.sort(compareDictionaryCommonPoolSourceRows);
@@ -1763,6 +2213,25 @@ function formatWordExpansionTargetStatus(targetProgress = null) {
     return `below target floor by ${targetProgress.remainingToTarget}`;
 }
 
+function formatUtilityBandCounts(counts = {}) {
+    return LEARNER_UTILITY_BANDS
+        .map((band) => `${band.label}=${counts[band.label] || 0}`)
+        .join("; ");
+}
+
+function formatLearnerUtilityLine(learnerUtility = null) {
+    if (!learnerUtility || !Number.isFinite(learnerUtility.score)) {
+        return "not scored";
+    }
+    const reasons = (learnerUtility.reasons || []).slice(0, 3).join("; ");
+    return `${learnerUtility.score}/${learnerUtility.max || 100} ${learnerUtility.band || getUtilityBand(learnerUtility.score)}${reasons ? ` - ${reasons}` : ""}`;
+}
+
+function formatLearnerUtilityPenalties(learnerUtility = null) {
+    const penalties = (learnerUtility?.penalties || []).slice(0, 3);
+    return penalties.length > 0 ? penalties.join("; ") : "none";
+}
+
 function formatWordCommonExpansionSelectorReport(report = {}) {
     const hasExtraSelector = (report.levelReports || [])
         .some((levelReport) => levelReport.sourceUniverse?.extraSource === true);
@@ -1848,6 +2317,25 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
 
     lines.push(
         "",
+        "Learner utility score:",
+        "| Level | Scored rows | Average | Min | Max | Bands | Policy |",
+        "| --- | ---: | ---: | ---: | ---: | --- | --- |"
+    );
+    for (const levelReport of report.levelReports || []) {
+        const utility = levelReport.summary.learnerUtility || {};
+        lines.push([
+            `| ${levelReport.levelLabel}`,
+            utility.scoredRows ?? 0,
+            utility.averageScore ?? "-",
+            utility.minScore ?? "-",
+            utility.maxScore ?? "-",
+            formatUtilityBandCounts(utility.bandCounts || {}),
+            "ordering signal only, not card approval",
+        ].join(" | ") + " |");
+    }
+
+    lines.push(
+        "",
         "Expansion work order:",
         "| Level | Next work | Reading fast | Reading editorial | Selector ready | Selector triage | Move routing | Deferred/backlog | Extra source lane |",
         "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |"
@@ -1919,6 +2407,8 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             if (Number.isInteger(row.frequencyRank)) {
                 lines.push(`   commonness rank: ${row.frequencyRank}`);
             }
+            lines.push(`   learner utility: ${formatLearnerUtilityLine(row.learnerUtility)}`);
+            lines.push(`   utility penalties: ${formatLearnerUtilityPenalties(row.learnerUtility)}`);
             lines.push(`   support: dictionary ${formatBoolean(row.dictionaryVerified)}, commonness ${formatBoolean(row.frequencySupported)}, sentence ${formatBoolean(row.sentenceSupported)}, pitch ${formatBoolean(row.pitchSupported)}, clean identity ${formatBoolean(row.cleanIdentity)}`);
             if (row.triageDecision) {
                 lines.push(`   triage: ${row.triageDecision.decision} [${row.triageDecision.priority || "normal"}] - ${row.triageDecision.reason}`);
@@ -1965,6 +2455,7 @@ module.exports = {
     buildExtraSourceAccessByLevel,
     buildLevelSelectorReport,
     buildExpansionWorkOrder,
+    buildLearnerUtilityScore,
     buildReadingExpansionGate,
     buildSourceUniverse,
     buildWordCommonExpansionSelectorReport,

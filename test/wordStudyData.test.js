@@ -103,12 +103,12 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2235);
+    assert.equal(Object.keys(starterEntries).length, 2237);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
-        4: 717,
+        4: 719,
         5: 320,
     });
 });

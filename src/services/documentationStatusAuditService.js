@@ -73,13 +73,22 @@ function buildProductDocumentationSnapshot({
         return total + countJsonlRecords(path.join(proofLedgerDir, `${deckKind}_n${level}.jsonl`), { existsSync, readFileSync });
     }, 0);
 
+    const wordN5Denominator = countWordContractDenominator(wordContract, 5);
+    const wordN4Denominator = countWordContractDenominator(wordContract, 4);
+    const wordN5ObsidianProof = countLedger("word", [5]);
+    const wordN4ObsidianProof = countLedger("word", [4]);
+
     return {
         kanjiDenominator: sumLevelCounts(kanjiContract, allLevels, countKanjiContractDenominator),
         wordDenominator: sumLevelCounts(wordContract, allLevels, countWordContractDenominator),
         kanjiLockedDenominator: sumLevelCounts(kanjiContract, lockedKanjiLevels, countKanjiContractDenominator),
         wordLockedDenominator: sumLevelCounts(wordContract, lockedWordLevels, countWordContractDenominator),
         kanjiObsidianProof: countLedger("kanji", lockedKanjiLevels),
-        wordObsidianProof: countLedger("word", lockedWordLevels),
+        wordObsidianProof: wordN5ObsidianProof + wordN4ObsidianProof,
+        wordN5Denominator,
+        wordN4Denominator,
+        wordN5ObsidianProof,
+        wordN4ObsidianProof,
     };
 }
 
@@ -125,6 +134,17 @@ function buildN3WordStatusPhrases(snapshot) {
 }
 
 function buildProductStatusPhrases(productSnapshot = {}) {
+    const wordN5Denominator = productSnapshot.wordN5Denominator ?? 300;
+    const wordN4Denominator = productSnapshot.wordN4Denominator ?? 700;
+    const wordN5ObsidianProof = productSnapshot.wordN5ObsidianProof ?? 300;
+    const wordN4ObsidianProof = productSnapshot.wordN4ObsidianProof ?? 700;
+    const wordN5Ratio = `${wordN5ObsidianProof}/${wordN5Denominator}`;
+    const wordN4Ratio = `${wordN4ObsidianProof}/${wordN4Denominator}`;
+    const wordLockedRatio = `${productSnapshot.wordObsidianProof}/${productSnapshot.wordLockedDenominator}`;
+    const wordLockedUncertified = Math.max(0, Number(productSnapshot.wordLockedDenominator || 0) - Number(productSnapshot.wordObsidianProof || 0));
+    const wordN5Uncertified = Math.max(0, Number(wordN5Denominator || 0) - Number(wordN5ObsidianProof || 0));
+    const wordN4Uncertified = Math.max(0, Number(wordN4Denominator || 0) - Number(wordN4ObsidianProof || 0));
+
     return {
         employerGeneratedDenominators: `Current generated denominators cover \`${productSnapshot.kanjiDenominator}\` core kanji rows and \`${productSnapshot.wordDenominator}\` word rows across JLPT N5-N1.`,
         employerWordDenominator: `| Words | \`${productSnapshot.wordDenominator}/${productSnapshot.wordDenominator}\` across N5-N1 | \`${productSnapshot.wordObsidianProof}/${productSnapshot.wordDenominator}\` |`,
@@ -133,12 +153,12 @@ function buildProductStatusPhrases(productSnapshot = {}) {
         readmeN4KanjiObsidian: "| N4 kanji | `212/212` Obsidian-certified",
         readmeN3KanjiObsidian: "| N3 kanji | `341/341` Obsidian-certified",
         readmeN2KanjiObsidian: "| N2 kanji | `349/349` Obsidian-certified",
-        readmeN5WordObsidian: "| N5 word | `300/300` strict word Obsidian-certified",
-        readmeN4WordObsidian: "| N4 word | `700/719` strict word Obsidian-certified",
-        claudeFrozenWordObsidian: "N5 word rows and the N4 Obsidian-certified subset are strict Obsidian-certified at `1000/1019` across current N5/N4 generated rows",
-        productExitN5WordObsidian: "N5 word: strict non-human governed native/fluent-quality word Obsidian content certification passes at `300/300`",
-        productExitN4WordObsidian: "N4 word: strict non-human governed native/fluent-quality word Obsidian content certification covers `700/719` current generated rows",
-        releaseQaWordObsidian: "N5 word is strict non-human governed native/fluent-quality Obsidian-certified at `300/300`; N4 word is strict non-human governed native/fluent-quality Obsidian-certified at `700/719`",
+        readmeN5WordObsidian: `| N5 word | \`${wordN5Ratio}\` strict word Obsidian-certified`,
+        readmeN4WordObsidian: `| N4 word | \`${wordN4Ratio}\` strict word Obsidian-certified`,
+        claudeFrozenWordObsidian: `N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at \`${wordLockedRatio}\` across current N5/N4 generated rows, with N5 at \`${wordN5Ratio}\` and N4 at \`${wordN4Ratio}\``,
+        productExitN5WordObsidian: `N5 word: strict non-human governed native/fluent-quality word Obsidian content certification covers \`${wordN5Ratio}\` current generated rows`,
+        productExitN4WordObsidian: `N4 word: strict non-human governed native/fluent-quality word Obsidian content certification covers \`${wordN4Ratio}\` current generated rows`,
+        releaseQaWordObsidian: `N5 word is strict non-human governed native/fluent-quality Obsidian-certified at \`${wordN5Ratio}\`; N4 word is strict non-human governed native/fluent-quality Obsidian-certified at \`${wordN4Ratio}\`; the ${wordLockedUncertified} current N5/N4 word v2 Silver additions (${wordN5Uncertified} N5, ${wordN4Uncertified} N4) are not release-certifiable until lower lanes and Obsidian proof catch up`,
         releaseProcessObsidianFirst: "first confirm the fail-closed Obsidian native/fluent-quality content-certification gate and its lower-lane prerequisite gates",
         systemObsidianProofNode: "Proof + natural-language certification",
         closeoutLowerLaneMatrix: "lower-lane Silver/Gold/Sapphire/Platinum count matrix",
@@ -309,11 +329,15 @@ function auditDocumentationText({
     const phrases = buildN3WordStatusPhrases(snapshot);
     const product = productSnapshot || snapshot.product || {
         kanjiDenominator: 2212,
-        wordDenominator: 2198,
+        wordDenominator: 2263,
         kanjiLockedDenominator: 982,
-        wordLockedDenominator: 1000,
+        wordLockedDenominator: 1065,
         kanjiObsidianProof: 982,
         wordObsidianProof: 1000,
+        wordN5Denominator: 346,
+        wordN4Denominator: 719,
+        wordN5ObsidianProof: 300,
+        wordN4ObsidianProof: 700,
     };
     const productPhrases = buildProductStatusPhrases(product);
     const failures = [];

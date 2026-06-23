@@ -1644,6 +1644,1570 @@
         "reason": "Governed 友だち|ともだち already teaches the beginner friend word with the learner-friendly mixed spelling; full-kanji 友達 adds duplicate spelling load.",
         "nextStep": "Reconsider only if the word product adds spelling-variant cards."
       }
+    },
+    "dictionary-common-pool": {
+      "一気|いっき": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common all-at-once/chug usage gives concrete 一 and 気 reinforcement, but Silver must avoid making alcohol-only usage the learner default. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "下車|げしゃ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common transit action for getting off a train, bus, or car, with clean 下 and 車 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "小学生|しょうがくせい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core school/person word for elementary school student, with clean 小・学・生 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "前年|ぜんねん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful previous-year time word that reinforces 前 and 年 without variant clutter. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "中学|ちゅうがく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common middle-school word that reinforces 中 and 学 and pairs well with existing school vocabulary. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "中学生|ちゅうがくせい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common middle-school student word with clear learner utility and clean 中・学・生 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "長年|ながねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: common but more abstract than core N5 time words; revisit after stronger year/month/day rows are promoted. Source level remains unverified; learner utility 86/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "年間|ねんかん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common period-of-a-year expression; Silver must keep the meaning concrete and not overteach era senses. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "年生|ねんせい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: suffix-like student-year identity is weaker than concrete 一年生, 小学生, and 中学生 rows. Source level remains unverified; learner utility 86/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "半年|はんとし": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful six-month duration word; keep this beginner-friendly reading and defer the duplicate はんねん reading for later comparison. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 86/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "半年|はんねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: duplicate written identity; defer until 半年|はんとし is reviewed and a second-reading card is justified. Source level remains unverified; learner utility 86/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "一週間|いっしゅうかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core one-week duration word; 週=N4 is a visible support label need, not a blocker. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 84/100. Support labels required: harder support kanji 週=N4.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "雨水|あまみず": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid concrete word but less learner-core than rain/weather rows such as 大雨. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "外国語|がいこくご": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: high-value language word for learners, clean 外・国・語 reinforcement, and easy exampleability. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 84/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "外出|がいしゅつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful going-out noun/suru word with clean 外 and 出 reinforcement; keep the common がいしゅつ reading and defer そとで. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 84/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "外出|そとで": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “going out; outing; leaving (one's home, office, etc.)”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "学年|がくねん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful school-year/grade word that strengthens 学 and 年 in a concrete school domain. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 84/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "月間|げっかん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: month-long period is useful but less beginner-core than 毎月, 一か月, and 何日/何年 rows. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "今年度|こんねんど": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: fiscal/school-year word is useful but 度=N4 and less core than 今年/前年/年間. Source level remains unverified; learner utility 84/100. Support labels required: harder support kanji 度=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "七々日|しちしちにち": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 49th-day memorial term is culturally specific and not useful enough for N5 deck expansion. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "水上|すいじょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: on-water/waterside word is concrete but not first-pass N5 learner utility. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "先日|せんじつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common recent-past time word with clean 先 and 日 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 84/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "前年度|ぜんねんど": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: previous fiscal-year term is less core and 度=N4 support should be reviewed later. Source level remains unverified; learner utility 84/100. Support labels required: harder support kanji 度=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "大雨|おおあめ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common weather word for heavy rain; keep the learner-friendly おおあめ reading and reject the rarer たいう reading. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 84/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "大雨|たいう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Rare/less learner-friendly reading duplicates the kept 大雨|おおあめ identity. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "大学院|だいがくいん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: graduate school is useful but 院 is N4 support and the concept is beyond the N5 expansion surface. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 院=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "大金|おおがね": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: large-money word is useful but duplicate written identity with たいきん and not first-pass N5. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "大金|たいきん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: large-sum word is useful but duplicate written identity and less core than money/quantity basics. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "長時間|ちょうじかん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful long-time duration word with clear exampleability and clean 長・時・間 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 84/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "母国|ぼこく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: home-country word is useful but 母国語 is the stronger learner-facing identity for this batch. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "本書|ほんしょ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: this-book/main-text word is formal and weaker than book/title vocabulary for N5. Source level remains unverified; learner utility 84/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "小学|しょうがく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: elementary-school noun is less learner-friendly than 小学生 and school-name compounds. Source level remains unverified; learner utility 83/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "前日|ぜんじつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful previous-day word; keep standard ぜんじつ and reject rare まえび. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 83/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "前日|まえび": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Rare/less standard reading duplicates the kept 前日|ぜんじつ identity. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "中間|ちゅうかん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: middle/interim has broad senses and needs later example-fit review. Source level remains unverified; learner utility 83/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "日中|にっちゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: daytime versus Japan-China ambiguity needs later review before any N5 card. Source level remains unverified; learner utility 83/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "来|らい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: prefix/since-like row is not clean enough as a standalone first-pass N5 card. Source level remains unverified; learner utility 83/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "今年|こんねん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core this-year time word that belongs in an expanded N5 deck if the exact identity is still missing. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 83/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "毎月|まいげつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core every-month routine word and strong 月 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 83/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "毎年|まいねん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core every-year routine word and strong 年 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 83/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "一時期|いちじき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: period-of-time word is useful but 期=N2 and less core than 時間/年間. Source level remains unverified; learner utility 82/100. Support labels required: harder support kanji 期=N2.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "下半身|かはんしん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Lower-body wording is not appropriate as an N5 learner expansion card in this queue. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: outside-JLPT support kanji 身.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "下半身|しもはんしん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Alternate lower-body wording is not appropriate as an N5 learner expansion card in this queue. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: outside-JLPT support kanji 身.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "外車|がいしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful imported/foreign car word with clean 外 and 車 reinforcement; keep only if Silver handles the paddle-wheel secondary sense out of scope. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 82/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "後日|ごじつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common later/another-day planning word; keep standard ごじつ and reject rare ごにち. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 82/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "後日|ごにち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “in the future; another day; later”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "高学年|こうがくねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: upper-grade school term is useful but less core than 小学生/中学生/一年生. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "昨年来|さくねんらい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “since last year”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 82/100. Support labels required: harder support kanji 昨=N3.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "四半期|しはんき": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: fiscal quarter term uses 期=N2 and is business/accounting vocabulary. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 期=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "車中|しゃちゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: in-a-vehicle word is concrete but lower utility than 下車 and car/train basics. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "出前|でまえ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: everyday food delivery word with clean 出 and 前 reinforcement and easy learner exampleability. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 82/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "出入|しゅつにゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: formal in/out or income-expense noun needs comparison with 出入り before promotion. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "書名|しょめい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: book-title word is useful but narrow and lower utility than core book/school rows. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "女学校|じょがっこう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Girls-school term is dated/specific and weaker than 学校, 学生, 小学生, and 中学生. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "上半期|かみはんき": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Fiscal half-year term is business/time-domain clutter for N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 期=N2.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "食後|しょくご": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful after-meal time word with clean 食 and 後 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 82/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "水気|みずけ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: moisture word is concrete but lower utility than 水分 and water/food basics. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "短時間|たんじかん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: short-time duration is useful, but 短 is N4 and this belongs with N4 adjective/time expansion. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 短=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "地下水|ちかすい": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: groundwater is a concrete word but 地 is N4 and the word is not core N5 learner utility. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 地=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "中古車|ちゅうこしゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: used-car vocabulary is useful, but 古 is N4 and the word fits a later N4 vehicle/everyday-commerce batch. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 古=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "中高|ちゅうこう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: middle-and-high-school abbreviation is less transparent than 中学/中学生. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "長雨|ながあめ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: long-rain word is concrete but lower priority than 大雨 and core weather rows. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "長雨|ながめ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: duplicate written identity and less learner-friendly reading than ながあめ. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "年男|としおとこ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Zodiac-year male term is culturally narrow and not useful enough for N5 expansion. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "半月|はんげつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: half-moon/half-month ambiguity needs later review. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "半月|はんつき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: half-month reading is valid but lower priority than 半日 and 半年. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "半日|はんじつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: duplicate written identity; defer until 半日|はんにち is reviewed. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "半日|はんにち": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful half-day duration word; keep common はんにち and defer はんじつ for later comparison. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 82/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "お話中|おはなしちゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: polite busy-phone variant is lower priority than cleaner 話し中. Source level remains unverified; learner utility 82/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "一年生|いちねんせい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: high-value first-year student word with clean 一・年・生 reinforcement and strong school-domain utility. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "院長|いんちょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: institution director uses 院=N4 and is too role-specific for N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 院=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "下院|かいん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Lower-house politics term is specialized and not learner-core for N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 院=N4.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "下旬|げじゅん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “last third of a month; 21st to the last day of a month”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 旬=N1.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "学園|がくえん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: school/campus word uses 園=N4 and is less beginner-core than 学校/学生 words. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 園=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "御金|おかね": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Kanji/polite spelling duplicates the normal お金 learner identity and adds 御=N2 spelling load. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 御=N2.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "公衆電話|こうしゅうでんわ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: public telephone is useful travel vocabulary, but 公=N4 and 衆=N1 require a higher-level review path. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 公=N4; harder support kanji 衆=N1.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "郊外|こうがい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: suburb is useful geography vocabulary but 郊=N2 and belongs above N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 郊=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "高等学校|こうとうがっこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: formal high-school identity is useful but better reviewed with N4 school vocabulary rather than N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 等=N3.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "国語|こくご": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful Japanese-language/school-subject word with clean 国 and 語 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "今回|こんかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: this-time expression is common, but 回 is N4 and should be reviewed in the N4 time/event lane. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 回=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "今春|こんしゅん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: this-spring expression uses 春=N4 and is less core than 今週/今年-style N5 time words. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 春=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "参入|さんにゅう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Market-entry/business term is too specialized and abstract for N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 参=N3.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "支店長|してんちょう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Branch-manager title is role-specific and better omitted from N5 expansion. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 支=N3; harder support kanji 店=N4.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "時事|じじ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Current-affairs term is abstract/news-domain vocabulary beyond N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 事=N4.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "室長|しつちょう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Office/lab-head title is role-specific and not useful enough for N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 室=N4.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "周年|しゅうねん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: anniversary counting word uses 周=N2 and needs higher-level review. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 周=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "修学旅行|しゅうがくりょこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: school trip is learner-useful but contains 旅=N4 and 修=N1, so it needs higher-level support review. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 修=N1; harder support kanji 旅=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "出身|しゅっしん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: very useful self-introduction word; 身 is outside-JLPT support and must be labeled clearly during Silver. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100. Support labels required: outside-JLPT support kanji 身.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "所長|しょちょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “head (of an office, laboratory, etc.); chief”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 所=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "賞金|しょうきん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “prize money; monetary award; reward”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 賞=N2.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "上院|じょういん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Upper-house politics term is specialized and not learner-core for N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 院=N4.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "乗用車|じょうようしゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: passenger-car term uses 乗 and 用 as N4 support and is more formal than N5 car vocabulary. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 乗=N4; harder support kanji 用=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "食品|しょくひん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: food-products vocabulary is useful but 品=N4 and fits the N4 food/domain lane. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 品=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "食料|しょくりょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: food/supplies word is useful but 料=N4 and should be reviewed with N4 food vocabulary. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 料=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "食糧|しょくりょう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Staple-food/provisions spelling is less learner-friendly than 食料 and contains 糧=N1. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 糧=N1.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "水準|すいじゅん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: level/standard vocabulary is abstract and 準=N2. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 準=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "水分|すいぶん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful water/moisture word for health and food contexts with clean 水 support. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "西側|にしがわ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: west-side word is useful but 側 is already governed in N3 and should stay with that side/position lane. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3. Support labels required: harder support kanji 側=N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "前期|ぜんき": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: first-term/preceding-period word uses 期=N2 and is not N5-core. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 期=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "短大|たんだい": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: junior-college word uses 短=N4 and is education-specific beyond N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 短=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "知人|ちじん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: acquaintance is useful social vocabulary, but 知=N4 and belongs in N4 review. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 知=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "中旬|ちゅうじゅん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Mid-month旬 term is calendar-specific and too fine-grained for N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 旬=N1.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "著書|ちょしょ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Authored-work noun is book-domain formal vocabulary beyond N5 learner need. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 著=N2.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "朝日|あさひ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Morning-sun/Asahi ambiguity risks proper-name confusion and is weaker than core weather/time rows. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 朝=N4.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "当時|とうじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: at-that-time expression is common but 当=N3 and belongs in higher-level time vocabulary. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3. Support labels required: harder support kanji 当=N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "当日|とうじつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: day-of/event-day word is useful but 当=N3 and should be reviewed in N3 time vocabulary. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3. Support labels required: harder support kanji 当=N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "同月|どうげつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “the same month”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 同=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "同日|どうじつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “the same day”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 同=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "同年|どうねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “that year; same year; same age”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 同=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "日夜|にちや": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “day and night; around the clock; always; constantly”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 夜=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "年内|ねんない": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “remainder of the year; rest of the year”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 内=N2.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "年末|ねんまつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: year-end is useful but 末=N3 and belongs in N3 seasonal/time review. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3. Support labels required: harder support kanji 末=N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "年来|ねんらい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “of long standing; long-pending; long-cherished; for years (past); over a period of years; for a long time”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "秘書|ひしょ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Secretary/secret-book senses and 秘=N1 make this a poor N5 expansion fit. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 秘=N1.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "百貨店|ひゃっかてん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: department store is travel/shopping useful, but 貨=N2 and 店=N4 require higher-level support review. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 貨=N2; harder support kanji 店=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "本部|ほんぶ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “headquarters; head office; main office”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 部=N4.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "本塁打|ほんるいだ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Baseball home-run term is domain-specific and not N5-core. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 塁=N1; harder support kanji 打=N3.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "翌日|よくじつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: next-day word is useful but 翌=N2 and should be reviewed above N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 翌=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "留学|りゅうがく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: study-abroad word is learner-useful but 留=N3 and should be reviewed in N3 education/travel vocabulary. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3. Support labels required: harder support kanji 留=N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "例年|れいねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “average (normal, ordinary) year; every year; annually”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100. Support labels required: harder support kanji 例=N3.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "列車|れっしゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: train word is useful but 列=N3 and belongs in N3 transport review. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3. Support labels required: harder support kanji 列=N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "連日|れんじつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: day-after-day expression is common but 連=N3 and not N5-core. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3. Support labels required: harder support kanji 連=N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "來月|らいげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Old-character variant duplicates the normal 来月 identity and should not enter N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: outside-JLPT support kanji 來.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "來年|らいねん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Old-character variant duplicates the normal 来年 identity and should not enter N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: outside-JLPT support kanji 來.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "學校|がっこう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Old-character variant duplicates the normal 学校 identity and should not enter N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: outside-JLPT support kanji 學.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "休学|きゅうがく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: leave-of-absence school word is useful but conceptually higher than N5 school basics. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "休校|きゅうこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: school-closure word is useful but belongs after core N5/N4 school vocabulary. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "土間|どま": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Dirt-floor/parterre word is culturally/domain-specific and low learner value for N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "二人前|ににんまえ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful restaurant quantity expression for two portions, with concrete 二・人・前 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "年長|ねんちょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “senior; older; third-year kindergarten student”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "母国語|ぼこくご": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful native-language word for learners living/traveling in Japan, with clean 母・国・語 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "名月|めいげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Harvest-moon/lunar-calendar word is seasonal/cultural and not N5-core. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "一年間|いちねんかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful one-year duration word that complements 年間 and reinforces 一・年・間. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "何日|なんにち": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core what-day/how-many-days question word with clean 何 and 日 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "何年|なんねん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core what-year/how-many-years question word with clean 何 and 年 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "学校名|がっこうめい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: school-name word is transparent but lower utility than school/student rows. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "午前中|ごぜんちゅう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: very useful during-the-morning expression with clean 午・前・中 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "女子高|じょしこう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: girls-high-school abbreviation is specific and lower utility than student/school rows. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "一書|いっしょ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: One-letter/one-book identity is rare and risks confusion with 一緒/together. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "雨後|うご": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: After-rain literary-style word is not high-value N5 expansion vocabulary. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "雨中|うちゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: in-the-rain word is valid but less useful than 大雨 and weather basics. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "下校|げこう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: school-domain word for leaving school, concrete and useful enough for review after core school words. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "学友|がくゆう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: school friend is useful but less common/modern than 友だち and school rows. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "校外|こうがい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: off-campus word is useful but not first-pass N5 compared with 下校/学校 rows. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "三食|さんしょく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful three-meals expression with clean 三 and 食 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "女学生|じょがくせい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: school/person word that reinforces 女・学・生; Silver must review whether 女子学生 or 学生 is the better learner-facing note. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "小金|こがね": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: small-sum-of-money word is less useful than core money/quantity rows. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "上出来|じょうでき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: good-performance idiom is useful but not transparent enough for first N5 common-pool pass. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "上水|じょうすい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Water-supply/tap-water technical noun is weaker than 水 and 飲み水-style vocabulary. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "水生|すいせい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Aquatic biology adjective/noun is specialized and not N5-core. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "生水|なまみず": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: travel-useful unboiled-water word with clean 生 and 水 reinforcement; needs careful example and safety framing. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "入校|にゅうこう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: valid dictionary/commonness evidence for “admission (to a school); entrance; enrolment; enrollment”, but weaker for first-pass N5 learner utility than the kept rows or needs later variant/domain comparison. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "白水|しろみず": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Rice-wash-water sense is too narrow for N5 expansion. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "八百長|やおちょう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Match-fixing term is idiomatic/domain-specific and not N5-core. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "話中|はなしちゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: busy-phone variant is lower priority than 話し中. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "気に入り|きにいり": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred during N5 dictionary-common-pool Silver draft review: JMdict/commonness support is present, but the beginner-facing noun pattern is weaker than the more natural お気に入り surface, and the drafted example did not meet the natural learner-card bar. Source level remains unverified; learner utility score alone is not approval.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Reconsider only through a later explicit review if a natural exact 気に入り|きにいり learner example is accepted or a separate お気に入り|おきにいり candidate is queued."
+      },
+      "校しゃ|こうしゃ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Mixed-kana source row is weaker than clean 校舎 review and should not be promoted as-is. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "天下り|あまくだり": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Government-to-private-sector employment term is political/business-domain vocabulary, not N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "日ごろ|ひごろ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common everyday/habitual time word with learner utility despite mixed-kana spelling. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "日どり|ひどり": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Fixed-date word is less common and weaker than 日付/日程-style review. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "一ヵ月|いっかげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Alternate one-month spelling is variant clutter; keep 一か月 for first review. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "一カ月|いっかげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Alternate one-month spelling is variant clutter; keep 一か月 for first review. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "一か月|いっかげつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: best beginner-friendly one-month spelling among the one-month variants in this queue; defer the alternate spellings. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "一ヶ月|いっかげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Alternate one-month spelling is variant clutter; keep 一か月 for first review. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "一ケ月|いっかげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Alternate one-month spelling is variant clutter; keep 一か月 for first review. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "山分け|やまわけ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Equal-split/profit-sharing word is not core N5 learner vocabulary. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "大入り|おおいり": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Full-house/large-attendance word is event-domain vocabulary and low N5 utility. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "父の日|ちちのひ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: holiday name is recognizable but proper/seasonal; defer behind everyday family words. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "母の日|ははのひ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: holiday name is recognizable but proper/seasonal; defer behind everyday family words. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "話し中|はなしちゅう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful busy-phone/status expression; keep this cleaner spelling and defer お話し中/話中 variants. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "お話し中|おはなしちゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: polite busy-phone variant is lower priority than 話し中. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "さ来月|さらいげつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: month-after-next is useful, but mixed-kana さ来月 should wait for cleaner 再来月/さらいげつ policy review. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "さ来年|さらいねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: year-after-next mixed-kana row was already deferred/rejected in the extra-source lane; keep out of first common-pool pass. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "お時間|おじかん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: polite time expression is useful but lower priority than core time nouns. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "お天気|おてんき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: polite weather variant is useful but should wait until plain 天気/weather coverage is compared. Source level remains unverified; learner utility 81/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "一周年|いっしゅうねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: one-year anniversary is useful but 周=N2 and lower priority than one-year duration rows. Source level remains unverified; learner utility 80/100. Support labels required: harder support kanji 周=N2.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "夏時間|なつじかん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Daylight-saving-time term is regional/policy-specific and not N5-core. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 夏=N4.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "御話中|おはなしちゅう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 御 spelling variant is unnecessary clutter next to cleaner 話し中. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 御=N2.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "今後|こんご": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common from-now-on expression with clean 今 and 後 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 80/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "四畳半|よじょうはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Four-and-a-half-tatami room term is too culturally specific for this N5 queue. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 畳=N2.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "四輪車|よんりんしゃ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Formal automobile term is weaker than 車/自動車-style learner vocabulary. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 輪=N3.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "食中毒|しょくちゅうどく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: food-poisoning word is useful travel/safety vocabulary but 毒=N2 and should be reviewed above N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 毒=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "人生|じんせい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: common high-utility life word with clean 人 and 生 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 80/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "水蒸気|すいじょうき": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: steam/water-vapor word is science-adjacent and 蒸=N2. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2. Support labels required: harder support kanji 蒸=N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "大気|たいき": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Atmosphere/air word is science/abstract vocabulary beyond N5 expansion. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "中国人|ちゅうごくじん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful nationality/person word with clean 中・国・人 reinforcement; Silver must keep example neutral and learner friendly. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 80/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "長女|ちょうじょ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: useful family word for eldest daughter with clean 長 and 女 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 80/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "低学年|ていがくねん": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: lower-grade school term uses 低=N4 and is less core than student/school words. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4. Support labels required: harder support kanji 低=N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "電子|でんし": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: electronic/electron vocabulary is common but abstract and better reviewed above N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "年金|ねんきん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: pension vocabulary is common life vocabulary but adult/domain-specific for N5. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "白書|はくしょ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Government white-paper term is specialized and not N5 learner vocabulary. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "盲学校|もうがっこう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: School-for-the-blind term is too specific for N5 expansion and needs sensitive higher-level review if ever used. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue. Support labels required: harder support kanji 盲=N1.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "一しょ|いっしょ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Mixed-kana together identity is weaker than clean 一緒 review and risks variant clutter. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "出かせぎ|でかせぎ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Migrant/working-away-from-home word is adult socioeconomic vocabulary beyond N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "食べもの|たべもの": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core food word with beginner-friendly mixed-kana spelling and clean 食 reinforcement. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 80/100.",
+        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+      },
+      "水入らず|みずいらず": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Private-family/friends idiom is not transparent enough for N5 expansion. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "書下ろす|かきおろす": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Original-work writing verb is publishing-domain vocabulary beyond N5. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "日一日と|ひいちにちと": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Day-by-day phrase is phrase-like and low utility for N5 word-card expansion. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "とび出し|とびだし": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the first N5 dictionary-common-pool Silver review: jumping/running-out safety word is useful but mixed-kana and lower priority than core movement verbs. Source level remains unverified; learner utility 80/100.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
+      },
+      "長い間|ながいあいだ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Phrase-like adjective+noun row is blocked by identity policy; review clean 間/長い usage elsewhere, not this row. Exact JMdict/commonness evidence does not overcome the learner-fit or identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if a cleaner learner-facing surface appears."
+      },
+      "永年|ながねん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: many-years/long-time vocabulary is useful but formal, uses 永=N2, and is weaker for beginner learner utility than simpler 年/年間 rows. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "空間|くうかん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: common physical space/room vocabulary, useful in daily settings, with a concrete example path; 空=N4 must be visibly labeled rather than blocking the row. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "年々|としどし": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the next N5 dictionary-common-pool Silver queue: exact identity is valid, but としどし is the lower-priority reading beside cleaner 年々|ねんねん for the same written form and meaning. Source level remains unverified; learner utility score alone is not approval.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Revisit only after higher-value N5 keep candidates are exhausted or a later review accepts a cleaner learner-facing use."
+      },
+      "年々|ねんねん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: common year-by-year expression with clean 年 reinforcement and no support-label blocker. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "本国|ほんごく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the next N5 dictionary-common-pool Silver queue: home-country meaning is useful, but the row is broad/formal and overlaps cleaner country/language rows already available for N5 expansion. Source level remains unverified.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Revisit only after higher-value N5 keep candidates are exhausted or a later review accepts a cleaner learner-facing use."
+      },
+      "本店|ほんだな": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: pinned JMdict exposes 本店|ほんだな, but the learner-facing identity is suspicious because the head-office/main-store sense belongs to the normal 本店|ほんてん reading, while ほんだな strongly conflicts with bookshelf vocabulary. Do not build a beginner card on this identity anomaly.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if the blocking issue is resolved."
+      },
+      "友達|ともだち": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: core friend vocabulary in the common kanji spelling; 達=N3 is a visible support-label need, not a blocker for this high-utility row. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "友達|トモダチ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: katakana トモダチ reading is not the clean beginner card identity when 友達|ともだち is available and stronger. Exact dictionary/commonness support does not overcome the learner-fit problem.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if the blocking issue is resolved."
+      },
+      "翌年|よくとし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: following-year vocabulary uses 翌=N2 and is lower beginner value than 来年 or the current N5 year rows. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "翌年|よくねん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: formal following-year vocabulary uses 翌=N2 and is lower beginner value than 来年 or the current N5 year rows. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "一昨年|いっさくねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the next N5 dictionary-common-pool Silver queue: year-before-last is useful, but this exact reading has a same-written governed alternate and 昨=N3 support; review only after cleaner unique time words are exhausted.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Revisit only after higher-value N5 keep candidates are exhausted or a later review accepts a cleaner learner-facing use."
+      },
+      "小中学生|しょうちゅうがくせい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from the next N5 dictionary-common-pool Silver queue: elementary-and-middle-school-pupils is understandable but narrow after separate 小学生 and 中学生 cards; not a priority N5 enhancement row. Source level remains unverified.",
+        "nextStep": "Keep as recorded N5 common-pool backlog. Revisit only after higher-value N5 keep candidates are exhausted or a later review accepts a cleaner learner-facing use."
+      },
+      "四六時中|しろくじちゅう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: around-the-clock idiom is useful but idiomatic and beyond beginner vocabulary despite simple numerals. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "何時ごろ|いつごろ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: highly useful about-what-time expression with clean 何 and 時 reinforcement and easy natural examples. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 80/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "絵本|えほん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: picture-book vocabulary is concrete, common, and learner-friendly; 絵=N3 must be visibly labeled rather than blocking the row. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "気象|きしょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: meteorological/weather-conditions vocabulary is more formal than 天気 and uses 象=N2. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "記念日|きねんび": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: anniversary/memorial-day vocabulary is useful for daily life and calendar talk; 記 and 念=N3 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "休業|きゅうぎょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: temporary-closure/signage vocabulary is practical for shops, schools, and travel; 業=N4 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "求人|きゅうじん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: job-vacancy vocabulary is useful adult-life vocabulary but 求=N3 and the concept fits later employment expansion. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "給食|きゅうしょく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: school-lunch vocabulary is concrete and Japan-relevant; 給=N3 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "金権|きんけん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: power-of-money/financial-influence vocabulary is political/economic and not learner-friendly N5 enhancement even with JMdict commonness support.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if the blocking issue is resolved."
+      },
+      "金銭|きんせん": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: money/cash vocabulary is formal and uses 銭=N1; N5 already has cleaner money rows for beginner utility. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N1.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "現時点|げんじてん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: present-point/at-this-time expression is formal and uses 現=N3 plus 点=N2. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "故人|こじん": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: deceased-person vocabulary is sensitive/formal and uses 故=N1; it is not an N5 enhancement priority. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N1.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "後輩|こうはい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: junior/school-work relationship vocabulary is culturally useful in Japan; 輩=N1 must be visibly labeled and examples must stay neutral. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "校舎|こうしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: school-building vocabulary is concrete and fits the school domain; 舎=N1 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "高等|こうとう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: high-grade/high-class vocabulary is abstract and usually useful in compounds such as 高等学校; 等=N3 support places review later. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "国道|こくどう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: national-road/highway vocabulary is concrete travel/signage Japanese; 道=N4 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "今秋|こんしゅう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: this-autumn vocabulary is useful but seasonal and formal, and 秋=N4 is the real anchor. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "昨年度|さくねんど": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: fiscal/academic previous-year vocabulary is administrative and uses 昨=N3 plus 度=N4. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "残高|ざんだか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: bank-balance vocabulary is practical for daily life in Japan; 残=N3 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "車内|しゃない": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: inside-train/car/bus vocabulary is highly useful for transit and announcements; 内=N2 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "出張|しゅっちょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: business-trip vocabulary is common adult-life Japanese and reinforces 出; 張=N1 must be visibly labeled and example choice must stay concrete. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "書簡|しょかん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: letter/epistle vocabulary is formal/literary, has a cleaner everyday alternative 手紙, and uses 簡=N2. It is not a learner-friendly N5 enhancement row.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if the blocking issue is resolved."
+      },
+      "書翰|しょかん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 書翰 is a formal/obscure alternate for letter/correspondence with outside-JLPT 翰 and a cleaner everyday alternative 手紙.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if the blocking issue is resolved."
+      },
+      "新車|しんしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: new-car vocabulary is concrete and useful in transport/commerce contexts; 新=N4 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "進学|しんがく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: advancing-to-the-next-school vocabulary is useful in education contexts; 進=N4 must be visibly labeled and the example must stay concrete. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "水質|すいしつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: water-quality vocabulary is useful but more technical/inspection-oriented and uses 質=N4. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "前夜|ぜんや": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: previous-night/eve vocabulary is useful for time sequencing; 夜=N4 must be visibly labeled and the card should avoid event-only overreach. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "走行|そうこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: vehicle-running/traveling vocabulary is signage/technical-adjacent and uses 走=N4. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "即時|そくじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: immediate/real-time vocabulary is formal and uses 即=N1. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N1.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "即日|そくじつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: same-day vocabulary is formal/signage-oriented and uses 即=N1. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N1.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "中華|ちゅうか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: Chinese-food/China vocabulary is common in food and city-life contexts; 華=N1 must be visibly labeled and the example should use the food sense. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "天候|てんこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: weather-condition vocabulary is more formal than 天気 and uses 候=N3. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N3.",
+        "nextStep": "Route only through the N3 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "登校|とうこう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: going-to-school vocabulary pairs naturally with kept 下校 and is concrete school-domain Japanese; 登=N3 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "当分|とうぶん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: for-the-time-being vocabulary is common and useful for everyday plans; 当=N3 must be visibly labeled and the example must keep the sense concrete. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "同校|どうこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: same-school/said-school vocabulary is formal and narrow; 同=N4 is the stronger level anchor. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N4.",
+        "nextStep": "Route only through the N4 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      },
+      "背中|せなか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: back-of-body vocabulary is concrete, common, and highly learner-useful; 背=N3 must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "夜間|やかん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: nighttime vocabulary is useful for schedules/signage; 夜=N4 must be visibly labeled and the card should avoid kettle homograph confusion by exact reading/context. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "間もなく|まもなく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool next-shortlist candidate kept for future Silver review: soon/shortly expression is common, useful, exampleable, and reinforces 間 without support-label blockers. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 79/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "出稼ぎ|でかせぎ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: migrant/working-away vocabulary is specialized adult socioeconomic vocabulary and uses 稼=N1. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N1.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to add this exact identity; keep the source-level claim unverified label and normal Silver/downstream gates."
+      }
     }
   },
   "N4": {

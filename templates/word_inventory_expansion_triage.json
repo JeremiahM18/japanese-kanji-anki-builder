@@ -4350,6 +4350,1179 @@
         "reason": "Common intransitive break/crack/split verb with exact JMdict verification and strong priority support, but the only kanji anchor is N3 割.",
         "nextStep": "Route only through the N3 word contract and starter-data review; distinguish it from transitive 割る before promotion."
       }
+    },
+    "tanos-n4-vocab": {
+      "見物|けんぶつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid Tanos N4 extra-source row with JMdict priority support, but sightseeing/attraction as 見物 is less central than simpler travel words and can feel formal.",
+        "nextStep": "Reconsider in a travel/culture expansion only after broader N4 daily-life vocabulary is handled; keep the Source level claim unverified label if promoted."
+      },
+      "工業|こうぎょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid Tanos N4 extra-source industry word with JMdict priority support, but manufacturing/industrial vocabulary is domain-heavy and lower learner utility than everyday N4 candidates.",
+        "nextStep": "Defer until a later work/school domain expansion; keep the Source level claim unverified label if promoted."
+      },
+      "産業|さんぎょう": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Valid Tanos N4 extra-source industry word with JMdict priority support, but it is more abstract/economic than the first N4 learner enhancement should prioritize.",
+        "nextStep": "Reconsider in a work/society vocabulary expansion; keep the Source level claim unverified label if promoted."
+      },
+      "新聞社|しんぶんしゃ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid Tanos N4 extra-source row, but 新聞 already covers the core learner word and newspaper company is a narrower institution noun.",
+        "nextStep": "Reconsider only after broader N4 daily-life vocabulary is handled; keep the Source level claim unverified label if promoted."
+      },
+      "引き出す|ひきだす": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common practical Tanos N4 extra-source verb for withdraw/draw out with exact JMdict priority support, clean N4 引 plus easier 出 support, and no governed exact duplicate.",
+        "nextStep": "Promote only through a future N4 word v2 extra-source Silver batch with the Source level claim unverified label, a concrete bank/withdraw or draw-out example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "楽む|たのしむ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Tanos extra-source row uses the wrong/incomplete spelling for the governed useful N4 verb 楽しむ|たのしむ.",
+        "nextStep": "Do not promote this exact source row; keep the governed 楽しむ|たのしむ card as the learner-facing identity."
+      },
+      "間に合う|まにあう": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Very useful Tanos N4 extra-source expression with JMdict priority support, but it is particle-shaped and should not enter the default word deck until expression-card policy is explicit.",
+        "nextStep": "Reconsider in an expression/phrase governance pass, or promote only after policy explicitly allows this identity with the Source level claim unverified label."
+      },
+      "起す|おこす": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Tanos extra-source row uses the less learner-friendly okurigana variant 起す while governed N4 起こす|おこす already teaches the useful wake/cause verb.",
+        "nextStep": "Do not promote this exact variant row; keep 起こす|おこす as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "集る|あつまる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Tanos extra-source row uses the uncommon/ambiguous 集る spelling while governed N4 集まる|あつまる already teaches the useful gather verb.",
+        "nextStep": "Do not promote this exact variant row; keep 集まる|あつまる as the governed card unless a future spelling-variant policy says otherwise."
+      },
+      "さ来月|さらいげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Tanos extra-source spelling is mixed-kana and weaker than the usual 再来月 identity; promoting this exact row would add avoidable alternate-spelling clutter.",
+        "nextStep": "Do not promote this exact source row; review 再来月 separately only if a later pass accepts the harder 再 label."
+      },
+      "さ来週|さらいしゅう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Tanos extra-source spelling is mixed-kana and weaker than the usual 再来週 identity; promoting this exact row would add spelling clutter.",
+        "nextStep": "Do not promote this exact source row; review 再来週 separately only if a later pass accepts the harder 再 label."
+      },
+      "為|ため": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos extra-source row has dictionary/commonness support, but the standalone kanji spelling 為 for ため is kana-first and grammar/function-word-like; it is not a clean starter Silver word despite the N1 kanji anchor.",
+        "nextStep": "Reconsider only in a grammar/function-word or alternate-spelling pass with explicit learner-value evidence; keep the Source level claim unverified label if promoted."
+      },
+      "一生懸命|いっしょうけんめい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common utmost-effort expression with exact Tanos N4 extra-source discovery and JMdict priority support; 命 provides the N3 anchor while 懸 remains a harder N1 support-kanji label.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; keep 懸 labeled as harder support and verify expression-card fit before promotion."
+      },
+      "下宿|げしゅく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Boarding/lodging noun has exact Tanos N4 extra-source discovery and JMdict priority support, with N3 宿 as the target anchor and N5 下 as easier support; existing 宿題/合宿 do not cover this lodging identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete lodging/boarding-house example and visible 下=N5 support labeling."
+      },
+      "家内|かない": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Tanos extra-source row is source-listed and dictionary verified, but socially nuanced/dated as my wife/housewife; not a clean learner-value addition for the first N4 enhancement pass.",
+        "nextStep": "Reconsider only in a family/social-register vocabulary pass; keep 内=N2 labeled if ever promoted."
+      },
+      "課長|かちょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common section-manager/workplace title with exact Tanos N4 extra-source discovery and JMdict priority support, with N3 課 as the target anchor and N5 長 as easier support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a straightforward workplace hierarchy example."
+      },
+      "看護婦|かんごふ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos extra-source row has JMdict verification and priority support, but the learner-facing term is gendered/older as female nurse; modern nurse vocabulary should be reviewed before routing this source row into a starter lane.",
+        "nextStep": "Reconsider only in a medical/workplace vocabulary pass that compares 看護婦 with a modern nurse term such as 看護師 and records the register decision explicitly."
+      },
+      "汽車|きしゃ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos extra-source row has JMdict verification and priority support, but the learner-facing meaning is steam/non-electric train and existing 車/電車/乗車 coverage handles more central train vocabulary.",
+        "nextStep": "Reconsider only in a transportation-history or rail vocabulary pass, and do not let the N4 source label override the N1 汽 placement."
+      },
+      "季節|きせつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common season noun with exact Tanos N4 extra-source discovery and JMdict priority support, with N2 季 as the target anchor and N1 節 as support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a plain season/time-of-year example and visible 節=N1 support labeling."
+      },
+      "技術|ぎじゅつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common technology/technique/skill noun with exact Tanos N4 extra-source discovery and JMdict priority support, with N3 術 as the target anchor and N2 技 as support; related 美術館/芸術/技師 do not cover this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple technology or skill example and visible 技=N2 support labeling."
+      },
+      "客|きゃく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common guest/customer noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 客 and existing 観客 does not cover this standalone customer/guest identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete store/customer or guest example."
+      },
+      "競争|きょうそう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common competition/contest noun with exact Tanos N4 extra-source discovery and JMdict priority support, with N3 争 as the target anchor and N2 競 as support; existing 競走 is a different same-reading race word.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a competition example that distinguishes 競争 from 競走."
+      },
+      "鏡|かがみ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common mirror noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 鏡 and existing 眼鏡 does not cover the standalone mirror word.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a basic mirror example if the N1 lane accepts this everyday word for 鏡 coverage."
+      },
+      "隅|すみ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common corner/nook noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 隅 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete room/corner example."
+      },
+      "形|かたち": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common shape/form noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 形 and no existing governed row covers this standalone reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple shape/form example."
+      },
+      "経済|けいざい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common economy/economics noun with exact Tanos N4 extra-source discovery and JMdict priority support, but both kanji anchors are N3 and related 経営/経験/経由 do not cover this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a plain economy/finance example."
+      },
+      "警察|けいさつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common police noun with exact Tanos N4 extra-source discovery and JMdict priority support, but both kanji anchors are N3 and related 観察/警告 do not cover this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a plain police/police-station example."
+      },
+      "血|ち": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common blood noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 血.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple health/body-context example."
+      },
+      "絹|きぬ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Concrete silk noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 絹 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a simple material/fabric example if the N1 lane accepts this concrete word for 絹 coverage."
+      },
+      "湖|みずうみ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common lake noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 湖.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple lake/water example."
+      },
+      "講義|こうぎ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common lecture noun/verbal noun with exact Tanos N4 extra-source discovery and JMdict priority support, with N2 講 as the target anchor and N1 義 as support; related 義務/講演 do not cover this classroom lecture identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple lecture/class example and visible 義=N1 support labeling."
+      },
+      "講堂|こうどう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid Tanos N4 extra-source school/building word, but less broadly useful than classroom/travel/daily-life N4 candidates and includes 講=N2.",
+        "nextStep": "Reconsider in a school-facilities expansion; keep 講=N2 labeled if promoted."
+      },
+      "郊外|こうがい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common suburb/outskirts noun with exact Tanos N4 extra-source discovery and JMdict priority support, with N2 郊 as the target anchor and N5 外 as easier support; existing 外/以外/外交 do not cover this word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a plain suburb/outskirts example and visible 外=N5 support labeling."
+      },
+      "高等学校|こうとうがっこう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Clean Tanos N4 extra-source school word with dictionary support, but governed 高校|こうこう already teaches the learner-facing high-school identity and 高等学校 is the longer formal surface with 等=N3 support.",
+        "nextStep": "Reconsider only in a school-word or formal-name expansion; keep 等=N3 and the Source level claim unverified label if promoted."
+      },
+      "国際|こくさい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common international noun/adjectival noun with exact Tanos N4 extra-source discovery and JMdict priority support, with N3 際 as the target anchor and N5 国 as easier support; related 国/外国/交際/実際 do not cover this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a plain international example and visible 国=N5 support labeling."
+      },
+      "砂|すな": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Very common sand/grit noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 砂 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a literal sand example."
+      },
+      "最後|さいご": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common last/end/conclusion noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 最 as the target anchor and N5 後 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a plain last/end example and visible 後=N5 support labeling."
+      },
+      "坂|さか": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common slope/hill noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 坂 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete hill/slope example."
+      },
+      "残念|ざんねん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common regrettable/unfortunate/disappointing na-adjective with exact Tanos N4 extra-source discovery and strong JMdict priority support, and both kanji anchors are N3 with no existing governed duplicate.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple disappointing/unfortunate example."
+      },
+      "指|ゆび": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common finger/toe noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 指.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple body-part example."
+      },
+      "指輪|ゆびわ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common ring noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, and both kanji anchors are N3 指 and 輪.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a finger-ring example."
+      },
+      "枝|えだ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common branch/twig noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 枝.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete tree-branch example."
+      },
+      "辞典|じてん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common dictionary/lexicon noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 辞 as the target anchor and N1 典 as support; governed 辞書|じしょ does not cover this exact identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple dictionary-use example and visible 典=N1 support labeling."
+      },
+      "失敗|しっぱい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common failure/mistake noun/verbal noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, and both kanji anchors are N3 with no existing governed duplicate.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple fail/make-a-mistake example."
+      },
+      "受付|うけつけ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Reception desk noun has exact Tanos N4 extra-source discovery and JMdict priority support; 付 provides the N3 anchor while 受 remains a harder N2 support-kanji label, and the source gloss contains noise that must not be copied.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; use a clean reception-desk/information-desk meaning and keep 受 labeled as harder support."
+      },
+      "舟|ふね": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Dictionary-backed boat/ship noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 舟; future review should distinguish 舟 from the more general 船 where needed.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a small-boat example if promoted."
+      },
+      "女性|じょせい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common woman/female noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 性 as the target anchor and N5 女 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a neutral woman/female example and visible 女=N5 support labeling."
+      },
+      "将来|しょうらい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Very common future/prospects noun-adverb with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N2 将 as the target anchor and N5 来 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a future/prospects example and visible 来=N5 support labeling."
+      },
+      "畳|たたみ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common tatami-mat noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 畳 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete tatami-room or tatami-mat example."
+      },
+      "人形|にんぎょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common doll/puppet noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N2 形 as the target anchor and N5 人 as easier support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with visible 人=N5 support labeling."
+      },
+      "水泳|すいえい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common swimming noun-verbal noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N2 泳 as the target anchor and N5 水 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple swimming example and visible 水=N5 support labeling."
+      },
+      "数学|すうがく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common mathematics noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 数 as the target anchor and N5 学 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a school/math example and visible 学=N5 support labeling."
+      },
+      "星|ほし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common star/heavenly-body noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 星.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple star/sky example."
+      },
+      "先輩|せんぱい": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Very common school/work senior noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N1 輩 as the target anchor and N5 先 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a school/work hierarchy example and visible 先=N5 support labeling."
+      },
+      "線|せん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Very common line/wire/route noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 線 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple line/wire example; avoid overloading the starter card with all route/ray senses."
+      },
+      "祖母|そぼ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common formal grandmother noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 祖 as the target anchor and N5 母 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a family example and visible 母=N5 support labeling."
+      },
+      "息子|むすこ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common son noun with exact Tanos N4 extra-source discovery and strong JMdict priority support; 息 is the N3 target anchor while 子 is easier N5 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a family-member example and visible 子=N5 support labeling."
+      },
+      "棚|たな": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common shelf/rack noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N1 棚 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a concrete shelf/rack example."
+      },
+      "暖房|だんぼう": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common indoor-heating noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but both kanji anchors are N1 暖 and 房.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; if an earlier placement is ever considered, require explicit learner-fit justification and visible N1 support labeling."
+      },
+      "男性|だんせい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common man/male noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 性 as the target anchor and N5 男 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a neutral man/male example and visible 男=N5 support labeling."
+      },
+      "虫|むし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common insect/bug noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 虫.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete insect/bug example."
+      },
+      "丁寧|ていねい": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common polite/careful adjective with exact Tanos N4 extra-source discovery and strong JMdict priority support, but both kanji anchors are N1 丁 and 寧.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; any earlier placement would need explicit learner-fit justification and visible N1 support labeling."
+      },
+      "泥棒|どろぼう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common thief/burglar noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but both kanji anchors are N2 泥 and 棒.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple crime/safety example."
+      },
+      "適当|てきとう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common suitable/appropriate and casual careless/perfunctory adjective with exact Tanos N4 extra-source discovery and strong JMdict priority support, but both kanji anchors are N3 適 and 当.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose the learner-facing sense deliberately because 適当 can mean either appropriate or careless depending on context."
+      },
+      "展覧会|てんらんかい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Useful Tanos N4 extra-source culture word with dictionary/commonness support, but it carries two N1 kanji and is less urgent than simpler museum/exhibition vocabulary for the current learner expansion.",
+        "nextStep": "Reconsider in a culture/museum expansion after higher-priority daily-life candidates; keep the Source level claim unverified label and visible 展=N1/覧=N1 support if promoted."
+      },
+      "点|てん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common point/score/dot noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 点.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; pick one concrete learner-facing sense such as point/score rather than overloading the card."
+      },
+      "電灯|でんとう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Dictionary-backed electric-light noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the target anchor is N2 灯 and 電 is easier N5 support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; confirm learner value against more common light/lamp wording before promotion."
+      },
+      "電報|でんぽう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Exact Tanos N4 extra-source row verifies telegram through JMdict and shows priority support, but the word is dated/lower everyday utility; the target anchor is N3 報 and 電 is easier N5 support.",
+        "nextStep": "Route only as a low-priority N3 backlog row; promote only if a later communication/history review keeps telegram as learner-useful."
+      },
+      "途中|とちゅう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common midway/on-the-way expression with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the target anchor is N2 途 and 中 is easier N5 support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete en-route or middle-of-action example."
+      },
+      "島|しま": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Very common island noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 島 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a literal island example; do not teach territory/turf senses in the starter card."
+      },
+      "日記|にっき": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common diary/journal noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 記 as the target anchor and N5 日 as easier support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 日=N5 support labeling."
+      },
+      "背中|せなか": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common body-back noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 背 as the target anchor and N5 中 as easier support; no existing governed row covers this word identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple body/back example and visible 中=N5 support labeling."
+      },
+      "倍|ばい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common double/times noun-suffix with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 倍.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a numeric comparison example."
+      },
+      "髪|かみ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common head-hair noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 髪 and existing 白髪 does not cover the standalone かみ reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a plain hair example."
+      },
+      "反対|はんたい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common opposition/opposite word with exact Tanos N4 extra-source discovery and strong JMdict priority support, but both kanji anchors are N3 反 and 対.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose one learner-facing sense such as opposition or opposite before promotion."
+      },
+      "飛行場|ひこうじょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Valid Tanos N4 extra-source airport/airfield word with dictionary support, but 空港 is the more modern/common learner target and 飛行場 is less urgent.",
+        "nextStep": "Do not promote before reviewing a better airport word identity; keep the Source level claim unverified label if this exact row is ever reconsidered."
+      },
+      "布団|ふとん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common futon/Japanese bedding noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but both kanji anchors are N2 布 and 団.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a sleep/bedroom example."
+      },
+      "複雑|ふくざつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common complex/complicated word with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 雑 as the target anchor and N2 複 as harder support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 複=N2 support labeling."
+      },
+      "壁|かべ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common wall noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N1 壁 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a concrete wall example if the N1 lane accepts this everyday word for 壁 coverage."
+      },
+      "変|へん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common strange/odd adjectival noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 変.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear strange/weird example before broader change/incident senses."
+      },
+      "法律|ほうりつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common law/legislation noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, with N3 法 as the target anchor and N2 律 as harder support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 律=N2 support labeling."
+      },
+      "僕|ぼく": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common masculine first-person pronoun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N1 僕.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; any earlier placement would need explicit learner-fit justification and visible N1 support labeling."
+      },
+      "翻訳|ほんやく": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common translation noun/suru-verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but both kanji anchors are N1 翻 and 訳.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a written-translation example."
+      },
+      "夢|ゆめ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common dream/hope noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 夢.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose a dream or hope sense explicitly before promotion."
+      },
+      "毛|け": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common hair/fur noun has duplicate Tanos N4 extra-source gloss rows and one exact JMdict identity with strong priority support, but the only kanji anchor is N2 毛 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple hair/fur example that distinguishes it from 髪."
+      },
+      "木綿|もめん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common cotton-material noun with exact Tanos N4 extra-source discovery and strong JMdict priority support; 綿 is the N2 target anchor while 木 is easier N5 support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete cotton/fabric example."
+      },
+      "訳|わけ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Very common reason/meaning noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N1 訳 and the entry is sense-broad.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; choose a learner-facing reason or meaning sense before promotion."
+      },
+      "予定|よてい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common plan/schedule noun with exact Tanos N4 extra-source discovery and strong JMdict priority support; 予 is the N3 target anchor while 定 is harder N2 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 定=N2 support labeling."
+      },
+      "予約|よやく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common reservation/booking noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, and both kanji anchors are N3 予 and 約.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a hotel, restaurant, or appointment reservation example."
+      },
+      "葉|は": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common leaf noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 葉.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple plant/tree example."
+      },
+      "裏|うら": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common back/reverse-side noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N3 裏 and existing 裏切り/裏切る cards do not cover this standalone identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear reverse-side/back example."
+      },
+      "歴史|れきし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Very common history noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, and both kanji anchors are N2 歴 and 史.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a school/history example."
+      },
+      "腕|うで": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common arm noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 腕.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete body-part example."
+      },
+      "億|おく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Useful large-number noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 億.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a plain number/money/counting example."
+      },
+      "御主人|ごしゅじん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos N4 extra-source row uses the harder kanji-prefix variant 御主人 while the governed learner-friendly identity ご主人|ごしゅじん already covers this polite spouse/social word.",
+        "nextStep": "Do not promote this exact variant row; keep the existing ご主人|ごしゅじん governed card as the learner-facing identity unless a future spelling-variant policy says otherwise."
+      },
+      "石|いし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common stone noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 石.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple stone/rock example."
+      },
+      "天気予報|てんきよほう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Useful weather-forecast word with exact Tanos N4 extra-source discovery and JMdict priority support, but its target anchors are N3 予 and 報 while 天 and 気 are easier support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 天=N5 and 気=N5 support labeling."
+      },
+      "壊す|こわす": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common transitive break/destroy verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 壊 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a simple break/destroy example that distinguishes it from 壊れる."
+      },
+      "壊れる|こわれる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common intransitive be-broken/break-down verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 壊 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a simple broken/not-working example that distinguishes it from 壊す."
+      },
+      "喜ぶ|よろこぶ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common be-delighted/be-glad verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 喜.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear glad/delighted example."
+      },
+      "久しぶり|ひさしぶり": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common long-time-no-see expression with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 久.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; keep the expression-style surface explicit instead of treating it as a mechanical kanji-reading card."
+      },
+      "決して|けっして": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common negative-polarity never/not-at-all adverb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 決 and existing 解決/決める/決る do not cover this adverb identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with an example that includes the required negative predicate."
+      },
+      "決める|きめる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common decide/choose verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 決 and existing 解決 does not cover this verb identity.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple decide/choose example."
+      },
+      "決る|きまる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Be-decided verb has exact Tanos N4 extra-source discovery and JMdict priority support, but 決る is an okurigana variant beside the cleaner 決まる surface and the only kanji anchor is N2 決.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; decide whether any promoted card should normalize to 決まる|きまる before creating learner-facing output."
+      },
+      "厳しい|きびしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common strict/severe adjective with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 厳 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a plain strict/severe example."
+      },
+      "細かい|こまかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common small/fine/detailed adjective with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 細 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a concrete small/fine-detail example."
+      },
+      "受ける|うける": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common receive/take-undergo verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 受.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple lesson/test or receive example."
+      },
+      "周り|まわり": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common surroundings/vicinity noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 周.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; compare with related 周辺 or 回り surfaces before promotion."
+      },
+      "柔らかい|やわらかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common soft/tender/flexible adjective with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 柔.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a physical soft/tender example before figurative flexibility senses."
+      },
+      "消しゴム|けしゴム": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common eraser noun with exact mixed-script Tanos N4 extra-source discovery, JMdict verification, and strong priority support, but the only kanji anchor is N3 消 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; preserve the mixed 消しゴム surface and katakana ゴム reading if promoted."
+      },
+      "飾る|かざる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Useful decorate/adorn verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 飾 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a plain decorate example."
+      },
+      "申し上げる|もうしあげる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common humble say/tell/express verb with exact Tanos N4 extra-source discovery and strong JMdict priority support; 申 is the N3 target anchor while 上 is easier N5 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; keep the humble register explicit and choose a say/tell or formal-greeting sense before promotion."
+      },
+      "盛ん|さかん": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common active/flourishing/popular na-adjective has exact Tanos N4 extra-source discovery, JMdict verification, and strong priority support, but the only kanji anchor is N1 盛 and the source gloss needs careful adjective-sense cleanup before card promotion.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with an active/flourishing example; do not preserve the rough source gloss as the final learner-facing meaning."
+      },
+      "騒ぐ|さわぐ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common make-noise/make-a-fuss verb with exact Tanos N4 extra-source discovery, JMdict verification, and strong priority support, but the only kanji anchor is N1 騒 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a simple noisy/fuss example."
+      },
+      "致す|いたす": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Valid humble do verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 致 and the register must be taught deliberately.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; require a polite-register example before promotion."
+      },
+      "漬ける|つける": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Dictionary-backed soak/pickle verb with exact Tanos N4 extra-source discovery, JMdict verification, and strong priority support, but the only kanji anchor is N1 漬.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; use a food/pickling example if later promoted."
+      },
+      "倒れる|たおれる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common collapse/fall-over/break-down verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 倒 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple fall/collapse example; avoid death/illness senses in the starter card."
+      },
+      "踏む|ふむ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common step-on/tread verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N1 踏.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; any earlier placement would need explicit learner-fit justification and visible N1 support labeling."
+      },
+      "彼ら|かれら": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common they/them pronoun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 彼 and existing 彼女 does not cover this plural pronoun identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a neutral plural-pronoun example."
+      },
+      "比べる|くらべる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common compare verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 比 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple compare example."
+      },
+      "必ず|かならず": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common always/without-fail adverb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 必 and existing 必ずしも does not cover this plain adverb identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple without-fail example."
+      },
+      "払う|はらう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common pay/brush-away verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 払.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; choose a payment example for first learner-facing promotion."
+      },
+      "沸かす|わかす": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common boil/heat-liquid verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 沸.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; distinguish it from intransitive 沸く before promotion."
+      },
+      "包む|つつむ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common wrap/envelop verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 包; exact reading must stay separate from 包む|くるむ.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a wrap/package example and explicit same-written reading separation."
+      },
+      "役に立つ|やくにたつ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Very useful Tanos N4 extra-source expression, but it is phrase-shaped and includes 役=N3; it should not enter the word deck without an explicit phrase/expression policy.",
+        "nextStep": "Reconsider in an expression deck or future phrase-governance pass; keep the Source level claim unverified label if promoted."
+      },
+      "遊び|あそび": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common play/amusement noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N3 遊.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; review alongside 遊ぶ so noun and verb coverage stays deliberate."
+      },
+      "踊り|おどり": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common dance noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 踊.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; review alongside 踊る so noun and verb coverage stays deliberate."
+      },
+      "落す|おとす": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos N4 extra-source row uses the compact okurigana variant 落す while the clean governed N3 identity 落とす|おとす already covers the useful drop/lose verb.",
+        "nextStep": "Do not promote this exact variant row; keep 落とす|おとす as the learner-facing identity unless a future spelling-variant policy says otherwise."
+      },
+      "落る|おちる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos N4 extra-source row uses the compact/awkward okurigana variant 落る while the clean governed N3 identity 落ちる|おちる already covers the useful fall/drop verb.",
+        "nextStep": "Do not promote this exact variant row; keep 落ちる|おちる as the learner-facing identity unless a future spelling-variant policy says otherwise."
+      },
+      "例えば|たとえば": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common for-example adverbial expression with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 例 and no existing governed row covers this written identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple example-introducing sentence; keep it as an adverbial expression, not a standalone kanji gloss."
+      },
+      "押し入れ|おしいれ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common built-in closet noun with exact Tanos N4 extra-source discovery and JMdict priority support; 押 provides the N3 anchor while 入 remains easier N5 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; keep 入 as support and use a concrete closet example."
+      },
+      "滑る|すべる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common slide/slip verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 滑 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a concrete slide/slip example; avoid examination-failure and joke-falling-flat senses in the starter card."
+      },
+      "乾く|かわく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common get-dry intransitive verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 乾 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple drying example."
+      },
+      "間違える|まちがえる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common make-a-mistake/get-wrong verb with exact Tanos N4 extra-source discovery and JMdict priority support; 違 is the N3 target anchor while 間 is easier N5 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a clear mistake/error example."
+      },
+      "祈る|いのる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common pray/wish verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 祈.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; choose a simple pray/wish example that avoids source-gloss ambiguity."
+      },
+      "泣く|なく": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common cry/weep verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 泣.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; any earlier placement would need explicit learner-fit justification and visible N1 support labeling."
+      },
+      "驚く|おどろく": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common be-surprised verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 驚.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a simple surprise/astonishment example."
+      },
+      "差し上げる|さしあげる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common humble/polite give/offer verb with exact Tanos N4 extra-source discovery and JMdict priority support, with N3 差 as the target anchor and N5 上 as easier support; the honorific register needs deliberate teaching.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a register-safe giving/offering example and visible 上=N5 support labeling."
+      },
+      "似る|にる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common resemble/be-similar verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 似.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple resemblance example."
+      },
+      "謝る|あやまる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common apology verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 謝.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; do not let the N4 source label override the kanji-anchor placement."
+      },
+      "寂しい|さびしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "high",
+        "reason": "Common lonely/lonesome adjective with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 寂 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a simple lonely/desolate example; keep さびしい distinct from the さみしい variant."
+      },
+      "取り替える|とりかえる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Useful exchange/replace verb with exact Tanos N4 extra-source discovery and JMdict priority support, with N3 取 as the target anchor and N2 替 as harder support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with visible 替=N2 support labeling."
+      },
+      "召し上がる|めしあがる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common polite eat/drink verb with exact Tanos N4 extra-source discovery and JMdict priority support; 召 is the N2 target anchor while 上 is easier N5 support.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; keep the honorific register explicit and choose an eat/drink example before promotion."
+      },
+      "触る|さわる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common touch/feel verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 触 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple touch/handle example; avoid overloading the first card with interfere/irritate senses."
+      },
+      "尋ねる|たずねる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Ask/inquire/search verb has exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 尋 and it shares the reading たずねる with the more learner-basic 訪ねる visit verb.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with an ask/inquire example that clearly distinguishes it from 訪ねる."
+      },
+      "浅い|あさい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common shallow/superficial adjective with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 浅.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; choose a concrete learner-facing shallow/superficial example before promotion."
+      },
+      "痩せる|やせる": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common become-thin/lose-weight verb with exact Tanos N4 extra-source discovery, JMdict verification, and commonness support; the only written kanji 痩 is outside the current JLPT kanji levels, which is a labeling requirement rather than a quality blocker.",
+        "nextStep": "Promote only through a future N4 word v2 extra-source Silver batch with the Source level claim unverified label, visible 痩=outside-JLPT support labeling, and a neutral health/appearance example that avoids body-shaming framing."
+      },
+      "珍しい|めずらしい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common rare/unusual adjective with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 珍.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a clear rare/unusual example."
+      },
+      "釣る|つる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Useful fish/angle verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 釣.",
+        "nextStep": "Route only through the N1 word contract and starter-data review with a fishing example if later promoted."
+      },
+      "塗る|ぬる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common paint/apply/spread verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 塗.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a paint or apply-cream example."
+      },
+      "届ける|とどける": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common deliver/send/notify verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 届.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a delivery or notification example."
+      },
+      "泊まる|とまる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common stay-overnight verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 泊.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a hotel/travel example."
+      },
+      "非常に|ひじょうに": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common very/extremely adverb with exact Tanos N4 extra-source discovery and JMdict priority support, but both kanji anchors are N3 非 and 常.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple intensity example."
+      },
+      "沸く|わく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common intransitive boil/become-hot/get-excited verb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N2 沸.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; distinguish it from transitive 沸かす and choose the boil/become-hot sense before promotion."
+      },
+      "片付ける|かたづける": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common tidy up/put away verb with exact Tanos N4 extra-source discovery and JMdict priority support, with N3 付 as the target anchor and N2 片 as support; no existing governed row covers this compound verb.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a plain cleaning or putting-away example."
+      },
+      "亡くなる|なくなる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common respectful pass-away verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N3 亡.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with sensitive death-context handling and a neutral example."
+      },
+      "戻る|もどる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common return/go-back verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 戻.",
+        "nextStep": "Route only through the N2 word contract and starter-data review with a simple return/go-back example."
+      },
+      "揺れる|ゆれる": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common shake/sway verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 揺.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; any earlier placement would need explicit learner-fit justification and visible N1 support labeling."
+      },
+      "踊る|おどる": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "high",
+        "reason": "Common dance verb with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 踊.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; review alongside 踊り so noun and verb coverage stays deliberate."
+      },
+      "付く|つく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common intransitive attach/stick/be-added verb with exact Tanos N4 extra-source discovery, JMdict verification, and commonness support; the only kanji anchor is N3 付, and governed 付ける|つける does not cover this intransitive identity.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple attach/stick example; keep it distinct from 付ける and other つく verbs."
+      },
+      "降り出す|ふりだす": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Useful start-to-rain/start-to-snow compound verb with exact Tanos N4 extra-source discovery, JMdict verification, and commonness support; 降 is the N3 target anchor while 出 is easier N5 support.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a weather-starting example and visible 出=N5 support labeling."
+      },
+      "お嬢さん|おじょうさん": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Common honorific daughter/young-lady noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N1 嬢 and the social register must be taught deliberately.",
+        "nextStep": "Route only through the N1 word contract and starter-data review; require a respectful-context example and do not let the N4 source label override N1 placement."
+      },
+      "ご存じ|ごぞんじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Common polite knowing/acquaintance expression with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N3 存 and the honorific register needs deliberate teaching.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a register-safe polite example."
+      },
+      "お祝い|おいわい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Common congratulation/celebration noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N2 祝.",
+        "nextStep": "Route only through the N2 word contract and starter-data review; preserve the お祝い surface if promoted and use a clean celebration example."
+      },
+      "お宅|おたく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Polite your-home/household noun has exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N3 宅 and the おたく ambiguity requires careful sense selection.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; teach the polite home/household sense explicitly if promoted."
+      },
+      "お礼|おれい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common thanks/gratitude noun with exact Tanos N4 extra-source discovery and JMdict priority support, but the only kanji anchor is N3 礼 and existing rows do not cover the お礼 surface.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a simple gratitude or thank-you gift example."
+      },
+      "下る|さがる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos N4 extra-source row uses 下る|さがる, but governed 下がる|さがる already teaches the learner-facing go-down/fall verb while 下る|くだる is a separate governed N2 reading; promoting this variant would create avoidable same-written confusion.",
+        "nextStep": "Do not promote this exact variant row. Keep 下がる|さがる as the learner-facing card and 下る|くだる in its governed N2 lane."
+      },
+      "上る|あがる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact Tanos N4 extra-source row uses 上る|あがる, but governed 上がる|あがる already teaches the learner-facing rise/go-up verb while 上る|のぼる is a separate governed reading.",
+        "nextStep": "Do not promote this exact variant row. Keep 上がる|あがる as the learner-facing card and 上る|のぼる in its governed lane."
+      },
+      "皆|みな": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Common everyone/all noun-adverb with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 皆.",
+        "nextStep": "Route only through the N3 word contract and starter-data review; compare with 皆さん|みなさん and みんな before choosing the learner-facing surface."
+      },
+      "席|せき": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "high",
+        "reason": "Very common seat/place noun with exact Tanos N4 extra-source discovery and strong JMdict priority support, but the only kanji anchor is N3 席 and no existing governed row covers this reading.",
+        "nextStep": "Route only through the N3 word contract and starter-data review with a concrete seat example."
+      },
+      "君|くん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Exact Tanos N4 extra-source row has JMdict/commonness support for the くん reading, but the source gloss is noisy and the governed 君|きみ row covers a different pronoun reading; the only kanji anchor is N3 君.",
+        "nextStep": "Route only through the N3 word contract and starter-data review as a suffix/register item; do not copy the source gloss, and keep it distinct from 君|きみ."
+      }
     }
   },
   "N3": {

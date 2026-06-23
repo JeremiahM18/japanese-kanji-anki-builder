@@ -1648,6 +1648,132 @@
   },
   "N4": {
     "jlptstudy.net-n4": {
+      "赤ん坊|あかんぼう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful baby word with exact JLPTStudy N4 discovery, JMdict dictionary verification, and priority/commonness support; outside-JLPT 坊 is a support-label requirement, not a blocker.",
+        "nextStep": "Promote only through an N4 word v2 Silver batch with explicit 坊 outside-JLPT labeling, a simple baby/family example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "お子さん|おこさん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Useful honorific child word and exact dictionary identity, but the current governed selector lacks JMdict priority/commonness support for this exact お子さん|おこさん row.",
+        "nextStep": "Do not promote in the current N4 Silver queue until a permitted commonness/usefulness source supports the exact identity or a future editorial policy records stronger evidence."
+      },
+      "さ来月|さらいげつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Source spelling is mixed-kana and weaker than the usual 再来月 identity; promoting this exact row would add avoidable alternate-spelling clutter.",
+        "nextStep": "Do not promote this exact source row; review 再来月 separately only if a later pass accepts the harder 再 label."
+      },
+      "下る|さがる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Governed 下がる|さがる already teaches the learner-facing go-down/fall verb, while 下る|くだる is a separate governed N2 reading; this exact 下る|さがる variant would create avoidable same-written confusion.",
+        "nextStep": "Do not promote this exact variant row. Keep 下がる|さがる as the learner-facing card and 下る|くだる in its governed N2 lane."
+      },
+      "噛む|かむ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common everyday bite/chew verb with exact JLPTStudy N4 discovery, JMdict dictionary verification, and priority/commonness support; outside-JLPT 噛 should be visibly labeled rather than blocked.",
+        "nextStep": "Promote only through an N4 word v2 Silver batch with explicit 噛 outside-JLPT labeling, a concrete bite/chew example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "気|き": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common exact standalone word for spirit/mood/feeling with dictionary and commonness support; standalone one-kanji written forms are queue-eligible after the reading lane is exhausted.",
+        "nextStep": "Promote only if N4 card review can choose a clear learner-facing mood/feeling sense and avoid treating the card as a generic kanji gloss."
+      },
+      "気分|きぶん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common learner-useful feeling/mood word with exact source discovery, dictionary verification, and commonness support; it is distinct from standalone 気 and useful in everyday health/emotion contexts.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with a clear feeling/mood example, pitch verification, audio, Gold, Sapphire, and Platinum gates."
+      },
+      "見つかる|みつかる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common intransitive be-found/be-discovered verb with exact source discovery, dictionary verification, and commonness support; it adds useful vocabulary beyond the existing 見 cards.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with an example that distinguishes 見つかる from transitive 見つける."
+      },
+      "見つける|みつける": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common transitive find/discover verb with exact source discovery, dictionary verification, and commonness support; it pairs naturally with 見つかる without duplicating an exact identity.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with an example that distinguishes 見つける from intransitive 見つかる."
+      },
+      "高校生|こうこうせい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school/person word with exact source discovery, dictionary verification, and commonness support; all kanji are easier-level support, so it needs vocabulary-level placement rather than a false reading-gap anchor.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with explicit vocabulary-level placement and a simple high-school-student example."
+      },
+      "子|こ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common standalone child word with exact dictionary and commonness support; standalone kanji written forms are allowed when reviewed for learner value and not used as mechanical kanji coverage.",
+        "nextStep": "Promote only if the card surface can clearly teach 子|こ as a vocabulary word, not as a duplicate of 子ども or a generic kanji gloss."
+      },
+      "十分|じゅうぶん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common enough/sufficient word with exact source discovery, dictionary verification, and commonness support; same-written 十分|じゅっぷん is already governed and must be deliberately distinguished.",
+        "nextStep": "Promote through an N4 word v2 Silver batch only with a disambiguating enough/sufficient example and explicit separation from 十分|じゅっぷん."
+      },
+      "凄い|すごい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Very common impressive/terrific/intense adjective with exact source discovery, dictionary verification, and commonness support; outside-JLPT 凄 requires visible support labeling and spelling review.",
+        "nextStep": "Promote only if N4 card review accepts the kanji spelling as learner-friendly enough; examples may use natural context while the card labels 凄 as outside-JLPT support."
+      },
+      "大学生|だいがくせい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school/person word with exact source discovery, dictionary verification, and commonness support; all kanji are easier-level support, so it belongs in vocabulary-level expansion after reading exhaustion.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with explicit vocabulary-level placement and a simple university-student example."
+      },
+      "大分|だいぶ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common adverb meaning considerably/quite with exact source discovery, dictionary verification, and commonness support; the kanji spelling is potentially confusing and needs deliberate learner-facing review.",
+        "nextStep": "Promote only if the N4 card review accepts 大分|だいぶ as a useful kanji-spelled word and uses examples that avoid place-name confusion."
+      },
+      "中々|なかなか": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common adverbial word with exact source discovery, dictionary verification, and commonness support; the kanji spelling is lower-priority than kana in many contexts but remains an exact governed candidate.",
+        "nextStep": "Promote only if N4 card review accepts the kanji spelling and chooses a clear fairly/quite or not-easily sense for the starter card."
+      },
+      "中学校|ちゅうがっこう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common school word with exact source discovery, dictionary verification, and commonness support; all kanji are easier-level support and the exact identity is useful beyond reading coverage.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with explicit vocabulary-level placement and a simple junior-high-school example."
+      },
+      "入学|にゅうがく・する": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Exact source reading includes the ・する template marker and governed 入学|にゅうがく already teaches the useful school-entry identity.",
+        "nextStep": "Do not promote this exact source row or duplicate governed 入学|にゅうがく."
+      },
+      "味噌|みそ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "Common food/culture word with exact source discovery, dictionary verification, and commonness support; outside-JLPT 噌 must be visibly labeled.",
+        "nextStep": "Promote only after example, pitch, audio, and outside-JLPT 噌 label review pass."
+      },
+      "無くなる|なくなる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Common disappear/be-lost verb with exact source discovery, dictionary verification, and commonness support; outside-JLPT 無 is a label requirement, not a blocker.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with explicit 無 outside-JLPT labeling and a concrete lost/disappeared example."
+      },
+      "無理|むり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "Very common impossible/unreasonable word with exact source discovery, dictionary verification, and commonness support; 理 provides an N4 anchor while 無 must be labeled outside-JLPT support.",
+        "nextStep": "Promote through an N4 word v2 Silver batch with visible 無 outside-JLPT labeling and an example that teaches the impossible/unreasonable sense cleanly."
+      },
       "明日|あす": {
         "decision": "keep_candidate",
         "priority": "medium",

@@ -601,6 +601,82 @@ test("buildWordCommonExpansionSelectorReport keeps move_candidate authoritative 
     assert.equal(row.sourceTriageDecision, null);
 });
 
+test("source-level move candidates with target levels do not block the source fallback gate", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "n5.tsv",
+        [
+            "written\treading\tmeaning\tjlpt",
+            "手紙\tてがみ\tletter\tN5",
+        ].join("\n")
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        [
+            "written\treading\tmeaning",
+            "手紙\tてがみ\tletter",
+        ].join("\n")
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "priority.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "手紙\tてがみ\tletter\t100",
+        ].join("\n")
+    );
+
+    const report = buildWordCommonExpansionSelectorReport({
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: buildExhaustedReadingSignal(5),
+        },
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                手: 4,
+                紙: 4,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                "fixture-n5": {
+                    "手紙|てがみ": {
+                        decision: "move_candidate",
+                        targetLevel: "N4",
+                        priority: "normal",
+                        reason: "This exact source row belongs in the N4 target queue.",
+                    },
+                },
+            },
+        },
+    });
+
+    const levelReport = report.levelReports[0];
+    const row = levelReport.rows.find((candidate) => candidate.key === "手紙|てがみ");
+    const moveWorkItem = levelReport.expansionWorkOrder.items.find((item) => item.lane === "move_candidate_routing");
+
+    assert.equal(row.selectorStatus, "move_candidate");
+    assert.equal(levelReport.summary.selectorStatusCounts.move_candidate, 1);
+    assert.equal(levelReport.summary.sourceMoveCandidateRows, 1);
+    assert.equal(levelReport.summary.routedSourceMoveCandidateRows, 1);
+    assert.equal(levelReport.summary.unresolvedSourceMoveCandidateRows, 0);
+    assert.equal(levelReport.fallbackSourceGate.active, true);
+    assert.equal(levelReport.fallbackSourceGate.moveCandidateRows, 0);
+    assert.equal(levelReport.fallbackSourceGate.routedSourceMoveCandidateRows, 1);
+    assert.equal(moveWorkItem.count, 0);
+    assert.equal(moveWorkItem.status, "clear");
+});
+
 test("buildWordCommonExpansionSelectorReport routes missing move_candidate rows into target level queue", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
     const candidateSource = writeFixtureSource(

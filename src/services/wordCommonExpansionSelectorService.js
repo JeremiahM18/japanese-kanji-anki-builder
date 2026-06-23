@@ -160,11 +160,46 @@ function summarizeSelectorRows(rows = []) {
     };
 }
 
+function summarizeSourceMoveCandidateRouting({ rows = [], sourceLevel = null } = {}) {
+    const byTargetLevel = {};
+    let sourceMoveCandidateRows = 0;
+    let routedSourceMoveCandidateRows = 0;
+    let unresolvedSourceMoveCandidateRows = 0;
+
+    for (const row of rows || []) {
+        if (row.selectorStatus !== "move_candidate" || row.triageDecision?.decision !== "move_candidate") {
+            continue;
+        }
+
+        sourceMoveCandidateRows += 1;
+        const targetLevel = row.triageDecision.targetLevel;
+        if (Number.isInteger(targetLevel) && targetLevel >= 1 && targetLevel <= 5 && targetLevel !== sourceLevel) {
+            routedSourceMoveCandidateRows += 1;
+            const targetKey = `N${targetLevel}`;
+            byTargetLevel[targetKey] = (byTargetLevel[targetKey] || 0) + 1;
+            continue;
+        }
+
+        unresolvedSourceMoveCandidateRows += 1;
+    }
+
+    return {
+        sourceMoveCandidateRows,
+        routedSourceMoveCandidateRows,
+        unresolvedSourceMoveCandidateRows,
+        byTargetLevel,
+    };
+}
+
 function buildFallbackSourceGate({ level, commonWordQueue = {}, summary = {}, sourceBlockers = [] } = {}) {
     const counts = summary.selectorStatusCounts || {};
     const readyRows = counts.ready_for_editorial_review || 0;
     const needsTriageRows = counts.needs_triage || 0;
-    const moveCandidateRows = counts.move_candidate || 0;
+    const sourceMoveCandidateRows = counts.move_candidate || 0;
+    const routedSourceMoveCandidateRows = countValue(summary.routedSourceMoveCandidateRows);
+    const moveCandidateRows = Number.isInteger(summary.unresolvedSourceMoveCandidateRows)
+        ? summary.unresolvedSourceMoveCandidateRows
+        : sourceMoveCandidateRows;
     const blockers = [];
 
     if (commonWordQueue.active !== true) {
@@ -180,7 +215,7 @@ function buildFallbackSourceGate({ level, commonWordQueue = {}, summary = {}, so
         blockers.push(`Current new-word selector still has ${needsTriageRows} needs-triage row(s).`);
     }
     if (moveCandidateRows > 0) {
-        blockers.push(`Current new-word selector still has ${moveCandidateRows} move-candidate row(s) to resolve in target levels.`);
+        blockers.push(`Current new-word selector still has ${moveCandidateRows} unresolved move-candidate row(s) without target-level routing.`);
     }
 
     const active = blockers.length === 0;
@@ -191,6 +226,9 @@ function buildFallbackSourceGate({ level, commonWordQueue = {}, summary = {}, so
         readyRows,
         needsTriageRows,
         moveCandidateRows,
+        sourceMoveCandidateRows,
+        routedSourceMoveCandidateRows,
+        unresolvedSourceMoveCandidateRows: moveCandidateRows,
         blockers,
         reason: active
             ? "Reading expansion and the current new-word selector are exhausted; the extra free/permitted source-family lane is READY for source-access/input work. Work is not done: imported extra rows must keep explicit unverified source-level labels."
@@ -307,7 +345,12 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const readingDeferredVariants = countValue(gate.deferVariantItems);
     const readyRows = countValue(counts.ready_for_editorial_review);
     const needsTriageRows = countValue(counts.needs_triage);
-    const moveRows = countValue(counts.move_candidate) + countValue(levelReport.summary?.routedMoveCandidateRows);
+    const sourceMoveRows = countValue(counts.move_candidate);
+    const unresolvedSourceMoveRows = Number.isInteger(levelReport.summary?.unresolvedSourceMoveCandidateRows)
+        ? levelReport.summary.unresolvedSourceMoveCandidateRows
+        : sourceMoveRows;
+    const targetRoutedRows = countValue(levelReport.summary?.routedMoveCandidateRows);
+    const moveRows = unresolvedSourceMoveRows + targetRoutedRows;
     const blockedRows = countValue(counts.blocked_identity)
         + countValue(counts.blocked_missing_dictionary)
         + countValue(counts.blocked_missing_commonness);
@@ -396,7 +439,11 @@ function buildExpansionWorkOrder(levelReport = {}) {
             command: allLevelSelectorCommand,
             reason: moveRows > 0
                 ? "Move candidates remain authoritative and must be resolved in their target level, not bypassed."
-                : "No move-candidate routing rows remain for this level view.",
+                : (
+                    sourceMoveRows > 0
+                        ? `${sourceMoveRows} source-level move-candidate row(s) are routed to target-level queues; no source-level routing blocker remains.`
+                        : "No move-candidate routing rows remain for this level view."
+                ),
         }),
         buildWorkOrderItem({
             rank: 6,
@@ -929,6 +976,10 @@ function buildLevelSelectorReport({
             sourceUniverse,
         }))
         .sort(compareSelectorRows);
+    const sourceMoveCandidateRoutingSummary = summarizeSourceMoveCandidateRouting({
+        rows,
+        sourceLevel: level,
+    });
     const summary = {
         ...summarizeSelectorRows(rows),
         sourceRows: expansionReport.summary.sourceRows,
@@ -936,6 +987,10 @@ function buildLevelSelectorReport({
         uniqueRows: expansionReport.summary.uniqueRows,
         duplicateSourceRows: expansionReport.summary.duplicateSourceRows,
         sourceDispositionCounts: expansionReport.summary.dispositions,
+        sourceMoveCandidateRoutingSummary,
+        sourceMoveCandidateRows: sourceMoveCandidateRoutingSummary.sourceMoveCandidateRows,
+        routedSourceMoveCandidateRows: sourceMoveCandidateRoutingSummary.routedSourceMoveCandidateRows,
+        unresolvedSourceMoveCandidateRows: sourceMoveCandidateRoutingSummary.unresolvedSourceMoveCandidateRows,
     };
 
     return {
@@ -1216,7 +1271,10 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
     lines.push("", "Fallback/free-source gate:");
     for (const levelReport of report.levelReports || []) {
         const gate = levelReport.fallbackSourceGate || {};
-        lines.push(`- ${levelReport.levelLabel}: ${gate.active ? "active" : "inactive"}; prerequisite ${gate.prerequisite || "after_reading_expansion_and_current_new_word_selector_exhausted"}; ready ${gate.readyRows ?? 0}; needs triage ${gate.needsTriageRows ?? 0}; move ${gate.moveCandidateRows ?? 0}; ${gate.reason || ""}`);
+        const routedMoveText = (gate.routedSourceMoveCandidateRows || 0) > 0
+            ? `; routed move ${gate.routedSourceMoveCandidateRows}`
+            : "";
+        lines.push(`- ${levelReport.levelLabel}: ${gate.active ? "active" : "inactive"}; prerequisite ${gate.prerequisite || "after_reading_expansion_and_current_new_word_selector_exhausted"}; ready ${gate.readyRows ?? 0}; needs triage ${gate.needsTriageRows ?? 0}; unresolved move ${gate.moveCandidateRows ?? 0}${routedMoveText}; ${gate.reason || ""}`);
         for (const blocker of gate.blockers || []) {
             lines.push(`  - ${blocker}`);
         }

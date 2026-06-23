@@ -269,3 +269,57 @@ test("documentation status audit catches missing word common-pool labels", () =>
         true,
     );
 });
+
+test("documentation status audit catches missing word common-pool quality filter doctrine", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"].replace(
+        "The default dictionary common-pool view is an editorial shortlist over an audit-visible raw pool, not the raw pool itself.",
+        "The dictionary common pool should be reviewed directly.",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("editorial shortlist over an audit-visible raw pool")),
+        true,
+    );
+});
+
+test("documentation status audit catches outside support kanji common-pool drift", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"].replace(
+        "Outside-JLPT and higher-level support kanji are label/review needs, not automatic common-pool deprioritization.",
+        "Outside-JLPT support kanji should be treated as low-priority common-pool rows.",
+    );
+    files["docs/command-reference.md"] = files["docs/command-reference.md"].replace(
+        "do not automatically deprioritize outside-JLPT or higher-level support kanji",
+        "lower outside-JLPT support kanji priority",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("outside-JLPT/higher-level support kanji")),
+        true,
+    );
+});

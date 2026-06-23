@@ -344,6 +344,7 @@ npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1
 npm run deck:words:vocab-expansion -- --levels=5 --source=tanos-n5-vocab --strict --limit=80
 npm run deck:words:vocab-expansion -- --levels=4 --source=tanos-n4-vocab --strict --limit=80
 npm run deck:words:vocab-expansion -- --levels=5 --source=common-pool --strict --limit=80
+npm run deck:words:vocab-expansion -- --levels=5 --source=common-pool --common-pool-mode=raw --strict --limit=80
 npm run deck:words:common-expansion -- --levels=5 --placement-mode=vocabulary-level --limit=40
 ```
 
@@ -388,6 +389,10 @@ The free word expansion order is:
 5. Promote only through normal Silver card review, then Gold, Sapphire, Platinum, and Obsidian catch-up gates.
 
 The dictionary common pool is part of the extra expansion lane, not a separate source-depth lane. It is not a license to import a dictionary. It is a governed review route that uses permitted dictionary and commonness signals, such as JMdict containment/commonness discovery, to surface exact `written|reading` identities that are not already governed or excluded. Dictionary common-pool rows must remain labeled `DICTIONARY COMMON POOL` plus `Source level claim unverified`. The label is what keeps the source claim honest; it is not a reason to block the row when the word is useful, common, learner-friendly, and otherwise passes card review.
+
+The default dictionary common-pool view is an editorial shortlist over an audit-visible raw pool, not the raw pool itself. The default shortlist is capped at `200` rows per selected level, while `sourceUniverse.rawRowCount`, `commonPoolSummary.eligibleRowsBeforeEditorialFilter`, and `commonPoolSummary.deprioritizedByEditorialQueueLimit` keep the evidence denominator visible. Use `--common-pool-mode=raw` only when auditing the full pool; use the default editorial mode for human review queues.
+
+Outside-JLPT and higher-level support kanji are label/review needs, not automatic common-pool deprioritization. A dictionary common-pool row that has a level-relevant anchor may stay near the front of the queue when it is common and learner-useful, even if another support kanji is N3, N1, or outside the JLPT kanji contract. The card still must visibly label that support kanji and pass normal level-fit review before promotion.
 
 Dictionary common-pool review must still reject weak rows: unclear written/reading identity, missing dictionary verification, missing commonness support, kana-only rows outside the active policy, duplicate governed identities, adult or unsafe content, narrow proper nouns, highly specialized technical terms, bad learner fit, unnatural examples, missing media, missing pitch policy handling, or unresolved level-placement risk. If a word belongs in another N-level, route it with the authoritative `move_candidate` mechanism and place it in that target level's word JSON before promotion.
 

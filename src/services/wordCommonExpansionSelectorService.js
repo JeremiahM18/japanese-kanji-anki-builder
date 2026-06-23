@@ -27,6 +27,9 @@ const SOURCE_POOL_DICTIONARY_COMMON = "dictionary_common_pool";
 const SOURCE_POOL_DICTIONARY_COMMON_LABEL = "DICTIONARY COMMON POOL";
 const DICTIONARY_COMMON_POOL_SOURCE_ID = "dictionary-common-pool";
 const DICTIONARY_COMMON_POOL_COMMAND_SOURCE = "common-pool";
+const DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT = 200;
+const COMMON_POOL_QUALITY_MODE_EDITORIAL = "editorial";
+const COMMON_POOL_QUALITY_MODE_RAW = "raw";
 
 const SELECTOR_STATUSES = [
     "ready_for_editorial_review",
@@ -52,6 +55,7 @@ const LATIN_WRITTEN_PATTERN = /[A-Za-zＡ-Ｚａ-ｚ]/u;
 const HAN_ANY_PATTERN = /\p{Script=Han}/u;
 const KANJI_NUMERIC_EXPRESSION_WRITTEN_PATTERN = /^[一二三四五六七八九十百千万億兆〇零壱弐参年月日円本冊枚台匹人個件点度回階杯校時分秒週番号]+$/u;
 const CAPITALIZED_PROPER_PHRASE_PATTERN = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b/u;
+const SUPPORT_LABEL_LEARNER_FIT_RE = /^(?:harder support kanji|outside-JLPT kanji)\b/u;
 
 function isStandaloneKanjiWritten(value = "") {
     const chars = [...String(value || "")];
@@ -284,6 +288,22 @@ function buildFallbackSourceGate({
 
 function countValue(value) {
     return Number.isInteger(value) ? value : 0;
+}
+
+function normalizeCommonPoolQualityMode(value = COMMON_POOL_QUALITY_MODE_EDITORIAL) {
+    const mode = String(value || COMMON_POOL_QUALITY_MODE_EDITORIAL).trim();
+    if ([COMMON_POOL_QUALITY_MODE_EDITORIAL, COMMON_POOL_QUALITY_MODE_RAW].includes(mode)) {
+        return mode;
+    }
+    throw new Error("Dictionary common pool quality mode must be one of: editorial, raw.");
+}
+
+function normalizeCommonPoolEditorialQueueLimit(value = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT) {
+    const limit = Number(value ?? DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT);
+    if (!Number.isInteger(limit) || limit < 1) {
+        throw new Error("Dictionary common pool editorial queue limit must be a positive integer.");
+    }
+    return limit;
 }
 
 function buildWorkOrderItem({
@@ -788,7 +808,7 @@ function compareSelectorRows(a, b) {
         || getCommonPoolQueuePriority(a) - getCommonPoolQueuePriority(b)
         || a.reviewReadiness.nextEvidenceCount - b.reviewReadiness.nextEvidenceCount
         || b.reviewReadiness.supportedEvidenceCount - a.reviewReadiness.supportedEvidenceCount
-        || a.reviewReadiness.learnerFitRiskCount - b.reviewReadiness.learnerFitRiskCount
+        || getLearnerFitSortRiskCount(a) - getLearnerFitSortRiskCount(b)
         || a.reviewReadiness.sameWrittenConflictCount - b.reviewReadiness.sameWrittenConflictCount
         || a.reviewReadiness.identityRiskCount - b.reviewReadiness.identityRiskCount
         || getWrittenShapePriority(a) - getWrittenShapePriority(b)
@@ -807,8 +827,20 @@ function hasCommonPoolProperOrSpecializedPrioritySignal(row = {}) {
     return COMMON_POOL_PRIORITY_MEANING_RE.test(meaning) || CAPITALIZED_PROPER_PHRASE_PATTERN.test(meaning);
 }
 
+function isDictionaryCommonPoolRow(row = {}) {
+    return row.sourcePool === SOURCE_POOL_DICTIONARY_COMMON;
+}
+
+function getLearnerFitSortRiskCount(row = {}) {
+    const risks = Array.isArray(row.learnerFitRisks) ? row.learnerFitRisks : [];
+    if (!isDictionaryCommonPoolRow(row)) {
+        return risks.length;
+    }
+    return risks.filter((risk) => !SUPPORT_LABEL_LEARNER_FIT_RE.test(String(risk || ""))).length;
+}
+
 function getCommonPoolQueuePriority(row = {}) {
-    if (row.sourcePool !== SOURCE_POOL_DICTIONARY_COMMON) {
+    if (!isDictionaryCommonPoolRow(row)) {
         return 0;
     }
     let priority = 0;
@@ -818,7 +850,7 @@ function getCommonPoolQueuePriority(row = {}) {
     if (hasCommonPoolProperOrSpecializedPrioritySignal(row)) {
         priority += 4;
     }
-    priority += Math.min(row.reviewReadiness?.learnerFitRiskCount || 0, 3) * 2;
+    priority += Math.min(getLearnerFitSortRiskCount(row), 3) * 2;
     priority += Math.min(row.reviewReadiness?.sameWrittenConflictCount || 0, 3);
     priority += Math.min(row.reviewReadiness?.identityRiskCount || 0, 3);
     return priority;
@@ -855,6 +887,23 @@ function buildTargetLearnerFitRisks({ scope = {}, sameWrittenConflicts = [] } = 
         risks.push("same-written alternate already tracked");
     }
     return risks;
+}
+
+function buildSupportLabelNeeds({ kanjiLevels = [], targetLevel = null } = {}) {
+    const needs = [];
+    for (const entry of kanjiLevels || []) {
+        if (!entry?.kanji) {
+            continue;
+        }
+        if (!Number.isInteger(entry.level)) {
+            needs.push(`outside-JLPT support kanji ${entry.kanji}`);
+            continue;
+        }
+        if (Number.isInteger(targetLevel) && entry.level < targetLevel) {
+            needs.push(`harder support kanji ${entry.kanji}=N${entry.level}`);
+        }
+    }
+    return needs;
 }
 
 function classifyRoutedMoveCandidateRow({ sourceRow = {}, targetGate = {} } = {}) {
@@ -1017,6 +1066,8 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
     const frequencyRanks = (agreementRow?.sourceAppearances || [])
         .map((appearance) => appearance.frequencyRank)
         .filter((rank) => Number.isInteger(rank) && rank > 0);
+    const targetLevel = expansionRow.targetLevel || agreementRow?.targetLevel || null;
+    const kanjiLevels = expansionRow.kanjiLevels || agreementRow?.kanjiLevels || [];
     return {
         key: expansionRow.key,
         written: expansionRow.written,
@@ -1025,7 +1076,7 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         selectorStatus,
         sourceDisposition: expansionRow.disposition,
         sourceReason: expansionRow.reason,
-        targetLevel: expansionRow.targetLevel || agreementRow?.targetLevel || null,
+        targetLevel,
         sourceLevel: expansionRow.sourceLevel ?? sourceAppearance?.sourceLevel ?? null,
         sourceIds: agreementRow?.sourceIds || [sourceUniverse.sourceId].filter(Boolean),
         sourceAppearances: agreementRow?.sourceAppearances || [],
@@ -1053,7 +1104,8 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         contractStatus: agreementRow?.contractStatus || null,
         targetKanji: expansionRow.targetKanji || agreementRow?.targetKanji || [],
         constituentKanji: expansionRow.constituentKanji || [],
-        kanjiLevels: expansionRow.kanjiLevels || agreementRow?.kanjiLevels || [],
+        kanjiLevels,
+        supportLabelNeeds: buildSupportLabelNeeds({ kanjiLevels, targetLevel }),
         reviewReadiness: agreementRow?.reviewReadiness || {
             supportedEvidenceCount: 0,
             supportedEvidenceTotal: 5,
@@ -1074,6 +1126,33 @@ function isDictionaryCommonPoolSource(source = {}) {
 
 function hasCommonPoolMeaningNoise(row = {}) {
     return COMMON_POOL_MEANING_NOISE_RE.test(String(row.meaning || ""));
+}
+
+function getDictionaryCommonPoolSourcePriority(row = {}) {
+    let priority = 0;
+    if (hasCommonPoolNumericExpressionWrittenForm(row)) {
+        priority += 30;
+    }
+    if (hasCommonPoolProperOrSpecializedPrioritySignal(row)) {
+        priority += 20;
+    }
+    const writtenLength = [...String(row.written || "")].length;
+    if (writtenLength >= 5) {
+        priority += 4;
+    } else if (writtenLength === 4) {
+        priority += 2;
+    }
+    return priority;
+}
+
+function compareDictionaryCommonPoolSourceRows(a = {}, b = {}) {
+    return (
+        getDictionaryCommonPoolSourcePriority(a) - getDictionaryCommonPoolSourcePriority(b)
+        || getComparableFrequencyRank(a) - getComparableFrequencyRank(b)
+        || getWrittenShapePriority(a) - getWrittenShapePriority(b)
+        || String(a.written || "").localeCompare(String(b.written || ""), "ja")
+        || String(a.reading || "").localeCompare(String(b.reading || ""), "ja")
+    );
 }
 
 function hasDigitWrittenForm(row = {}) {
@@ -1106,12 +1185,21 @@ function filterDictionaryCommonPoolRows({
     const maxFrequencyRank = Number.isInteger(source.commonPool?.maxFrequencyRank)
         ? source.commonPool.maxFrequencyRank
         : null;
+    const qualityMode = normalizeCommonPoolQualityMode(source.commonPool?.qualityMode);
+    const editorialQueueLimit = qualityMode === COMMON_POOL_QUALITY_MODE_RAW
+        ? null
+        : normalizeCommonPoolEditorialQueueLimit(source.commonPool?.editorialQueueLimit);
     const normalizedRows = sourceRows
         .flatMap((row) => normalizeCandidateSourceRows(row, { sourceLabel: sourceId }))
         .filter(Boolean);
     const rows = [];
     const filteredCounts = {
         sourceRows: normalizedRows.length,
+        qualityMode,
+        editorialQueueLimit,
+        eligibleRowsBeforeEditorialFilter: 0,
+        editorialQueueRows: 0,
+        deprioritizedByEditorialQueueLimit: 0,
         missingCommonness: 0,
         aboveMaxFrequencyRank: 0,
         kanaOnly: 0,
@@ -1120,6 +1208,15 @@ function filterDictionaryCommonPoolRows({
         meaningNoise: 0,
         digitWrittenForm: 0,
         latinWrittenForm: 0,
+        kanjiNumericExpressionRows: 0,
+        properOrSpecializedPriorityRows: 0,
+        outsideJlptSupportRows: 0,
+        harderSupportKanjiRows: 0,
+        outsideJlptSupportRowsInQueue: 0,
+        harderSupportKanjiRowsInQueue: 0,
+        targetOnlyRows: 0,
+        targetOnlyRowsInQueue: 0,
+        outsideJlptSupportPolicy: "label_not_deprioritize",
     };
 
     for (const row of normalizedRows) {
@@ -1156,11 +1253,46 @@ function filterDictionaryCommonPoolRows({
             filteredCounts.meaningNoise += 1;
             continue;
         }
+        if (hasCommonPoolNumericExpressionWrittenForm(row)) {
+            filteredCounts.kanjiNumericExpressionRows += 1;
+        }
+        if (hasCommonPoolProperOrSpecializedPrioritySignal(row)) {
+            filteredCounts.properOrSpecializedPriorityRows += 1;
+        }
+        if (scope.outsideJlptKanji.length > 0) {
+            filteredCounts.outsideJlptSupportRows += 1;
+        }
+        if (scope.harderKanji.length > 0) {
+            filteredCounts.harderSupportKanjiRows += 1;
+        }
+        if (scope.outsideJlptKanji.length === 0 && scope.harderKanji.length === 0) {
+            filteredCounts.targetOnlyRows += 1;
+        }
         rows.push(row);
     }
 
+    const sortedRows = rows.sort(compareDictionaryCommonPoolSourceRows);
+    const editorialRows = Number.isInteger(editorialQueueLimit)
+        ? sortedRows.slice(0, editorialQueueLimit)
+        : sortedRows;
+    filteredCounts.eligibleRowsBeforeEditorialFilter = sortedRows.length;
+    filteredCounts.editorialQueueRows = editorialRows.length;
+    filteredCounts.deprioritizedByEditorialQueueLimit = Math.max(0, sortedRows.length - editorialRows.length);
+    for (const row of editorialRows) {
+        const scope = classifyKanjiScope(row, { targetLevel, jlptLevelContract });
+        if (scope.outsideJlptKanji.length > 0) {
+            filteredCounts.outsideJlptSupportRowsInQueue += 1;
+        }
+        if (scope.harderKanji.length > 0) {
+            filteredCounts.harderSupportKanjiRowsInQueue += 1;
+        }
+        if (scope.outsideJlptKanji.length === 0 && scope.harderKanji.length === 0) {
+            filteredCounts.targetOnlyRowsInQueue += 1;
+        }
+    }
+
     return {
-        rows,
+        rows: editorialRows,
         filteredCounts,
     };
 }
@@ -1518,7 +1650,41 @@ function formatSourceUniverse(sourceUniverse = {}) {
     if (sourceUniverse.sourcePoolLabel && sourceUniverse.sourcePoolLabel !== sourceUniverse.sourceLaneLabel) {
         parts.splice(1, 0, `pool ${sourceUniverse.sourcePoolLabel}`);
     }
+    if (sourceUniverse.commonPoolSummary) {
+        const pool = sourceUniverse.commonPoolSummary;
+        parts.push(`pool mode ${pool.qualityMode || COMMON_POOL_QUALITY_MODE_EDITORIAL}`);
+        parts.push(`pool eligible ${pool.eligibleRowsBeforeEditorialFilter ?? "-"}`);
+        parts.push(`pool queue ${pool.editorialQueueRows ?? "-"}`);
+        if (Number.isInteger(pool.deprioritizedByEditorialQueueLimit)) {
+            parts.push(`pool deferred ${pool.deprioritizedByEditorialQueueLimit}`);
+        }
+    }
     return parts.join("; ");
+}
+
+function splitDisplayLearnerFitNotes(row = {}) {
+    const learnerFitRisks = Array.isArray(row.learnerFitRisks) ? row.learnerFitRisks : [];
+    const supportLabelNeeds = Array.isArray(row.supportLabelNeeds) ? [...row.supportLabelNeeds] : [];
+    if (!isDictionaryCommonPoolRow(row)) {
+        return {
+            learnerFitRisks,
+            supportLabelNeeds,
+        };
+    }
+    const countableLearnerFitRisks = [];
+    for (const risk of learnerFitRisks) {
+        if (SUPPORT_LABEL_LEARNER_FIT_RE.test(String(risk || ""))) {
+            if (supportLabelNeeds.length === 0) {
+                supportLabelNeeds.push(risk);
+            }
+        } else {
+            countableLearnerFitRisks.push(risk);
+        }
+    }
+    return {
+        learnerFitRisks: countableLearnerFitRisks,
+        supportLabelNeeds: [...new Set(supportLabelNeeds)],
+    };
 }
 
 function formatSourceAdequacy(sourceAdequacy = null) {
@@ -1684,8 +1850,12 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             if (row.sameWrittenConflicts.length > 0) {
                 lines.push(`   same-written conflicts: ${row.sameWrittenConflicts.map((entry) => `${entry.reading} (${entry.status || entry.type}${entry.jlpt ? ` N${entry.jlpt}` : ""})`).join(", ")}`);
             }
-            if (row.learnerFitRisks.length > 0) {
-                lines.push(`   learner-fit risks: ${row.learnerFitRisks.join("; ")}`);
+            const displayLearnerFit = splitDisplayLearnerFitNotes(row);
+            if (displayLearnerFit.supportLabelNeeds.length > 0) {
+                lines.push(`   support label needs: ${displayLearnerFit.supportLabelNeeds.join("; ")}`);
+            }
+            if (displayLearnerFit.learnerFitRisks.length > 0) {
+                lines.push(`   learner-fit risks: ${displayLearnerFit.learnerFitRisks.join("; ")}`);
             }
             if (row.nextRequiredEvidence.length > 0) {
                 lines.push(`   next evidence: ${row.nextRequiredEvidence.join("; ")}`);
@@ -1709,6 +1879,7 @@ module.exports = {
     SOURCE_LEVEL_CLAIM_WARNING,
     SOURCE_UNIVERSE_WARNING,
     DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+    DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     DICTIONARY_COMMON_POOL_SOURCE_ID,
     buildExtraSourceAccessByLevel,
     buildLevelSelectorReport,

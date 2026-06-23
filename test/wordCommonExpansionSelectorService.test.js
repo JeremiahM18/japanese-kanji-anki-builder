@@ -6,6 +6,7 @@ const path = require("node:path");
 
 const {
     DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+    DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     DICTIONARY_COMMON_POOL_SOURCE_ID,
     SOURCE_LANE_CONFIGURED_LABEL,
     SOURCE_LANE_EXTRA_LABEL,
@@ -809,6 +810,58 @@ test("common-pool source override is an EXTRA expansion pool backed by pinned JM
     assert.ok(commonPool.allowedUse.includes("candidate-discovery"));
     assert.ok(commonPool.allowedUse.includes("dictionary-verification"));
     assert.ok(commonPool.allowedUse.includes("frequency-sanity"));
+    assert.equal(commonPool.commonPool.qualityMode, "editorial");
+    assert.equal(commonPool.commonPool.editorialQueueLimit, DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT);
+    assert.equal(commonPool.commonPool.outsideJlptSupportPolicy, "label_not_deprioritize");
+});
+
+test("common-pool source override accepts explicit raw audit mode", () => {
+    const parsed = parseArgs([
+        "--levels=5",
+        "--source=common-pool",
+        "--common-pool-mode=raw",
+        "--common-pool-limit=25",
+    ]);
+    assert.equal(parsed.commonPoolMode, "raw");
+    assert.equal(parsed.commonPoolLimit, 25);
+
+    const manifest = {
+        sources: {
+            jmdict: {
+                status: "active",
+                origin: { url: "https://example.com/jmdict" },
+                licenseUse: { status: "approved", license: "CC BY-SA 4.0" },
+                checkedAt: "2026-06-21",
+                allowedUse: ["dictionary-verification"],
+                local: {
+                    path: "downloads/jmdict-word-verification.tsv",
+                    format: "tsv",
+                },
+            },
+            "jmdict-priority-commonness": {
+                status: "active",
+                origin: { url: "https://example.com/jmdict" },
+                licenseUse: { status: "approved", license: "CC BY-SA 4.0" },
+                checkedAt: "2026-06-21",
+                allowedUse: ["frequency-sanity"],
+                local: {
+                    path: "downloads/jmdict-word-verification.tsv",
+                    format: "tsv",
+                },
+            },
+        },
+    };
+    const selectorManifest = buildSelectorManifestForSource({
+        manifest,
+        wordSourceEvidence: { sources: {} },
+        sourceId: DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+        levels: [5],
+        commonPoolMode: parsed.commonPoolMode,
+        commonPoolLimit: parsed.commonPoolLimit,
+    });
+
+    assert.equal(selectorManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.qualityMode, "raw");
+    assert.equal(selectorManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.editorialQueueLimit, 25);
 });
 
 test("dictionary common pool filters to common non-duplicate kanji candidates inside the extra lane", () => {
@@ -822,6 +875,8 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
             "山川\tさんせん\tmountains and rivers\t120",
             "一月\tいちがつ\tJanuary\t100",
             "大社\tおおやしろ\tIzumo Grand Shrine\t90",
+            "本棚\tほんだな\tbookshelf\t95",
+            "本社\tほんしゃ\thead office; main office\t95",
             "かな\tかな\tkana\t100",
             "既存\tきそん\texisting\t100",
             "珍語\tちんご\trare coined word\t",
@@ -900,6 +955,7 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
                 月: 5,
                 大: 5,
                 社: 4,
+                本: 5,
                 山: 5,
                 川: 5,
                 既: 5,
@@ -925,14 +981,21 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
 
     assert.equal(levelReport.sourceUniverse.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
     assert.equal(levelReport.sourceUniverse.sourcePoolLabel, SOURCE_POOL_DICTIONARY_COMMON_LABEL);
-    assert.equal(levelReport.sourceUniverse.rowCount, 4);
-    assert.equal(levelReport.sourceUniverse.rawRowCount, 9);
+    assert.equal(levelReport.sourceUniverse.rowCount, 6);
+    assert.equal(levelReport.sourceUniverse.rawRowCount, 11);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.qualityMode, "editorial");
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.eligibleRowsBeforeEditorialFilter, 6);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.editorialQueueRows, 6);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 0);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.kanaOnly, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.alreadyGovernedOrExcluded, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.missingCommonness, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.meaningNoise, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.noTargetKanji, 1);
-    assert.deepEqual([...rowsByKey.keys()], ["山川|さんせん", "本屋|ほんや", "一月|いちがつ", "大社|おおやしろ"]);
+    assert.deepEqual(
+        [...rowsByKey.keys()].sort(),
+        ["一月|いちがつ", "大社|おおやしろ", "山川|さんせん", "本屋|ほんや", "本棚|ほんだな", "本社|ほんしゃ"].sort()
+    );
 
     for (const row of rowsByKey.values()) {
         assert.equal(row.selectorStatus, "needs_triage");
@@ -945,11 +1008,130 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
     }
     assert.equal(rowsByKey.get("本屋|ほんや").frequencyRank, 100);
     assert.equal(rowsByKey.get("山川|さんせん").frequencyRank, 120);
+    assert.deepEqual(rowsByKey.get("本棚|ほんだな").supportLabelNeeds, ["outside-JLPT support kanji 棚"]);
+    assert.deepEqual(rowsByKey.get("本社|ほんしゃ").supportLabelNeeds, ["harder support kanji 社=N4"]);
 
     const formatted = formatWordCommonExpansionSelectorReport(report);
     assert.match(formatted, /pool DICTIONARY COMMON POOL/);
+    assert.match(formatted, /pool eligible 6/);
+    assert.match(formatted, /pool queue 6/);
     assert.match(formatted, /source pool: DICTIONARY COMMON POOL/);
+    assert.match(formatted, /support label needs: outside-JLPT support kanji 棚/);
     assert.match(formatted, /commonness rank: 100/);
+});
+
+test("dictionary common pool editorial mode caps review queue without penalizing outside support", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const commonPoolSource = writeFixtureSource(
+        dir,
+        "jmdict.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "一月\tいちがつ\tJanuary\t90",
+            "大社\tおおやしろ\tIzumo Grand Shrine\t90",
+            "本棚\tほんだな\tbookshelf\t95",
+            "本社\tほんしゃ\thead office; main office\t96",
+            "山川\tさんせん\tmountains and rivers\t97",
+        ].join("\n")
+    );
+    const baseManifest = {
+        version: 1,
+        checkedAt: "2026-06-21",
+        sources: {
+            [DICTIONARY_COMMON_POOL_SOURCE_ID]: {
+                name: "Fixture dictionary common pool",
+                tier: 3,
+                status: "active",
+                sourceType: "dictionary_common_pool",
+                origin: {
+                    url: "https://example.com/jmdict",
+                    localPath: commonPoolSource.path,
+                },
+                licenseUse: {
+                    status: "approved",
+                    license: "CC BY-SA 4.0",
+                },
+                checkedAt: "2026-06-21",
+                local: {
+                    path: commonPoolSource.path,
+                    format: "tsv",
+                    byteSize: commonPoolSource.byteSize,
+                    rowCount: commonPoolSource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+                allowedUse: [
+                    "candidate-discovery",
+                    "dictionary-verification",
+                    "frequency-sanity",
+                    "usefulness-support",
+                ],
+                candidatePolicy: {
+                    levels: [5],
+                    kanjiScope: "known-jlpt",
+                    requireSourceLevel: false,
+                },
+                extraSourceLane: true,
+                extraSourcePool: "dictionary_common_pool",
+                extraSourcePoolLabel: SOURCE_POOL_DICTIONARY_COMMON_LABEL,
+                commonPool: {
+                    type: "dictionary_common_pool",
+                    qualityMode: "editorial",
+                    editorialQueueLimit: 3,
+                },
+            },
+        },
+    };
+
+    const commonInputs = {
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: buildExhaustedReadingSignal(5),
+        },
+        jlptLevelContract: {
+            kanjiLevels: {
+                一: 5,
+                月: 5,
+                大: 5,
+                社: 4,
+                本: 5,
+                山: 5,
+                川: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+    };
+
+    const editorialReport = buildWordCommonExpansionSelectorReport({
+        ...commonInputs,
+        manifest: baseManifest,
+    });
+    const editorialLevel = editorialReport.levelReports[0];
+    const editorialKeys = editorialLevel.rows.map((row) => row.key);
+    assert.deepEqual(editorialKeys, ["本棚|ほんだな", "本社|ほんしゃ", "山川|さんせん"]);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.eligibleRowsBeforeEditorialFilter, 5);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.editorialQueueRows, 3);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 2);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.outsideJlptSupportRows, 1);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.outsideJlptSupportRowsInQueue, 1);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.harderSupportKanjiRows, 2);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.harderSupportKanjiRowsInQueue, 1);
+    assert.deepEqual(editorialLevel.rows[0].supportLabelNeeds, ["outside-JLPT support kanji 棚"]);
+
+    const rawManifest = JSON.parse(JSON.stringify(baseManifest));
+    rawManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.qualityMode = "raw";
+    const rawReport = buildWordCommonExpansionSelectorReport({
+        ...commonInputs,
+        manifest: rawManifest,
+    });
+    assert.equal(rawReport.levelReports[0].summary.selectedRows, 5);
+    assert.equal(rawReport.levelReports[0].sourceUniverse.commonPoolSummary.qualityMode, "raw");
+    assert.equal(rawReport.levelReports[0].sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 0);
 });
 
 test("selected extra source work order labels triage as EXTRA work", () => {

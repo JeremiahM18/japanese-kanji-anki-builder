@@ -8,7 +8,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 
 | Command | Purpose |
 | --- | --- |
-| `npm test` | Run the full test suite |
+| `npm test` | Run the full test suite; for inner-loop feedback only, use `npm test -- --scope=<scope>` with `ci-release`, `docs-governance`, `kanji-lanes`, `media-audio`, `nlp`, `obsidian-proof`, `performance`, `source-evidence`, or `word-lanes` |
 | `npm run lint` | Run ESLint |
 | `npm run typecheck` | Run the staged JSDoc typecheck gate |
 | `npm run docs:status-audit` | Compare tracked documentation status language against current review counts, generated denominators, npm command routing, and lane boundaries; fails when README, CHANGELOG, CLAUDE, workflow, command-reference, verification, architecture, or overview docs drift from tracked status or omit Silver/Gold/Sapphire/Platinum/Obsidian separation |

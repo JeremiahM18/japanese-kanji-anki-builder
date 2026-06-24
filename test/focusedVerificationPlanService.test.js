@@ -38,7 +38,7 @@ test("focused verification planner keeps word NLP focused commands separate from
 
     assert.ok(report.laneCommands.includes("npm run deck:words:ready -- --levels=5"));
     assert.ok(report.laneCommands.includes("npm run nlp:governance-gate"));
-    assert.ok(report.focusedTests.some((command) => command.includes("test/nlpEmbeddingSmokeGateService.test.js")));
+    assert.ok(report.focusedTests.includes("npm test -- --scope=nlp"));
     assert.ok(report.fullMergeGate.includes("npm test"));
     assert.ok(report.boundaries.some((rule) => /inner-loop feedback only/.test(rule)));
     assert.ok(report.boundaries.some((rule) => /never replaces the full merge gate/.test(rule)));
@@ -62,6 +62,8 @@ test("focused verification planner adds changed-file risk commands without hidin
 
     assert.equal(report.git.changedFileRisk.highestRisk, "high");
     assert.ok(report.changedFileCommands.includes("npm run docs:status-audit"));
+    assert.ok(report.changedFileCommands.includes("npm test -- --scope=docs-governance"));
+    assert.ok(report.changedFileCommands.includes("npm test -- --scope=ci-release"));
     assert.ok(report.changedFileCommands.includes("npm run ci:smoke"));
     assert.ok(report.changedFileCommands.some((command) => command.includes("test/runNodeTestsScript.test.js")));
     assert.ok(report.changedFileCommands.includes("node --test test/focusedVerificationPlanService.test.js"));
@@ -98,6 +100,7 @@ test("focused verification planner exposes source scope and validates mapped tes
     }), [
         "npm test -- --scope=source-evidence",
         "npm run docs:status-audit",
+        "npm test -- --scope=docs-governance",
     ]);
 });
 

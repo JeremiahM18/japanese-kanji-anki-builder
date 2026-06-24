@@ -25,61 +25,61 @@ const SOURCE_OF_TRUTH = Object.freeze([
 
 const COMMON_LANE_TEST_COMMANDS = Object.freeze({
     ops: Object.freeze([
-        "node --test test/laneOpsStatusService.test.js test/deckCloseoutStatusService.test.js",
+        "npm test -- --scope=docs-governance",
     ]),
     source: Object.freeze([
         "npm test -- --scope=source-evidence",
     ]),
     media: Object.freeze([
-        "node --test test/audioPolicyAuditService.test.js test/audioReviewService.test.js test/wordAudioReviewService.test.js test/mediaSync.test.js test/strokeOrderPolicyAuditService.test.js",
+        "npm test -- --scope=media-audio",
     ]),
     release: Object.freeze([
-        "node --test test/ciSmokeService.test.js test/releaseGateService.test.js test/releasePolicy.test.js test/releaseQaEvidenceService.test.js",
+        "npm test -- --scope=ci-release",
     ]),
 });
 
 const DECK_LANE_TEST_COMMANDS = Object.freeze({
     "word:silver": Object.freeze([
-        "node --test test/prepareWordDeckScript.test.js test/wordDeckCompletionService.test.js test/wordReadingCoverageService.test.js test/wordExportService.test.js",
+        "npm test -- --scope=word-lanes",
     ]),
     "word:gold": Object.freeze([
-        "node --test test/reviewGoldenWordLevel.test.js test/goldWordExpectationScaffoldService.test.js",
+        "npm test -- --scope=word-lanes",
     ]),
     "word:sapphire": Object.freeze([
-        "node --test test/reviewSapphireWordLevel.test.js test/sapphireWordBatchReportService.test.js test/sapphireWordTrackedReviewSets.test.js",
+        "npm test -- --scope=word-lanes",
     ]),
     "word:platinum": Object.freeze([
-        "node --test test/reviewPlatinumWordLevel.test.js test/platinumWordBatchReportService.test.js test/platinumWordRereviewStatusService.test.js",
+        "npm test -- --scope=word-lanes",
     ]),
     "word:obsidian": Object.freeze([
-        "node --test test/obsidianProofLedger.test.js test/obsidianProofProviderService.test.js test/obsidianWordCertificationStatusService.test.js test/platinumWordRereviewStatusService.test.js",
+        "npm test -- --scope=obsidian-proof",
     ]),
     "word:nlp": Object.freeze([
-        "node --test test/nlpGovernanceGateService.test.js test/nlpEmbeddingSmokeGateService.test.js test/nlpTokenizationGenerationService.test.js test/nlpReadingGapCandidateDiscoveryService.test.js test/nlpReviewPacketService.test.js test/nlpDraftProposalService.test.js test/runWordNlpExpansionSupportScript.test.js",
+        "npm test -- --scope=nlp",
     ]),
     "kanji:silver": Object.freeze([
-        "node --test test/prepareDeck.test.js test/deckReadyService.test.js test/buildPipeline.test.js test/exportService.test.js",
+        "npm test -- --scope=kanji-lanes",
     ]),
     "kanji:gold": Object.freeze([
-        "node --test test/reviewGoldenLevelScript.test.js test/goldenReviewService.test.js test/goldenReviewCoverage.test.js",
+        "npm test -- --scope=kanji-lanes",
     ]),
     "kanji:sapphire": Object.freeze([
-        "node --test test/sapphireTrackedReviewSets.test.js test/reviewPlatinumKanjiLevel.test.js test/platinumTrackedReviewSets.test.js",
+        "npm test -- --scope=kanji-lanes",
     ]),
     "kanji:platinum": Object.freeze([
-        "node --test test/reviewPlatinumKanjiLevel.test.js test/platinumKanjiBatchReportService.test.js test/platinumKanjiRereviewStatusService.test.js",
+        "npm test -- --scope=kanji-lanes",
     ]),
     "kanji:obsidian": Object.freeze([
-        "node --test test/obsidianProofLedger.test.js test/obsidianProofProviderService.test.js test/obsidianKanjiCertificationStatusService.test.js test/platinumKanjiRereviewStatusService.test.js",
+        "npm test -- --scope=obsidian-proof",
     ]),
     "kanji:nlp": Object.freeze([
-        "node --test test/nlpGovernanceGateService.test.js test/nlpTokenizationGenerationService.test.js test/nlpReviewPacketService.test.js test/runKanjiNlpSignalSupportScript.test.js",
+        "npm test -- --scope=nlp",
     ]),
 });
 
 const RISK_TEST_COMMANDS = Object.freeze({
     "ci-release": Object.freeze([
-        "node --test test/ciSmokeService.test.js test/releaseGateService.test.js test/branchProtectionPolicy.test.js",
+        "npm test -- --scope=ci-release",
         "npm run ci:smoke",
         "npm run release:gate",
     ]),
@@ -91,30 +91,32 @@ const RISK_TEST_COMMANDS = Object.freeze({
         "node --test test/runNodeTestsScript.test.js",
     ]),
     "proof-ledger": Object.freeze([
-        "node --test test/obsidianProofLedger.test.js test/obsidianProofReconciliation.test.js test/obsidianProofProviderService.test.js test/obsidianProofProviderParity.test.js",
+        "npm test -- --scope=obsidian-proof",
         "npm run data:obsidian:proof:validate",
     ]),
     "review-manifest": Object.freeze([
-        "node --test test/sapphireTrackedReviewSets.test.js test/sapphireWordTrackedReviewSets.test.js test/platinumTrackedReviewSets.test.js",
+        "npm test -- --scope=kanji-lanes",
+        "npm test -- --scope=word-lanes",
     ]),
     "source-governance": Object.freeze([
         "npm test -- --scope=source-evidence",
     ]),
     "performance-matrix": Object.freeze([
-        "node --test test/performanceMemoryAuditMatrix.test.js test/benchmarkBuild.test.js test/obsidianProofEtlBenchmark.test.js test/jlptKanjiSourceEvidenceCostReport.test.js",
+        "npm test -- --scope=performance",
     ]),
     documentation: Object.freeze([
         "npm run docs:status-audit",
+        "npm test -- --scope=docs-governance",
     ]),
     "nlp-support": Object.freeze([
-        "node --test test/nlpGovernanceGateService.test.js test/nlpEmbeddingSmokeGateService.test.js test/nlpTokenizationGenerationService.test.js test/nlpReviewPacketService.test.js test/nlpDraftProposalService.test.js",
+        "npm test -- --scope=nlp",
     ]),
     "runtime-code": Object.freeze([
         "npm run lint",
     ]),
     tests: Object.freeze([]),
     "media-audio": Object.freeze([
-        "node --test test/audioPolicyAuditService.test.js test/audioReviewService.test.js test/wordAudioReviewService.test.js test/mediaSync.test.js",
+        "npm test -- --scope=media-audio",
     ]),
 });
 

@@ -79,6 +79,20 @@ Use `npm run verify:focused -- --deck=<word|kanji> --lane=<lane> --level=<level>
 
 Focused verification does not run commands, certify cards, approve source truth, write proof ledgers, edit templates, replace Gold/Sapphire/Platinum/Obsidian gates, replace release QA, shrink denominators, hide expected backlog, or replace the full merge gate before commit, merge, or release claims.
 
+Scoped `npm test` runs are available for focused feedback only:
+
+- `npm test -- --scope=ci-release`
+- `npm test -- --scope=docs-governance`
+- `npm test -- --scope=kanji-lanes`
+- `npm test -- --scope=media-audio`
+- `npm test -- --scope=nlp`
+- `npm test -- --scope=obsidian-proof`
+- `npm test -- --scope=performance`
+- `npm test -- --scope=source-evidence`
+- `npm test -- --scope=word-lanes`
+
+The full `npm test` command remains part of the full merge gate.
+
 ## Product artifact gates
 
 `product:artifacts:n5` builds a fresh N5 word TSV from tracked templates only. It disables network inference, excludes ignored local `data/` word, sentence, JLPT, cache, and media inputs, validates schema, checks canonical row counts, enforces canonical-only governance, and repeats output generation for determinism.

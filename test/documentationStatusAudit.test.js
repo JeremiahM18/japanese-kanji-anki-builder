@@ -126,7 +126,7 @@ test("documentation status audit catches a missing package script", () => {
 test("documentation status audit catches undocumented package scripts", () => {
     const files = readDocumentationFiles();
     files["docs/command-reference.md"] = files["docs/command-reference.md"].replace(
-        "| `npm run bench:build` | Measure local deck build/package performance for selected levels without applying a timing budget; use the gate variants for budget enforcement |\n",
+        "| `npm run bench:build` | Measure local deck build/package performance for selected levels without applying a timing budget; use the gate variants for budget enforcement; add `-- --summary` for compact JSON run/package timing accounting or `-- --keys-only` for report-shape discovery without printing full run payloads |\n",
         "",
     );
 

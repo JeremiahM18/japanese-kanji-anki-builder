@@ -103,6 +103,7 @@
     "deck:closeout": "node scripts/reportDeckCloseoutStatus.js",
     "deck:ops": "node scripts/reportLaneOpsStatus.js",
     "deck:lane-status": "node scripts/reportLaneOpsStatus.js",
+    "deck:work-packet": "node scripts/reportLaneWorkPacket.js",
     "verify:focused": "node scripts/reportFocusedVerificationPlan.js",
     "media:plan": "node scripts/reportMediaPlan.js",
     "media:import:audio": "node scripts/importAudio.js",

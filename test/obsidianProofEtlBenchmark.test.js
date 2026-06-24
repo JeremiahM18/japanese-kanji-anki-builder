@@ -10,7 +10,9 @@ const {
 const { resolvePythonCommand } = require("../src/services/toolchainService");
 const {
     DEFAULT_OBSIDIAN_PROOF_ETL_BUDGET,
+    buildObsidianProofEtlBenchmarkKeysOnly,
     buildObsidianProofEtlBenchmarkReport,
+    buildObsidianProofEtlBenchmarkSummary,
     evaluateBudget,
     formatBudgetResult,
     formatObsidianProofEtlBenchmarkReport,
@@ -104,10 +106,14 @@ test("Obsidian proof ETL benchmark parses local guardrail options", () => {
         "--budget-validation-ms=123",
         "--budget-sqlite-mirror-ms=456",
         "--json",
+        "--summary",
+        "--keys-only",
     ]);
 
     assert.deepEqual(options, {
         json: true,
+        summary: true,
+        keysOnly: true,
         repeat: 3,
         ledgerDir: "templates/custom-ledger",
         outputDirBase: "out/custom-obsidian-bench",
@@ -119,6 +125,36 @@ test("Obsidian proof ETL benchmark parses local guardrail options", () => {
         budgetSqliteMirrorMs: 456,
         unknownArgs: [],
     });
+});
+
+test("Obsidian proof ETL benchmark compact summary keeps stage accounting", () => {
+    const report = {
+        passed: true,
+        configuration: { repeat: 1 },
+        readOnlyCanonicalInputs: true,
+        generatedArtifactsOnly: true,
+        memory: { unit: "bytes" },
+        timings: {
+            total: { averageMs: 10 },
+            validation: { label: "ledger validation", repeat: 1, averageMs: 1, minMs: 1, maxMs: 1, memory: { samples: 1 }, lastResult: { large: true } },
+            compatibilityView: { label: "compatibility", repeat: 1, averageMs: 2, minMs: 2, maxMs: 2, memory: { samples: 1 }, lastResult: { large: true } },
+            sqliteMirror: { label: "sqlite", repeat: 1, averageMs: 3, minMs: 3, maxMs: 3, memory: { samples: 1 }, lastResult: { large: true } },
+        },
+        stages: {
+            validation: { passed: true, proofEvents: 2, files: ["a", "b"], failures: [] },
+            compatibilityView: { passed: true, ledgerProofEvents: 2, reviewSets: [{ level: 5 }], failures: [] },
+            sqliteMirror: { passed: true, proofEvents: 2, evidenceChecks: 4, failures: [] },
+        },
+        budget: { passed: true, failures: [] },
+        failures: [],
+    };
+    const summary = buildObsidianProofEtlBenchmarkSummary(report);
+    const keys = buildObsidianProofEtlBenchmarkKeysOnly(report);
+
+    assert.equal(summary.stageCounts.validation.files, 2);
+    assert.equal(summary.stageCounts.compatibilityView.reviewSets, 1);
+    assert.equal(Object.hasOwn(summary.timings.validation, "lastResult"), false);
+    assert.deepEqual(keys.children.stages.children.compatibilityView.children.reviewSets.type, "array");
 });
 
 test("Obsidian proof ETL benchmark validates repeat and budgets", () => {

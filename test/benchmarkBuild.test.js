@@ -5,6 +5,8 @@ const path = require("node:path");
 const {
     COLD_APKG_BUILD_BUDGET,
     DEFAULT_BUILD_BUDGET,
+    buildBuildBenchmarkKeysOnly,
+    buildBuildBenchmarkSummary,
     cleanOutDir,
     evaluateBudget,
     evaluateRepeatedBudget,
@@ -40,6 +42,8 @@ test("benchmarkBuild parseArgs supports warmup json and build options", () => {
         warmup: false,
         coldApkgCache: true,
         json: true,
+        summary: false,
+        keysOnly: false,
         repeat: 3,
         budget: "default",
         budgetTotalMs: 4200,
@@ -48,6 +52,44 @@ test("benchmarkBuild parseArgs supports warmup json and build options", () => {
         budgetPackagingMs: 500,
         unknownArgs: [],
     });
+});
+
+test("benchmarkBuild parseArgs supports compact output modes", () => {
+    const options = parseArgs(["--summary", "--keys-only"]);
+
+    assert.equal(options.summary, true);
+    assert.equal(options.keysOnly, true);
+});
+
+test("build benchmark compact summary keeps timings and drops bulky coverage payloads", () => {
+    const result = {
+        configuration: { levels: [5], repeat: 1 },
+        garbageCollection: { beforeMeasuredRuns: true },
+        warmup: null,
+        measured: {
+            outDir: "out/bench-build/measured",
+            durationMs: 123,
+            doctorReady: true,
+            exports: [{ level: 5, rows: 80 }],
+            package: {
+                mediaAssetCount: 2,
+                exportCount: 1,
+                ankiPackageSkipped: false,
+                timingsMs: { copyMedia: 1 },
+            },
+            timingsMs: { export: 10 },
+            memory: { samples: 1 },
+            coverage: { giant: ["payload"] },
+        },
+        measuredRuns: [],
+        budget: { passed: true, failures: [] },
+    };
+    const summary = buildBuildBenchmarkSummary(result);
+    const keys = buildBuildBenchmarkKeysOnly(result);
+
+    assert.equal(summary.measured.durationMs, 123);
+    assert.equal(Object.hasOwn(summary.measured, "coverage"), false);
+    assert.deepEqual(keys.children.measured.children.coverage.children.giant.type, "array");
 });
 
 test("resolveRepeatCount floors positive values and rejects zero", () => {

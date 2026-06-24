@@ -144,6 +144,8 @@ npm run bench:build:cold-apkg:gate
 
 Before changing a timing budget, raising a performance claim, or calling a close run stable, run the benchmark gate standalone, append `--repeat=3` to the relevant command, and keep the same machine, runtime, cache mode, and input boundary. The matrix records this as the minimum repeat-evidence rule; a single passing run is enough for the gate result, but not enough to change the budget standard. Do not run timing-budget commands in parallel with tests, audits, builds, or other IO-heavy work.
 
+For benchmark report triage, `--summary` emits compact JSON timing/accounting output and `--keys-only` emits report shape without large nested payloads. These modes do not change measured work, budget evaluation, repeat requirements, cache mode, output roots, or fail/pass behavior.
+
 Current memory-sampled benchmark lanes report process snapshots for trend analysis only:
 
 - `data:benchmark:jlpt:sources:gate` samples source-governance stages and the whole source-evidence cost report.

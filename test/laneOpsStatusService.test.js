@@ -150,7 +150,7 @@ test("lane ops formatter exposes boundaries, serial work, and architecture needs
     assert.match(formatted, /Japanese Kanji Builder Lane Ops Status/);
     assert.match(formatted, /Obsidian proof posture must come from the fail-closed Obsidian status/);
     assert.match(formatted, /data:obsidian:proof:append --write/);
-    assert.match(formatted, /per-level\/per-run output roots/);
+    assert.match(formatted, /same-key APKG cache writes/);
     assert.match(formatted, /Do not treat Deck Ready, closeout, NLP, source adequacy, or release:gate as card certification/);
 });
 

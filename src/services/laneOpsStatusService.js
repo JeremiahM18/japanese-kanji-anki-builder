@@ -697,6 +697,10 @@ function buildParallelismPlan({ deckKind, levels }) {
                 condition: `Use one process per level after the shared deck surface is refreshed; example levels: ${selected}.`,
             },
             {
+                activity: "Deck build/package runs with isolated output roots",
+                condition: "Use a distinct --run-id or --out-dir per process; default shared roots remain serial.",
+            },
+            {
                 activity: "Read-only status, batch, source, and audit reports",
                 condition: "Safe only when no --write flag is used and no timing-budget benchmark is running.",
             },
@@ -706,13 +710,13 @@ function buildParallelismPlan({ deckKind, levels }) {
             },
         ],
         mustRemainSerial: [
-            "npm run deck:words:ready because it writes through shared out/word-build package roots.",
-            "npm run deck:ready, deck:package, deck:apkg, and deck:words:apkg because packaging/output roots and APKG cache are shared.",
+            "Default npm run deck:words:ready because it writes through shared out/word-build package roots unless --run-id or --out-dir isolates the run.",
+            "Default npm run deck:ready, deck:package, deck:apkg, and deck:words:apkg because packaging/output roots and APKG cache are shared unless each process has an isolated output root and no cold-cache cleanup is running.",
             "data:obsidian:proof:append --write, proof reconciliation writes, source-input imports, source merges, and integrity pin writes.",
             "Timing budget benchmarks from the performance matrix; run them standalone on the same machine/runtime/cache mode.",
         ],
         needsArchitectureBeforeParallelism: [
-            "Per-lane/per-level/per-run output roots for package/build commands before concurrent deck builds are safe.",
+            "Write-lock or atomic cache-store semantics before same-key APKG cache writes can be treated as coordination-safe.",
             "Write-lock or ledgered work-packet ownership for proof/source mutation commands before concurrent writes are safe.",
             "A focused verification planner and test-scope map before local test sharding can be treated as reliable feedback.",
         ],

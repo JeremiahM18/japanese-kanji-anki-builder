@@ -22,6 +22,7 @@ const {
 const { buildWordAudioReviewReport } = require("../src/services/wordAudioReviewService");
 const { buildSelectedKanjiByLevel, parseLevelsArgument } = require("../src/services/buildPipeline");
 const { buildDeckPackage } = require("../src/services/deckPackageService");
+const { resolveOutputDir } = require("../src/services/outputIsolationService");
 const { createMediaServices } = require("../src/services/mediaServiceFactory");
 const { selectKanjiForSync, syncMediaForKanjiList } = require("../src/services/mediaSync");
 const { createWordExportService } = require("../src/services/wordExportService");
@@ -79,6 +80,8 @@ function parseArgs(argv) {
         limit: null,
         concurrency: null,
         outDir: null,
+        outDirBase: null,
+        runId: null,
         maxWordsPerKanji: null,
         minimumCandidateScore: null,
         includeInferred: false,
@@ -102,6 +105,10 @@ function parseArgs(argv) {
             options.concurrency = parseNumericOption(arg, "concurrency");
         } else if (arg.startsWith("--out-dir=")) {
             options.outDir = parseStringOption(arg, "out-dir");
+        } else if (arg.startsWith("--out-dir-base=")) {
+            options.outDirBase = parseStringOption(arg, "out-dir-base");
+        } else if (arg.startsWith("--run-id=")) {
+            options.runId = parseStringOption(arg, "run-id");
         } else if (arg.startsWith("--max-words-per-kanji=")) {
             options.maxWordsPerKanji = parseNumericOption(arg, "max-words-per-kanji");
         } else if (arg.startsWith("--minimum-candidate-score=")) {
@@ -275,7 +282,15 @@ async function main() {
         return;
     }
 
-    const outDir = options.outDir || path.join(path.dirname(config.buildOutDir), "word-build");
+    const levels = options.levels || [5];
+    const outDir = resolveOutputDir({
+        explicitOutDir: options.outDir,
+        runId: options.runId,
+        outDirBase: options.outDirBase,
+        defaultOutDir: path.join(path.dirname(config.buildOutDir), "word-build"),
+        deckKind: "word",
+        levels,
+    });
     const buildPaths = buildOutputPaths(outDir);
     const jlptOnlyJson = loadJlptOnlyJson(config.jlptJsonPath);
     const jlptWordLevelContract = loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json"));
@@ -299,7 +314,6 @@ async function main() {
     });
     const { strokeOrderService, audioService } = createMediaServices(config);
     const wordExportService = createWordExportService({ sentenceCorpus, curatedStudyData, wordStudyData, wordPitchAccentData });
-    const levels = options.levels || [5];
     const selectedLevelSet = new Set(levels);
     const coverageSupportLevels = buildRequiredCoverageLevels(levels);
     const concurrency = Number.isFinite(options.concurrency) ? options.concurrency : config.exportConcurrency;

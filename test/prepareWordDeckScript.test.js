@@ -5,6 +5,7 @@ const path = require("node:path");
 const {
     buildWordDeckExitCondition,
     formatWordDeckReadyReport,
+    parseArgs,
     resolveKanjiTsvPath,
 } = require("../scripts/prepareWordDeck");
 
@@ -264,6 +265,20 @@ test("resolveKanjiTsvPath points word completion back to the kanji export for th
         resolveKanjiTsvPath("C:/repo/out/build", 5),
         path.join("C:/repo/out/build", "exports", "jlpt-n5.tsv")
     );
+});
+
+test("prepareWordDeck parseArgs records output isolation options", () => {
+    const options = parseArgs([
+        "--levels=5,4",
+        "--out-dir-base=out/runs",
+        "--run-id=word-batch-001",
+        "--json",
+    ]);
+
+    assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.outDirBase, "out/runs");
+    assert.equal(options.runId, "word-batch-001");
+    assert.equal(options.json, true);
 });
 
 test("buildWordDeckExitCondition keeps JSON and text exit gates on one policy surface", () => {

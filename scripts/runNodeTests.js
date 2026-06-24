@@ -25,6 +25,7 @@ const TEST_SCOPES = Object.freeze({
         "documentationStatusAudit.test.js",
         "focusedVerificationPlanService.test.js",
         "laneOpsStatusService.test.js",
+        "outputIsolationService.test.js",
         "repositoryGovernance.test.js",
         "runNodeTestsScript.test.js",
     ]),

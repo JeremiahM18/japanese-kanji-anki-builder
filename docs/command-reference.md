@@ -65,13 +65,13 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:sapphire:batch -- --level=1 --limit=8 --queue=missing-current-standard` | Build a read-only core-kanji Sapphire review packet for generated rows missing current-standard Sapphire coverage |
 | `npm run deck:sapphire:promote -- --level=1 --input=<reviewed-json>` | Validate and merge reviewed Sapphire candidate entries; writes only with `--write`, does not create Platinum or Obsidian proof |
 | `npm run deck:platinum:batch -- --level=5 --limit=12` | Build a read-only kanji Platinum packet for Sapphire-eligible rows; defaults to missing current-standard Platinum coverage, while Obsidian proof-status workflows must pass `--queue=substantive-rereview` explicitly |
-| `npm run deck:package` | Build package artifacts through the Node artifact wrapper |
+| `npm run deck:package` | Build package artifacts through the Node artifact wrapper; add `-- --run-id=<id>` for an isolated generated output root under `out/run-outputs/<id>/kanji-n*`, or use explicit `-- --out-dir=<path>` when manually controlling the package root |
 | `npm run deck:kanji:surface-audit` | Audit generated kanji deck surface details before review or release claims |
 | `npm run deck:kanji:partition-plan` | Report core/additional kanji partition decisions and duplicate-claim handling |
 | `npm run deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` | Classify kanji Platinum versus Obsidian proof; N5/N4/N3/N2 complete proof reads canonical JSONL through the scoped proof provider |
 | `npm run deck:kanji:obsidian:certify-status -- --levels=5,4,3,2` | Fail-closed kanji Obsidian certification status for the completed N5/N4/N3/N2 scope |
 | `npm run deck:kanji:platinum:certify-status -- --levels=5,4,3,2` | Compatibility alias for the kanji Obsidian certification status command; new proof work should use the Obsidian command name |
-| `npm run deck:ready` | Build and package kanji TSV artifacts |
+| `npm run deck:ready` | Build and package kanji TSV artifacts; add `-- --run-id=<id>` for an isolated generated output root under `out/run-outputs/<id>/kanji-n*`, or use explicit `-- --out-dir=<path>` when manually controlling the package root |
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
 | `npm run deck:kanji:review-status` | Report core/additional kanji generated, Gold, native Sapphire structural coverage, Platinum coverage, revalidation backlog, and duplicate-claim status |
@@ -104,7 +104,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:platinum:n3` | Run the N3 kanji Platinum gate; use `deck:sapphire:n3` for structure-only Sapphire |
 | `npm run deck:platinum:n2` | Run the N2 kanji Platinum gate; use `deck:sapphire:n2` for structure-only Sapphire |
 | `npm run deck:platinum:n1` | Run the N1 kanji Platinum gate; fails closed while generated rows lack matching current-standard Platinum entries; use `deck:sapphire:n1` for structure-only Sapphire |
-| `npm run deck:words:ready` | Build and package requested word TSV artifacts; reading-readiness for a selected harder/lower-numbered level uses its cumulative easier-level support stack, such as N3 counting N5 + N4 + N3 |
+| `npm run deck:words:ready` | Build and package requested word TSV artifacts; reading-readiness for a selected harder/lower-numbered level uses its cumulative easier-level support stack, such as N3 counting N5 + N4 + N3; add `-- --run-id=<id>` for an isolated generated output root under `out/run-outputs/<id>/word-n*`, or use explicit `-- --out-dir=<path>` when manually controlling the package root |
 | `npm run deck:words:apkg` | Build word `.apkg` artifacts |
 | `npm run deck:words:gold:scaffold -- --level=3 --limit=8` | Draft fail-closed Gold word expectation skeletons from live generated rows missing Gold review; writes no tracked templates and uses TODO sentinels for human-only review fields |
 | `npm run deck:words:sapphire:batch -- --level=5 --limit=8 --queue=missing-current-standard` | Build a read-only word Sapphire structural review packet for generated rows missing current-standard Sapphire coverage |

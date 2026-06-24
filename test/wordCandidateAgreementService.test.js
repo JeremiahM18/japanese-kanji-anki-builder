@@ -214,6 +214,53 @@ test("buildWordCandidateAgreementReport seeds candidates from discovery sources 
     assert.match(formatWordCandidateAgreementReport(report), /Placement gate: 0\/1 word-level placement violations/);
 });
 
+test("word candidate agreement carries TubeLex frequency evidence on exact identities", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
+    const candidateSource = writeFixtureSource(
+        dir,
+        "jlpt.tsv",
+        "written\treading\tmeaning\tjlpt\n本屋\tほんや\tbookstore\tN5\n"
+    );
+    const dictionarySource = writeFixtureSource(
+        dir,
+        "dict.tsv",
+        "written\treading\tmeaning\n本屋\tほんや\tbookstore\n"
+    );
+    const frequencySource = writeFixtureSource(
+        dir,
+        "tubelex.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank\ttubelexRank\ttubelexCount\ttubelexVideoCount\ttubelexChannelCount\ttubelexDispersionScore\ttubelexCategoryConcentration\ttubelexMatchStatus\ttubelexFrequencyBand\tsource\tnotes",
+            "本屋\tほんや\tbookstore\t300\t300\t5000\t1200\t300\t80\t0.3\texact_written\tgood\ttubelex-ja-frequency\tTubeLex support only",
+        ].join("\n")
+    );
+
+    const report = buildWordCandidateAgreementReport({
+        levels: [5],
+        limit: 10,
+        manifest: buildManifest({ candidateSource, dictionarySource, frequencySource }),
+        jlptLevelContract: {
+            kanjiLevels: {
+                本: 5,
+                屋: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+    });
+    const row = report.levelReports[0].rows.find((entry) => entry.key === "本屋|ほんや");
+    const frequencyAppearance = row.sourceAppearances.find((appearance) => appearance.sourceId === "fixture-priority");
+
+    assert.equal(row.frequencySupported, true);
+    assert.equal(row.frequencyEvidence.length, 1);
+    assert.equal(row.frequencyEvidence[0].tubelexRank, 300);
+    assert.equal(row.frequencyEvidence[0].frequencyBand, "good");
+    assert.equal(row.frequencyEvidence[0].frequencyMatchStatus, "exact_written");
+    assert.equal(frequencyAppearance.frequencyEvidence.tubelexCount, 5000);
+});
+
 test("buildWordCandidateAgreementReport surfaces moved candidates with target levels", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-candidate-agreement-"));
     const candidateSource = writeFixtureSource(

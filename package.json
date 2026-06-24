@@ -191,6 +191,7 @@
     "deck:words:gap-plan:n2": "node scripts/reportWordReadingGapPlan.js --level=2",
     "deck:words:gap-plan:n1": "node scripts/reportWordReadingGapPlan.js --level=1",
     "data:normalize:words:jmdict": "node scripts/normalizeJmdictWordSource.js",
+    "data:normalize:words:tubelex": "node scripts/normalizeTubelexWordFrequency.js",
     "nlp:models:audit": "node scripts/reportNlpModelGovernance.js",
     "nlp:tokenization:generate": "node scripts/generateNlpTokenization.js",
     "nlp:tokenization:validate": "node scripts/validateNlpTokenization.js",

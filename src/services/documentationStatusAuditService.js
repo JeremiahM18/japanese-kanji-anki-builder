@@ -179,6 +179,10 @@ function buildWordExpansionDoctrinePhrases() {
         dictionaryCommonPoolLearnerUtilityBoundary: "The score is an ordering signal only, never card approval.",
         dictionaryCommonPoolOutsideSupport: "Outside-JLPT and higher-level support kanji are label/review needs, not automatic common-pool deprioritization.",
         dictionaryCommonPoolRawCommand: "`--common-pool-mode=raw`",
+        tubelexNormalizerCommand: "`npm run data:normalize:words:tubelex`",
+        tubelexFrequencyBoundary: "TubeLex is frequency/usefulness support only; it is not candidate discovery, JLPT level truth, reading proof, meaning proof, pitch proof, or card approval.",
+        tubelexAmbiguityBoundary: "Ambiguous TubeLex written/reading matches stay visibly marked and cannot create reading proof.",
+        tubelexDiscoveryYieldBands: "Discovery yield reports strong, good, borderline, and poor frequency/usefulness bands for each 200-row window.",
         expansionTargetMinimums: "Expansion targets are useful minimums, not hard caps or approval quotas: N5 ~800, N4 ~1000, N3 ~2250, N2 ~2250, and N1 ~4000 unique governed words.",
         expansionTargetActivation: "Target-progress reporting starts after reading expansion; it must not activate common-word expansion before reading work is exhausted.",
         expansionTargetQualityBoundary: "Missing a target is never permission to accept weak rows",
@@ -382,6 +386,10 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/workflows.md must list the learner-utility scoring components.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityBoundary), "docs/workflows.md must state learner-utility score is ordering only, not card approval.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolOutsideSupport), "docs/workflows.md must state that outside-JLPT/higher-level support kanji are label needs, not automatic common-pool deprioritization.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.tubelexNormalizerCommand), "docs/workflows.md must document the TubeLex word frequency normalizer command.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.tubelexFrequencyBoundary), "docs/workflows.md must state that TubeLex is support/ranking evidence only, not level truth or card approval.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.tubelexAmbiguityBoundary), "docs/workflows.md must state that ambiguous TubeLex matches are visibly marked and cannot prove reading.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.tubelexDiscoveryYieldBands), "docs/workflows.md must document discovery-yield frequency/usefulness bands.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetMinimums), "docs/workflows.md must preserve the word expansion target minimums as useful minimums, not hard caps or quotas.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetActivation), "docs/workflows.md must preserve that target-progress reporting does not activate common-word expansion before reading exhaustion.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.expansionTargetQualityBoundary), "docs/workflows.md must preserve that missing target counts do not permit weak word rows.");
@@ -392,6 +400,10 @@ function auditDocumentationText({
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/command-reference.md must document learner-utility scoring components for common-pool work.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.expansionStatusTargetProgress), "docs/command-reference.md must document expansion-status target-progress reporting.");
     addFailure(failures, commandReference.includes("do not automatically deprioritize outside-JLPT or higher-level support kanji"), "docs/command-reference.md must document that outside-JLPT/higher-level support kanji are not automatically deprioritized.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.tubelexNormalizerCommand), "docs/command-reference.md must document the TubeLex word frequency normalizer command.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.tubelexFrequencyBoundary), "docs/command-reference.md must state that TubeLex support is not level truth or card approval.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.tubelexAmbiguityBoundary), "docs/command-reference.md must state that ambiguous TubeLex matches cannot prove reading.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.tubelexDiscoveryYieldBands), "docs/command-reference.md must document TubeLex/common-pool discovery yield bands.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/command-reference.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, documentationStandard.includes(phrases.commandReferenceAuditCommand), "docs/documentation-standard.md must require docs:status-audit for status/count doc edits.");
     addFailure(failures, verification.includes(phrases.commandReferenceAuditCommand), "docs/verification.md must route documentation status audits through docs:status-audit.");

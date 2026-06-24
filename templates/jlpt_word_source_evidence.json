@@ -61,6 +61,11 @@
       "role": "dictionary",
       "description": "JMdict dictionary and priority markers for identity/commonness support, not JLPT level truth."
     },
+    "tubelex-subtitle-frequency": {
+      "label": "TubeLex Japanese subtitle frequency",
+      "role": "frequency-sanity",
+      "description": "TubeLex Japanese YouTube subtitle frequency list used for everyday-language support/ranking only, never JLPT level truth or card approval."
+    },
     "kanjium-pitch": {
       "label": "Kanjium pitch accent",
       "role": "pitch-accent",
@@ -93,6 +98,10 @@
     "edrdg": {
       "label": "EDRDG",
       "description": "EDRDG/JMdict dictionary family."
+    },
+    "tubelex": {
+      "label": "TubeLex",
+      "description": "TubeLex subtitle-derived frequency family."
     },
     "kanjium": {
       "label": "Kanjium",
@@ -534,6 +543,54 @@
         "rowCount": 255738
       },
       "derivedFromSources": []
+    },
+    "tubelex-ja-frequency": {
+      "name": "TubeLex Japanese everyday-language frequency support",
+      "tier": "support-commonness",
+      "evidenceLineage": "tubelex-subtitle-frequency",
+      "independenceGroup": "tubelex",
+      "status": "active",
+      "sourceKind": "frequency",
+      "sourceType": "corpus_frequency",
+      "url": "https://github.com/naist-nlp/tubelex/blob/main/frequencies/tubelex-ja-310-lemma-pos.tsv.xz",
+      "levels": [],
+      "japanesePublished": false,
+      "permissionedLearnerSource": false,
+      "countsForConsensus": false,
+      "weight": 1,
+      "licenseStatus": "approved",
+      "allowedUse": [
+        "commonness-support",
+        "frequency-sanity"
+      ],
+      "disallowedUse": [
+        "level-hint",
+        "candidate-discovery",
+        "dictionary-verification",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification"
+      ],
+      "canStoreWordAssignments": false,
+      "canStoreRawList": false,
+      "canStoreExcerpts": false,
+      "requiresCitation": true,
+      "positiveEvidenceOnly": true,
+      "licenseEvidenceUrl": "https://github.com/naist-nlp/tubelex/blob/main/LICENSE",
+      "licenseReviewedAt": "2026-06-24",
+      "checkedAt": "2026-06-24",
+      "local": {
+        "path": "downloads/tubelex-ja-frequency.tsv",
+        "format": "tsv",
+        "sha256": "6211ef80c94a06b67f5762f05ba239f3195d1ce2085adb76994e1156940f1cf1",
+        "byteSize": 24510589,
+        "rowCount": 65319
+      },
+      "derivedFromSources": [
+        "jmdict"
+      ],
+      "legalNotes": "BSD-3-Clause source; derived exact-identity support facts only. Raw subtitle text is not stored.",
+      "notes": "Support/ranking evidence only. TubeLex does not prove JLPT level, reading, meaning, pitch, dictionary identity, or card approval; ambiguous written matches stay labeled."
     },
     "kanjium-pitch-accent": {
       "name": "Kanjium pitch accent database",

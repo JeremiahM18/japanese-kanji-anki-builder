@@ -44,6 +44,7 @@ function parseArgs(argv) {
         source: "",
         commonPoolLimit: DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
         commonPoolMode: "editorial",
+        frequencySource: "",
         sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: false,
         triage: "templates/word_inventory_expansion_triage.json",
@@ -79,6 +80,8 @@ function parseArgs(argv) {
             options.commonPoolMode = String(arg.slice("--common-pool-mode=".length) || "").trim();
         } else if (arg.startsWith("--pool-mode=")) {
             options.commonPoolMode = String(arg.slice("--pool-mode=".length) || "").trim();
+        } else if (arg.startsWith("--frequency-source=")) {
+            options.frequencySource = String(arg.slice("--frequency-source=".length) || "").trim();
         } else if (arg.startsWith("--source-evidence=")) {
             options.sourceEvidence = String(arg.slice("--source-evidence=".length) || "").trim();
         } else if (arg.startsWith("--triage=")) {
@@ -146,6 +149,7 @@ function assertActiveApprovedManifestSource(sourceId, source = {}, requiredUse =
 function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = [], {
     commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     commonPoolMode = "editorial",
+    frequencySource = "",
 } = {}) {
     const dictionarySource = manifest.sources?.jmdict || null;
     const commonnessSource = manifest.sources?.["jmdict-priority-commonness"] || null;
@@ -222,6 +226,7 @@ function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = [], {
             requireTargetKanji: true,
             qualityMode: commonPoolMode,
             editorialQueueLimit: commonPoolLimit,
+            frequencySourceIds: frequencySource ? [frequencySource] : [],
             outsideJlptSupportPolicy: "label_not_deprioritize",
         },
     };
@@ -288,6 +293,7 @@ function buildSelectorManifestForSource({
     levels = [],
     commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     commonPoolMode = "editorial",
+    frequencySource = "",
 } = {}) {
     const normalizedSourceId = normalizeSelectorSourceId(sourceId);
     if (!normalizedSourceId) {
@@ -311,7 +317,7 @@ function buildSelectorManifestForSource({
     }
 
     const overrideSource = normalizedSourceId === DICTIONARY_COMMON_POOL_SOURCE_ID
-        ? buildDictionaryCommonPoolManifestSource(selectorManifest, levels, { commonPoolLimit, commonPoolMode })
+        ? buildDictionaryCommonPoolManifestSource(selectorManifest, levels, { commonPoolLimit, commonPoolMode, frequencySource })
         : (existingSource ? {
             ...existingSource,
             status: "active",
@@ -356,6 +362,7 @@ async function main() {
         levels: options.levels,
         commonPoolLimit: options.commonPoolLimit,
         commonPoolMode: options.commonPoolMode,
+        frequencySource: options.frequencySource,
     });
     const wordSourceEvidenceReport = auditJlptWordSourceEvidence({
         contract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),

@@ -390,3 +390,53 @@ test("documentation status audit catches outside support kanji common-pool drift
         true,
     );
 });
+
+test("documentation status audit catches TubeLex frequency-support drift", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"]
+        .replace(
+            "TubeLex is frequency/usefulness support only; it is not candidate discovery, JLPT level truth, reading proof, meaning proof, pitch proof, or card approval.",
+            "TubeLex can approve common words.",
+        )
+        .replace(
+            "Ambiguous TubeLex written/reading matches stay visibly marked and cannot create reading proof.",
+            "Ambiguous TubeLex matches can be trusted.",
+        )
+        .replace(
+            "Discovery yield reports strong, good, borderline, and poor frequency/usefulness bands for each 200-row window.",
+            "Discovery yield reports a simple score.",
+        );
+    files["docs/command-reference.md"] = files["docs/command-reference.md"].replace(
+        "`npm run data:normalize:words:tubelex`",
+        "`npm run data:normalize:words:frequency`",
+    );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("TubeLex is support/ranking evidence only")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("ambiguous TubeLex matches")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("discovery-yield frequency/usefulness bands")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("TubeLex word frequency normalizer")),
+        true,
+    );
+});

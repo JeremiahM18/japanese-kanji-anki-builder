@@ -4,13 +4,99 @@ const {
     normalizeQueueMode,
 } = require("./platinumWordBatchReportService");
 const {
+    ACTIVE_WORD_SAPPHIRE_STATUSES,
     CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+    NON_SHIPPING_STATUSES,
+    REVIEW_ONLY_STATUSES,
+    buildWordSapphireReviewStandardSummary,
+    entryUsesCurrentWordSapphireStandard,
     mapPlatinumTextToSapphire,
     mapSapphireWordEntriesToPlatinumCompatibility,
 } = require("./sapphireWordReviewService");
 const {
     buildWordGoldPreconditionFailuresByKey,
 } = require("./reviewLanePreconditionService");
+
+function normalizeText(value) {
+    return String(value ?? "").trim();
+}
+
+function buildWordIdentity({ word = "", reading = "" } = {}) {
+    return `${normalizeText(word)}|${normalizeText(reading)}`;
+}
+
+function buildSapphireStateByIdentity(entries = []) {
+    const stateByIdentity = new Map();
+    for (const entry of Array.isArray(entries) ? entries : []) {
+        const readings = Array.isArray(entry.readingIncludes) ? entry.readingIncludes : [entry.reading || ""];
+        for (const reading of readings) {
+            const identity = buildWordIdentity({
+                word: entry.word,
+                reading,
+            });
+            if (!identity || identity === "|") {
+                continue;
+            }
+            const state = stateByIdentity.get(identity) || {
+                statuses: [],
+                hasActiveSapphire: false,
+                hasCurrentStandardSapphire: false,
+            };
+            const status = normalizeText(entry.status);
+            if (status) {
+                state.statuses.push(status);
+            }
+            if (ACTIVE_WORD_SAPPHIRE_STATUSES.includes(status)) {
+                state.hasActiveSapphire = true;
+                if (entryUsesCurrentWordSapphireStandard(entry)) {
+                    state.hasCurrentStandardSapphire = true;
+                }
+            }
+            stateByIdentity.set(identity, state);
+        }
+    }
+    return stateByIdentity;
+}
+
+function classifySapphireReviewState(state = {}) {
+    const statuses = Array.isArray(state.statuses) ? state.statuses : [];
+    if (state.hasCurrentStandardSapphire) {
+        return "current_standard_sapphire";
+    }
+    if (state.hasActiveSapphire) {
+        return "legacy_unversioned_sapphire";
+    }
+    if (statuses.some((status) => NON_SHIPPING_STATUSES.includes(status))) {
+        return "non_shipping_decision";
+    }
+    if (statuses.some((status) => REVIEW_ONLY_STATUSES.includes(status))) {
+        return "needs_review";
+    }
+    if (statuses.length > 0) {
+        return "invalid_or_unknown";
+    }
+    return "missing_sapphire";
+}
+
+function selectSapphireRows({ rows = [], entries = [], words = [], limit = 12 } = {}) {
+    const generatedRows = Array.isArray(rows) ? rows : [];
+    if (Array.isArray(words) && words.length > 0) {
+        return words
+            .map((target) => generatedRows.find((row) => (
+                normalizeText(row.word) === normalizeText(target.word)
+                && (!normalizeText(target.reading) || normalizeText(row.reading) === normalizeText(target.reading))
+            )))
+            .filter(Boolean);
+    }
+
+    const stateByIdentity = buildSapphireStateByIdentity(entries);
+    return generatedRows
+        .filter((row) => {
+            const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+            return classifySapphireReviewState(state) !== "current_standard_sapphire";
+        })
+        .slice(0, Math.max(1, Number.isFinite(limit) ? Math.floor(limit) : 12));
+}
 
 function mapReviewStatus(status = "") {
     return String(status || "")
@@ -89,16 +175,48 @@ function buildSapphireWordBatchReport({
     goldenExpectations,
     queue = WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD,
 } = {}) {
-    const report = buildPlatinumWordBatchReport({
+    const queueMode = normalizeQueueMode(queue);
+    const scopedToRequestedWords = Array.isArray(words) && words.length > 0;
+    const selectedRows = selectSapphireRows({
+        rows,
+        entries,
+        words,
+        limit,
+    });
+    const selectedWords = selectedRows.map((row) => ({
+        word: row.word,
+        reading: row.reading,
+    }));
+    const report = selectedWords.length > 0 ? buildPlatinumWordBatchReport({
         rows,
         entries: mapSapphireWordEntriesToPlatinumCompatibility(entries),
         wordPitchAccentData,
         level,
-        words,
+        words: selectedWords,
         limit,
-        queue,
+        queue: queueMode,
         skipSapphirePreconditionForSapphireCompatibilityReport: true,
+    }) : {
+        level,
+        scope: scopedToRequestedWords
+            ? `words=${words.map(buildWordIdentity).join(",")}`
+            : `queue=${queueMode} limit=${limit}`,
+        queue: queueMode,
+        scopedToRequestedWords,
+        cards: [],
+    };
+    const stateByIdentity = buildSapphireStateByIdentity(entries);
+    const standardSummary = buildWordSapphireReviewStandardSummary(entries);
+    const generatedRows = Array.isArray(rows) ? rows : [];
+    const missingCurrentStandardRows = generatedRows.filter((row) => {
+        const state = stateByIdentity.get(buildWordIdentity(row)) || {};
+        return classifySapphireReviewState(state) !== "current_standard_sapphire";
     });
+    const requestedMissing = Array.isArray(words)
+        ? words
+            .map((target) => buildWordIdentity(target))
+            .filter((identity) => !selectedRows.some((row) => buildWordIdentity(row) === identity))
+        : [];
     const goldPreconditionFailures = buildWordGoldPreconditionFailuresByKey({
         rows,
         entries: (report.cards || []).map((card) => ({
@@ -110,26 +228,38 @@ function buildSapphireWordBatchReport({
     });
     const cards = (report.cards || [])
         .map((card) => addGoldPreconditionToCard(card, goldPreconditionFailures.get(card.identity)))
-        .map(mapCard);
+        .map(mapCard)
+        .map((card) => {
+            const reviewStatus = classifySapphireReviewState(stateByIdentity.get(card.identity) || {});
+            return {
+                ...card,
+                reviewStatus,
+                suggestedReviewStep: reviewStatus === "current_standard_sapphire"
+                    ? "already Sapphire; Platinum and Obsidian proof remain separate"
+                    : card.suggestedReviewStep,
+            };
+        });
 
     return {
         level: report.level,
         lane: "sapphire",
-        scope: report.scope,
+        scope: scopedToRequestedWords
+            ? `words=${words.map(buildWordIdentity).join(",")}`
+            : `queue=${queueMode} limit=${limit}`,
         queue: report.queue,
-        scopedToRequestedWords: report.scopedToRequestedWords,
+        scopedToRequestedWords,
         summary: {
-            generatedRows: report.summary?.generatedRows || 0,
-            activeSapphire: report.summary?.activePlatinum || 0,
+            generatedRows: generatedRows.length,
+            activeSapphire: standardSummary.activeStatusCount || 0,
             currentReviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
-            currentStandardSapphire: report.summary?.currentStandardPlatinum || 0,
-            legacyOrUnversionedSapphire: report.summary?.legacyOrUnversionedPlatinum || 0,
-            remainingSapphire: report.summary?.remainingCurrentStandard || 0,
+            currentStandardSapphire: standardSummary.currentStandardCount || 0,
+            legacyOrUnversionedSapphire: standardSummary.legacyOrUnversionedCount || 0,
+            remainingSapphire: missingCurrentStandardRows.length,
             selectedCards: cards.length,
-            requestedMissing: report.summary?.requestedMissing || 0,
+            requestedMissing: requestedMissing.length,
         },
-        requestedMissing: report.requestedMissing || [],
-        nextMissingWords: report.nextMissingWords || [],
+        requestedMissing,
+        nextMissingWords: missingCurrentStandardRows.map(buildWordIdentity),
         cards,
     };
 }

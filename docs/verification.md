@@ -73,6 +73,12 @@ npm run product:readiness:n5
 npm run release:gate
 ```
 
+## Focused verification planning
+
+Use `npm run verify:focused -- --deck=<word|kanji> --lane=<lane> --level=<level>` to plan an inner-loop check set for a specific lane. The command is read-only. It prints live git posture, changed-file risk, focused lane commands, mapped focused tests, changed-file-specific commands, the full merge gate, and the source-of-truth docs behind the boundaries.
+
+Focused verification does not run commands, certify cards, approve source truth, write proof ledgers, edit templates, replace Gold/Sapphire/Platinum/Obsidian gates, replace release QA, shrink denominators, hide expected backlog, or replace the full merge gate before commit, merge, or release claims.
+
 ## Product artifact gates
 
 `product:artifacts:n5` builds a fresh N5 word TSV from tracked templates only. It disables network inference, excludes ignored local `data/` word, sentence, JLPT, cache, and media inputs, validates schema, checks canonical row counts, enforces canonical-only governance, and repeats output generation for determinism.

@@ -22,6 +22,11 @@ const {
 } = require("./nlpTokenizationAuditService");
 const { ensureDir } = require("../utils/fs");
 const { readJsonFile } = require("../utils/jsonFile");
+const {
+    buildReuseResult,
+    inputHashesMatch,
+    tryReadReusableArtifact,
+} = require("./nlpArtifactReuseService");
 
 const DEFAULT_CREATED_BY = "scripts/generateNlpReviewPackets.js";
 const KANJI_TOKENIZER_COVERAGE_GAP_SIGNAL_KIND = "kanji-card-tokenizer-coverage-gap";
@@ -223,6 +228,34 @@ function buildPacketCounts(packets) {
     };
 }
 
+function reviewPacketArtifactsMatch(actual = {}, expected = {}) {
+    return inputHashesMatch(actual.generator?.inputHashes, expected.generator?.inputHashes)
+        && JSON.stringify(actual.scope) === JSON.stringify(expected.scope)
+        && JSON.stringify(actual.authority) === JSON.stringify(expected.authority)
+        && JSON.stringify(actual.counts) === JSON.stringify(expected.counts)
+        && JSON.stringify(actual.packets) === JSON.stringify(expected.packets);
+}
+
+function findReusableReviewPacketArtifact({ outPath, markdownOutPath = null, expectedArtifact }) {
+    const artifact = tryReadReusableArtifact(outPath, parseNlpReviewPacketArtifact);
+    if (!artifact) {
+        return null;
+    }
+    if (!reviewPacketArtifactsMatch(artifact, expectedArtifact)) {
+        return null;
+    }
+    if (markdownOutPath) {
+        if (!fs.existsSync(markdownOutPath)) {
+            return null;
+        }
+        const expectedMarkdown = formatNlpReviewPacketMarkdown(artifact);
+        if (fs.readFileSync(markdownOutPath, "utf8") !== expectedMarkdown) {
+            return null;
+        }
+    }
+    return artifact;
+}
+
 function formatTokenizationSignalDetail(signal = {}) {
     return [
         signal.id,
@@ -413,17 +446,32 @@ function writeNlpReviewPacketArtifact({
     }
     const artifact = buildNlpReviewPacketArtifact(options);
     const resolvedOutPath = path.resolve(outPath);
+    const resolvedMarkdownPath = markdownOutPath ? path.resolve(markdownOutPath) : null;
+    const reusableArtifact = findReusableReviewPacketArtifact({
+        outPath: resolvedOutPath,
+        markdownOutPath: resolvedMarkdownPath,
+        expectedArtifact: artifact,
+    });
+    if (reusableArtifact) {
+        return {
+            ...buildReuseResult({
+                outPath: resolvedOutPath,
+                artifact: reusableArtifact,
+            }),
+            markdownOutPath: resolvedMarkdownPath,
+        };
+    }
     ensureDir(path.dirname(resolvedOutPath));
     fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
     if (markdownOutPath) {
-        const resolvedMarkdownPath = path.resolve(markdownOutPath);
         ensureDir(path.dirname(resolvedMarkdownPath));
         fs.writeFileSync(resolvedMarkdownPath, formatNlpReviewPacketMarkdown(artifact), "utf8");
     }
     return {
         outPath: resolvedOutPath,
-        markdownOutPath: markdownOutPath ? path.resolve(markdownOutPath) : null,
+        markdownOutPath: resolvedMarkdownPath,
         artifact,
+        skipped: false,
     };
 }
 
@@ -477,12 +525,13 @@ function formatNlpReviewPacketMarkdown(artifact = {}) {
     return `${lines.join("\n")}\n`;
 }
 
-function formatNlpReviewPacketSummary({ outPath, markdownOutPath, artifact }) {
+function formatNlpReviewPacketSummary({ outPath, markdownOutPath, artifact, skipped = false }) {
     return [
         "Japanese Kanji Builder NLP Human Review Packets",
         "",
         `Artifact: ${outPath}`,
         markdownOutPath ? `Markdown: ${markdownOutPath}` : null,
+        `Status: ${skipped ? "reused unchanged artifact" : "generated artifact"}`,
         `Scope: ${artifact.scope.levels.map((level) => `N${level}`).join(", ")} ${artifact.scope.deckKind}`,
         `Packets: ${artifact.counts.packets}`,
         `Suggestions: ${artifact.counts.suggestions}`,

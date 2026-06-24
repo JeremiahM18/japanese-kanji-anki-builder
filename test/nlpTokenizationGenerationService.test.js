@@ -215,6 +215,49 @@ test("writeNlpWordTokenizationArtifact writes artifacts accepted by the validato
     assert.equal(report.counts.items, 1);
 });
 
+test("writeNlpWordTokenizationArtifact reuses unchanged artifact before building tokenizer", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-generation-"));
+    const wordTsvPath = path.join(dir, "jlpt-n5-words.tsv");
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    const outPath = path.join(dir, "tokens.json");
+    fs.writeFileSync(wordTsvPath, "Word\tReading\tMeaning\tJLPTLevel\n日本語\tにほんご\tJapanese\tJLPT N5\n");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+
+    const first = await writeNlpWordTokenizationArtifact({
+        wordTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildTokenizerFn: async () => buildFakeTokenizer(),
+    });
+    const second = await writeNlpWordTokenizationArtifact({
+        wordTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        now: () => new Date("2026-05-21T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildTokenizerFn: async () => {
+            throw new Error("Tokenizer should not be built for unchanged artifacts.");
+        },
+    });
+
+    assert.equal(first.skipped, false);
+    assert.equal(second.skipped, true);
+    assert.equal(second.skipReason, "unchanged-inputs");
+    assert.equal(second.artifact.generatedAt, "2026-05-20T00:00:00.000Z");
+});
+
 test("writeNlpKanjiTokenizationArtifact writes artifacts accepted by the validator", async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-generation-"));
     const kanjiTsvPath = path.join(dir, "jlpt-n5.tsv");
@@ -244,4 +287,47 @@ test("writeNlpKanjiTokenizationArtifact writes artifacts accepted by the validat
     assert.equal(fs.existsSync(outPath), true);
     assert.equal(report.passed, true);
     assert.equal(report.counts.items, 1);
+});
+
+test("writeNlpKanjiTokenizationArtifact reuses unchanged artifact before building tokenizer", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-token-generation-"));
+    const kanjiTsvPath = path.join(dir, "jlpt-n5.tsv");
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    const outPath = path.join(dir, "kanji-tokens.json");
+    fs.writeFileSync(kanjiTsvPath, "Kanji\tDisplayWord\tMeaningJP\tPrimaryReading\n日\t日\tday / sun\tにち\n");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+
+    const first = await writeNlpKanjiTokenizationArtifact({
+        kanjiTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildTokenizerFn: async () => buildFakeTokenizer(),
+    });
+    const second = await writeNlpKanjiTokenizationArtifact({
+        kanjiTsvPath,
+        manifestPath,
+        outPath,
+        workspaceRoot: dir,
+        level: 5,
+        now: () => new Date("2026-05-21T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildTokenizerFn: async () => {
+            throw new Error("Tokenizer should not be built for unchanged artifacts.");
+        },
+    });
+
+    assert.equal(first.skipped, false);
+    assert.equal(second.skipped, true);
+    assert.equal(second.skipReason, "unchanged-inputs");
+    assert.equal(second.artifact.generatedAt, "2026-05-20T00:00:00.000Z");
 });

@@ -621,6 +621,41 @@ test("NLP draft proposal writer emits artifacts accepted by the validator", () =
     assert.equal(report.releaseBoundary.draftProposalsAreCertificationEvidence, false);
 });
 
+test("NLP draft proposal writer reuses unchanged JSON and Markdown artifacts", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
+    const suggestionPath = writeJson(dir, "suggestions.json", buildSuggestionArtifact());
+    const reviewPacketPath = writeJson(dir, "review-packets.json", buildReviewPacketArtifact());
+    const manifestPath = writeJson(dir, "manifest.json", { fixture: true });
+    const outPath = path.join(dir, "drafts.json");
+    const markdownOutPath = path.join(dir, "drafts.md");
+    const commonOptions = {
+        outPath,
+        markdownOutPath,
+        suggestionArtifactPath: suggestionPath,
+        reviewPacketArtifactPath: reviewPacketPath,
+        manifestPath,
+        workspaceRoot: dir,
+        loadManifestFn: () => buildManifest(),
+        buildSuggestionReportFn: () => ({ passed: true, errors: [] }),
+        buildReviewPacketReportFn: () => ({ passed: true, errors: [] }),
+    };
+
+    const first = writeNlpDraftProposalArtifact({
+        ...commonOptions,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+    });
+    const second = writeNlpDraftProposalArtifact({
+        ...commonOptions,
+        now: () => new Date("2026-05-21T00:00:00.000Z"),
+    });
+
+    assert.equal(first.skipped, false);
+    assert.equal(second.skipped, true);
+    assert.equal(second.skipReason, "unchanged-inputs");
+    assert.equal(second.artifact.generatedAt, "2026-05-20T00:00:00.000Z");
+    assert.equal(fs.readFileSync(markdownOutPath, "utf8").includes("Generated: 2026-05-20"), true);
+});
+
 test("NLP draft proposal validation fails under-authorized source models and bad JSON", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-drafts-"));
     const suggestionPath = writeJson(dir, "suggestions.json", buildSuggestionArtifact());

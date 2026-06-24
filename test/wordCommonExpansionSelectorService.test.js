@@ -708,7 +708,7 @@ test("extra expansion work order opens dictionary common pool after selected ext
     assert.equal(workOrder.status, "extra_source_family");
     assert.equal(workOrder.extraSourceLaneReady, true);
     assert.equal(workOrder.extraSourceLaneActionable, true);
-    assert.equal(workOrder.nextCommand, "npm run deck:words:vocab-expansion -- --levels=5 --source=common-pool --frequency-source=tubelex-ja-frequency --strict --limit=80");
+    assert.equal(workOrder.nextCommand, "npm run deck:words:vocab-expansion -- --levels=5 --source=common-pool --queue=discovery --frequency-source=tubelex-ja-frequency --strict --limit=80");
     assert.match(workOrder.nextAction, /DICTIONARY COMMON POOL/);
     assert.match(workOrder.nextAction, /same extra expansion lane/);
     assert.match(workOrder.nextAction, /exclude exact governed\/excluded duplicates and kana-only rows/);
@@ -842,6 +842,7 @@ test("common-pool source override is an EXTRA expansion pool backed by pinned JM
     assert.ok(commonPool.allowedUse.includes("dictionary-verification"));
     assert.ok(commonPool.allowedUse.includes("frequency-sanity"));
     assert.equal(commonPool.commonPool.qualityMode, "editorial");
+    assert.equal(commonPool.commonPool.queueMode, "auto");
     assert.equal(commonPool.commonPool.editorialQueueLimit, DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT);
     assert.equal(commonPool.commonPool.outsideJlptSupportPolicy, "label_not_deprioritize");
 });
@@ -852,10 +853,12 @@ test("common-pool source override accepts explicit raw audit mode", () => {
         "--source=common-pool",
         "--common-pool-mode=raw",
         "--common-pool-limit=25",
+        "--queue=all",
         "--frequency-source=tubelex-ja-frequency",
     ]);
     assert.equal(parsed.commonPoolMode, "raw");
     assert.equal(parsed.commonPoolLimit, 25);
+    assert.equal(parsed.queueMode, "all");
     assert.equal(parsed.frequencySource, "tubelex-ja-frequency");
 
     const manifest = {
@@ -892,9 +895,11 @@ test("common-pool source override accepts explicit raw audit mode", () => {
         commonPoolMode: parsed.commonPoolMode,
         commonPoolLimit: parsed.commonPoolLimit,
         frequencySource: parsed.frequencySource,
+        queueMode: parsed.queueMode,
     });
 
     assert.equal(selectorManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.qualityMode, "raw");
+    assert.equal(selectorManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.queueMode, "all");
     assert.equal(selectorManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.editorialQueueLimit, 25);
     assert.deepEqual(selectorManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.frequencySourceIds, ["tubelex-ja-frequency"]);
 });
@@ -1256,6 +1261,182 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
     assert.match(formatted, /source pool: DICTIONARY COMMON POOL/);
     assert.match(formatted, /support label needs: outside-JLPT support kanji 棚/);
     assert.match(formatted, /commonness rank: 100/);
+});
+
+test("dictionary common pool queue modes separate discovery, Silver-prep, and audit history before the cap", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const commonPoolSource = writeFixtureSource(
+        dir,
+        "jmdict.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "本店\tほんてん\tmain store\t100",
+            "山川\tさんせん\tmountains and rivers\t101",
+            "学校\tがっこう\tschool\t102",
+            "学生\tがくせい\tstudent\t103",
+            "本屋\tほんや\tbookstore\t500",
+            "水中\tすいちゅう\tin the water\t600",
+        ].join("\n")
+    );
+    const baseManifest = {
+        version: 1,
+        checkedAt: "2026-06-24",
+        sources: {
+            [DICTIONARY_COMMON_POOL_SOURCE_ID]: {
+                name: "Fixture dictionary common pool",
+                tier: 3,
+                status: "active",
+                sourceType: "dictionary_common_pool",
+                origin: {
+                    url: "https://example.com/jmdict",
+                    localPath: commonPoolSource.path,
+                },
+                licenseUse: {
+                    status: "approved",
+                    license: "CC BY-SA 4.0",
+                },
+                checkedAt: "2026-06-24",
+                local: {
+                    path: commonPoolSource.path,
+                    format: "tsv",
+                    byteSize: commonPoolSource.byteSize,
+                    rowCount: commonPoolSource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+                allowedUse: [
+                    "candidate-discovery",
+                    "dictionary-verification",
+                    "frequency-sanity",
+                    "usefulness-support",
+                ],
+                candidatePolicy: {
+                    levels: [5],
+                    kanjiScope: "known-jlpt",
+                    requireSourceLevel: false,
+                },
+                extraSourceLane: true,
+                extraSourcePool: "dictionary_common_pool",
+                extraSourcePoolLabel: SOURCE_POOL_DICTIONARY_COMMON_LABEL,
+                commonPool: {
+                    type: "dictionary_common_pool",
+                    qualityMode: "editorial",
+                    editorialQueueLimit: 2,
+                },
+            },
+        },
+    };
+    const commonInputs = {
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: buildExhaustedReadingSignal(5),
+        },
+        jlptLevelContract: {
+            kanjiLevels: {
+                本: 5,
+                店: 4,
+                山: 5,
+                川: 5,
+                学: 5,
+                校: 5,
+                生: 5,
+                屋: 4,
+                水: 5,
+                中: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+        triageDecisionsByLevelSource: {
+            N5: {
+                [DICTIONARY_COMMON_POOL_SOURCE_ID]: {
+                    "本店|ほんてん": {
+                        decision: "keep_candidate",
+                        priority: "high",
+                        reason: "useful store-family review row",
+                    },
+                    "山川|さんせん": {
+                        decision: "reject_candidate",
+                        reason: "not useful enough for this level deck",
+                    },
+                    "学校|がっこう": {
+                        decision: "defer_candidate",
+                        reason: "needs better media/example policy before promotion",
+                    },
+                    "学生|がくせい": {
+                        decision: "move_candidate",
+                        targetLevel: 4,
+                        reason: "belongs in the target N4 word JSON for this route",
+                    },
+                },
+            },
+        },
+    };
+
+    const discoveryManifest = JSON.parse(JSON.stringify(baseManifest));
+    discoveryManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.queueMode = "discovery";
+    const discoveryReport = buildWordCommonExpansionSelectorReport({
+        ...commonInputs,
+        manifest: discoveryManifest,
+    });
+    const discoveryLevel = discoveryReport.levelReports[0];
+    assert.deepEqual(
+        discoveryLevel.rows.map((row) => row.key).sort(),
+        ["本屋|ほんや", "水中|すいちゅう"].sort()
+    );
+    assert.equal(discoveryLevel.sourceUniverse.commonPoolSummary.queueMode, "discovery");
+    assert.equal(discoveryLevel.sourceUniverse.commonPoolSummary.reviewableRowsBeforeEditorialFilter, 6);
+    assert.equal(discoveryLevel.sourceUniverse.commonPoolSummary.queueModeIncludedRowsBeforeLimit, 2);
+    assert.equal(discoveryLevel.sourceUniverse.commonPoolSummary.queueModeExcludedRowsBeforeLimit, 4);
+    assert.deepEqual(discoveryLevel.sourceUniverse.commonPoolSummary.triageDecisionCountsBeforeQueueFilter, {
+        untriaged: 2,
+        keep_candidate: 1,
+        move_candidate: 1,
+        defer_candidate: 1,
+        reject_candidate: 1,
+    });
+    assert.deepEqual(discoveryLevel.sourceUniverse.commonPoolSummary.queueModeExcludedDecisionCounts, {
+        untriaged: 0,
+        keep_candidate: 1,
+        move_candidate: 1,
+        defer_candidate: 1,
+        reject_candidate: 1,
+    });
+    assert.equal(discoveryLevel.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 0);
+    assert.equal(discoveryLevel.rows.every((row) => row.selectorStatus === "needs_triage"), true);
+    assert.equal(discoveryLevel.expansionWorkOrder.nextCommand, "npm run deck:words:vocab-expansion -- --levels=5 --source=common-pool --queue=discovery --frequency-source=tubelex-ja-frequency --strict --limit=80");
+    assert.match(formatWordCommonExpansionSelectorReport(discoveryReport), /Common-pool operational queue:/);
+    assert.match(formatWordCommonExpansionSelectorReport(discoveryReport), /history stays audit-visible; active queue filters before cap/);
+
+    const silverManifest = JSON.parse(JSON.stringify(baseManifest));
+    silverManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.queueMode = "silver";
+    const silverReport = buildWordCommonExpansionSelectorReport({
+        ...commonInputs,
+        manifest: silverManifest,
+    });
+    const silverLevel = silverReport.levelReports[0];
+    assert.deepEqual(silverLevel.rows.map((row) => row.key), ["本店|ほんてん"]);
+    assert.equal(silverLevel.rows[0].selectorStatus, "ready_for_editorial_review");
+    assert.equal(silverLevel.sourceUniverse.commonPoolSummary.queueMode, "silver");
+    assert.equal(silverLevel.sourceUniverse.commonPoolSummary.queueModeIncludedRowsBeforeLimit, 1);
+    assert.equal(silverLevel.sourceUniverse.commonPoolSummary.queueModeExcludedRowsBeforeLimit, 5);
+    assert.equal(silverLevel.expansionWorkOrder.nextCommand, "npm run deck:words:vocab-expansion -- --levels=5 --source=common-pool --queue=silver --frequency-source=tubelex-ja-frequency --strict --limit=80");
+
+    const auditManifest = JSON.parse(JSON.stringify(baseManifest));
+    auditManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.queueMode = "all";
+    const auditReport = buildWordCommonExpansionSelectorReport({
+        ...commonInputs,
+        manifest: auditManifest,
+    });
+    const auditLevel = auditReport.levelReports[0];
+    assert.equal(auditLevel.sourceUniverse.commonPoolSummary.queueMode, "all");
+    assert.equal(auditLevel.sourceUniverse.commonPoolSummary.queueModeIncludedRowsBeforeLimit, 6);
+    assert.equal(auditLevel.sourceUniverse.commonPoolSummary.queueModeExcludedRowsBeforeLimit, 0);
+    assert.equal(auditLevel.rows.length, 2);
 });
 
 test("dictionary common pool can use TubeLex support without making it level truth", () => {

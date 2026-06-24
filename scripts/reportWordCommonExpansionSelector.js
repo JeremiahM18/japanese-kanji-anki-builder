@@ -17,6 +17,7 @@ const {
     buildExtraSourceAccessByLevel,
     buildWordCommonExpansionSelectorReport,
     formatWordCommonExpansionSelectorReport,
+    normalizeCommonPoolQueueMode,
 } = require("../src/services/wordCommonExpansionSelectorService");
 const { normalizePlacementMode } = require("../src/services/wordCandidateAgreementService");
 const {
@@ -45,6 +46,7 @@ function parseArgs(argv) {
         commonPoolLimit: DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
         commonPoolMode: "editorial",
         frequencySource: "",
+        queueMode: "auto",
         sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: false,
         triage: "templates/word_inventory_expansion_triage.json",
@@ -80,6 +82,10 @@ function parseArgs(argv) {
             options.commonPoolMode = String(arg.slice("--common-pool-mode=".length) || "").trim();
         } else if (arg.startsWith("--pool-mode=")) {
             options.commonPoolMode = String(arg.slice("--pool-mode=".length) || "").trim();
+        } else if (arg.startsWith("--queue=")) {
+            options.queueMode = String(arg.slice("--queue=".length) || "").trim();
+        } else if (arg.startsWith("--queue-mode=")) {
+            options.queueMode = String(arg.slice("--queue-mode=".length) || "").trim();
         } else if (arg.startsWith("--frequency-source=")) {
             options.frequencySource = String(arg.slice("--frequency-source=".length) || "").trim();
         } else if (arg.startsWith("--source-evidence=")) {
@@ -105,13 +111,14 @@ function validateLevels(levels = []) {
     }
 }
 
-function validateCommonPoolOptions({ commonPoolMode = "editorial", commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT } = {}) {
+function validateCommonPoolOptions({ commonPoolMode = "editorial", commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT, queueMode = "auto" } = {}) {
     if (!["editorial", "raw"].includes(commonPoolMode)) {
         throw new Error("Common expansion selector --common-pool-mode must be one of: editorial, raw.");
     }
     if (!Number.isInteger(commonPoolLimit) || commonPoolLimit < 1) {
         throw new Error("Common expansion selector --common-pool-limit must be a positive integer.");
     }
+    normalizeCommonPoolQueueMode(queueMode);
 }
 
 function sourceAllowsCandidateDiscovery(source = {}) {
@@ -150,6 +157,7 @@ function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = [], {
     commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     commonPoolMode = "editorial",
     frequencySource = "",
+    queueMode = "auto",
 } = {}) {
     const dictionarySource = manifest.sources?.jmdict || null;
     const commonnessSource = manifest.sources?.["jmdict-priority-commonness"] || null;
@@ -225,6 +233,7 @@ function buildDictionaryCommonPoolManifestSource(manifest = {}, levels = [], {
             excludeKanaOnly: true,
             requireTargetKanji: true,
             qualityMode: commonPoolMode,
+            queueMode,
             editorialQueueLimit: commonPoolLimit,
             frequencySourceIds: frequencySource ? [frequencySource] : [],
             outsideJlptSupportPolicy: "label_not_deprioritize",
@@ -294,6 +303,7 @@ function buildSelectorManifestForSource({
     commonPoolLimit = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     commonPoolMode = "editorial",
     frequencySource = "",
+    queueMode = "auto",
 } = {}) {
     const normalizedSourceId = normalizeSelectorSourceId(sourceId);
     if (!normalizedSourceId) {
@@ -317,7 +327,7 @@ function buildSelectorManifestForSource({
     }
 
     const overrideSource = normalizedSourceId === DICTIONARY_COMMON_POOL_SOURCE_ID
-        ? buildDictionaryCommonPoolManifestSource(selectorManifest, levels, { commonPoolLimit, commonPoolMode, frequencySource })
+        ? buildDictionaryCommonPoolManifestSource(selectorManifest, levels, { commonPoolLimit, commonPoolMode, frequencySource, queueMode })
         : (existingSource ? {
             ...existingSource,
             status: "active",
@@ -363,6 +373,7 @@ async function main() {
         commonPoolLimit: options.commonPoolLimit,
         commonPoolMode: options.commonPoolMode,
         frequencySource: options.frequencySource,
+        queueMode: options.queueMode,
     });
     const wordSourceEvidenceReport = auditJlptWordSourceEvidence({
         contract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),

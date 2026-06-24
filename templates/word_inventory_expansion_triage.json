@@ -10712,6 +10712,463 @@
         "priority": "low",
         "reason": "Reject this exact N5 dictionary-common-pool row: doomed/business-in-bad-state expression is negative and not learner-friendly. Exact JMdict/commonness support does not overcome the learner-fit or identity problem for this queue.",
         "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later explicit source/identity review if the blocking issue is resolved."
+      },
+      "日間|にっかん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: the standalone 日間|にっかん daytime identity is less learner-friendly and more confusing than common governed/basic time words; it risks teaching an unnatural-looking card just because TubeLex frequency is high.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only if a future time-expression policy explicitly accepts 日間|にっかん with natural example evidence and pitch/audio review."
+      },
+      "前月|ぜんげつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: previous-month vocabulary is common, concrete time language with clean N5 anchors 前 and 月. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a simple previous-month example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "小六|しょうろく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: sixth-grade abbreviation vocabulary is culturally useful but narrow and belongs in a deliberate school-grade family pass, not the immediate N5 expansion queue.",
+        "nextStep": "Reconsider with 小一 through 小六 and related school-year abbreviations as a family, after deciding how many grade labels are useful enough for the deck."
+      },
+      "中一|ちゅういち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: first-year junior-high abbreviation vocabulary is useful in Japan but narrow and should be reviewed with the school-grade family rather than promoted alone.",
+        "nextStep": "Reconsider with 中一 through 中三 and related school-year abbreviations as a family, preserving exact reading and natural school-context examples."
+      },
+      "高三|こうさん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: third-year high-school abbreviation vocabulary is culturally useful but narrow and should be reviewed with the school-grade family before any N5 card is accepted.",
+        "nextStep": "Reconsider with 高一 through 高三 and related school-year abbreviations as a family, after checking learner value versus redundancy."
+      },
+      "中高生|ちゅうこうせい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: middle-and-high-school-student vocabulary is understandable and common, but it is a school-category compound better reviewed with the wider school-age/person family.",
+        "nextStep": "Reconsider in a school/person vocabulary pass with 中学生, 高校生, and grade-year abbreviations; promote only if the family adds real learner value without redundancy."
+      },
+      "上書き|うわがき": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: overwrite/address-label vocabulary is useful for modern digital and written contexts, has clean N5 anchors 上 and 書, and can take a concrete file-overwrite example. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 81/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: choose one learner-facing sense, likely file overwrite, preserve source labels, verify pitch/audio, and run normal downstream gates."
+      },
+      "食感|しょっかん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: food-texture vocabulary is practical for eating in Japan and reinforces 食; 感=N3 must be visibly labeled rather than blocking the row. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 80/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with explicit 感=N3 support labeling, a food-texture example, pitch/audio verification, and normal downstream gates."
+      },
+      "中二|ちゅうに": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: second-year junior-high vocabulary is useful only within a school-grade family and also carries a broad chuunibyou sense that needs careful example control.",
+        "nextStep": "Reconsider with the school-grade abbreviation family; do not promote alone without deciding whether the puberty/chuunibyou sense is excluded from the learner-facing card."
+      },
+      "出来立て|できたて": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: freshly-made/just-made vocabulary is common, concrete daily-life Japanese and can use simple food examples; 立=N4 must be visibly labeled. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 78/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a fresh-food example, explicit 立=N4 support labeling, pitch/audio verification, and normal downstream gates."
+      },
+      "食レポ|しょくレポ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: food-report/TV/social-media vocabulary is media-domain slangy Japanese and not a high-quality N5 deck expansion despite dictionary/commonness support.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a future media/social vocabulary pass if the product intentionally teaches mixed kanji-katakana media terms."
+      },
+      "日銀|にちぎん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: Bank of Japan is an institution-specific abbreviation, not learner-friendly N5 vocabulary, and 銀=N4 support does not make it a good beginner expansion.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a later economics/news vocabulary scope if needed."
+      },
+      "少子|しょうし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: low-birth/few-children vocabulary is social-policy/news language and is not a strong standalone beginner card; 少=N4 support also points away from N5.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later social/news vocabulary pass, likely as 少子化 rather than this fragment."
+      },
+      "今作|こんさく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: this-work/this-title vocabulary is media-review language and does not add enough everyday learner value for N5; 作=N4 support does not justify a beginner card.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later media/review vocabulary pass."
+      },
+      "本作|ほんさく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: this-piece/this-work vocabulary is review or publishing language and is too narrow for the N5 common-word expansion queue; 作=N4 support would need a higher-level review anyway.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later media/review vocabulary pass."
+      },
+      "本市|ほんし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: this-city wording is formal municipal/document language, not learner-friendly N5 vocabulary; 市=N4 support reinforces that it belongs outside this beginner expansion lane.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
+      },
+      "作中|さくちゅう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: within-the-story vocabulary is media/literary analysis language and not a high-quality beginner expansion; 作=N4 support does not make it N5 deck work.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later reading/media vocabulary pass."
+      },
+      "実車|じっしゃ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: occupied-taxi/full-scale-car vocabulary is narrow domain language and not learner-friendly N5 expansion despite exact dictionary and TubeLex evidence.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
+      },
+      "見頃|みごろ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: best-time-to-see vocabulary is practical for travel, seasons, flowers, and local events in Japan, and it reinforces 見; 頃 is outside-JLPT support that must be visibly labeled. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 76/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with explicit 頃 outside-JLPT support labeling, a seasonal/travel example, pitch/audio verification, and normal downstream gates."
+      },
+      "鱈子|たらこ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: tarako is useful food vocabulary, but the full-kanji 鱈子 spelling is not the learner-friendly beginner form and 鱈 is outside-JLPT support.",
+        "nextStep": "Do not promote this exact full-kanji row from the N5 common-pool queue. Reconsider food vocabulary only with a spelling policy that accepts the learner-facing kana/mixed form."
+      },
+      "来季|らいき": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: next-season vocabulary is mostly sports/business schedule language, and 季 is the N2 target anchor while 来 is easier support. Exact JMdict dictionary/commonness evidence is present, but learner-fit review belongs in N2 if accepted at all.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to teach this exact identity; preserve source labels and normal downstream gates."
+      },
+      "朝一|あさいち": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: first-thing-in-the-morning vocabulary is common, concrete daily-life language and reinforces 一; 朝=N4 must be visibly labeled rather than blocking the row. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 76/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with explicit 朝=N4 support labeling, a morning schedule example, pitch/audio verification, and normal downstream gates."
+      },
+      "室外|しつがい": {
+        "decision": "move_candidate",
+        "targetLevel": "N4",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: outdoors/outside-the-room vocabulary is useful, but 室 is the N4 target anchor and the exact word is better reviewed with room/indoor-outdoor vocabulary at N4. Exact JMdict dictionary/commonness evidence and TubeLex support are present.",
+        "nextStep": "Route only through the N4 word contract and starter-data review with visible 外=N5 support labeling and a concrete indoor/outdoor example."
+      },
+      "出来る|できる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: 出来る is a core ability/possibility verb, extremely common, and uses clean N5 anchors 出 and 来; broad senses require a tight beginner example, not rejection. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 76/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with one clear ability/possibility sense, a natural beginner example, pitch/audio verification, and normal downstream gates."
+      },
+      "出でる|いでる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 出でる|いでる is archaic/literary compared with learner-facing 出る and does not belong in the N5 expansion queue even with frequency support.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only if a future literary/register expansion explicitly teaches archaic forms."
+      },
+      "小さめ|ちいさめ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: smallish/on-the-small-side vocabulary is common descriptive daily language, directly reinforces 小, and can be taught with a simple size example. Exact JMdict dictionary/commonness evidence and TubeLex support are present; source level remains unverified; learner utility 76/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a simple size/example sentence, pitch/audio verification, and normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+      },
+      "外来|がいらい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: 外来 is common but broad across foreign/imported and outpatient senses, so a weak one-size card would lower quality even though 外 and 来 are N5 anchors.",
+        "nextStep": "Reconsider in a health/language vocabulary pass after choosing the learner-facing sense, likely outpatient care or foreign-origin vocabulary, with a tight example and pitch/audio review."
+      },
+      "五十三次|ごじゅうさんつぎ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: the fifty-three stations of the Tokaido is historical/cultural proper-domain vocabulary and not useful N5 common-word expansion.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
+      },
+      "厚生年金|こうせいねんきん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: welfare-pension vocabulary is practical adult Japan-life language but long and administrative; 厚 is the N2 target anchor while 生, 年, and 金 are easier support. Exact JMdict dictionary/commonness evidence is present.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to teach this exact identity; preserve source labels, make the pension/benefits sense explicit, and run normal downstream gates."
+      },
+      "行政処分|ぎょうせいしょぶん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: administrative-disposition vocabulary is legal/bureaucratic domain language and not learner-friendly N5 expansion, despite dictionary/commonness support.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a future legal/news vocabulary scope."
+      },
+      "国々|くにぐに": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: countries/nations plural vocabulary is useful, concrete, and reinforces 国 without harder support labels. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural various-countries example, pitch/audio verification, and normal downstream gates."
+      },
+      "国民健康保険|こくみんけんこうほけん": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Do not backfill this exact row into N5: national-health-insurance vocabulary is genuinely useful for living in Japan, but it is a long administrative term with N1 anchors 健, 康, and 保 plus N3/N4 support. Exact JMdict dictionary/commonness evidence is present.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to teach this exact identity; preserve source labels and use a practical insurance-card/sign-up example."
+      },
+      "左前|ひだりまえ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 左前 spans kimono burial convention, recession, and positional senses, making it broad/narrow and risky for a clean beginner card.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
+      },
+      "出来高|できだか": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: yield/production/piecework vocabulary is business or production-domain language and does not add enough learner-friendly N5 value despite N5 kanji anchors.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a future business/work vocabulary pass."
+      },
+      "上々|じょうじょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: excellent/very-good vocabulary is a common useful expression and reinforces 上; the iteration-mark spelling must be handled deliberately. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural progress/result example, pitch/audio verification, and an explicit decision to teach the 上々 spelling."
+      },
+      "上上|じょうじょう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 上上 is a less learner-friendly duplicate spelling variant of 上々 and would add spelling noise rather than useful vocabulary coverage.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue; keep any review on 上々|じょうじょう only."
+      },
+      "人間関係|にんげんかんけい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: personal-relationships vocabulary is very useful everyday/social language and reinforces 人間; 関 and 係 are N3 support that must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with explicit 関=N3 and 係=N3 support labels, a simple relationship example, pitch/audio verification, and normal downstream gates."
+      },
+      "生年月日|せいねんがっぴ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: date-of-birth vocabulary is practical form/admin language in Japan and uses clean N5 anchors 生, 年, 月, and 日. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a form/date-of-birth example, pitch/audio verification, and normal downstream gates."
+      },
+      "大小|だいしょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: size/large-and-small vocabulary is useful when constrained to the size sense and reinforces 大 and 小; broad secondary senses require tight card wording. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch if the card limits itself to the size/large-and-small sense, with pitch/audio verification and normal downstream gates."
+      },
+      "第一人者|だいいちにんしゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: leading-figure/foremost-person vocabulary is advanced descriptive language, with 第 as an N1 target anchor and 者 as N4 support. Exact JMdict dictionary/commonness evidence is present.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to teach this exact identity; preserve source labels and use a clear expert/field example."
+      },
+      "土曜|どよう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: Saturday abbreviation vocabulary is common calendar language and reinforces 土; 曜=N4 must be visibly labeled, and near-duplicate review against 土曜日 is required. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with explicit 曜=N4 support labeling, duplicate-family review against 土曜日, pitch/audio verification, and normal downstream gates."
+      },
+      "日曜|にちよう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: Sunday abbreviation vocabulary is common calendar language and reinforces 日; 曜=N4 must be visibly labeled, and near-duplicate review against 日曜日 is required. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with explicit 曜=N4 support labeling, duplicate-family review against 日曜日, pitch/audio verification, and normal downstream gates."
+      },
+      "分子|ぶんし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: molecule/numerator/member vocabulary is technical and multi-sense, not a clean learner-friendly N5 expansion despite N5 kanji anchors.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a science/math vocabulary scope."
+      },
+      "本土|ほんど": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: mainland/country-proper vocabulary can be useful, but the broad geography/political senses need better level-fit review before it is accepted as N5 expansion.",
+        "nextStep": "Reconsider in a geography/travel vocabulary pass with a tight mainland sense and natural example."
+      },
+      "外気|がいき": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: outside-air/open-air vocabulary is concrete and useful for weather, ventilation, and daily descriptions, with clean N5 anchors 外 and 気. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural outside-air/weather example, pitch/audio verification, and normal downstream gates."
+      },
+      "外来語|がいらいご": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: loanword vocabulary is highly useful for Japanese learners and reinforces 外, 来, and 語 with no harder support labels. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a simple loanword/example sentence, pitch/audio verification, and normal downstream gates."
+      },
+      "間食|かんしょく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: snacking/eating-between-meals vocabulary is concrete daily-life food language and reinforces 間 and 食. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a simple snack/between-meals example, pitch/audio verification, and normal downstream gates."
+      },
+      "気前|きまえ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: generosity/being generous vocabulary is useful social language when taught in a simple 気前がいい pattern and reinforces 気 and 前. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a pattern-safe generosity example, pitch/audio verification, and normal downstream gates."
+      },
+      "月食|げっしょく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: lunar-eclipse vocabulary is clear and uses N5 kanji, but it is lower everyday utility than the current N5 expansion queue should prioritize.",
+        "nextStep": "Reconsider in a science/nature/event vocabulary pass if the deck has room after stronger daily-life words are exhausted."
+      },
+      "大水|おおみず": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: flood/high-water vocabulary is concrete weather/disaster language and reinforces 大 and 水; example review should keep the sense natural. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural flood/high-water example, pitch/audio verification, and normal downstream gates."
+      },
+      "後書|あとがき": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: afterword/postscript is not high-value beginner vocabulary, and the learner-facing spelling is usually 後書き rather than this compact 後書 row.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only through a future reading/book vocabulary pass with spelling-policy review."
+      },
+      "中産階級|ちゅうさんかいきゅう": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: middle-class/bourgeoisie vocabulary is social/economic language with N1 級 plus N3/N4 support, not beginner expansion. Exact JMdict dictionary/commonness evidence is present.",
+        "nextStep": "Route only through the N1 word contract and starter-data review if that level chooses to teach this exact identity; preserve source labels and use a social/economic context example."
+      },
+      "長話|ながばなし": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: long-talk vocabulary is concrete conversational language, reinforces 長 and 話, and can use a simple natural example. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural conversation example, pitch/audio verification, and normal downstream gates."
+      },
+      "二男|じなん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: second-son vocabulary is useful family/form language and reinforces 二 and 男; spelling/register review must keep it distinct from learner-facing family basics. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a family/form example, duplicate-family review against son/boy vocabulary, pitch/audio verification, and normal downstream gates."
+      },
+      "分母|ぶんぼ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: denominator vocabulary is math-domain language and not high-quality N5 common-word expansion, especially after rejecting the paired technical 分子 row.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a future explicit math vocabulary scope."
+      },
+      "一時間|いちじかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: one-hour vocabulary is core time language with clean N5 anchors 一, 時, and 間. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a simple duration example, pitch/audio verification, and normal downstream gates."
+      },
+      "右下|みぎした": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: lower-right vocabulary is useful for screens, forms, maps, and directions, with clean N5 anchors 右 and 下. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a UI/map/location example, pitch/audio verification, and normal downstream gates."
+      },
+      "右上|みぎうえ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: upper-right vocabulary is useful for screens, forms, maps, and directions, with clean N5 anchors 右 and 上. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a UI/map/location example, pitch/audio verification, and normal downstream gates."
+      },
+      "何時間|なんじかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: how-many-hours vocabulary is core time-question language with clean N5 anchors 何, 時, and 間. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a simple duration-question example, pitch/audio verification, and normal downstream gates."
+      },
+      "左上|ひだりうえ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: upper-left vocabulary is useful for screens, forms, maps, and directions, with clean N5 anchors 左 and 上. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a UI/map/location example, pitch/audio verification, and normal downstream gates."
+      },
+      "土日|どにち": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: weekend/Saturday-and-Sunday vocabulary is common calendar language with clean N5 anchors 土 and 日. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a weekend schedule example, pitch/audio verification, and duplicate-family review against weekday cards."
+      },
+      "年後|ねんご": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Defer this exact N5 dictionary-common-pool row: years-later vocabulary is useful as a suffix-like time expression, but the standalone 年後 row needs family review with 一年後, 数年後, and 何年後 before promotion.",
+        "nextStep": "Reconsider in a time-expression family pass; do not promote as an isolated standalone card without a natural example policy."
+      },
+      "分間|ふんかん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 分間 is a suffix-like duration fragment that needs a preceding number and is not a clean standalone word-card identity.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Prefer complete duration identities such as 一分間 or 何分間 if a future time-family pass needs them."
+      },
+      "為替銀行|かわせぎんこう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: exchange-bank vocabulary is specialized finance language with multiple higher-level support kanji and is not learner-friendly N5 expansion.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a future finance vocabulary scope."
+      },
+      "一語|いちご": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: one-word vocabulary is useful language-learning terminology and reinforces 一 and 語. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a simple word/language example, pitch/audio verification, and normal downstream gates."
+      },
+      "一子|いっし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: one-child/only-child/heir/stone senses are broad and formal, making the row a poor beginner card despite N5 kanji anchors.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
+      },
+      "一心同体|いっしんどうたい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: the one-body-one-soul idiom is advanced fixed-expression vocabulary with multiple N4 support kanji and not beginner expansion.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an idiom/fixed-expression scope."
+      },
+      "一朝一夕|いっちょういっせき": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: the brief-time idiom is advanced fixed-expression vocabulary with N4 support kanji and not useful N5 common-word expansion.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an idiom/fixed-expression scope."
+      },
+      "一読|いちどく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: one-reading/perusal vocabulary is useful for books, instructions, and polite document language; it reinforces 一 and 読 but needs register-safe examples. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a clear reading-through-once sense, register-safe example, pitch/audio verification, and normal downstream gates."
+      },
+      "一木|いちぼく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: one-tree vocabulary is not a common standalone learner-friendly word and would add count without practical value.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
+      },
+      "右左|みぎひだり": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: right-and-left is better handled by the common governed/ordinary 左右 pattern or separate direction words; this order adds little learner value.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
+      },
+      "外交辞令|がいこうじれい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Do not backfill this exact row into N5: diplomatic language/tactful phrase is advanced social-register vocabulary with N2/N3 support kanji. Exact JMdict dictionary/commonness evidence is present, but review belongs in a higher-level deck if accepted.",
+        "nextStep": "Route only through the N2 word contract and starter-data review if that level chooses to teach this exact identity; preserve source labels and use a register-safe example."
+      },
+      "学名|がくめい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: scientific-name/binomial-name vocabulary is specialized biology/taxonomy language and not learner-friendly N5 expansion.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a science/domain vocabulary scope."
+      },
+      "気長|きなが": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: patient/unhurried vocabulary is useful social/personality language and reinforces 気 and 長, especially in 気長に. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
+        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural patient/unhurried example, pitch/audio verification, and normal downstream gates."
+      },
+      "見分|けんぶん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: inspection/examination/survey vocabulary is formal and less learner-friendly than related everyday verbs; it does not belong in N5 expansion.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue."
       }
     }
   },

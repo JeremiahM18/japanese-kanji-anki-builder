@@ -299,6 +299,51 @@ test("documentation status audit catches missing word common-pool quality filter
     );
 });
 
+test("documentation status audit catches missing word common-pool operational queue doctrine", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"]
+        .replace(
+            "Dictionary common-pool operational queues filter already-reviewed keep, defer, reject, and move rows before the `200`-row cap while keeping their counts audit-visible.",
+            "Dictionary common-pool queues can include reviewed and unreviewed rows together.",
+        )
+        .replace(
+            "Use `--queue=silver` to surface kept common-pool rows for later Silver preparation without mixing them into discovery triage",
+            "Use one common-pool queue for all review steps",
+        );
+    files["docs/command-reference.md"] = files["docs/command-reference.md"]
+        .replace("`--queue=discovery`", "`--queue=review`")
+        .replace("`--queue=all`", "`--queue=history`");
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("filter reviewed history before the 200-row cap")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("common-pool discovery queue command mode")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("common-pool Silver-prep queue mode")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("common-pool all/history queue mode")),
+        true,
+    );
+});
+
 test("documentation status audit catches missing word common-pool learner utility scoring doctrine", () => {
     const files = readDocumentationFiles();
     files["docs/workflows.md"] = files["docs/workflows.md"]

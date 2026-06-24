@@ -16,10 +16,17 @@ const {
     cosineSimilarity,
 } = require("./nlpEmbeddingModelEvaluationService");
 const { ensureDir } = require("../utils/fs");
+const {
+    buildReuseResult,
+    inputHashesMatch,
+    parametersMatch,
+    tryReadReusableArtifact,
+} = require("./nlpArtifactReuseService");
 
 const DEFAULT_MODEL_ID = "paraphrase-multilingual-minilm-l12-v2-q8";
 const DEFAULT_LANE = "assistive-candidate-discovery";
 const DEFAULT_CREATED_BY = "scripts/discoverNlpReadingGapCandidates.js";
+const REUSE_POLICY_VERSION = 1;
 const READING_GAP_CANDIDATE_LIMITATIONS = Object.freeze([
     "Reading-gap candidate discovery is an assistive review queue only and must not replace human Japanese/pedagogy review.",
     "Embedding similarity can prioritize candidates for review, but it does not prove commonness, level fit, naturalness, source truth, or card readiness.",
@@ -127,6 +134,140 @@ function buildInputHashes({ gapPlan, level, inputHashes, manifestHash }) {
         ...inputHashes,
         manifestHash,
     ];
+}
+
+function buildReadingGapCandidateGeneratorParameters({
+    level,
+    lane,
+    limit,
+    maxCandidatesPerGap,
+    minModelScore,
+}) {
+    const fullScope = !Number.isFinite(limit);
+    return {
+        task: "word-reading-gap-candidate-discovery",
+        reusePolicyVersion: REUSE_POLICY_VERSION,
+        level,
+        lane,
+        fullScope,
+        limit: fullScope ? null : limit,
+        maxCandidatesPerGap,
+        minModelScore,
+    };
+}
+
+function buildNlpReadingGapCandidateRunContext({
+    gapPlan,
+    inputHashes = [],
+    manifestPath = buildDefaultNlpModelManifestPath(),
+    workspaceRoot = process.cwd(),
+    level = 5,
+    modelId = DEFAULT_MODEL_ID,
+    lane = DEFAULT_LANE,
+    limit = null,
+    maxCandidatesPerGap = 3,
+    minModelScore = 0,
+    cacheDir = path.resolve("cache/nlp-models/transformers-js"),
+    allowRemoteModels = false,
+    createdBy = DEFAULT_CREATED_BY,
+    now = () => new Date(),
+    loadManifestFn = loadNlpModelManifest,
+    buildEmbedTextFn = buildTransformersEmbedTextFn,
+} = {}) {
+    if (!gapPlan || typeof gapPlan !== "object") {
+        throw new Error("gapPlan is required for NLP reading-gap candidate discovery.");
+    }
+    if (!Number.isInteger(level) || level < 1 || level > 5) {
+        throw new Error("NLP reading-gap candidate discovery level must be an integer from 1 to 5.");
+    }
+    if (Number.isFinite(limit) && (!Number.isInteger(limit) || limit < 1)) {
+        throw new Error("NLP reading-gap limit must be a positive integer when provided.");
+    }
+    if (!Number.isInteger(maxCandidatesPerGap) || maxCandidatesPerGap < 0) {
+        throw new Error("NLP reading-gap maxCandidatesPerGap must be a non-negative integer.");
+    }
+    if (!Number.isFinite(minModelScore) || minModelScore < 0 || minModelScore > 1) {
+        throw new Error("NLP reading-gap minModelScore must be a number from 0 to 1.");
+    }
+
+    const resolvedWorkspaceRoot = path.resolve(workspaceRoot);
+    const resolvedManifestPath = path.resolve(manifestPath);
+    const manifest = loadManifestFn(resolvedManifestPath);
+    const model = assertReadingGapCandidateModel({ manifest, modelId, lane });
+    const manifestHash = sha256FileWithSize(resolvedManifestPath);
+    const allInputHashes = buildInputHashes({
+        gapPlan,
+        level,
+        inputHashes,
+        manifestHash,
+    }).map((entry) => ({
+        path: path.isAbsolute(entry.path)
+            ? path.relative(resolvedWorkspaceRoot, entry.path).replace(/\\/g, "/")
+            : entry.path,
+        sha256: entry.sha256,
+        byteSize: entry.byteSize,
+    }));
+    const parameters = buildReadingGapCandidateGeneratorParameters({
+        level,
+        lane,
+        limit,
+        maxCandidatesPerGap,
+        minModelScore,
+    });
+
+    return {
+        allowRemoteModels,
+        buildEmbedTextFn,
+        cacheDir,
+        createdBy,
+        gapPlan,
+        inputHashes: allInputHashes,
+        lane,
+        level,
+        limit,
+        manifest,
+        manifestPath: resolvedManifestPath,
+        maxCandidatesPerGap,
+        minModelScore,
+        model,
+        modelId,
+        now,
+        parameters,
+        workspaceRoot: resolvedWorkspaceRoot,
+    };
+}
+
+function readingGapSuggestionsMatchScope(artifact, context) {
+    return artifact.suggestions.every((suggestion) => suggestion
+        && suggestion.task === context.lane
+        && suggestion.target?.deckKind === "word"
+        && suggestion.target?.level === context.level);
+}
+
+function findReusableReadingGapCandidateArtifact(outPath, context) {
+    const artifact = tryReadReusableArtifact(outPath, parseNlpSuggestionArtifact);
+    if (!artifact) {
+        return null;
+    }
+    if (artifact.generator.modelId !== context.modelId) {
+        return null;
+    }
+    if (!parametersMatch(artifact.generator.parameters, context.parameters)) {
+        return null;
+    }
+    if (!inputHashesMatch(artifact.generator.inputHashes, context.inputHashes)) {
+        return null;
+    }
+    if (artifact.scope.deckKind !== "word"
+        || artifact.scope.lane !== context.lane
+        || artifact.scope.levels?.length !== 1
+        || artifact.scope.levels[0] !== context.level) {
+        return null;
+    }
+    if (!readingGapSuggestionsMatchScope(artifact, context)) {
+        return null;
+    }
+    return artifact;
 }
 
 function mapCandidateSourceType(source) {
@@ -241,89 +382,47 @@ async function collectScoredCandidates({
 }
 
 async function buildNlpReadingGapCandidateArtifact({
-    gapPlan,
-    inputHashes = [],
-    manifestPath = buildDefaultNlpModelManifestPath(),
-    workspaceRoot = process.cwd(),
-    level = 5,
-    modelId = DEFAULT_MODEL_ID,
-    lane = DEFAULT_LANE,
-    limit = null,
-    maxCandidatesPerGap = 3,
-    minModelScore = 0,
-    cacheDir = path.resolve("cache/nlp-models/transformers-js"),
-    allowRemoteModels = false,
-    createdBy = DEFAULT_CREATED_BY,
-    now = () => new Date(),
-    loadManifestFn = loadNlpModelManifest,
-    buildEmbedTextFn = buildTransformersEmbedTextFn,
+    context = null,
+    ...options
 } = {}) {
-    if (!gapPlan || typeof gapPlan !== "object") {
-        throw new Error("gapPlan is required for NLP reading-gap candidate discovery.");
-    }
-    if (!Number.isInteger(level) || level < 1 || level > 5) {
-        throw new Error("NLP reading-gap candidate discovery level must be an integer from 1 to 5.");
-    }
-    if (!Number.isInteger(maxCandidatesPerGap) || maxCandidatesPerGap < 0) {
-        throw new Error("NLP reading-gap maxCandidatesPerGap must be a non-negative integer.");
-    }
-    if (!Number.isFinite(minModelScore) || minModelScore < 0 || minModelScore > 1) {
-        throw new Error("NLP reading-gap minModelScore must be a number from 0 to 1.");
-    }
-
-    const resolvedWorkspaceRoot = path.resolve(workspaceRoot);
-    const resolvedManifestPath = path.resolve(manifestPath);
-    const manifest = loadManifestFn(resolvedManifestPath);
-    const model = assertReadingGapCandidateModel({ manifest, modelId, lane });
-    const embedTextFn = await buildEmbedTextFn({
-        model,
-        cacheDir,
-        allowRemoteModels,
+    const runContext = context || buildNlpReadingGapCandidateRunContext(options);
+    const embedTextFn = await runContext.buildEmbedTextFn({
+        model: runContext.model,
+        cacheDir: runContext.cacheDir,
+        allowRemoteModels: runContext.allowRemoteModels,
     });
-    const manifestHash = sha256FileWithSize(resolvedManifestPath);
-    const allInputHashes = buildInputHashes({
-        gapPlan,
-        level,
-        inputHashes,
-        manifestHash,
-    }).map((entry) => ({
-        path: path.isAbsolute(entry.path)
-            ? path.relative(resolvedWorkspaceRoot, entry.path).replace(/\\/g, "/")
-            : entry.path,
-        sha256: entry.sha256,
-        byteSize: entry.byteSize,
-    }));
     const scoredCandidates = await collectScoredCandidates({
-        gapPlan,
+        gapPlan: runContext.gapPlan,
         embedTextFn,
-        limit,
-        maxCandidatesPerGap,
-        minModelScore,
+        limit: runContext.limit,
+        maxCandidatesPerGap: runContext.maxCandidatesPerGap,
+        minModelScore: runContext.minModelScore,
     });
     const suggestions = scoredCandidates.map((scored, index) => buildReadingGapCandidateSuggestion({
         scored,
         index,
-        level,
-        lane,
+        level: runContext.level,
+        lane: runContext.lane,
     }));
 
     const artifact = {
         version: 1,
         artifactType: "nlp_suggestion_batch",
-        generatedAt: now().toISOString(),
+        generatedAt: runContext.now().toISOString(),
         generator: {
-            modelId,
-            runId: `${modelId}-reading-gap-candidates-n${level}-${allInputHashes[0].sha256.slice(0, 12)}`,
-            manifestPath: path.relative(resolvedWorkspaceRoot, resolvedManifestPath).replace(/\\/g, "/"),
-            createdBy,
-            inputHashes: allInputHashes,
+            modelId: runContext.modelId,
+            runId: `${runContext.modelId}-reading-gap-candidates-n${runContext.level}-${runContext.inputHashes[0].sha256.slice(0, 12)}`,
+            manifestPath: path.relative(runContext.workspaceRoot, runContext.manifestPath).replace(/\\/g, "/"),
+            createdBy: runContext.createdBy,
+            parameters: runContext.parameters,
+            inputHashes: runContext.inputHashes,
         },
         authority: { ...NLP_SUGGESTION_AUTHORITY },
         scope: {
             deckKind: "word",
-            levels: [level],
-            lane,
-            description: `Assistive reading-gap candidate discovery for JLPT N${level} word review queues.`,
+            levels: [runContext.level],
+            lane: runContext.lane,
+            description: `Assistive reading-gap candidate discovery for JLPT N${runContext.level} word review queues.`,
         },
         suggestions,
     };
@@ -338,21 +437,34 @@ async function writeNlpReadingGapCandidateArtifact({
     if (!outPath) {
         throw new Error("outPath is required for NLP reading-gap candidate discovery.");
     }
-    const artifact = await buildNlpReadingGapCandidateArtifact(options);
     const resolvedOutPath = path.resolve(outPath);
+    const context = buildNlpReadingGapCandidateRunContext(options);
+    const reusableArtifact = findReusableReadingGapCandidateArtifact(resolvedOutPath, context);
+    if (reusableArtifact) {
+        return buildReuseResult({
+            outPath: resolvedOutPath,
+            artifact: reusableArtifact,
+        });
+    }
+    const artifact = await buildNlpReadingGapCandidateArtifact({
+        ...options,
+        context,
+    });
     ensureDir(path.dirname(resolvedOutPath));
     fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
     return {
         outPath: resolvedOutPath,
         artifact,
+        skipped: false,
     };
 }
 
-function formatNlpReadingGapCandidateSummary({ outPath, artifact }) {
+function formatNlpReadingGapCandidateSummary({ outPath, artifact, skipped = false }) {
     return [
         "Japanese Kanji Builder NLP Reading-Gap Candidate Discovery",
         "",
         `Artifact: ${outPath}`,
+        `Status: ${skipped ? "reused unchanged artifact" : "generated artifact"}`,
         `Model: ${artifact.generator.modelId}`,
         `Scope: ${artifact.scope.levels.map((level) => `N${level}`).join(", ")} ${artifact.scope.deckKind}`,
         `Candidates: ${artifact.suggestions.length}`,
@@ -369,6 +481,8 @@ module.exports = {
     buildCandidateInput,
     buildGapIntentInput,
     buildNlpReadingGapCandidateArtifact,
+    buildNlpReadingGapCandidateRunContext,
+    buildReadingGapCandidateGeneratorParameters,
     collectScoredCandidates,
     formatNlpReadingGapCandidateSummary,
     scoreReadingGapCandidate,

@@ -9,6 +9,7 @@ const {
     buildGapIntentInput,
     buildNlpReadingGapCandidateArtifact,
     collectScoredCandidates,
+    formatNlpReadingGapCandidateSummary,
     writeNlpReadingGapCandidateArtifact,
 } = require("../src/services/nlpReadingGapCandidateDiscoveryService");
 const {
@@ -141,6 +142,16 @@ test("buildNlpReadingGapCandidateArtifact emits governed candidate suggestions",
     assert.equal(artifact.suggestions[0].target.reading, "ばしょ");
     assert.equal(artifact.suggestions[0].evidence.some((entry) => entry.sourceType === "human-note"), true);
     assert.equal(artifact.authority.certifiesCards, false);
+    assert.deepEqual(artifact.generator.parameters, {
+        task: "word-reading-gap-candidate-discovery",
+        reusePolicyVersion: 1,
+        level: 4,
+        lane: "assistive-candidate-discovery",
+        fullScope: true,
+        limit: null,
+        maxCandidatesPerGap: 3,
+        minModelScore: 0,
+    });
 });
 
 test("writeNlpReadingGapCandidateArtifact writes artifacts accepted by the validator", async () => {
@@ -169,4 +180,115 @@ test("writeNlpReadingGapCandidateArtifact writes artifacts accepted by the valid
     assert.equal(fs.existsSync(outPath), true);
     assert.equal(report.passed, true);
     assert.equal(report.counts.suggestions, 1);
+});
+
+test("writeNlpReadingGapCandidateArtifact skips unchanged artifacts without rebuilding model", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-reading-gap-"));
+    const manifestPath = writeManifest(dir);
+    const outPath = path.join(dir, "suggestions.json");
+    let modelBuilds = 0;
+
+    const first = await writeNlpReadingGapCandidateArtifact({
+        gapPlan: buildGapPlan(),
+        outPath,
+        manifestPath,
+        workspaceRoot: dir,
+        level: 4,
+        modelId: "fixtureEmbeddingModel",
+        limit: 1,
+        maxCandidatesPerGap: 1,
+        minModelScore: 0,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => {
+            modelBuilds += 1;
+            return async (input) => input.includes("candidate word") ? [1, 0, 0] : [1, 0, 0];
+        },
+    });
+
+    const second = await writeNlpReadingGapCandidateArtifact({
+        gapPlan: buildGapPlan(),
+        outPath,
+        manifestPath,
+        workspaceRoot: dir,
+        level: 4,
+        modelId: "fixtureEmbeddingModel",
+        limit: 1,
+        maxCandidatesPerGap: 1,
+        minModelScore: 0,
+        now: () => new Date("2026-05-21T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => {
+            throw new Error("model should not be rebuilt for unchanged reading-gap inputs");
+        },
+    });
+
+    assert.equal(first.skipped, false);
+    assert.equal(second.skipped, true);
+    assert.equal(second.skipReason, "unchanged-inputs");
+    assert.equal(modelBuilds, 1);
+    assert.equal(second.artifact.generatedAt, "2026-05-20T00:00:00.000Z");
+    assert.equal(second.artifact.suggestions.length, 1);
+    assert.match(formatNlpReadingGapCandidateSummary(second), /Status: reused unchanged artifact/);
+});
+
+test("writeNlpReadingGapCandidateArtifact regenerates when generation parameters change", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-reading-gap-"));
+    const manifestPath = writeManifest(dir);
+    const outPath = path.join(dir, "suggestions.json");
+    let modelBuilds = 0;
+
+    await writeNlpReadingGapCandidateArtifact({
+        gapPlan: buildGapPlan(),
+        outPath,
+        manifestPath,
+        workspaceRoot: dir,
+        level: 4,
+        modelId: "fixtureEmbeddingModel",
+        limit: 1,
+        maxCandidatesPerGap: 1,
+        minModelScore: 0,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => {
+            modelBuilds += 1;
+            return async (input) => input.includes("candidate word") ? [1, 0, 0] : [1, 0, 0];
+        },
+    });
+
+    const second = await writeNlpReadingGapCandidateArtifact({
+        gapPlan: buildGapPlan(),
+        outPath,
+        manifestPath,
+        workspaceRoot: dir,
+        level: 4,
+        modelId: "fixtureEmbeddingModel",
+        limit: 1,
+        maxCandidatesPerGap: 1,
+        minModelScore: 0.1,
+        now: () => new Date("2026-05-21T00:00:00.000Z"),
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => {
+            modelBuilds += 1;
+            return async (input) => input.includes("candidate word") ? [1, 0, 0] : [1, 0, 0];
+        },
+    });
+
+    assert.equal(second.skipped, false);
+    assert.equal(modelBuilds, 2);
+    assert.equal(second.artifact.generatedAt, "2026-05-21T00:00:00.000Z");
+    assert.equal(second.artifact.generator.parameters.minModelScore, 0.1);
+    assert.match(formatNlpReadingGapCandidateSummary(second), /Status: generated artifact/);
 });

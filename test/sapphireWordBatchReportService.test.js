@@ -101,10 +101,66 @@ function buildSapphireEntry(overrides = {}) {
         status: "sapphire",
         readingIncludes: ["きょう"],
         reviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+        reviewedAt: "2026-06-05",
         revalidatedAt: "2026-06-05",
+        reviewer: "fixture-sapphire-review",
         revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
         notesIncludes: ["Common word."],
+        sourceEvidence: [
+            {
+                type: "japanese-source",
+                source: "fixture dictionary check",
+                detail: "Japanese-source fixture evidence supports 今日|きょう.",
+            },
+        ],
+        internalChecks: [
+            {
+                type: "generated-surface",
+                source: "fixture generated row",
+                detail: "Generated row identity and fields are present.",
+            },
+            {
+                type: "golden-regression",
+                source: "fixture Gold row",
+                detail: "Gold regression fixture is present.",
+            },
+            {
+                type: "level-contract",
+                source: "fixture level contract",
+                detail: "Level contract includes the word identity.",
+            },
+            {
+                type: "media-audit",
+                source: "fixture media audit",
+                detail: "Media identity was checked.",
+            },
+            {
+                type: "audio-review",
+                source: "fixture audio review",
+                detail: "Audio identity was checked.",
+            },
+            {
+                type: "pitch-accent-review",
+                source: "fixture pitch review",
+                detail: "Pitch rendering was checked.",
+            },
+            {
+                type: "label-review",
+                source: "fixture label review",
+                detail: "Labels were checked.",
+            },
+        ],
         reviewEvidence: [
+            {
+                type: "example-review",
+                source: "fixture example review",
+                detail: "Example sentence was checked.",
+            },
+            {
+                type: "manual-review",
+                source: "fixture manual review",
+                detail: "Manual structural review was checked.",
+            },
             {
                 type: "current-standard-review",
                 source: "Sapphire fixture",
@@ -164,4 +220,40 @@ test("word Sapphire scoped report maps current-standard structural status withou
     assert.equal(report.cards[0].reviewStatus, "current_standard_sapphire");
     assert.match(report.cards[0].suggestedReviewStep, /already Sapphire/);
     assert.match(formatted, /Platinum and Obsidian proof remain separate/);
+});
+
+test("word Sapphire batch report does not use Platinum compatibility state for native Sapphire queues", () => {
+    const sapphireOnlyCurrentStandardEntry = buildSapphireEntry({
+        revalidationSummary: "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire structural standard.",
+    });
+    const report = buildSapphireWordBatchReport({
+        rows,
+        entries: [
+            sapphireOnlyCurrentStandardEntry,
+            buildSapphireEntry({
+                word: "八",
+                readingIncludes: ["はち"],
+                notesIncludes: ["Common number."],
+                sourceEvidence: [
+                    {
+                        type: "japanese-source",
+                        source: "fixture dictionary check",
+                        detail: "Japanese-source fixture evidence supports 八|はち.",
+                    },
+                ],
+                revalidationSummary: "Revalidated 八|はち for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+            }),
+        ],
+        wordPitchAccentData,
+        goldenExpectations,
+        level: 5,
+        limit: 12,
+    });
+
+    assert.equal(report.summary.activeSapphire, 2);
+    assert.equal(report.summary.currentStandardSapphire, 2);
+    assert.equal(report.summary.legacyOrUnversionedSapphire, 0);
+    assert.equal(report.summary.remainingSapphire, 0);
+    assert.deepEqual(report.nextMissingWords, []);
+    assert.deepEqual(report.cards, []);
 });

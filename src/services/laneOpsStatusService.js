@@ -5,17 +5,40 @@ const { parseLevelsArgument } = require("./buildPipeline");
 const { buildDeckCloseoutStatus } = require("./deckCloseoutStatusService");
 
 const DEFAULT_LEVELS = Object.freeze([5, 4, 3, 2, 1]);
-const VALID_LANES = Object.freeze([
-    "ops",
+const PROGRAM_LANES = Object.freeze([
+    "discover",
     "silver",
     "gold",
     "sapphire",
     "platinum",
     "obsidian",
+]);
+const SUPPORT_WORK_AREAS = Object.freeze([
     "nlp",
     "source",
     "media",
     "release",
+]);
+const VALID_SELECTORS = Object.freeze([
+    "ops",
+    ...PROGRAM_LANES,
+    ...SUPPORT_WORK_AREAS,
+]);
+const SUPPORT_WORK_AREA_LABELS = Object.freeze({
+    nlp: "NLP support",
+    source: "source governance",
+    media: "media/audio support",
+    release: "release verification",
+});
+
+const TRUE_PROGRAM_LANES_LABEL = "discover -> silver -> gold -> sapphire -> platinum -> obsidian";
+
+const CERTIFICATION_LANES = Object.freeze([
+    "silver",
+    "gold",
+    "sapphire",
+    "platinum",
+    "obsidian",
 ]);
 
 function normalizeText(value) {
@@ -46,16 +69,29 @@ function normalizeLane(value = "ops") {
         proof: "obsidian",
         proof_ledger: "obsidian",
         language: "obsidian",
+        candidate: "discover",
+        candidates: "discover",
+        discovery: "discover",
         model: "nlp",
         models: "nlp",
         performance: "ops",
         status: "ops",
     };
     const lane = aliases[normalized] || normalized || "ops";
-    if (!VALID_LANES.includes(lane)) {
-        throw new Error(`Unsupported lane: ${value}`);
+    if (!VALID_SELECTORS.includes(lane)) {
+        throw new Error(`Unsupported work selector: ${value}`);
     }
     return lane;
+}
+
+function buildScopeMetadata(selector) {
+    const isProgramLane = PROGRAM_LANES.includes(selector);
+    return {
+        selector,
+        programLane: isProgramLane ? selector : null,
+        workArea: SUPPORT_WORK_AREAS.includes(selector) ? SUPPORT_WORK_AREA_LABELS[selector] : null,
+        programLaneOrder: TRUE_PROGRAM_LANES_LABEL,
+    };
 }
 
 function normalizeLevels(levels = DEFAULT_LEVELS) {
@@ -74,7 +110,11 @@ function commandEntry({ phase, command, writes = "read-only", serial = false, au
     return { phase, command, writes, serial, authority };
 }
 
-function buildWordLaneCommands({ lane, levels }) {
+function isSapphireBlockedByGold({ lane, level, routing = {} } = {}) {
+    return lane === "sapphire" && routing.sapphireBlockedByGoldLevels?.has(Number(level));
+}
+
+function buildWordLaneCommands({ lane, levels, routing = {} }) {
     const commands = [];
     for (const level of levels) {
         if (lane === "ops") {
@@ -83,6 +123,20 @@ function buildWordLaneCommands({ lane, levels }) {
                     phase: `${levelLabel(level)} orientation`,
                     command: `npm run deck:closeout -- --levels=${level}`,
                     authority: "Closeout is orientation only; it is not a certification lane.",
+                })
+            );
+        }
+        if (lane === "discover") {
+            commands.push(
+                commandEntry({
+                    phase: `${levelLabel(level)} word discovery status`,
+                    command: `npm run deck:words:expansion-status -- --levels=${level}`,
+                    authority: "Read-only pre-trust discovery posture; does not create Silver rows or certify review tiers.",
+                }),
+                commandEntry({
+                    phase: `${levelLabel(level)} word discovery queue`,
+                    command: `npm run deck:words:vocab-expansion -- --levels=${level} --limit=80`,
+                    authority: "Read-only candidate discovery queue; promotion still starts at Silver and downstream gates remain separate.",
                 })
             );
         }
@@ -122,7 +176,21 @@ function buildWordLaneCommands({ lane, levels }) {
                 })
             );
         }
-        if (["sapphire", "ops"].includes(lane)) {
+        if (isSapphireBlockedByGold({ lane, level, routing })) {
+            commands.push(
+                commandEntry({
+                    phase: `${levelLabel(level)} word Gold prerequisite`,
+                    command: `npm run deck:words:gold:scaffold -- --level=${level} --limit=10`,
+                    writes: "read-only tracked-template draft helper",
+                    authority: "Gold is missing for this scope; Sapphire work is blocked until matching Gold review exists.",
+                }),
+                commandEntry({
+                    phase: `${levelLabel(level)} word Gold gate`,
+                    command: `npm run deck:words:review:n${level}`,
+                    authority: "Run the prior-lane Gold gate before any Sapphire structural queue is legal work.",
+                })
+            );
+        } else if (["sapphire", "ops"].includes(lane)) {
             commands.push(
                 commandEntry({
                     phase: `${levelLabel(level)} word Sapphire queue`,
@@ -216,7 +284,7 @@ function buildWordLaneCommands({ lane, levels }) {
     return commands;
 }
 
-function buildKanjiLaneCommands({ lane, levels }) {
+function buildKanjiLaneCommands({ lane, levels, routing = {} }) {
     const commands = [];
     for (const level of levels) {
         if (lane === "ops") {
@@ -225,6 +293,20 @@ function buildKanjiLaneCommands({ lane, levels }) {
                     phase: `${levelLabel(level)} orientation`,
                     command: `npm run deck:closeout -- --levels=${level}`,
                     authority: "Closeout is orientation only; it is not a certification lane.",
+                })
+            );
+        }
+        if (lane === "discover") {
+            commands.push(
+                commandEntry({
+                    phase: `${levelLabel(level)} kanji discovery deltas`,
+                    command: "npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25",
+                    authority: "Read-only pre-trust source/candidate posture; does not move kanji or certify review tiers.",
+                }),
+                commandEntry({
+                    phase: `${levelLabel(level)} kanji product partition plan`,
+                    command: "npm run deck:kanji:partition-plan -- --limit=25",
+                    authority: "Read-only discovery/product plan; generated rows still enter trust at Silver.",
                 })
             );
         }
@@ -258,7 +340,15 @@ function buildKanjiLaneCommands({ lane, levels }) {
                 })
             );
         }
-        if (["sapphire", "ops"].includes(lane)) {
+        if (isSapphireBlockedByGold({ lane, level, routing })) {
+            commands.push(
+                commandEntry({
+                    phase: `${levelLabel(level)} kanji Gold prerequisite`,
+                    command: `npm run deck:review:n${level}`,
+                    authority: "Gold is missing for this scope; run the prior-lane Gold gate before any Sapphire structural queue is legal work.",
+                })
+            );
+        } else if (["sapphire", "ops"].includes(lane)) {
             commands.push(
                 commandEntry({
                     phase: `${levelLabel(level)} kanji Sapphire queue`,
@@ -357,10 +447,10 @@ function buildKanjiLaneCommands({ lane, levels }) {
     return commands;
 }
 
-function buildNextCommands({ deckKind, lane, levels }) {
+function buildNextCommands({ deckKind, lane, levels, routing }) {
     return deckKind === "word"
-        ? buildWordLaneCommands({ lane, levels })
-        : buildKanjiLaneCommands({ lane, levels });
+        ? buildWordLaneCommands({ lane, levels, routing })
+        : buildKanjiLaneCommands({ lane, levels, routing });
 }
 
 function runGitCommand(args, { cwd, execFileSync = childProcess.execFileSync } = {}) {
@@ -571,7 +661,7 @@ function buildBacklogPosture(closeout = {}, { deckKind, lane, levels }) {
     const rows = extractLaneRows(closeout, { deckKind, levels });
     const laneNames = lane === "ops"
         ? ["silver", "gold", "sapphire", "platinum"]
-        : ["silver", "gold", "sapphire", "platinum"].includes(lane)
+        : CERTIFICATION_LANES.includes(lane)
             ? [lane]
             : [];
     const backlogRows = rows.flatMap((row) => laneNames
@@ -615,6 +705,24 @@ function buildBacklogPosture(closeout = {}, { deckKind, lane, levels }) {
     };
 }
 
+function buildLaneRouting(closeout = {}, { deckKind, lane, levels }) {
+    const blocked = new Set();
+    if (lane !== "sapphire") {
+        return {
+            sapphireBlockedByGoldLevels: blocked,
+        };
+    }
+    const rows = extractLaneRows(closeout, { deckKind, levels });
+    for (const row of rows) {
+        if ((row.lanes?.gold?.missing || 0) > 0) {
+            blocked.add(Number(row.level));
+        }
+    }
+    return {
+        sapphireBlockedByGoldLevels: blocked,
+    };
+}
+
 function buildNlpSupportPosture(nlpSupport = null) {
     if (!nlpSupport) {
         return null;
@@ -630,10 +738,18 @@ function buildNlpSupportPosture(nlpSupport = null) {
     };
 }
 
-function buildFocusedVerification({ deckKind, lane, levels }) {
+function buildFocusedVerification({ deckKind, lane, levels, routing = {} }) {
     const commands = ["git diff --check"];
     for (const level of levels) {
         if (deckKind === "word") {
+            if (lane === "discover") {
+                commands.push(`npm run deck:words:expansion-status -- --levels=${level}`);
+                commands.push(`npm run deck:words:vocab-expansion -- --levels=${level} --limit=80`);
+            }
+            if (isSapphireBlockedByGold({ lane, level, routing })) {
+                commands.push(`npm run deck:words:review:n${level}`);
+                continue;
+            }
             if (["silver", "nlp", "ops"].includes(lane)) {
                 commands.push(`npm run deck:words:ready -- --levels=${level}`);
                 commands.push(`npm run deck:words:completion:n${level}`);
@@ -653,6 +769,14 @@ function buildFocusedVerification({ deckKind, lane, levels }) {
                 commands.push(`npm run deck:words:obsidian:rereview-status -- --levels=${level}`);
             }
         } else {
+            if (lane === "discover") {
+                commands.push("npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25");
+                commands.push("npm run deck:kanji:partition-plan -- --limit=25");
+            }
+            if (isSapphireBlockedByGold({ lane, level, routing })) {
+                commands.push(`npm run deck:review:n${level}`);
+                continue;
+            }
             if (["silver", "nlp", "ops"].includes(lane)) {
                 commands.push(`npm run deck:ready -- --levels=${level}`);
                 commands.push("npm run nlp:governance-gate");
@@ -754,9 +878,11 @@ function buildLaneOpsStatus({
     const scope = {
         deckKind: normalizedDeckKind,
         lane: normalizedLane,
+        ...buildScopeMetadata(normalizedLane),
         levels: normalizedLevels,
         levelLabel: normalizedLevels.map(levelLabel).join(", "),
     };
+    const routing = buildLaneRouting(closeout, scope);
 
     return {
         generatedAt: new Date().toISOString(),
@@ -764,8 +890,8 @@ function buildLaneOpsStatus({
         scope,
         git,
         backlog: buildBacklogPosture(closeout, scope),
-        nextCommands: buildNextCommands(scope),
-        focusedVerification: buildFocusedVerification(scope),
+        nextCommands: buildNextCommands({ ...scope, routing }),
+        focusedVerification: buildFocusedVerification({ ...scope, routing }),
         fullMergeGate: buildFullMergeGate(),
         parallelism: buildParallelismPlan(scope),
         failClosedRules: buildFailClosedRules(),
@@ -822,11 +948,15 @@ function formatChangedFileRisk(risk = {}) {
 
 function formatLaneOpsStatus(report = {}) {
     const lines = [
-        "Japanese Kanji Builder Lane Ops Status",
+        "Japanese Kanji Builder Ops Status",
         "",
         "Scope:",
         `- deck: ${report.scope?.deckKind}`,
-        `- lane: ${report.scope?.lane}`,
+        `- selector: ${report.scope?.selector || report.scope?.lane}`,
+        report.scope?.programLane
+            ? `- program lane: ${report.scope.programLane}`
+            : `- program lane: none; work area: ${report.scope?.workArea || "operations/orientation"}`,
+        `- program lane order: ${report.scope?.programLaneOrder || TRUE_PROGRAM_LANES_LABEL}`,
         `- levels: ${report.scope?.levelLabel}`,
         "",
         "Git:",
@@ -875,6 +1005,7 @@ function formatLaneOpsStatus(report = {}) {
 
 module.exports = {
     DEFAULT_LEVELS,
+    TRUE_PROGRAM_LANES_LABEL,
     buildBacklogPosture,
     buildChangedFileRisk,
     buildFailClosedRules,
@@ -883,6 +1014,7 @@ module.exports = {
     buildLaneOpsStatus,
     buildNextCommands,
     buildParallelismPlan,
+    buildScopeMetadata,
     classifyChangedPath,
     formatLaneOpsStatus,
     normalizeDeckKind,

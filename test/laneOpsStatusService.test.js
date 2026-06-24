@@ -90,6 +90,8 @@ test("lane ops status plans word NLP work without certifying cards or paralleliz
     assert.equal(readyCommand.serial, true);
     assert.match(readyCommand.authority, /not Gold, Sapphire, Platinum, Obsidian, or release approval/);
     assert.match(supportCommand.authority, /cannot approve cards/);
+    assert.equal(report.scope.programLane, null);
+    assert.equal(report.scope.workArea, "NLP support");
     assert.ok(report.focusedVerification.includes("npm run nlp:governance-gate"));
     assert.match(report.parallelism.safeNow[0].condition, /one process per level/);
     assert.ok(report.failClosedRules.some((rule) => /Do not shrink generated denominators/.test(rule)));
@@ -110,6 +112,46 @@ test("lane ops status keeps Platinum prior-lane backlog visible", () => {
     assert.equal(report.backlog.rows[0].ratio, "2/20");
     assert.deepEqual(report.backlog.rows[0].priorBacklog, ["Gold missing 2", "Sapphire missing 8"]);
     assert.ok(report.backlog.realBlockers.some((blocker) => /Sapphire missing 8/.test(blocker.reason)));
+});
+
+test("lane ops routes blocked Sapphire work back to Gold prerequisite commands", () => {
+    const report = buildLaneOpsStatus({
+        rootDir: process.cwd(),
+        deckKind: "word",
+        lane: "sapphire",
+        levels: [5],
+        execFileSync: createGitStub(),
+        buildCloseoutStatusFn: () => buildCloseoutFixture(),
+    });
+
+    assert.deepEqual(report.backlog.rows.map((row) => row.lane), ["sapphire"]);
+    assert.deepEqual(report.backlog.rows[0].priorBacklog, ["Gold missing 2"]);
+    assert.ok(report.backlog.realBlockers.some((blocker) => /sapphire cannot be complete while Gold missing 2/.test(blocker.reason)));
+    assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:words:gold:scaffold -- --level=5 --limit=10"));
+    assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:words:review:n5"));
+    assert.equal(report.nextCommands.some((entry) => /deck:words:sapphire:batch/.test(entry.command)), false);
+    assert.deepEqual(report.focusedVerification, [
+        "git diff --check",
+        "npm run deck:words:review:n5",
+    ]);
+});
+
+test("lane ops keeps Sapphire commands when Gold prerequisite is complete", () => {
+    const report = buildLaneOpsStatus({
+        rootDir: process.cwd(),
+        deckKind: "kanji",
+        lane: "sapphire",
+        levels: [5],
+        execFileSync: createGitStub(),
+        buildCloseoutStatusFn: () => buildCloseoutFixture(),
+    });
+
+    assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:sapphire:batch -- --level=5 --limit=12 --queue=missing-current-standard"));
+    assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:sapphire:n5"));
+    assert.deepEqual(report.focusedVerification, [
+        "git diff --check",
+        "npm run deck:sapphire:n5",
+    ]);
 });
 
 test("changed-file risk classifies proof, source, CI, and docs paths", () => {
@@ -147,11 +189,33 @@ test("lane ops formatter exposes boundaries, serial work, and architecture needs
     });
     const formatted = formatLaneOpsStatus(report);
 
-    assert.match(formatted, /Japanese Kanji Builder Lane Ops Status/);
+    assert.match(formatted, /Japanese Kanji Builder Ops Status/);
+    assert.match(formatted, /program lane: obsidian/);
+    assert.match(formatted, /program lane order: discover -> silver -> gold -> sapphire -> platinum -> obsidian/);
     assert.match(formatted, /Obsidian proof posture must come from the fail-closed Obsidian status/);
     assert.match(formatted, /data:obsidian:proof:append --write/);
     assert.match(formatted, /same-key APKG cache writes/);
     assert.match(formatted, /Do not treat Deck Ready, closeout, NLP, source adequacy, or release:gate as card certification/);
+});
+
+test("lane ops supports pre-trust discovery as a program selector", () => {
+    const report = buildLaneOpsStatus({
+        rootDir: process.cwd(),
+        deckKind: "word",
+        lane: "discover",
+        levels: [5],
+        execFileSync: createGitStub(),
+        buildCloseoutStatusFn: () => buildCloseoutFixture(),
+    });
+    const formatted = formatLaneOpsStatus(report);
+
+    assert.equal(report.scope.programLane, "discover");
+    assert.equal(report.backlog.rows.length, 0);
+    assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:words:expansion-status -- --levels=5"));
+    assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:words:vocab-expansion -- --levels=5 --limit=80"));
+    assert.ok(report.focusedVerification.includes("npm run deck:words:expansion-status -- --levels=5"));
+    assert.match(formatted, /selector: discover/);
+    assert.match(formatted, /program lane: discover/);
 });
 
 test("lane ops helpers parse status lines, classify individual paths, and parse CLI args", () => {

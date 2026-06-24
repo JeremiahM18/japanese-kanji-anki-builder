@@ -38,6 +38,8 @@ test("focused verification planner keeps word NLP focused commands separate from
 
     assert.ok(report.laneCommands.includes("npm run deck:words:ready -- --levels=5"));
     assert.ok(report.laneCommands.includes("npm run nlp:governance-gate"));
+    assert.equal(report.scope.programLane, null);
+    assert.equal(report.scope.workArea, "NLP support");
     assert.ok(report.focusedTests.includes("npm test -- --scope=nlp"));
     assert.ok(report.fullMergeGate.includes("npm test"));
     assert.ok(report.boundaries.some((rule) => /inner-loop feedback only/.test(rule)));
@@ -81,6 +83,8 @@ test("focused verification planner formats boundaries and source documents", () 
 
     assert.match(formatted, /Japanese Kanji Builder Focused Verification Plan/);
     assert.match(formatted, /deck: word/);
+    assert.match(formatted, /program lane: obsidian/);
+    assert.match(formatted, /program lane order: discover -> silver -> gold -> sapphire -> platinum -> obsidian/);
     assert.match(formatted, /deck:words:obsidian:rereview-status -- --levels=4/);
     assert.match(formatted, /Do not treat Deck Ready, closeout, NLP, source adequacy, release:gate, or this planner as card certification/);
     assert.match(formatted, /docs\/review-system-forward-contract\.md/);
@@ -110,6 +114,25 @@ test("focused verification planner builds exact changed-test commands", () => {
         { path: "docs/verification.md" },
         { path: "test/alpha.test.js" },
     ]), ["node --test test/alpha.test.js test/zeta.test.js"]);
+});
+
+test("focused verification planner supports pre-trust discovery selector without calling support work a lane", () => {
+    const report = buildFocusedVerificationPlan({
+        rootDir: process.cwd(),
+        deckKind: "word",
+        lane: "discover",
+        levels: [5],
+        execFileSync: createGitStub(),
+    });
+    const formatted = formatFocusedVerificationPlan(report);
+
+    assert.equal(report.scope.programLane, "discover");
+    assert.ok(report.laneCommands.includes("npm run deck:words:expansion-status -- --levels=5"));
+    assert.ok(report.laneCommands.includes("npm run deck:words:vocab-expansion -- --levels=5 --limit=80"));
+    assert.ok(report.focusedTests.includes("npm test -- --scope=word-lanes"));
+    assert.match(formatted, /selector: discover/);
+    assert.match(formatted, /Focused commands:/);
+    assert.doesNotMatch(formatted, /Focused lane commands:/);
 });
 
 test("focused verification script parses scope arguments", () => {

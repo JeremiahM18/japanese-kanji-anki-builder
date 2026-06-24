@@ -32,7 +32,7 @@ npm run deck:ready -- --levels=<level>
 
 This refreshes the live generated TSV/APKG surface used by the Obsidian pass. It is not Obsidian proof.
 
-4. Run the kanji NLP support lane.
+4. Run the kanji NLP support workflow.
 
 ```bash
 npm run deck:kanji:nlp-signals -- --levels=<level>
@@ -172,7 +172,7 @@ npm run deck:words:ready -- --levels=<level>
 
 This refreshes the live generated word rows used by the Obsidian pass. It is not Obsidian proof.
 
-4. Run the word NLP support lane.
+4. Run the word NLP support workflow.
 
 ```bash
 npm run deck:words:expansion-support -- --levels=<level>

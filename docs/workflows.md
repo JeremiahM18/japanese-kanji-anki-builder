@@ -74,9 +74,9 @@ npm run deck:words:sapphire:n5
 
 Lane names: candidate means proposed pre-trust work, not a certification lane; Silver means generated surface; Gold means regression protection; Sapphire means current-standard structural certification; Platinum means current-standard card-surface inspection; and Obsidian means explicit non-mechanical current-version rereview proof. Deck Ready is mechanical artifact readiness only, not a trust tier.
 
-Use `npm run deck:ops -- --deck=<word|kanji> --lane=<lane> --level=<level>` when choosing the next safe local action. It is read-only and reports git/change-risk posture, visible lower-lane backlog from closeout counts, exact next legal commands, focused verification, full merge gates, safe parallelism, serial write roots, architecture prerequisites, and fail-closed rules. It does not run lane gates, write proof/source/templates, certify cards, shrink denominators, or hide expected backlog. `npm run deck:lane-status` is an alias for the same command.
+Use `npm run deck:ops -- --deck=<word|kanji> --lane=<selector> --level=<level>` when choosing the next safe local action. For program work, the selector is one of the true program lanes: discover, silver, gold, sapphire, platinum, or obsidian. Backward-compatible support selectors such as nlp, source, media, release, and ops are work areas, not certification lanes. The command is read-only and reports git/change-risk posture, visible lower-lane backlog from closeout counts, exact next legal commands, focused verification, full merge gates, safe parallelism, serial write roots, architecture prerequisites, and fail-closed rules. It does not run lane gates, write proof/source/templates, certify cards, shrink denominators, or hide expected backlog. `npm run deck:lane-status` is an alias for the same command.
 
-Use `npm run verify:focused -- --deck=<word|kanji> --lane=<lane> --level=<level>` before an inner-loop check set. It is read-only and prints exact focused lane commands, mapped focused tests, changed-file-specific verification, and the full merge gate that still has to run before commit, merge, or release claims. It does not run the commands, certify cards, replace Silver/Gold/Sapphire/Platinum/Obsidian gates, write proof/source/templates, shrink denominators, or hide expected backlog.
+Use `npm run verify:focused -- --deck=<word|kanji> --lane=<selector> --level=<level>` before an inner-loop check set. It is read-only and prints exact focused commands, mapped focused tests, changed-file-specific verification, and the full merge gate that still has to run before commit, merge, or release claims. Support selectors are work areas, not certification lanes. It does not run the commands, certify cards, replace Silver/Gold/Sapphire/Platinum/Obsidian gates, write proof/source/templates, shrink denominators, or hide expected backlog.
 
 Use `npm run deck:work-packet -- --deck=<word|kanji> --lane=<lane> --level=<level> --batch-report=<batch-json> --run-id=<id> --write` only after a read-only batch report has been emitted as JSON. The packet records selected identities, queue before/after counts, optional decision records from `--decisions=<json-or-jsonl>`, optional verification classifications from `--verification-results=<json-or-jsonl>`, exact expected verification commands, and fail-closed rules under `out/lane-work-packets/<id>/`. It is generated operational evidence only: it does not write proof ledgers, source evidence, tracked review templates, release QA evidence, deck data, or approval state; it does not replace Deck Ready, Silver, Gold, Sapphire, Platinum, Obsidian, source adequacy, or the full merge gate. Use `npm run deck:work-packet -- --packet=<packet-json>` to validate an existing packet before citing it in a commit or PR.
 
@@ -108,7 +108,7 @@ npm run deck:platinum:batch -- --level=<level> --limit=12 --queue=substantive-re
 
 Obsidian workflows must request `--queue=substantive-rereview` explicitly. The default Platinum batch queue is `missing-current-standard` and is for Platinum coverage work, not Obsidian proof. Use `deck:sapphire:batch -- --queue=missing-current-standard` when the task is actual card-data Sapphire coverage rather than Obsidian proof.
 
-3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support lane before or during review:
+3. Generate or refresh the kanji TSV with the normal kanji build, then run the governed kanji NLP support workflow before or during review:
 
 ```bash
 npm run deck:ready -- --levels=<level>
@@ -160,7 +160,7 @@ npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substanti
 
 Obsidian word workflows must request `--queue=substantive-rereview` explicitly. The default word Platinum batch queue is `missing-current-standard` and is for Platinum coverage work, not Obsidian proof. For word structural work, use `deck:words:sapphire:batch`.
 
-3. Generate or refresh the word deck surface, then run the governed word NLP support lane before or during review:
+3. Generate or refresh the word deck surface, then run the governed word NLP support workflow before or during review:
 
 ```bash
 npm run deck:words:ready -- --levels=<level>

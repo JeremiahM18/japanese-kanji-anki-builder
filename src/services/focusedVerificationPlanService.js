@@ -5,9 +5,11 @@ const path = require("node:path");
 const { parseLevelsArgument } = require("./buildPipeline");
 const {
     DEFAULT_LEVELS,
+    TRUE_PROGRAM_LANES_LABEL,
     buildChangedFileRisk,
     buildFocusedVerification,
     buildFullMergeGate,
+    buildScopeMetadata,
     normalizeDeckKind,
     normalizeLane,
     parseGitStatusChanges,
@@ -42,6 +44,9 @@ const DECK_LANE_TEST_COMMANDS = Object.freeze({
     "word:silver": Object.freeze([
         "npm test -- --scope=word-lanes",
     ]),
+    "word:discover": Object.freeze([
+        "npm test -- --scope=word-lanes",
+    ]),
     "word:gold": Object.freeze([
         "npm test -- --scope=word-lanes",
     ]),
@@ -59,6 +64,9 @@ const DECK_LANE_TEST_COMMANDS = Object.freeze({
     ]),
     "kanji:silver": Object.freeze([
         "npm test -- --scope=kanji-lanes",
+    ]),
+    "kanji:discover": Object.freeze([
+        "npm test -- --scope=source-evidence",
     ]),
     "kanji:gold": Object.freeze([
         "npm test -- --scope=kanji-lanes",
@@ -264,6 +272,7 @@ function buildFocusedVerificationPlan({
     const scope = {
         deckKind: normalizedDeckKind,
         lane: normalizedLane,
+        ...buildScopeMetadata(normalizedLane),
         levels: normalizedLevels,
         levelLabel: normalizedLevels.map((level) => `N${level}`).join(", "),
     };
@@ -319,7 +328,11 @@ function formatFocusedVerificationPlan(report = {}) {
         "",
         "Scope:",
         `- deck: ${report.scope?.deckKind}`,
-        `- lane: ${report.scope?.lane}`,
+        `- selector: ${report.scope?.selector || report.scope?.lane}`,
+        report.scope?.programLane
+            ? `- program lane: ${report.scope.programLane}`
+            : `- program lane: none; work area: ${report.scope?.workArea || "operations/orientation"}`,
+        `- program lane order: ${report.scope?.programLaneOrder || TRUE_PROGRAM_LANES_LABEL}`,
         `- levels: ${report.scope?.levelLabel}`,
         "",
         "Git:",
@@ -330,8 +343,8 @@ function formatFocusedVerificationPlan(report = {}) {
         "Changed-file risk:",
         ...formatChangedFileRisk(report.git?.changedFileRisk || {}),
         "",
-        "Focused lane commands:",
-        ...formatCommandList(report.laneCommands || [], "no lane-specific commands for this scope"),
+        "Focused commands:",
+        ...formatCommandList(report.laneCommands || [], "no focused commands for this scope"),
         "",
         "Focused tests:",
         ...formatCommandList(report.focusedTests || [], "no mapped focused test command for this lane yet"),

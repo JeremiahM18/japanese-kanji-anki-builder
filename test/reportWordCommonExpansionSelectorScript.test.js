@@ -21,6 +21,8 @@ test("parseArgs supports common expansion selector options", () => {
         "--json",
     ]), {
         json: true,
+        summary: false,
+        keysOnly: false,
         levels: [5, 4, 3],
         limit: 25,
         manifest: "templates/word-source.json",

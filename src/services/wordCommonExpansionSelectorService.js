@@ -11,7 +11,9 @@ const {
     classifyKanjiScope,
     normalizeMoveTargetLevel,
     normalizeCandidateSourceRows,
+    normalizeTriageDecisions,
     parseCandidateSourceText,
+    resolveTriageDecisionForPlacementMode,
 } = require("./wordInventoryExpansionCandidateService");
 const { normalizePlacementMode } = require("./wordCandidateAgreementService");
 
@@ -30,6 +32,16 @@ const DICTIONARY_COMMON_POOL_COMMAND_SOURCE = "common-pool";
 const DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT = 200;
 const COMMON_POOL_QUALITY_MODE_EDITORIAL = "editorial";
 const COMMON_POOL_QUALITY_MODE_RAW = "raw";
+const COMMON_POOL_QUEUE_MODE_AUTO = "auto";
+const COMMON_POOL_QUEUE_MODE_ALL = "all";
+const COMMON_POOL_QUEUE_MODE_DISCOVERY = "discovery";
+const COMMON_POOL_QUEUE_MODE_SILVER = "silver";
+const COMMON_POOL_QUEUE_MODES = [
+    COMMON_POOL_QUEUE_MODE_AUTO,
+    COMMON_POOL_QUEUE_MODE_ALL,
+    COMMON_POOL_QUEUE_MODE_DISCOVERY,
+    COMMON_POOL_QUEUE_MODE_SILVER,
+];
 const DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID = "tubelex-ja-frequency";
 const FREQUENCY_EVIDENCE_BANDS = ["strong", "good", "borderline", "poor", "missing"];
 const COMMON_POOL_LEARNER_VALUE_BUCKETS = [
@@ -481,6 +493,24 @@ function normalizeCommonPoolQualityMode(value = COMMON_POOL_QUALITY_MODE_EDITORI
     throw new Error("Dictionary common pool quality mode must be one of: editorial, raw.");
 }
 
+function normalizeCommonPoolQueueMode(value = COMMON_POOL_QUEUE_MODE_AUTO) {
+    const mode = String(value || COMMON_POOL_QUEUE_MODE_AUTO).trim();
+    if (COMMON_POOL_QUEUE_MODES.includes(mode)) {
+        return mode;
+    }
+    throw new Error(`Dictionary common pool queue mode must be one of: ${COMMON_POOL_QUEUE_MODES.join(", ")}.`);
+}
+
+function resolveCommonPoolQueueMode({ qualityMode = COMMON_POOL_QUALITY_MODE_EDITORIAL, queueMode = COMMON_POOL_QUEUE_MODE_AUTO } = {}) {
+    const normalizedQueueMode = normalizeCommonPoolQueueMode(queueMode);
+    if (qualityMode === COMMON_POOL_QUALITY_MODE_RAW) {
+        return COMMON_POOL_QUEUE_MODE_ALL;
+    }
+    return normalizedQueueMode === COMMON_POOL_QUEUE_MODE_AUTO
+        ? COMMON_POOL_QUEUE_MODE_DISCOVERY
+        : normalizedQueueMode;
+}
+
 function normalizeCommonPoolEditorialQueueLimit(value = DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT) {
     const limit = Number(value ?? DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT);
     if (!Number.isInteger(limit) || limit < 1) {
@@ -633,8 +663,16 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const selectorSourceId = isDictionaryCommonPoolSelector
         ? DICTIONARY_COMMON_POOL_COMMAND_SOURCE
         : levelReport.sourceUniverse?.sourceId;
+    const dictionaryCommonPoolDiscoveryArg = ` --source=${DICTIONARY_COMMON_POOL_COMMAND_SOURCE} --queue=${COMMON_POOL_QUEUE_MODE_DISCOVERY} --frequency-source=${DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID}`;
+    const dictionaryCommonPoolSilverArg = ` --source=${DICTIONARY_COMMON_POOL_COMMAND_SOURCE} --queue=${COMMON_POOL_QUEUE_MODE_SILVER} --frequency-source=${DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID}`;
+    const dictionaryCommonPoolCurrentQueueMode = levelReport.sourceUniverse?.commonPoolSummary?.queueMode || COMMON_POOL_QUEUE_MODE_DISCOVERY;
+    const dictionaryCommonPoolCurrentArg = ` --source=${DICTIONARY_COMMON_POOL_COMMAND_SOURCE} --queue=${dictionaryCommonPoolCurrentQueueMode} --frequency-source=${DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID}`;
     const selectorSourceArg = isExtraSourceSelector && selectorSourceId
-        ? ` --source=${selectorSourceId}${isDictionaryCommonPoolSelector ? ` --frequency-source=${DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID}` : ""}`
+        ? (
+            isDictionaryCommonPoolSelector
+                ? dictionaryCommonPoolCurrentArg
+                : ` --source=${selectorSourceId}`
+        )
         : "";
     const selectorScopeLabel = isExtraSourceSelector
         ? (isDictionaryCommonPoolSelector ? SOURCE_POOL_DICTIONARY_COMMON_LABEL : "EXTRA source")
@@ -667,9 +705,15 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const rejectedRows = countValue(counts.triaged_reject);
     const gapPlanCommand = `npm run deck:words:gap-plan:n${level} -- --limit=50`;
     const selectorCommand = `npm run deck:words:vocab-expansion -- --levels=${level}${selectorSourceArg} --strict --limit=80`;
+    const selectorReadyCommand = isDictionaryCommonPoolSelector
+        ? `npm run deck:words:vocab-expansion -- --levels=${level}${dictionaryCommonPoolSilverArg} --strict --limit=80`
+        : selectorCommand;
+    const selectorTriageCommand = isDictionaryCommonPoolSelector
+        ? `npm run deck:words:vocab-expansion -- --levels=${level}${dictionaryCommonPoolDiscoveryArg} --strict --limit=80`
+        : selectorCommand;
     const allLevelSelectorCommand = "npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1 --strict --limit=80";
     const sourceAccessCommand = "npm run deck:words:source-access";
-    const dictionaryCommonPoolCommand = `npm run deck:words:vocab-expansion -- --levels=${level} --source=${DICTIONARY_COMMON_POOL_COMMAND_SOURCE} --frequency-source=${DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID} --strict --limit=80`;
+    const dictionaryCommonPoolCommand = `npm run deck:words:vocab-expansion -- --levels=${level}${dictionaryCommonPoolDiscoveryArg} --strict --limit=80`;
     const extraSourceCommand = availableReviewedExtraSourceIds.length === 1
         ? `npm run deck:words:vocab-expansion -- --levels=${level} --source=${availableReviewedExtraSourceIds[0]} --strict --limit=80`
         : (dictionaryCommonPoolAvailable ? dictionaryCommonPoolCommand : sourceAccessCommand);
@@ -771,7 +815,7 @@ function buildExpansionWorkOrder(levelReport = {}) {
                 count: countValue(levelReport.summary?.selectedRows),
                 status: "audit_only",
                 blocksExtraLane: false,
-                command: selectorCommand,
+                command: selectorTriageCommand,
                 reason: `Raw dictionary common-pool mode is an audit denominator, not an actionable review lane. It shows ${countValue(levelReport.summary?.selectedRows)} denominator row(s), including ${auditReadyRows} ready/pre-trust and ${auditNeedsTriageRows} needs-triage classifications, for evidence accounting only. Use the default editorial shortlist for triage.`,
             }),
         ] : []),
@@ -782,7 +826,7 @@ function buildExpansionWorkOrder(levelReport = {}) {
             count: readyRows,
             status: readyRows > 0 ? "active" : "clear",
             blocksExtraLane: readyRows > 0,
-            command: selectorCommand,
+            command: selectorReadyCommand,
             reason: readyRows > 0
                 ? `${selectorScopeLabel} selector rows are ready for editorial Silver review; still pre-trust and not card approvals.`
                 : `No ready rows remain in the ${selectorScopeLabel.toLowerCase()} selector.`,
@@ -794,7 +838,7 @@ function buildExpansionWorkOrder(levelReport = {}) {
             count: needsTriageRows,
             status: needsTriageRows > 0 ? "active" : "clear",
             blocksExtraLane: needsTriageRows > 0,
-            command: selectorCommand,
+            command: selectorTriageCommand,
             reason: needsTriageRows > 0
                 ? `${selectorScopeLabel} rows still need keep/defer/reject/move decisions before Silver.`
                 : `No needs-triage rows remain in the ${selectorScopeLabel.toLowerCase()} selector.`,
@@ -2162,6 +2206,36 @@ function buildCommonPoolLearnerValueClassification(row = {}, {
     };
 }
 
+function buildCommonPoolTriageDecisionCounts() {
+    return {
+        untriaged: 0,
+        keep_candidate: 0,
+        move_candidate: 0,
+        defer_candidate: 0,
+        reject_candidate: 0,
+    };
+}
+
+function summarizeCommonPoolTriageDecisionCounts(rows = []) {
+    const counts = buildCommonPoolTriageDecisionCounts();
+    for (const row of rows) {
+        const status = row.commonPoolQueueTriageStatus || "untriaged";
+        counts[status] = (counts[status] || 0) + 1;
+    }
+    return counts;
+}
+
+function commonPoolQueueModeIncludesRow(row = {}, queueMode = COMMON_POOL_QUEUE_MODE_ALL) {
+    const triageStatus = row.commonPoolQueueTriageStatus || "untriaged";
+    if (queueMode === COMMON_POOL_QUEUE_MODE_DISCOVERY) {
+        return triageStatus === "untriaged";
+    }
+    if (queueMode === COMMON_POOL_QUEUE_MODE_SILVER) {
+        return triageStatus === "keep_candidate";
+    }
+    return true;
+}
+
 function hasDigitWrittenForm(row = {}) {
     return DIGIT_WRITTEN_PATTERN.test(String(row.written || ""));
 }
@@ -2335,14 +2409,22 @@ function filterDictionaryCommonPoolRows({
     source = {},
     jlptLevelContract = {},
     jlptWordLevelContract = {},
+    triageDecisions = {},
+    placementMode = "kanji-anchor",
 } = {}) {
     const maxFrequencyRank = Number.isInteger(source.commonPool?.maxFrequencyRank)
         ? source.commonPool.maxFrequencyRank
         : null;
     const qualityMode = normalizeCommonPoolQualityMode(source.commonPool?.qualityMode);
+    const queueMode = resolveCommonPoolQueueMode({
+        qualityMode,
+        queueMode: source.commonPool?.queueMode,
+    });
     const editorialQueueLimit = qualityMode === COMMON_POOL_QUALITY_MODE_RAW
         ? null
         : normalizeCommonPoolEditorialQueueLimit(source.commonPool?.editorialQueueLimit);
+    const normalizedPlacementMode = normalizePlacementMode(placementMode);
+    const normalizedTriageDecisions = normalizeTriageDecisions(triageDecisions, { currentLevel: targetLevel });
     const normalizedRows = sourceRows
         .flatMap((row) => normalizeCandidateSourceRows(row, { sourceLabel: sourceId }))
         .map((row) => mergeFrequencySupportRow(row, frequencySupportRowsByKey.get(row.key) || null))
@@ -2352,10 +2434,16 @@ function filterDictionaryCommonPoolRows({
     const filteredCounts = {
         sourceRows: normalizedRows.length,
         qualityMode,
+        queueMode,
+        queueModePolicy: "operational_queue_filters_before_cap_without_shrinking_audit_denominator",
         editorialQueueLimit,
         eligibleRowsBeforeEditorialFilter: 0,
         editorialQueueRows: 0,
         deprioritizedByEditorialQueueLimit: 0,
+        triageDecisionCountsBeforeQueueFilter: buildCommonPoolTriageDecisionCounts(),
+        queueModeIncludedRowsBeforeLimit: 0,
+        queueModeExcludedRowsBeforeLimit: 0,
+        queueModeExcludedDecisionCounts: buildCommonPoolTriageDecisionCounts(),
         missingCommonness: 0,
         aboveMaxFrequencyRank: 0,
         kanaOnly: 0,
@@ -2470,6 +2558,10 @@ function filterDictionaryCommonPoolRows({
         const family = row.commonPoolLearnerFamily || buildCommonPoolLearnerFamily(row, classifyKanjiScope(row, { targetLevel, jlptLevelContract }));
         const familyRank = (familyRanks.get(family.key) || 0) + 1;
         familyRanks.set(family.key, familyRank);
+        const triageDecision = resolveTriageDecisionForPlacementMode(normalizedTriageDecisions[row.key] || null, {
+            placementMode: normalizedPlacementMode,
+        });
+        const commonPoolQueueTriageStatus = triageDecision?.decision || "untriaged";
         const classification = buildCommonPoolLearnerValueClassification(row, {
             familyRank,
             familyCap: family.cap,
@@ -2489,6 +2581,7 @@ function filterDictionaryCommonPoolRows({
             learnerValueFamilyKey: family.key,
             learnerValueFamilyType: family.type,
             learnerValueFamilyLabel: family.label,
+            commonPoolQueueTriageStatus,
         };
     });
 
@@ -2496,12 +2589,22 @@ function filterDictionaryCommonPoolRows({
     const reviewableSortedRows = qualityMode === COMMON_POOL_QUALITY_MODE_RAW
         ? sortedRows
         : sortedRows.filter((row) => row.learnerValueReviewable !== false);
+    filteredCounts.triageDecisionCountsBeforeQueueFilter = summarizeCommonPoolTriageDecisionCounts(reviewableSortedRows);
+    const queueModeRows = queueMode === COMMON_POOL_QUEUE_MODE_ALL
+        ? reviewableSortedRows
+        : reviewableSortedRows.filter((row) => commonPoolQueueModeIncludesRow(row, queueMode));
+    const queueModeExcludedRows = queueMode === COMMON_POOL_QUEUE_MODE_ALL
+        ? []
+        : reviewableSortedRows.filter((row) => !commonPoolQueueModeIncludesRow(row, queueMode));
+    filteredCounts.queueModeIncludedRowsBeforeLimit = queueModeRows.length;
+    filteredCounts.queueModeExcludedRowsBeforeLimit = queueModeExcludedRows.length;
+    filteredCounts.queueModeExcludedDecisionCounts = summarizeCommonPoolTriageDecisionCounts(queueModeExcludedRows);
     const editorialRows = Number.isInteger(editorialQueueLimit)
-        ? reviewableSortedRows.slice(0, editorialQueueLimit)
-        : reviewableSortedRows;
+        ? queueModeRows.slice(0, editorialQueueLimit)
+        : queueModeRows;
     filteredCounts.eligibleRowsBeforeEditorialFilter = sortedRows.length;
     filteredCounts.editorialQueueRows = editorialRows.length;
-    filteredCounts.deprioritizedByEditorialQueueLimit = Math.max(0, reviewableSortedRows.length - editorialRows.length);
+    filteredCounts.deprioritizedByEditorialQueueLimit = Math.max(0, queueModeRows.length - editorialRows.length);
     filteredCounts.auditOnlyRowsExcludedFromEditorialQueue = qualityMode === COMMON_POOL_QUALITY_MODE_RAW
         ? 0
         : filteredCounts.auditOnlyRowsBeforeEditorialFilter;
@@ -2534,6 +2637,8 @@ function loadSourceRows({
     level = null,
     jlptLevelContract = {},
     jlptWordLevelContract = {},
+    triageDecisions = {},
+    placementMode = "kanji-anchor",
     readFile = fs.readFileSync,
 } = {}) {
     const sourcePath = path.resolve(process.cwd(), source.local?.path || "");
@@ -2566,6 +2671,8 @@ function loadSourceRows({
             source,
             jlptLevelContract,
             jlptWordLevelContract,
+            triageDecisions,
+            placementMode,
         })
         : null;
 
@@ -2633,6 +2740,7 @@ function buildLevelSelectorReport({
     }
 
     const [sourceId, source] = candidateSources[0];
+    const triageDecisionsForLevelSource = triageDecisionsByLevelSource?.[`N${level}`]?.[sourceId] || {};
     const loadedSource = loadSourceRows({
         sourceId,
         source,
@@ -2640,6 +2748,8 @@ function buildLevelSelectorReport({
         level,
         jlptLevelContract,
         jlptWordLevelContract,
+        triageDecisions: triageDecisionsForLevelSource,
+        placementMode: normalizedPlacementMode,
         readFile,
     });
     blockers.push(...loadedSource.blockers);
@@ -2680,7 +2790,7 @@ function buildLevelSelectorReport({
         requireSourceLevel: Boolean(candidatePolicy.requireSourceLevel),
         sourceLabel: sourceId,
         limit: Number.MAX_SAFE_INTEGER,
-        triageDecisions: triageDecisionsByLevelSource?.[`N${level}`]?.[sourceId] || {},
+        triageDecisions: triageDecisionsForLevelSource,
         jlptLevelContract,
         jlptWordLevelContract,
         placementMode: normalizedPlacementMode,
@@ -2903,8 +3013,15 @@ function formatSourceUniverse(sourceUniverse = {}) {
     if (sourceUniverse.commonPoolSummary) {
         const pool = sourceUniverse.commonPoolSummary;
         parts.push(`pool mode ${pool.qualityMode || COMMON_POOL_QUALITY_MODE_EDITORIAL}`);
+        parts.push(`queue mode ${pool.queueMode || COMMON_POOL_QUEUE_MODE_DISCOVERY}`);
         parts.push(`pool eligible ${pool.eligibleRowsBeforeEditorialFilter ?? "-"}`);
         parts.push(`pool queue ${pool.editorialQueueRows ?? "-"}`);
+        if (Number.isInteger(pool.queueModeIncludedRowsBeforeLimit)) {
+            parts.push(`queue candidates ${pool.queueModeIncludedRowsBeforeLimit}`);
+        }
+        if (Number.isInteger(pool.queueModeExcludedRowsBeforeLimit)) {
+            parts.push(`queue history ${pool.queueModeExcludedRowsBeforeLimit}`);
+        }
         if (Number.isInteger(pool.reviewableRowsBeforeEditorialFilter)) {
             parts.push(`pool reviewable ${pool.reviewableRowsBeforeEditorialFilter}`);
         }
@@ -3127,6 +3244,31 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
         }
     }
 
+    if ((report.levelReports || []).some((levelReport) => levelReport.sourceUniverse?.commonPoolSummary?.queueMode)) {
+        lines.push(
+            "",
+            "Common-pool operational queue:",
+            "| Level | Queue mode | Included before cap | History excluded before cap | Untriaged | Keep | Move | Defer | Reject | Policy |",
+            "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |"
+        );
+        for (const levelReport of report.levelReports || []) {
+            const commonPool = levelReport.sourceUniverse?.commonPoolSummary || {};
+            const triageCounts = commonPool.triageDecisionCountsBeforeQueueFilter || {};
+            lines.push([
+                `| ${levelReport.levelLabel}`,
+                commonPool.queueMode || "-",
+                commonPool.queueModeIncludedRowsBeforeLimit ?? "-",
+                commonPool.queueModeExcludedRowsBeforeLimit ?? "-",
+                triageCounts.untriaged || 0,
+                triageCounts.keep_candidate || 0,
+                triageCounts.move_candidate || 0,
+                triageCounts.defer_candidate || 0,
+                triageCounts.reject_candidate || 0,
+                "history stays audit-visible; active queue filters before cap",
+            ].join(" | ") + " |");
+        }
+    }
+
     lines.push(
         "",
         "Discovery yield:",
@@ -3307,6 +3449,11 @@ module.exports = {
     SOURCE_UNIVERSE_WARNING,
     WORD_EXPANSION_TARGET_MINIMUMS,
     WORD_EXPANSION_TARGET_POLICY,
+    COMMON_POOL_QUEUE_MODE_ALL,
+    COMMON_POOL_QUEUE_MODE_AUTO,
+    COMMON_POOL_QUEUE_MODE_DISCOVERY,
+    COMMON_POOL_QUEUE_MODE_SILVER,
+    COMMON_POOL_QUEUE_MODES,
     DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
     DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT,
     DICTIONARY_COMMON_POOL_SOURCE_ID,
@@ -3321,5 +3468,6 @@ module.exports = {
     classifyCommonExpansionSelectorRow,
     formatWordCommonExpansionSelectorReport,
     getCandidateDiscoverySourcesForLevel,
+    normalizeCommonPoolQueueMode,
     summarizeSelectorRows,
 };

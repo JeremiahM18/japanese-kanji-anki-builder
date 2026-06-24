@@ -29,6 +29,7 @@ test("parseArgs supports common expansion selector options", () => {
         commonPoolLimit: 200,
         commonPoolMode: "editorial",
         frequencySource: "",
+        queueMode: "auto",
         sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: true,
         triage: "templates/triage.json",
@@ -54,7 +55,10 @@ test("common expansion selector defaults to all JLPT levels", () => {
     assert.equal(options.placementMode, "kanji-anchor");
     assert.equal(options.commonPoolLimit, 200);
     assert.equal(options.commonPoolMode, "editorial");
+    assert.equal(options.queueMode, "auto");
     assert.equal(parseArgs(["--frequency-source=tubelex-ja-frequency"]).frequencySource, "tubelex-ja-frequency");
+    assert.equal(parseArgs(["--queue=silver"]).queueMode, "silver");
+    assert.equal(parseArgs(["--queue-mode=all"]).queueMode, "all");
     assert.equal(options.sourceEvidence, "templates/jlpt_word_source_evidence.json");
     assert.equal(
         resolveManifestPath(""),
@@ -64,9 +68,10 @@ test("common expansion selector defaults to all JLPT levels", () => {
 
 test("validateCommonPoolOptions rejects invalid common-pool settings", () => {
     assert.doesNotThrow(() => validateCommonPoolOptions({ commonPoolMode: "editorial", commonPoolLimit: 200 }));
-    assert.doesNotThrow(() => validateCommonPoolOptions({ commonPoolMode: "raw", commonPoolLimit: 1 }));
+    assert.doesNotThrow(() => validateCommonPoolOptions({ commonPoolMode: "raw", commonPoolLimit: 1, queueMode: "all" }));
     assert.throws(() => validateCommonPoolOptions({ commonPoolMode: "wide", commonPoolLimit: 200 }), /common-pool-mode/);
     assert.throws(() => validateCommonPoolOptions({ commonPoolMode: "raw", commonPoolLimit: 0 }), /common-pool-limit/);
+    assert.throws(() => validateCommonPoolOptions({ commonPoolMode: "editorial", commonPoolLimit: 200, queueMode: "later" }), /queue mode/);
 });
 
 test("validateLevels rejects empty or invalid selector scopes", () => {

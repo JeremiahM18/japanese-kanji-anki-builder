@@ -174,6 +174,10 @@ function buildWordExpansionDoctrinePhrases() {
         dictionaryCommonPoolLabels: "Dictionary common-pool rows must remain labeled `DICTIONARY COMMON POOL` plus `Source level claim unverified`.",
         dictionaryCommonPoolCommandReference: "Continue the same extra expansion lane with the `DICTIONARY COMMON POOL`",
         dictionaryCommonPoolQualityFilter: "The default dictionary common-pool view is an editorial shortlist over an audit-visible raw pool, not the raw pool itself.",
+        dictionaryCommonPoolOperationalQueue: "Dictionary common-pool operational queues filter already-reviewed keep, defer, reject, and move rows before the `200`-row cap while keeping their counts audit-visible.",
+        dictionaryCommonPoolDiscoveryQueueCommand: "`--queue=discovery`",
+        dictionaryCommonPoolSilverQueue: "Use `--queue=silver` to surface kept common-pool rows for later Silver preparation without mixing them into discovery triage",
+        dictionaryCommonPoolHistoryQueueCommand: "`--queue=all`",
         dictionaryCommonPoolLearnerUtilityOrder: "Dictionary common-pool editorial queues are ordered by a transparent learner-utility score before the `200`-row cap is applied.",
         dictionaryCommonPoolLearnerUtilityComponents: "everyday usefulness, concrete/common domain fit, target-kanji reinforcement value, duplicate or near-duplicate safety, specialized/proper-noun penalty signals, exampleability, and pitch/audio/media readiness",
         dictionaryCommonPoolLearnerUtilityBoundary: "The score is an ordering signal only, never card approval.",
@@ -384,6 +388,10 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolRoute), "docs/workflows.md must document the JMdict containment/commonness common-pool route.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLabels), "docs/workflows.md must require DICTIONARY COMMON POOL and Source level claim unverified labels for common-pool rows.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolQualityFilter), "docs/workflows.md must state that the default dictionary common-pool queue is an editorial shortlist over an audit-visible raw pool.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolOperationalQueue), "docs/workflows.md must state that common-pool operational queues filter reviewed history before the 200-row cap while keeping counts audit-visible.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolDiscoveryQueueCommand), "docs/workflows.md must document the common-pool discovery queue command mode.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolSilverQueue), "docs/workflows.md must document the common-pool Silver-prep queue mode.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolHistoryQueueCommand), "docs/workflows.md must document the common-pool all/history queue mode.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityOrder), "docs/workflows.md must state that common-pool editorial queues are ordered by transparent learner-utility score before the 200-row cap.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/workflows.md must list the learner-utility scoring components.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityBoundary), "docs/workflows.md must state learner-utility score is ordering only, not card approval.");
@@ -400,6 +408,10 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(wordExpansionDoctrine.paidSourceBoundary), "docs/workflows.md must preserve the free expansion boundary that paid/private sources are optional, not prerequisites.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.sourceDepthClaimLimiter), "docs/command-reference.md must state that word source-depth is a claim limiter, not a Silver blocker.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolCommandReference), "docs/command-reference.md must document common-pool work as the same extra expansion lane.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolOperationalQueue), "docs/command-reference.md must state that common-pool operational queues filter reviewed history before the 200-row cap while keeping counts audit-visible.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolDiscoveryQueueCommand), "docs/command-reference.md must document the common-pool discovery queue command mode.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolSilverQueue), "docs/command-reference.md must document the common-pool Silver-prep queue mode.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolHistoryQueueCommand), "docs/command-reference.md must document the common-pool all/history queue mode.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolRawCommand), "docs/command-reference.md must document dictionary common-pool raw audit mode.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/command-reference.md must document learner-utility scoring components for common-pool work.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerValueBuckets), "docs/command-reference.md must document learner-value bucket names for common-pool review.");

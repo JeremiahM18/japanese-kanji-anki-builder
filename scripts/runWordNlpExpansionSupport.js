@@ -36,6 +36,7 @@ function parseArgs(argv) {
         workspaceRoot: null,
         cacheDir: null,
         allowRemoteModels: false,
+        forceSmoke: false,
         runGovernanceGate: true,
         unknownArgs: [],
     };
@@ -52,6 +53,8 @@ function parseArgs(argv) {
             options.includeDeferred = false;
         } else if (arg === "--allow-remote-models") {
             options.allowRemoteModels = true;
+        } else if (arg === "--force-smoke") {
+            options.forceSmoke = true;
         } else if (arg === "--no-governance-gate") {
             options.runGovernanceGate = false;
         } else if (arg.startsWith("--level=")) {
@@ -215,11 +218,13 @@ function buildCommandPlan(options) {
             ...(options.manifestPath ? [`--manifest=${options.manifestPath}`] : []),
         ]),
         scriptStep("NLP runtime readiness", "doctorNlpRuntime.js", manifestArgs),
-        scriptStep("NLP embedding smoke benchmark", "evaluateNlpEmbeddingModel.js", [
+        scriptStep("NLP embedding smoke gate", "runNlpEmbeddingSmokeGate.js", [
             ...(options.manifestPath ? [`--manifest=${options.manifestPath}`] : []),
             `--model-id=${options.modelId}`,
             ...(options.cacheDir ? [`--cache-dir=${options.cacheDir}`] : []),
+            ...(options.workspaceRoot ? [`--workspace-root=${options.workspaceRoot}`] : []),
             ...(options.allowRemoteModels ? ["--allow-remote-models"] : []),
+            ...(options.forceSmoke ? ["--force-smoke"] : []),
         ]),
     ];
 

@@ -23,6 +23,7 @@ test("parseArgs supports all word NLP expansion support controls", () => {
         "--workspace-root=.",
         "--cache-dir=cache/nlp-models/transformers-js",
         "--allow-remote-models",
+        "--force-smoke",
         "--no-include-deferred",
         "--no-governance-gate",
         "--dry-run",
@@ -43,6 +44,7 @@ test("parseArgs supports all word NLP expansion support controls", () => {
     assert.equal(options.workspaceRoot, ".");
     assert.equal(options.cacheDir, "cache/nlp-models/transformers-js");
     assert.equal(options.allowRemoteModels, true);
+    assert.equal(options.forceSmoke, true);
     assert.equal(options.includeDeferred, false);
     assert.equal(options.runGovernanceGate, false);
     assert.equal(options.dryRun, true);
@@ -104,6 +106,7 @@ test("buildCommandPlan wires NLP expansion support into every selected N level",
     assert.ok(commandTexts.some((command) => command.includes("validateNlpEmbeddings.js")));
     assert.ok(commandTexts.some((command) => command.includes("validateNlpSuggestions.js")));
     assert.ok(commandTexts.some((command) => command.includes("runNlpGovernanceGate.js")));
+    assert.ok(commandTexts.some((command) => command.includes("runNlpEmbeddingSmokeGate.js")));
     assert.equal(plan.authority.outputAuthority, "assistive_only");
     assert.equal(plan.authority.writesTrackedTemplates, false);
     assert.equal(plan.authority.certifiesCards, false);
@@ -123,4 +126,13 @@ test("formatWordNlpExpansionSupportPlan keeps the certification boundary visible
     assert.match(text, /deck:words:obsidian:rereview-status/);
     assert.match(text, /N4 reading-gap candidate suggestions/);
     assert.match(text, /NLP governance gate/);
+    assert.match(text, /NLP embedding smoke gate/);
+});
+
+test("buildCommandPlan passes force-smoke to the cache-aware smoke gate", () => {
+    const plan = buildCommandPlan(parseArgs(["--levels=5", "--force-smoke"]));
+    const commandTexts = plan.steps.map(commandText);
+
+    assert.ok(commandTexts.some((command) => command.includes("runNlpEmbeddingSmokeGate.js")
+        && command.includes("--force-smoke")));
 });

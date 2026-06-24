@@ -199,6 +199,8 @@ npm run deck:kanji:additional:ready
 
 `deck:ready` validates setup, syncs media, builds exports, packages files under `out/build/package`, reports managed manifest coverage and exported card media completeness, and fails on export fallbacks by default. When native `.apkg` creation succeeds, package media is read directly from managed-media source paths through the integrity sidecar instead of being duplicated into `package/media`; if `.apkg` creation is skipped, `package/media` is materialized for TSV/manual-copy compatibility.
 
+Default `deck:ready` writes through the shared `out/build` root. Use `npm run deck:ready -- --levels=<level> --run-id=<id>` to isolate a generated output root under `out/run-outputs/<id>/kanji-n*` for local parallel build/package experiments. Use explicit `--out-dir=<path>` only when you are intentionally controlling the generated root. Do not run cold APKG cache clearing, timing-budget benchmarks, proof/source writes, or release certification gates in parallel with these builds.
+
 The generated package also includes `media-integrity.json`, a local sidecar used to bind packaged media filenames to managed-media SHA-256 identities during deterministic APKG creation. It is not source evidence, Obsidian proof, or release QA.
 
 Native `.apkg` creation may reuse a SHA-verified, content-addressed generated cache under `out/.apkg-cache` when exports, note schema, media integrity, and the APKG builder script are unchanged. Cache entries include a generated metadata manifest binding the cache key, artifact byte size, and APKG SHA-256. A cache miss rebuilds the package normally; a corrupt cache entry is ignored and rebuilt. The cold native APKG path is independently measurable with `npm run bench:build:cold-apkg:gate`, which clears the generated APKG cache before the measured build and verifies the Python archive path rather than the hot-cache path.
@@ -218,7 +220,7 @@ npm run deck:words:ready -- --levels=5
 npm run deck:words:apkg -- --levels=5
 ```
 
-Run separate `deck:words:ready` invocations serially. The command writes through the shared `out/word-build` package directory, so parallel per-level runs can collide during media cleanup or package creation.
+Run separate default `deck:words:ready` invocations serially. The default command writes through the shared `out/word-build` package directory, so parallel per-level runs can collide during media cleanup or package creation. Use `npm run deck:words:ready -- --levels=<level> --run-id=<id>` to isolate a generated output root under `out/run-outputs/<id>/word-n*` for local parallel build/package experiments. The run-id root only isolates generated build/package files; it does not certify cards, replace Gold/Sapphire/Platinum/Obsidian gates, coordinate proof/source writes, or make timing benchmarks safe to run in parallel.
 
 For reading readiness, `deck:words:ready` expands each requested word level to its cumulative easier-level support stack while keeping the packaged deck scoped to the requested level. For example, `--levels=3` packages N3 word cards but evaluates N3 reading coverage with N5 + N4 + N3 word support.
 

@@ -1,5 +1,6 @@
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument, runBuildPipeline } = require("../src/services/buildPipeline");
+const { resolveOutputDir } = require("../src/services/outputIsolationService");
 const { assertNoUnknownArgs, collectUnknownArg, parseNumericOption, parseStringOption, invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
@@ -8,6 +9,8 @@ function parseArgs(argv) {
         limit: null,
         concurrency: null,
         outDir: null,
+        outDirBase: null,
+        runId: null,
         skipMediaSync: false,
         failOnExportIssues: false,
         maxFallbackRatio: null,
@@ -26,6 +29,10 @@ function parseArgs(argv) {
             options.concurrency = parseNumericOption(arg, "concurrency");
         } else if (arg.startsWith("--out-dir=")) {
             options.outDir = parseStringOption(arg, "out-dir");
+        } else if (arg.startsWith("--out-dir-base=")) {
+            options.outDirBase = parseStringOption(arg, "out-dir-base");
+        } else if (arg.startsWith("--run-id=")) {
+            options.runId = parseStringOption(arg, "run-id");
         } else if (arg === "--skip-media-sync") {
             options.skipMediaSync = true;
         } else if (arg === "--fail-on-export-issues") {
@@ -57,10 +64,19 @@ async function main() {
         throw new Error("Invalid max-fallback-ratio. Must be a number between 0 and 1.");
     }
 
+    const levels = options.levels || [5, 4, 3, 2, 1];
+    const outDir = resolveOutputDir({
+        explicitOutDir: options.outDir,
+        runId: options.runId,
+        outDirBase: options.outDirBase,
+        defaultOutDir: config.buildOutDir,
+        deckKind: "kanji",
+        levels,
+    });
     const summary = await runBuildPipeline({
         config,
-        outDir: options.outDir || config.buildOutDir,
-        levels: options.levels || [5, 4, 3, 2, 1],
+        outDir,
+        levels,
         limit: Number.isFinite(options.limit) ? options.limit : null,
         concurrency: Number.isFinite(options.concurrency) ? options.concurrency : null,
         maxFallbackRatio: Number.isFinite(options.maxFallbackRatio) ? options.maxFallbackRatio : null,

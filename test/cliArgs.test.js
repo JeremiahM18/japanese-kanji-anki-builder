@@ -70,10 +70,19 @@ test("importKanjiVg parseArgs accepts explicit kanji outside JLPT inventory", ()
     assert.equal(options.json, true);
 });
 
-test("prepareDeck parseArgs records unsupported flags, json mode, and strict override", () => {
-    const options = parsePrepareArgs(["--levels=5,4", "--json", "--allow-export-fallbacks", "--oops"]);
+test("prepareDeck parseArgs records unsupported flags, output isolation, json mode, and strict override", () => {
+    const options = parsePrepareArgs([
+        "--levels=5,4",
+        "--out-dir-base=out/runs",
+        "--run-id=batch-001",
+        "--json",
+        "--allow-export-fallbacks",
+        "--oops",
+    ]);
 
     assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.outDirBase, "out/runs");
+    assert.equal(options.runId, "batch-001");
     assert.equal(options.json, true);
     assert.equal(options.allowExportFallbacks, true);
     assert.deepEqual(options.unknownArgs, ["--oops"]);
@@ -133,10 +142,20 @@ test("reviewGoldenAdditionalKanjiLevel parseArgs records level output root and u
     assert.deepEqual(options.unknownArgs, ["--oops"]);
 });
 
-test("buildArtifacts parseArgs records unsupported flags and export issue gates", () => {
-    const options = parseBuildArtifactsArgs(["--levels=5,4", "--skip-media-sync", "--fail-on-export-issues", "--max-fallback-ratio=0.05", "--oops"]);
+test("buildArtifacts parseArgs records unsupported flags, output isolation, and export issue gates", () => {
+    const options = parseBuildArtifactsArgs([
+        "--levels=5,4",
+        "--out-dir-base=out/runs",
+        "--run-id=batch-002",
+        "--skip-media-sync",
+        "--fail-on-export-issues",
+        "--max-fallback-ratio=0.05",
+        "--oops",
+    ]);
 
     assert.deepEqual(options.levels, [5, 4]);
+    assert.equal(options.outDirBase, "out/runs");
+    assert.equal(options.runId, "batch-002");
     assert.equal(options.skipMediaSync, true);
     assert.equal(options.failOnExportIssues, true);
     assert.equal(options.maxFallbackRatio, 0.05);

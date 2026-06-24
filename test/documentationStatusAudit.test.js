@@ -337,6 +337,49 @@ test("documentation status audit catches missing word common-pool learner utilit
     );
 });
 
+test("documentation status audit catches missing word common-pool learner-value bucket doctrine", () => {
+    const files = readDocumentationFiles();
+    files["docs/workflows.md"] = files["docs/workflows.md"]
+        .replace(
+            "Learner-value buckets classify common-pool rows as core candidates, family representatives, support-label candidates, same-written ambiguities, redundant family members, domain-narrow rows, or raw audit low-fit rows.",
+            "Common-pool rows use a basic bucket.",
+        )
+        .replace(
+            "Redundant family members, domain-narrow rows, and raw audit low-fit rows stay counted in the raw denominator but are audit-only by default, not human review queue work.",
+            "All common-pool rows remain review work.",
+        );
+    files["docs/command-reference.md"] = files["docs/command-reference.md"]
+        .replace(
+            "Learner-value buckets classify common-pool rows as core candidates, family representatives, support-label candidates, same-written ambiguities, redundant family members, domain-narrow rows, or raw audit low-fit rows.",
+            "Common-pool rows use a bucket.",
+        )
+        .replace(
+            "Redundant family members, domain-narrow rows, and raw audit low-fit rows stay counted in the raw denominator but are audit-only by default, not human review queue work.",
+            "All common-pool rows are review work.",
+        );
+
+    const report = auditDocumentationText({
+        files,
+        n3WordSnapshot: {
+            denominator: 1081,
+            gold: { ratio: "1081/1081", missing: 0 },
+            sapphire: { ratio: "8/1081", missing: 1073 },
+            platinum: { ratio: "8/1081", missing: 1073 },
+            obsidianProofRecorded: false,
+        },
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("learner-value bucket names")),
+        true,
+    );
+    assert.equal(
+        report.failures.some((failure) => failure.includes("audit-only by default")),
+        true,
+    );
+});
+
 test("documentation status audit catches missing word expansion target doctrine", () => {
     const files = readDocumentationFiles();
     files["docs/workflows.md"] = files["docs/workflows.md"].replace(

@@ -177,6 +177,8 @@ function buildWordExpansionDoctrinePhrases() {
         dictionaryCommonPoolLearnerUtilityOrder: "Dictionary common-pool editorial queues are ordered by a transparent learner-utility score before the `200`-row cap is applied.",
         dictionaryCommonPoolLearnerUtilityComponents: "everyday usefulness, concrete/common domain fit, target-kanji reinforcement value, duplicate or near-duplicate safety, specialized/proper-noun penalty signals, exampleability, and pitch/audio/media readiness",
         dictionaryCommonPoolLearnerUtilityBoundary: "The score is an ordering signal only, never card approval.",
+        dictionaryCommonPoolLearnerValueBuckets: "Learner-value buckets classify common-pool rows as core candidates, family representatives, support-label candidates, same-written ambiguities, redundant family members, domain-narrow rows, or raw audit low-fit rows.",
+        dictionaryCommonPoolAuditOnlyBuckets: "Redundant family members, domain-narrow rows, and raw audit low-fit rows stay counted in the raw denominator but are audit-only by default, not human review queue work.",
         dictionaryCommonPoolOutsideSupport: "Outside-JLPT and higher-level support kanji are label/review needs, not automatic common-pool deprioritization.",
         dictionaryCommonPoolRawCommand: "`--common-pool-mode=raw`",
         tubelexNormalizerCommand: "`npm run data:normalize:words:tubelex`",
@@ -385,6 +387,8 @@ function auditDocumentationText({
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityOrder), "docs/workflows.md must state that common-pool editorial queues are ordered by transparent learner-utility score before the 200-row cap.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/workflows.md must list the learner-utility scoring components.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityBoundary), "docs/workflows.md must state learner-utility score is ordering only, not card approval.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerValueBuckets), "docs/workflows.md must document learner-value bucket names for common-pool review.");
+    addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolAuditOnlyBuckets), "docs/workflows.md must state that redundant/domain/low-fit common-pool rows are audit-only by default.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.dictionaryCommonPoolOutsideSupport), "docs/workflows.md must state that outside-JLPT/higher-level support kanji are label needs, not automatic common-pool deprioritization.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.tubelexNormalizerCommand), "docs/workflows.md must document the TubeLex word frequency normalizer command.");
     addFailure(failures, workflows.includes(wordExpansionDoctrine.tubelexFrequencyBoundary), "docs/workflows.md must state that TubeLex is support/ranking evidence only, not level truth or card approval.");
@@ -398,6 +402,8 @@ function auditDocumentationText({
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolCommandReference), "docs/command-reference.md must document common-pool work as the same extra expansion lane.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolRawCommand), "docs/command-reference.md must document dictionary common-pool raw audit mode.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerUtilityComponents), "docs/command-reference.md must document learner-utility scoring components for common-pool work.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolLearnerValueBuckets), "docs/command-reference.md must document learner-value bucket names for common-pool review.");
+    addFailure(failures, commandReference.includes(wordExpansionDoctrine.dictionaryCommonPoolAuditOnlyBuckets), "docs/command-reference.md must state that redundant/domain/low-fit common-pool rows are audit-only by default.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.expansionStatusTargetProgress), "docs/command-reference.md must document expansion-status target-progress reporting.");
     addFailure(failures, commandReference.includes("do not automatically deprioritize outside-JLPT or higher-level support kanji"), "docs/command-reference.md must document that outside-JLPT/higher-level support kanji are not automatically deprioritized.");
     addFailure(failures, commandReference.includes(wordExpansionDoctrine.tubelexNormalizerCommand), "docs/command-reference.md must document the TubeLex word frequency normalizer command.");

@@ -989,6 +989,117 @@ test("dictionary common-pool raw mode is audit-only, not an actionable triage qu
     );
 });
 
+test("dictionary common pool uses learner-value buckets to keep redundant and narrow rows audit-only", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
+    const commonPoolSource = writeFixtureSource(
+        dir,
+        "jmdict.tsv",
+        [
+            "written\treading\tmeaning\tfrequencyRank",
+            "本屋\tほんや\tbookstore\t100",
+            "本社\tほんしゃ\thead office\t101",
+            "大社\tおおやしろ\tIzumo Grand Shrine\t102",
+            "本甲\tほんこう\tmain item alpha\t103",
+            "本乙\tほんおつ\tmain item beta\t104",
+            "本丙\tほんへい\tmain item gamma\t105",
+            "本丁\tほんてい\tmain item delta\t106",
+            "本戊\tほんぼ\tmain item epsilon\t107",
+            "本己\tほんき\tmain item zeta\t108",
+            "本庚\tほんこう\tmain item eta\t109",
+            "本辛\tほんしん\tmain item theta\t110",
+            "本壬\tほんじん\tmain item iota\t111",
+            "本癸\tほんき\tmain item kappa\t112",
+        ].join("\n")
+    );
+    const manifest = {
+        sources: {
+            jmdict: {
+                status: "active",
+                origin: { url: "https://example.com/jmdict" },
+                licenseUse: { status: "approved", license: "CC BY-SA 4.0" },
+                checkedAt: "2026-06-21",
+                allowedUse: ["dictionary-verification", "reading-verification", "meaning-verification"],
+                local: {
+                    path: commonPoolSource.path,
+                    format: "tsv",
+                    byteSize: commonPoolSource.byteSize,
+                    rowCount: commonPoolSource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+            },
+            "jmdict-priority-commonness": {
+                status: "active",
+                origin: { url: "https://example.com/jmdict" },
+                licenseUse: { status: "approved", license: "CC BY-SA 4.0" },
+                checkedAt: "2026-06-21",
+                allowedUse: ["frequency-sanity", "usefulness-support"],
+                local: {
+                    path: commonPoolSource.path,
+                    format: "tsv",
+                    byteSize: commonPoolSource.byteSize,
+                    rowCount: commonPoolSource.rowCount,
+                    columns: ["written", "reading", "meaning", "frequencyRank"],
+                },
+            },
+        },
+    };
+    const baseArgs = {
+        levels: [5],
+        placementMode: "vocabulary-level",
+        limit: 20,
+        enforceReadingExpansionGate: true,
+        readingExpansionSignalsByLevel: {
+            5: buildExhaustedReadingSignal(5),
+        },
+        jlptLevelContract: {
+            kanjiLevels: {
+                本: 5,
+                屋: 5,
+                社: 4,
+                大: 5,
+            },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {},
+            excludedWordLevels: {},
+        },
+    };
+    const editorialManifest = buildSelectorManifestForSource({
+        manifest,
+        wordSourceEvidence: { sources: {} },
+        sourceId: DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+        levels: [5],
+    });
+    const rawManifest = buildSelectorManifestForSource({
+        manifest,
+        wordSourceEvidence: { sources: {} },
+        sourceId: DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+        levels: [5],
+        commonPoolMode: "raw",
+    });
+
+    const editorialReport = buildWordCommonExpansionSelectorReport({
+        ...baseArgs,
+        manifest: editorialManifest,
+    });
+    const rawReport = buildWordCommonExpansionSelectorReport({
+        ...baseArgs,
+        manifest: rawManifest,
+    });
+    const editorialLevel = editorialReport.levelReports[0];
+    const rawLevel = rawReport.levelReports[0];
+
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.eligibleRowsBeforeEditorialFilter, 13);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.learnerValueBucketCounts.domain_narrow, 1);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.learnerValueBucketCounts.redundant_family_member > 0, true);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.auditOnlyRowsBeforeEditorialFilter > 0, true);
+    assert.equal(editorialLevel.rows.some((row) => row.learnerValueAuditOnly), false);
+    assert.equal(rawLevel.rows.some((row) => row.learnerValueBucket === "domain_narrow"), true);
+    assert.equal(rawLevel.rows.some((row) => row.learnerValueBucket === "redundant_family_member"), true);
+    assert.match(formatWordCommonExpansionSelectorReport(editorialReport), /Learner-value buckets:/);
+    assert.match(formatWordCommonExpansionSelectorReport(rawReport), /learner-value bucket: Redundant family member; audit-only by default/);
+});
+
 test("dictionary common pool filters to common non-duplicate kanji candidates inside the extra lane", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "word-common-expansion-"));
     const commonPoolSource = writeFixtureSource(
@@ -1106,12 +1217,14 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
 
     assert.equal(levelReport.sourceUniverse.sourceLaneLabel, SOURCE_LANE_EXTRA_LABEL);
     assert.equal(levelReport.sourceUniverse.sourcePoolLabel, SOURCE_POOL_DICTIONARY_COMMON_LABEL);
-    assert.equal(levelReport.sourceUniverse.rowCount, 6);
+    assert.equal(levelReport.sourceUniverse.rowCount, 5);
     assert.equal(levelReport.sourceUniverse.rawRowCount, 11);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.qualityMode, "editorial");
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.eligibleRowsBeforeEditorialFilter, 6);
-    assert.equal(levelReport.sourceUniverse.commonPoolSummary.editorialQueueRows, 6);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.editorialQueueRows, 5);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 0);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.auditOnlyRowsBeforeEditorialFilter, 1);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.auditOnlyRowsExcludedFromEditorialQueue, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.kanaOnly, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.alreadyGovernedOrExcluded, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.missingCommonness, 1);
@@ -1119,7 +1232,7 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.noTargetKanji, 1);
     assert.deepEqual(
         [...rowsByKey.keys()].sort(),
-        ["一月|いちがつ", "大社|おおやしろ", "山川|さんせん", "本屋|ほんや", "本棚|ほんだな", "本社|ほんしゃ"].sort()
+        ["一月|いちがつ", "山川|さんせん", "本屋|ほんや", "本棚|ほんだな", "本社|ほんしゃ"].sort()
     );
 
     for (const row of rowsByKey.values()) {
@@ -1139,7 +1252,7 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
     const formatted = formatWordCommonExpansionSelectorReport(report);
     assert.match(formatted, /pool DICTIONARY COMMON POOL/);
     assert.match(formatted, /pool eligible 6/);
-    assert.match(formatted, /pool queue 6/);
+    assert.match(formatted, /pool queue 5/);
     assert.match(formatted, /source pool: DICTIONARY COMMON POOL/);
     assert.match(formatted, /support label needs: outside-JLPT support kanji 棚/);
     assert.match(formatted, /commonness rank: 100/);
@@ -1254,9 +1367,8 @@ test("dictionary common pool can use TubeLex support without making it level tru
         },
     };
 
-    const report = buildWordCommonExpansionSelectorReport({
+    const selectorInputs = {
         levels: [5],
-        manifest,
         placementMode: "vocabulary-level",
         limit: 20,
         enforceReadingExpansionGate: true,
@@ -1276,6 +1388,10 @@ test("dictionary common pool can use TubeLex support without making it level tru
             wordLevels: {},
             excludedWordLevels: {},
         },
+    };
+    const report = buildWordCommonExpansionSelectorReport({
+        ...selectorInputs,
+        manifest,
     });
     const levelReport = report.levelReports[0];
     const rowsByKey = new Map(levelReport.rows.map((row) => [row.key, row]));
@@ -1285,11 +1401,12 @@ test("dictionary common pool can use TubeLex support without making it level tru
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.frequencyBandCounts.borderline, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.frequencyBandCounts.poor, 1);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.missingCommonness, 0);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.learnerValueBucketCounts.raw_audit_low_fit, 1);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.auditOnlyRowsBeforeEditorialFilter, 1);
+    assert.equal(rowsByKey.has("野|の"), false);
     assert.equal(rowsByKey.get("本屋|ほんや").frequencyRankSource, "tubelex-ja-frequency");
     assert.equal(rowsByKey.get("本屋|ほんや").frequencyBand, "good");
     assert.equal(rowsByKey.get("本屋|ほんや").frequencyMatchStatus, "exact_written");
-    assert.equal(rowsByKey.get("野|の").frequencyBand, "poor");
-    assert.equal(rowsByKey.get("野|の").frequencyMatchStatus, "ambiguous_written");
     const mixedJmdictAndTubelexRow = rowsByKey.get("山川|さんせん");
     const tubelexEvidence = mixedJmdictAndTubelexRow.frequencyEvidence.sources.filter(
         (evidence) => evidence.source === "tubelex-ja-frequency"
@@ -1303,6 +1420,17 @@ test("dictionary common pool can use TubeLex support without making it level tru
     assert.match(formatWordCommonExpansionSelectorReport(report), /frequency support tubelex-ja-frequency/);
     assert.match(formatWordCommonExpansionSelectorReport(report), /frequency evidence: tubelex-ja-frequency; band good; match exact_written/);
     assert.match(formatWordCommonExpansionSelectorReport(report), /Discovery yield:/);
+
+    const rawManifest = JSON.parse(JSON.stringify(manifest));
+    rawManifest.sources[DICTIONARY_COMMON_POOL_SOURCE_ID].commonPool.qualityMode = "raw";
+    const rawReport = buildWordCommonExpansionSelectorReport({
+        ...selectorInputs,
+        manifest: rawManifest,
+    });
+    const rawRowsByKey = new Map(rawReport.levelReports[0].rows.map((row) => [row.key, row]));
+    assert.equal(rawRowsByKey.get("野|の").frequencyBand, "poor");
+    assert.equal(rawRowsByKey.get("野|の").frequencyMatchStatus, "ambiguous_written");
+    assert.equal(rawRowsByKey.get("野|の").learnerValueBucket, "raw_audit_low_fit");
 });
 
 test("dictionary common pool editorial mode caps review queue without penalizing outside support", () => {
@@ -1401,7 +1529,7 @@ test("dictionary common pool editorial mode caps review queue without penalizing
     assert.deepEqual(editorialKeys, ["本棚|ほんだな", "本社|ほんしゃ", "山川|さんせん"]);
     assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.eligibleRowsBeforeEditorialFilter, 5);
     assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.editorialQueueRows, 3);
-    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 2);
+    assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 1);
     assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.outsideJlptSupportRows, 1);
     assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.outsideJlptSupportRowsInQueue, 1);
     assert.equal(editorialLevel.sourceUniverse.commonPoolSummary.harderSupportKanjiRows, 2);
@@ -1512,7 +1640,7 @@ test("dictionary common pool shortlist uses transparent learner utility before t
     assert.deepEqual(selectedKeys, ["本店|ほんてん", "山川|さんせん"]);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.eligibleRowsBeforeEditorialFilter, 4);
     assert.equal(levelReport.sourceUniverse.commonPoolSummary.editorialQueueRows, 2);
-    assert.equal(levelReport.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 2);
+    assert.equal(levelReport.sourceUniverse.commonPoolSummary.deprioritizedByEditorialQueueLimit, 1);
     assert.equal(levelReport.summary.learnerUtility.scoredRows, 2);
     assert.equal(levelReport.rows[0].learnerUtility.policy, "review_ordering_signal_not_card_approval");
     assert.equal(levelReport.rows[0].learnerUtility.components.everydayUsefulness.reason, "highest JMdict commonness tier (100)");

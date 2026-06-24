@@ -19,6 +19,7 @@ const {
     snapshotMemoryUsage,
     summarizeMemorySamples,
 } = require("../src/utils/memoryUsage");
+const { summarizeReportShape } = require("../src/utils/reportSummary");
 
 const DEFAULT_BUILD_BUDGET = Object.freeze({
     totalMs: 5000,
@@ -45,6 +46,8 @@ function parseArgs(argv) {
         warmup: true,
         coldApkgCache: false,
         json: false,
+        summary: false,
+        keysOnly: false,
         repeat: 1,
         budget: null,
         budgetTotalMs: null,
@@ -57,6 +60,10 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--summary") {
+            options.summary = true;
+        } else if (arg === "--keys-only") {
+            options.keysOnly = true;
         } else if (arg === "--no-warmup") {
             options.warmup = false;
         } else if (arg === "--cold-apkg-cache") {
@@ -89,6 +96,45 @@ function parseArgs(argv) {
     }
 
     return options;
+}
+
+function summarizeBenchmarkRun(run = null) {
+    if (!run) {
+        return null;
+    }
+    return {
+        outDir: run.outDir,
+        durationMs: run.durationMs,
+        doctorReady: run.doctorReady,
+        exports: run.exports || [],
+        package: {
+            mediaAssetCount: run.package?.mediaAssetCount || 0,
+            exportCount: run.package?.exportCount || 0,
+            ankiPackageSkipped: Boolean(run.package?.ankiPackageSkipped),
+            cacheHit: run.package?.integrityChecks?.cacheHit ?? run.package?.ankiPackageTimingsMs?.cacheHit ?? null,
+            timingsMs: run.package?.timingsMs || null,
+            ankiPackageTimingsMs: run.package?.ankiPackageTimingsMs || null,
+            pythonTimingsMs: run.package?.pythonTimingsMs || null,
+            pythonRuntime: run.package?.pythonRuntime || null,
+        },
+        timingsMs: run.timingsMs || {},
+        memory: run.memory || null,
+    };
+}
+
+function buildBuildBenchmarkSummary(result = {}) {
+    return {
+        configuration: result.configuration || {},
+        garbageCollection: result.garbageCollection || {},
+        warmup: summarizeBenchmarkRun(result.warmup),
+        measured: summarizeBenchmarkRun(result.measured),
+        measuredRuns: (result.measuredRuns || []).map(summarizeBenchmarkRun),
+        budget: result.budget || null,
+    };
+}
+
+function buildBuildBenchmarkKeysOnly(result = {}) {
+    return summarizeReportShape(result, { maxDepth: 3 });
 }
 
 function resolveRepeatCount(value) {
@@ -398,8 +444,16 @@ async function main() {
     result.measured = result.measuredRuns[result.measuredRuns.length - 1];
     result.budget = evaluateRepeatedBudget(result.measuredRuns, budget);
 
-    if (options.json) {
-        console.log(JSON.stringify(result, null, 2));
+    if (options.keysOnly) {
+        console.log(JSON.stringify(buildBuildBenchmarkKeysOnly(result), null, 2));
+        if (result.budget && !result.budget.passed) {
+            process.exitCode = 1;
+        }
+        return;
+    }
+
+    if (options.summary || options.json) {
+        console.log(JSON.stringify(options.summary ? buildBuildBenchmarkSummary(result) : result, null, 2));
         if (result.budget && !result.budget.passed) {
             process.exitCode = 1;
         }
@@ -438,6 +492,8 @@ module.exports = {
     DEFAULT_BUILD_BUDGET,
     evaluateBudget,
     evaluateRepeatedBudget,
+    buildBuildBenchmarkKeysOnly,
+    buildBuildBenchmarkSummary,
     formatBudgetResult,
     formatRunMemory,
     cleanApkgCacheDir,

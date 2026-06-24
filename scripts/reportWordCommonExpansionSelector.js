@@ -27,6 +27,7 @@ const {
     parseCsvOption,
     parseNumericOption,
 } = require("../src/utils/cliArgs");
+const { summarizeReportShape } = require("../src/utils/reportSummary");
 const {
     DEFAULT_WORD_SOURCE_MANIFEST,
     loadSharedInputs,
@@ -38,6 +39,8 @@ const { buildWordExpansionSignalReport } = require("./reportWordExpansionSignals
 function parseArgs(argv) {
     const options = {
         json: false,
+        summary: false,
+        keysOnly: false,
         levels: [5, 4, 3, 2, 1],
         limit: 40,
         manifest: DEFAULT_WORD_SOURCE_MANIFEST,
@@ -56,6 +59,10 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--summary") {
+            options.summary = true;
+        } else if (arg === "--keys-only") {
+            options.keysOnly = true;
         } else if (arg === "--strict") {
             options.strict = true;
         } else if (arg.startsWith("--level=")) {
@@ -98,6 +105,49 @@ function parseArgs(argv) {
     }
 
     return options;
+}
+
+function buildWordCommonExpansionSelectorSummary(report = {}) {
+    return {
+        levels: report.levels || [],
+        routingSupportLevels: report.routingSupportLevels || [],
+        configuredSourceOnly: report.configuredSourceOnly === true,
+        placementMode: report.placementMode || "",
+        summary: report.summary || {},
+        blockerCount: (report.blockers || []).length,
+        blockers: report.blockers || [],
+        levelReports: (report.levelReports || []).map(summarizeSelectorLevelReport),
+    };
+}
+
+function summarizeSelectorLevelReport(levelReport = {}) {
+    const sourceUniverse = levelReport.sourceUniverse || {};
+    return {
+        level: levelReport.level,
+        levelLabel: levelReport.levelLabel,
+        rowCount: (levelReport.rows || []).length,
+        shownRowCount: (levelReport.shownRows || []).length,
+        selectedRows: levelReport.summary?.selectedRows || 0,
+        sourceUniverse: {
+            sourceLaneLabel: sourceUniverse.sourceLaneLabel,
+            sourcePoolLabel: sourceUniverse.sourcePoolLabel,
+            levelClaimStatus: sourceUniverse.levelClaimStatus,
+            levelClaimLabel: sourceUniverse.levelClaimLabel,
+            configuredSourceOnly: sourceUniverse.configuredSourceOnly === true,
+            rawRowCount: sourceUniverse.rawRowCount || 0,
+            commonPoolSummary: sourceUniverse.commonPoolSummary || null,
+            warning: sourceUniverse.warning || "",
+        },
+        commonWordQueue: levelReport.commonWordQueue || null,
+        fallbackSourceGate: levelReport.fallbackSourceGate || null,
+        expansionWorkOrder: levelReport.expansionWorkOrder || null,
+        routedMoveCandidateSummary: levelReport.routedMoveCandidateSummary || null,
+        summary: levelReport.summary || {},
+    };
+}
+
+function buildWordCommonExpansionSelectorKeysOnly(report = {}) {
+    return summarizeReportShape(report, { maxDepth: 3 });
 }
 
 function validateLevels(levels = []) {
@@ -401,8 +451,10 @@ async function main() {
         ...sharedInputs,
     });
 
-    if (options.json) {
-        process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+    if (options.keysOnly) {
+        process.stdout.write(`${JSON.stringify(buildWordCommonExpansionSelectorKeysOnly(report), null, 2)}\n`);
+    } else if (options.summary || options.json) {
+        process.stdout.write(`${JSON.stringify(options.summary ? buildWordCommonExpansionSelectorSummary(report) : report, null, 2)}\n`);
     } else {
         process.stdout.write(formatWordCommonExpansionSelectorReport(report));
     }
@@ -421,6 +473,8 @@ if (require.main === module) {
 
 module.exports = {
     DEFAULT_WORD_SOURCE_MANIFEST,
+    buildWordCommonExpansionSelectorKeysOnly,
+    buildWordCommonExpansionSelectorSummary,
     buildDictionaryCommonPoolManifestSource,
     buildManifestSourceFromEvidence,
     buildSelectorManifestForSource,

@@ -22,6 +22,7 @@ const {
     snapshotMemoryUsage,
     summarizeMemorySamples,
 } = require("../src/utils/memoryUsage");
+const { summarizeReportShape } = require("../src/utils/reportSummary");
 const { buildReports } = require("./reportJlptKanjiSourceInputs");
 const {
     DEFAULT_CONFIG,
@@ -48,6 +49,8 @@ function parseArgs(argv) {
         limit: 25,
         fullRematerialize: false,
         json: false,
+        summary: false,
+        keysOnly: false,
         budget: null,
         budgetEvidenceLoadMs: null,
         budgetPreflightMs: null,
@@ -60,6 +63,10 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--summary") {
+            options.summary = true;
+        } else if (arg === "--keys-only") {
+            options.keysOnly = true;
         } else if (arg === "--full-rematerialize") {
             options.fullRematerialize = true;
         } else if (arg.startsWith("--config=")) {
@@ -92,6 +99,61 @@ function parseArgs(argv) {
     }
 
     return options;
+}
+
+function buildJlptKanjiSourceEvidenceCostSummary(report = {}) {
+    return {
+        sourceId: report.sourceId,
+        repeat: report.repeat,
+        limit: report.limit,
+        readOnly: report.readOnly === true,
+        noDeckMutation: report.noDeckMutation === true,
+        paths: report.paths || {},
+        files: {
+            evidence: report.files?.evidence || null,
+            assignmentFiles: {
+                count: report.files?.assignmentFiles?.count || 0,
+                byteSize: report.files?.assignmentFiles?.byteSize || 0,
+                lineCount: report.files?.assignmentFiles?.lineCount || 0,
+                assignmentCount: report.files?.assignmentFiles?.assignmentCount || 0,
+                evidenceRecordCount: report.files?.assignmentFiles?.evidenceRecordCount || 0,
+                evidenceRecordReferenceCount: report.files?.assignmentFiles?.evidenceRecordReferenceCount || 0,
+            },
+            sourceInputs: report.files?.sourceInputs || null,
+            contract: report.files?.contract || null,
+            sourceWorksheet: report.files?.sourceWorksheet || null,
+        },
+        evidence: report.evidence || null,
+        selectedSource: report.selectedSource || null,
+        memory: report.memory || null,
+        timings: {
+            evidenceLoad: summarizeMeasuredOperation(report.timings?.evidenceLoad),
+            preflight: summarizeMeasuredOperation(report.timings?.preflight),
+            importDryRun: summarizeMeasuredOperation(report.timings?.importDryRun),
+            serializedEvidence: summarizeMeasuredOperation(report.timings?.serializedEvidence),
+            sourceAudit: summarizeMeasuredOperation(report.timings?.sourceAudit),
+        },
+        budget: report.budget || null,
+    };
+}
+
+function summarizeMeasuredOperation(entry = null) {
+    if (!entry) {
+        return null;
+    }
+    return {
+        label: entry.label,
+        repeat: entry.repeat,
+        averageMs: entry.averageMs,
+        minMs: entry.minMs,
+        maxMs: entry.maxMs,
+        memory: entry.memory || null,
+        lastResult: entry.lastResult,
+    };
+}
+
+function buildJlptKanjiSourceEvidenceCostKeysOnly(report = {}) {
+    return summarizeReportShape(report, { maxDepth: 3 });
 }
 
 function normalizeRepeat(value) {
@@ -571,8 +633,16 @@ function main(argv = process.argv.slice(2)) {
     const report = buildJlptKanjiSourceEvidenceCostReport(options);
     report.budget = evaluateBudget(report, budget);
 
-    if (options.json) {
-        process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+    if (options.keysOnly) {
+        process.stdout.write(`${JSON.stringify(buildJlptKanjiSourceEvidenceCostKeysOnly(report), null, 2)}\n`);
+        if (report.budget && !report.budget.passed) {
+            throw new Error("Source-evidence benchmark exceeded the configured budget.");
+        }
+        return;
+    }
+
+    if (options.summary || options.json) {
+        process.stdout.write(`${JSON.stringify(options.summary ? buildJlptKanjiSourceEvidenceCostSummary(report) : report, null, 2)}\n`);
         if (report.budget && !report.budget.passed) {
             throw new Error("Source-evidence benchmark exceeded the configured budget.");
         }
@@ -599,7 +669,9 @@ module.exports = {
     DEFAULT_SOURCE_EVIDENCE_BUDGET,
     buildAssignmentFileStats,
     buildFileStats,
+    buildJlptKanjiSourceEvidenceCostKeysOnly,
     buildJlptKanjiSourceEvidenceCostReport,
+    buildJlptKanjiSourceEvidenceCostSummary,
     countPhysicalLines,
     formatDuration,
     formatAssignmentFileStats,

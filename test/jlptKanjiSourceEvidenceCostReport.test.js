@@ -10,7 +10,9 @@ const {
     DEFAULT_EVIDENCE,
     DEFAULT_SOURCE_EVIDENCE_BUDGET,
     buildAssignmentFileStats,
+    buildJlptKanjiSourceEvidenceCostKeysOnly,
     buildJlptKanjiSourceEvidenceCostReport,
+    buildJlptKanjiSourceEvidenceCostSummary,
     countPhysicalLines,
     diffMemoryUsage,
     evaluateBudget,
@@ -49,6 +51,8 @@ test("source evidence cost report parses explicit benchmark options", () => {
         "--budget=default",
         "--budget-source-audit-ms=1234",
         "--json",
+        "--summary",
+        "--keys-only",
     ]);
 
     assert.equal(options.source, "shin_kanzen_master_kanji");
@@ -58,6 +62,8 @@ test("source evidence cost report parses explicit benchmark options", () => {
     assert.equal(options.budget, "default");
     assert.equal(options.budgetSourceAuditMs, 1234);
     assert.equal(options.json, true);
+    assert.equal(options.summary, true);
+    assert.equal(options.keysOnly, true);
 });
 
 test("source evidence cost report requires an explicit source", () => {
@@ -398,6 +404,48 @@ test("source evidence cost report formats read-only no-mutation scope", () => {
     assert.match(text, /Observed process memory snapshots/);
     assert.match(text, /evidence manifest load/);
     assert.match(text, /Source-evidence benchmark budget: pass/);
+});
+
+test("source evidence cost report compact summary keeps accounting without assignment file maps", () => {
+    const report = {
+        sourceId: "fixture_source",
+        repeat: 1,
+        limit: 10,
+        readOnly: true,
+        noDeckMutation: true,
+        paths: { evidence: "templates/evidence.json" },
+        files: {
+            evidence: { byteSize: 100 },
+            assignmentFiles: {
+                count: 2,
+                byteSize: 200,
+                lineCount: 20,
+                assignmentCount: 10,
+                evidenceRecordCount: 4,
+                evidenceRecordReferenceCount: 8,
+                filesBySource: {
+                    source_a: { byteSize: 100 },
+                },
+            },
+            sourceInputs: { byteSize: 10 },
+            contract: { byteSize: 20 },
+            sourceWorksheet: { byteSize: 30 },
+        },
+        evidence: { assignmentCount: 10 },
+        selectedSource: { assignmentCount: 4 },
+        memory: { unit: "bytes" },
+        timings: {
+            evidenceLoad: { label: "load", repeat: 1, averageMs: 1, minMs: 1, maxMs: 1, memory: {}, lastResult: { assignmentCount: 10 } },
+        },
+        budget: { passed: true, failures: [] },
+    };
+    const summary = buildJlptKanjiSourceEvidenceCostSummary(report);
+    const keys = buildJlptKanjiSourceEvidenceCostKeysOnly(report);
+
+    assert.equal(summary.files.assignmentFiles.assignmentCount, 10);
+    assert.equal(Object.hasOwn(summary.files.assignmentFiles, "filesBySource"), false);
+    assert.equal(summary.timings.evidenceLoad.lastResult.assignmentCount, 10);
+    assert.equal(keys.children.files.children.assignmentFiles.children.filesBySource.type, "object");
 });
 
 test("source evidence cost report counts physical lines", () => {

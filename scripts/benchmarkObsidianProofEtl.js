@@ -28,6 +28,7 @@ const {
     snapshotMemoryUsage,
     summarizeMemorySamples,
 } = require("../src/utils/memoryUsage");
+const { summarizeReportShape } = require("../src/utils/reportSummary");
 
 const DEFAULT_OBSIDIAN_PROOF_ETL_BENCHMARK_DIR = path.join(
     "out",
@@ -44,6 +45,8 @@ const DEFAULT_OBSIDIAN_PROOF_ETL_BUDGET = Object.freeze({
 function parseArgs(argv) {
     const options = {
         json: false,
+        summary: false,
+        keysOnly: false,
         repeat: 1,
         ledgerDir: undefined,
         outputDirBase: undefined,
@@ -59,6 +62,10 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg === "--json") {
             options.json = true;
+        } else if (arg === "--summary") {
+            options.summary = true;
+        } else if (arg === "--keys-only") {
+            options.keysOnly = true;
         } else if (arg.startsWith("--repeat=")) {
             options.repeat = parseNumericOption(arg, "repeat");
         } else if (arg.startsWith("--ledger-dir=")) {
@@ -85,6 +92,72 @@ function parseArgs(argv) {
     }
 
     return options;
+}
+
+function buildObsidianProofEtlBenchmarkSummary(report = {}) {
+    const validation = report.stages?.validation || {};
+    const compatibility = report.stages?.compatibilityView || {};
+    const sqlite = report.stages?.sqliteMirror || {};
+    return {
+        passed: report.passed === true,
+        configuration: report.configuration || {},
+        readOnlyCanonicalInputs: report.readOnlyCanonicalInputs === true,
+        generatedArtifactsOnly: report.generatedArtifactsOnly === true,
+        memory: report.memory || null,
+        timings: report.timings ? {
+            total: report.timings.total,
+            validation: {
+                label: report.timings.validation?.label,
+                repeat: report.timings.validation?.repeat,
+                averageMs: report.timings.validation?.averageMs,
+                minMs: report.timings.validation?.minMs,
+                maxMs: report.timings.validation?.maxMs,
+                memory: report.timings.validation?.memory,
+            },
+            compatibilityView: {
+                label: report.timings.compatibilityView?.label,
+                repeat: report.timings.compatibilityView?.repeat,
+                averageMs: report.timings.compatibilityView?.averageMs,
+                minMs: report.timings.compatibilityView?.minMs,
+                maxMs: report.timings.compatibilityView?.maxMs,
+                memory: report.timings.compatibilityView?.memory,
+            },
+            sqliteMirror: {
+                label: report.timings.sqliteMirror?.label,
+                repeat: report.timings.sqliteMirror?.repeat,
+                averageMs: report.timings.sqliteMirror?.averageMs,
+                minMs: report.timings.sqliteMirror?.minMs,
+                maxMs: report.timings.sqliteMirror?.maxMs,
+                memory: report.timings.sqliteMirror?.memory,
+            },
+        } : null,
+        stageCounts: {
+            validation: {
+                passed: validation.passed === true,
+                proofEvents: validation.proofEvents || 0,
+                files: (validation.files || []).length,
+                failures: (validation.failures || []).length,
+            },
+            compatibilityView: {
+                passed: compatibility.passed === true,
+                ledgerProofEvents: compatibility.ledgerProofEvents || 0,
+                reviewSets: (compatibility.reviewSets || []).length,
+                failures: (compatibility.failures || []).length,
+            },
+            sqliteMirror: {
+                passed: sqlite.passed === true,
+                proofEvents: sqlite.proofEvents || 0,
+                evidenceChecks: sqlite.evidenceChecks || 0,
+                failures: (sqlite.failures || []).length,
+            },
+        },
+        budget: report.budget || null,
+        failureCount: (report.failures || []).length,
+    };
+}
+
+function buildObsidianProofEtlBenchmarkKeysOnly(report = {}) {
+    return summarizeReportShape(report, { maxDepth: 3 });
 }
 
 function toPosixPath(value) {
@@ -475,8 +548,10 @@ function main(argv = process.argv.slice(2)) {
     assertNoUnknownArgs("bench:obsidian-proof-etl", options.unknownArgs);
     const report = buildObsidianProofEtlBenchmarkReport(options);
 
-    if (options.json) {
-        process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+    if (options.keysOnly) {
+        process.stdout.write(`${JSON.stringify(buildObsidianProofEtlBenchmarkKeysOnly(report), null, 2)}\n`);
+    } else if (options.summary || options.json) {
+        process.stdout.write(`${JSON.stringify(options.summary ? buildObsidianProofEtlBenchmarkSummary(report) : report, null, 2)}\n`);
     } else {
         process.stdout.write(formatObsidianProofEtlBenchmarkReport(report));
     }
@@ -496,7 +571,9 @@ if (require.main === module) {
 module.exports = {
     DEFAULT_OBSIDIAN_PROOF_ETL_BENCHMARK_DIR,
     DEFAULT_OBSIDIAN_PROOF_ETL_BUDGET,
+    buildObsidianProofEtlBenchmarkKeysOnly,
     buildObsidianProofEtlBenchmarkReport,
+    buildObsidianProofEtlBenchmarkSummary,
     cleanBenchmarkOutputRoot,
     diffMemoryUsage,
     evaluateBudget,

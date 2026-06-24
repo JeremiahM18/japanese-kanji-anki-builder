@@ -26,6 +26,8 @@ const {
     formatWordCommonExpansionSelectorReport,
 } = require("../src/services/wordCommonExpansionSelectorService");
 const {
+    buildWordCommonExpansionSelectorKeysOnly,
+    buildWordCommonExpansionSelectorSummary,
     buildSelectorManifestForSource,
     normalizeSelectorSourceId,
     parseArgs,
@@ -348,6 +350,14 @@ test("buildWordCommonExpansionSelectorReport classifies governed common-word sou
     assert.match(formatted, /Deck target progress/);
     assert.match(formatted, /\| N5 \| 1 \| 800 \| 799 \| below target floor by 799 \| useful minimum, not a hard cap or quota \|/);
     assert.match(formatted, /ready_for_editorial_review/);
+
+    const summary = buildWordCommonExpansionSelectorSummary(report);
+    const keys = buildWordCommonExpansionSelectorKeysOnly(report);
+    assert.equal(summary.levelReports[0].rowCount, 10);
+    assert.equal(summary.levelReports[0].shownRowCount, report.levelReports[0].shownRows.length);
+    assert.equal(summary.levelReports[0].sourceUniverse.levelClaimLabel, SOURCE_LEVEL_CLAIM_LABEL);
+    assert.equal(Object.hasOwn(summary.levelReports[0], "rows"), false);
+    assert.equal(keys.children.levelReports.type, "array");
 });
 
 test("word expansion target progress counts unique governed words without changing queue gates", () => {
@@ -715,9 +725,11 @@ test("extra expansion work order opens dictionary common pool after selected ext
 });
 
 test("source override manifest marks selected reviewed source as EXTRA", () => {
-    const parsed = parseArgs(["--levels=4", "--source=tanos-n4-vocab", "--strict"]);
+    const parsed = parseArgs(["--levels=4", "--source=tanos-n4-vocab", "--strict", "--summary", "--keys-only"]);
     assert.deepEqual(parsed.levels, [4]);
     assert.equal(parsed.source, "tanos-n4-vocab");
+    assert.equal(parsed.summary, true);
+    assert.equal(parsed.keysOnly, true);
 
     const manifest = {
         sources: {

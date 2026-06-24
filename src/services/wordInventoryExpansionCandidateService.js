@@ -222,6 +222,25 @@ function normalizeCandidateSourceRow(row, { sourceLabel = "external" } = {}) {
         frequencyRank: Number.isInteger(frequencyRank) ? frequencyRank : null,
         key: buildWordStudyEntryKey({ written, reading }),
     };
+    const preservedFields = {};
+    for (const field of [
+        "learnerValueBucket",
+        "learnerValueBucketLabel",
+        "learnerValueReviewable",
+        "learnerValueAuditOnly",
+        "learnerValueFamilyKey",
+        "learnerValueFamilyType",
+        "learnerValueFamilyLabel",
+        "learnerValueFamilyRank",
+        "learnerValueFamilyCap",
+        "learnerValueReasons",
+        "commonPoolLearnerFamily",
+    ]) {
+        if (row?.[field] !== undefined) {
+            preservedFields[field] = row[field];
+        }
+    }
+    Object.assign(baseRow, preservedFields);
 
     if (!frequencyEvidence && !resolvedFrequencyRankSource) {
         return baseRow;

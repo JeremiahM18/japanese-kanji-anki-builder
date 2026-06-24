@@ -32,6 +32,50 @@ const COMMON_POOL_QUALITY_MODE_EDITORIAL = "editorial";
 const COMMON_POOL_QUALITY_MODE_RAW = "raw";
 const DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID = "tubelex-ja-frequency";
 const FREQUENCY_EVIDENCE_BANDS = ["strong", "good", "borderline", "poor", "missing"];
+const COMMON_POOL_LEARNER_VALUE_BUCKETS = [
+    "core_candidate",
+    "family_representative",
+    "support_label_candidate",
+    "same_written_ambiguity",
+    "redundant_family_member",
+    "domain_narrow",
+    "raw_audit_low_fit",
+];
+const COMMON_POOL_LEARNER_VALUE_BUCKET_LABELS = Object.freeze({
+    core_candidate: "Core candidate",
+    family_representative: "Family representative",
+    support_label_candidate: "Support-label candidate",
+    same_written_ambiguity: "Same-written ambiguity",
+    redundant_family_member: "Redundant family member",
+    domain_narrow: "Domain narrow",
+    raw_audit_low_fit: "Raw audit low-fit",
+});
+const COMMON_POOL_LEARNER_VALUE_BUCKET_PRIORITY = Object.freeze({
+    core_candidate: 0,
+    support_label_candidate: 1,
+    family_representative: 1,
+    same_written_ambiguity: 2,
+    redundant_family_member: 3,
+    domain_narrow: 4,
+    raw_audit_low_fit: 5,
+});
+const COMMON_POOL_AUDIT_ONLY_BUCKETS = new Set([
+    "redundant_family_member",
+    "domain_narrow",
+    "raw_audit_low_fit",
+]);
+const COMMON_POOL_FAMILY_DEFAULT_REVIEW_CAP = 8;
+const COMMON_POOL_FAMILY_REVIEW_CAPS = Object.freeze({
+    time_calendar: 18,
+    person_social: 14,
+    place_travel: 14,
+    learning_language: 12,
+    body_health: 12,
+    food_daily_life: 12,
+    number_quantity: 10,
+    work_business: 8,
+    target_kanji_family: 8,
+});
 const WORD_EXPANSION_TARGET_MINIMUMS = Object.freeze({
     5: 800,
     4: 1000,
@@ -63,12 +107,20 @@ const COMMON_POOL_PRIORITY_MEANING_RE = /\b(?:grand shrine|famous shrine|lunar c
 const LEARNER_UTILITY_EVERYDAY_DOMAIN_RE = /\b(?:home|house|family|friend|school|class|lesson|teacher|student|work|job|office|shop|store|bookstore|bookshelf|money|bank|food|meal|drink|water|weather|rain|snow|health|body|doctor|hospital|train|station|bus|car|street|road|city|town|room|book|clothes|phone|letter|language|time|day|week|month|year|morning|night|travel|trip)\b/iu;
 const LEARNER_UTILITY_ABSTRACT_DOMAIN_RE = /\b(?:analysis|analytical|parse|parsing|theory|policy|system|principle|ideology|philosophy|economics|politics|administration|legal|statistical|technical|specialized)\b/iu;
 const LEARNER_UTILITY_SPECIALIZED_OR_PROPER_RE = /\b(?:archaism|archaic|obsolete|vulgar|obscene|derogatory|Buddhist term|physics|chemistry|botany|zoology|astronomy|mathematics|literature|prefecture|ministry|bureau|agency|grand shrine|famous shrine|solar term|lunar calendar|proofreading|first proof|railway line|district|province|clan|company|university|one-off payment|lump sum)\b/iu;
+const COMMON_POOL_TIME_FAMILY_RE = /\b(?:time|day|date|week|month|year|morning|afternoon|evening|night|calendar|season|holiday|weekday|weekend|today|tomorrow|yesterday|daily|weekly|monthly|yearly)\b/iu;
+const COMMON_POOL_PERSON_FAMILY_RE = /\b(?:person|people|man|woman|child|adult|family|friend|teacher|student|boy|girl|parent|mother|father|elder|younger)\b/iu;
+const COMMON_POOL_PLACE_FAMILY_RE = /\b(?:place|home|house|room|school|shop|store|office|station|road|street|city|town|village|country|hospital|bank|library|restaurant|train|bus|travel|trip)\b/iu;
+const COMMON_POOL_LEARNING_FAMILY_RE = /\b(?:language|word|letter|book|dictionary|reading|writing|study|lesson|class|question|answer|sentence|grammar)\b/iu;
+const COMMON_POOL_BODY_HEALTH_FAMILY_RE = /\b(?:body|health|doctor|hospital|medicine|illness|sick|pain|eye|ear|hand|foot|head|mouth|heart)\b/iu;
+const COMMON_POOL_FOOD_DAILY_FAMILY_RE = /\b(?:food|meal|drink|water|tea|rice|bread|breakfast|lunch|dinner|kitchen|clothes|phone|money|weather|rain|snow)\b/iu;
+const COMMON_POOL_WORK_BUSINESS_FAMILY_RE = /\b(?:work|job|office|company|business|employee|meeting|document|bank|money|payment|salary|contract)\b/iu;
 const DIGIT_WRITTEN_PATTERN = /[0-9０-９]/u;
 const LATIN_WRITTEN_PATTERN = /[A-Za-zＡ-Ｚａ-ｚ]/u;
 const HAN_ANY_PATTERN = /\p{Script=Han}/u;
 const KANJI_NUMERIC_EXPRESSION_WRITTEN_PATTERN = /^[一二三四五六七八九十百千万億兆〇零壱弐参年月日円本冊枚台匹人個件点度回階杯校時分秒週番号]+$/u;
 const CAPITALIZED_PROPER_PHRASE_PATTERN = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b/u;
 const CAPITALIZED_SINGLE_PROPER_HEAD_PATTERN = /^[A-Z][a-z]+(?:\s*\(|\s*$)/u;
+const CAPITALIZED_CALENDAR_GLOSS_PATTERN = /^(?:January|February|March|April|May|June|July|August|September|October|November|December|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)(?:\b|;|,)/u;
 const SUPPORT_LABEL_LEARNER_FIT_RE = /^(?:harder support kanji|outside-JLPT kanji)\b/u;
 const LEARNER_UTILITY_BANDS = [
     { min: 80, label: "strong_review_candidate" },
@@ -192,14 +244,25 @@ function summarizeSelectorRows(rows = []) {
     const selectorStatusCounts = Object.fromEntries(SELECTOR_STATUSES.map((status) => [status, 0]));
     const learnerUtilityBandCounts = Object.fromEntries(LEARNER_UTILITY_BANDS.map((band) => [band.label, 0]));
     const frequencyBandCounts = Object.fromEntries(FREQUENCY_EVIDENCE_BANDS.map((band) => [band, 0]));
+    const learnerValueBucketCounts = Object.fromEntries(COMMON_POOL_LEARNER_VALUE_BUCKETS.map((bucket) => [bucket, 0]));
     const utilityScores = [];
     let reviewableQualityRows = 0;
     let readyQualityRows = 0;
+    let learnerValueReviewableRows = 0;
+    let learnerValueAuditOnlyRows = 0;
     for (const row of rows) {
         const status = SELECTOR_STATUSES.includes(row.selectorStatus) ? row.selectorStatus : "needs_triage";
         selectorStatusCounts[status] += 1;
         const frequencyBand = normalizeFrequencyEvidenceBand(row.frequencyBand || row.frequencyEvidence?.primary?.frequencyBand);
         frequencyBandCounts[frequencyBand] = (frequencyBandCounts[frequencyBand] || 0) + 1;
+        if (row.learnerValueBucket) {
+            learnerValueBucketCounts[row.learnerValueBucket] = (learnerValueBucketCounts[row.learnerValueBucket] || 0) + 1;
+        }
+        if (row.learnerValueReviewable === true) {
+            learnerValueReviewableRows += 1;
+        } else if (row.learnerValueAuditOnly === true) {
+            learnerValueAuditOnlyRows += 1;
+        }
         if (["strong", "good"].includes(frequencyBand) && ["ready_for_editorial_review", "needs_triage"].includes(status)) {
             reviewableQualityRows += 1;
         }
@@ -224,6 +287,12 @@ function summarizeSelectorRows(rows = []) {
             minScore: utilityScores.length > 0 ? Math.min(...utilityScores) : null,
             bandCounts: learnerUtilityBandCounts,
             policy: "review_ordering_signal_not_card_approval",
+        },
+        learnerValueBuckets: {
+            reviewableRows: learnerValueReviewableRows,
+            auditOnlyRows: learnerValueAuditOnlyRows,
+            bucketCounts: learnerValueBucketCounts,
+            policy: "review_buckets_do_not_shrink_raw_denominator",
         },
         discoveryYieldSummary: {
             windowRows: rows.length,
@@ -1233,11 +1302,13 @@ function isLearnerUtilityPenaltyReason(reason = "") {
 
 function hasLearnerUtilitySpecializedOrProperSignal(row = {}) {
     const meaning = String(row.meaning || "");
+    const capitalizedSingleProper = CAPITALIZED_SINGLE_PROPER_HEAD_PATTERN.test(meaning)
+        && !CAPITALIZED_CALENDAR_GLOSS_PATTERN.test(meaning);
     return (
         LEARNER_UTILITY_SPECIALIZED_OR_PROPER_RE.test(meaning)
         || COMMON_POOL_PRIORITY_MEANING_RE.test(meaning)
         || CAPITALIZED_PROPER_PHRASE_PATTERN.test(meaning)
-        || CAPITALIZED_SINGLE_PROPER_HEAD_PATTERN.test(meaning)
+        || capitalizedSingleProper
     );
 }
 
@@ -1906,6 +1977,16 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         supportLabelNeeds: buildSupportLabelNeeds({ kanjiLevels, targetLevel }),
         reviewReadiness,
         nextRequiredEvidence: agreementRow?.nextRequiredEvidence || [],
+        learnerValueBucket: expansionRow.learnerValueBucket || "",
+        learnerValueBucketLabel: expansionRow.learnerValueBucketLabel || "",
+        learnerValueReviewable: expansionRow.learnerValueReviewable,
+        learnerValueAuditOnly: expansionRow.learnerValueAuditOnly,
+        learnerValueFamilyKey: expansionRow.learnerValueFamilyKey || "",
+        learnerValueFamilyType: expansionRow.learnerValueFamilyType || "",
+        learnerValueFamilyLabel: expansionRow.learnerValueFamilyLabel || "",
+        learnerValueFamilyRank: expansionRow.learnerValueFamilyRank,
+        learnerValueFamilyCap: expansionRow.learnerValueFamilyCap,
+        learnerValueReasons: expansionRow.learnerValueReasons || [],
     };
     return {
         ...selectorRow,
@@ -1940,9 +2021,15 @@ function getDictionaryCommonPoolSourcePriority(row = {}) {
     return priority;
 }
 
+function getCommonPoolLearnerValueBucketPriority(row = {}) {
+    return COMMON_POOL_LEARNER_VALUE_BUCKET_PRIORITY[row.learnerValueBucket] ?? 99;
+}
+
 function compareDictionaryCommonPoolSourceRows(a = {}, b = {}) {
     return (
-        getLearnerUtilityComparableScore(b) - getLearnerUtilityComparableScore(a)
+        getCommonPoolLearnerValueBucketPriority(a) - getCommonPoolLearnerValueBucketPriority(b)
+        || Number(Boolean(a.learnerValueAuditOnly)) - Number(Boolean(b.learnerValueAuditOnly))
+        || getLearnerUtilityComparableScore(b) - getLearnerUtilityComparableScore(a)
         || getJmdictNfRank(a) - getJmdictNfRank(b)
         || getDictionaryCommonPoolSourcePriority(a) - getDictionaryCommonPoolSourcePriority(b)
         || getComparableFrequencyRank(a) - getComparableFrequencyRank(b)
@@ -1950,6 +2037,129 @@ function compareDictionaryCommonPoolSourceRows(a = {}, b = {}) {
         || String(a.written || "").localeCompare(String(b.written || ""), "ja")
         || String(a.reading || "").localeCompare(String(b.reading || ""), "ja")
     );
+}
+
+function formatTargetKanjiSignature(scope = {}) {
+    const targetKanji = (scope.targetKanji || [])
+        .map((entry) => (typeof entry === "string" ? entry : entry?.kanji))
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b, "ja"));
+    return targetKanji.length > 0 ? targetKanji.join("") : "no-target";
+}
+
+function getCommonPoolSemanticFamilyType(row = {}) {
+    const meaning = String(row.meaning || "");
+    if (COMMON_POOL_TIME_FAMILY_RE.test(meaning)) {
+        return "time_calendar";
+    }
+    if (COMMON_POOL_PERSON_FAMILY_RE.test(meaning)) {
+        return "person_social";
+    }
+    if (COMMON_POOL_PLACE_FAMILY_RE.test(meaning)) {
+        return "place_travel";
+    }
+    if (COMMON_POOL_LEARNING_FAMILY_RE.test(meaning)) {
+        return "learning_language";
+    }
+    if (COMMON_POOL_BODY_HEALTH_FAMILY_RE.test(meaning)) {
+        return "body_health";
+    }
+    if (COMMON_POOL_FOOD_DAILY_FAMILY_RE.test(meaning)) {
+        return "food_daily_life";
+    }
+    if (COMMON_POOL_WORK_BUSINESS_FAMILY_RE.test(meaning)) {
+        return "work_business";
+    }
+    if (hasCommonPoolNumericExpressionWrittenForm(row)) {
+        return "number_quantity";
+    }
+    return "target_kanji_family";
+}
+
+function buildCommonPoolLearnerFamily(row = {}, scope = {}) {
+    const type = getCommonPoolSemanticFamilyType(row);
+    const targetSignature = formatTargetKanjiSignature(scope);
+    return {
+        type,
+        targetSignature,
+        key: `${type}:${targetSignature}`,
+        label: `${type.replace(/_/gu, " ")} / ${targetSignature}`,
+        cap: COMMON_POOL_FAMILY_REVIEW_CAPS[type] || COMMON_POOL_FAMILY_DEFAULT_REVIEW_CAP,
+    };
+}
+
+function hasSupportLabelNeed(scope = {}) {
+    return (scope.harderKanji || []).length > 0 || (scope.outsideJlptKanji || []).length > 0;
+}
+
+function getFrequencyBandForRow(row = {}) {
+    return normalizeFrequencyEvidenceBand(row.frequencyBand || getPrimaryFrequencyEvidence(row)?.frequencyBand);
+}
+
+function isStrongCommonPoolFamilyException(row = {}) {
+    const rank = getComparableFrequencyRank(row);
+    const score = getLearnerUtilityComparableScore(row);
+    return (
+        rank <= 100
+        && score >= 80
+        && !hasLearnerUtilitySpecializedOrProperSignal(row)
+        && !hasCommonPoolNumericExpressionWrittenForm(row)
+        && (row.sameWrittenSourceConflicts || []).length === 0
+        && (row.sameWrittenConflicts || []).length === 0
+    );
+}
+
+function buildCommonPoolLearnerValueClassification(row = {}, {
+    familyRank = 1,
+    familyCap = COMMON_POOL_FAMILY_DEFAULT_REVIEW_CAP,
+    scope = {},
+} = {}) {
+    const score = getLearnerUtilityComparableScore(row);
+    const frequencyBand = getFrequencyBandForRow(row);
+    const sameWrittenSourceConflictCount = (row.sameWrittenSourceConflicts || []).length;
+    const sameWrittenContractConflictCount = (row.sameWrittenConflicts || []).length;
+    const supportLabelNeeded = hasSupportLabelNeed(scope);
+    const reasons = [];
+    let bucket;
+
+    if (
+        score < 50
+        || frequencyBand === "poor"
+        || frequencyBand === "missing"
+        || row.cleanIdentity === false
+    ) {
+        bucket = "raw_audit_low_fit";
+        reasons.push("low learner-utility, weak frequency, missing frequency, or identity risk keeps this row audit-only");
+    } else if (hasLearnerUtilitySpecializedOrProperSignal(row)) {
+        bucket = "domain_narrow";
+        reasons.push("specialized or proper-noun signal keeps this row audit-only by default");
+    } else if (familyRank > familyCap && !isStrongCommonPoolFamilyException(row)) {
+        bucket = "redundant_family_member";
+        reasons.push(`family rank ${familyRank} exceeds review cap ${familyCap}`);
+    } else if (sameWrittenSourceConflictCount > 0 || sameWrittenContractConflictCount > 0) {
+        bucket = "same_written_ambiguity";
+        reasons.push("same written form has competing readings or governed/source-pool alternatives");
+    } else if (supportLabelNeeded) {
+        bucket = "support_label_candidate";
+        reasons.push("useful candidate with harder or outside-JLPT support kanji label needs");
+    } else if (score >= 80) {
+        bucket = "core_candidate";
+        reasons.push("high learner utility with target-level kanji and no support-label or duplicate risk");
+    } else {
+        bucket = "family_representative";
+        reasons.push("reviewable representative for this target-kanji learner family");
+    }
+
+    const reviewable = !COMMON_POOL_AUDIT_ONLY_BUCKETS.has(bucket);
+    return {
+        learnerValueBucket: bucket,
+        learnerValueBucketLabel: COMMON_POOL_LEARNER_VALUE_BUCKET_LABELS[bucket] || bucket,
+        learnerValueReviewable: reviewable,
+        learnerValueAuditOnly: !reviewable,
+        learnerValueFamilyRank: familyRank,
+        learnerValueFamilyCap: familyCap,
+        learnerValueReasons: reasons,
+    };
 }
 
 function hasDigitWrittenForm(row = {}) {
@@ -2169,6 +2379,11 @@ function filterDictionaryCommonPoolRows({
         targetOnlyRows: 0,
         targetOnlyRowsInQueue: 0,
         outsideJlptSupportPolicy: "label_not_deprioritize",
+        learnerValueBucketCounts: Object.fromEntries(COMMON_POOL_LEARNER_VALUE_BUCKETS.map((bucket) => [bucket, 0])),
+        learnerValueBucketCountsInQueue: Object.fromEntries(COMMON_POOL_LEARNER_VALUE_BUCKETS.map((bucket) => [bucket, 0])),
+        reviewableRowsBeforeEditorialFilter: 0,
+        auditOnlyRowsBeforeEditorialFilter: 0,
+        auditOnlyRowsExcludedFromEditorialQueue: 0,
     };
 
     for (const row of normalizedRows) {
@@ -2230,6 +2445,7 @@ function filterDictionaryCommonPoolRows({
         rows.push({
             ...row,
             sameWrittenSourceConflicts,
+            commonPoolLearnerFamily: buildCommonPoolLearnerFamily(row, scope),
             learnerUtility: buildLearnerUtilityScore({
                 ...row,
                 sourcePool: SOURCE_POOL_DICTIONARY_COMMON,
@@ -2248,15 +2464,52 @@ function filterDictionaryCommonPoolRows({
         });
     }
 
-    const sortedRows = rows.sort(compareDictionaryCommonPoolSourceRows);
+    const prelimSortedRows = [...rows].sort(compareDictionaryCommonPoolSourceRows);
+    const familyRanks = new Map();
+    const rowsWithLearnerValueBuckets = prelimSortedRows.map((row) => {
+        const family = row.commonPoolLearnerFamily || buildCommonPoolLearnerFamily(row, classifyKanjiScope(row, { targetLevel, jlptLevelContract }));
+        const familyRank = (familyRanks.get(family.key) || 0) + 1;
+        familyRanks.set(family.key, familyRank);
+        const classification = buildCommonPoolLearnerValueClassification(row, {
+            familyRank,
+            familyCap: family.cap,
+            scope: classifyKanjiScope(row, { targetLevel, jlptLevelContract }),
+        });
+        filteredCounts.learnerValueBucketCounts[classification.learnerValueBucket] = (
+            filteredCounts.learnerValueBucketCounts[classification.learnerValueBucket] || 0
+        ) + 1;
+        if (classification.learnerValueReviewable) {
+            filteredCounts.reviewableRowsBeforeEditorialFilter += 1;
+        } else {
+            filteredCounts.auditOnlyRowsBeforeEditorialFilter += 1;
+        }
+        return {
+            ...row,
+            ...classification,
+            learnerValueFamilyKey: family.key,
+            learnerValueFamilyType: family.type,
+            learnerValueFamilyLabel: family.label,
+        };
+    });
+
+    const sortedRows = rowsWithLearnerValueBuckets.sort(compareDictionaryCommonPoolSourceRows);
+    const reviewableSortedRows = qualityMode === COMMON_POOL_QUALITY_MODE_RAW
+        ? sortedRows
+        : sortedRows.filter((row) => row.learnerValueReviewable !== false);
     const editorialRows = Number.isInteger(editorialQueueLimit)
-        ? sortedRows.slice(0, editorialQueueLimit)
-        : sortedRows;
+        ? reviewableSortedRows.slice(0, editorialQueueLimit)
+        : reviewableSortedRows;
     filteredCounts.eligibleRowsBeforeEditorialFilter = sortedRows.length;
     filteredCounts.editorialQueueRows = editorialRows.length;
-    filteredCounts.deprioritizedByEditorialQueueLimit = Math.max(0, sortedRows.length - editorialRows.length);
+    filteredCounts.deprioritizedByEditorialQueueLimit = Math.max(0, reviewableSortedRows.length - editorialRows.length);
+    filteredCounts.auditOnlyRowsExcludedFromEditorialQueue = qualityMode === COMMON_POOL_QUALITY_MODE_RAW
+        ? 0
+        : filteredCounts.auditOnlyRowsBeforeEditorialFilter;
     for (const row of editorialRows) {
         const scope = classifyKanjiScope(row, { targetLevel, jlptLevelContract });
+        filteredCounts.learnerValueBucketCountsInQueue[row.learnerValueBucket] = (
+            filteredCounts.learnerValueBucketCountsInQueue[row.learnerValueBucket] || 0
+        ) + 1;
         if (scope.outsideJlptKanji.length > 0) {
             filteredCounts.outsideJlptSupportRowsInQueue += 1;
         }
@@ -2652,6 +2905,12 @@ function formatSourceUniverse(sourceUniverse = {}) {
         parts.push(`pool mode ${pool.qualityMode || COMMON_POOL_QUALITY_MODE_EDITORIAL}`);
         parts.push(`pool eligible ${pool.eligibleRowsBeforeEditorialFilter ?? "-"}`);
         parts.push(`pool queue ${pool.editorialQueueRows ?? "-"}`);
+        if (Number.isInteger(pool.reviewableRowsBeforeEditorialFilter)) {
+            parts.push(`pool reviewable ${pool.reviewableRowsBeforeEditorialFilter}`);
+        }
+        if (Number.isInteger(pool.auditOnlyRowsBeforeEditorialFilter)) {
+            parts.push(`pool audit-only ${pool.auditOnlyRowsBeforeEditorialFilter}`);
+        }
         if (Number.isInteger(pool.deprioritizedByEditorialQueueLimit)) {
             parts.push(`pool deferred ${pool.deprioritizedByEditorialQueueLimit}`);
         }
@@ -2722,6 +2981,12 @@ function formatUtilityBandCounts(counts = {}) {
 function formatFrequencyBandCounts(counts = {}) {
     return FREQUENCY_EVIDENCE_BANDS
         .map((band) => `${band}=${counts[band] || 0}`)
+        .join("; ");
+}
+
+function formatLearnerValueBucketCounts(counts = {}) {
+    return COMMON_POOL_LEARNER_VALUE_BUCKETS
+        .map((bucket) => `${bucket}=${counts[bucket] || 0}`)
         .join("; ");
 }
 
@@ -2838,6 +3103,28 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             formatUtilityBandCounts(utility.bandCounts || {}),
             "ordering signal only, not card approval",
         ].join(" | ") + " |");
+    }
+
+    if ((report.levelReports || []).some((levelReport) => levelReport.summary.learnerValueBuckets?.reviewableRows > 0 || levelReport.sourceUniverse?.commonPoolSummary?.learnerValueBucketCounts)) {
+        lines.push(
+            "",
+            "Learner-value buckets:",
+            "| Level | Selected reviewable | Selected audit-only | Raw reviewable | Raw audit-only | Buckets | Policy |",
+            "| --- | ---: | ---: | ---: | ---: | --- | --- |"
+        );
+        for (const levelReport of report.levelReports || []) {
+            const selectedBuckets = levelReport.summary.learnerValueBuckets || {};
+            const commonPool = levelReport.sourceUniverse?.commonPoolSummary || {};
+            lines.push([
+                `| ${levelReport.levelLabel}`,
+                selectedBuckets.reviewableRows ?? 0,
+                selectedBuckets.auditOnlyRows ?? 0,
+                commonPool.reviewableRowsBeforeEditorialFilter ?? "-",
+                commonPool.auditOnlyRowsBeforeEditorialFilter ?? "-",
+                formatLearnerValueBucketCounts(commonPool.learnerValueBucketCounts || selectedBuckets.bucketCounts || {}),
+                "buckets guide review; raw denominator is not shrunk",
+            ].join(" | ") + " |");
+        }
     }
 
     lines.push(
@@ -2960,6 +3247,22 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
                 lines.push(`   frequency evidence: ${parts.join("; ")}`);
                 if (row.frequencyReason) {
                     lines.push(`   frequency reason: ${row.frequencyReason}`);
+                }
+            }
+            if (row.learnerValueBucket) {
+                const bucketParts = [
+                    row.learnerValueBucketLabel || row.learnerValueBucket,
+                    row.learnerValueReviewable === false ? "audit-only by default" : "reviewable",
+                ];
+                if (row.learnerValueFamilyLabel) {
+                    bucketParts.push(`family ${row.learnerValueFamilyLabel}`);
+                }
+                if (Number.isInteger(row.learnerValueFamilyRank) && Number.isInteger(row.learnerValueFamilyCap)) {
+                    bucketParts.push(`family rank ${row.learnerValueFamilyRank}/${row.learnerValueFamilyCap}`);
+                }
+                lines.push(`   learner-value bucket: ${bucketParts.join("; ")}`);
+                if ((row.learnerValueReasons || []).length > 0) {
+                    lines.push(`   learner-value reason: ${row.learnerValueReasons.join("; ")}`);
                 }
             }
             lines.push(`   learner utility: ${formatLearnerUtilityLine(row.learnerUtility)}`);

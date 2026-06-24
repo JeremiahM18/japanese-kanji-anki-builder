@@ -348,3 +348,36 @@ test("writeNlpReviewPacketArtifact writes artifacts accepted by the validator", 
     assert.equal(report.passed, true);
     assert.equal(report.counts.packets, 0);
 });
+
+test("writeNlpReviewPacketArtifact reuses unchanged JSON and Markdown artifacts", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-review-packets-"));
+    const outPath = path.join(dir, "packets.json");
+    const markdownOutPath = path.join(dir, "packets.md");
+    const commonOptions = {
+        outPath,
+        markdownOutPath,
+        buildSuggestionReportFn: () => ({ passed: true, errors: [] }),
+        buildTokenizationAuditReportFn: () => ({
+            passed: true,
+            errors: [],
+            artifacts: [],
+            signals: [],
+        }),
+        resolveSuggestionArtifactPathsFn: () => ({ artifactPaths: [], missingArtifactDir: true, artifactDir: dir }),
+    };
+
+    const first = writeNlpReviewPacketArtifact({
+        ...commonOptions,
+        now: () => new Date("2026-05-20T00:00:00.000Z"),
+    });
+    const second = writeNlpReviewPacketArtifact({
+        ...commonOptions,
+        now: () => new Date("2026-05-21T00:00:00.000Z"),
+    });
+
+    assert.equal(first.skipped, false);
+    assert.equal(second.skipped, true);
+    assert.equal(second.skipReason, "unchanged-inputs");
+    assert.equal(second.artifact.generatedAt, "2026-05-20T00:00:00.000Z");
+    assert.equal(fs.readFileSync(markdownOutPath, "utf8"), formatNlpReviewPacketMarkdown(second.artifact));
+});

@@ -30,6 +30,11 @@ const {
 } = require("./nlpSuggestionArtifactService");
 const { ensureDir } = require("../utils/fs");
 const { readJsonFile } = require("../utils/jsonFile");
+const {
+    buildReuseResult,
+    inputHashesMatch,
+    tryReadReusableArtifact,
+} = require("./nlpArtifactReuseService");
 
 const DEFAULT_LANE = "assistive-draft-proposal";
 const DEFAULT_CREATED_BY = "scripts/generateNlpDraftProposals.js";
@@ -306,6 +311,37 @@ function countProposals({ proposals, sourceSuggestionCount, sourcePacketCount })
     };
 }
 
+function draftProposalArtifactsMatch(actual = {}, expected = {}) {
+    return JSON.stringify(actual.generator?.modelIds || []) === JSON.stringify(expected.generator?.modelIds || [])
+        && actual.generator?.runId === expected.generator?.runId
+        && actual.generator?.manifestPath === expected.generator?.manifestPath
+        && inputHashesMatch(actual.generator?.inputHashes, expected.generator?.inputHashes)
+        && JSON.stringify(actual.scope) === JSON.stringify(expected.scope)
+        && JSON.stringify(actual.authority) === JSON.stringify(expected.authority)
+        && JSON.stringify(actual.counts) === JSON.stringify(expected.counts)
+        && JSON.stringify(actual.proposals) === JSON.stringify(expected.proposals);
+}
+
+function findReusableDraftProposalArtifact({ outPath, markdownOutPath = null, expectedArtifact }) {
+    const artifact = tryReadReusableArtifact(outPath, parseNlpDraftProposalArtifact);
+    if (!artifact) {
+        return null;
+    }
+    if (!draftProposalArtifactsMatch(artifact, expectedArtifact)) {
+        return null;
+    }
+    if (markdownOutPath) {
+        if (!fs.existsSync(markdownOutPath)) {
+            return null;
+        }
+        const expectedMarkdown = formatNlpDraftProposalMarkdown(artifact);
+        if (fs.readFileSync(markdownOutPath, "utf8") !== expectedMarkdown) {
+            return null;
+        }
+    }
+    return artifact;
+}
+
 function collectInputHashes({ suggestionArtifactPaths, reviewPacketArtifactPaths, manifestPath, workspaceRoot }) {
     const seen = new Set();
     return [...suggestionArtifactPaths, ...reviewPacketArtifactPaths, manifestPath]
@@ -504,17 +540,32 @@ function writeNlpDraftProposalArtifact({
     }
     const artifact = buildNlpDraftProposalArtifact(options);
     const resolvedOutPath = path.resolve(outPath);
+    const resolvedMarkdownPath = markdownOutPath ? path.resolve(markdownOutPath) : null;
+    const reusableArtifact = findReusableDraftProposalArtifact({
+        outPath: resolvedOutPath,
+        markdownOutPath: resolvedMarkdownPath,
+        expectedArtifact: artifact,
+    });
+    if (reusableArtifact) {
+        return {
+            ...buildReuseResult({
+                outPath: resolvedOutPath,
+                artifact: reusableArtifact,
+            }),
+            markdownOutPath: resolvedMarkdownPath,
+        };
+    }
     ensureDir(path.dirname(resolvedOutPath));
     fs.writeFileSync(resolvedOutPath, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
     if (markdownOutPath) {
-        const resolvedMarkdownPath = path.resolve(markdownOutPath);
         ensureDir(path.dirname(resolvedMarkdownPath));
         fs.writeFileSync(resolvedMarkdownPath, formatNlpDraftProposalMarkdown(artifact), "utf8");
     }
     return {
         outPath: resolvedOutPath,
-        markdownOutPath: markdownOutPath ? path.resolve(markdownOutPath) : null,
+        markdownOutPath: resolvedMarkdownPath,
         artifact,
+        skipped: false,
     };
 }
 
@@ -561,12 +612,13 @@ function formatNlpDraftProposalMarkdown(artifact = {}) {
     return `${lines.join("\n")}\n`;
 }
 
-function formatNlpDraftProposalSummary({ outPath, markdownOutPath, artifact }) {
+function formatNlpDraftProposalSummary({ outPath, markdownOutPath, artifact, skipped = false }) {
     return [
         "Japanese Kanji Builder NLP Draft Proposals",
         "",
         `Artifact: ${outPath}`,
         markdownOutPath ? `Markdown: ${markdownOutPath}` : null,
+        `Status: ${skipped ? "reused unchanged artifact" : "generated artifact"}`,
         `Scope: ${artifact.scope.levels.map((item) => `N${item}`).join(", ")} ${artifact.scope.deckKind}`,
         `Models: ${artifact.generator.modelIds.join(", ") || "none"}`,
         `Proposals: ${artifact.counts.proposals}`,

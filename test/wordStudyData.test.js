@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2283);
+    assert.equal(Object.keys(starterEntries).length, 2383);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 366,
+        5: 466,
     });
 });
 
@@ -7863,4 +7863,141 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.equal(starterEntries["小川|おがわ"].exampleSentence.japanese, "小川があります。");
     assert.equal(starterEntries["上下|じょうげ"].exampleSentence.japanese, "上下に動きます。");
     assert.match(starterEntries["元気|げんき"].notes, /N4 元 -> げん/);
+});
+
+test("tracked starter word data includes the ten N5 word v2 common-pool Silver batches", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "家電|かでん",
+        "空間|くうかん",
+        "終日|しゅうじつ",
+        "初日|しょにち",
+        "年々|ねんねん",
+        "友達|ともだち",
+        "一日中|いちにちじゅう",
+        "一年中|いちねんじゅう",
+        "小人|しょうにん",
+        "一時に|いちじに",
+        "時半|じはん",
+        "上半身|じょうはんしん",
+        "前半|ぜんはん",
+        "男女|だんじょ",
+        "天|てん",
+        "東南|とうなん",
+        "東北|とうほく",
+        "日々|ひび",
+        "本名|ほんみょう",
+        "来日|らいにち",
+        "女子高生|じょしこうせい",
+        "先に|さきに",
+        "何時ごろ|いつごろ",
+        "雨上がり|あめあがり",
+        "飲食|いんしょく",
+        "絵本|えほん",
+        "学級|がっきゅう",
+        "記念日|きねんび",
+        "休業|きゅうぎょう",
+        "給食|きゅうしょく",
+        "居間|いま",
+        "月々|つきづき",
+        "月末|げつまつ",
+        "後輩|こうはい",
+        "語|ご",
+        "校舎|こうしゃ",
+        "校則|こうそく",
+        "校内|こうない",
+        "国道|こくどう",
+        "残高|ざんだか",
+        "車内|しゃない",
+        "主食|しゅしょく",
+        "手話|しゅわ",
+        "出張|しゅっちょう",
+        "書籍|しょせき",
+        "奨学金|しょうがくきん",
+        "新車|しんしゃ",
+        "進学|しんがく",
+        "水道水|すいどうすい",
+        "水面|すいめん",
+        "前夜|ぜんや",
+        "送金|そうきん",
+        "単行本|たんこうぼん",
+        "中華|ちゅうか",
+        "通学|つうがく",
+        "店長|てんちょう",
+        "登校|とうこう",
+        "当分|とうぶん",
+        "入居|にゅうきょ",
+        "入金|にゅうきん",
+        "背中|せなか",
+        "半額|はんがく",
+        "北側|きたがわ",
+        "本文|ほんぶん",
+        "毎回|まいかい",
+        "夜間|やかん",
+        "一晩中|ひとばんじゅう",
+        "再来月|さらいげつ",
+        "再来年|さらいねん",
+        "時間割|じかんわり",
+        "定休日|ていきゅうび",
+        "明後日|あさって",
+        "時間帯|じかんたい",
+        "語学力|ごがくりょく",
+        "終電車|しゅうでんしゃ",
+        "間もなく|まもなく",
+        "時間切れ|じかんぎれ",
+        "小遣い|こづかい",
+        "日にち|ひにち",
+        "百円ショップ|ひゃくえんショップ",
+        "お気に入り|おきにいり",
+        "一家|いっか",
+        "一行|いちぎょう",
+        "一体|いったい",
+        "一部|いちぶ",
+        "何十|なんじゅう",
+        "外見|がいけん",
+        "外食|がいしょく",
+        "休暇|きゅうか",
+        "軽自動車|けいじどうしゃ",
+        "見方|みかた",
+        "語学|ごがく",
+        "高級|こうきゅう",
+        "国外|こくがい",
+        "国内|こくない",
+        "国名|こくめい",
+        "時期|じき",
+        "自動車|じどうしゃ",
+        "車両|しゃりょう",
+        "主人公|しゅじんこう",
+    ];
+
+    assert.equal(batchKeys.length, 100);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 5, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n5"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assert.match(entry?.notes || "", /Silver-only/, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    assertReadingBreakdowns(starterEntries, [
+        ["年々|ねんねん", "<ruby>年々<rt>ねんねん</rt></ruby>"],
+        ["日々|ひび", "<ruby>日々<rt>ひび</rt></ruby>"],
+        ["何時ごろ|いつごろ", "<ruby>何時<rt>いつ</rt></ruby>ごろ"],
+        ["明後日|あさって", "<ruby>明後日<rt>あさって</rt></ruby>"],
+        ["百円ショップ|ひゃくえんショップ", "<ruby>百<rt>ひゃく</rt></ruby><ruby>円<rt>えん</rt></ruby>ショップ"],
+        ["お気に入り|おきにいり", "お<ruby>気<rt>き</rt></ruby>に<ruby>入<rt>い</rt></ruby>り"],
+    ]);
 });

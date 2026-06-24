@@ -33,6 +33,24 @@ function parseSourceLevel(value) {
     return Number(match[1]);
 }
 
+function parseIntegerField(value) {
+    const text = String(value ?? "").trim();
+    if (!text) {
+        return null;
+    }
+    const parsed = Number.parseInt(text, 10);
+    return Number.isInteger(parsed) ? parsed : null;
+}
+
+function parseNumberField(value) {
+    const text = String(value ?? "").trim();
+    if (!text) {
+        return null;
+    }
+    const parsed = Number.parseFloat(text);
+    return Number.isFinite(parsed) ? parsed : null;
+}
+
 function pickField(row, names) {
     for (const name of names) {
         if (row[name] !== undefined && row[name] !== null && String(row[name]).trim()) {
@@ -146,13 +164,55 @@ function normalizeCandidateSourceRow(row, { sourceLabel = "external" } = {}) {
     const source = pickField(normalized, ["source", "sourcename"]) || sourceLabel;
     const notes = pickField(normalized, ["notes", "note"]);
     const level = parseSourceLevel(pickField(normalized, ["jlpt", "level", "jlptlevel"]));
-    const frequencyRank = Number.parseInt(pickField(normalized, ["frequencyrank", "frequency", "rank"]), 10);
+    const frequencyRank = parseIntegerField(pickField(normalized, ["frequencyrank", "frequency", "rank"]));
+    const frequencyRankSource = pickField(normalized, ["frequencyranksource", "frequencysource", "frequencysourceid"]);
+    const frequencyEvidenceSource = pickField(normalized, ["frequencyevidencesource", "evidencesource", "supportsource"]);
+    const frequencyReason = pickField(normalized, ["frequencyreason", "frequencyreasontext", "evidencenotes"]) || notes;
+    const tubelexRank = parseIntegerField(pickField(normalized, ["tubelexrank"]));
+    const tubelexCount = parseIntegerField(pickField(normalized, ["tubelexcount"]));
+    const tubelexVideoCount = parseIntegerField(pickField(normalized, ["tubelexvideocount"]));
+    const tubelexChannelCount = parseIntegerField(pickField(normalized, ["tubelexchannelcount"]));
+    const tubelexDispersionScore = parseNumberField(pickField(normalized, ["tubelexdispersionscore"]));
+    const tubelexCategoryConcentration = parseNumberField(pickField(normalized, ["tubelexcategoryconcentration"]));
+    const frequencyMatchStatus = pickField(normalized, ["frequencymatchstatus", "tubelexmatchstatus"]);
+    const frequencyBand = pickField(normalized, ["frequencyband", "tubelexfrequencyband"]);
 
     if (!written || !reading) {
         return null;
     }
 
-    return {
+    const frequencyEvidence = (
+        Number.isInteger(tubelexRank)
+        || Number.isInteger(tubelexCount)
+        || frequencyMatchStatus
+        || frequencyBand
+    )
+        ? {
+            source: frequencyEvidenceSource || frequencyRankSource || source,
+            frequencyRank: Number.isInteger(tubelexRank)
+                ? tubelexRank
+                : (Number.isInteger(frequencyRank) ? frequencyRank : null),
+            frequencyBand: frequencyBand || "",
+            frequencyMatchStatus: frequencyMatchStatus || "",
+            tubelexRank,
+            tubelexCount,
+            tubelexVideoCount,
+            tubelexChannelCount,
+            tubelexDispersionScore,
+            tubelexCategoryConcentration,
+            frequencyReason,
+        }
+        : null;
+    const resolvedFrequencyRankSource = frequencyRankSource || (
+        frequencyEvidence
+        && Number.isInteger(frequencyRank)
+        && Number.isInteger(tubelexRank)
+        && frequencyRank === tubelexRank
+            ? frequencyEvidence.source
+            : ""
+    );
+
+    const baseRow = {
         written,
         reading,
         meaning,
@@ -161,6 +221,28 @@ function normalizeCandidateSourceRow(row, { sourceLabel = "external" } = {}) {
         sourceLevel: Number.isInteger(level) ? level : null,
         frequencyRank: Number.isInteger(frequencyRank) ? frequencyRank : null,
         key: buildWordStudyEntryKey({ written, reading }),
+    };
+
+    if (!frequencyEvidence && !resolvedFrequencyRankSource) {
+        return baseRow;
+    }
+
+    return {
+        ...baseRow,
+        frequencyRankSource: resolvedFrequencyRankSource,
+        ...(frequencyEvidence ? {
+            frequencyEvidenceSource: frequencyEvidence.source || frequencyEvidenceSource || "",
+            frequencyEvidence,
+            frequencyBand: frequencyEvidence.frequencyBand || "",
+            frequencyMatchStatus: frequencyEvidence.frequencyMatchStatus || "",
+            tubelexRank,
+            tubelexCount,
+            tubelexVideoCount,
+            tubelexChannelCount,
+            tubelexDispersionScore,
+            tubelexCategoryConcentration,
+            frequencyReason: frequencyEvidence.frequencyReason || frequencyReason || "",
+        } : {}),
     };
 }
 

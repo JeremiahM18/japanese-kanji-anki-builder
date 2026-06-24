@@ -493,3 +493,21 @@ test("word source assignment files resolve manifest-relative slash styles", () =
     const evidence = loadJlptWordSourceEvidence(manifestPath);
     assert.equal(evidence.assignments.source_a["食べる|たべる"].level, 5);
 });
+
+test("tracked word source evidence registers TubeLex as non-consensus frequency support", () => {
+    const evidence = loadJlptWordSourceEvidence("templates/jlpt_word_source_evidence.json");
+    const source = evidence.sources["tubelex-ja-frequency"];
+
+    assert.equal(evidence.sourceLineages["tubelex-subtitle-frequency"].role, "frequency-sanity");
+    assert.equal(evidence.independenceGroups.tubelex.label, "TubeLex");
+    assert.equal(source.status, "active");
+    assert.equal(source.sourceKind, "frequency");
+    assert.equal(source.sourceType, "corpus_frequency");
+    assert.equal(source.licenseStatus, "approved");
+    assert.equal(source.countsForConsensus, false);
+    assert.equal(source.canStoreWordAssignments, false);
+    assert.equal(source.canStoreRawList, false);
+    assert.deepEqual(source.allowedUse, ["commonness-support", "frequency-sanity"]);
+    assert.equal(source.disallowedUse.includes("candidate-discovery"), true);
+    assert.equal(source.local.rowCount, 65319);
+});

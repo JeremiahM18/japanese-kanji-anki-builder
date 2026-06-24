@@ -519,6 +519,63 @@
         "pitch-verification"
       ]
     },
+    "tubelex-ja-frequency": {
+      "name": "TubeLex Japanese everyday-language frequency support",
+      "tier": 3,
+      "status": "active",
+      "sourceType": "corpus_frequency",
+      "origin": {
+        "url": "https://github.com/naist-nlp/tubelex/blob/main/frequencies/tubelex-ja-310-lemma-pos.tsv.xz",
+        "localPath": "downloads/tubelex-ja-frequency.tsv",
+        "notes": "Derived exact written-reading support TSV generated from ignored TubeLex Japanese lemma frequency data joined through the pinned JMdict exact identity TSV. Raw TubeLex frequency files stay ignored; no raw subtitle text is stored."
+      },
+      "licenseUse": {
+        "status": "approved",
+        "license": "BSD-3-Clause",
+        "notes": "Frequency and usefulness support only. TubeLex frequency does not prove JLPT level, dictionary identity, reading, meaning, pitch, or card approval."
+      },
+      "checkedAt": "2026-06-24",
+      "local": {
+        "path": "downloads/tubelex-ja-frequency.tsv",
+        "format": "tsv",
+        "sha256": "6211ef80c94a06b67f5762f05ba239f3195d1ce2085adb76994e1156940f1cf1",
+        "byteSize": 24510589,
+        "rowCount": 65319,
+        "columns": [
+          "written",
+          "reading",
+          "meaning",
+          "frequencyRank",
+          "tubelexRank",
+          "tubelexCount",
+          "tubelexVideoCount",
+          "tubelexChannelCount",
+          "tubelexDispersionScore",
+          "tubelexCategoryConcentration",
+          "tubelexMatchStatus",
+          "tubelexFrequencyBand",
+          "source",
+          "notes"
+        ]
+      },
+      "intendedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "allowedUse": [
+        "frequency-sanity",
+        "usefulness-support"
+      ],
+      "disallowedUse": [
+        "candidate-discovery",
+        "card-approval",
+        "level-truth",
+        "dictionary-verification",
+        "reading-verification",
+        "meaning-verification",
+        "pitch-verification"
+      ]
+    },
     "jpdb-frequency": {
       "name": "jpdb frequency signal",
       "tier": 3,

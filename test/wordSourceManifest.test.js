@@ -167,6 +167,14 @@ test("tracked word source manifest loads", () => {
     assert.equal(manifest.sources["tanos-n1-vocab"].local.rowCount, 3494);
     assert.equal(manifest.sources["tanos-n1-vocab"].local.sha256, "d9ab4bd35b9ca149ffbf1377472c982eb04c4156e60ead869303472341810c2e");
     assert.equal(manifest.sources["jpdb-frequency"].status, "blocked");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].status, "active");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].sourceType, "corpus_frequency");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].licenseUse.status, "approved");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].licenseUse.license, "BSD-3-Clause");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].local.rowCount, 65319);
+    assert.equal(manifest.sources["tubelex-ja-frequency"].local.sha256, "6211ef80c94a06b67f5762f05ba239f3195d1ce2085adb76994e1156940f1cf1");
+    assert.deepEqual(manifest.sources["tubelex-ja-frequency"].allowedUse, ["frequency-sanity", "usefulness-support"]);
+    assert.equal(manifest.sources["tubelex-ja-frequency"].disallowedUse.includes("candidate-discovery"), true);
     assert.equal(manifest.sources.jmdict.status, "active");
     assert.equal(manifest.sources["jmdict-priority-commonness"].status, "active");
     assert.deepEqual(manifest.sourcePurposeRules.dictionary.allowedUse, [

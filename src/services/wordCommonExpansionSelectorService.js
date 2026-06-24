@@ -30,6 +30,8 @@ const DICTIONARY_COMMON_POOL_COMMAND_SOURCE = "common-pool";
 const DICTIONARY_COMMON_POOL_DEFAULT_EDITORIAL_QUEUE_LIMIT = 200;
 const COMMON_POOL_QUALITY_MODE_EDITORIAL = "editorial";
 const COMMON_POOL_QUALITY_MODE_RAW = "raw";
+const DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID = "tubelex-ja-frequency";
+const FREQUENCY_EVIDENCE_BANDS = ["strong", "good", "borderline", "poor", "missing"];
 const WORD_EXPANSION_TARGET_MINIMUMS = Object.freeze({
     5: 800,
     4: 1000,
@@ -189,10 +191,21 @@ function classifyCommonExpansionSelectorRow({ expansionRow = {}, agreementRow = 
 function summarizeSelectorRows(rows = []) {
     const selectorStatusCounts = Object.fromEntries(SELECTOR_STATUSES.map((status) => [status, 0]));
     const learnerUtilityBandCounts = Object.fromEntries(LEARNER_UTILITY_BANDS.map((band) => [band.label, 0]));
+    const frequencyBandCounts = Object.fromEntries(FREQUENCY_EVIDENCE_BANDS.map((band) => [band, 0]));
     const utilityScores = [];
+    let reviewableQualityRows = 0;
+    let readyQualityRows = 0;
     for (const row of rows) {
         const status = SELECTOR_STATUSES.includes(row.selectorStatus) ? row.selectorStatus : "needs_triage";
         selectorStatusCounts[status] += 1;
+        const frequencyBand = normalizeFrequencyEvidenceBand(row.frequencyBand || row.frequencyEvidence?.primary?.frequencyBand);
+        frequencyBandCounts[frequencyBand] = (frequencyBandCounts[frequencyBand] || 0) + 1;
+        if (["strong", "good"].includes(frequencyBand) && ["ready_for_editorial_review", "needs_triage"].includes(status)) {
+            reviewableQualityRows += 1;
+        }
+        if (["strong", "good"].includes(frequencyBand) && status === "ready_for_editorial_review") {
+            readyQualityRows += 1;
+        }
         if (Number.isFinite(row.learnerUtility?.score)) {
             utilityScores.push(row.learnerUtility.score);
             const band = row.learnerUtility.band || getUtilityBand(row.learnerUtility.score);
@@ -211,6 +224,20 @@ function summarizeSelectorRows(rows = []) {
             minScore: utilityScores.length > 0 ? Math.min(...utilityScores) : null,
             bandCounts: learnerUtilityBandCounts,
             policy: "review_ordering_signal_not_card_approval",
+        },
+        discoveryYieldSummary: {
+            windowRows: rows.length,
+            frequencyBandCounts,
+            reviewableStrongOrGoodRows: reviewableQualityRows,
+            readyStrongOrGoodRows: readyQualityRows,
+            reviewableStrongOrGoodYieldPercent: rows.length > 0
+                ? Number(((reviewableQualityRows / rows.length) * 100).toFixed(1))
+                : 0,
+            currentWindowBelowStopThreshold: rows.length > 0
+                ? (reviewableQualityRows < 10 || (reviewableQualityRows / rows.length) < 0.05)
+                : false,
+            stopRule: "after_two_consecutive_200_row_windows_below_10_keep_ready_quality_rows_or_below_5_percent_keep_yield",
+            policy: "discovery_stop_advisory_not_card_approval",
         },
         readyForEditorialReviewRows: selectorStatusCounts.ready_for_editorial_review,
         inactiveReadingExpansionRows: selectorStatusCounts.queue_inactive_reading_expansion,
@@ -293,6 +320,7 @@ function buildFallbackSourceGate({
     summary = {},
     sourceBlockers = [],
     isExtraSourceSelector = false,
+    auditOnly = false,
 } = {}) {
     const selectorScope = isExtraSourceSelector ? "EXTRA source selector" : "Current new-word selector";
     const counts = summary.selectorStatusCounts || {};
@@ -304,6 +332,23 @@ function buildFallbackSourceGate({
         ? summary.unresolvedSourceMoveCandidateRows
         : sourceMoveCandidateRows;
     const blockers = [];
+
+    if (auditOnly) {
+        return {
+            active: false,
+            status: "raw_mode_audit_only",
+            auditOnly: true,
+            prerequisite: "raw_dictionary_common_pool_mode_is_evidence_accounting_only",
+            readyRows,
+            needsTriageRows,
+            moveCandidateRows,
+            sourceMoveCandidateRows,
+            routedSourceMoveCandidateRows,
+            unresolvedSourceMoveCandidateRows: moveCandidateRows,
+            blockers,
+            reason: "Raw dictionary common-pool mode exposes the denominator for evidence accounting only; do not treat raw rows as the human triage or Silver review queue. Use the default editorial shortlist for governed review work.",
+        };
+    }
 
     if (commonWordQueue.active !== true) {
         blockers.push(`N${level} reading expansion is not exhausted.`);
@@ -514,11 +559,13 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const extraSourceAccess = levelReport.extraSourceAccess || {};
     const isExtraSourceSelector = levelReport.sourceUniverse?.extraSource === true;
     const isDictionaryCommonPoolSelector = levelReport.sourceUniverse?.sourcePool === SOURCE_POOL_DICTIONARY_COMMON;
+    const isRawDictionaryCommonPoolAudit = isDictionaryCommonPoolSelector
+        && levelReport.sourceUniverse?.commonPoolSummary?.qualityMode === COMMON_POOL_QUALITY_MODE_RAW;
     const selectorSourceId = isDictionaryCommonPoolSelector
         ? DICTIONARY_COMMON_POOL_COMMAND_SOURCE
         : levelReport.sourceUniverse?.sourceId;
     const selectorSourceArg = isExtraSourceSelector && selectorSourceId
-        ? ` --source=${selectorSourceId}`
+        ? ` --source=${selectorSourceId}${isDictionaryCommonPoolSelector ? ` --frequency-source=${DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID}` : ""}`
         : "";
     const selectorScopeLabel = isExtraSourceSelector
         ? (isDictionaryCommonPoolSelector ? SOURCE_POOL_DICTIONARY_COMMON_LABEL : "EXTRA source")
@@ -533,9 +580,12 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const readingFastPromotions = countValue(gate.promoteCuratedExampleItems);
     const readingEditorialResearch = countValue(gate.editorialReviewItems);
     const readingDeferredVariants = countValue(gate.deferVariantItems);
-    const readyRows = countValue(counts.ready_for_editorial_review);
-    const needsTriageRows = countValue(counts.needs_triage);
-    const sourceMoveRows = countValue(counts.move_candidate);
+    const auditReadyRows = countValue(counts.ready_for_editorial_review);
+    const auditNeedsTriageRows = countValue(counts.needs_triage);
+    const auditSourceMoveRows = countValue(counts.move_candidate);
+    const readyRows = isRawDictionaryCommonPoolAudit ? 0 : auditReadyRows;
+    const needsTriageRows = isRawDictionaryCommonPoolAudit ? 0 : auditNeedsTriageRows;
+    const sourceMoveRows = isRawDictionaryCommonPoolAudit ? 0 : auditSourceMoveRows;
     const unresolvedSourceMoveRows = Number.isInteger(levelReport.summary?.unresolvedSourceMoveCandidateRows)
         ? levelReport.summary.unresolvedSourceMoveCandidateRows
         : sourceMoveRows;
@@ -550,28 +600,37 @@ function buildExpansionWorkOrder(levelReport = {}) {
     const selectorCommand = `npm run deck:words:vocab-expansion -- --levels=${level}${selectorSourceArg} --strict --limit=80`;
     const allLevelSelectorCommand = "npm run deck:words:vocab-expansion -- --levels=5,4,3,2,1 --strict --limit=80";
     const sourceAccessCommand = "npm run deck:words:source-access";
-    const dictionaryCommonPoolCommand = `npm run deck:words:vocab-expansion -- --levels=${level} --source=${DICTIONARY_COMMON_POOL_COMMAND_SOURCE} --strict --limit=80`;
+    const dictionaryCommonPoolCommand = `npm run deck:words:vocab-expansion -- --levels=${level} --source=${DICTIONARY_COMMON_POOL_COMMAND_SOURCE} --frequency-source=${DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID} --strict --limit=80`;
     const extraSourceCommand = availableReviewedExtraSourceIds.length === 1
         ? `npm run deck:words:vocab-expansion -- --levels=${level} --source=${availableReviewedExtraSourceIds[0]} --strict --limit=80`
         : (dictionaryCommonPoolAvailable ? dictionaryCommonPoolCommand : sourceAccessCommand);
-    const extraSourceStatus = isExtraSourceSelector
-        ? (
-            !isDictionaryCommonPoolSelector && fallbackGate.active && dictionaryCommonPoolAvailable
-                ? "ready_dictionary_common_pool"
-                : "selected_extra_source"
-        )
-        : (fallbackGate.active
-        ? (
-            hasSourceAccessContext && availableReviewedExtraSourceCount > 0
-                ? "ready_extra_source_available"
-                : (
-                    dictionaryCommonPoolAvailable
+    const extraSourceStatus = isRawDictionaryCommonPoolAudit
+        ? "raw_audit_only"
+        : (
+            isExtraSourceSelector
+                ? (
+                    !isDictionaryCommonPoolSelector && fallbackGate.active && dictionaryCommonPoolAvailable
                         ? "ready_dictionary_common_pool"
-                        : (hasSourceAccessContext && actionableExtraSourceCount === 0 ? "ready_no_actionable_source" : "ready")
+                        : "selected_extra_source"
                 )
-        )
-        : "closed");
+                : (
+                    fallbackGate.active
+                        ? (
+                            hasSourceAccessContext && availableReviewedExtraSourceCount > 0
+                                ? "ready_extra_source_available"
+                                : (
+                                    dictionaryCommonPoolAvailable
+                                        ? "ready_dictionary_common_pool"
+                                        : (hasSourceAccessContext && actionableExtraSourceCount === 0 ? "ready_no_actionable_source" : "ready")
+                                )
+                        )
+                        : "closed"
+                )
+        );
     const extraSourceReason = (() => {
+        if (isRawDictionaryCommonPoolAudit) {
+            return "Raw dictionary common-pool mode is an audit denominator, not an actionable review lane. Use the default editorial shortlist command for governed triage and Silver preparation.";
+        }
         if (extraSourceStatus === "ready_dictionary_common_pool") {
             const prefix = isExtraSourceSelector
                 ? "Selected extra source-family selector is exhausted under the current filters."
@@ -579,7 +638,7 @@ function buildExpansionWorkOrder(levelReport = {}) {
             return [
                 prefix,
                 "Continue the same extra expansion lane with the DICTIONARY COMMON POOL.",
-                "Rows come from pinned JMdict priority/commonness data, exclude exact governed/excluded duplicates and kana-only rows by default, keep the Source level claim unverified label, and still require normal triage before Silver.",
+                "Rows come from pinned JMdict dictionary/commonness data plus optional TubeLex frequency support, exclude exact governed/excluded duplicates and kana-only rows by default, keep the Source level claim unverified label, and still require normal triage before Silver.",
             ].join(" ");
         }
         if (isExtraSourceSelector) {
@@ -635,6 +694,18 @@ function buildExpansionWorkOrder(levelReport = {}) {
                 ? "Reading gaps still need learner-facing source/card research before common-word expansion should be treated as the main lane."
                 : "No active reading editorial research remains.",
         }),
+        ...(isRawDictionaryCommonPoolAudit ? [
+            buildWorkOrderItem({
+                rank: 3,
+                lane: "dictionary_common_pool_raw_audit",
+                label: "Dictionary common-pool raw audit",
+                count: countValue(levelReport.summary?.selectedRows),
+                status: "audit_only",
+                blocksExtraLane: false,
+                command: selectorCommand,
+                reason: `Raw dictionary common-pool mode is an audit denominator, not an actionable review lane. It shows ${countValue(levelReport.summary?.selectedRows)} denominator row(s), including ${auditReadyRows} ready/pre-trust and ${auditNeedsTriageRows} needs-triage classifications, for evidence accounting only. Use the default editorial shortlist for triage.`,
+            }),
+        ] : []),
         buildWorkOrderItem({
             rank: 3,
             lane: "current_selector_ready",
@@ -712,6 +783,7 @@ function buildExpansionWorkOrder(levelReport = {}) {
     ];
 
     const nextItem = items.find((item) => item.status === "active")
+        || items.find((item) => item.status === "audit_only")
         || items.find((item) => item.lane === "extra_source_family" && item.status === "ready")
         || items.find((item) => item.lane === "extra_source_family" && item.status === "ready_extra_source_available")
         || items.find((item) => item.lane === "extra_source_family" && item.status === "ready_dictionary_common_pool")
@@ -887,6 +959,180 @@ function getUtilityBand(score) {
     return LEARNER_UTILITY_BANDS.find((band) => boundedScore >= band.min)?.label || "low_priority_review_candidate";
 }
 
+function normalizeFrequencyEvidenceBand(value = "") {
+    const normalized = String(value || "").trim().toLowerCase();
+    return FREQUENCY_EVIDENCE_BANDS.includes(normalized) ? normalized : "missing";
+}
+
+function normalizeFrequencyMatchStatus(value = "") {
+    const normalized = String(value || "").trim();
+    return ["exact_written", "lemma_match", "ambiguous_written", "missing"].includes(normalized)
+        ? normalized
+        : "";
+}
+
+function collectFrequencyEvidenceFromRow(row = {}) {
+    const directEvidence = Array.isArray(row.frequencyEvidence)
+        ? row.frequencyEvidence
+        : (
+            row.frequencyEvidence?.primary || Array.isArray(row.frequencyEvidence?.sources)
+                ? [row.frequencyEvidence.primary, ...(row.frequencyEvidence.sources || [])].filter(Boolean)
+                : (row.frequencyEvidence ? [row.frequencyEvidence] : [])
+        );
+    const evidence = [...directEvidence];
+    if (
+        directEvidence.length === 0
+        && (
+        Number.isInteger(row.tubelexRank)
+        || Number.isInteger(row.tubelexCount)
+        || row.frequencyBand
+        || row.frequencyMatchStatus
+        )
+    ) {
+        const evidenceSource = row.frequencyEvidenceSource || row.frequencyRankSource || row.source || DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID;
+        evidence.push({
+            source: evidenceSource,
+            frequencyRank: evidenceSource === DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID && Number.isInteger(row.tubelexRank)
+                ? row.tubelexRank
+                : row.frequencyRank,
+            frequencyBand: row.frequencyBand || "",
+            frequencyMatchStatus: row.frequencyMatchStatus || "",
+            tubelexRank: row.tubelexRank,
+            tubelexCount: row.tubelexCount,
+            tubelexVideoCount: row.tubelexVideoCount,
+            tubelexChannelCount: row.tubelexChannelCount,
+            tubelexDispersionScore: row.tubelexDispersionScore,
+            tubelexCategoryConcentration: row.tubelexCategoryConcentration,
+            frequencyReason: row.frequencyReason || "",
+        });
+    }
+    const seen = new Set();
+    return evidence.filter((entry) => {
+        if (!entry) {
+            return false;
+        }
+        const key = [
+            entry.source || "",
+            entry.frequencyRank ?? "",
+            entry.frequencyBand || "",
+            entry.frequencyMatchStatus || "",
+        ].join("|");
+        if (seen.has(key)) {
+            return false;
+        }
+        seen.add(key);
+        return true;
+    });
+}
+
+function compareFrequencyEvidence(a = {}, b = {}) {
+    const bandOrder = {
+        strong: 0,
+        good: 1,
+        borderline: 2,
+        poor: 3,
+        missing: 4,
+    };
+    const matchOrder = {
+        exact_written: 0,
+        lemma_match: 1,
+        ambiguous_written: 2,
+        missing: 3,
+        "": 4,
+    };
+    return (
+        (bandOrder[normalizeFrequencyEvidenceBand(a.frequencyBand)] ?? 99)
+        - (bandOrder[normalizeFrequencyEvidenceBand(b.frequencyBand)] ?? 99)
+        || (matchOrder[normalizeFrequencyMatchStatus(a.frequencyMatchStatus)] ?? 99)
+        - (matchOrder[normalizeFrequencyMatchStatus(b.frequencyMatchStatus)] ?? 99)
+        || getComparableFrequencyEvidenceRank(a) - getComparableFrequencyEvidenceRank(b)
+    );
+}
+
+function getComparableFrequencyEvidenceRank(evidence = {}) {
+    return Number.isInteger(evidence.frequencyRank) && evidence.frequencyRank > 0
+        ? evidence.frequencyRank
+        : (Number.isInteger(evidence.tubelexRank) && evidence.tubelexRank > 0 ? evidence.tubelexRank : Number.MAX_SAFE_INTEGER);
+}
+
+function buildFrequencyEvidenceSummary(row = {}) {
+    const evidence = collectFrequencyEvidenceFromRow(row).sort(compareFrequencyEvidence);
+    const primary = evidence[0] || buildJmdictFrequencyEvidence(row);
+    return {
+        primary,
+        sources: evidence,
+    };
+}
+
+function getPrimaryFrequencyEvidence(row = {}) {
+    return buildFrequencyEvidenceSummary(row).primary;
+}
+
+function classifyRankFrequencyBand(rank) {
+    if (!Number.isInteger(rank) || rank <= 0) {
+        return "missing";
+    }
+    if (rank <= 200) {
+        return "strong";
+    }
+    if (rank <= 1000) {
+        return "good";
+    }
+    if (rank <= 5000) {
+        return "borderline";
+    }
+    return "poor";
+}
+
+function buildJmdictFrequencyEvidence(row = {}) {
+    if (!hasCommonnessRank(row)) {
+        return null;
+    }
+    return {
+        source: row.frequencyRankSource || "jmdict-priority-commonness",
+        frequencyRank: row.frequencyRank,
+        frequencyBand: classifyRankFrequencyBand(row.frequencyRank),
+        frequencyMatchStatus: "exact_written",
+        frequencyReason: `JMdict priority/commonness rank ${row.frequencyRank}`,
+    };
+}
+
+function buildSelectorFrequencyEvidence({ expansionRow = {}, agreementRow = null } = {}) {
+    const sourceAppearanceEvidence = (agreementRow?.sourceAppearances || [])
+        .flatMap((appearance) => {
+            if (appearance.frequencyEvidence) {
+                return [appearance.frequencyEvidence];
+            }
+            if (Number.isInteger(appearance.frequencyRank) && appearance.frequencyRank > 0) {
+                return [{
+                    source: appearance.frequencyRankSource || appearance.sourceId || "frequency-support",
+                    frequencyRank: appearance.frequencyRank,
+                    frequencyBand: classifyRankFrequencyBand(appearance.frequencyRank),
+                    frequencyMatchStatus: "exact_written",
+                    frequencyReason: `${appearance.sourceId || "frequency-support"} numeric commonness rank ${appearance.frequencyRank}`,
+                }];
+            }
+            return [];
+        });
+    const evidence = [
+        ...collectFrequencyEvidenceFromRow(expansionRow),
+        ...(agreementRow?.frequencyEvidence || []),
+        ...sourceAppearanceEvidence,
+    ];
+    const summary = buildFrequencyEvidenceSummary({
+        ...expansionRow,
+        frequencyEvidence: evidence,
+        frequencyRank: Number.isInteger(expansionRow.frequencyRank)
+            ? expansionRow.frequencyRank
+            : null,
+        frequencyRankSource: expansionRow.frequencyRankSource || "",
+    });
+    return {
+        ...summary,
+        sources: summary.sources,
+    };
+}
+
 function getRowKanjiScope(row = {}, explicitScope = null) {
     if (explicitScope) {
         return explicitScope;
@@ -973,6 +1219,8 @@ function isLearnerUtilityPenaltyReason(reason = "") {
         || /^highest JMdict commonness tier/iu.test(text)
         || /^strong JMdict commonness tier/iu.test(text)
         || /^moderate JMdict commonness tier/iu.test(text)
+        || /^(?:strong|good|borderline) TubeLex everyday-language evidence/iu.test(text)
+        || /^match exact_written/iu.test(text)
         || /^everyday concrete domain signal/iu.test(text)
         || /^reinforces target kanji/iu.test(text)
         || /^sentence evidence already present/iu.test(text)
@@ -1015,8 +1263,62 @@ function formatJmdictNfReason(row = {}) {
     return rank === Number.MAX_SAFE_INTEGER ? "" : `JMdict nf${String(rank).padStart(2, "0")} priority`;
 }
 
+function scoreTubelexFrequencyEvidence(evidence = {}) {
+    const band = normalizeFrequencyEvidenceBand(evidence.frequencyBand);
+    const rank = getComparableFrequencyEvidenceRank(evidence);
+    const matchStatus = normalizeFrequencyMatchStatus(evidence.frequencyMatchStatus) || "missing";
+    let score = 0;
+    if (band === "strong") {
+        score = 24;
+    } else if (band === "good") {
+        score = 20;
+    } else if (band === "borderline") {
+        score = 12;
+    } else if (band === "poor") {
+        score = 5;
+    }
+    const reasons = [
+        `${band} TubeLex everyday-language evidence${Number.isInteger(rank) ? ` (rank ${rank})` : ""}`,
+        `match ${matchStatus}`,
+    ];
+    if (Number.isFinite(evidence.tubelexDispersionScore)) {
+        reasons.push(`dispersion ${evidence.tubelexDispersionScore}`);
+    }
+    if (Number.isFinite(evidence.tubelexCategoryConcentration)) {
+        reasons.push(`category concentration ${evidence.tubelexCategoryConcentration}`);
+    }
+    if (matchStatus === "ambiguous_written") {
+        score = Math.min(score, 5);
+        reasons.push("ambiguous written/reading support cannot prove reading");
+    } else if (matchStatus === "lemma_match") {
+        score = Math.min(score, 18);
+        reasons.push("lemma match needs review before trust");
+    }
+    return {
+        score,
+        reason: reasons.join("; "),
+    };
+}
+
 function scoreEverydayUsefulness(row = {}) {
     const rank = getComparableFrequencyRank(row);
+    const primaryFrequencyEvidence = getPrimaryFrequencyEvidence(row);
+    const hasTubelexEvidence = primaryFrequencyEvidence?.source === DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID
+        || Number.isInteger(primaryFrequencyEvidence?.tubelexRank);
+    if (hasTubelexEvidence && row.frequencyRankSource === DEFAULT_COMMON_POOL_FREQUENCY_SOURCE_ID) {
+        const tubelexScore = scoreTubelexFrequencyEvidence(primaryFrequencyEvidence);
+        let score = tubelexScore.score;
+        const reasons = [tubelexScore.reason];
+        if (hasLearnerUtilitySpecializedOrProperSignal(row)) {
+            score -= 5;
+            reasons.push("proper/specialized signal lowers everyday usefulness");
+        }
+        if (LEARNER_UTILITY_ABSTRACT_DOMAIN_RE.test(String(row.meaning || ""))) {
+            score -= 3;
+            reasons.push("abstract/technical signal lowers everyday usefulness");
+        }
+        return buildLearnerUtilityComponent({ score, max: 25, reason: reasons.join("; ") });
+    }
     if (rank === Number.MAX_SAFE_INTEGER) {
         return buildLearnerUtilityComponent({
             score: 0,
@@ -1055,6 +1357,15 @@ function scoreEverydayUsefulness(row = {}) {
     const nfReason = formatJmdictNfReason(row);
     if (nfReason) {
         reasons.push(nfReason);
+    }
+    if (hasTubelexEvidence) {
+        const tubelexScore = scoreTubelexFrequencyEvidence(primaryFrequencyEvidence);
+        reasons.push(tubelexScore.reason);
+        if (tubelexScore.score <= 5) {
+            score -= 2;
+        } else if (tubelexScore.score >= 20) {
+            score += 1;
+        }
     }
     if (hasLearnerUtilitySpecializedOrProperSignal(row)) {
         score -= 5;
@@ -1526,6 +1837,8 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
     const frequencyRanks = (agreementRow?.sourceAppearances || [])
         .map((appearance) => appearance.frequencyRank)
         .filter((rank) => Number.isInteger(rank) && rank > 0);
+    const frequencyEvidence = buildSelectorFrequencyEvidence({ expansionRow, agreementRow });
+    const primaryFrequencyEvidence = frequencyEvidence.primary || null;
     const targetLevel = expansionRow.targetLevel || agreementRow?.targetLevel || null;
     const kanjiLevels = expansionRow.kanjiLevels || agreementRow?.kanjiLevels || [];
     const sameWrittenConflicts = agreementRow?.sameWrittenConflicts || expansionRow.sameWrittenContractEntries || [];
@@ -1565,7 +1878,20 @@ function buildSelectorRow({ expansionRow = {}, agreementRow = null, sourceUniver
         pitchSupported: Boolean(agreementRow?.pitchSupported),
         frequencyRank: Number.isInteger(sourceAppearance?.frequencyRank)
             ? sourceAppearance.frequencyRank
-            : (frequencyRanks.length > 0 ? Math.min(...frequencyRanks) : null),
+            : (frequencyRanks.length > 0
+                ? Math.min(...frequencyRanks)
+                : (Number.isInteger(primaryFrequencyEvidence?.frequencyRank) ? primaryFrequencyEvidence.frequencyRank : null)),
+        frequencyRankSource: primaryFrequencyEvidence?.source || sourceAppearance?.frequencyRankSource || "",
+        frequencyEvidence,
+        frequencyBand: normalizeFrequencyEvidenceBand(primaryFrequencyEvidence?.frequencyBand),
+        frequencyMatchStatus: normalizeFrequencyMatchStatus(primaryFrequencyEvidence?.frequencyMatchStatus) || "missing",
+        tubelexRank: primaryFrequencyEvidence?.tubelexRank ?? null,
+        tubelexCount: primaryFrequencyEvidence?.tubelexCount ?? null,
+        tubelexVideoCount: primaryFrequencyEvidence?.tubelexVideoCount ?? null,
+        tubelexChannelCount: primaryFrequencyEvidence?.tubelexChannelCount ?? null,
+        tubelexDispersionScore: primaryFrequencyEvidence?.tubelexDispersionScore ?? null,
+        tubelexCategoryConcentration: primaryFrequencyEvidence?.tubelexCategoryConcentration ?? null,
+        frequencyReason: primaryFrequencyEvidence?.frequencyReason || "",
         cleanIdentity: Boolean(agreementRow?.cleanIdentity) || expansionRow.disposition === "review_candidate",
         identityRisks: agreementRow?.identityRisks || [],
         learnerFitRisks,
@@ -1638,6 +1964,151 @@ function hasCommonnessRank(row = {}) {
     return Number.isInteger(row.frequencyRank) && row.frequencyRank > 0;
 }
 
+function getCommonPoolFrequencySupportSourceIds(source = {}) {
+    return Array.isArray(source.commonPool?.frequencySourceIds)
+        ? source.commonPool.frequencySourceIds.filter(Boolean)
+        : [];
+}
+
+function sourceCanProvideFrequencySupport(source = {}) {
+    return source.status === "active"
+        && source.licenseUse?.status === "approved"
+        && (
+            sourceAllows(source, "frequency-sanity")
+            || sourceAllows(source, "usefulness-support")
+        );
+}
+
+function buildFrequencySupportRowIndex({
+    sourceRows = [],
+    sourceId = "",
+} = {}) {
+    const rowsByKey = new Map();
+    const normalizedRows = sourceRows
+        .flatMap((row) => normalizeCandidateSourceRows(row, { sourceLabel: sourceId }))
+        .filter((row) => hasCommonnessRank(row) || collectFrequencyEvidenceFromRow(row).length > 0);
+
+    for (const row of normalizedRows) {
+        const existing = rowsByKey.get(row.key);
+        if (!existing || compareFrequencySupportRows(row, existing) < 0) {
+            rowsByKey.set(row.key, row);
+        }
+    }
+
+    return {
+        rowsByKey,
+        normalizedRows,
+    };
+}
+
+function compareFrequencySupportRows(a = {}, b = {}) {
+    const aPrimary = getPrimaryFrequencyEvidence(a) || {};
+    const bPrimary = getPrimaryFrequencyEvidence(b) || {};
+    return (
+        compareFrequencyEvidence(aPrimary, bPrimary)
+        || getComparableFrequencyRank(a) - getComparableFrequencyRank(b)
+    );
+}
+
+function loadCommonPoolFrequencySupportRows({
+    source = {},
+    manifest = {},
+    readFile = fs.readFileSync,
+} = {}) {
+    const frequencySourceIds = getCommonPoolFrequencySupportSourceIds(source);
+    const rowsByKey = new Map();
+    const blockers = [];
+    const sources = [];
+    const summary = {
+        frequencySourceIds,
+        loadedSourceCount: 0,
+        loadedRows: 0,
+        normalizedRows: 0,
+        rowsWithSupport: 0,
+        sources,
+    };
+
+    for (const frequencySourceId of frequencySourceIds) {
+        const supportSource = manifest.sources?.[frequencySourceId] || null;
+        if (!supportSource) {
+            blockers.push(`${frequencySourceId}: missing frequency support source in word source manifest`);
+            continue;
+        }
+        if (!sourceCanProvideFrequencySupport(supportSource)) {
+            blockers.push(`${frequencySourceId}: frequency support source must be active, approved, and limited to frequency/usefulness support`);
+            continue;
+        }
+        const supportPath = path.resolve(process.cwd(), supportSource.local?.path || "");
+        if (!supportSource.local?.path || !fs.existsSync(supportPath)) {
+            blockers.push(`${frequencySourceId}: missing local frequency support file ${supportSource.local?.path || "(missing path)"}`);
+            continue;
+        }
+        const supportBuffer = readFile(supportPath);
+        const buffer = Buffer.isBuffer(supportBuffer) ? supportBuffer : Buffer.from(String(supportBuffer || ""), "utf8");
+        const sourceRows = parseCandidateSourceText(buffer.toString("utf8"), {
+            format: supportSource.local.format || "auto",
+        });
+        const integrity = buildSourceFileIntegrity({ sourceBuffer: buffer, sourceRows });
+        const integrityBlockers = validateSourceIntegrity(supportSource, integrity);
+        if (integrityBlockers.length > 0) {
+            blockers.push(...integrityBlockers.map((blocker) => `${frequencySourceId}: ${blocker}`));
+            continue;
+        }
+        const indexed = buildFrequencySupportRowIndex({ sourceRows, sourceId: frequencySourceId });
+        for (const [key, row] of indexed.rowsByKey.entries()) {
+            const existing = rowsByKey.get(key);
+            if (!existing || compareFrequencySupportRows(row, existing) < 0) {
+                rowsByKey.set(key, row);
+            }
+        }
+        summary.loadedSourceCount += 1;
+        summary.loadedRows += sourceRows.length;
+        summary.normalizedRows += indexed.normalizedRows.length;
+        summary.rowsWithSupport = rowsByKey.size;
+        sources.push({
+            sourceId: frequencySourceId,
+            localPath: supportSource.local.path,
+            rowCount: integrity.rowCount,
+            sha256: integrity.sha256,
+            byteSize: integrity.byteSize,
+            licenseStatus: supportSource.licenseUse?.status || "",
+            allowedUse: supportSource.allowedUse || [],
+        });
+    }
+
+    return {
+        rowsByKey,
+        blockers,
+        summary,
+    };
+}
+
+function mergeFrequencySupportRow(baseRow = {}, supportRow = null) {
+    if (!supportRow) {
+        return baseRow;
+    }
+    const supportEvidence = collectFrequencyEvidenceFromRow(supportRow);
+    const baseEvidence = collectFrequencyEvidenceFromRow(baseRow);
+    const useSupportRank = !hasCommonnessRank(baseRow) && hasCommonnessRank(supportRow);
+    const supportEvidenceSource = supportEvidence[0]?.source || supportRow.frequencyEvidenceSource || supportRow.frequencyRankSource || supportRow.source || "";
+    return {
+        ...baseRow,
+        frequencyRank: useSupportRank ? supportRow.frequencyRank : baseRow.frequencyRank,
+        frequencyRankSource: useSupportRank ? (supportRow.frequencyRankSource || supportRow.source || "") : (baseRow.frequencyRankSource || ""),
+        frequencyEvidenceSource: supportEvidenceSource,
+        frequencyEvidence: [...baseEvidence, ...supportEvidence],
+        frequencyBand: supportRow.frequencyBand || baseRow.frequencyBand || "",
+        frequencyMatchStatus: supportRow.frequencyMatchStatus || baseRow.frequencyMatchStatus || "",
+        tubelexRank: supportRow.tubelexRank ?? baseRow.tubelexRank,
+        tubelexCount: supportRow.tubelexCount ?? baseRow.tubelexCount,
+        tubelexVideoCount: supportRow.tubelexVideoCount ?? baseRow.tubelexVideoCount,
+        tubelexChannelCount: supportRow.tubelexChannelCount ?? baseRow.tubelexChannelCount,
+        tubelexDispersionScore: supportRow.tubelexDispersionScore ?? baseRow.tubelexDispersionScore,
+        tubelexCategoryConcentration: supportRow.tubelexCategoryConcentration ?? baseRow.tubelexCategoryConcentration,
+        frequencyReason: supportRow.frequencyReason || baseRow.frequencyReason || "",
+    };
+}
+
 function isAlreadyGovernedOrExcluded(row = {}, jlptWordLevelContract = {}) {
     return Boolean(
         jlptWordLevelContract.wordLevels?.[row.key]
@@ -1647,6 +2118,8 @@ function isAlreadyGovernedOrExcluded(row = {}, jlptWordLevelContract = {}) {
 
 function filterDictionaryCommonPoolRows({
     sourceRows = [],
+    frequencySupportRowsByKey = new Map(),
+    frequencySupportSummary = null,
     sourceId = DICTIONARY_COMMON_POOL_SOURCE_ID,
     targetLevel,
     source = {},
@@ -1662,6 +2135,7 @@ function filterDictionaryCommonPoolRows({
         : normalizeCommonPoolEditorialQueueLimit(source.commonPool?.editorialQueueLimit);
     const normalizedRows = sourceRows
         .flatMap((row) => normalizeCandidateSourceRows(row, { sourceLabel: sourceId }))
+        .map((row) => mergeFrequencySupportRow(row, frequencySupportRowsByKey.get(row.key) || null))
         .filter(Boolean);
     const sourceRowsByWritten = buildSameWrittenSourceRowsByWritten(normalizedRows);
     const rows = [];
@@ -1682,6 +2156,12 @@ function filterDictionaryCommonPoolRows({
         latinWrittenForm: 0,
         kanjiNumericExpressionRows: 0,
         properOrSpecializedPriorityRows: 0,
+        frequencySupportSourceIds: getCommonPoolFrequencySupportSourceIds(source),
+        frequencySupportLoadedSourceCount: frequencySupportSummary?.loadedSourceCount ?? 0,
+        frequencySupportLoadedRows: frequencySupportSummary?.loadedRows ?? 0,
+        frequencySupportRowsWithSupport: frequencySupportSummary?.rowsWithSupport ?? 0,
+        frequencySupportMatchedRows: 0,
+        frequencyBandCounts: Object.fromEntries(FREQUENCY_EVIDENCE_BANDS.map((band) => [band, 0])),
         outsideJlptSupportRows: 0,
         harderSupportKanjiRows: 0,
         outsideJlptSupportRowsInQueue: 0,
@@ -1731,6 +2211,11 @@ function filterDictionaryCommonPoolRows({
         if (hasCommonPoolProperOrSpecializedPrioritySignal(row)) {
             filteredCounts.properOrSpecializedPriorityRows += 1;
         }
+        if (collectFrequencyEvidenceFromRow(row).length > 0) {
+            filteredCounts.frequencySupportMatchedRows += 1;
+        }
+        const frequencyBand = normalizeFrequencyEvidenceBand(row.frequencyBand || getPrimaryFrequencyEvidence(row)?.frequencyBand);
+        filteredCounts.frequencyBandCounts[frequencyBand] = (filteredCounts.frequencyBandCounts[frequencyBand] || 0) + 1;
         if (scope.outsideJlptKanji.length > 0) {
             filteredCounts.outsideJlptSupportRows += 1;
         }
@@ -1792,6 +2277,7 @@ function filterDictionaryCommonPoolRows({
 function loadSourceRows({
     sourceId,
     source,
+    manifest = {},
     level = null,
     jlptLevelContract = {},
     jlptWordLevelContract = {},
@@ -1813,9 +2299,15 @@ function loadSourceRows({
     });
     const integrity = buildSourceFileIntegrity({ sourceBuffer: buffer, sourceRows: parsedSourceRows });
     const blockers = validateSourceIntegrity(source, integrity).map((blocker) => `${sourceId}: ${blocker}`);
+    const frequencySupport = isDictionaryCommonPoolSource(source) && Number.isInteger(level)
+        ? loadCommonPoolFrequencySupportRows({ source, manifest, readFile })
+        : null;
+    blockers.push(...(frequencySupport?.blockers || []));
     const commonPool = isDictionaryCommonPoolSource(source) && Number.isInteger(level)
         ? filterDictionaryCommonPoolRows({
             sourceRows: parsedSourceRows,
+            frequencySupportRowsByKey: frequencySupport?.rowsByKey || new Map(),
+            frequencySupportSummary: frequencySupport?.summary || null,
             sourceId,
             targetLevel: level,
             source,
@@ -1829,6 +2321,7 @@ function loadSourceRows({
         integrity,
         effectiveRowCount: commonPool?.rows.length ?? integrity.rowCount,
         commonPoolSummary: commonPool?.filteredCounts || null,
+        frequencySupportSummary: frequencySupport?.summary || null,
         blockers,
     };
 }
@@ -1890,6 +2383,7 @@ function buildLevelSelectorReport({
     const loadedSource = loadSourceRows({
         sourceId,
         source,
+        manifest,
         level,
         jlptLevelContract,
         jlptWordLevelContract,
@@ -1966,6 +2460,7 @@ function buildLevelSelectorReport({
         routedSourceMoveCandidateRows: sourceMoveCandidateRoutingSummary.routedSourceMoveCandidateRows,
         unresolvedSourceMoveCandidateRows: sourceMoveCandidateRoutingSummary.unresolvedSourceMoveCandidateRows,
     };
+    const rawDictionaryCommonPoolAudit = loadedSource.commonPoolSummary?.qualityMode === COMMON_POOL_QUALITY_MODE_RAW;
 
     return {
         level,
@@ -1977,6 +2472,7 @@ function buildLevelSelectorReport({
             summary,
             sourceBlockers: blockers,
             isExtraSourceSelector: source.extraSourceLane === true,
+            auditOnly: rawDictionaryCommonPoolAudit,
         }),
         sourceAdequacy,
         targetProgress,
@@ -2159,6 +2655,10 @@ function formatSourceUniverse(sourceUniverse = {}) {
         if (Number.isInteger(pool.deprioritizedByEditorialQueueLimit)) {
             parts.push(`pool deferred ${pool.deprioritizedByEditorialQueueLimit}`);
         }
+        if ((pool.frequencySupportSourceIds || []).length > 0) {
+            parts.push(`frequency support ${pool.frequencySupportSourceIds.join(",")}`);
+            parts.push(`frequency matched ${pool.frequencySupportMatchedRows ?? 0}`);
+        }
     }
     return parts.join("; ");
 }
@@ -2216,6 +2716,12 @@ function formatWordExpansionTargetStatus(targetProgress = null) {
 function formatUtilityBandCounts(counts = {}) {
     return LEARNER_UTILITY_BANDS
         .map((band) => `${band.label}=${counts[band.label] || 0}`)
+        .join("; ");
+}
+
+function formatFrequencyBandCounts(counts = {}) {
+    return FREQUENCY_EVIDENCE_BANDS
+        .map((band) => `${band}=${counts[band] || 0}`)
         .join("; ");
 }
 
@@ -2336,6 +2842,25 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
 
     lines.push(
         "",
+        "Discovery yield:",
+        "| Level | Window rows | Strong/good reviewable | Yield | Below stop threshold | Frequency bands | Stop rule |",
+        "| --- | ---: | ---: | ---: | --- | --- | --- |"
+    );
+    for (const levelReport of report.levelReports || []) {
+        const yieldSummary = levelReport.summary.discoveryYieldSummary || {};
+        lines.push([
+            `| ${levelReport.levelLabel}`,
+            yieldSummary.windowRows ?? 0,
+            yieldSummary.reviewableStrongOrGoodRows ?? 0,
+            `${yieldSummary.reviewableStrongOrGoodYieldPercent ?? 0}%`,
+            yieldSummary.currentWindowBelowStopThreshold ? "yes" : "no",
+            formatFrequencyBandCounts(yieldSummary.frequencyBandCounts || {}),
+            "two consecutive weak 200-row windows before stopping broad discovery",
+        ].join(" | ") + " |");
+    }
+
+    lines.push(
+        "",
         "Expansion work order:",
         "| Level | Next work | Reading fast | Reading editorial | Selector ready | Selector triage | Move routing | Deferred/backlog | Extra source lane |",
         "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |"
@@ -2406,6 +2931,36 @@ function formatWordCommonExpansionSelectorReport(report = {}) {
             lines.push(`   source level label: ${row.sourceLevelClaimLabel || SOURCE_LEVEL_CLAIM_LABEL} (${row.sourceLevelClaimStatus || SOURCE_LEVEL_CLAIM_STATUS})`);
             if (Number.isInteger(row.frequencyRank)) {
                 lines.push(`   commonness rank: ${row.frequencyRank}`);
+            }
+            if (row.frequencyEvidence?.primary) {
+                const evidence = row.frequencyEvidence.primary;
+                const parts = [
+                    evidence.source || row.frequencyRankSource || "frequency-support",
+                    `band ${row.frequencyBand || normalizeFrequencyEvidenceBand(evidence.frequencyBand)}`,
+                    `match ${row.frequencyMatchStatus || normalizeFrequencyMatchStatus(evidence.frequencyMatchStatus) || "missing"}`,
+                ];
+                if (Number.isInteger(row.tubelexRank)) {
+                    parts.push(`tubelex rank ${row.tubelexRank}`);
+                }
+                if (Number.isInteger(row.tubelexCount)) {
+                    parts.push(`count ${row.tubelexCount}`);
+                }
+                if (Number.isInteger(row.tubelexVideoCount)) {
+                    parts.push(`videos ${row.tubelexVideoCount}`);
+                }
+                if (Number.isInteger(row.tubelexChannelCount)) {
+                    parts.push(`channels ${row.tubelexChannelCount}`);
+                }
+                if (Number.isFinite(row.tubelexDispersionScore)) {
+                    parts.push(`dispersion ${row.tubelexDispersionScore}`);
+                }
+                if (Number.isFinite(row.tubelexCategoryConcentration)) {
+                    parts.push(`category concentration ${row.tubelexCategoryConcentration}`);
+                }
+                lines.push(`   frequency evidence: ${parts.join("; ")}`);
+                if (row.frequencyReason) {
+                    lines.push(`   frequency reason: ${row.frequencyReason}`);
+                }
             }
             lines.push(`   learner utility: ${formatLearnerUtilityLine(row.learnerUtility)}`);
             lines.push(`   utility penalties: ${formatLearnerUtilityPenalties(row.learnerUtility)}`);

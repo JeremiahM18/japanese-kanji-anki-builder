@@ -28,6 +28,7 @@ test("parseArgs supports common expansion selector options", () => {
         source: "",
         commonPoolLimit: 200,
         commonPoolMode: "editorial",
+        frequencySource: "",
         sourceEvidence: "templates/jlpt_word_source_evidence.json",
         strict: true,
         triage: "templates/triage.json",
@@ -53,6 +54,7 @@ test("common expansion selector defaults to all JLPT levels", () => {
     assert.equal(options.placementMode, "kanji-anchor");
     assert.equal(options.commonPoolLimit, 200);
     assert.equal(options.commonPoolMode, "editorial");
+    assert.equal(parseArgs(["--frequency-source=tubelex-ja-frequency"]).frequencySource, "tubelex-ja-frequency");
     assert.equal(options.sourceEvidence, "templates/jlpt_word_source_evidence.json");
     assert.equal(
         resolveManifestPath(""),

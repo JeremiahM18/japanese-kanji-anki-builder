@@ -336,6 +336,7 @@ function addSourceRowsToLevels({
                         triageDecisions: [],
                         dictionaryVerified: false,
                         frequencySupported: false,
+                        frequencyEvidence: [],
                         sentenceSupported: Boolean(starterEntries?.[key]?.exampleSentence),
                         pitchSupported: Boolean(wordPitchAccentData?.entries?.[key]),
                     });
@@ -418,7 +419,16 @@ function addSourceAppearance(candidate, sourceId, source, row, {
             allowedUse: source.allowedUse || [],
             sourceLevel: row.sourceLevel,
             frequencyRank: row.frequencyRank,
+            frequencyRankSource: row.frequencyRankSource || "",
+            frequencyEvidence: row.frequencyEvidence || null,
         });
+    }
+    if (row.frequencyEvidence && !candidate.frequencyEvidence.some((evidence) => (
+        evidence.source === row.frequencyEvidence.source
+        && evidence.frequencyRank === row.frequencyEvidence.frequencyRank
+        && evidence.frequencyMatchStatus === row.frequencyEvidence.frequencyMatchStatus
+    ))) {
+        candidate.frequencyEvidence.push(row.frequencyEvidence);
     }
     const triageDecision = getTriageDecision({
         triageDecisionsByLevelSource,

@@ -78,6 +78,7 @@
     "data:obsidian:proof:sqlite": "node scripts/buildObsidianProofSqlite.js",
     "data:obsidian:proof:sqlite:query": "node scripts/queryObsidianProofSqlite.js",
     "data:obsidian:proof:provider-parity": "node scripts/reportObsidianProofProviderParity.js",
+    "data:migrate:word-sapphire-slim": "node scripts/slimWordSapphireReviewSets.js",
     "data:audit:stroke-order": "node scripts/auditStrokeOrderPolicy.js",
     "media:review:audio": "node scripts/reportAudioReview.js",
     "media:review:word-audio": "node scripts/reportWordAudioReview.js",

@@ -43,8 +43,28 @@ function buildWordPitchAccentData(overrides = {}) {
     };
 }
 
+function buildGoldExpectationFromEntry(entry = {}) {
+    return {
+        word: entry.word,
+        readingIncludes: entry.readingIncludes,
+        meaningIncludes: entry.meaningIncludes,
+        jlptLevelIncludes: entry.jlptLevelIncludes,
+        coverageRoleIncludes: entry.coverageRoleIncludes,
+        focusIncludes: entry.focusIncludes,
+        coversReadingIncludes: entry.coversReadingIncludes,
+        breakdownIncludes: entry.breakdownIncludes,
+        exampleIncludes: entry.exampleIncludes,
+        notesIncludes: entry.notesIncludes,
+    };
+}
+
 function evaluateWordPlatinum(options = {}) {
+    const entries = Array.isArray(options.entries) ? options.entries : [];
+    const hasGoldenExpectations = Object.prototype.hasOwnProperty.call(options, "goldenExpectations");
     return evaluatePlatinumWordReviewSet({
+        goldenExpectations: hasGoldenExpectations
+            ? options.goldenExpectations
+            : entries.map(buildGoldExpectationFromEntry),
         wordPitchAccentData: buildWordPitchAccentData(),
         kanjiLevelData: {
             今: { jlpt: 5 },

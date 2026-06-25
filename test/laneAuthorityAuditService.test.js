@@ -6,7 +6,7 @@ const {
     buildLaneAuthorityDuplicationReport,
 } = require("../src/services/laneAuthorityAuditService");
 
-test("lane authority duplication audit records the current transitional baseline", () => {
+test("lane authority duplication audit records word slimming progress and remaining kanji debt", () => {
     const report = buildLaneAuthorityDuplicationReport();
 
     assert.match(report.boundary, /Read-only transitional lane-authority audit/);
@@ -19,7 +19,7 @@ test("lane authority duplication audit records the current transitional baseline
     });
     assert.equal(report.word.n5.sapphireVsPlatinum.shared, 308);
     assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.readingIncludes, 308);
-    assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.qualityGates, 295);
+    assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.qualityGates, 0);
     assert.equal(report.word.n3.sapphireMinusPlatinum, 1030);
 
     for (const field of WORD_GOLD_FIELDS) {
@@ -27,6 +27,13 @@ test("lane authority duplication audit records the current transitional baseline
             Object.hasOwn(report.word.n5.goldVsSapphire.identicalByField, field),
             `audit must track Gold-owned word field ${field}`
         );
+        if (field !== "readingIncludes") {
+            assert.equal(
+                report.word.n5.goldVsSapphire.identicalByField[field],
+                0,
+                `word Sapphire must not duplicate Gold-owned ${field} after slimming`
+            );
+        }
     }
 
     assert.deepEqual(report.kanji.n5.counts, {

@@ -45,10 +45,10 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     assert.equal(report.snapshot.product.wordDenominator, 2463);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);
     assert.equal(report.snapshot.product.wordLockedDenominator, 1265);
-    assert.equal(report.snapshot.product.wordObsidianProof, 1000);
+    assert.equal(report.snapshot.product.wordObsidianProof, 1008);
     assert.equal(report.snapshot.product.wordN5Denominator, 546);
     assert.equal(report.snapshot.product.wordN4Denominator, 719);
-    assert.equal(report.snapshot.product.wordN5ObsidianProof, 300);
+    assert.equal(report.snapshot.product.wordN5ObsidianProof, 308);
     assert.equal(report.snapshot.product.wordN4ObsidianProof, 700);
 });
 
@@ -152,9 +152,9 @@ test("documentation status audit catches stale generated denominator docs", () =
     const files = readDocumentationFiles();
     files["docs/employer-overview.md"] = files["docs/employer-overview.md"]
         .replace("`2463` word rows", "`1470` word rows")
-        .replace("`2463/2463` across N5-N1 | `1000/2463`", "`1470/1470` across N5-N1 | `987/1470`");
+        .replace("`2463/2463` across N5-N1 | `1008/2463`", "`1470/1470` across N5-N1 | `987/1470`");
     files["docs/system-architecture.md"] = files["docs/system-architecture.md"]
-        .replace("| Words | 2463 | 1000 |", "| Words | 1470 | 987 |");
+        .replace("| Words | 2463 | 1008 |", "| Words | 1470 | 987 |");
 
     const report = auditDocumentationText({
         files,
@@ -177,8 +177,8 @@ test("documentation status audit catches stale generated denominator docs", () =
 test("documentation status audit catches Obsidian-decentered completed status wording", () => {
     const files = readDocumentationFiles();
     files["README.md"] = files["README.md"].replace(
-        "`300/546` strict word Obsidian-certified",
-        "`300` certified rows. Gold, readiness, tracked-source artifact, native Sapphire structural coverage, Platinum, and strict word Obsidian content certification pass at `300/546`",
+        "`308/546` strict word Obsidian-certified",
+        "`308` certified rows. Gold, readiness, tracked-source artifact, native Sapphire structural coverage, Platinum, and strict word Obsidian content certification pass at `308/546`",
     );
 
     const report = auditDocumentationText({

@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2483);
+    assert.equal(Object.keys(starterEntries).length, 2513);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 566,
+        5: 596,
     });
 });
 
@@ -8005,5 +8005,210 @@ test("tracked starter word data includes the ten N5 word v2 common-pool Silver b
         ["明後日|あさって", "<ruby>明後日<rt>あさって</rt></ruby>"],
         ["百円ショップ|ひゃくえんショップ", "<ruby>百<rt>ひゃく</rt></ruby><ruby>円<rt>えん</rt></ruby>ショップ"],
         ["お気に入り|おきにいり", "お<ruby>気<rt>き</rt></ruby>に<ruby>入<rt>い</rt></ruby>り"],
+    ]);
+});
+
+test("tracked starter word data includes the first N5 common-pool Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "前月|ぜんげつ",
+        "上書き|うわがき",
+        "食感|しょっかん",
+        "出来立て|できたて",
+        "何千|なんぜん",
+        "何百|なんびゃく",
+        "出勤|しゅっきん",
+        "出番|でばん",
+        "出来事|できごと",
+        "食生活|しょくせいかつ",
+    ];
+
+    assert.equal(batchKeys.length, 10);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 5, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n5"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assert.match(entry?.notes || "", /Silver-only/, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["前月|ぜんげつ", "前", "ぜん"],
+        ["前月|ぜんげつ", "月", "げつ"],
+        ["上書き|うわがき", "上", "うわ"],
+        ["上書き|うわがき", "書", "がき"],
+        ["食感|しょっかん", "食", "しょっ"],
+        ["出来立て|できたて", "出", "で"],
+        ["出来立て|できたて", "来", "き"],
+        ["何千|なんぜん", "何", "なん"],
+        ["何千|なんぜん", "千", "ぜん"],
+        ["何百|なんびゃく", "何", "なん"],
+        ["何百|なんびゃく", "百", "びゃく"],
+        ["出勤|しゅっきん", "出", "しゅっ"],
+        ["出番|でばん", "出", "で"],
+        ["出来事|できごと", "出", "で"],
+        ["出来事|できごと", "来", "き"],
+        ["食生活|しょくせいかつ", "食", "しょく"],
+        ["食生活|しょくせいかつ", "生", "せい"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["前月|ぜんげつ", "<ruby>前<rt>ぜん</rt></ruby><ruby>月<rt>げつ</rt></ruby>"],
+        ["上書き|うわがき", "<ruby>上<rt>うわ</rt></ruby><ruby>書き<rt>がき</rt></ruby>"],
+        ["食感|しょっかん", "<ruby>食<rt>しょっ</rt></ruby><ruby>感<rt>かん</rt></ruby>"],
+        ["出来立て|できたて", "<ruby>出<rt>で</rt></ruby><ruby>来<rt>き</rt></ruby><ruby>立て<rt>たて</rt></ruby>"],
+        ["何千|なんぜん", "<ruby>何<rt>なん</rt></ruby><ruby>千<rt>ぜん</rt></ruby>"],
+        ["何百|なんびゃく", "<ruby>何<rt>なん</rt></ruby><ruby>百<rt>びゃく</rt></ruby>"],
+        ["出勤|しゅっきん", "<ruby>出<rt>しゅっ</rt></ruby><ruby>勤<rt>きん</rt></ruby>"],
+        ["出番|でばん", "<ruby>出<rt>で</rt></ruby><ruby>番<rt>ばん</rt></ruby>"],
+        ["出来事|できごと", "<ruby>出<rt>で</rt></ruby><ruby>来<rt>き</rt></ruby><ruby>事<rt>ごと</rt></ruby>"],
+        ["食生活|しょくせいかつ", "<ruby>食<rt>しょく</rt></ruby><ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the second N5 common-pool Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "親友|しんゆう",
+        "人気者|にんきもの",
+        "人出|ひとで",
+        "人名|じんめい",
+        "祖父母|そふぼ",
+        "大部分|だいぶぶん",
+        "定時|ていじ",
+        "日光|にっこう",
+        "日食|にっしょく",
+        "日本酒|にほんしゅ",
+    ];
+
+    assert.equal(batchKeys.length, 10);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 5, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n5"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assert.match(entry?.notes || "", /Silver-only/, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["親友|しんゆう", "友", "ゆう"],
+        ["人気者|にんきもの", "人", "にん"],
+        ["人気者|にんきもの", "気", "き"],
+        ["人出|ひとで", "人", "ひと"],
+        ["人出|ひとで", "出", "で"],
+        ["人名|じんめい", "人", "じん"],
+        ["人名|じんめい", "名", "めい"],
+        ["祖父母|そふぼ", "父", "ふ"],
+        ["祖父母|そふぼ", "母", "ぼ"],
+        ["大部分|だいぶぶん", "大", "だい"],
+        ["大部分|だいぶぶん", "分", "ぶん"],
+        ["定時|ていじ", "時", "じ"],
+        ["日光|にっこう", "日", "にっ"],
+        ["日食|にっしょく", "日", "にっ"],
+        ["日食|にっしょく", "食", "しょく"],
+        ["日本酒|にほんしゅ", "日", "に"],
+        ["日本酒|にほんしゅ", "本", "ほん"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["親友|しんゆう", "<ruby>親<rt>しん</rt></ruby><ruby>友<rt>ゆう</rt></ruby>"],
+        ["人気者|にんきもの", "<ruby>人<rt>にん</rt></ruby><ruby>気<rt>き</rt></ruby><ruby>者<rt>もの</rt></ruby>"],
+        ["人出|ひとで", "<ruby>人<rt>ひと</rt></ruby><ruby>出<rt>で</rt></ruby>"],
+        ["人名|じんめい", "<ruby>人<rt>じん</rt></ruby><ruby>名<rt>めい</rt></ruby>"],
+        ["祖父母|そふぼ", "<ruby>祖<rt>そ</rt></ruby><ruby>父<rt>ふ</rt></ruby><ruby>母<rt>ぼ</rt></ruby>"],
+        ["大部分|だいぶぶん", "<ruby>大<rt>だい</rt></ruby><ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>"],
+        ["定時|ていじ", "<ruby>定<rt>てい</rt></ruby><ruby>時<rt>じ</rt></ruby>"],
+        ["日光|にっこう", "<ruby>日<rt>にっ</rt></ruby><ruby>光<rt>こう</rt></ruby>"],
+        ["日食|にっしょく", "<ruby>日<rt>にっ</rt></ruby><ruby>食<rt>しょく</rt></ruby>"],
+        ["日本酒|にほんしゅ", "<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>酒<rt>しゅ</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the third N5 common-pool Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "年下|としした",
+        "父子|ふし",
+        "本場|ほんば",
+        "衣食住|いしょくじゅう",
+        "一昔|ひとむかし",
+        "雨具|あまぐ",
+        "学割|がくわり",
+        "客間|きゃくま",
+        "敬語|けいご",
+        "再来週|さらいしゅう",
+    ];
+
+    assert.equal(batchKeys.length, 10);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 5, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n5"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assert.match(entry?.notes || "", /Silver-only/, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["年下|としした", "年", "とし"],
+        ["年下|としした", "下", "した"],
+        ["父子|ふし", "父", "ふ"],
+        ["父子|ふし", "子", "し"],
+        ["本場|ほんば", "本", "ほん"],
+        ["衣食住|いしょくじゅう", "食", "しょく"],
+        ["一昔|ひとむかし", "一", "ひと"],
+        ["雨具|あまぐ", "雨", "あま"],
+        ["学割|がくわり", "学", "がく"],
+        ["客間|きゃくま", "間", "ま"],
+        ["敬語|けいご", "語", "ご"],
+        ["再来週|さらいしゅう", "来", "らい"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["年下|としした", "<ruby>年<rt>とし</rt></ruby><ruby>下<rt>した</rt></ruby>"],
+        ["父子|ふし", "<ruby>父<rt>ふ</rt></ruby><ruby>子<rt>し</rt></ruby>"],
+        ["本場|ほんば", "<ruby>本<rt>ほん</rt></ruby><ruby>場<rt>ば</rt></ruby>"],
+        ["衣食住|いしょくじゅう", "<ruby>衣<rt>い</rt></ruby><ruby>食<rt>しょく</rt></ruby><ruby>住<rt>じゅう</rt></ruby>"],
+        ["一昔|ひとむかし", "<ruby>一<rt>ひと</rt></ruby><ruby>昔<rt>むかし</rt></ruby>"],
+        ["雨具|あまぐ", "<ruby>雨<rt>あま</rt></ruby><ruby>具<rt>ぐ</rt></ruby>"],
+        ["学割|がくわり", "<ruby>学<rt>がく</rt></ruby><ruby>割<rt>わり</rt></ruby>"],
+        ["客間|きゃくま", "<ruby>客<rt>きゃく</rt></ruby><ruby>間<rt>ま</rt></ruby>"],
+        ["敬語|けいご", "<ruby>敬<rt>けい</rt></ruby><ruby>語<rt>ご</rt></ruby>"],
+        ["再来週|さらいしゅう", "<ruby>再<rt>さ</rt></ruby><ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>"],
     ]);
 });

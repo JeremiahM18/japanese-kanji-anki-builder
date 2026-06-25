@@ -63,6 +63,21 @@ test("validateEvidenceSnippets accepts escaped generated snippets against unesca
     assert.deepEqual(failures, []);
 });
 
+test("validateEvidenceSnippets treats governed list separators as punctuation, not missing proof", () => {
+    const failures = validateEvidenceSnippets({
+        sourceEvidence: [{
+            type: "current-standard-review",
+            source: "manual review",
+            detail: "Current-standard review checked reading breakdown 本 （ほん）; book.",
+        }],
+        type: "current-standard-review",
+        label: "current-standard whole-card revalidation",
+        snippets: ["本 （ほん） ／ book"],
+    });
+
+    assert.deepEqual(failures, []);
+});
+
 test("validateJapaneseSourceEvidence supports single-kanji word checks without making kanji references general word dictionaries", () => {
     const sourceEvidence = japaneseEvidence({
         source: "https://www.kanjipedia.jp/kanji/0005127900; Bunka Joyo Kanji reading index",

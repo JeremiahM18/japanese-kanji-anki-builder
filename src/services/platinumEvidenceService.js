@@ -19,9 +19,10 @@ function normalizeText(value) {
 }
 
 function normalizeForEvidence(value) {
-    return decodeHtmlEntities(normalizeText(value)
+    return normalizeText(decodeHtmlEntities(normalizeText(value))
         .replace(/<ruby>(.*?)<rt>.*?<\/rt><\/ruby>/gu, "$1")
         .replace(/<[^>]+>/g, " ")
+        .replace(/[／/;]+/g, " ")
         .replace(/\s+/g, " "))
         .toLowerCase();
 }

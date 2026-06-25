@@ -107,6 +107,12 @@ function validateCandidateEntries(candidateEntries = [], rows = [], { goldenExpe
     if (inactiveCandidates.length > 0) {
         throw new Error(`Sapphire word promoter only accepts active Sapphire candidates: ${inactiveCandidates.join(", ")}`);
     }
+    const platinumReviewerCandidates = candidates
+        .filter((entry) => /platinum/i.test(normalizeText(entry.reviewer)))
+        .map(formatEntryIdentity);
+    if (platinumReviewerCandidates.length > 0) {
+        throw new Error(`Sapphire word candidates must not use Platinum reviewer identity: ${platinumReviewerCandidates.join(", ")}`);
+    }
 
     const duplicateIdentities = findDuplicateWordIdentities(candidates);
     if (duplicateIdentities.length > 0) {

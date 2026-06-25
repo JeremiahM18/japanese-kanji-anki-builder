@@ -5,6 +5,10 @@ const {
     buildWordGoldPreconditionFailuresByKey,
     mergeFailuresIntoResult,
 } = require("./reviewLanePreconditionService");
+const {
+    buildResolvedWordFields,
+    resolveWordGoldExpectation,
+} = require("./reviewLaneContextService");
 
 const ACTIVE_WORD_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 const NON_SHIPPING_STATUSES = platinumWordReview.NON_SHIPPING_STATUSES;
@@ -393,6 +397,7 @@ function validateGeneratedWordStructuralRow(row = {}) {
 }
 
 function validateActiveSapphireWordEntry(entry = {}, {
+    goldExpectation = null,
     requireCurrentReviewStandard = false,
     row = null,
 } = {}) {
@@ -403,15 +408,7 @@ function validateActiveSapphireWordEntry(entry = {}, {
     }
     for (const field of [
         "readingIncludes",
-        "meaningIncludes",
-        "jlptLevelIncludes",
-        "coverageRoleIncludes",
-        "focusIncludes",
-        "coversReadingIncludes",
-        "breakdownIncludes",
-        "exampleIncludes",
         "pitchAccentIncludes",
-        "notesIncludes",
     ]) {
         if (normalizeStringArray(entry[field]).length === 0) {
             failures.push(`${field} must protect the generated word-card field`);
@@ -429,8 +426,8 @@ function validateActiveSapphireWordEntry(entry = {}, {
     if (entry.platinumReviewAudit !== undefined) {
         failures.push("Sapphire entries must not include platinumReviewAudit");
     }
-    if (entry.qualityGates !== undefined && (typeof entry.qualityGates !== "object" || Array.isArray(entry.qualityGates))) {
-        failures.push("qualityGates must be an object when present");
+    if (entry.qualityGates !== undefined) {
+        failures.push("Sapphire entries must not include Platinum qualityGates");
     }
     if (
         requireCurrentReviewStandard
@@ -441,30 +438,34 @@ function validateActiveSapphireWordEntry(entry = {}, {
         failures.push(...validateCurrentWordSapphireEvidenceLaneStructure(entry));
     }
     if (row) {
+        const resolvedFields = buildResolvedWordFields({
+            entry,
+            goldExpectation,
+        });
         failures.push(...validateGeneratedWordStructuralRow(row));
-        if (Array.isArray(entry.readingIncludes) && !includesAll(row.reading, entry.readingIncludes)) {
-            failures.push(`reading field did not include protected snippet: ${entry.readingIncludes.join(", ")}`);
+        if (resolvedFields.readingIncludes.length > 0 && !includesAll(row.reading, resolvedFields.readingIncludes)) {
+            failures.push(`reading field did not include Gold-protected snippet: ${resolvedFields.readingIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.meaningIncludes) && !includesAll(row.meaning, entry.meaningIncludes)) {
-            failures.push(`meaning field did not include protected snippet: ${entry.meaningIncludes.join(", ")}`);
+        if (resolvedFields.meaningIncludes.length > 0 && !includesAll(row.meaning, resolvedFields.meaningIncludes)) {
+            failures.push(`meaning field did not include Gold-protected snippet: ${resolvedFields.meaningIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.jlptLevelIncludes) && !includesAll(row.jlptLevel, entry.jlptLevelIncludes)) {
-            failures.push(`JLPT level field did not include protected snippet: ${entry.jlptLevelIncludes.join(", ")}`);
+        if (resolvedFields.jlptLevelIncludes.length > 0 && !includesAll(row.jlptLevel, resolvedFields.jlptLevelIncludes)) {
+            failures.push(`JLPT level field did not include Gold-protected snippet: ${resolvedFields.jlptLevelIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.coverageRoleIncludes) && !includesAll(row.coverageRole, entry.coverageRoleIncludes)) {
-            failures.push(`coverage role field did not include protected snippet: ${entry.coverageRoleIncludes.join(", ")}`);
+        if (resolvedFields.coverageRoleIncludes.length > 0 && !includesAll(row.coverageRole, resolvedFields.coverageRoleIncludes)) {
+            failures.push(`coverage role field did not include Gold-protected snippet: ${resolvedFields.coverageRoleIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.breakdownIncludes) && !includesAllBreakdownSnippets(`${row.readingBreakdown} ${row.kanjiBreakdown}`, entry.breakdownIncludes)) {
-            failures.push(`reading/kanji breakdown fields did not include protected snippet: ${entry.breakdownIncludes.join(", ")}`);
+        if (resolvedFields.breakdownIncludes.length > 0 && !includesAllBreakdownSnippets(`${row.readingBreakdown} ${row.kanjiBreakdown}`, resolvedFields.breakdownIncludes)) {
+            failures.push(`reading/kanji breakdown fields did not include Gold-protected snippet: ${resolvedFields.breakdownIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.exampleIncludes) && !includesAll(row.exampleSentence, entry.exampleIncludes)) {
-            failures.push(`example field did not include protected snippet: ${entry.exampleIncludes.join(", ")}`);
+        if (resolvedFields.exampleIncludes.length > 0 && !includesAll(row.exampleSentence, resolvedFields.exampleIncludes)) {
+            failures.push(`example field did not include Gold-protected snippet: ${resolvedFields.exampleIncludes.join(", ")}`);
         }
         if (Array.isArray(entry.pitchAccentIncludes) && !includesAllLiteral(row.pitchAccent, entry.pitchAccentIncludes)) {
             failures.push(`pitch accent field did not include protected snippet: ${entry.pitchAccentIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.notesIncludes) && !includesAll(row.notes, entry.notesIncludes)) {
-            failures.push(`notes field did not include protected snippet: ${entry.notesIncludes.join(", ")}`);
+        if (resolvedFields.notesIncludes.length > 0 && !includesAll(row.notes, resolvedFields.notesIncludes)) {
+            failures.push(`notes field did not include Gold-protected snippet: ${resolvedFields.notesIncludes.join(", ")}`);
         }
         for (const reading of normalizeStringArray(entry.readingIncludes)) {
             const expectedAudioFragment = `word-reading-${entry.word}-${reading}`;
@@ -500,6 +501,7 @@ function validateNonShippingEntry(entry = {}) {
 }
 
 function evaluateSapphireWordEntry({
+    goldExpectation = null,
     requireCurrentReviewStandard = false,
     rows = [],
     entry = {},
@@ -520,6 +522,7 @@ function evaluateSapphireWordEntry({
             failures.push("active Sapphire word could not be generated");
         } else {
             failures.push(...validateActiveSapphireWordEntry(entry, {
+                goldExpectation,
                 requireCurrentReviewStandard,
                 row,
             }));
@@ -599,6 +602,10 @@ function evaluateSapphireWordReviewSet({
         evaluateSapphireWordEntry({
             rows: generatedRows,
             entry,
+            goldExpectation: resolveWordGoldExpectation({
+                entry,
+                goldenExpectations,
+            }).entry,
             requireCurrentReviewStandard,
         }),
         goldPreconditionFailures.get(buildWordEntryIdentity(entry))

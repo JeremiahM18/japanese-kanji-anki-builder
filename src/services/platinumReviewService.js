@@ -7,6 +7,11 @@ const {
     validatePlatinumLaneAuthorityBoundary,
 } = require("./reviewLanePreconditionService");
 const {
+    buildResolvedWordFields,
+    resolveCurrentStandardWordSapphireEntry,
+    resolveWordGoldExpectation,
+} = require("./reviewLaneContextService");
+const {
     extractRenderedPitchAccentPattern,
     parsePitchAccentPattern,
 } = require("./pitchAccentRenderService");
@@ -233,9 +238,6 @@ function validateCurrentWordPlatinumReviewStandard(entry = {}) {
             }
         }
     }
-    if (normalizeStringArray(entry.notesIncludes).length === 0) {
-        failures.push("notesIncludes must protect the notes/support surface for the current word platinum standard");
-    }
     if (!reviewEvidenceTypes.has("current-standard-review")) {
         failures.push("reviewEvidence must include evidence type: current-standard-review for the current word platinum standard");
     }
@@ -354,8 +356,21 @@ function findDuplicateValues(values = []) {
     return [...duplicates].sort();
 }
 
-function validateActivePlatinumEntry(entry = {}, { requireCurrentReviewStandard = false } = {}) {
+function resolveEvidenceLane(entry = {}, sapphireEntry = {}, laneName = "") {
+    return Array.isArray(entry[laneName]) ? entry[laneName] : sapphireEntry?.[laneName];
+}
+
+function validateActivePlatinumEntry(entry = {}, {
+    goldExpectation = null,
+    requireCurrentReviewStandard = false,
+    sapphireEntry = null,
+} = {}) {
     const failures = [];
+    const resolvedFields = buildResolvedWordFields({
+        entry,
+        goldExpectation,
+        sapphireEntry,
+    });
 
     if (!normalizeText(entry.word)) {
         failures.push("word is required");
@@ -363,28 +378,28 @@ function validateActivePlatinumEntry(entry = {}, { requireCurrentReviewStandard 
     if (normalizeStringArray(entry.readingIncludes).length === 0) {
         failures.push("readingIncludes must name the exact reviewed reading");
     }
-    if (normalizeStringArray(entry.meaningIncludes).length === 0) {
-        failures.push("meaningIncludes must protect the learner-facing meaning");
+    if (resolvedFields.meaningIncludes.length === 0) {
+        failures.push("Gold-owned meaningIncludes must protect the learner-facing meaning");
     }
-    if (normalizeStringArray(entry.jlptLevelIncludes).length === 0) {
-        failures.push("jlptLevelIncludes must protect the displayed level label");
+    if (resolvedFields.jlptLevelIncludes.length === 0) {
+        failures.push("Gold-owned jlptLevelIncludes must protect the displayed level label");
     }
-    if (normalizeStringArray(entry.coverageRoleIncludes).length === 0) {
-        failures.push("coverageRoleIncludes must protect the card role");
+    if (resolvedFields.coverageRoleIncludes.length === 0) {
+        failures.push("Gold-owned coverageRoleIncludes must protect the card role");
     }
-    if (normalizeStringArray(entry.breakdownIncludes).length === 0) {
-        failures.push("breakdownIncludes must protect the reading and kanji breakdown");
+    if (resolvedFields.breakdownIncludes.length === 0) {
+        failures.push("Gold-owned breakdownIncludes must protect the reading and kanji breakdown");
     }
-    if (normalizeStringArray(entry.focusIncludes).length === 0) {
-        failures.push("focusIncludes must protect the reviewed focus kanji");
+    if (resolvedFields.focusIncludes.length === 0) {
+        failures.push("Gold-owned focusIncludes must protect the reviewed focus kanji");
     }
-    if (normalizeStringArray(entry.coversReadingIncludes).length === 0) {
-        failures.push("coversReadingIncludes must protect the reviewed reading-coverage labels");
+    if (resolvedFields.coversReadingIncludes.length === 0) {
+        failures.push("Gold-owned coversReadingIncludes must protect the reviewed reading-coverage labels");
     }
-    if (normalizeStringArray(entry.exampleIncludes).length === 0) {
-        failures.push("exampleIncludes must protect the release-quality example");
+    if (resolvedFields.exampleIncludes.length === 0) {
+        failures.push("Gold-owned exampleIncludes must protect the release-quality example");
     }
-    if (normalizeStringArray(entry.pitchAccentIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.pitchAccentIncludes).length === 0) {
         failures.push("pitchAccentIncludes must protect the reviewed pitch accent");
     }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(normalizeText(entry.reviewedAt))) {
@@ -398,17 +413,20 @@ function validateActivePlatinumEntry(entry = {}, { requireCurrentReviewStandard 
     }
     failures.push(...validatePlatinumLaneAuthorityBoundary({ deckKind: "word", entry }));
 
-    const sourceEvidence = normalizeEvidenceEntries(entry.sourceEvidence);
-    failures.push(...validateStructuredEvidenceLane(entry.sourceEvidence, {
+    const sourceEvidenceLane = resolveEvidenceLane(entry, sapphireEntry, "sourceEvidence");
+    const internalChecksLane = resolveEvidenceLane(entry, sapphireEntry, "internalChecks");
+    const reviewEvidenceLane = resolveEvidenceLane(entry, sapphireEntry, "reviewEvidence");
+    const sourceEvidence = normalizeEvidenceEntries(sourceEvidenceLane);
+    failures.push(...validateStructuredEvidenceLane(sourceEvidenceLane, {
         fieldName: "sourceEvidence",
         requiredTypes: REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
         blockedTypes: BLOCKED_WORD_EVIDENCE_TYPES,
     }));
-    failures.push(...validateStructuredEvidenceLane(entry.internalChecks, {
+    failures.push(...validateStructuredEvidenceLane(internalChecksLane, {
         fieldName: "internalChecks",
         requiredTypes: REQUIRED_WORD_INTERNAL_CHECK_TYPES,
     }));
-    failures.push(...validateStructuredEvidenceLane(entry.reviewEvidence, {
+    failures.push(...validateStructuredEvidenceLane(reviewEvidenceLane, {
         fieldName: "reviewEvidence",
         requiredTypes: REQUIRED_WORD_REVIEW_EVIDENCE_TYPES,
         blockedTypes: ["golden-review"],
@@ -488,18 +506,25 @@ function validateWordVerificationLimitations(entry = {}) {
 
 function validateWordEvidenceBindings({
     entry = {},
+    goldExpectation = null,
     requireCurrentReviewStandard = false,
     row = {},
+    sapphireEntry = null,
     sourcePitchAccent = null,
 } = {}) {
     const failures = [];
+    const resolvedFields = buildResolvedWordFields({
+        entry,
+        goldExpectation,
+        sapphireEntry,
+    });
     const readings = normalizeStringArray(entry.readingIncludes);
     const reading = readings[0] || row.reading;
     const wordLabel = `${entry.word}|${reading}`;
     const expectedAudioFragment = `word-reading-${entry.word}-${reading}`;
-    const sourceEvidence = entry.sourceEvidence || [];
-    const internalChecks = entry.internalChecks || [];
-    const reviewEvidence = entry.reviewEvidence || [];
+    const sourceEvidence = resolveEvidenceLane(entry, sapphireEntry, "sourceEvidence") || [];
+    const internalChecks = resolveEvidenceLane(entry, sapphireEntry, "internalChecks") || [];
+    const reviewEvidence = resolveEvidenceLane(entry, sapphireEntry, "reviewEvidence") || [];
     const requiresCurrentStandardEvidence = (
         requireCurrentReviewStandard
         || entry.reviewStandard !== undefined
@@ -517,19 +542,19 @@ function validateWordEvidenceBindings({
         sourceEvidence,
         type: "japanese-source",
         label: "written form, reading, meaning, and example",
-        snippets: [wordLabel, ...readings, ...normalizeStringArray(entry.meaningIncludes), ...normalizeStringArray(entry.exampleIncludes)],
+        snippets: [wordLabel, ...readings, ...resolvedFields.meaningIncludes, ...resolvedFields.exampleIncludes],
     }));
     failures.push(...validateEvidenceSnippets({
         sourceEvidence: internalChecks,
         type: "level-contract",
         label: "word level placement",
-        snippets: [wordLabel, ...normalizeStringArray(entry.jlptLevelIncludes)],
+        snippets: [wordLabel, ...resolvedFields.jlptLevelIncludes],
     }));
     failures.push(...validateEvidenceSnippets({
         sourceEvidence: reviewEvidence,
         type: "example-review",
         label: "example sentence and reading",
-        snippets: [wordLabel, ...readings, ...normalizeStringArray(entry.exampleIncludes)],
+        snippets: [wordLabel, ...readings, ...resolvedFields.exampleIncludes],
     }));
     failures.push(...validateEvidenceSnippets({
         sourceEvidence: internalChecks,
@@ -557,7 +582,7 @@ function validateWordEvidenceBindings({
             wordLabel,
             sourcePitchAccent?.sourceId,
             sourcePitchAccent?.pattern,
-            ...normalizeStringArray(entry.pitchAccentIncludes),
+            ...normalizeStringArray(resolvedFields.pitchAccentIncludes),
         ],
     }));
     failures.push(...validateEvidenceSnippets({
@@ -566,10 +591,10 @@ function validateWordEvidenceBindings({
         label: "JLPT, coverage, focus, and reading labels",
         snippets: [
             wordLabel,
-            ...normalizeStringArray(entry.jlptLevelIncludes),
-            ...normalizeStringArray(entry.coverageRoleIncludes),
-            ...normalizeStringArray(entry.focusIncludes),
-            ...normalizeStringArray(entry.coversReadingIncludes),
+            ...resolvedFields.jlptLevelIncludes,
+            ...resolvedFields.coverageRoleIncludes,
+            ...resolvedFields.focusIncludes,
+            ...resolvedFields.coversReadingIncludes,
         ],
     }));
     failures.push(...validateEvidenceSnippets({
@@ -582,15 +607,15 @@ function validateWordEvidenceBindings({
         const currentStandardSnippets = [
             wordLabel,
             ...readings,
-            ...normalizeStringArray(entry.meaningIncludes),
-            ...normalizeStringArray(entry.exampleIncludes),
-            ...normalizeStringArray(entry.breakdownIncludes),
-            ...normalizeStringArray(entry.jlptLevelIncludes),
-            ...normalizeStringArray(entry.coverageRoleIncludes),
-            ...normalizeStringArray(entry.focusIncludes),
-            ...normalizeStringArray(entry.coversReadingIncludes),
-            ...normalizeStringArray(entry.notesIncludes),
-            ...normalizeStringArray(entry.pitchAccentIncludes),
+            ...resolvedFields.meaningIncludes,
+            ...resolvedFields.exampleIncludes,
+            ...resolvedFields.breakdownIncludes,
+            ...resolvedFields.jlptLevelIncludes,
+            ...resolvedFields.coverageRoleIncludes,
+            ...resolvedFields.focusIncludes,
+            ...resolvedFields.coversReadingIncludes,
+            ...resolvedFields.notesIncludes,
+            ...normalizeStringArray(resolvedFields.pitchAccentIncludes),
             sourcePitchAccent?.sourceId,
             sourcePitchAccent?.pattern,
             expectedAudioFragment,
@@ -726,9 +751,11 @@ function validateSameLevelWordAnchor({ row = {}, entry = {}, kanjiLevelData = nu
 }
 
 function evaluatePlatinumEntry({
+    goldExpectation = null,
     requireCurrentReviewStandard = false,
     rows = [],
     entry = {},
+    sapphireEntry = null,
     wordPitchAccentData = {},
     kanjiLevelData = null,
 } = {}) {
@@ -741,26 +768,39 @@ function evaluatePlatinumEntry({
     }
 
     if (ACTIVE_PLATINUM_STATUSES.includes(status)) {
-        failures.push(...validateActivePlatinumEntry(entry, { requireCurrentReviewStandard }));
+        failures.push(...validateActivePlatinumEntry(entry, {
+            goldExpectation,
+            requireCurrentReviewStandard,
+            sapphireEntry,
+        }));
         const row = findWordRowForEntry(rows, entry);
         if (row?.error) {
             failures.push(row.error);
         } else if (!row) {
             failures.push("active platinum word could not be generated");
         } else {
+            const resolvedFields = buildResolvedWordFields({
+                entry,
+                goldExpectation,
+                sapphireEntry,
+            });
             failures.push(...validateGeneratedPlatinumRow(row));
             failures.push(...validateSameLevelWordAnchor({ row, entry, kanjiLevelData }));
             // Golden word review is regression coverage for exported fields, not Japanese-source truth.
-            const goldenRegressionFieldReport = evaluateGoldenWordReviewSet({ rows, expectations: [entry] });
-            const goldenRegressionFieldResult = goldenRegressionFieldReport.results?.[0];
-            if (goldenRegressionFieldResult && !goldenRegressionFieldResult.passed) {
-                failures.push(...goldenRegressionFieldResult.failures);
+            if (!goldExpectation) {
+                failures.push("active Platinum word requires resolved Gold expectation for field regression");
+            } else {
+                const goldenRegressionFieldReport = evaluateGoldenWordReviewSet({ rows, expectations: [goldExpectation] });
+                const goldenRegressionFieldResult = goldenRegressionFieldReport.results?.[0];
+                if (goldenRegressionFieldResult && !goldenRegressionFieldResult.passed) {
+                    failures.push(...goldenRegressionFieldResult.failures);
+                }
+                if (goldenRegressionFieldReport.coverageFailures?.length > 0) {
+                    failures.push(...goldenRegressionFieldReport.coverageFailures);
+                }
             }
-            if (goldenRegressionFieldReport.coverageFailures?.length > 0) {
-                failures.push(...goldenRegressionFieldReport.coverageFailures);
-            }
-            if (!includesAllLiteral(row.pitchAccent, entry.pitchAccentIncludes)) {
-                failures.push(`pitch accent did not include: ${normalizeStringArray(entry.pitchAccentIncludes).join(", ")}`);
+            if (!includesAllLiteral(row.pitchAccent, normalizeStringArray(resolvedFields.pitchAccentIncludes))) {
+                failures.push(`pitch accent did not include: ${normalizeStringArray(resolvedFields.pitchAccentIncludes).join(", ")}`);
             }
             for (const reading of normalizeStringArray(entry.readingIncludes)) {
                 const expectedAudioFragment = `word-reading-${entry.word}-${reading}`;
@@ -775,8 +815,10 @@ function evaluatePlatinumEntry({
             const sourcePitchAccent = wordPitchAccentData?.entries?.[wordKey] || null;
             failures.push(...validateWordEvidenceBindings({
                 entry,
+                goldExpectation,
                 requireCurrentReviewStandard,
                 row,
+                sapphireEntry,
                 sourcePitchAccent,
             }));
             const expectedAccents = parsePitchAccentPattern(sourcePitchAccent?.pattern || "");
@@ -902,6 +944,14 @@ function evaluatePlatinumWordReviewSet({
         : new Map();
     const results = reviewEntries.map((entry) => {
         const identity = buildWordEntryIdentity(entry);
+        const goldContext = resolveWordGoldExpectation({
+            entry,
+            goldenExpectations,
+        });
+        const sapphireContext = resolveCurrentStandardWordSapphireEntry({
+            entry,
+            sapphireEntries,
+        });
         const preconditionFailures = [
             ...(goldPreconditionFailures.get(identity) || []),
             ...(sapphirePreconditionFailures.get(identity) || []),
@@ -909,6 +959,8 @@ function evaluatePlatinumWordReviewSet({
         return mergeFailuresIntoResult(evaluatePlatinumEntry({
             rows: generatedRows,
             entry,
+            goldExpectation: goldContext.entry,
+            sapphireEntry: sapphireContext.entry,
             wordPitchAccentData,
             kanjiLevelData,
             requireCurrentReviewStandard,

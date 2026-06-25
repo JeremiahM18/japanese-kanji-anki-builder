@@ -40,13 +40,21 @@ function normalizePitchSourceLabel(sourceEntry = {}, sources = {}) {
         : "";
 }
 
-function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
+function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}, goldenExpectations = []) {
     return activeEntries(entries).map((entry) => {
         const reading = normalizeList(entry.readingIncludes)[0] || "";
         const wordKey = buildWordStudyEntryKey({
             written: entry.word,
             reading,
         });
+        const goldEntry = goldenExpectations.find((expectation) => buildWordStudyEntryKey({
+            written: expectation.word,
+            reading: normalizeList(expectation.readingIncludes)[0],
+        }) === wordKey) || {};
+        const protectedList = (field) => {
+            const goldValues = normalizeList(goldEntry[field]);
+            return goldValues.length > 0 ? goldValues : normalizeList(entry[field]);
+        };
         const sourcePitchAccent = wordPitchAccentData.entries?.[wordKey] || {};
         const pitchAccent = buildPitchAccentHtml({
             pattern: sourcePitchAccent.pattern || "",
@@ -57,17 +65,17 @@ function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
         return {
             word: entry.word,
             reading,
-            readingBreakdown: normalizeList(entry.breakdownIncludes).join(" / "),
+            readingBreakdown: protectedList("breakdownIncludes").join(" / "),
             audio: `[sound:word-reading-${entry.word}-${reading}.wav]`,
             pitchAccent,
-            meaning: normalizeList(entry.meaningIncludes).join(" / "),
-            jlptLevel: normalizeList(entry.jlptLevelIncludes)[0] || "",
-            coverageRole: normalizeList(entry.coverageRoleIncludes).join(" / "),
-            focusKanji: normalizeList(entry.focusIncludes).join("、"),
-            coversReading: normalizeList(entry.coversReadingIncludes).join(" ／ "),
-            kanjiBreakdown: normalizeList(entry.breakdownIncludes).join(" ／ "),
-            exampleSentence: normalizeList(entry.exampleIncludes).join(" / "),
-            notes: normalizeList(entry.notesIncludes).join(" / "),
+            meaning: protectedList("meaningIncludes").join(" / "),
+            jlptLevel: protectedList("jlptLevelIncludes")[0] || "",
+            coverageRole: protectedList("coverageRoleIncludes").join(" / "),
+            focusKanji: protectedList("focusIncludes").join("、"),
+            coversReading: protectedList("coversReadingIncludes").join(" ／ "),
+            kanjiBreakdown: protectedList("breakdownIncludes").join(" ／ "),
+            exampleSentence: protectedList("exampleIncludes").join(" / "),
+            notes: protectedList("notesIncludes").join(" / "),
         };
     });
 }
@@ -206,6 +214,7 @@ test("tracked populated word Sapphire manifests bind evidence to protected field
     for (const level of [3, 4, 5]) {
         const fileName = `sapphire_n${level}_word_review_set.json`;
         const entries = loadJson(path.join("templates", fileName));
+        const goldenExpectations = loadJson(path.join("templates", `golden_n${level}_word_review_set.json`));
         const manifestActiveEntries = activeEntries(entries);
         const activeWordKeys = manifestActiveEntries.map((entry) =>
             buildWordStudyEntryKey({
@@ -219,8 +228,9 @@ test("tracked populated word Sapphire manifests bind evidence to protected field
         }
 
         const report = evaluateSapphireWordReviewSet({
-            rows: buildSyntheticWordRows(manifestActiveEntries, wordPitchAccentData),
+            rows: buildSyntheticWordRows(manifestActiveEntries, wordPitchAccentData, goldenExpectations),
             entries: manifestActiveEntries,
+            goldenExpectations,
             wordPitchAccentData,
         });
 
@@ -234,8 +244,8 @@ test("Sapphire word evaluator requires prior Gold when precondition enforcement 
         loadJson(path.join("templates", "sapphire_n5_word_review_set.json"))
             .find((entry) => ACTIVE_WORD_SAPPHIRE_STATUSES.includes(entry.status))
     ));
-    const rows = buildSyntheticWordRows([candidate], wordPitchAccentData);
     const goldenExpectations = loadJson(path.join("templates", "golden_n5_word_review_set.json"));
+    const rows = buildSyntheticWordRows([candidate], wordPitchAccentData, goldenExpectations);
 
     const passingReport = evaluateSapphireWordReviewSet({
         rows,
@@ -264,6 +274,18 @@ test("Sapphire word evaluator protects kanji breakdown snippets alongside readin
             .find((entry) => ACTIVE_WORD_SAPPHIRE_STATUSES.includes(entry.status))
     ));
     const reading = normalizeList(candidate.readingIncludes)[0];
+    const goldenExpectations = loadJson(path.join("templates", "golden_n5_word_review_set.json"));
+    const goldEntry = goldenExpectations.find((expectation) => buildWordStudyEntryKey({
+        written: expectation.word,
+        reading: normalizeList(expectation.readingIncludes)[0],
+    }) === buildWordStudyEntryKey({
+        written: candidate.word,
+        reading,
+    })) || {};
+    const protectedList = (field) => {
+        const goldValues = normalizeList(goldEntry[field]);
+        return goldValues.length > 0 ? goldValues : normalizeList(candidate[field]);
+    };
     const wordKey = buildWordStudyEntryKey({
         written: candidate.word,
         reading,
@@ -279,19 +301,20 @@ test("Sapphire word evaluator protects kanji breakdown snippets alongside readin
         readingBreakdown: `<ruby>${candidate.word}<rt>${reading}</rt></ruby>`,
         audio: `[sound:word-reading-${candidate.word}-${reading}.wav]`,
         pitchAccent,
-        meaning: normalizeList(candidate.meaningIncludes).join(" / "),
-        jlptLevel: normalizeList(candidate.jlptLevelIncludes)[0],
-        coverageRole: normalizeList(candidate.coverageRoleIncludes).join(" / "),
-        focusKanji: normalizeList(candidate.focusIncludes).join("、"),
-        coversReading: normalizeList(candidate.coversReadingIncludes).join(" ／ "),
-        kanjiBreakdown: normalizeList(candidate.breakdownIncludes).join(" ／ "),
-        exampleSentence: normalizeList(candidate.exampleIncludes).join(" / "),
-        notes: normalizeList(candidate.notesIncludes).join(" / "),
+        meaning: protectedList("meaningIncludes").join(" / "),
+        jlptLevel: protectedList("jlptLevelIncludes")[0],
+        coverageRole: protectedList("coverageRoleIncludes").join(" / "),
+        focusKanji: protectedList("focusIncludes").join("、"),
+        coversReading: protectedList("coversReadingIncludes").join(" ／ "),
+        kanjiBreakdown: protectedList("breakdownIncludes").join(" ／ "),
+        exampleSentence: protectedList("exampleIncludes").join(" / "),
+        notes: protectedList("notesIncludes").join(" / "),
     };
 
     const report = evaluateSapphireWordReviewSet({
         rows: [row],
         entries: [candidate],
+        goldenExpectations,
         wordPitchAccentData,
         requireCurrentReviewStandard: true,
     });
@@ -413,7 +436,8 @@ test("Sapphire word promoter merges reviewed input and fails closed on unsafe ca
             .find((entry) => ACTIVE_WORD_SAPPHIRE_STATUSES.includes(entry.status))
     ));
     const goldenExpectations = loadJson(path.join("templates", "golden_n5_word_review_set.json"));
-    const rows = buildSyntheticWordRows([candidate], wordPitchAccentData);
+    candidate.reviewer = "word-governance-sapphire-review";
+    const rows = buildSyntheticWordRows([candidate], wordPitchAccentData, goldenExpectations);
     const promoted = promoteSapphireWordBatch({
         existingEntries: [],
         candidateEntries: [candidate],
@@ -449,6 +473,19 @@ test("Sapphire word promoter merges reviewed input and fails closed on unsafe ca
         status: "platinum",
         reviewStandard: "word-platinum-v3-evidence-lanes",
     };
+    const platinumReviewerCandidate = {
+        ...candidate,
+        reviewer: "codex-platinum-review",
+    };
+    assert.throws(
+        () => promoteSapphireWordBatch({
+            existingEntries: [],
+            candidateEntries: [platinumReviewerCandidate],
+            rows,
+            goldenExpectations,
+        }),
+        /must not use Platinum reviewer identity/
+    );
     assert.throws(
         () => promoteSapphireWordBatch({
             existingEntries: [],

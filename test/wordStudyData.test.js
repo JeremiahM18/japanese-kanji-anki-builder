@@ -7972,6 +7972,10 @@ test("tracked starter word data includes the ten N5 word v2 common-pool Silver b
 
     assert.equal(batchKeys.length, 100);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+    const promotedFromCommonPool = new Set([
+        "年々|ねんねん",
+        "天|てん",
+    ]);
 
     for (const key of batchKeys) {
         const entry = starterEntries[key];
@@ -7982,7 +7986,9 @@ test("tracked starter word data includes the ten N5 word v2 common-pool Silver b
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        if (!promotedFromCommonPool.has(key)) {
+            assert.match(entry?.notes || "", /Silver-only/, key);
+        }
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);

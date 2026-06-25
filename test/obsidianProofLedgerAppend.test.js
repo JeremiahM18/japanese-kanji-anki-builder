@@ -6,6 +6,7 @@ const assert = require("node:assert/strict");
 
 const {
     buildObsidianProofLedgerAppendReport,
+    GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR,
     parseDraftEventsText,
     runObsidianProofLedgerAppend,
 } = require("../src/services/obsidianProofLedgerAppendService");
@@ -86,6 +87,12 @@ function buildProofEvent(overrides = {}) {
                 supportOnly: true,
                 reviewerJudgment: "Fixture reviewer checked naturalness, usefulness, level fit, reading, and translation.",
             },
+            reviewSession: {
+                mode: "card-by-card-observable-rereview",
+                source: "live-generated-card-and-tracked-evidence",
+                generatedFromPriorLaneOnly: false,
+                batchReportOnly: false,
+            },
         },
         authority: {
             sourceOfTruth: "tracked-jsonl-obsidian-proof-ledger",
@@ -105,7 +112,17 @@ function buildProofEvent(overrides = {}) {
 }
 
 function writeDraft(rootDir, value, fileName = "events.jsonl") {
-    const filePath = path.join(rootDir, "out", "obsidian-proof", "drafts", fileName);
+    const filePath = path.join(rootDir, GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR, fileName);
+    const text = Array.isArray(value)
+        ? `${value.map((event) => JSON.stringify(event)).join("\n")}\n`
+        : `${JSON.stringify(value, null, 2)}\n`;
+    fs.writeFileSync(filePath, text, "utf8");
+    return path.relative(rootDir, filePath);
+}
+
+function writeAdHocLaneBatchDraft(rootDir, value, fileName = "events.jsonl") {
+    const filePath = path.join(rootDir, "out", "lane-batches", fileName);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
     const text = Array.isArray(value)
         ? `${value.map((event) => JSON.stringify(event)).join("\n")}\n`
         : `${JSON.stringify(value, null, 2)}\n`;
@@ -145,6 +162,47 @@ test("append dry-run validates complete events without writing ledger output", (
     assert.equal(report.ledgerOutputPath, "templates/obsidian_proof_ledger/kanji_n3.jsonl");
     assert.deepEqual(report.targets, ["kanji:n3:常|じょう"]);
     assert.equal(fs.existsSync(ledgerPath), false);
+});
+
+test("append rejects ad hoc lane-batch proof drafts", () => {
+    const rootDir = makeWorkspace();
+    const eventsPath = writeAdHocLaneBatchDraft(rootDir, [buildProofEvent()]);
+
+    assert.throws(() => buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath,
+    }), /must stay under out\/obsidian-proof\/drafts/);
+});
+
+test("append rejects new proof without an explicit card-by-card review session", () => {
+    const rootDir = makeWorkspace();
+    const event = buildProofEvent();
+    delete event.proof.reviewSession;
+    const eventsPath = writeDraft(rootDir, [event]);
+
+    assert.throws(() => buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath,
+    }), /missing proof\.reviewSession/);
+});
+
+test("append rejects generated or automated author identities for new proof", () => {
+    const rootDir = makeWorkspace();
+    const eventsPath = writeDraft(rootDir, [buildProofEvent({
+        proof: {
+            ...buildProofEvent().proof,
+            reviewer: "codex-generated-proof-helper",
+        },
+        ledger: {
+            ...buildProofEvent().ledger,
+            recordedBy: "script-generator",
+        },
+    })]);
+
+    assert.throws(() => buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath,
+    }), /not generated or automated tooling/);
 });
 
 test("append write appends canonical JSONL and runs reconciliation", () => {

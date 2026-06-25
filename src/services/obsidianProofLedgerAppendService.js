@@ -20,6 +20,9 @@ const {
     writeFileIfMissingSync,
 } = require("../utils/fs");
 
+const GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR = path.join("out", "obsidian-proof", "drafts");
+const DISALLOWED_NEW_PROOF_AUTHOR_PATTERN = /\b(?:codex|assistant|automation|automated|generator|generated|script|migration|bulk|lane-batch)\b/i;
+
 function toPosixPath(value) {
     return String(value).replace(/\\/g, "/");
 }
@@ -90,6 +93,14 @@ function assertSafeDraftEventInputPath({ cwd, eventPath, ledgerDir }) {
     const resolved = path.resolve(cwd, eventPath);
     if (!isPathInside(resolved, cwd)) {
         throw new Error(`Refusing to read Obsidian proof draft outside workspace: ${resolved}`);
+    }
+    const governedDraftDir = path.resolve(cwd, GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR);
+    if (!isPathInside(resolved, governedDraftDir)) {
+        const governedDraftDirLabel = toPosixPath(GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR);
+        throw new Error([
+            `Obsidian proof draft input must stay under ${governedDraftDirLabel}/: ${toPosixPath(path.relative(cwd, resolved))}.`,
+            "Do not append proof from ad hoc lane-batch helpers, batch reports, generated TSVs, NLP output, or prior-lane promotion artifacts.",
+        ].join(" "));
     }
     const resolvedLedgerDir = path.resolve(cwd, ledgerDir);
     if (isPathInside(resolved, resolvedLedgerDir)) {
@@ -204,6 +215,38 @@ function assertNoDuplicateDraftEvents(events = []) {
     }
 }
 
+function assertNoGeneratedProofAuthorIdentity(event) {
+    const identities = [
+        ["proof.reviewer", event.proof.reviewer],
+        ["ledger.recordedBy", event.ledger.recordedBy],
+    ];
+
+    for (const [label, value] of identities) {
+        if (DISALLOWED_NEW_PROOF_AUTHOR_PATTERN.test(normalizeText(value))) {
+            throw new Error([
+                `Obsidian proof event ${event.proofId} ${label} must identify the accountable Obsidian review session, not generated or automated tooling: ${value}.`,
+                "Obsidian proof cannot be recorded by helper scripts, generated batch output, migration identities, or assistant automation.",
+            ].join(" "));
+        }
+    }
+}
+
+function assertAppendableProofReviewSession(events = []) {
+    for (const event of events) {
+        if (event.ledger.representationMigration) {
+            throw new Error(`Obsidian proof append does not accept representationMigration=true events: ${event.proofId}. Use the dedicated migration command for representation migrations.`);
+        }
+        if (!event.proof.reviewSession) {
+            throw new Error([
+                `Obsidian proof event ${event.proofId} is missing proof.reviewSession.`,
+                "New proof appends must explicitly assert card-by-card-observable-rereview from the live generated card and tracked evidence.",
+                "A clean Platinum gate, batch report, NLP packet, or generated draft is not enough.",
+            ].join(" "));
+        }
+        assertNoGeneratedProofAuthorIdentity(event);
+    }
+}
+
 function assertNoDuplicateExistingEvents({ cwd, ledgerDir, events }) {
     const ledger = loadObsidianProofLedger({ cwd, ledgerDir });
     const existingProofIds = new Map(ledger.events.map((event) => [event.proofId, event]));
@@ -251,6 +294,7 @@ function buildObsidianProofLedgerAppendReport(options = {}) {
     const draft = readDraftProofEvents({ cwd, eventsPath, ledgerDir });
     const scope = assertSingleAppendScope(draft.events);
     assertNoDuplicateDraftEvents(draft.events);
+    assertAppendableProofReviewSession(draft.events);
 
     const ledgerRelativePath = expectedLedgerRelativePath({
         deckKind: scope.deckKind,
@@ -353,8 +397,9 @@ function formatObsidianProofLedgerAppendReport(report = {}) {
         ...((report.targets || []).map((target) => `- ${target}`)),
         "",
         "Authority boundary:",
-        "- This command appends complete human-reviewed proof events to canonical JSONL only.",
+        "- This command appends complete governed card-by-card Obsidian proof events to canonical JSONL only.",
         "- Dry-run is the default. Use --write only after reviewing the draft and dry-run report.",
+        "- It rejects ad hoc lane-batch proof inputs and proof authored by generated, automated, migration, or assistant tooling identities.",
         "- It does not create inline rereviewProvenance, Japanese-source evidence, generated TSV authority, APKG authority, NLP certification, or release readiness.",
     ];
 
@@ -385,6 +430,7 @@ module.exports = {
     appendJsonlEvents,
     buildObsidianProofLedgerAppendReport,
     formatObsidianProofLedgerAppendReport,
+    GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR,
     parseDraftEventsText,
     readDraftProofEvents,
     runObsidianProofLedgerAppend,

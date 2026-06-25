@@ -73,7 +73,7 @@ npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>
 npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl --write
 ```
 
-The appender validates the proof-event schema, card identity binding, tracked review-set target, canonical ledger output path, duplicate proof ids, duplicate proof targets, and post-write reconciliation. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, generated TSVs, Gold fixtures, Sapphire pass text, compatibility pass text, or a clean batch report alone.
+The appender validates the governed draft root, proof-event schema, card identity binding, tracked review-set target, canonical ledger output path, duplicate proof ids, duplicate proof targets, explicit card-by-card review-session assertions, non-generated/non-automated author identity, and post-write reconciliation. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, generated TSVs, Gold fixtures, Sapphire pass text, compatibility pass text, or a clean batch report alone.
 
 7. Verify the structural and reading gates for the batch.
 
@@ -198,6 +198,8 @@ Use the governed appender with an ignored/local draft input, dry-run first, and 
 npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl
 npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl --write
 ```
+
+The appender rejects proof drafts outside `out/obsidian-proof/drafts/`, missing card-by-card review-session assertions, generated/automated proof author identities, schema drift, card-binding drift, tracked review-set target drift, duplicate proof ids, duplicate proof targets, canonical ledger path drift, and post-write reconciliation drift. A Platinum entry, clean batch report, NLP packet, or generated proof-shaped JSON is not Obsidian proof.
 
 7. Verify the batch.
 

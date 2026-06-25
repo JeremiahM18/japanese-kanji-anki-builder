@@ -230,7 +230,7 @@ Word readiness reports:
 
 - shipped row governance
 - canonical inventory counts
-- source-only exclusions
+- source-only exclusions, if any
 - word-level placement violations
 - explicit reading-coverage contract counts
 - selected-level reading coverage

@@ -100,7 +100,14 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(contract.inventoryCounts["3"], 1099);
     assert.equal(contract.inventoryCounts["4"], 719);
     assert.equal(contract.inventoryCounts["5"], 646);
-    assert.equal(contract.excludedCounts["5"], 20);
+    assert.deepEqual(contract.excludedCounts, {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+    });
+    assert.deepEqual(Object.keys(contract.excludedWordLevels), []);
     const n5RoutedMoveTargets = {
         "お弁当|おべんとう": 3,
         "泳ぐ|およぐ": 2,
@@ -514,13 +521,6 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "次第|しだい"), 4);
     assert.equal(getJlptWordLevel(contract, "声色|こわいろ"), 4);
     assert.equal(getJlptWordLevel(contract, "市場|しじょう"), null);
-    assert.equal(contract.excludedWordLevels["山の上|やまのうえ"].exclusionReason, "phrase");
-    assert.equal(contract.excludedWordLevels["雨の日|あめのひ"].exclusionReason, "phrase");
-    assert.equal(contract.excludedWordLevels["駅の前|えきのまえ"].exclusionReason, "phrase");
-    assert.equal(contract.excludedWordLevels["駅の中|えきのなか"].exclusionReason, "phrase");
-    assert.equal(contract.excludedWordLevels["家の中|いえのなか"].exclusionReason, "phrase");
-    assert.equal(contract.excludedWordLevels["海の水|うみのみず"].exclusionReason, "phrase");
-    assert.equal(contract.excludedWordLevels["公園の中|こうえんのなか"].exclusionReason, "phrase");
     assert.equal(getJlptWordLevel(contract, "母校|ぼこう"), 1);
     assert.equal(getJlptWordLevel(contract, "上座|かみざ"), null);
     assert.equal(getJlptWordLevel(contract, "気配|けはい"), null);
@@ -1356,8 +1356,6 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "廊下|ろうか"), 5);
     assert.equal(getJlptWordLevel(contract, "本棚|ほんだな"), 5);
     assert.equal(getJlptWordLevel(contract, "留学生|りゅうがくせい"), 5);
-    assert.equal(contract.excludedWordLevels["高い山|たかいやま"].exclusionReason, "phrase");
-    assert.equal(contract.excludedWordLevels["赤い花|あかいはな"].exclusionReason, "phrase");
 });
 
 test("auditWordStudyEntriesAgainstContract reports starter drift against the canonical word contract", () => {

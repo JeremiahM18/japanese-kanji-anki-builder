@@ -48,6 +48,13 @@ const sentenceQualityReviewSchema = z.object({
     reviewerJudgment: z.string().min(1),
 }).strict();
 
+const proofReviewSessionSchema = z.object({
+    mode: z.literal("card-by-card-observable-rereview"),
+    source: z.literal("live-generated-card-and-tracked-evidence"),
+    generatedFromPriorLaneOnly: z.literal(false),
+    batchReportOnly: z.literal(false),
+}).strict();
+
 const proofSchema = z.object({
     type: z.literal("substantive current standard rereview"),
     reviewStandard: z.string().min(1),
@@ -61,6 +68,7 @@ const proofSchema = z.object({
     evidenceChecked: z.array(z.string().min(1)).min(8),
     limitationDecision: z.string().min(1),
     sentenceQualityReview: sentenceQualityReviewSchema,
+    reviewSession: proofReviewSessionSchema.optional(),
 }).strict();
 
 const authoritySchema = z.object({
@@ -250,6 +258,7 @@ function buildRereviewProvenanceFromLedgerEvent(event) {
         evidenceChecked: event.proof.evidenceChecked,
         limitationDecision: event.proof.limitationDecision,
         sentenceQualityReview: event.proof.sentenceQualityReview,
+        ...(event.proof.reviewSession ? { reviewSession: event.proof.reviewSession } : {}),
     };
 }
 

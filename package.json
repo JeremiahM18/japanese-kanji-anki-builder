@@ -14,6 +14,7 @@
     "test": "node scripts/runNodeTests.js",
     "typecheck": "tsc --noEmit -p jsconfig.json",
     "docs:status-audit": "node scripts/auditDocumentationStatus.js",
+    "lane:authority:audit": "node scripts/auditLaneAuthorityDuplication.js",
     "supply-chain:audit": "node scripts/auditSupplyChain.js",
     "security:advisories": "npm audit --audit-level=moderate",
     "security:branch-protection": "node scripts/auditBranchProtection.js",

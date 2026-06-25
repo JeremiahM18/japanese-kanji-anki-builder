@@ -7242,10 +7242,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "話しことば|はなしことば": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: spoken-language vocabulary is useful learner language; keep this cleaner exact identity over no-okurigana variants. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: spoken-language register vocabulary is not core N5 learner work, and keeping both kana/kanji orthographic variants would add low-value duplicate clutter. Exact JMdict/commonness evidence does not overcome the learner-fit problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later explicit register/usage vocabulary pass with one chosen learner-facing surface."
       },
       "晴れ間|はれま": {
         "decision": "keep_candidate",
@@ -8493,10 +8493,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "一緒に|いっしょに": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: together vocabulary is core learner language; 緒 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: governed 一緒|いっしょ already covers the learner-facing together identity, and 一緒に is a particle-attached phrase surface better used inside examples than as a separate word-card identity.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Keep 一緒に as example/support language on the governed 一緒|いっしょ card unless a future expression policy says otherwise."
       },
       "雨宿り|あまやどり": {
         "decision": "keep_candidate",
@@ -11812,10 +11812,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "一人で|ひとりで": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Alone/by oneself is core beginner expression support with clean 一 and 人 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: particle-attached 一人で is a compositional phrase surface, not a strong standalone word-card identity. Teach 一人 as the word identity and use 一人で only inside examples when useful.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an explicit expression/adverbial-pattern pass, not as ordinary Silver word intake."
       },
       "雨ふり|あめふり": {
         "decision": "keep_candidate",
@@ -11935,10 +11935,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "話し言葉|はなしことば": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Spoken-language vocabulary is directly useful to learners; 言 and 葉 support labels must be explicit. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: spoken-language register vocabulary is not core N5 learner work, and keeping the kanji variant alongside 話しことば would add low-value duplicate clutter with harder support labels.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later explicit register/usage vocabulary pass with one chosen learner-facing surface."
       },
       "雨が降る|あめがふる": {
         "decision": "keep_candidate",
@@ -12397,10 +12397,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "毎日のように|まいにちのように": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Almost every day is a highly useful time-frequency expression with clean 毎 and 日 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 毎日のように is a compositional adverbial phrase, not a clean word-card identity. Its usefulness belongs in example sentences, not as a separate beginner vocabulary card.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an explicit expression/adverbial-pattern pass, not as ordinary Silver word intake."
       },
       "一人娘|ひとりむすめ": {
         "decision": "keep_candidate",
@@ -13885,10 +13885,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "一人でに|ひとりでに": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: By itself/automatically is useful conversational vocabulary with clean 一人 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 一人でに is an adverbial expression with weaker beginner-card value than the governed 一人 identity and cleaner example usage. Exact dictionary/commonness support does not make it ordinary N5 Silver intake.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an explicit expression/adverbial-pattern pass, not as ordinary Silver word intake."
       },
       "一晩じゅう|ひとばんじゅう": {
         "decision": "defer_candidate",
@@ -13927,10 +13927,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "子どもの頃|こどものころ": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Childhood expression is useful personal-history language and cleaner learner-facing surface than 子供の頃. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 子どもの頃 is a compositional childhood phrase, not a clean beginner word-card identity. Its learner value belongs in examples after 子ども/頃-style words are governed, not as a separate N5 card.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an explicit expression/adverbial-pattern pass, not as ordinary Silver word intake."
       },
       "子供のころ|こどものころ": {
         "decision": "defer_candidate",
@@ -14851,10 +14851,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "大いに|おおいに": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Greatly/very much is useful adverbial vocabulary with clean 大 anchor. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 大いに is an abstract adverbial expression and not strong N5 learner-card material. Exact dictionary/commonness support does not overcome the level-fit and card-identity problem for this queue.",
+        "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an explicit expression/adverbial-pattern pass, not as ordinary Silver word intake."
       },
       "読み|よみ": {
         "decision": "keep_candidate",

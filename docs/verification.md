@@ -75,7 +75,7 @@ npm run release:gate
 
 ## Focused verification planning
 
-Use `npm run verify:focused -- --deck=<word|kanji> --lane=<selector> --level=<level>` to plan an inner-loop check set for a specific program lane or support work area. The true program lane order is Discover, Silver, Gold, Sapphire, Platinum, Obsidian. NLP, source governance, media/audio, release, and ops selectors are work areas, not certification lanes. The command is read-only. It prints live git posture, changed-file risk, focused commands, mapped focused tests, changed-file-specific commands, the full merge gate, and the source-of-truth docs behind the boundaries.
+Use `npm run verify:focused -- --deck=<word|kanji> --lane=<selector> --level=<level>` to plan an inner-loop check set for a specific certification lane or support work area. The certification lane order is Silver, Gold, Sapphire, Platinum, Obsidian. Discovery/intake, NLP, source governance, media/audio, release, and ops selectors are work areas, not certification lanes; discovery is not required before every batch. The command is read-only. It prints live git posture, changed-file risk, focused commands, mapped focused tests, changed-file-specific commands, the full merge gate, and the source-of-truth docs behind the boundaries.
 
 Focused verification does not run commands, certify cards, approve source truth, write proof ledgers, edit templates, replace Gold/Sapphire/Platinum/Obsidian gates, replace release QA, shrink denominators, hide expected backlog, or replace the full merge gate before commit, merge, or release claims.
 

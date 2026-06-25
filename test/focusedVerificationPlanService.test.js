@@ -36,8 +36,8 @@ test("focused verification planner keeps word NLP focused commands separate from
         execFileSync: createGitStub(),
     });
 
-    assert.ok(report.laneCommands.includes("npm run deck:words:ready -- --levels=5"));
-    assert.ok(report.laneCommands.includes("npm run nlp:governance-gate"));
+    assert.ok(report.focusedCommands.includes("npm run deck:words:ready -- --levels=5"));
+    assert.ok(report.focusedCommands.includes("npm run nlp:governance-gate"));
     assert.equal(report.scope.programLane, null);
     assert.equal(report.scope.workArea, "NLP support");
     assert.ok(report.focusedTests.includes("npm test -- --scope=nlp"));
@@ -84,7 +84,7 @@ test("focused verification planner formats boundaries and source documents", () 
     assert.match(formatted, /Japanese Kanji Builder Focused Verification Plan/);
     assert.match(formatted, /deck: word/);
     assert.match(formatted, /program lane: obsidian/);
-    assert.match(formatted, /program lane order: discover -> silver -> gold -> sapphire -> platinum -> obsidian/);
+    assert.match(formatted, /certification lane order: silver -> gold -> sapphire -> platinum -> obsidian/);
     assert.match(formatted, /deck:words:obsidian:rereview-status -- --levels=4/);
     assert.match(formatted, /Do not treat Deck Ready, closeout, NLP, source adequacy, release:gate, or this planner as card certification/);
     assert.match(formatted, /docs\/review-system-forward-contract\.md/);
@@ -116,7 +116,7 @@ test("focused verification planner builds exact changed-test commands", () => {
     ]), ["node --test test/alpha.test.js test/zeta.test.js"]);
 });
 
-test("focused verification planner supports pre-trust discovery selector without calling support work a lane", () => {
+test("focused verification planner treats discovery as intake support, not a program lane", () => {
     const report = buildFocusedVerificationPlan({
         rootDir: process.cwd(),
         deckKind: "word",
@@ -126,13 +126,17 @@ test("focused verification planner supports pre-trust discovery selector without
     });
     const formatted = formatFocusedVerificationPlan(report);
 
-    assert.equal(report.scope.programLane, "discover");
-    assert.ok(report.laneCommands.includes("npm run deck:words:expansion-status -- --levels=5"));
-    assert.ok(report.laneCommands.includes("npm run deck:words:vocab-expansion -- --levels=5 --limit=80"));
+    assert.equal(report.scope.programLane, null);
+    assert.equal(report.scope.workArea, "discovery/intake support");
+    assert.equal(report.scope.certificationLaneOrder, "silver -> gold -> sapphire -> platinum -> obsidian");
+    assert.ok(report.focusedCommands.includes("npm run deck:words:expansion-status -- --levels=5"));
+    assert.ok(report.focusedCommands.includes("npm run deck:words:vocab-expansion -- --levels=5 --limit=80"));
     assert.ok(report.focusedTests.includes("npm test -- --scope=word-lanes"));
     assert.match(formatted, /selector: discover/);
+    assert.match(formatted, /program lane: none; work area: discovery\/intake support/);
     assert.match(formatted, /Focused commands:/);
     assert.doesNotMatch(formatted, /Focused lane commands:/);
+    assert.doesNotMatch(formatted, /program lane: discover/);
 });
 
 test("focused verification script parses scope arguments", () => {

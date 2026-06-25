@@ -5,7 +5,7 @@ const path = require("node:path");
 const { parseLevelsArgument } = require("./buildPipeline");
 const {
     DEFAULT_LEVELS,
-    TRUE_PROGRAM_LANES_LABEL,
+    CERTIFICATION_LANE_ORDER_LABEL,
     buildChangedFileRisk,
     buildFocusedVerification,
     buildFullMergeGate,
@@ -25,7 +25,7 @@ const SOURCE_OF_TRUTH = Object.freeze([
     "docs/product-exit-criteria.md",
 ]);
 
-const COMMON_LANE_TEST_COMMANDS = Object.freeze({
+const COMMON_SELECTOR_TEST_COMMANDS = Object.freeze({
     ops: Object.freeze([
         "npm test -- --scope=docs-governance",
     ]),
@@ -40,7 +40,7 @@ const COMMON_LANE_TEST_COMMANDS = Object.freeze({
     ]),
 });
 
-const DECK_LANE_TEST_COMMANDS = Object.freeze({
+const DECK_SELECTOR_TEST_COMMANDS = Object.freeze({
     "word:silver": Object.freeze([
         "npm test -- --scope=word-lanes",
     ]),
@@ -218,8 +218,8 @@ function assertMappedTestFilesExist(commands = [], rootDir = process.cwd()) {
 
 function buildFocusedTestCommands({ deckKind, lane, rootDir }) {
     const commands = [
-        ...(COMMON_LANE_TEST_COMMANDS[lane] || []),
-        ...(DECK_LANE_TEST_COMMANDS[`${deckKind}:${lane}`] || []),
+        ...(COMMON_SELECTOR_TEST_COMMANDS[lane] || []),
+        ...(DECK_SELECTOR_TEST_COMMANDS[`${deckKind}:${lane}`] || []),
     ];
     const unique = uniqueCommands(commands);
     assertMappedTestFilesExist(unique, rootDir);
@@ -277,7 +277,7 @@ function buildFocusedVerificationPlan({
         levelLabel: normalizedLevels.map((level) => `N${level}`).join(", "),
     };
     const git = buildGitState({ rootDir: resolvedRoot, execFileSync });
-    const laneCommands = buildFocusedVerification(scope);
+    const focusedCommands = buildFocusedVerification(scope);
     const focusedTests = buildFocusedTestCommands({
         deckKind: normalizedDeckKind,
         lane: normalizedLane,
@@ -294,7 +294,7 @@ function buildFocusedVerificationPlan({
         rootDir: resolvedRoot,
         scope,
         git,
-        laneCommands,
+        focusedCommands,
         focusedTests,
         changedFileCommands,
         fullMergeGate: buildFullMergeGate(),
@@ -332,7 +332,7 @@ function formatFocusedVerificationPlan(report = {}) {
         report.scope?.programLane
             ? `- program lane: ${report.scope.programLane}`
             : `- program lane: none; work area: ${report.scope?.workArea || "operations/orientation"}`,
-        `- program lane order: ${report.scope?.programLaneOrder || TRUE_PROGRAM_LANES_LABEL}`,
+        `- certification lane order: ${report.scope?.certificationLaneOrder || CERTIFICATION_LANE_ORDER_LABEL}`,
         `- levels: ${report.scope?.levelLabel}`,
         "",
         "Git:",
@@ -344,7 +344,7 @@ function formatFocusedVerificationPlan(report = {}) {
         ...formatChangedFileRisk(report.git?.changedFileRisk || {}),
         "",
         "Focused commands:",
-        ...formatCommandList(report.laneCommands || [], "no focused commands for this scope"),
+        ...formatCommandList(report.focusedCommands || [], "no focused commands for this scope"),
         "",
         "Focused tests:",
         ...formatCommandList(report.focusedTests || [], "no mapped focused test command for this lane yet"),

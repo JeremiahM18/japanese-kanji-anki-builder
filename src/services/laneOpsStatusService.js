@@ -6,7 +6,6 @@ const { buildDeckCloseoutStatus } = require("./deckCloseoutStatusService");
 
 const DEFAULT_LEVELS = Object.freeze([5, 4, 3, 2, 1]);
 const PROGRAM_LANES = Object.freeze([
-    "discover",
     "silver",
     "gold",
     "sapphire",
@@ -14,6 +13,7 @@ const PROGRAM_LANES = Object.freeze([
     "obsidian",
 ]);
 const SUPPORT_WORK_AREAS = Object.freeze([
+    "discover",
     "nlp",
     "source",
     "media",
@@ -25,13 +25,14 @@ const VALID_SELECTORS = Object.freeze([
     ...SUPPORT_WORK_AREAS,
 ]);
 const SUPPORT_WORK_AREA_LABELS = Object.freeze({
+    discover: "discovery/intake support",
     nlp: "NLP support",
     source: "source governance",
     media: "media/audio support",
     release: "release verification",
 });
 
-const TRUE_PROGRAM_LANES_LABEL = "discover -> silver -> gold -> sapphire -> platinum -> obsidian";
+const CERTIFICATION_LANE_ORDER_LABEL = "silver -> gold -> sapphire -> platinum -> obsidian";
 
 const CERTIFICATION_LANES = Object.freeze([
     "silver",
@@ -90,7 +91,7 @@ function buildScopeMetadata(selector) {
         selector,
         programLane: isProgramLane ? selector : null,
         workArea: SUPPORT_WORK_AREAS.includes(selector) ? SUPPORT_WORK_AREA_LABELS[selector] : null,
-        programLaneOrder: TRUE_PROGRAM_LANES_LABEL,
+        certificationLaneOrder: CERTIFICATION_LANE_ORDER_LABEL,
     };
 }
 
@@ -131,12 +132,12 @@ function buildWordLaneCommands({ lane, levels, routing = {} }) {
                 commandEntry({
                     phase: `${levelLabel(level)} word discovery status`,
                     command: `npm run deck:words:expansion-status -- --levels=${level}`,
-                    authority: "Read-only pre-trust discovery posture; does not create Silver rows or certify review tiers.",
+                    authority: "Read-only pre-Silver intake posture; not a certification lane and not required before every batch.",
                 }),
                 commandEntry({
                     phase: `${levelLabel(level)} word discovery queue`,
                     command: `npm run deck:words:vocab-expansion -- --levels=${level} --limit=80`,
-                    authority: "Read-only candidate discovery queue; promotion still starts at Silver and downstream gates remain separate.",
+                    authority: "Read-only candidate discovery queue; governed promotion starts at Silver and downstream gates remain separate.",
                 })
             );
         }
@@ -301,12 +302,12 @@ function buildKanjiLaneCommands({ lane, levels, routing = {} }) {
                 commandEntry({
                     phase: `${levelLabel(level)} kanji discovery deltas`,
                     command: "npm run data:audit:jlpt:source-levels -- --worklist-only --limit=25",
-                    authority: "Read-only pre-trust source/candidate posture; does not move kanji or certify review tiers.",
+                    authority: "Read-only pre-Silver source/candidate posture; not a certification lane and not required before every batch.",
                 }),
                 commandEntry({
                     phase: `${levelLabel(level)} kanji product partition plan`,
                     command: "npm run deck:kanji:partition-plan -- --limit=25",
-                    authority: "Read-only discovery/product plan; generated rows still enter trust at Silver.",
+                    authority: "Read-only discovery/product plan; governed promotion starts at Silver.",
                 })
             );
         }
@@ -956,7 +957,7 @@ function formatLaneOpsStatus(report = {}) {
         report.scope?.programLane
             ? `- program lane: ${report.scope.programLane}`
             : `- program lane: none; work area: ${report.scope?.workArea || "operations/orientation"}`,
-        `- program lane order: ${report.scope?.programLaneOrder || TRUE_PROGRAM_LANES_LABEL}`,
+        `- certification lane order: ${report.scope?.certificationLaneOrder || CERTIFICATION_LANE_ORDER_LABEL}`,
         `- levels: ${report.scope?.levelLabel}`,
         "",
         "Git:",
@@ -1005,7 +1006,7 @@ function formatLaneOpsStatus(report = {}) {
 
 module.exports = {
     DEFAULT_LEVELS,
-    TRUE_PROGRAM_LANES_LABEL,
+    CERTIFICATION_LANE_ORDER_LABEL,
     buildBacklogPosture,
     buildChangedFileRisk,
     buildFailClosedRules,

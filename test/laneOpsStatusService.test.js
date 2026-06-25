@@ -191,14 +191,14 @@ test("lane ops formatter exposes boundaries, serial work, and architecture needs
 
     assert.match(formatted, /Japanese Kanji Builder Ops Status/);
     assert.match(formatted, /program lane: obsidian/);
-    assert.match(formatted, /program lane order: discover -> silver -> gold -> sapphire -> platinum -> obsidian/);
+    assert.match(formatted, /certification lane order: silver -> gold -> sapphire -> platinum -> obsidian/);
     assert.match(formatted, /Obsidian proof posture must come from the fail-closed Obsidian status/);
     assert.match(formatted, /data:obsidian:proof:append --write/);
     assert.match(formatted, /same-key APKG cache writes/);
     assert.match(formatted, /Do not treat Deck Ready, closeout, NLP, source adequacy, or release:gate as card certification/);
 });
 
-test("lane ops supports pre-trust discovery as a program selector", () => {
+test("lane ops supports discovery as a separate intake selector", () => {
     const report = buildLaneOpsStatus({
         rootDir: process.cwd(),
         deckKind: "word",
@@ -209,13 +209,16 @@ test("lane ops supports pre-trust discovery as a program selector", () => {
     });
     const formatted = formatLaneOpsStatus(report);
 
-    assert.equal(report.scope.programLane, "discover");
+    assert.equal(report.scope.programLane, null);
+    assert.equal(report.scope.workArea, "discovery/intake support");
+    assert.equal(report.scope.certificationLaneOrder, "silver -> gold -> sapphire -> platinum -> obsidian");
     assert.equal(report.backlog.rows.length, 0);
     assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:words:expansion-status -- --levels=5"));
     assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:words:vocab-expansion -- --levels=5 --limit=80"));
     assert.ok(report.focusedVerification.includes("npm run deck:words:expansion-status -- --levels=5"));
     assert.match(formatted, /selector: discover/);
-    assert.match(formatted, /program lane: discover/);
+    assert.match(formatted, /program lane: none; work area: discovery\/intake support/);
+    assert.doesNotMatch(formatted, /program lane: discover/);
 });
 
 test("lane ops helpers parse status lines, classify individual paths, and parse CLI args", () => {

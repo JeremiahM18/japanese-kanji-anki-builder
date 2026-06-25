@@ -42827,5 +42827,1104 @@
       "newReviewStandard": "",
       "authority": "Representation migration from the former word structural/Platinum card-surface compatibility lane into first-class Sapphire. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
     }
+  },
+  {
+    "word": "中年",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ちゅうねん"
+    ],
+    "meaningIncludes": [
+      "middle age",
+      "middle-aged"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "中",
+      "年"
+    ],
+    "coversReadingIncludes": [
+      "中: ちゅう",
+      "年: ねん"
+    ],
+    "breakdownIncludes": [
+      "中 （ちゅう）",
+      "年 （ねん）"
+    ],
+    "exampleIncludes": [
+      "この店は中年の人が多いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 中年|ちゅうねん",
+      "middle-age vocabulary"
+    ],
+    "selectionRationale": "Reading-coverage support row for 中:ちゅう and 年:ねん; JMdict exact identity and priority markers support the written form, reading, meaning, and usefulness, while the source-level claim remains only a discovery hint.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 中年|ちゅうねん on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%AD%E5%B9%B4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%B8%AD%E5%B9%B4 checked 中年|ちゅうねん, reading ちゅうねん, learner meaning middle age / middle-aged, and product review checked example この店は中年の人が多いです。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1425240; jmdictPriority=ichi1,news1,nf08; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 中年|ちゅうねん as governed word-field-verification evidence, reading ちゅうねん, senses middle-age; middle age; midlife; one's middle years, and priority/commonness rank 100; product review kept learner meaning middle age / middle-aged and checked example この店は中年の人が多いです。 against that word sense for 中年|ちゅうねん."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 中年|ちゅうねん: word 中年, reading ちゅうねん, meaning middle age / middle-aged, example この店は中年の人が多いです。, audio word-reading-中年-ちゅうねん, breakdown 中 （ちゅう）年 （ねん） / 中 ちゅう 中 （ちゅう） ／ inside / middle Stroke order On: チュウ Kun: あた.る、 うち、 なか 年 ねん 年 （ねん） ／ year Stroke order On: ネン Kun: とし, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 中年|ちゅうねん: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 中、年, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 中年|ちゅうねん; generated export includes exact audio media fragment word-reading-中年-ちゅうねん without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 中年|ちゅうねん exact asset fragment word-reading-中年-ちゅうねん for exported reading ちゅうねん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 中年|ちゅうねん source voicevox-nemo-accent-query (VOICEVOX Nemo accent query) pattern 4 [odaka] and rendered Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 中年|ちゅうねん JLPT N5, Reading coverage support, focus 中、年, and covered readings 中: ちゅう ／ 年: ねん."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 中年|ちゅうねん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 中年|ちゅうねん, reading ちゅうねん, sentence この店は中年の人が多いです。, reading line このみせはちゅうねんのひとがおおいです。, translation This shop has many middle-aged people., and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 中年|ちゅうねん common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading ちゅうねん, meaning middle age / middle-aged, and natural example この店は中年の人が多いです。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 中年|ちゅうねん checked generated surface, Japanese-source evidence, example sentence この店は中年の人が多いです。, reading このみせはちゅうねんのひとがおおいです。, translation This shop has many middle-aged people., notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 中年|ちゅうねん as middle-age vocabulary., reading breakdown 中 （ちゅう）年 （ねん）; 中 ちゅう 中 （ちゅう） ／ inside / middle Stroke order On: チュウ Kun: あた.る、 うち、 なか 年 ねん 年 （ねん） ／ year Stroke order On: ネン Kun: とし, meaning middle age / middle-aged, labels JLPT N5; Reading coverage support; focus 中、年; covers 中: ちゅう ／ 年: ねん, audio word-reading-中年-ちゅうねん, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
+  },
+  {
+    "word": "天",
+    "status": "sapphire",
+    "readingIncludes": [
+      "てん"
+    ],
+    "meaningIncludes": [
+      "sky",
+      "heavens"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "天"
+    ],
+    "coversReadingIncludes": [
+      "天: てん"
+    ],
+    "breakdownIncludes": [
+      "天 （てん）"
+    ],
+    "exampleIncludes": [
+      "天を見上げます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 天|てん",
+      "standalone sky/heavens vocabulary"
+    ],
+    "selectionRationale": "Single-kanji word row kept as governed vocabulary for 天|てん, not as a kanji-deck shortcut; JMdict exact identity and priority markers support the sky/heavens sense and usefulness, while the source-level claim remains only a discovery hint.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 天|てん on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%A9",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%A4%A9 checked 天|てん, reading てん, learner meaning sky / heavens, and product review checked example 天を見上げます。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1438210; jmdictPriority=ichi1,news1,nf03; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 天|てん as governed word-field-verification evidence, reading てん, senses sky; heaven; God; svarga (heaven-like realm visited as a stage of death and rebirth); deva (divine being of Buddhism); top (of a book); sole (of a Japanese sandal); beginning; start; tempura; India, and priority/commonness rank 100; product review kept learner meaning sky / heavens and checked example 天を見上げます。 against that word sense for 天|てん."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 天|てん: word 天, reading てん, meaning sky / heavens, example 天を見上げます。, audio word-reading-天-てん, breakdown 天 （てん） / 天 てん 天 （てん） ／ sky / heavens Stroke order On: テン Kun: あま-、 あまつ、 あめ, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 天|てん: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 天, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 天|てん; generated export includes exact audio media fragment word-reading-天-てん without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 天|てん exact asset fragment word-reading-天-てん for exported reading てん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 天|てん source voicevox-nemo-accent-query (VOICEVOX Nemo accent query) pattern 1 [atamadaka] and rendered Pitch 1: 1 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 天|てん JLPT N5, Reading coverage support, focus 天, and covered readings 天: てん."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 天|てん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 天|てん, reading てん, sentence 天を見上げます。, reading line てんをみあげます。, translation I look up at the sky., and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 天|てん common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading てん, meaning sky / heavens, and natural example 天を見上げます。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 天|てん checked generated surface, Japanese-source evidence, example sentence 天を見上げます。, reading てんをみあげます。, translation I look up at the sky., notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 天|てん as standalone sky/heavens vocabulary., reading breakdown 天 （てん）; 天 てん 天 （てん） ／ sky / heavens Stroke order On: テン Kun: あま-、 あまつ、 あめ, meaning sky / heavens, labels JLPT N5; Reading coverage support; focus 天; covers 天: てん, audio word-reading-天-てん, pitch accent source voicevox-nemo-accent-query pattern 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
+  },
+  {
+    "word": "何年",
+    "status": "sapphire",
+    "readingIncludes": [
+      "なんねん"
+    ],
+    "meaningIncludes": [
+      "what year",
+      "how many years"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "何",
+      "年"
+    ],
+    "coversReadingIncludes": [
+      "何: なん",
+      "年: ねん"
+    ],
+    "breakdownIncludes": [
+      "何 （なん）",
+      "年 （ねん）"
+    ],
+    "exampleIncludes": [
+      "何年日本語を勉強していますか。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 何年|なんねん",
+      "what-year/how-many-years vocabulary"
+    ],
+    "selectionRationale": "Useful beginner question expression for years and duration; the row supports 何:なん and 年:ねん reading coverage with exact JMdict identity and priority support, while the source-level claim remains only a discovery hint.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 何年|なんねん on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BD%95%E5%B9%B4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E4%BD%95%E5%B9%B4 checked 何年|なんねん, reading なんねん, learner meaning what year / how many years, and product review checked example 何年日本語を勉強していますか。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1189250; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 何年|なんねん as governed word-field-verification evidence, reading なんねん, senses how many years; how long; what year, and priority/commonness rank 120; product review kept learner meaning what year / how many years and checked example 何年日本語を勉強していますか。 against that word sense for 何年|なんねん."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 何年|なんねん: word 何年, reading なんねん, meaning what year / how many years, example 何年日本語を勉強していますか。, audio word-reading-何年-なんねん, breakdown 何 （なん）年 （ねん） / 何 なん 何 （なん） ／ what Stroke order On: カ Kun: なに、 なん 年 ねん 年 （ねん） ／ year Stroke order On: ネン Kun: とし, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 何年|なんねん: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 何、年, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 何年|なんねん; generated export includes exact audio media fragment word-reading-何年-なんねん without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 何年|なんねん exact asset fragment word-reading-何年-なんねん for exported reading なんねん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 何年|なんねん source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database) pattern 1 [atamadaka] and rendered Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 何年|なんねん JLPT N5, Reading coverage support, focus 何、年, and covered readings 何: なん ／ 年: ねん."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 何年|なんねん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 何年|なんねん, reading なんねん, sentence 何年日本語を勉強していますか。, reading line なんねんにほんごをべんきょうしていますか。, translation How many years have you studied Japanese?, and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 何年|なんねん common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading なんねん, meaning what year / how many years, and natural example 何年日本語を勉強していますか。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 何年|なんねん checked generated surface, Japanese-source evidence, example sentence 何年日本語を勉強していますか。, reading なんねんにほんごをべんきょうしていますか。, translation How many years have you studied Japanese?, notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 何年|なんねん as what-year/how-many-years vocabulary., reading breakdown 何 （なん）年 （ねん）; 何 なん 何 （なん） ／ what Stroke order On: カ Kun: なに、 なん 年 ねん 年 （ねん） ／ year Stroke order On: ネン Kun: とし, meaning what year / how many years, labels JLPT N5; Reading coverage support; focus 何、年; covers 何: なん ／ 年: ねん, audio word-reading-何年-なんねん, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
+  },
+  {
+    "word": "半日",
+    "status": "sapphire",
+    "readingIncludes": [
+      "はんにち"
+    ],
+    "meaningIncludes": [
+      "half a day"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "半",
+      "日"
+    ],
+    "coversReadingIncludes": [
+      "半: はん",
+      "日: にち"
+    ],
+    "breakdownIncludes": [
+      "半 （はん）",
+      "日 （にち）"
+    ],
+    "exampleIncludes": [
+      "半日、家で勉強しました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 半日|はんにち",
+      "keeps common はんにち"
+    ],
+    "selectionRationale": "Useful time-span word for beginner scheduling and study examples; exact JMdict identity and priority markers support 半日|はんにち, while the はんじつ comparison remains outside this shipped card.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 半日|はんにち on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%8A%E6%97%A5",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%8D%8A%E6%97%A5 checked 半日|はんにち, reading はんにち, learner meaning half a day, and product review checked example 半日、家で勉強しました。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1583180; jmdictPriority=ichi1,news1,nf17; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 半日|はんにち as governed word-field-verification evidence, reading はんにち, senses half day, and priority/commonness rank 100; product review kept learner meaning half a day and checked example 半日、家で勉強しました。 against that word sense for 半日|はんにち."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 半日|はんにち: word 半日, reading はんにち, meaning half a day, example 半日、家で勉強しました。, audio word-reading-半日-はんにち, breakdown 半 （はん）日 （にち） / 半 はん 半 （はん） ／ half Stroke order On: ハン Kun: なか.ば 日 にち 日 （にち） ／ day / sun Stroke order On: ジツ、 ニチ Kun: -か、 -び、 ひ, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 半日|はんにち: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 半、日, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 半日|はんにち; generated export includes exact audio media fragment word-reading-半日-はんにち without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 半日|はんにち exact asset fragment word-reading-半日-はんにち for exported reading はんにち."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 半日|はんにち source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database) pattern 4 [odaka] and rendered Pitch 1: 4."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 半日|はんにち JLPT N5, Reading coverage support, focus 半、日, and covered readings 半: はん ／ 日: にち."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 半日|はんにち; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 半日|はんにち, reading はんにち, sentence 半日、家で勉強しました。, reading line はんにち、いえでべんきょうしました。, translation I studied at home for half a day., and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 半日|はんにち common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading はんにち, meaning half a day, and natural example 半日、家で勉強しました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 半日|はんにち checked generated surface, Japanese-source evidence, example sentence 半日、家で勉強しました。, reading はんにち、いえでべんきょうしました。, translation I studied at home for half a day., notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 半日|はんにち as half-day vocabulary. This card keeps common はんにち and leaves はんじつ for later comparison., reading breakdown 半 （はん）日 （にち）; 半 はん 半 （はん） ／ half Stroke order On: ハン Kun: なか.ば 日 にち 日 （にち） ／ day / sun Stroke order On: ジツ、 ニチ Kun: -か、 -び、 ひ, meaning half a day, labels JLPT N5; Reading coverage support; focus 半、日; covers 半: はん ／ 日: にち, audio word-reading-半日-はんにち, pitch accent source kanjium-cc-by-sa-4.0 pattern 4 [odaka] rendered Pitch 1: 4, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
+  },
+  {
+    "word": "年々",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ねんねん"
+    ],
+    "meaningIncludes": [
+      "year by year"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "年"
+    ],
+    "coversReadingIncludes": [
+      "年: ねん"
+    ],
+    "breakdownIncludes": [
+      "年 （とし）"
+    ],
+    "exampleIncludes": [
+      "日本語の勉強が年々楽しくなります。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 年々|ねんねん",
+      "year-by-year change vocabulary"
+    ],
+    "selectionRationale": "Common useful adverbial vocabulary for gradual change; exact JMdict identity and priority markers support 年々|ねんねん, and the card protects the whole-word 年々 reading while the kanji component display keeps the base 年 card.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 年々|ねんねん on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B9%B4%E3%80%85",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%B9%B4%E3%80%85 checked 年々|ねんねん, reading ねんねん, learner meaning year by year, and product review checked example 日本語の勉強が年々楽しくなります。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1582860; jmdictPriority=ichi1,news1,nf06; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 年々|ねんねん as governed word-field-verification evidence, reading ねんねん, senses year by year; annually; every year; from year to year, and priority/commonness rank 100; product review kept learner meaning year by year and checked example 日本語の勉強が年々楽しくなります。 against that word sense for 年々|ねんねん."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 年々|ねんねん: word 年々, reading ねんねん, meaning year by year, example 日本語の勉強が年々楽しくなります。, audio word-reading-年々-ねんねん, breakdown 年々 （ねんねん） / 年 とし 年 （とし） ／ year Stroke order On: ネン Kun: とし, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 年々|ねんねん: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 年, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 年々|ねんねん; generated export includes exact audio media fragment word-reading-年々-ねんねん without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 年々|ねんねん exact asset fragment word-reading-年々-ねんねん for exported reading ねんねん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 年々|ねんねん source voicevox-nemo-accent-query (VOICEVOX Nemo accent query) pattern 4 [odaka] and rendered Pitch 1: 4 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 年々|ねんねん JLPT N5, Reading coverage support, focus 年, and covered readings 年: ねん."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 年々|ねんねん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 年々|ねんねん, reading ねんねん, sentence 日本語の勉強が年々楽しくなります。, reading line にほんごのべんきょうがねんねんたのしくなります。, translation Studying Japanese becomes more fun year by year., and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 年々|ねんねん common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading ねんねん, meaning year by year, and natural example 日本語の勉強が年々楽しくなります。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 年々|ねんねん checked generated surface, Japanese-source evidence, example sentence 日本語の勉強が年々楽しくなります。, reading にほんごのべんきょうがねんねんたのしくなります。, translation Studying Japanese becomes more fun year by year., notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 年々|ねんねん as year-by-year change vocabulary., reading breakdown 年々 （ねんねん）; 年 とし 年 （とし） ／ year Stroke order On: ネン Kun: とし, meaning year by year, labels JLPT N5; Reading coverage support; focus 年; covers 年: ねん, audio word-reading-年々-ねんねん, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
+  },
+  {
+    "word": "長らく",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ながらく"
+    ],
+    "meaningIncludes": [
+      "for a long time"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "長"
+    ],
+    "coversReadingIncludes": [
+      "長: なが"
+    ],
+    "breakdownIncludes": [
+      "長 （なが）"
+    ],
+    "exampleIncludes": [
+      "長らく待ちました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 長らく|ながらく",
+      "for-a-long-time vocabulary"
+    ],
+    "selectionRationale": "Useful long-time adverbial word supporting 長:なが reading coverage; exact JMdict identity and priority markers support the reading and meaning, while the source-level claim remains only a discovery hint.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 長らく|ながらく on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%95%B7%E3%82%89%E3%81%8F",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%95%B7%E3%82%89%E3%81%8F checked 長らく|ながらく, reading ながらく, learner meaning for a long time, and product review checked example 長らく待ちました。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1599450; jmdictPriority=ichi1,news2,nf31; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 長らく|ながらく as governed word-field-verification evidence, reading ながらく, senses long; (for a) long time, and priority/commonness rank 110; product review kept learner meaning for a long time and checked example 長らく待ちました。 against that word sense for 長らく|ながらく."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 長らく|ながらく: word 長らく, reading ながらく, meaning for a long time, example 長らく待ちました。, audio word-reading-長らく-ながらく, breakdown 長 （なが）らく / 長 なが 長 （なが） ／ long Stroke order On: チョウ Kun: おさ、 なが.い, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 長らく|ながらく: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 長, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 長らく|ながらく; generated export includes exact audio media fragment word-reading-長らく-ながらく without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 長らく|ながらく exact asset fragment word-reading-長らく-ながらく for exported reading ながらく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 長らく|ながらく source voicevox-nemo-accent-query (VOICEVOX Nemo accent query) pattern 2 [nakadaka] and rendered Pitch 1: 2 / Generated pitch (unverified)."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 長らく|ながらく JLPT N5, Reading coverage support, focus 長, and covered readings 長: なが."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 長らく|ながらく; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 長らく|ながらく, reading ながらく, sentence 長らく待ちました。, reading line ながらくまちました。, translation I waited for a long time., and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 長らく|ながらく common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading ながらく, meaning for a long time, and natural example 長らく待ちました。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 長らく|ながらく checked generated surface, Japanese-source evidence, example sentence 長らく待ちました。, reading ながらくまちました。, translation I waited for a long time., notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 長らく|ながらく as for-a-long-time vocabulary., reading breakdown 長 （なが）らく; 長 なが 長 （なが） ／ long Stroke order On: チョウ Kun: おさ、 なが.い, meaning for a long time, labels JLPT N5; Reading coverage support; focus 長; covers 長: なが, audio word-reading-長らく-ながらく, pitch accent source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified), media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
+  },
+  {
+    "word": "長女",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ちょうじょ"
+    ],
+    "meaningIncludes": [
+      "eldest daughter"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "長",
+      "女"
+    ],
+    "coversReadingIncludes": [
+      "長: ちょう",
+      "女: じょ"
+    ],
+    "breakdownIncludes": [
+      "長 （ちょう）",
+      "女 （じょ）"
+    ],
+    "exampleIncludes": [
+      "姉は長女です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 長女|ちょうじょ",
+      "eldest-daughter vocabulary"
+    ],
+    "selectionRationale": "Family vocabulary useful for learner examples and reading coverage for 長:ちょう and 女:じょ; exact JMdict identity and priority markers support the written form, reading, and meaning.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 長女|ちょうじょ on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%95%B7%E5%A5%B3",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E9%95%B7%E5%A5%B3 checked 長女|ちょうじょ, reading ちょうじょ, learner meaning eldest daughter, and product review checked example 姉は長女です。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1430040; jmdictPriority=ichi1,news1,nf04; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 長女|ちょうじょ as governed word-field-verification evidence, reading ちょうじょ, senses eldest daughter; first-born daughter, and priority/commonness rank 100; product review kept learner meaning eldest daughter and checked example 姉は長女です。 against that word sense for 長女|ちょうじょ."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 長女|ちょうじょ: word 長女, reading ちょうじょ, meaning eldest daughter, example 姉は長女です。, audio word-reading-長女-ちょうじょ, breakdown 長 （ちょう）女 （じょ） / 長 ちょう 長 （ちょう） ／ long Stroke order On: チョウ Kun: おさ、 なが.い 女 じょ 女 （じょ） ／ woman / female Stroke order On: ジョ、 ニョ、 ニョウ Kun: おんな、 め, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 長女|ちょうじょ: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 長、女, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 長女|ちょうじょ; generated export includes exact audio media fragment word-reading-長女-ちょうじょ without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 長女|ちょうじょ exact asset fragment word-reading-長女-ちょうじょ for exported reading ちょうじょ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 長女|ちょうじょ source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database) pattern 1 [atamadaka] and rendered Pitch 1: 1."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 長女|ちょうじょ JLPT N5, Reading coverage support, focus 長、女, and covered readings 長: ちょう ／ 女: じょ."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 長女|ちょうじょ; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 長女|ちょうじょ, reading ちょうじょ, sentence 姉は長女です。, reading line あねはちょうじょです。, translation My older sister is the eldest daughter., and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 長女|ちょうじょ common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading ちょうじょ, meaning eldest daughter, and natural example 姉は長女です。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 長女|ちょうじょ checked generated surface, Japanese-source evidence, example sentence 姉は長女です。, reading あねはちょうじょです。, translation My older sister is the eldest daughter., notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 長女|ちょうじょ as eldest-daughter vocabulary., reading breakdown 長 （ちょう）女 （じょ）; 長 ちょう 長 （ちょう） ／ long Stroke order On: チョウ Kun: おさ、 なが.い 女 じょ 女 （じょ） ／ woman / female Stroke order On: ジョ、 ニョ、 ニョウ Kun: おんな、 め, meaning eldest daughter, labels JLPT N5; Reading coverage support; focus 長、女; covers 長: ちょう ／ 女: じょ, audio word-reading-長女-ちょうじょ, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
+  },
+  {
+    "word": "学年",
+    "status": "sapphire",
+    "readingIncludes": [
+      "がくねん"
+    ],
+    "meaningIncludes": [
+      "school grade",
+      "year in school"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N5"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "学",
+      "年"
+    ],
+    "coversReadingIncludes": [
+      "学: がく",
+      "年: ねん"
+    ],
+    "breakdownIncludes": [
+      "学 （がく）",
+      "年 （ねん）"
+    ],
+    "exampleIncludes": [
+      "妹と同じ学年です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0"
+    ],
+    "notesIncludes": [
+      "Exact governed JMdict/commonness verification supports 学年|がくねん",
+      "school-grade/year vocabulary"
+    ],
+    "selectionRationale": "School vocabulary useful for learner self-introduction and class examples; exact JMdict identity and priority markers support 学年|がくねん as school grade / year in school.",
+    "reviewedAt": "2026-06-24",
+    "reviewer": "word-governance-sapphire-review",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-06-24",
+    "revalidationSummary": "Sapphire structural review for 学年|がくねん on 2026-06-24: rechecked evidence lanes, generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations against the live generated N5 word row; kept no active core-card limitations for the exported card surface.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AD%A6%E5%B9%B4",
+        "detail": "JLearn.net Japanese Dictionary https://jlearn.net/dictionary/%E5%AD%A6%E5%B9%B4 checked 学年|がくねん, reading がくねん, learner meaning school grade / year in school, and product review checked example 妹と同じ学年です。 for the shipped word-card surface."
+      },
+      {
+        "type": "japanese-source",
+        "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
+        "detail": "JMdict exact row entrySeq=1207030; jmdictPriority=ichi1,news1,nf10; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only verifies 学年|がくねん as governed word-field-verification evidence, reading がくねん, senses academic year; school year; year in school; grade in school, and priority/commonness rank 100; product review kept learner meaning school grade / year in school and checked example 妹と同じ学年です。 against that word sense for 学年|がくねん."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
+        "detail": "Generated word-card surface inspected for 学年|がくねん: word 学年, reading がくねん, meaning school grade / year in school, example 妹と同じ学年です。, audio word-reading-学年-がくねん, breakdown 学 （がく）年 （ねん） / 学 がく 学 （がく） ／ study / learning Stroke order On: ガク Kun: まな.ぶ 年 ねん 年 （ねん） ／ year Stroke order On: ネン Kun: とし, labels JLPT N5 Reading coverage support."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and current-level kanji anchor audit",
+        "detail": "Word level placement checked for 学年|がくねん: displayed level JLPT N5, reading-coverage role Reading coverage support, focus 学、年, and selection rationale reviewed for N5 learner fit."
+      },
+      {
+        "type": "media-audit",
+        "source": "generated TSV Audio field and managed media provenance",
+        "detail": "Managed media provenance checked 学年|がくねん; generated export includes exact audio media fragment word-reading-学年-がくねん without silent fallback."
+      },
+      {
+        "type": "audio-review",
+        "source": "managed word audio artifact manifest and generated TSV Audio field",
+        "detail": "Audio review checked 学年|がくねん exact asset fragment word-reading-学年-がくねん for exported reading がくねん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json",
+        "detail": "Pitch accent review checked 学年|がくねん source kanjium-cc-by-sa-4.0 (Kanjium pitch accent database) pattern 0 [heiban] and rendered Pitch 1: 0."
+      },
+      {
+        "type": "label-review",
+        "source": "generated N5 word TSV labels and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 学年|がくねん JLPT N5, Reading coverage support, focus 学、年, and covered readings 学: がく ／ 年: ねん."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n5_word_review_set.json and npm run deck:words:review:n5",
+        "detail": "Separate golden regression gate checked 学年|がくねん; this regression gate protects generated field expectations but is not source truth and not source evidence."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "Sapphire structural review example review",
+        "detail": "Example review checked 学年|がくねん, reading がくねん, sentence 妹と同じ学年です。, reading line いもうととおなじがくねんです。, translation I am in the same grade as my younger sister., and release quality for the exported word-card surface."
+      },
+      {
+        "type": "manual-review",
+        "source": "Sapphire structural review product review",
+        "detail": "Product review judged 学年|がくねん common useful learner-friendly and level-appropriate for the N5 word deck, with accurate reading がくねん, meaning school grade / year in school, and natural example 妹と同じ学年です。."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "Sapphire structural review current-standard word review using generated N5 word batch report, governed Japanese-source evidence, generated TSV output, media reports, and pitch source data",
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 学年|がくねん checked generated surface, Japanese-source evidence, example sentence 妹と同じ学年です。, reading いもうととおなじがくねんです。, translation I am in the same grade as my younger sister., notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 学年|がくねん as school-grade/year vocabulary., reading breakdown 学 （がく）年 （ねん）; 学 がく 学 （がく） ／ study / learning Stroke order On: ガク Kun: まな.ぶ 年 ねん 年 （ねん） ／ year Stroke order On: ネン Kun: とし, meaning school grade / year in school, labels JLPT N5; Reading coverage support; focus 学、年; covers 学: がく ／ 年: ねん, audio word-reading-学年-がくねん, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "migrationProvenance": {
+      "migratedAt": "2026-06-24",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "manual-structural-review",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection, not Obsidian proof, and not release readiness."
+    }
   }
 ]

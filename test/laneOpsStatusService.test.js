@@ -112,6 +112,8 @@ test("lane ops status keeps Platinum prior-lane backlog visible", () => {
     assert.equal(report.backlog.rows[0].ratio, "2/20");
     assert.deepEqual(report.backlog.rows[0].priorBacklog, ["Gold missing 2", "Sapphire missing 8"]);
     assert.ok(report.backlog.realBlockers.some((blocker) => /Sapphire missing 8/.test(blocker.reason)));
+    assert.ok(report.nextCommands.some((entry) => entry.command === "npm run deck:words:platinum:batch -- --level=3 --limit=8 --queue=blocked-current-standard"));
+    assert.ok(report.nextCommands.some((entry) => /fail the actual gate/.test(entry.authority)));
 });
 
 test("lane ops routes blocked Sapphire work back to Gold prerequisite commands", () => {

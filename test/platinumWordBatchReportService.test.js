@@ -186,6 +186,32 @@ test("word batch report keeps Platinum-only current-standard entries in the expl
     assert.match(report.cards[0].suggestedReviewStep, /Platinum is not Obsidian proof/);
 });
 
+test("word batch report surfaces failing current-standard Platinum as repair work", () => {
+    const report = buildPlatinumWordBatchReport({
+        rows,
+        entries: [buildStructuralCurrentWordEntry()],
+        goldenExpectations: [{ word: "今日", readingIncludes: ["きょう"] }],
+        sapphireEntries,
+        sapphireResults: [{ identity: "今日|きょう", passed: true }],
+        wordPitchAccentData,
+        level: 5,
+        limit: 8,
+        queue: WORD_BATCH_QUEUE_MODES.BLOCKED_CURRENT_STANDARD,
+    });
+
+    assert.equal(report.queue, WORD_BATCH_QUEUE_MODES.BLOCKED_CURRENT_STANDARD);
+    assert.equal(report.summary.currentStandardPlatinum, 1);
+    assert.equal(report.summary.failingCurrentStandardPlatinum, 1);
+    assert.deepEqual(report.nextBlockedCurrentStandardWords, ["今日|きょう"]);
+    assert.equal(report.cards.length, 1);
+    assert.equal(report.cards[0].identity, "今日|きょう");
+    assert.equal(report.cards[0].reviewStatus, "blocked_current_standard_platinum");
+    assert.ok(report.cards[0].platinumValidationFailures.length > 0);
+    assert.match(report.cards[0].suggestedReviewStep, /repair current-standard Platinum/);
+    assert.match(formatPlatinumWordBatchReport(report), /Next blocked current-standard Platinum repair queue/);
+    assert.match(formatPlatinumWordBatchReport(report), /Native Platinum validation failures/);
+});
+
 test("word batch report does not treat base rereview provenance as Obsidian proof", () => {
     const report = buildPlatinumWordBatchReport({
         rows,

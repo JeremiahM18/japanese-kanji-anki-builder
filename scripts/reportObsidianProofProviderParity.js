@@ -42,6 +42,9 @@ const {
     parseSapphireWordReviewSet,
 } = require("../src/datasets/sapphireWordReviewSet");
 const {
+    evaluateSapphireWordReviewSet,
+} = require("../src/services/sapphireWordReviewService");
+const {
     loadPlatinumCardSourceManifest,
 } = require("../src/datasets/platinumCardSourceManifest");
 const {
@@ -228,6 +231,28 @@ function loadSapphireWordEntries({ cwd = process.cwd(), level } = {}) {
         loadJsonIfExists(path.join(cwd, relativePath), []),
         relativePath
     );
+}
+
+function loadGoldenWordExpectations({ cwd = process.cwd(), level } = {}) {
+    return loadJsonIfExists(path.join(cwd, "templates", `golden_n${level}_word_review_set.json`), []);
+}
+
+function loadWordPriorLaneInputs({ cwd = process.cwd(), level, rows = [] } = {}) {
+    const goldenExpectations = loadGoldenWordExpectations({ cwd, level });
+    const sapphireEntries = loadSapphireWordEntries({ cwd, level });
+    const sapphireReport = evaluateSapphireWordReviewSet({
+        rows,
+        entries: sapphireEntries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+        allowEmpty: true,
+    });
+    return {
+        goldenExpectations,
+        sapphireEntries,
+        sapphireResults: sapphireReport.results,
+    };
 }
 
 function firstString(values = []) {
@@ -707,6 +732,9 @@ function buildPlatinumGovernanceGateProviderParityForLevel({
 function buildWordGovernanceInputsProviderParityForLevel({
     rows = [],
     rawEntries = [],
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults,
     cwd = process.cwd(),
     ledgerDir,
     level = 5,
@@ -735,6 +763,10 @@ function buildWordGovernanceInputsProviderParityForLevel({
     const reportOptions = {
         rows,
         level,
+        goldenExpectations,
+        sapphireEntries,
+        sapphireResults,
+        requireLanePreconditions: true,
         wordPitchAccentData,
         kanjiLevelData,
     };
@@ -904,6 +936,9 @@ function buildKanjiPlatinumLevelProviderParityForLevel({
 function buildWordPlatinumLevelProviderParityForLevel({
     rows = [],
     rawEntries = [],
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults,
     cwd = process.cwd(),
     ledgerDir,
     level = 5,
@@ -937,6 +972,11 @@ function buildWordPlatinumLevelProviderParityForLevel({
         level,
         wordPitchAccentData,
         kanjiLevelData,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        sapphireEntries,
+        sapphireResults,
+        requireSapphirePrecondition: true,
         requireCurrentReviewStandard,
         requireAllRows,
         allowEmpty,
@@ -1291,6 +1331,9 @@ function buildKanjiRereviewStatusProviderParityForLevel({
 function buildWordRereviewStatusProviderParityForLevel({
     rows = [],
     rawEntries = [],
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults,
     cwd = process.cwd(),
     ledgerDir,
     level = 5,
@@ -1319,6 +1362,10 @@ function buildWordRereviewStatusProviderParityForLevel({
     const reportOptions = {
         rows,
         level,
+        goldenExpectations,
+        sapphireEntries,
+        sapphireResults,
+        requireLanePreconditions: true,
         wordPitchAccentData,
         kanjiLevelData,
     };
@@ -1365,7 +1412,9 @@ function buildWordRereviewStatusProviderParityForLevel({
 function buildWordBatchReportProviderParityForLevel({
     rows = [],
     rawEntries = [],
+    goldenExpectations,
     sapphireEntries = [],
+    sapphireResults,
     cwd = process.cwd(),
     ledgerDir,
     level = 5,
@@ -1396,7 +1445,9 @@ function buildWordBatchReportProviderParityForLevel({
     });
     const reportOptions = {
         rows,
+        goldenExpectations,
         sapphireEntries,
+        sapphireResults,
         wordPitchAccentData,
         level,
         words,
@@ -1448,6 +1499,9 @@ function buildWordBatchReportProviderParityForLevel({
 function buildWordCertificationStatusProviderParityForLevel({
     rows = [],
     rawEntries = [],
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults,
     cwd = process.cwd(),
     ledgerDir,
     level = 5,
@@ -1476,6 +1530,10 @@ function buildWordCertificationStatusProviderParityForLevel({
     const reportOptions = {
         rows,
         level,
+        goldenExpectations,
+        sapphireEntries,
+        sapphireResults,
+        requireLanePreconditions: true,
         wordPitchAccentData,
         kanjiLevelData,
     };
@@ -1580,11 +1638,14 @@ async function buildObsidianProofProviderParityReport({
             rawEntries: rawReviewSet.entries,
             config,
         });
+        const wordPriorLaneInputs = deckKind === "word"
+            ? loadWordPriorLaneInputs({ cwd, level, rows })
+            : {};
         if (consumer === SUPPORTED_CONSUMERS.WORD_BATCH_REPORT) {
             scopes.push(buildWordBatchReportProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
-                sapphireEntries: loadSapphireWordEntries({ cwd, level }),
+                ...wordPriorLaneInputs,
                 cwd,
                 level,
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
@@ -1597,6 +1658,7 @@ async function buildObsidianProofProviderParityReport({
             scopes.push(buildWordCertificationStatusProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
+                ...wordPriorLaneInputs,
                 cwd,
                 level,
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
@@ -1607,6 +1669,7 @@ async function buildObsidianProofProviderParityReport({
             scopes.push(buildWordRereviewStatusProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
+                ...wordPriorLaneInputs,
                 cwd,
                 level,
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
@@ -1617,6 +1680,7 @@ async function buildObsidianProofProviderParityReport({
             scopes.push(buildWordPlatinumLevelProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
+                ...wordPriorLaneInputs,
                 cwd,
                 level,
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,
@@ -1630,6 +1694,7 @@ async function buildObsidianProofProviderParityReport({
             scopes.push(buildWordGovernanceInputsProviderParityForLevel({
                 rows,
                 rawEntries: rawReviewSet.entries,
+                ...wordPriorLaneInputs,
                 cwd,
                 level,
                 sourceReviewSetPath: rawReviewSet.summary.sourceReviewSetPath,

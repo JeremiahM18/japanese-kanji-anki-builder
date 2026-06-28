@@ -213,6 +213,11 @@ function buildWordLaneCommands({ lane, levels, routing = {} }) {
                     authority: "Defaults to missing current-standard Platinum coverage, not Obsidian proof.",
                 }),
                 commandEntry({
+                    phase: `${levelLabel(level)} word Platinum blocked-current-standard repair queue`,
+                    command: `npm run deck:words:platinum:batch -- --level=${level} --limit=8 --queue=blocked-current-standard`,
+                    authority: "Read-only native Platinum validation repair queue; surfaces current-standard Platinum rows that fail the actual gate instead of counting them complete.",
+                }),
+                commandEntry({
                     phase: `${levelLabel(level)} word Platinum gate`,
                     command: `npm run deck:words:platinum:n${level}`,
                     authority: "Card-surface inspection gate; requires Gold and active current-standard Sapphire.",
@@ -653,7 +658,11 @@ function buildLaneBacklogRow(row, lane) {
         lane,
         ratio: laneStatus.ratio,
         missing: laneStatus.missing,
-        classification: laneStatus.missing > 0 ? "expected-backlog-visible" : "count-complete-run-gate-to-confirm",
+        classification: laneStatus.missing > 0
+            ? "expected-backlog-visible"
+            : lane === "platinum"
+                ? "count-complete-run-native-gate-and-blocked-current-standard-report"
+                : "count-complete-run-gate-to-confirm",
         priorBacklog,
     };
 }

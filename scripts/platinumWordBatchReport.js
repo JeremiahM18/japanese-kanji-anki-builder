@@ -2,9 +2,11 @@ const path = require("node:path");
 const fs = require("node:fs");
 const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
+const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { parseSapphireWordReviewSet } = require("../src/datasets/sapphireWordReviewSet");
 const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { evaluateSapphireWordReviewSet } = require("../src/services/sapphireWordReviewService");
 const {
     DEFAULT_WORD_BATCH_QUEUE_MODE,
     buildPlatinumWordBatchReport,
@@ -95,6 +97,15 @@ function readSapphireReviewSet(level, { cwd = process.cwd() } = {}) {
     );
 }
 
+function readGoldenReviewSet(level, { cwd = process.cwd() } = {}) {
+    const reviewSetPath = path.join(cwd, "templates", `golden_n${level}_word_review_set.json`);
+    if (!fs.existsSync(reviewSetPath)) {
+        throw new Error(`Missing prior Gold word review set at ${reviewSetPath}`);
+    }
+
+    return JSON.parse(fs.readFileSync(reviewSetPath, "utf8"));
+}
+
 async function main({
     commandName = "deck:words:platinum:batch",
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
@@ -110,13 +121,26 @@ async function main({
     const config = loadConfig();
     const entries = readReviewSet(options.level, { proofProvider });
     const sapphireEntries = readSapphireReviewSet(options.level);
+    const goldenExpectations = readGoldenReviewSet(options.level);
     const rows = await buildWordRowsForLevel({ level: options.level, config });
     const wordPitchAccentData = loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json"));
+    const kanjiLevelData = loadJlptOnlyJson(config.jlptJsonPath);
+    const sapphireReport = evaluateSapphireWordReviewSet({
+        rows,
+        entries: sapphireEntries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+        allowEmpty: true,
+    });
     const report = buildPlatinumWordBatchReport({
         rows,
         entries,
+        goldenExpectations,
         sapphireEntries,
+        sapphireResults: sapphireReport.results,
         wordPitchAccentData,
+        kanjiLevelData,
         level: options.level,
         words: options.words,
         limit: options.limit,
@@ -141,6 +165,7 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
+    readGoldenReviewSet,
     readReviewSet,
     readSapphireReviewSet,
     parseWordIdentities,

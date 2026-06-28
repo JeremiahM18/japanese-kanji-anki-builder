@@ -6,6 +6,7 @@ const {
     NON_SHIPPING_STATUSES,
     REVIEW_ONLY_STATUSES,
     entryUsesCurrentWordPlatinumStandard,
+    evaluatePlatinumWordReviewSet,
 } = require("./platinumReviewService");
 const {
     entryHasSubstantiveCurrentStandardRereviewProof,
@@ -20,6 +21,7 @@ const { katakanaToHiragana } = require("../utils/japanese");
 
 const WORD_BATCH_QUEUE_MODES = {
     MISSING_CURRENT_STANDARD: "missing-current-standard",
+    BLOCKED_CURRENT_STANDARD: "blocked-current-standard",
     SUBSTANTIVE_REREVIEW: "substantive-rereview",
 };
 const DEFAULT_WORD_BATCH_QUEUE_MODE = WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD;
@@ -483,6 +485,7 @@ function buildRiskFlags(row = {}, {
     reviewStatus = "missing_platinum",
     statuses = [],
     pitch = {},
+    platinumValidationFailures = [],
     queueMode = DEFAULT_WORD_BATCH_QUEUE_MODE,
 } = {}) {
     const flags = [];
@@ -492,7 +495,12 @@ function buildRiskFlags(row = {}, {
     const outsideLevelLabels = [...normalizeText(row.kanjiBreakdown).matchAll(/JLPT N[1-4] kanji/g)]
         .map((match) => match[0]);
 
-    if (reviewStatus === "substantive_rereview_proven") {
+    if (reviewStatus === "blocked_current_standard_platinum") {
+        flags.push("current-standard Platinum exists but fails native Platinum validation; repair the existing entry before treating the lane as complete");
+        for (const failure of platinumValidationFailures.slice(0, 5)) {
+            flags.push(`Platinum validation failure: ${failure}`);
+        }
+    } else if (reviewStatus === "substantive_rereview_proven") {
         flags.push(queueMode === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW
             ? "already has explicit Obsidian proof; skip unless intentionally replacing prior evidence"
             : "already has current-standard Platinum and separate Obsidian proof; no missing-Platinum work required");
@@ -544,6 +552,9 @@ function buildSuggestedReviewStep({ hardChecksPassed, reviewStatus, riskFlags = 
     if (!hardChecksPassed) {
         return "fix generated surface before platinum";
     }
+    if (reviewStatus === "blocked_current_standard_platinum") {
+        return "repair current-standard Platinum evidence/card binding, then rerun the native Platinum gate";
+    }
     if (reviewStatus === "substantive_rereview_proven") {
         return queueMode === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW
             ? "already has explicit Obsidian proof"
@@ -586,6 +597,7 @@ function selectBatchRows({
     rows = [],
     entries = [],
     sapphireEntries = [],
+    failingCurrentStandardIdentities = new Set(),
     words = [],
     limit = 12,
     skipSapphirePreconditionForSapphireCompatibilityReport = false,
@@ -618,16 +630,67 @@ function selectBatchRows({
                 return reviewState !== "current_standard_platinum_only"
                     && reviewState !== "substantive_rereview_proven";
             }
+            if (queueMode === WORD_BATCH_QUEUE_MODES.BLOCKED_CURRENT_STANDARD) {
+                return failingCurrentStandardIdentities.has(identity);
+            }
             return !state.hasSubstantiveCurrentStandardRereview;
         })
         .slice(0, Math.max(1, Number.isFinite(limit) ? Math.floor(limit) : 12));
 }
 
+function buildFailingCurrentStandardPlatinumByIdentity({
+    rows = [],
+    entries = [],
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults,
+    wordPitchAccentData = {},
+    kanjiLevelData = null,
+} = {}) {
+    if (!Array.isArray(goldenExpectations)) {
+        return new Map();
+    }
+
+    const stateByIdentity = buildEntryReviewStateByIdentity(entries);
+    const report = evaluatePlatinumWordReviewSet({
+        rows,
+        entries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        sapphireEntries,
+        sapphireResults: Array.isArray(sapphireResults) ? sapphireResults : [],
+        requireSapphirePrecondition: Array.isArray(sapphireResults),
+        wordPitchAccentData,
+        kanjiLevelData,
+        requireCurrentReviewStandard: true,
+        requireAllRows: false,
+        allowEmpty: true,
+    });
+    const failuresByIdentity = new Map();
+
+    for (const result of report.results || []) {
+        const identity = normalizeText(result.identity);
+        const state = stateByIdentity.get(identity) || {};
+        if (!identity || result.passed || !state.hasCurrentStandardPlatinum) {
+            continue;
+        }
+        failuresByIdentity.set(identity, {
+            label: result.label,
+            failures: Array.isArray(result.failures) ? result.failures : [],
+        });
+    }
+
+    return failuresByIdentity;
+}
+
 function buildPlatinumWordBatchReport({
     rows = [],
     entries = [],
+    goldenExpectations,
     sapphireEntries = [],
+    sapphireResults,
     wordPitchAccentData = {},
+    kanjiLevelData = null,
     level,
     words = [],
     limit = 12,
@@ -640,10 +703,21 @@ function buildPlatinumWordBatchReport({
     const currentSapphireSet = buildCurrentStandardSapphireSet(sapphireEntries);
     const queueMode = normalizeQueueMode(queue);
     const enforceSapphirePrecondition = !skipSapphirePreconditionForSapphireCompatibilityReport;
+    const failingCurrentStandardByIdentity = buildFailingCurrentStandardPlatinumByIdentity({
+        rows: generatedRows,
+        entries: reviewEntries,
+        goldenExpectations,
+        sapphireEntries,
+        sapphireResults,
+        wordPitchAccentData,
+        kanjiLevelData,
+    });
+    const failingCurrentStandardIdentities = new Set(failingCurrentStandardByIdentity.keys());
     const selectedRows = selectBatchRows({
         rows: generatedRows,
         entries: reviewEntries,
         sapphireEntries,
+        failingCurrentStandardIdentities,
         words,
         limit,
         skipSapphirePreconditionForSapphireCompatibilityReport,
@@ -686,6 +760,13 @@ function buildPlatinumWordBatchReport({
         const state = stateByIdentity.get(identity) || {};
         return !state.hasSubstantiveCurrentStandardRereview;
     });
+    const failingCurrentStandardRows = generatedRows.filter((row) => {
+        const identity = buildWordIdentity(row);
+        if (enforceSapphirePrecondition && !currentSapphireSet.has(identity)) {
+            return false;
+        }
+        return failingCurrentStandardIdentities.has(identity);
+    });
     const requestedMissing = Array.isArray(words)
         ? words
             .map((target) => buildWordIdentity(target))
@@ -698,11 +779,21 @@ function buildPlatinumWordBatchReport({
         const identity = buildWordIdentity(row);
         const state = stateByIdentity.get(identity) || {};
         const statuses = state.statuses || [];
-        const reviewStatus = classifyReviewState(state);
+        const platinumValidation = failingCurrentStandardByIdentity.get(identity) || null;
+        const platinumValidationFailures = platinumValidation?.failures || [];
+        const reviewStatus = platinumValidation
+            ? "blocked_current_standard_platinum"
+            : classifyReviewState(state);
         const pitch = buildPitchReview(row, wordPitchAccentData);
         const hardChecks = buildHardChecks(row, wordPitchAccentData);
         const hardChecksPassed = hardChecks.every((check) => check.passed);
-        const riskFlags = buildRiskFlags(row, { reviewStatus, statuses, pitch, queueMode });
+        const riskFlags = buildRiskFlags(row, {
+            reviewStatus,
+            statuses,
+            pitch,
+            platinumValidationFailures,
+            queueMode,
+        });
         if (enforceSapphirePrecondition && !currentSapphireSet.has(identity)) {
             riskFlags.unshift("missing current-standard Sapphire precondition; run Sapphire before Platinum");
         }
@@ -730,6 +821,7 @@ function buildPlatinumWordBatchReport({
             pitch,
             hardChecks,
             hardChecksPassed,
+            platinumValidationFailures,
             riskFlags,
             sourceLookupLinks: buildSourceLookupLinks(row),
             suggestedReviewStep: buildSuggestedReviewStep({
@@ -761,6 +853,7 @@ function buildPlatinumWordBatchReport({
                 : 0,
             remainingPlatinum: missingRows.length,
             remainingCurrentStandard: missingCurrentStandardRows.length,
+            failingCurrentStandardPlatinum: failingCurrentStandardRows.length,
             ...(includeSubstantiveRereviewQueue ? {
                 substantiveRereviewProven: substantiveRereviewProvenCount,
                 remainingSubstantiveRereview: needsSubstantiveRereviewRows.length,
@@ -770,6 +863,7 @@ function buildPlatinumWordBatchReport({
         },
         requestedMissing,
         nextMissingWords: missingCurrentStandardRows.map(buildWordIdentity),
+        nextBlockedCurrentStandardWords: failingCurrentStandardRows.map(buildWordIdentity),
         ...(includeSubstantiveRereviewQueue ? {
             nextSubstantiveRereviewWords: needsSubstantiveRereviewRows.map(buildWordIdentity),
         } : {}),
@@ -794,6 +888,7 @@ function formatPlatinumWordBatchReport(report = {}) {
         `Blocked by missing Sapphire: ${summary.blockedByMissingSapphire || 0}`,
         `Missing Platinum entries: ${summary.remainingPlatinum || 0}`,
         `Missing current-standard Platinum: ${summary.remainingCurrentStandard || 0}`,
+        `Failing current-standard Platinum: ${summary.failingCurrentStandardPlatinum || 0}`,
         `Selected cards: ${summary.selectedCards || 0}`,
     ];
     if (report.queue === WORD_BATCH_QUEUE_MODES.SUBSTANTIVE_REREVIEW) {
@@ -810,10 +905,14 @@ function formatPlatinumWordBatchReport(report = {}) {
 
     const queueWords = report.queue === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
         ? report.nextMissingWords
-        : report.nextSubstantiveRereviewWords;
+        : report.queue === WORD_BATCH_QUEUE_MODES.BLOCKED_CURRENT_STANDARD
+            ? report.nextBlockedCurrentStandardWords
+            : report.nextSubstantiveRereviewWords;
     const queueLabel = report.queue === WORD_BATCH_QUEUE_MODES.MISSING_CURRENT_STANDARD
         ? "Next missing current-standard Platinum queue"
-        : "Next explicit Obsidian proof queue";
+        : report.queue === WORD_BATCH_QUEUE_MODES.BLOCKED_CURRENT_STANDARD
+            ? "Next blocked current-standard Platinum repair queue"
+            : "Next explicit Obsidian proof queue";
     if (!report.scopedToRequestedWords && Array.isArray(queueWords) && queueWords.length > 0) {
         lines.push("", `${queueLabel} (${Math.min(queueWords.length, 30)}/${queueWords.length}):`);
         for (const identity of queueWords.slice(0, 30)) {
@@ -838,6 +937,15 @@ function formatPlatinumWordBatchReport(report = {}) {
         for (const check of (card.hardChecks || []).filter((item) => !item.passed)) {
             lines.push(`    - ${check.name}`);
         }
+        if (card.platinumValidationFailures?.length > 0) {
+            lines.push("  Native Platinum validation failures:");
+            for (const failure of card.platinumValidationFailures.slice(0, 12)) {
+                lines.push(`    - ${failure}`);
+            }
+            if (card.platinumValidationFailures.length > 12) {
+                lines.push(`    - ... ${card.platinumValidationFailures.length - 12} more`);
+            }
+        }
         lines.push("  Source lookup:");
         lines.push(`    - JLearn: ${card.sourceLookupLinks.jlearn}`);
         lines.push(`    - Jisho: ${card.sourceLookupLinks.jisho}`);
@@ -856,7 +964,7 @@ function formatPlatinumWordBatchReport(report = {}) {
     lines.push(
         "",
         "This report is read-only. It prepares review; it does not create platinum entries or prove release readiness.",
-        "Default queue is missing-current-standard Platinum. Use --queue=substantive-rereview only for explicit Obsidian proof-status compatibility work."
+        "Default queue is missing-current-standard Platinum. Use --queue=blocked-current-standard for current-standard Platinum rows that fail native validation. Use --queue=substantive-rereview only for explicit Obsidian proof-status compatibility work."
     );
     return `${lines.join("\n")}\n`;
 }

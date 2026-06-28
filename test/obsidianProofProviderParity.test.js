@@ -353,6 +353,39 @@ function buildWordSapphireEntry(overrides = {}) {
     };
 }
 
+function buildWordGoldExpectation(overrides = {}) {
+    const entry = buildWordEntry(overrides);
+    return {
+        word: entry.word,
+        readingIncludes: entry.readingIncludes,
+        meaningIncludes: entry.meaningIncludes,
+        jlptLevelIncludes: entry.jlptLevelIncludes,
+        coverageRoleIncludes: entry.coverageRoleIncludes,
+        focusIncludes: entry.focusIncludes,
+        coversReadingIncludes: entry.coversReadingIncludes,
+        breakdownIncludes: entry.breakdownIncludes,
+        exampleIncludes: entry.exampleIncludes,
+        notesIncludes: entry.notesIncludes,
+    };
+}
+
+function buildWordSapphireResult(overrides = {}) {
+    const entry = buildWordEntry(overrides);
+    const reading = (Array.isArray(entry.readingIncludes) ? entry.readingIncludes : [])[0] || "";
+    return {
+        identity: `${entry.word}|${reading}`,
+        passed: true,
+    };
+}
+
+function buildWordPriorLaneFixture(overrides = {}) {
+    return {
+        goldenExpectations: [buildWordGoldExpectation(overrides)],
+        sapphireEntries: [buildWordSapphireEntry(overrides)],
+        sapphireResults: [buildWordSapphireResult(overrides)],
+    };
+}
+
 function buildWordProofEvent(overrides = {}) {
     const provenance = buildWordProvenance();
     return {
@@ -632,6 +665,7 @@ test("word rereview-status provider parity passes when inline and ledger project
     const scope = buildWordRereviewStatusProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -667,7 +701,7 @@ test("word batch-report provider parity passes when inline and ledger projection
     const scope = buildWordBatchReportProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
-        sapphireEntries: [buildWordSapphireEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -705,7 +739,7 @@ test("word batch-report provider parity fails when ledger changes queue selectio
     const scope = buildWordBatchReportProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
-        sapphireEntries: [buildWordSapphireEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -752,6 +786,7 @@ test("word certify-status provider parity passes when inline and ledger projecti
     const scope = buildWordCertificationStatusProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -791,6 +826,7 @@ test("word certify-status provider parity fails when ledger misses inline proof"
     const scope = buildWordCertificationStatusProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -837,6 +873,7 @@ test("word platinum-level provider parity passes when structural projections mat
     const scope = buildWordPlatinumLevelProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -874,6 +911,7 @@ test("word platinum-level provider parity keeps structural gate stable when ledg
     const scope = buildWordPlatinumLevelProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -910,6 +948,7 @@ test("word governance inputs provider parity passes when gate projections match"
     const scope = buildWordGovernanceInputsProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
@@ -947,6 +986,7 @@ test("word governance inputs provider parity fails when word proof warning postu
     const scope = buildWordGovernanceInputsProviderParityForLevel({
         rows: [buildWordRow()],
         rawEntries: [buildWordEntry()],
+        ...buildWordPriorLaneFixture(),
         cwd: rootDir,
         level: 5,
         sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",

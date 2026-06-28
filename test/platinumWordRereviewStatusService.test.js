@@ -9,6 +9,9 @@ const {
     REQUIRED_WORD_SOURCE_EVIDENCE_TYPES,
 } = require("../src/services/platinumReviewService");
 const {
+    CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+} = require("../src/services/sapphireWordReviewService");
+const {
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     buildPlatinumWordRereviewStatusReport,
     buildPlatinumWordRereviewStatusSummary,
@@ -296,11 +299,58 @@ function buildEntry(overrides = {}) {
     };
 }
 
+function buildGoldExpectationFromEntry(entry = buildEntry()) {
+    return {
+        word: entry.word,
+        readingIncludes: entry.readingIncludes,
+        meaningIncludes: entry.meaningIncludes,
+        jlptLevelIncludes: entry.jlptLevelIncludes,
+        coverageRoleIncludes: entry.coverageRoleIncludes,
+        focusIncludes: entry.focusIncludes,
+        coversReadingIncludes: entry.coversReadingIncludes,
+        breakdownIncludes: entry.breakdownIncludes,
+        exampleIncludes: entry.exampleIncludes,
+        notesIncludes: entry.notesIncludes,
+    };
+}
+
+function buildSapphireEntryFromEntry(entry = buildEntry()) {
+    return {
+        word: entry.word,
+        status: "sapphire",
+        readingIncludes: entry.readingIncludes,
+        reviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+    };
+}
+
+function buildSapphireResultFromEntry(entry = buildEntry()) {
+    const reading = (Array.isArray(entry.readingIncludes) ? entry.readingIncludes : [])[0] || "";
+    return {
+        identity: `${entry.word}|${reading}`,
+        passed: true,
+    };
+}
+
 function buildReport(options = {}) {
+    const {
+        entries = [],
+        goldenExpectations,
+        sapphireEntries,
+        sapphireResults,
+        requireLanePreconditions = true,
+        ...rest
+    } = options;
+    const priorLaneEntries = entries.length > 0 ? entries : [buildEntry()];
+
     return buildPlatinumWordRereviewStatusReport({
         wordPitchAccentData: buildWordPitchAccentData(),
         kanjiLevelData: buildKanjiLevelData(),
-        ...options,
+        ...rest,
+        entries,
+        goldenExpectations: goldenExpectations || priorLaneEntries.map(buildGoldExpectationFromEntry),
+        sapphireEntries: sapphireEntries || priorLaneEntries.map(buildSapphireEntryFromEntry),
+        sapphireResults: sapphireResults || priorLaneEntries.map(buildSapphireResultFromEntry),
+        requireLanePreconditions,
     });
 }
 

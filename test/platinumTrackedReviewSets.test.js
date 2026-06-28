@@ -19,6 +19,9 @@ const {
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
 const {
+    evaluateSapphireWordReviewSet,
+} = require("../src/services/sapphireWordReviewService");
+const {
     validatePlatinumLaneAuthorityBoundary,
 } = require("../src/services/reviewLanePreconditionService");
 const { buildPitchAccentHtml } = require("../src/services/pitchAccentRenderService");
@@ -414,10 +417,20 @@ function assertN1PlatinumAuditMeetsLedgerGradeFloor(entry) {
     }
 }
 
-function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
+function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}, goldenExpectations = []) {
+    const goldenExpectationByKey = new Map((Array.isArray(goldenExpectations) ? goldenExpectations : [])
+        .map((entry) => [
+            buildWordStudyEntryKey({
+                written: entry.word,
+                reading: normalizeList(entry.readingIncludes)[0],
+            }),
+            entry,
+        ]));
+
     return activeEntries(entries, ACTIVE_WORD_PLATINUM_STATUSES).map((entry) => {
         const reading = normalizeList(entry.readingIncludes)[0] || "";
         const wordKey = buildWordStudyEntryKey({ written: entry.word, reading });
+        const goldExpectation = goldenExpectationByKey.get(wordKey) || {};
         const pitchEntry = wordPitchAccentData.entries?.[wordKey] || {};
         const pitchPattern = pitchEntry.pattern || "";
         const sourceLabel = isGeneratedPitchAccentSource({
@@ -428,17 +441,17 @@ function buildSyntheticWordRows(entries = [], wordPitchAccentData = {}) {
         return {
             word: entry.word,
             reading,
-            readingBreakdown: normalizeList(entry.breakdownIncludes).join(" / "),
+            readingBreakdown: normalizeList(goldExpectation.breakdownIncludes || entry.breakdownIncludes).join(" / "),
             audio: `[sound:${entry.word}-word-reading-${entry.word}-${reading}.wav]`,
             pitchAccent: buildPitchAccentHtml({ pattern: pitchPattern, reading, sourceLabel }),
-            meaning: normalizeList(entry.meaningIncludes).join(" / "),
-            jlptLevel: normalizeList(entry.jlptLevelIncludes).join(" / "),
-            coverageRole: normalizeList(entry.coverageRoleIncludes).join(" / "),
-            focusKanji: normalizeList(entry.focusIncludes).join(" / "),
-            coversReading: normalizeList(entry.coversReadingIncludes).join(" / "),
-            kanjiBreakdown: normalizeList(entry.breakdownIncludes).join(" / "),
-            exampleSentence: normalizeList(entry.exampleIncludes).join(" / "),
-            notes: normalizeList(entry.notesIncludes).join(" / "),
+            meaning: normalizeList(goldExpectation.meaningIncludes || entry.meaningIncludes).join(" / "),
+            jlptLevel: normalizeList(goldExpectation.jlptLevelIncludes || entry.jlptLevelIncludes).join(" / "),
+            coverageRole: normalizeList(goldExpectation.coverageRoleIncludes || entry.coverageRoleIncludes).join(" / "),
+            focusKanji: normalizeList(goldExpectation.focusIncludes || entry.focusIncludes).join(" / "),
+            coversReading: normalizeList(goldExpectation.coversReadingIncludes || entry.coversReadingIncludes).join(" / "),
+            kanjiBreakdown: normalizeList(goldExpectation.breakdownIncludes || entry.breakdownIncludes).join(" / "),
+            exampleSentence: normalizeList(goldExpectation.exampleIncludes || entry.exampleIncludes).join(" / "),
+            notes: normalizeList(goldExpectation.notesIncludes || entry.notesIncludes).join(" / "),
         };
     });
 }
@@ -803,6 +816,9 @@ test("tracked populated word platinum manifests bind evidence to protected field
         if (manifestActiveEntries.length === 0) {
             continue;
         }
+        const levelMatch = fileName.match(/^platinum_n([1-5])_word_review_set\.json$/);
+        assert.ok(levelMatch, `${fileName} must encode a word JLPT level`);
+        const level = Number(levelMatch[1]);
 
         const activeWordKeys = manifestActiveEntries.map((entry) =>
             buildWordStudyEntryKey({
@@ -815,9 +831,34 @@ test("tracked populated word platinum manifests bind evidence to protected field
             assert.ok(wordPitchAccentData.entries[wordKey], `${fileName} missing pitch source for ${wordKey}`);
         }
 
+        const activeWordKeySet = new Set(activeWordKeys);
+        const goldenExpectations = loadJson(path.join("templates", `golden_n${level}_word_review_set.json`))
+            .filter((entry) => activeWordKeySet.has(buildWordStudyEntryKey({
+                written: entry.word,
+                reading: normalizeList(entry.readingIncludes)[0],
+            })));
+        const rows = buildSyntheticWordRows(manifestActiveEntries, wordPitchAccentData, goldenExpectations);
+        const sapphireEntries = loadJson(path.join("templates", `sapphire_n${level}_word_review_set.json`))
+            .filter((entry) => activeWordKeySet.has(buildWordStudyEntryKey({
+                written: entry.word,
+                reading: normalizeList(entry.readingIncludes)[0],
+            })));
+        const sapphireReport = evaluateSapphireWordReviewSet({
+            rows,
+            entries: sapphireEntries,
+            goldenExpectations,
+            requireGoldPrecondition: true,
+            requireCurrentReviewStandard: true,
+            allowEmpty: true,
+        });
         const report = evaluatePlatinumWordReviewSet({
-            rows: buildSyntheticWordRows(manifestActiveEntries, wordPitchAccentData),
+            rows,
             entries: manifestActiveEntries,
+            goldenExpectations,
+            requireGoldPrecondition: true,
+            sapphireEntries,
+            sapphireResults: sapphireReport.results,
+            requireSapphirePrecondition: true,
             wordPitchAccentData,
         });
 

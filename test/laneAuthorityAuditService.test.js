@@ -2,11 +2,12 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    KANJI_GOLD_FIELDS,
     WORD_GOLD_FIELDS,
     buildLaneAuthorityDuplicationReport,
 } = require("../src/services/laneAuthorityAuditService");
 
-test("lane authority duplication audit records word slimming progress and remaining kanji debt", () => {
+test("lane authority duplication audit records word and kanji authority slimming progress", () => {
     const report = buildLaneAuthorityDuplicationReport();
 
     assert.match(report.boundary, /Read-only transitional lane-authority audit/);
@@ -42,5 +43,18 @@ test("lane authority duplication audit records word slimming progress and remain
         platinum: 80,
     });
     assert.equal(report.kanji.n3.sapphireVsPlatinum.shared, 341);
-    assert.equal(report.kanji.n3.sapphireVsPlatinum.identicalByField.qualityGates, 341);
+    for (const field of KANJI_GOLD_FIELDS) {
+        assert.equal(
+            report.kanji.n5.goldVsSapphire.identicalByField[field],
+            0,
+            `kanji Sapphire must not duplicate Gold-owned ${field} after slimming`
+        );
+    }
+    for (const level of ["n5", "n4", "n3", "n2", "n1"]) {
+        assert.equal(
+            report.kanji[level].sapphireVsPlatinum.identicalByField.qualityGates,
+            0,
+            `${level} kanji Sapphire must not carry Platinum qualityGates after slimming`
+        );
+    }
 });

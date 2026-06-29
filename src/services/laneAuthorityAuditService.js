@@ -83,6 +83,9 @@ function stable(value) {
 }
 
 function valuesMatch(left, right, field) {
+    if (left?.[field] === undefined && right?.[field] === undefined) {
+        return false;
+    }
     return stable(left?.[field]) === stable(right?.[field]);
 }
 

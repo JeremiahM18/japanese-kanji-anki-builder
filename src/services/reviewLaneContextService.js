@@ -3,7 +3,9 @@ const {
 } = require("./reviewLanePreconditionService");
 
 const CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD = "word-sapphire-v1-evidence-lanes";
+const CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD = "kanji-sapphire-v1-evidence-lanes";
 const ACTIVE_WORD_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
+const ACTIVE_KANJI_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 
 const WORD_GOLD_PROTECTED_FIELDS = Object.freeze([
     "readingIncludes",
@@ -25,6 +27,22 @@ const WORD_SAPPHIRE_STRUCTURAL_FIELDS = Object.freeze([
     "verificationLimitations",
 ]);
 
+const KANJI_GOLD_PROTECTED_FIELDS = Object.freeze([
+    "readingIncludes",
+    "meaningIncludes",
+    "exampleIncludes",
+    "notesIncludes",
+]);
+
+const KANJI_SAPPHIRE_STRUCTURAL_FIELDS = Object.freeze([
+    "kanjiMeaningsIncludes",
+    "levelIncludes",
+    "sourceEvidence",
+    "internalChecks",
+    "reviewEvidence",
+    "verificationLimitations",
+]);
+
 function normalizeText(value) {
     return String(value ?? "").trim();
 }
@@ -39,9 +57,22 @@ function formatWordIdentity(entry = {}) {
     return buildWordEntryIdentity(entry) || `${normalizeText(entry.word)}|(missing-reading)`;
 }
 
+function buildKanjiIdentity(entry = {}) {
+    return normalizeText(entry.kanji);
+}
+
+function formatKanjiIdentity(entry = {}) {
+    return buildKanjiIdentity(entry) || "(missing-kanji)";
+}
+
 function hasCurrentStandardWordSapphireStatus(entry = {}) {
     return ACTIVE_WORD_SAPPHIRE_STATUSES.includes(normalizeText(entry.status))
         && normalizeText(entry.reviewStandard) === CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD;
+}
+
+function hasCurrentStandardKanjiSapphireStatus(entry = {}) {
+    return ACTIVE_KANJI_SAPPHIRE_STATUSES.includes(normalizeText(entry.status))
+        && normalizeText(entry.reviewStandard) === CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD;
 }
 
 function findEntriesByIdentity(entries = [], identity = "", {
@@ -94,10 +125,31 @@ function resolveCurrentStandardWordSapphireEntry({ entry = {}, sapphireEntries }
     });
 }
 
-function resolvePriorLaneResult({ entry = {}, results = [], laneName = "prior lane" } = {}) {
-    const identity = buildWordEntryIdentity(entry);
+function resolveKanjiGoldExpectation({ entry = {}, goldenExpectations } = {}) {
+    return findEntriesByIdentity(goldenExpectations, buildKanjiIdentity(entry), {
+        laneName: "Gold regression",
+        getIdentity: buildKanjiIdentity,
+    });
+}
+
+function resolveCurrentStandardKanjiSapphireEntry({ entry = {}, sapphireEntries } = {}) {
+    return findEntriesByIdentity(sapphireEntries, buildKanjiIdentity(entry), {
+        laneName: "current-standard Sapphire",
+        includeEntry: hasCurrentStandardKanjiSapphireStatus,
+        getIdentity: buildKanjiIdentity,
+    });
+}
+
+function resolvePriorLaneResult({
+    entry = {},
+    results = [],
+    laneName = "prior lane",
+    getEntryIdentity = buildWordEntryIdentity,
+    getResultIdentity = (result) => result.identity || buildWordEntryIdentity(result),
+} = {}) {
+    const identity = getEntryIdentity(entry);
     const matches = (Array.isArray(results) ? results : [])
-        .filter((result) => normalizeText(result.identity || buildWordEntryIdentity(result)) === normalizeText(identity));
+        .filter((result) => normalizeText(getResultIdentity(result)) === normalizeText(identity));
 
     if (matches.length === 0) {
         return {
@@ -156,6 +208,41 @@ function resolveWordLaneContext({
     };
 }
 
+function resolveKanjiLaneContext({
+    entry = {},
+    goldenExpectations,
+    sapphireEntries,
+    sapphireResults,
+} = {}) {
+    const gold = goldenExpectations === undefined
+        ? { failures: [] }
+        : resolveKanjiGoldExpectation({ entry, goldenExpectations });
+    const sapphire = sapphireEntries === undefined
+        ? { failures: [] }
+        : resolveCurrentStandardKanjiSapphireEntry({ entry, sapphireEntries });
+    const sapphireGate = sapphireResults === undefined
+        ? { failures: [] }
+        : resolvePriorLaneResult({
+            entry,
+            results: sapphireResults,
+            laneName: "Sapphire",
+            getEntryIdentity: buildKanjiIdentity,
+            getResultIdentity: (result) => result.kanji,
+        });
+
+    return {
+        identity: formatKanjiIdentity(entry),
+        goldExpectation: gold.entry,
+        sapphireEntry: sapphire.entry,
+        sapphireResult: sapphireGate.result,
+        failures: [
+            ...gold.failures,
+            ...sapphire.failures,
+            ...sapphireGate.failures,
+        ],
+    };
+}
+
 function getGoldProtectedWordField({ entry = {}, goldExpectation = {}, field } = {}) {
     const goldEntry = goldExpectation || {};
     const goldValue = normalizeStringArray(goldEntry[field]);
@@ -166,6 +253,23 @@ function getGoldProtectedWordField({ entry = {}, goldExpectation = {}, field } =
 }
 
 function getSapphireStructuralWordField({ entry = {}, sapphireEntry = {}, field } = {}) {
+    const sapphireValue = sapphireEntry ? sapphireEntry[field] : undefined;
+    if (Array.isArray(sapphireValue)) {
+        return sapphireValue;
+    }
+    return entry[field];
+}
+
+function getGoldProtectedKanjiField({ entry = {}, goldExpectation = {}, field } = {}) {
+    const goldEntry = goldExpectation || {};
+    const goldValue = normalizeStringArray(goldEntry[field]);
+    if (goldValue.length > 0) {
+        return goldValue;
+    }
+    return normalizeStringArray(entry[field]);
+}
+
+function getSapphireStructuralKanjiField({ entry = {}, sapphireEntry = {}, field } = {}) {
     const sapphireValue = sapphireEntry ? sapphireEntry[field] : undefined;
     if (Array.isArray(sapphireValue)) {
         return sapphireValue;
@@ -186,17 +290,42 @@ function buildResolvedWordFields({ entry = {}, goldExpectation = {}, sapphireEnt
     return fields;
 }
 
+function buildResolvedKanjiFields({ entry = {}, goldExpectation = {}, sapphireEntry = {} } = {}) {
+    const fields = {};
+    const resolvedGoldExpectation = goldExpectation || {};
+    const resolvedSapphireEntry = sapphireEntry || {};
+    for (const field of KANJI_GOLD_PROTECTED_FIELDS) {
+        fields[field] = getGoldProtectedKanjiField({ entry, goldExpectation: resolvedGoldExpectation, field });
+    }
+    for (const field of KANJI_SAPPHIRE_STRUCTURAL_FIELDS) {
+        fields[field] = getSapphireStructuralKanjiField({ entry, sapphireEntry: resolvedSapphireEntry, field });
+    }
+    return fields;
+}
+
 module.exports = {
+    CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
     CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
+    KANJI_GOLD_PROTECTED_FIELDS,
+    KANJI_SAPPHIRE_STRUCTURAL_FIELDS,
     WORD_GOLD_PROTECTED_FIELDS,
     WORD_SAPPHIRE_STRUCTURAL_FIELDS,
+    buildKanjiIdentity,
+    buildResolvedKanjiFields,
     buildResolvedWordFields,
     findEntriesByIdentity,
+    formatKanjiIdentity,
     formatWordIdentity,
+    getGoldProtectedKanjiField,
     getGoldProtectedWordField,
+    getSapphireStructuralKanjiField,
     getSapphireStructuralWordField,
+    hasCurrentStandardKanjiSapphireStatus,
     hasCurrentStandardWordSapphireStatus,
+    resolveCurrentStandardKanjiSapphireEntry,
     resolveCurrentStandardWordSapphireEntry,
+    resolveKanjiGoldExpectation,
+    resolveKanjiLaneContext,
     resolvePriorLaneResult,
     resolveWordGoldExpectation,
     resolveWordLaneContext,

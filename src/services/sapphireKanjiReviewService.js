@@ -4,6 +4,10 @@ const {
     buildKanjiGoldPreconditionFailuresByKey,
     mergeFailuresIntoResult,
 } = require("./reviewLanePreconditionService");
+const {
+    buildResolvedKanjiFields,
+    resolveKanjiGoldExpectation,
+} = require("./reviewLaneContextService");
 
 const ACTIVE_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 const NON_SHIPPING_STATUSES = platinumKanjiReview.NON_SHIPPING_STATUSES;
@@ -100,9 +104,9 @@ function mapSapphireEntryToPlatinumCompatibility(entry = {}) {
     if (entry.previousReviewStandard === CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD) {
         mapped.previousReviewStandard = platinumKanjiReview.CURRENT_KANJI_PLATINUM_REVIEW_STANDARD;
     }
-    if (entry.sapphireReviewAudit && !entry.platinumReviewAudit) {
-        mapped.platinumReviewAudit = entry.sapphireReviewAudit;
-    }
+    delete mapped.qualityGates;
+    delete mapped.sapphireReviewAudit;
+    delete mapped.platinumReviewAudit;
 
     return mapped;
 }
@@ -342,30 +346,32 @@ function validateGeneratedKanjiStructuralRow(row = {}) {
 }
 
 function validateActiveSapphireEntry(entry = {}, {
+    goldExpectation,
     requireCurrentReviewStandard = false,
     row = null,
 } = {}) {
     const failures = [];
+    const resolvedFields = buildResolvedKanjiFields({ entry, goldExpectation });
 
     if (!SINGLE_KANJI_RE.test(normalizeText(entry.kanji))) {
         failures.push("kanji must be one target kanji");
     }
-    if (normalizeStringArray(entry.readingIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.readingIncludes).length === 0) {
         failures.push("readingIncludes must protect the generated primary reading field");
     }
-    if (normalizeStringArray(entry.meaningIncludes).length === 0) {
-        failures.push("meaningIncludes must protect the generated primary meaning field");
+    if (normalizeStringArray(resolvedFields.meaningIncludes).length === 0) {
+        failures.push("meaningIncludes must protect the generated meaning field");
     }
-    if (normalizeStringArray(entry.kanjiMeaningsIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.kanjiMeaningsIncludes).length === 0) {
         failures.push("kanjiMeaningsIncludes must protect the generated broader meaning field");
     }
-    if (normalizeStringArray(entry.levelIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.levelIncludes).length === 0) {
         failures.push("levelIncludes must protect the generated JLPT level field");
     }
-    if (normalizeStringArray(entry.exampleIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.exampleIncludes).length === 0) {
         failures.push("exampleIncludes must protect the generated example field");
     }
-    if (normalizeStringArray(entry.notesIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.notesIncludes).length === 0) {
         failures.push("notesIncludes must protect the generated notes/support field");
     }
     if (!normalizeText(entry.primaryReadingRationale)) {
@@ -380,8 +386,8 @@ function validateActiveSapphireEntry(entry = {}, {
     if (entry.platinumReviewAudit !== undefined) {
         failures.push("Sapphire entries must not include platinumReviewAudit");
     }
-    if (entry.qualityGates !== undefined && (typeof entry.qualityGates !== "object" || Array.isArray(entry.qualityGates))) {
-        failures.push("qualityGates must be an object when present");
+    if (entry.qualityGates !== undefined) {
+        failures.push("Sapphire entries must not include Platinum qualityGates");
     }
     if (
         requireCurrentReviewStandard
@@ -393,23 +399,24 @@ function validateActiveSapphireEntry(entry = {}, {
     }
     if (row) {
         failures.push(...validateGeneratedKanjiStructuralRow(row));
-        if (Array.isArray(entry.readingIncludes) && !includesAll(row.primaryReading, entry.readingIncludes)) {
-            failures.push(`primary reading field did not include protected snippet: ${entry.readingIncludes.join(", ")}`);
+        if (normalizeStringArray(resolvedFields.readingIncludes).length > 0 && !includesAll(row.primaryReading, resolvedFields.readingIncludes)) {
+            failures.push(`primary reading field did not include protected snippet: ${resolvedFields.readingIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.meaningIncludes) && !includesAll(row.meaningJP, entry.meaningIncludes)) {
-            failures.push(`primary meaning field did not include protected snippet: ${entry.meaningIncludes.join(", ")}`);
+        const generatedMeaningText = `${row.meaningJP || ""} ／ ${row.kanjiMeanings || ""}`;
+        if (normalizeStringArray(resolvedFields.meaningIncludes).length > 0 && !includesAll(generatedMeaningText, resolvedFields.meaningIncludes)) {
+            failures.push(`meaning fields did not include protected snippet: ${resolvedFields.meaningIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.kanjiMeaningsIncludes) && !includesAll(row.kanjiMeanings, entry.kanjiMeaningsIncludes)) {
-            failures.push(`kanji meanings field did not include protected snippet: ${entry.kanjiMeaningsIncludes.join(", ")}`);
+        if (normalizeStringArray(resolvedFields.kanjiMeaningsIncludes).length > 0 && !includesAll(row.kanjiMeanings, resolvedFields.kanjiMeaningsIncludes)) {
+            failures.push(`kanji meanings field did not include protected snippet: ${resolvedFields.kanjiMeaningsIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.levelIncludes) && !includesAll(row.levelLabel, entry.levelIncludes)) {
-            failures.push(`level label field did not include protected snippet: ${entry.levelIncludes.join(", ")}`);
+        if (normalizeStringArray(resolvedFields.levelIncludes).length > 0 && !includesAll(row.levelLabel, resolvedFields.levelIncludes)) {
+            failures.push(`level label field did not include protected snippet: ${resolvedFields.levelIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.exampleIncludes) && !includesAll(row.exampleSentence, entry.exampleIncludes)) {
-            failures.push(`example field did not include protected snippet: ${entry.exampleIncludes.join(", ")}`);
+        if (normalizeStringArray(resolvedFields.exampleIncludes).length > 0 && !includesAll(row.exampleSentence, resolvedFields.exampleIncludes)) {
+            failures.push(`example field did not include protected snippet: ${resolvedFields.exampleIncludes.join(", ")}`);
         }
-        if (Array.isArray(entry.notesIncludes) && !includesAll(row.notes, entry.notesIncludes)) {
-            failures.push(`notes field did not include protected snippet: ${entry.notesIncludes.join(", ")}`);
+        if (normalizeStringArray(resolvedFields.notesIncludes).length > 0 && !includesAll(row.notes, resolvedFields.notesIncludes)) {
+            failures.push(`notes field did not include protected snippet: ${resolvedFields.notesIncludes.join(", ")}`);
         }
     }
 
@@ -460,6 +467,7 @@ function validateRevalidationEntry(entry = {}) {
 function evaluateSapphireKanjiEntry({
     rows = [],
     entry = {},
+    goldExpectation,
     requireCurrentReviewStandard = false,
 } = {}) {
     const status = normalizeText(entry.status);
@@ -478,6 +486,7 @@ function evaluateSapphireKanjiEntry({
             failures.push("active Sapphire kanji could not be generated");
         } else {
             failures.push(...validateActiveSapphireEntry(entry, {
+                goldExpectation,
                 requireCurrentReviewStandard,
                 row,
             }));
@@ -555,11 +564,20 @@ function evaluateSapphireKanjiReviewSet({
         })
         : new Map();
     const results = reviewEntries.map((entry) => mergeFailuresIntoResult(
-        evaluateSapphireKanjiEntry({
-            rows: generatedRows,
-            entry,
-            requireCurrentReviewStandard,
-        }),
+        (() => {
+            const goldContext = goldenExpectations === undefined
+                ? { failures: [] }
+                : resolveKanjiGoldExpectation({ entry, goldenExpectations });
+            return mergeFailuresIntoResult(
+                evaluateSapphireKanjiEntry({
+                    rows: generatedRows,
+                    entry,
+                    goldExpectation: goldContext.entry,
+                    requireCurrentReviewStandard,
+                }),
+                goldContext.failures
+            );
+        })(),
         goldPreconditionFailures.get(entry.kanji)
     ));
     const coverageFailures = [];

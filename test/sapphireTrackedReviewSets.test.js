@@ -31,6 +31,16 @@ function activeEntries(entries = []) {
     return entries.filter((entry) => ACTIVE_SAPPHIRE_STATUSES.includes(entry.status));
 }
 
+function buildKanjiIdentity(entry = {}) {
+    return String(entry.kanji || "").trim();
+}
+
+function findGoldEntry(entry = {}, goldEntries = []) {
+    const identity = buildKanjiIdentity(entry);
+    return (Array.isArray(goldEntries) ? goldEntries : [])
+        .find((goldEntry) => buildKanjiIdentity(goldEntry) === identity);
+}
+
 function isAllowedLegacyLanePath(pathParts = [], value = "") {
     const pathText = pathParts.join(".");
     return pathText.includes("migrationProvenance")
@@ -58,15 +68,22 @@ function collectLegacyLaneTextIssues(value, pathParts = []) {
     return [];
 }
 
-function buildSyntheticSapphireRows(entries = [], levelLabel = "") {
+function buildSyntheticSapphireRows(entries = [], levelLabel = "", goldEntries = []) {
     return activeEntries(entries).map((entry) => {
         const surface = entry.sapphireReviewAudit?.generatedSurface || {};
-        const reading = normalizeList(entry.readingIncludes)[0] || surface.primaryReading || "";
+        const goldEntry = findGoldEntry(entry, goldEntries) || {};
+        const reading = normalizeList(entry.readingIncludes)[0]
+            || normalizeList(goldEntry.readingIncludes)[0]
+            || surface.primaryReading
+            || "";
         return {
             kanji: entry.kanji,
             levelLabel,
             displayWord: surface.displayWord || entry.kanji,
-            meaningJP: surface.meaningJP || normalizeList(entry.meaningIncludes).join(" / "),
+            meaningJP: surface.meaningJP
+                || normalizeList(entry.meaningIncludes)[0]
+                || normalizeList(goldEntry.meaningIncludes)[0]
+                || "",
             primaryReading: reading,
             kanjiMeanings: surface.kanjiMeanings || normalizeList(entry.kanjiMeaningsIncludes).join(" / "),
             studyWordKanji: surface.studyWordKanji ?? "",
@@ -75,8 +92,12 @@ function buildSyntheticSapphireRows(entries = [], levelLabel = "") {
             strokeOrder: surface.strokeOrder || `<img src="${entry.kanji}-stroke-order.gif" alt="Stroke order for ${entry.kanji}" />`,
             audio: surface.audio || `[sound:${entry.kanji}-kanji-reading-${entry.kanji}-${reading}.wav]`,
             radical: "",
-            notes: surface.notes || normalizeList(entry.notesIncludes).join(" / "),
-            exampleSentence: surface.exampleSentence || normalizeList(entry.exampleIncludes).join(" / "),
+            notes: surface.notes
+                || normalizeList(entry.notesIncludes).join(" / ")
+                || normalizeList(goldEntry.notesIncludes).join(" / "),
+            exampleSentence: surface.exampleSentence
+                || normalizeList(entry.exampleIncludes).join(" / ")
+                || normalizeList(goldEntry.exampleIncludes).join(" / "),
         };
     });
 }
@@ -172,6 +193,7 @@ test("tracked Sapphire kanji manifests are first-class structural review sets", 
     for (const fileName of sapphireFiles) {
         const level = Number(fileName.match(/^sapphire_n([1-5])_review_set\.json$/)?.[1]);
         const entries = loadJson(path.join("templates", fileName));
+        const goldenExpectations = loadJson(path.join("templates", `golden_n${level}_review_set.json`));
         const manifestActiveEntries = activeEntries(entries);
 
         assert.ok(manifestActiveEntries.length > 0, `${fileName} must have active Sapphire coverage`);
@@ -234,8 +256,9 @@ test("tracked Sapphire kanji manifests are first-class structural review sets", 
         }
 
         const report = evaluateSapphireKanjiReviewSet({
-            rows: buildSyntheticSapphireRows(entries, `N${level}`),
+            rows: buildSyntheticSapphireRows(entries, `N${level}`, goldenExpectations),
             entries,
+            goldenExpectations,
             requireCurrentReviewStandard: true,
         });
         assert.equal(report.passed, true, `${fileName}\n${formatSapphireKanjiReviewReport(report)}`);
@@ -265,8 +288,8 @@ test("Sapphire migration preserves Platinum manifest coverage without shrinking 
 
 test("Sapphire kanji evaluator requires prior Gold when precondition enforcement is enabled", () => {
     const candidate = JSON.parse(JSON.stringify(loadJson(path.join("templates", "sapphire_n5_review_set.json"))[0]));
-    const rows = buildSyntheticSapphireRows([candidate], "N5");
     const goldenExpectations = loadJson(path.join("templates", "golden_n5_review_set.json"));
+    const rows = buildSyntheticSapphireRows([candidate], "N5", goldenExpectations);
 
     const passingReport = evaluateSapphireKanjiReviewSet({
         rows,
@@ -341,7 +364,7 @@ test("Sapphire schema validates native manifests and rejects Platinum-shaped can
 test("Sapphire promoter merges reviewed input and fails closed on unsafe candidates", () => {
     const candidate = JSON.parse(JSON.stringify(loadJson(path.join("templates", "sapphire_n5_review_set.json"))[0]));
     const goldenExpectations = loadJson(path.join("templates", "golden_n5_review_set.json"));
-    const rows = buildSyntheticSapphireRows([candidate], "N5");
+    const rows = buildSyntheticSapphireRows([candidate], "N5", goldenExpectations);
     const promoted = promoteSapphireKanjiBatch({
         existingEntries: [],
         candidateEntries: [candidate],

@@ -43,6 +43,7 @@ const TEST_SCOPES = Object.freeze({
         "kanjiDeckPartitionPlanService.test.js",
         "kanjiDeckReviewStatusService.test.js",
         "kanjiReadingReferenceContract.test.js",
+        "laneAuthorityAuditService.test.js",
         "platinumCardSourceManifest.test.js",
         "platinumEvidenceService.test.js",
         "platinumGovernanceGateService.test.js",
@@ -57,6 +58,7 @@ const TEST_SCOPES = Object.freeze({
         "reviewPlatinumKanjiLevel.test.js",
         "reviewPlatinumKanjiLevelScript.test.js",
         "sapphireTrackedReviewSets.test.js",
+        "slimKanjiSapphireReviewSets.test.js",
         "trackedSourceArtifactService.test.js",
     ]),
     "media-audio": Object.freeze([

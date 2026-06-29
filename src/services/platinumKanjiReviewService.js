@@ -14,6 +14,10 @@ const {
     getDefaultJlptKanjiSourceEvidence,
     resolveKanjiSourceOriginIdsForEntry,
 } = require("./platinumKanjiSourceOriginService");
+const {
+    buildResolvedKanjiFields,
+    resolveKanjiLaneContext,
+} = require("./reviewLaneContextService");
 const { decodeHtmlEntities } = require("../utils/text");
 const { normalizeJapaneseReading } = require("../utils/japanese");
 const NON_SHIPPING_STATUSES = Object.freeze(["deferred", "removed"]);
@@ -347,30 +351,33 @@ function findKanjiRowForEntry(rows = [], entry = {}) {
 }
 
 function validateActivePlatinumEntry(entry = {}, {
+    goldExpectation,
     requireCurrentReviewStandard = false,
+    sapphireEntry,
     sourceOriginIds = [],
 } = {}) {
     const failures = [];
+    const resolvedFields = buildResolvedKanjiFields({ entry, goldExpectation, sapphireEntry });
 
     if (!SINGLE_KANJI_RE.test(normalizeText(entry.kanji))) {
         failures.push("kanji must be one target kanji");
     }
-    if (normalizeStringArray(entry.readingIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.readingIncludes).length === 0) {
         failures.push("readingIncludes must protect the exact primary reading");
     }
-    if (normalizeStringArray(entry.meaningIncludes).length === 0) {
-        failures.push("meaningIncludes must protect the learner-facing primary meaning");
+    if (normalizeStringArray(resolvedFields.meaningIncludes).length === 0) {
+        failures.push("meaningIncludes must protect the generated meaning text");
     }
-    if (normalizeStringArray(entry.kanjiMeaningsIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.kanjiMeaningsIncludes).length === 0) {
         failures.push("kanjiMeaningsIncludes must protect the broader meaning list");
     }
-    if (normalizeStringArray(entry.levelIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.levelIncludes).length === 0) {
         failures.push("levelIncludes must protect the reviewed JLPT level");
     }
-    if (normalizeStringArray(entry.exampleIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.exampleIncludes).length === 0) {
         failures.push("exampleIncludes must protect the support example");
     }
-    if (normalizeStringArray(entry.notesIncludes).length === 0) {
+    if (normalizeStringArray(resolvedFields.notesIncludes).length === 0) {
         failures.push("notesIncludes must protect supporting vocabulary/examples");
     }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(normalizeText(entry.reviewedAt))) {
@@ -566,12 +573,15 @@ function validateGeneratedKanjiRow(row = {}) {
 
 function validateKanjiEvidenceBindings({
     entry = {},
+    goldExpectation,
     requireCurrentReviewStandard = false,
     row = {},
+    sapphireEntry,
 } = {}) {
     const failures = [];
+    const resolvedFields = buildResolvedKanjiFields({ entry, goldExpectation, sapphireEntry });
     const kanji = normalizeText(entry.kanji);
-    const primaryReading = normalizeStringArray(entry.readingIncludes)[0] || row.primaryReading;
+    const primaryReading = normalizeStringArray(resolvedFields.readingIncludes)[0] || row.primaryReading;
     const exactAudioFragment = `kanji-reading-${kanji}-${primaryReading}`;
     const sourceEvidence = entry.sourceEvidence || [];
     const internalChecks = entry.internalChecks || [];
@@ -596,8 +606,8 @@ function validateKanjiEvidenceBindings({
         snippets: [
             kanji,
             primaryReading,
-            ...normalizeStringArray(entry.meaningIncludes),
-            ...normalizeStringArray(entry.kanjiMeaningsIncludes),
+            ...normalizeStringArray(resolvedFields.meaningIncludes),
+            ...normalizeStringArray(resolvedFields.kanjiMeaningsIncludes),
         ],
     }));
     failures.push(...validateEvidenceSnippets({
@@ -638,10 +648,10 @@ function validateKanjiEvidenceBindings({
         const currentStandardSnippets = [
             kanji,
             primaryReading,
-            ...normalizeStringArray(entry.meaningIncludes),
-            ...normalizeStringArray(entry.kanjiMeaningsIncludes),
-            ...normalizeStringArray(entry.exampleIncludes),
-            ...normalizeStringArray(entry.notesIncludes),
+            ...normalizeStringArray(resolvedFields.meaningIncludes),
+            ...normalizeStringArray(resolvedFields.kanjiMeaningsIncludes),
+            ...normalizeStringArray(resolvedFields.exampleIncludes),
+            ...normalizeStringArray(resolvedFields.notesIncludes),
             exactAudioFragment,
             "evidence lanes",
             "generated surface",
@@ -697,12 +707,15 @@ function validateKanjiEvidenceBindings({
 function evaluatePlatinumKanjiEntry({
     rows = [],
     entry = {},
+    goldExpectation,
     sourceOriginFailures = [],
     sourceOriginIds = [],
+    sapphireEntry,
 } = {}) {
     const status = normalizeText(entry.status);
     const label = normalizeText(entry.kanji) || "(blank)";
     const failures = [];
+    const resolvedFields = buildResolvedKanjiFields({ entry, goldExpectation, sapphireEntry });
 
     if (!ALLOWED_PLATINUM_STATUSES.includes(status)) {
         failures.push(`unsupported platinum status: ${status || "(blank)"}`);
@@ -714,7 +727,9 @@ function evaluatePlatinumKanjiEntry({
         }
         failures.push(...sourceOriginFailures);
         failures.push(...validateActivePlatinumEntry(entry, {
+            goldExpectation,
             requireCurrentReviewStandard: true,
+            sapphireEntry,
             sourceOriginIds,
         }));
         const row = findKanjiRowForEntry(rows, entry);
@@ -726,26 +741,29 @@ function evaluatePlatinumKanjiEntry({
             failures.push(...validateGeneratedKanjiRow(row));
             failures.push(...validateKanjiEvidenceBindings({
                 entry,
+                goldExpectation,
                 requireCurrentReviewStandard: true,
                 row,
+                sapphireEntry,
             }));
-            if (Array.isArray(entry.readingIncludes) && !includesAll(row.primaryReading, entry.readingIncludes)) {
-                failures.push(`primary reading did not include: ${entry.readingIncludes.join(", ")}`);
+            if (normalizeStringArray(resolvedFields.readingIncludes).length > 0 && !includesAll(row.primaryReading, resolvedFields.readingIncludes)) {
+                failures.push(`primary reading did not include: ${resolvedFields.readingIncludes.join(", ")}`);
             }
-            if (Array.isArray(entry.meaningIncludes) && !includesAll(row.meaningJP, entry.meaningIncludes)) {
-                failures.push(`primary meaning did not include: ${entry.meaningIncludes.join(", ")}`);
+            const generatedMeaningText = `${row.meaningJP || ""} ／ ${row.kanjiMeanings || ""}`;
+            if (normalizeStringArray(resolvedFields.meaningIncludes).length > 0 && !includesAll(generatedMeaningText, resolvedFields.meaningIncludes)) {
+                failures.push(`meaning fields did not include: ${resolvedFields.meaningIncludes.join(", ")}`);
             }
-            if (Array.isArray(entry.kanjiMeaningsIncludes) && !includesAll(row.kanjiMeanings, entry.kanjiMeaningsIncludes)) {
-                failures.push(`kanji meanings did not include: ${entry.kanjiMeaningsIncludes.join(", ")}`);
+            if (normalizeStringArray(resolvedFields.kanjiMeaningsIncludes).length > 0 && !includesAll(row.kanjiMeanings, resolvedFields.kanjiMeaningsIncludes)) {
+                failures.push(`kanji meanings did not include: ${resolvedFields.kanjiMeaningsIncludes.join(", ")}`);
             }
-            if (Array.isArray(entry.levelIncludes) && !includesAll(row.levelLabel, entry.levelIncludes)) {
-                failures.push(`level label did not include: ${entry.levelIncludes.join(", ")}`);
+            if (normalizeStringArray(resolvedFields.levelIncludes).length > 0 && !includesAll(row.levelLabel, resolvedFields.levelIncludes)) {
+                failures.push(`level label did not include: ${resolvedFields.levelIncludes.join(", ")}`);
             }
-            if (Array.isArray(entry.exampleIncludes) && !includesAll(row.exampleSentence, entry.exampleIncludes)) {
-                failures.push(`example did not include: ${entry.exampleIncludes.join(", ")}`);
+            if (normalizeStringArray(resolvedFields.exampleIncludes).length > 0 && !includesAll(row.exampleSentence, resolvedFields.exampleIncludes)) {
+                failures.push(`example did not include: ${resolvedFields.exampleIncludes.join(", ")}`);
             }
-            if (Array.isArray(entry.notesIncludes) && !includesAll(row.notes, entry.notesIncludes)) {
-                failures.push(`notes did not include: ${entry.notesIncludes.join(", ")}`);
+            if (normalizeStringArray(resolvedFields.notesIncludes).length > 0 && !includesAll(row.notes, resolvedFields.notesIncludes)) {
+                failures.push(`notes did not include: ${resolvedFields.notesIncludes.join(", ")}`);
             }
         }
     } else if (NON_SHIPPING_STATUSES.includes(status)) {
@@ -840,9 +858,16 @@ function evaluatePlatinumKanjiReviewSet({
         })
         : new Map();
     const results = reviewEntries.map((entry) => {
+        const laneContext = resolveKanjiLaneContext({
+            entry,
+            goldenExpectations,
+            sapphireEntries,
+            sapphireResults,
+        });
         const preconditionFailures = [
             ...(goldPreconditionFailures.get(entry.kanji) || []),
             ...(sapphirePreconditionFailures.get(entry.kanji) || []),
+            ...laneContext.failures,
         ];
         try {
             const sourceOriginIds = resolveKanjiSourceOriginIdsForEntry({
@@ -852,13 +877,17 @@ function evaluatePlatinumKanjiReviewSet({
             return mergeFailuresIntoResult(evaluatePlatinumKanjiEntry({
                 rows: generatedRows,
                 entry,
+                goldExpectation: laneContext.goldExpectation,
                 sourceOriginIds,
+                sapphireEntry: laneContext.sapphireEntry,
             }), preconditionFailures);
         } catch (error) {
             return mergeFailuresIntoResult(evaluatePlatinumKanjiEntry({
                 rows: generatedRows,
                 entry,
+                goldExpectation: laneContext.goldExpectation,
                 sourceOriginFailures: [`could not resolve kanji source-claim origin ids: ${error.message}`],
+                sapphireEntry: laneContext.sapphireEntry,
             }), preconditionFailures);
         }
     });

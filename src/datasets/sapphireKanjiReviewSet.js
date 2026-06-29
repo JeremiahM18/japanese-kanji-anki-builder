@@ -47,7 +47,7 @@ const sapphireKanjiReviewEntrySchema = z.object({
     sourceEvidence: z.array(evidenceEntrySchema).optional(),
     internalChecks: z.array(evidenceEntrySchema).optional(),
     reviewEvidence: z.array(evidenceEntrySchema).optional(),
-    qualityGates: z.record(z.string(), z.boolean()).optional(),
+    qualityGates: z.never().optional(),
     verificationLimitations: z.array(verificationLimitationSchema).optional(),
     fixSummary: z.string().optional(),
     sapphireReviewAudit: sapphireReviewAuditSchema.optional(),
@@ -65,12 +65,8 @@ const sapphireKanjiReviewEntrySchema = z.object({
     }
 
     const requiredArrayFields = [
-        "readingIncludes",
-        "meaningIncludes",
         "kanjiMeaningsIncludes",
         "levelIncludes",
-        "exampleIncludes",
-        "notesIncludes",
         "sourceEvidence",
         "internalChecks",
         "reviewEvidence",

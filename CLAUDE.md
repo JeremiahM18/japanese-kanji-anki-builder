@@ -131,7 +131,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at `1008/1365` across current N5/N4 generated rows, with N5 at `308/646` and N4 at `700/719`. Lower-lane prerequisites are complete for that certified subset, but the 338 current N5 word v2 Silver additions and 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
+N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at `1008/1465` across current N5/N4 generated rows, with N5 at `308/746` and N4 at `700/719`. Lower-lane prerequisites are complete for that certified subset, but the 438 current N5 word v2 Silver additions and 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
 
 That means:
 

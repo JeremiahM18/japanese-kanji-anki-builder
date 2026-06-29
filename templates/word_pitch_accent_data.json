@@ -350,6 +350,12 @@
       "sourceQuery": "一時半",
       "generatedReading": "いちじはん"
     },
+    "一時間|いちじかん": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "一時間",
+      "generatedReading": "いちじかん"
+    },
     "一晩|ひとばん": {
       "pattern": "2 [nakadaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -2045,6 +2051,12 @@
       "sourceId": "voicevox-nemo-reading-query",
       "sourceQuery": "いつごろ",
       "generatedReading": "いつごろ"
+    },
+    "何時間|なんじかん": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "何時間",
+      "generatedReading": "なんじかん"
     },
     "何百|なんびゃく": {
       "pattern": "1 [atamadaka]",
@@ -4754,6 +4766,12 @@
       "sourceReading": "とち",
       "sourceAccent": "0"
     },
+    "土日|どにち": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "土日",
+      "generatedReading": "どにち"
+    },
     "土曜日|どようび": {
       "pattern": "2 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -6624,6 +6642,12 @@
       "sourceWord": "年間",
       "sourceReading": "ねんかん",
       "sourceAccent": "0"
+    },
+    "年齢|ねんれい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ねんれい",
+      "generatedReading": "ねんれい"
     },
     "幸|さち": {
       "pattern": "1 [atamadaka]",
@@ -8771,6 +8795,12 @@
       "sourceReading": "にっちょく",
       "sourceAccent": "0"
     },
+    "日程|にってい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "にってい",
+      "generatedReading": "にってい"
+    },
     "日課|にっか": {
       "pattern": "3 [odaka]",
       "sourceId": "voicevox-nemo-accent-query",
@@ -10362,6 +10392,12 @@
       "sourceReading": "ぼこう",
       "sourceAccent": "1"
     },
+    "母親|ははおや": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "母親",
+      "generatedReading": "ははおや"
+    },
     "母語|ぼご": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -11636,6 +11672,12 @@
       "sourceReading": "なまみず",
       "sourceAccent": "2"
     },
+    "生活|せいかつ": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "せいかつ",
+      "generatedReading": "せいかつ"
+    },
     "産まれる|うまれる": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -11784,6 +11826,12 @@
       "sourceWord": "男子",
       "sourceReading": "だんし",
       "sourceAccent": "1"
+    },
+    "男性|だんせい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "だんせい",
+      "generatedReading": "だんせい"
     },
     "町|まち": {
       "pattern": "2 [odaka]",
@@ -15070,6 +15118,12 @@
       "sourceReading": "しちや",
       "sourceAccent": "2"
     },
+    "購入|こうにゅう": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "こうにゅう",
+      "generatedReading": "こおにゅう"
+    },
     "贈り物|おくりもの": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -16019,6 +16073,12 @@
       "sourceWord": "部",
       "sourceReading": "ぶ",
       "sourceAccent": "1,0"
+    },
+    "部分|ぶぶん": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "部分",
+      "generatedReading": "ぶぶん"
     },
     "部屋|へや": {
       "pattern": "2 [odaka]",

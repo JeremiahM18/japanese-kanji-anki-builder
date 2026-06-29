@@ -9551,10 +9551,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "以来|いらい": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: since/ever-since vocabulary is common time language; 以 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: the abstract since/ever-since identity is not a strong beginner card compared with concrete high-use N5 expansion words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level grammar/time-expression review with exact examples and normal downstream gates."
       },
       "意外|いがい": {
         "decision": "keep_candidate",
@@ -9569,10 +9569,10 @@
         "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level or explicit expression-focused review."
       },
       "一般的|いっぱんてき": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: general/common/typical vocabulary is common comprehension language; 般 and 的 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: general/typical is abstract adjective vocabulary and too advanced for the current beginner common-pool expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level abstract-adjective review."
       },
       "何度|なんど": {
         "decision": "keep_candidate",
@@ -9617,10 +9617,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "基本的|きほんてき": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: basic/fundamental vocabulary is common comprehension language; 基 and 的 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: this derived adjective is redundant after accepting the cleaner 基本|きほん beginner identity.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Keep the learner surface on 基本 unless a later higher-level batch needs the adjective."
       },
       "期間|きかん": {
         "decision": "keep_candidate",
@@ -9641,10 +9641,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "玉子|たまご": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: egg spelling is common food vocabulary; 玉 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: this spelling variant is lower-value clutter while the cleaner 卵|たまご identity is already governed elsewhere.",
+        "nextStep": "Do not promote this exact variant to N5 Silver from the common-pool queue. Reopen only if a future variant policy deliberately adds spelling contrast cards."
       },
       "金属|きんぞく": {
         "decision": "keep_candidate",
@@ -9653,10 +9653,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "金利|きんり": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: interest-rate vocabulary is practical money language; 利 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: interest-rate vocabulary is finance-specific and too narrow for the current beginner common-pool expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Finance vocabulary needs separate governed scope before reopening."
       },
       "購入|こうにゅう": {
         "decision": "keep_candidate",
@@ -9665,16 +9665,16 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "高齢|こうれい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: advanced-age vocabulary is common social/health language; 齢 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: advanced-age vocabulary is less beginner-useful than the accepted age identity 年齢|ねんれい.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Keep the current beginner age card surface on 年齢 unless a later higher-level batch reopens it."
       },
       "高齢者|こうれいしゃ": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: senior-citizen vocabulary is common public-signage/social language; 齢 and 者 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: elderly-person demographic vocabulary is too narrow and advanced for the current beginner common-pool expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only in a deliberate higher-level person/social vocabulary review."
       },
       "国際|こくさい": {
         "decision": "keep_candidate",
@@ -9683,10 +9683,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "国際的|こくさいてき": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: international adjective is common comprehension language; 際 and 的 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: the derived international adjective is abstract and lower beginner value than concrete daily-use vocabulary.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level abstract/global-affairs vocabulary review."
       },
       "国産|こくさん": {
         "decision": "keep_candidate",
@@ -9701,22 +9701,22 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "市長|しちょう": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: mayor vocabulary is common civic title language; 市 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: mayor is a civic-title identity and too narrow for the current beginner common-pool expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Civic titles need separate governed scope before reopening."
       },
       "社会人|しゃかいじん": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: working adult/member-of-society vocabulary is common Japan-life language; 社 and 会 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: working-adult/member-of-society vocabulary is culturally loaded and too advanced for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate higher-level social-role review."
       },
       "終了後|しゅうりょうご": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: after-the-end vocabulary is practical schedule/event language; 終 and 了 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: after-the-end is phrase-like temporal compound vocabulary and not a clean beginner word-card identity here.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only if a later expression-focused batch deliberately covers it."
       },
       "出演|しゅつえん": {
         "decision": "keep_candidate",

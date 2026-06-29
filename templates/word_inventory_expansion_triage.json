@@ -11559,10 +11559,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "四半|しはん": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Quarter/fourth vocabulary is useful enough for school/time/math contexts with clean 四 and 半 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: quarter/fourth is ambiguous in JMdict and less beginner-useful than cleaner time/math rows already available; the square-cloth sense is noise for this deck.",
+        "nextStep": "Remove from N5 common-pool Silver work unless a future governed source provides a cleaner beginner card surface."
       },
       "前出|ぜんしゅつ": {
         "decision": "reject_candidate",
@@ -11571,10 +11571,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "南国|なんごく": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Southern country or tropical-south vocabulary is concrete travel/geography language with clean 南 and 国 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: southern/tropical-country vocabulary is not junk, but it is lower learner utility than direct country/direction rows and does not earn a scarce N5 Silver support slot.",
+        "nextStep": "Do not promote from this common-pool queue without a new governed review showing stronger beginner value."
       },
       "先入|せんにゅう": {
         "decision": "reject_candidate",
@@ -12283,10 +12283,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "書斎|しょさい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Study/den/home office is concrete home vocabulary; 斎=N1 needs a visible support label. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: study/den is a narrow home term with 斎=N1 support, lower value than simpler room/home vocabulary.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "小僧|こぞう": {
         "decision": "reject_candidate",
@@ -12476,10 +12476,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "人一倍|ひといちばい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: More than others is common descriptive language; 倍=N2 must be labeled and examples kept simple. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: idiomatic 'more than others' language is too abstract for this Silver batch and depends on 倍=N2 support.",
+        "nextStep": "Remove from N5 common-pool Silver work unless later reviewed for a higher-level idiom deck."
       },
       "生中継|なまちゅうけい": {
         "decision": "move_candidate",
@@ -12539,10 +12539,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "見あたる|みあたる": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: To be found is useful search/location language; Silver must review relation to 見当たる. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: mixed-kana 見あたる is not the clean governed surface to teach; the canonical 見当たる relation would need separate review.",
+        "nextStep": "Do not promote this surface from the common-pool queue."
       },
       "見こみ|みこみ": {
         "decision": "defer_candidate",
@@ -12563,10 +12563,10 @@
         "nextStep": "Leave deferred until a later exact-surface or family review proves it beats cleaner alternatives."
       },
       "残った分|のこったぶん": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Remaining amount/portion is practical daily language; 残=N3 must be visibly labeled. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: phrase-shaped inflected expression rather than a clean stable vocabulary identity for this deck.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "借り入れ金|かりいれきん": {
         "decision": "reject_candidate",
@@ -13658,10 +13658,10 @@
         "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level building/abstract-scope review."
       },
       "交友|こうゆう": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Friendship/acquaintance vocabulary is useful social language; 交=N3 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: friendship/acquaintance is formal and abstract compared with simpler learner vocabulary such as friend/friendship surfaces.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "今日的|こんにちてき": {
         "decision": "reject_candidate",
@@ -13745,10 +13745,10 @@
         "targetLevel": "N3"
       },
       "大黒柱|だいこくばしら": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Mainstay/provider is common family/house metaphor vocabulary; 黒 and 柱 need support labels. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: metaphorical mainstay/provider vocabulary is idiomatic and advanced, with multiple hard support labels and too much sense control risk.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "中性子|ちゅうせいし": {
         "decision": "reject_candidate",
@@ -13770,10 +13770,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "日本式|にほんしき": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Japanese style is useful culture/language vocabulary; 式=N3 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: Japanese-style/Nihon-shiki romanization is narrow and meaning-noisy for a beginner support row.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "八千代|やちよ": {
         "decision": "reject_candidate",
@@ -14032,10 +14032,10 @@
         "targetLevel": "N3"
       },
       "さし入れ|さしいれ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Refreshments/supplies brought to someone is practical social/work vocabulary; Silver must review 差し入れ relation. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: mixed-kana surface and broad JMdict senses make it a poor Silver identity; 差し入れ would need separate canonical-surface review.",
+        "nextStep": "Do not promote this surface from the common-pool queue."
       },
       "年月日|ねんがっぴ": {
         "decision": "keep_candidate",

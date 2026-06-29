@@ -190,6 +190,7 @@ const TEST_SCOPES = Object.freeze({
         "wordDeckCoverageScopeService.test.js",
         "wordExportService.test.js",
         "wordInventoryExpansionCandidateService.test.js",
+        "wordLevelInventoryStatusService.test.js",
         "wordLevelAnchorAuditService.test.js",
         "wordReadingCoverageService.test.js",
         "wordReadingGapPlanService.test.js",

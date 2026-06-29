@@ -9929,28 +9929,28 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "前向き|まえむき": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: positive/forward-looking vocabulary is common evaluation language; 向 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: forward-looking/positive is abstract stance vocabulary and too advanced for this beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level abstract/personality vocabulary review."
       },
       "値上げ|ねあげ": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: price-increase vocabulary is practical shopping/news language; 値 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: price increase is economic/news vocabulary and lower beginner value than direct shopping words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a shopping/economy vocabulary review."
       },
       "話合い|はなしあい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: discussion/talk vocabulary is useful communication language; 合 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: this spelling variant is lower-value clutter beside the cleaner 話し合い identity if that concept is ever reviewed.",
+        "nextStep": "Do not promote this exact variant to N5 Silver from the common-pool queue. Reopen only with a clean exact identity and normal downstream gates."
       },
       "一本|いっぽん": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: one-long-thing/counter vocabulary is core counter support. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: the sense bundle is broad/noisy counter vocabulary and not a clean standalone beginner card identity here.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Counter work needs separate governed scope and examples."
       },
       "新成人|しんせいじん": {
         "decision": "defer_candidate",
@@ -10983,10 +10983,10 @@
         "nextStep": "Reconsider in a geography/travel vocabulary pass with a tight mainland sense and natural example."
       },
       "外気|がいき": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: outside-air/open-air vocabulary is concrete and useful for weather, ventilation, and daily descriptions, with clean N5 anchors 外 and 気. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural outside-air/weather example, pitch/audio verification, and normal downstream gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: open-air/outside-air vocabulary is lower beginner value than clearer weather and outside words already covered.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only if a later weather/environment batch has explicit need."
       },
       "外来語|がいらいご": {
         "decision": "reject_candidate",
@@ -11159,10 +11159,10 @@
         "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a science/domain vocabulary scope."
       },
       "気長|きなが": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: patient/unhurried vocabulary is useful social/personality language and reinforces 気 and 長, especially in 気長に. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural patient/unhurried example, pitch/audio verification, and normal downstream gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: patient/unhurried is abstract personality/manner vocabulary and not a strong beginner card here.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level personality/manner review."
       },
       "見分|けんぶん": {
         "decision": "reject_candidate",
@@ -11281,10 +11281,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "小食|しょうしょく": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Small-appetite vocabulary is practical food/health language with clean 小 and 食 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: light-eating/not-eating-much vocabulary is narrow and lower beginner value than direct food/eating words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate food/habit vocabulary review."
       },
       "小生|しょうせい": {
         "decision": "reject_candidate",
@@ -11330,10 +11330,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "川下|かわしも": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Downstream is concrete geography language with clean 川 and 下 anchors and can support simple travel/nature examples. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: downstream is geography/river-position vocabulary and too narrow for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a geography/nature vocabulary review."
       },
       "前水|せんすい": {
         "decision": "reject_candidate",
@@ -11348,10 +11348,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "大男|おおおとこ": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Big/tall man is concrete person-description vocabulary with clean 大 and 男 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: big-man/giant vocabulary is redundant with simpler size/person language and not a high-value beginner identity.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Keep person/size coverage on cleaner words unless a later batch reopens it."
       },
       "大本山|だいほんざん": {
         "decision": "reject_candidate",
@@ -11372,10 +11372,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "長々|ながなが": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: For-a-long-time or at-length adverb is common enough and reinforces 長, while duplicate spelling variants must be controlled later. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: the long-winded/at-length adverbial identity is expression-like and too advanced for this beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through an expression/adverb review."
       },
       "長生|ちょうせい": {
         "decision": "reject_candidate",
@@ -11444,10 +11444,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "南下|なんか": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Going south is concrete geography/travel language with clean 南 and 下 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: going-south movement vocabulary is narrow geography/news language and not a strong beginner card here.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate travel/geography review."
       },
       "南南西|なんなんせい": {
         "decision": "reject_candidate",
@@ -11462,10 +11462,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "年休|ねんきゅう": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Annual leave is practical adult life/work vocabulary with clean 年 and 休 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: annual-leave vocabulary is workplace/admin specific and too narrow for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a workplace/admin vocabulary review."
       },
       "白日|はくじつ": {
         "decision": "reject_candidate",
@@ -11480,10 +11480,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "半円|はんえん": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Semicircle is concrete school/math vocabulary with clean 半 and 円 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: semicircle vocabulary is shape-specific and lower beginner value than core shape/number words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate shape/math vocabulary review."
       },
       "半身不随|はんしんふずい": {
         "decision": "reject_candidate",
@@ -12126,10 +12126,10 @@
         "targetLevel": "N3"
       },
       "読み直す|よみなおす": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Reread is practical learning-language vocabulary; 直=N3 must be visibly labeled. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: this spelling duplicates already governed 読みなおす|よみなおす and would add variant clutter.",
+        "nextStep": "Do not promote this exact variant to N5 Silver from the common-pool queue. Keep the accepted learner surface on 読みなおす unless a future variant policy changes."
       },
       "分け前|わけまえ": {
         "decision": "keep_candidate",
@@ -12198,10 +12198,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "ひと晩中|ひとばんじゅう": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: All night long is practical time expression; 晩=N4 must be visibly labeled. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: all-night-long is phrase-like duration vocabulary and too narrow for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate time-expression review."
       },
       "お菓子屋|おかしや": {
         "decision": "keep_candidate",
@@ -13861,10 +13861,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "人間ドック|にんげんドック": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Comprehensive medical check-up is practical Japan adult-life vocabulary with clean 人間 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: comprehensive medical check-up is specialized medical/admin vocabulary and not a beginner card candidate.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a specialized health/admin vocabulary review."
       },
       "人間ドッグ|にんげんドック": {
         "decision": "reject_candidate",

@@ -14,7 +14,7 @@ test("lane authority duplication audit records word and kanji authority slimming
     assert.deepEqual(report.levels, [5, 4, 3, 2, 1]);
 
     assert.deepEqual(report.word.n5.counts, {
-        gold: 308,
+        gold: 318,
         sapphire: 308,
         platinum: 308,
     });

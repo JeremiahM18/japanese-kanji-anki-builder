@@ -12782,10 +12782,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "月曜|げつよう": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Monday is core calendar vocabulary; 曜=N4 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: the deck already governs the cleaner full weekday identity 月曜日|げつようび, so the abbreviated duplicate should not occupy a Silver support row.",
+        "nextStep": "Remove from N5 common-pool Silver work unless a future governed duplicate-policy change explicitly allows abbreviated weekday variants."
       },
       "工学|こうがく": {
         "decision": "move_candidate",
@@ -13819,10 +13819,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "大学院生|だいがくいんせい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Graduate student is useful school/person vocabulary; 院=N4 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: graduate student is useful but too academic/specific for an N5 support row and depends on higher-level school vocabulary.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "本田|ほんでん": {
         "decision": "reject_candidate",
@@ -13837,10 +13837,10 @@
         "nextStep": "Leave deferred until a later exact-surface or family review proves it beats cleaner alternatives."
       },
       "雲行き|くもゆき": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Weather/situation outlook is practical weather and conversation vocabulary; 雲=N3 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: weather/situation-outlook senses are idiomatic and broad; this is not a clean beginner card identity.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "持出し|もちだし": {
         "decision": "defer_candidate",
@@ -13963,10 +13963,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "見出し語|みだしご": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Headword/entry word is useful dictionary and language-learning vocabulary with clean 見, 出, and 語 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: headword/dictionary-entry term is technical language-learning metalanguage with low beginner payoff.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "焼け出される|やけだされる": {
         "decision": "reject_candidate",
@@ -14019,10 +14019,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "ひと先ず|ひとまず": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: For now/for the time being is useful conversational time language with 先 anchor. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: mixed ひと先ず surface is not the clean learner-facing identity for this adverb; kana ひとまず would need separate review.",
+        "nextStep": "Do not promote this surface from the common-pool queue."
       },
       "あみ出す|あみだす": {
         "decision": "move_candidate",
@@ -14044,10 +14044,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "分校|ぶんこう": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Branch school is useful school vocabulary with clean 分 and 校 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: branch school is narrow institutional vocabulary with lower learner value than ordinary school words already covered.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "右派|うは": {
         "decision": "reject_candidate",
@@ -14062,16 +14062,16 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "円相場|えんそうば": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Yen exchange rate is useful Japan-life/money vocabulary; 相 and 場 need support labels. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: yen exchange-rate vocabulary is technical finance/news language and too sense-heavy for this beginner support queue.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "円卓|えんたく": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Round table is concrete object/meeting vocabulary; 卓=N1 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: round table is not wrong, but it is low priority for N5 and carries 卓=N1 support where simpler table vocabulary is enough.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "何回|なんかい": {
         "decision": "keep_candidate",
@@ -14106,10 +14106,10 @@
         "targetLevel": "N3"
       },
       "覚書|おぼえがき": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Memo/note is practical work/study vocabulary; 覚=N3 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: memorandum/diplomatic memorandum senses are formal and noisy for a beginner deck.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "掛長|かかりちょう": {
         "decision": "reject_candidate",
@@ -14138,10 +14138,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "係長|かかりちょう": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Section chief/assistant manager is useful workplace title vocabulary; 係=N3 needs support labeling. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 Silver-prep re-review: subsection-head/work title is narrow and lower value than broader workplace vocabulary.",
+        "nextStep": "Remove from N5 common-pool Silver work."
       },
       "血友病|けつゆうびょう": {
         "decision": "reject_candidate",

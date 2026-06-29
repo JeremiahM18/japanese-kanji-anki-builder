@@ -177,6 +177,8 @@
     "deck:words:completion:n3": "node scripts/reportWordDeckCompletion.js --level=3",
     "deck:words:completion:n2": "node scripts/reportWordDeckCompletion.js --level=2",
     "deck:words:completion:n1": "node scripts/reportWordDeckCompletion.js --level=1",
+    "deck:words:inventory-status": "node scripts/reportWordLevelInventoryStatus.js",
+    "deck:words:pre-silver-status": "node scripts/reportWordLevelInventoryStatus.js --pre-silver-only",
     "deck:words:level-anchor-audit": "node scripts/auditWordLevelAnchors.js",
     "deck:words:coverage-uplift": "node scripts/reportWordCoverageUplift.js",
     "deck:words:reading-audit": "node scripts/reportWordReadingCoverage.js",

@@ -66,6 +66,12 @@
       "sourceReading": "おねえさん",
       "sourceAccent": "2"
     },
+    "お小遣い|おこづかい": {
+      "pattern": "2 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "おこづかい",
+      "generatedReading": "おこずかい"
+    },
     "お弁当|おべんとう": {
       "pattern": "2 [nakadaka]",
       "sourceId": "voicevox-nemo-reading-query",
@@ -228,6 +234,12 @@
       "sourceWord": "一人",
       "sourceReading": "ひとり",
       "sourceAccent": "2"
+    },
+    "一人っ子|ひとりっこ": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "一人っ子",
+      "generatedReading": "ひとりっこ"
     },
     "一体|いったい": {
       "pattern": "4 [odaka]",
@@ -693,6 +705,12 @@
       "sourceReading": "へた",
       "sourceAccent": "2"
     },
+    "下書き|したがき": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "下書き",
+      "generatedReading": "したがき"
+    },
     "下校|げこう": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -933,11 +951,23 @@
       "sourceReading": "ちゅうし",
       "sourceAccent": "0"
     },
+    "中火|ちゅうび": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "中火",
+      "generatedReading": "ちゅうび"
+    },
     "中華|ちゅうか": {
       "pattern": "1 [atamadaka]",
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "中華",
       "generatedReading": "ちゅうか"
+    },
+    "中華料理|ちゅうかりょうり": {
+      "pattern": "4 [nakadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "ちゅうかりょうり",
+      "generatedReading": "ちゅうかりょおり"
     },
     "主に|おもに": {
       "pattern": "1 [atamadaka]",
@@ -1749,6 +1779,12 @@
       "sourceQuery": "休息",
       "generatedReading": "きゅうそく"
     },
+    "休憩|きゅうけい": {
+      "pattern": "4 [odaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "きゅうけい",
+      "generatedReading": "きゅうけい"
+    },
     "休憩時間|きゅうけいじかん": {
       "pattern": "5 [nakadaka]",
       "sourceId": "voicevox-nemo-reading-query",
@@ -1993,6 +2029,12 @@
       "sourceWord": "何",
       "sourceReading": "なに",
       "sourceAccent": "1"
+    },
+    "何で|なんで": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "何で",
+      "generatedReading": "なんで"
     },
     "何ですか|なんですか": {
       "pattern": "1 [atamadaka]",
@@ -5532,6 +5574,12 @@
       "sourceWord": "女",
       "sourceReading": "おんな",
       "sourceAccent": "3"
+    },
+    "女の人|おんなのひと": {
+      "pattern": "3 [nakadaka] / 2 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "女の人",
+      "generatedReading": "おんなのひと"
     },
     "女の子|おんなのこ": {
       "pattern": "3 [nakadaka]",
@@ -13409,6 +13457,12 @@
       "sourceReading": "おく",
       "sourceAccent": "0"
     },
+    "署名|しょめい": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-reading-query",
+      "sourceQuery": "しょめい",
+      "generatedReading": "しょめい"
+    },
     "美しい|うつくしい": {
       "pattern": "4 [nakadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -14262,6 +14316,12 @@
       "sourceWord": "見る",
       "sourceReading": "みる",
       "sourceAccent": "1"
+    },
+    "見出し|みだし": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "見出し",
+      "generatedReading": "みだし"
     },
     "見学|けんがく": {
       "pattern": "0 [heiban]",

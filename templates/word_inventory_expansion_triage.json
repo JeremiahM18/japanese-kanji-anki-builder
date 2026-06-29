@@ -9905,10 +9905,10 @@
         "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a later travel/news vocabulary review."
       },
       "北部|ほくぶ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: northern-part vocabulary is useful geography/news language; 部 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: northern-part vocabulary is geography/register specific and lower beginner value than direct direction/place words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate geography vocabulary review."
       },
       "優先|ゆうせん": {
         "decision": "reject_candidate",
@@ -9923,10 +9923,10 @@
         "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level abstract vocabulary review."
       },
       "見直し|みなおし": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: review/reconsideration vocabulary is practical work/study language; 直 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: review/reconsideration is abstract process vocabulary and less beginner-friendly than concrete 見/reading support words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level review/process vocabulary pass."
       },
       "前向き|まえむき": {
         "decision": "reject_candidate",
@@ -11013,10 +11013,10 @@
         "nextStep": "Reconsider in a science/nature/event vocabulary pass if the deck has room after stronger daily-life words are exhausted."
       },
       "大水|おおみず": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: flood/high-water vocabulary is concrete weather/disaster language and reinforces 大 and 水; example review should keep the sense natural. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 75/100.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch with a natural flood/high-water example, pitch/audio verification, and normal downstream gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: this flood identity is less standard for the card surface than the accepted 洪水|こうずい disaster word.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Keep flood coverage on 洪水 unless a later variant policy changes."
       },
       "後書|あとがき": {
         "decision": "reject_candidate",
@@ -11684,10 +11684,10 @@
         "targetLevel": "N3"
       },
       "今や|いまや": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Now/now at last is common time discourse language and can be taught with simple examples. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: this now/at-last expression has register and usage nuance that is too expression-like for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate expression/adverb review."
       },
       "書きこむ|かきこむ": {
         "decision": "defer_candidate",
@@ -11757,10 +11757,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "南がわ|みなみがわ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: South side is concrete direction/location language and the kana side marker keeps it learner-readable. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: the mixed-kana south-side identity is lower-value variant clutter; a clean 側/side identity would need separate review.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only with a clean exact identity and normal downstream gates."
       },
       "日ざし|ひざし": {
         "decision": "defer_candidate",
@@ -11818,10 +11818,10 @@
         "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in an explicit expression/adverbial-pattern pass, not as ordinary Silver word intake."
       },
       "雨ふり|あめふり": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Rainy weather/rainfall is concrete weather vocabulary; Silver should review 雨降り relation and surface naturalness. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: the rainy-weather identity is lower-value spelling/wording clutter beside cleaner rain/weather vocabulary.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Keep weather coverage on cleaner exact identities unless a future variant policy changes."
       },
       "下書き|したがき": {
         "decision": "keep_candidate",
@@ -11941,10 +11941,10 @@
         "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later explicit register/usage vocabulary pass with one chosen learner-facing surface."
       },
       "雨が降る|あめがふる": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: To rain is core weather expression support and highly learner-friendly even though 降 needs a support label. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: this is a sentence-like phrase rather than a clean standalone word-card identity for this Silver path.",
+        "nextStep": "Do not promote this exact phrase to N5 Silver from the common-pool queue. Use it as example-sentence language only when appropriate."
       },
       "何人か|なんにんか": {
         "decision": "keep_candidate",
@@ -12003,10 +12003,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "間仕切り|まじきり": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Room partition/divider is concrete housing/interior language; 仕 and 切 support labels must be explicit. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: room-divider/partition vocabulary is household-specific and too narrow for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate housing/interior vocabulary review."
       },
       "繰入れる|くりいれる": {
         "decision": "reject_candidate",
@@ -12028,10 +12028,10 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "見聞き|みきき": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Seeing and hearing/experience vocabulary is useful comprehension language with clean 見 and 聞 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: seeing-and-hearing/information vocabulary is abstract and less beginner-useful than direct 見/聞 action words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level comprehension vocabulary review."
       },
       "後の祭り|あとのまつり": {
         "decision": "move_candidate",
@@ -12065,10 +12065,10 @@
         "nextStep": "Leave deferred until a later exact-surface or family review proves it beats cleaner alternatives."
       },
       "手間取る|てまどる": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Taking longer than expected is common practical time/work language; 手 and 取 support labels must be explicit. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: taking-more-time-than-expected is useful but idiomatic/advanced for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level time/process vocabulary review."
       },
       "書出し|かきだし": {
         "decision": "reject_candidate",
@@ -12077,16 +12077,16 @@
         "nextStep": "Do not promote in N5 common-pool Silver. Keep visible as reviewed discovery history."
       },
       "小出し|こだし": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Little-by-little/apportioning vocabulary is practical and uses clean 小 and 出 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: apportioning-in-small-amounts is narrow process vocabulary and not a high-value beginner card here.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a higher-level process vocabulary review."
       },
       "小分け|こわけ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Dividing into small portions is practical food/organization language with clean 小 and 分 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: subdivision/portioning vocabulary is narrow and lower beginner value than direct size/part words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate packaging/portioning vocabulary review."
       },
       "食わす|くわす": {
         "decision": "reject_candidate",
@@ -12150,10 +12150,10 @@
         "nextStep": "Leave deferred until a later exact-surface or family review proves it beats cleaner alternatives."
       },
       "立ち食い|たちぐい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery review: Eating while standing or at a stall is practical Japan food/travel vocabulary; 立=N4 needs a support label. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: eating-while-standing is food/travel specific and too narrow for the current beginner expansion.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate food/travel culture vocabulary review."
       },
       "下ろし|おろし": {
         "decision": "defer_candidate",
@@ -12192,10 +12192,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "ただ今|ただいま": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: I am home/now is common daily expression support with clean 今 anchor. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: the sense bundle mixes greeting and time meanings, making it too noisy for a clean beginner card here.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. If needed, review the kana/greeting surface separately with exact scope."
       },
       "ひと晩中|ひとばんじゅう": {
         "decision": "reject_candidate",
@@ -12204,10 +12204,10 @@
         "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Reopen only through a deliberate time-expression review."
       },
       "お菓子屋|おかしや": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Candy/sweets shop is concrete Japan-life vocabulary and cleaner than 御菓子屋; 菓 and 屋 need support labels. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: confectionery-shop vocabulary is shop-specific and redundant beside existing お菓子 and broader shopping words.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Shop vocabulary needs separate governed scope before reopening."
       },
       "お出掛け|おでかけ": {
         "decision": "keep_candidate",
@@ -12222,10 +12222,10 @@
         "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
       },
       "お名前|おなまえ": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery review: Polite name vocabulary is core beginner interaction language with clean 名 and 前 anchors. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
-        "nextStep": "Keep only as future N5 Silver-prep work after full card-surface review, curated example, pitch, audio, Gold, Sapphire, and Platinum gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during governed N5 Silver common-pool review: polite-name vocabulary is redundant with the existing core 名前 identity and would add low-value duplicate surface area.",
+        "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Keep beginner name coverage on 名前 unless a polite-form variant policy changes."
       },
       "この前|このまえ": {
         "decision": "keep_candidate",

@@ -42,6 +42,8 @@ Live commands, tracked schemas, tracked manifests, proof ledgers, and release ev
 
 Native Sapphire is implemented for core kanji and words. Platinum is implemented through the existing Platinum manifests and command families. Do not describe these Platinum commands as legacy-only or unimplemented.
 
+Native word and core-kanji Sapphire manifests are resolver-backed for prior-lane authority. Gold-owned generated-output snippets may be resolved from the matching Gold manifest instead of copied into Sapphire, while Sapphire still owns structural evidence lanes, internal checks, limitations, and the current-standard structural decision. Platinum gates may resolve matching Gold and current-standard Sapphire context, but Platinum still owns its own card-surface inspection, quality gates, and reviewer judgment. Resolver-backed context is a precondition mechanism, not a permission to shrink denominators, relabel authority, or infer Platinum/Obsidian certification.
+
 ## Legacy Compatibility Lock
 
 Historical Platinum manifests, statuses, standards, and commands are still the active Platinum lane unless a deliberate count-preserving migration changes that contract.
@@ -71,8 +73,8 @@ Rules:
 | --- | --- | --- |
 | Silver | Candidate inputs and generated rows. | Gold, Sapphire, Platinum, Obsidian, source truth, release, or manual QA authority. |
 | Gold | Silver output and reviewed expected snippets. | Sapphire, Platinum, Obsidian, or source-governance authority. |
-| Sapphire | Silver, Gold, structural evidence lanes, internal generated/media checks, NLP support where required, and reviewer structural decision fields. | Obsidian proof fields, Platinum claims, release readiness, source-truth certification, or source-governance placement authority. |
-| Platinum | Current-standard Sapphire, generated card rows, governed Japanese-source field evidence, internal generated/media checks, review evidence, and reviewer card-surface judgment. | Sapphire alone, Obsidian proof alone, Deck Ready, or NLP approval as sufficient evidence. |
+| Sapphire | Silver, resolved matching Gold snippets, structural evidence lanes, internal generated/media checks, NLP support where required, and reviewer structural decision fields. | Obsidian proof fields, Platinum claims, Platinum quality gates, release readiness, source-truth certification, or source-governance placement authority. |
+| Platinum | Resolved matching Gold, current-standard Sapphire, generated card rows, governed Japanese-source field evidence, internal generated/media checks, review evidence, Platinum quality gates, and reviewer card-surface judgment. | Sapphire alone, Obsidian proof alone, Deck Ready, or NLP approval as sufficient evidence. |
 | Obsidian | Current-standard Sapphire or compatibility structural coverage plus actual non-human governed native/fluent-quality rereview proof. | `revalidatedAt`, clean batch reports, NLP output, generated TSVs, Gold fixtures, Sapphire text as standalone proof, release artifact QA, or unrecorded human/native review. |
 
 ## Prior-Lane Enforcement

@@ -73,6 +73,8 @@ The following names are the active Platinum names for core kanji and words, and 
 
 Current-standard `platinum` and `fixed_then_platinum` entries remain valid Platinum coverage. Existing completed work is not invalidated by introducing Sapphire language, but migrated core-kanji and word Sapphire structural work is represented by `sapphire` and `fixed_then_sapphire` under native Sapphire standards and must not be described as Platinum coverage.
 
+Native core-kanji and word Sapphire may resolve Gold-owned generated-output snippets from the matching Gold manifest instead of carrying copied Gold payload inline. Native Sapphire still owns structural evidence lanes, current-standard structural checks, limitations, and structural decisions, and it must not carry Platinum-only authority such as `qualityGates`. Platinum may resolve Gold and current-standard Sapphire context as preconditions, but it still owns card-surface judgment and Platinum quality gates.
+
 For new core-kanji and word structural documentation, prompts, and reviews, use the native Sapphire command families. For Platinum, use the Platinum command families. For additional-unverified surfaces that still carry `platinum` names, describe them as structural compatibility gates unless the work is explicitly Platinum. Do not claim Platinum coverage from a structure-only Sapphire pass.
 
 ## Migration Rules

@@ -42,11 +42,11 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     assert.deepEqual(report.snapshot.sapphire, n3WordSnapshot.sapphire);
     assert.deepEqual(report.snapshot.platinum, n3WordSnapshot.platinum);
     assert.equal(report.snapshot.product.kanjiDenominator, 2212);
-    assert.equal(report.snapshot.product.wordDenominator, 2563);
+    assert.equal(report.snapshot.product.wordDenominator, 2663);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);
-    assert.equal(report.snapshot.product.wordLockedDenominator, 1365);
+    assert.equal(report.snapshot.product.wordLockedDenominator, 1465);
     assert.equal(report.snapshot.product.wordObsidianProof, 1008);
-    assert.equal(report.snapshot.product.wordN5Denominator, 646);
+    assert.equal(report.snapshot.product.wordN5Denominator, 746);
     assert.equal(report.snapshot.product.wordN4Denominator, 719);
     assert.equal(report.snapshot.product.wordN5ObsidianProof, 308);
     assert.equal(report.snapshot.product.wordN4ObsidianProof, 700);
@@ -151,10 +151,10 @@ test("documentation status audit catches undocumented package scripts", () => {
 test("documentation status audit catches stale generated denominator docs", () => {
     const files = readDocumentationFiles();
     files["docs/employer-overview.md"] = files["docs/employer-overview.md"]
-        .replace("`2563` word rows", "`1470` word rows")
-        .replace("`2563/2563` across N5-N1 | `1008/2563`", "`1470/1470` across N5-N1 | `987/1470`");
+        .replace("`2663` word rows", "`1470` word rows")
+        .replace("`2663/2663` across N5-N1 | `1008/2663`", "`1470/1470` across N5-N1 | `987/1470`");
     files["docs/system-architecture.md"] = files["docs/system-architecture.md"]
-        .replace("| Words | 2563 | 1008 |", "| Words | 1470 | 987 |");
+        .replace("| Words | 2663 | 1008 |", "| Words | 1470 | 987 |");
 
     const report = auditDocumentationText({
         files,
@@ -177,8 +177,8 @@ test("documentation status audit catches stale generated denominator docs", () =
 test("documentation status audit catches Obsidian-decentered completed status wording", () => {
     const files = readDocumentationFiles();
     files["README.md"] = files["README.md"].replace(
-        "`308/646` strict word Obsidian-certified",
-        "`308` certified rows. Gold, readiness, tracked-source artifact, native Sapphire structural coverage, Platinum, and strict word Obsidian content certification pass at `308/646`",
+        "`308/746` strict word Obsidian-certified",
+        "`308` certified rows. Gold, readiness, tracked-source artifact, native Sapphire structural coverage, Platinum, and strict word Obsidian content certification pass at `308/746`",
     );
 
     const report = auditDocumentationText({

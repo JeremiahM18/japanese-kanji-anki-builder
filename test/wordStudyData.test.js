@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2728);
+    assert.equal(Object.keys(starterEntries).length, 2738);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 811,
+        5: 821,
     });
 });
 
@@ -9785,5 +9785,69 @@ test("tracked starter word data includes the twenty-seventh N5 common-pool Silve
         ["二階建|にかいだて","<ruby>二<rt>に</rt></ruby><ruby>階<rt>かい</rt></ruby><ruby>建<rt>だて</rt></ruby>"],
         ["年収|ねんしゅう","<ruby>年<rt>ねん</rt></ruby><ruby>収<rt>しゅう</rt></ruby>"],
         ["年数|ねんすう","<ruby>年<rt>ねん</rt></ruby><ruby>数<rt>すう</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the twenty-eighth N5 common-pool Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "背後|はいご",
+        "半々|はんはん",
+        "半径|はんけい",
+        "半島|はんとう",
+        "美人|びじん",
+        "病人|びょうにん",
+        "部下|ぶか",
+        "噴火|ふんか",
+        "並木|なみき",
+        "本業|ほんぎょう",
+    ];
+
+    assert.equal(batchKeys.length, 10);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 5, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n5"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assert.match(entry?.notes || "", /Silver-only/, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["背後|はいご","後","ご"],
+        ["半々|はんはん","半","はん"],
+        ["半径|はんけい","半","はん"],
+        ["半島|はんとう","半","はん"],
+        ["美人|びじん","人","じん"],
+        ["病人|びょうにん","人","にん"],
+        ["部下|ぶか","下","か"],
+        ["噴火|ふんか","火","か"],
+        ["並木|なみき","木","き"],
+        ["本業|ほんぎょう","本","ほん"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["背後|はいご","<ruby>背<rt>はい</rt></ruby><ruby>後<rt>ご</rt></ruby>"],
+        ["半々|はんはん","<ruby>半<rt>はん</rt></ruby><ruby>々<rt>はん</rt></ruby>"],
+        ["半径|はんけい","<ruby>半<rt>はん</rt></ruby><ruby>径<rt>けい</rt></ruby>"],
+        ["半島|はんとう","<ruby>半<rt>はん</rt></ruby><ruby>島<rt>とう</rt></ruby>"],
+        ["美人|びじん","<ruby>美<rt>び</rt></ruby><ruby>人<rt>じん</rt></ruby>"],
+        ["病人|びょうにん","<ruby>病<rt>びょう</rt></ruby><ruby>人<rt>にん</rt></ruby>"],
+        ["部下|ぶか","<ruby>部<rt>ぶ</rt></ruby><ruby>下<rt>か</rt></ruby>"],
+        ["噴火|ふんか","<ruby>噴<rt>ふん</rt></ruby><ruby>火<rt>か</rt></ruby>"],
+        ["並木|なみき","<ruby>並<rt>なみ</rt></ruby><ruby>木<rt>き</rt></ruby>"],
+        ["本業|ほんぎょう","<ruby>本<rt>ほん</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>"],
     ]);
 });

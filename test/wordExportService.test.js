@@ -282,6 +282,7 @@ test("isLikelyPhraseCard detects compositional phrase shapes that should stay ou
     assert.equal(isLikelyPhraseCard({ written: "川の近く" }), true);
     assert.equal(isLikelyPhraseCard({ written: "兄の部屋" }), true);
     assert.equal(isLikelyPhraseCard({ written: "使い方" }), false);
+    assert.equal(isLikelyPhraseCard({ written: "思い出" }), false);
     assert.equal(isLikelyPhraseCard({ written: "学校" }), false);
     assert.equal(isLikelyPhraseCard({ written: "病院" }), false);
 });

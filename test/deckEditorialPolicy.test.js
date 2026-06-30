@@ -23,6 +23,7 @@ test("tracked deck editorial policy regexes preserve current phrase and meaning 
 
     assert.equal(phraseEndingPatterns.some((regex) => regex.test("川の近く")), true);
     assert.equal(lexicalizedUsageSuffixPatterns.some((regex) => regex.test("使い方")), true);
+    assert.equal(lexicalizedUsageSuffixPatterns.some((regex) => regex.test("思い出")), true);
     assert.equal(adjectiveNounPhrasePatterns.some((regex) => regex.test("高い山")), true);
     assert.equal(noisyMeaningPatterns.some((regex) => regex.test("two radical (no. 7)")), true);
     assert.equal(noisyMeaningPatterns.some((regex) => regex.test("rape")), true);

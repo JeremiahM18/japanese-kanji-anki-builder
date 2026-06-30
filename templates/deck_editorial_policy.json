@@ -36,6 +36,12 @@
         "pattern": "[\\p{Script=Han}々]い方$",
         "flags": "u",
         "notes": "Usage-form words such as 使い方 are not excluded by the adjective-noun phrase guard."
+      },
+      {
+        "id": "lexicalized-memory-noun",
+        "pattern": "^思い出$",
+        "flags": "u",
+        "notes": "The lexicalized memory/recollection noun 思い出 is not excluded by the adjective-noun phrase guard."
       }
     ],
     "adjectiveNounPhrasePatterns": [

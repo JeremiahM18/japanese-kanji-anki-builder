@@ -7020,22 +7020,25 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "水洗|すいせん": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N4",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: water-flush / rinse vocabulary is practical bathroom/cleaning language; 洗 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: water-flush/rinse vocabulary is valid, but the learner value is tied to 洗=N4 and this exact compound should not stay as hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N4 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "水滴|すいてき": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: water-drop vocabulary is concrete and easy to example; 滴 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: water-drop vocabulary is a clean useful identity, but the distinctive kanji value is 滴=N2 and it should not remain hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "水平線|すいへいせん": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: horizon vocabulary is concrete travel/scenery language; 平 and 線 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: horizon vocabulary is concrete and useful, but 平=N2 and 線=N2 make this a better N2 support-kanji review than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "発車|はっしゃ": {
         "decision": "keep_candidate",
@@ -7044,16 +7047,18 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "敷金|しききん": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N1",
         "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: security-deposit vocabulary is practical Japan housing language; 敷 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: security-deposit vocabulary is practical Japan housing language, but 敷=N1 makes it target-level routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N1 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "噴水|ふんすい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N1",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: fountain vocabulary is concrete park/city/travel language; 噴 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: fountain vocabulary is concrete and usable, but 噴=N1 makes it target-level routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N1 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "洋間|ようま": {
         "decision": "reject_candidate",
@@ -7062,10 +7067,11 @@
         "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Keep room vocabulary focused on cleaner high-utility identities unless a future governed review reopens the need."
       },
       "洋書|ようしょ": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N4",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: foreign/Western-book vocabulary is useful bookstore and study language; 洋 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: foreign/Western-book vocabulary is useful bookstore and study language, but 洋=N4 makes it N4 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N4 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "出社|しゅっしゃ": {
         "decision": "keep_candidate",
@@ -7086,22 +7092,24 @@
         "nextStep": "Do not promote this exact identity to N5 Silver from the common-pool queue. Use cleaner classmate/friend vocabulary if a future governed batch needs that concept."
       },
       "金銀|きんぎん": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: gold-and-silver vocabulary is concrete color/material/money language; 銀 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: gold-and-silver is understandable but not valuable enough as a separate hidden N5 common-pool keep row, and 銀 is better reviewed through a cleaner N4 silver/money identity.",
+        "nextStep": "Do not promote this exact identity from the N5 common-pool queue. Reopen only through a deliberate N4 review if a separate 金銀 card proves useful."
       },
       "湖水|こすい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: lake-water/lake vocabulary is concrete geography/nature language; 湖 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: lake-water/lake vocabulary is concrete, but 湖=N2 makes it target-level routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "残金|ざんきん": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N3",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: remaining-money/balance vocabulary is practical payment language; 残 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: remaining-money/balance vocabulary is practical payment language, but 残=N3 makes it N3 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N3 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "車窓|しゃそう": {
         "decision": "keep_candidate",
@@ -7152,16 +7160,18 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "水玉|みずたま": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N3",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: polka-dot / water-drop vocabulary is common pattern/object language; 玉 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: polka-dot/water-drop vocabulary is a clean concrete identity, but 玉=N3 makes it target-level routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N3 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "節水|せっすい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N1",
         "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: water-conservation vocabulary is practical signage and daily-life language; 節 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: water-conservation vocabulary is practical signage and daily-life language, but 節=N1 makes it N1 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N1 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "洗車|せんしゃ": {
         "decision": "keep_candidate",
@@ -7224,10 +7234,11 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "流水|りゅうすい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: running-water / flowing-water vocabulary is concrete nature/signage language; 流 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: flowing/running-water vocabulary is concrete, but 流=N2 makes it target-level routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "日の出|ひので": {
         "decision": "keep_candidate",
@@ -7254,10 +7265,11 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "年の暮|としのくれ": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N3",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: year-end vocabulary is useful seasonal/calendar language; 暮 support must be visibly labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: year-end vocabulary is useful seasonal/calendar language, but 暮=N3 makes it N3 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N3 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "本日|ほんじつ": {
         "decision": "keep_candidate",
@@ -8223,10 +8235,11 @@
         "nextStep": "Do not promote this exact phrase to N5 Silver from the common-pool queue. Reopen only through a deliberate time-expression review."
       },
       "飲料水|いんりょうすい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N4",
         "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: drinking-water vocabulary is practical for travel, safety, and signs; support kanji must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: drinking-water vocabulary is practical for travel, safety, and signs, but 飲=N4 and 料=N4 make it N4 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N4 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "雨具|あまぐ": {
         "decision": "keep_candidate",
@@ -8259,10 +8272,11 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "祭日|さいじつ": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: holiday/festival-day vocabulary is useful calendar language; 祭 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: holiday/festival-day vocabulary is useful calendar language, but 祭=N2 makes it N2 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "参考書|さんこうしょ": {
         "decision": "keep_candidate",
@@ -8289,10 +8303,11 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "水筒|すいとう": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: water-bottle/flask vocabulary is practical daily-life language; 筒 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: water-bottle/flask vocabulary is practical daily-life language, but 筒=N2 makes it N2 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "予備校|よびこう": {
         "decision": "keep_candidate",
@@ -8331,10 +8346,11 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "湧水|ゆうすい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N1",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: spring-water vocabulary is concrete travel/nature language; 湧 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: spring-water vocabulary is concrete travel/nature language, but 湧=N1 makes it N1 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N1 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "遠出|とおで": {
         "decision": "keep_candidate",
@@ -8403,34 +8419,39 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "食券|しょっけん": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "high",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: meal-ticket vocabulary is highly practical restaurant/cafeteria language; 券 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: meal-ticket vocabulary is highly practical restaurant/cafeteria language, but 券=N2 makes it N2 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "真水|まみず": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N4",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: fresh-water vocabulary is concrete and useful; 真 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: fresh-water vocabulary is concrete and useful, but 真=N4 makes it N4 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N4 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "水加減|みずかげん": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N3",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: amount-of-water vocabulary is practical cooking language; 加 and 減 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: amount-of-water vocabulary is practical cooking language, but 加=N3 and 減=N2 make it target-level routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N3 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "水鉄砲|みずでっぽう": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: water-gun vocabulary is concrete family/play language; 鉄 and 砲 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: water-gun vocabulary is concrete family/play language, but 鉄=N2 and 砲=N1 make it N2 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "耐水|たいすい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N1",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: water-resistant vocabulary is practical product-label language; 耐 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: water-resistant vocabulary is practical product-label language, but 耐=N1 makes it N1 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N1 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "町名|ちょうめい": {
         "decision": "keep_candidate",
@@ -8481,16 +8502,17 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "離乳食|りにゅうしょく": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: weaning/baby-food vocabulary is practical family language; 離 and 乳 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: weaning/baby-food vocabulary is practical family language, but 離=N1 and 乳=N2 make it N2 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "立食|りっしょく": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: standing meal/buffet vocabulary is practical food/event language; 立 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: 立食 is formal/low-fit for this learner queue and was audit-only; the concept is better reviewed through a cleaner 立ち食い-style identity if ever needed.",
+        "nextStep": "Do not promote this exact identity from the N5 common-pool queue. Reopen only with a clean learner-facing surface, natural example, pitch, audio, and normal downstream gates."
       },
       "一緒に|いっしょに": {
         "decision": "reject_candidate",
@@ -8529,16 +8551,17 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "日替り|ひがわり": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N2",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: daily-changing/daily-special vocabulary is practical restaurant and shop language; 替 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: daily-changing/daily-special vocabulary is practical restaurant and shop language, but 替=N2 makes it N2 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N2 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "食べあるき|たべあるき": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: food-tour/eating-around vocabulary is useful travel/food language. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: eating-around/food-tour vocabulary is useful in concept, but this mixed-kana exact surface adds low-value N5 clutter and should not remain hidden keep backlog.",
+        "nextStep": "Do not promote this exact identity from the N5 common-pool queue. Reopen only through a deliberate review of a cleaner 食べ歩き-style identity in the appropriate target level."
       },
       "勤め人|つとめにん": {
         "decision": "keep_candidate",
@@ -8547,22 +8570,25 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "水差し|みずさし": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N3",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: pitcher/water-jug vocabulary is concrete household language; 差 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: pitcher/water-jug vocabulary is concrete household language, but 差=N3 makes it N3 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N3 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "水洗い|みずあらい": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N4",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: washing-with-water vocabulary is practical household language; 洗 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: washing-with-water vocabulary is practical household language, but 洗=N4 makes it N4 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N4 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "水遊び|みずあそび": {
-        "decision": "keep_candidate",
+        "decision": "move_candidate",
+        "targetLevel": "N3",
         "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: playing-in-water vocabulary is concrete family/leisure language; 遊 support must be labeled. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "reason": "N5 dictionary-common-pool cleanup: playing-in-water vocabulary is concrete family/leisure language, but 遊=N3 makes it N3 routing work rather than hidden N5 keep backlog. Exact dictionary/commonness support remains pre-trust and source level claim stays unverified.",
+        "nextStep": "Route only through the N3 word contract/starter-data review if this exact identity is still useful; do not promote in N5."
       },
       "読みなおす|よみなおす": {
         "decision": "keep_candidate",
@@ -9545,10 +9571,10 @@
         "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
       },
       "書きことば|かきことば": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N5 dictionary-common-pool discovery candidate kept for future Silver review: written-language vocabulary is useful learner language. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility score is an ordering signal, not approval.",
-        "nextStep": "Queue only for a later governed N5 word v2 Silver batch: preserve DICTIONARY COMMON POOL and Source level claim unverified labels, draft a natural exact-identity example, verify pitch/audio, and run normal Gold/Sapphire/Platinum/Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact N5 dictionary-common-pool row: written-language register vocabulary is not strong N5 common-pool work, governed 言葉 already covers the core word, and keeping orthographic/register variants would add low-value duplicate clutter.",
+        "nextStep": "Do not promote this exact identity from the N5 common-pool queue. Reopen only in a later explicit register/usage vocabulary pass with one chosen learner-facing surface."
       },
       "以来|いらい": {
         "decision": "reject_candidate",

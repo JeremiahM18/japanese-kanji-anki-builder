@@ -151,7 +151,7 @@ test("tracked Sapphire word manifests are first-class structural review sets", (
 });
 
 test("word Sapphire migration preserves completed Platinum inputs without shrinking denominators", () => {
-    for (const level of [4, 5]) {
+    for (const level of [4]) {
         const sapphireEntries = loadJson(path.join("templates", `sapphire_n${level}_word_review_set.json`));
         const platinumEntries = loadJson(path.join("templates", `platinum_n${level}_word_review_set.json`));
         const sapphireActiveCount = activeEntries(sapphireEntries).length;
@@ -159,6 +159,26 @@ test("word Sapphire migration preserves completed Platinum inputs without shrink
 
         assert.equal(sapphireEntries.length, platinumEntries.length, `N${level} total tracked decisions must be preserved`);
         assert.equal(sapphireActiveCount, platinumActiveCount, `N${level} active structural coverage must be preserved`);
+    }
+
+    const n5SapphireEntries = loadJson(path.join("templates", "sapphire_n5_word_review_set.json"));
+    const n5PlatinumEntries = loadJson(path.join("templates", "platinum_n5_word_review_set.json"));
+    const n5SapphireActiveKeys = new Set(activeEntries(n5SapphireEntries).map((entry) => buildWordStudyEntryKey({
+        written: entry.word,
+        reading: normalizeList(entry.readingIncludes)[0],
+    })));
+    const n5PlatinumActiveKeys = n5PlatinumEntries
+        .filter((entry) => ["platinum", "fixed_then_platinum"].includes(entry.status))
+        .map((entry) => buildWordStudyEntryKey({
+            written: entry.word,
+            reading: normalizeList(entry.readingIncludes)[0],
+        }));
+
+    assert.equal(n5SapphireEntries.length, 507, "N5 word Sapphire tracked decisions must include current native review progress");
+    assert.ok(n5SapphireEntries.length >= n5PlatinumEntries.length, "N5 word Sapphire must not shrink prior tracked Platinum decisions");
+    assert.ok(n5SapphireActiveKeys.size >= n5PlatinumActiveKeys.length, "N5 active Sapphire coverage must preserve prior Platinum coverage");
+    for (const platinumKey of n5PlatinumActiveKeys) {
+        assert.ok(n5SapphireActiveKeys.has(platinumKey), `${platinumKey} Platinum entry must remain covered by N5 Sapphire`);
     }
 
     for (const level of [1, 2]) {

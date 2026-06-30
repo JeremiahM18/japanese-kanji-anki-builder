@@ -22,22 +22,18 @@ const {
 } = require("./jlptWordSourceEvidenceService");
 const {
     ACTIVE_PLATINUM_STATUSES: ACTIVE_KANJI_PLATINUM_STATUSES,
-    CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
     entryUsesCurrentKanjiPlatinumStandard,
 } = require("./platinumKanjiReviewService");
 const {
     ACTIVE_PLATINUM_STATUSES: ACTIVE_WORD_PLATINUM_STATUSES,
-    CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
     entryUsesCurrentWordPlatinumStandard,
 } = require("./platinumReviewService");
 const {
     ACTIVE_SAPPHIRE_STATUSES,
-    CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
     entryUsesCurrentKanjiSapphireStandard,
 } = require("./sapphireKanjiReviewService");
 const {
     ACTIVE_WORD_SAPPHIRE_STATUSES,
-    CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
     entryUsesCurrentWordSapphireStandard,
 } = require("./sapphireWordReviewService");
 const { buildDeckCloseoutStatus, DEFAULT_LEVELS } = require("./deckCloseoutStatusService");

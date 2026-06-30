@@ -99,15 +99,15 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(contract.inventoryCounts["2"], 61);
     assert.equal(contract.inventoryCounts["3"], 1099);
     assert.equal(contract.inventoryCounts["4"], 719);
-    assert.equal(contract.inventoryCounts["5"], 873);
+    assert.equal(contract.inventoryCounts["5"], 871);
     assert.deepEqual(contract.excludedCounts, {
         "1": 0,
         "2": 0,
         "3": 0,
         "4": 0,
-        "5": 0,
+        "5": 1,
     });
-    assert.deepEqual(Object.keys(contract.excludedWordLevels), []);
+    assert.deepEqual(Object.keys(contract.excludedWordLevels), ["一時に|いちじに"]);
     const n5RoutedMoveTargets = {
         "お弁当|おべんとう": 3,
         "泳ぐ|およぐ": 2,

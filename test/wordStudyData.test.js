@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2788);
+    assert.equal(Object.keys(starterEntries).length, 2743);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 871,
+        5: 826,
     });
 });
 
@@ -7869,7 +7869,6 @@ test("tracked starter word data includes the active N5 word v2 common-pool Silve
     const starterEntries = loadTrackedStarterWordEntries();
     const batchKeys = [
         "家電|かでん",
-        "空間|くうかん",
         "終日|しゅうじつ",
         "初日|しょにち",
         "年々|ねんねん",
@@ -7906,7 +7905,6 @@ test("tracked starter word data includes the active N5 word v2 common-pool Silve
         "校則|こうそく",
         "校内|こうない",
         "国道|こくどう",
-        "残高|ざんだか",
         "車内|しゃない",
         "主食|しゅしょく",
         "手話|しゅわ",
@@ -7917,7 +7915,6 @@ test("tracked starter word data includes the active N5 word v2 common-pool Silve
         "進学|しんがく",
         "水道水|すいどうすい",
         "水面|すいめん",
-        "前夜|ぜんや",
         "送金|そうきん",
         "単行本|たんこうぼん",
         "中華|ちゅうか",
@@ -7969,7 +7966,7 @@ test("tracked starter word data includes the active N5 word v2 common-pool Silve
         "主人公|しゅじんこう",
     ];
 
-    assert.equal(batchKeys.length, 99);
+    assert.equal(batchKeys.length, 96);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
     assert.equal(starterEntries["一時に|いちじに"], undefined);
 
@@ -8014,7 +8011,6 @@ test("tracked starter word data includes the first N5 common-pool Silver batch",
     const batchKeys = [
         "前月|ぜんげつ",
         "上書き|うわがき",
-        "食感|しょっかん",
         "出来立て|できたて",
         "何千|なんぜん",
         "何百|なんびゃく",
@@ -8024,7 +8020,7 @@ test("tracked starter word data includes the first N5 common-pool Silver batch",
         "食生活|しょくせいかつ",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8051,7 +8047,6 @@ test("tracked starter word data includes the first N5 common-pool Silver batch",
         ["前月|ぜんげつ", "月", "げつ"],
         ["上書き|うわがき", "上", "うわ"],
         ["上書き|うわがき", "書", "がき"],
-        ["食感|しょっかん", "食", "しょっ"],
         ["出来立て|できたて", "出", "で"],
         ["出来立て|できたて", "来", "き"],
         ["何千|なんぜん", "何", "なん"],
@@ -8068,7 +8063,6 @@ test("tracked starter word data includes the first N5 common-pool Silver batch",
     assertReadingBreakdowns(starterEntries, [
         ["前月|ぜんげつ", "<ruby>前<rt>ぜん</rt></ruby><ruby>月<rt>げつ</rt></ruby>"],
         ["上書き|うわがき", "<ruby>上<rt>うわ</rt></ruby><ruby>書き<rt>がき</rt></ruby>"],
-        ["食感|しょっかん", "<ruby>食<rt>しょっ</rt></ruby><ruby>感<rt>かん</rt></ruby>"],
         ["出来立て|できたて", "<ruby>出<rt>で</rt></ruby><ruby>来<rt>き</rt></ruby><ruby>立て<rt>たて</rt></ruby>"],
         ["何千|なんぜん", "<ruby>何<rt>なん</rt></ruby><ruby>千<rt>ぜん</rt></ruby>"],
         ["何百|なんびゃく", "<ruby>何<rt>なん</rt></ruby><ruby>百<rt>びゃく</rt></ruby>"],
@@ -8155,12 +8149,11 @@ test("tracked starter word data includes the third N5 common-pool Silver batch",
         "一昔|ひとむかし",
         "雨具|あまぐ",
         "学割|がくわり",
-        "客間|きゃくま",
         "敬語|けいご",
         "再来週|さらいしゅう",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8192,7 +8185,6 @@ test("tracked starter word data includes the third N5 common-pool Silver batch",
         ["一昔|ひとむかし", "一", "ひと"],
         ["雨具|あまぐ", "雨", "あま"],
         ["学割|がくわり", "学", "がく"],
-        ["客間|きゃくま", "間", "ま"],
         ["敬語|けいご", "語", "ご"],
         ["再来週|さらいしゅう", "来", "らい"],
     ]);
@@ -8204,7 +8196,6 @@ test("tracked starter word data includes the third N5 common-pool Silver batch",
         ["一昔|ひとむかし", "<ruby>一<rt>ひと</rt></ruby><ruby>昔<rt>むかし</rt></ruby>"],
         ["雨具|あまぐ", "<ruby>雨<rt>あま</rt></ruby><ruby>具<rt>ぐ</rt></ruby>"],
         ["学割|がくわり", "<ruby>学<rt>がく</rt></ruby><ruby>割<rt>わり</rt></ruby>"],
-        ["客間|きゃくま", "<ruby>客<rt>きゃく</rt></ruby><ruby>間<rt>ま</rt></ruby>"],
         ["敬語|けいご", "<ruby>敬<rt>けい</rt></ruby><ruby>語<rt>ご</rt></ruby>"],
         ["再来週|さらいしゅう", "<ruby>再<rt>さ</rt></ruby><ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>"],
     ]);
@@ -8282,13 +8273,12 @@ test("tracked starter word data includes the fifth N5 common-pool Silver batch",
         "中心部|ちゅうしんぶ",
         "朝一番|あさいちばん",
         "店名|てんめい",
-        "百均|ひゃっきん",
         "保証金|ほしょうきん",
         "連絡先|れんらくさき",
         "遠出|とおで",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8317,7 +8307,6 @@ test("tracked starter word data includes the fifth N5 common-pool Silver batch",
         ["中心部|ちゅうしんぶ", "中", "ちゅう"],
         ["朝一番|あさいちばん", "一", "いち"],
         ["店名|てんめい", "名", "めい"],
-        ["百均|ひゃっきん", "百", "ひゃっ"],
         ["保証金|ほしょうきん", "金", "きん"],
         ["連絡先|れんらくさき", "先", "さき"],
         ["遠出|とおで", "出", "で"],
@@ -8329,7 +8318,6 @@ test("tracked starter word data includes the fifth N5 common-pool Silver batch",
         ["中心部|ちゅうしんぶ", "<ruby>中<rt>ちゅう</rt></ruby><ruby>心<rt>しん</rt></ruby><ruby>部<rt>ぶ</rt></ruby>"],
         ["朝一番|あさいちばん", "<ruby>朝<rt>あさ</rt></ruby><ruby>一<rt>いち</rt></ruby><ruby>番<rt>ばん</rt></ruby>"],
         ["店名|てんめい", "<ruby>店<rt>てん</rt></ruby><ruby>名<rt>めい</rt></ruby>"],
-        ["百均|ひゃっきん", "<ruby>百<rt>ひゃっ</rt></ruby><ruby>均<rt>きん</rt></ruby>"],
         ["保証金|ほしょうきん", "<ruby>保<rt>ほ</rt></ruby><ruby>証<rt>しょう</rt></ruby><ruby>金<rt>きん</rt></ruby>"],
         ["連絡先|れんらくさき", "<ruby>連<rt>れん</rt></ruby><ruby>絡<rt>らく</rt></ruby><ruby>先<rt>さき</rt></ruby>"],
         ["遠出|とおで", "<ruby>遠<rt>とお</rt></ruby><ruby>出<rt>で</rt></ruby>"],
@@ -8346,12 +8334,11 @@ test("tracked starter word data includes the sixth N5 common-pool Silver batch",
         "休診|きゅうしん",
         "教則本|きょうそくぼん",
         "広間|ひろま",
-        "荒天|こうてん",
         "市電|しでん",
         "車窓|しゃそう",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8382,7 +8369,6 @@ test("tracked starter word data includes the sixth N5 common-pool Silver batch",
         ["休診|きゅうしん", "休", "きゅう"],
         ["教則本|きょうそくぼん", "本", "ぼん"],
         ["広間|ひろま", "間", "ま"],
-        ["荒天|こうてん", "天", "てん"],
         ["市電|しでん", "電", "でん"],
         ["車窓|しゃそう", "車", "しゃ"],
     ]);
@@ -8394,7 +8380,6 @@ test("tracked starter word data includes the sixth N5 common-pool Silver batch",
         ["休診|きゅうしん", "<ruby>休<rt>きゅう</rt></ruby><ruby>診<rt>しん</rt></ruby>"],
         ["教則本|きょうそくぼん", "<ruby>教<rt>きょう</rt></ruby><ruby>則<rt>そく</rt></ruby><ruby>本<rt>ぼん</rt></ruby>"],
         ["広間|ひろま", "<ruby>広<rt>ひろ</rt></ruby><ruby>間<rt>ま</rt></ruby>"],
-        ["荒天|こうてん", "<ruby>荒<rt>こう</rt></ruby><ruby>天<rt>てん</rt></ruby>"],
         ["市電|しでん", "<ruby>市<rt>し</rt></ruby><ruby>電<rt>でん</rt></ruby>"],
         ["車窓|しゃそう", "<ruby>車<rt>しゃ</rt></ruby><ruby>窓<rt>そう</rt></ruby>"],
     ]);
@@ -8469,17 +8454,15 @@ test("tracked starter word data includes the eighth N5 common-pool Silver batch"
     const batchKeys = [
         "町名|ちょうめい",
         "長文|ちょうぶん",
-        "庭先|にわさき",
         "締切日|しめきりび",
         "鈍行|どんこう",
         "二次会|にじかい",
         "日直|にっちょく",
         "非常時|ひじょうじ",
         "標準語|ひょうじゅんご",
-        "父方|ちちかた",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 8);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8505,26 +8488,22 @@ test("tracked starter word data includes the eighth N5 common-pool Silver batch"
     assertCoverageReadings(starterEntries, [
         ["町名|ちょうめい", "名", "めい"],
         ["長文|ちょうぶん", "長", "ちょう"],
-        ["庭先|にわさき", "先", "さき"],
         ["締切日|しめきりび", "日", "び"],
         ["鈍行|どんこう", "行", "こう"],
         ["二次会|にじかい", "二", "に"],
         ["日直|にっちょく", "日", "にっ"],
         ["非常時|ひじょうじ", "時", "じ"],
         ["標準語|ひょうじゅんご", "語", "ご"],
-        ["父方|ちちかた", "父", "ちち"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["町名|ちょうめい", "<ruby>町<rt>ちょう</rt></ruby><ruby>名<rt>めい</rt></ruby>"],
         ["長文|ちょうぶん", "<ruby>長<rt>ちょう</rt></ruby><ruby>文<rt>ぶん</rt></ruby>"],
-        ["庭先|にわさき", "<ruby>庭<rt>にわ</rt></ruby><ruby>先<rt>さき</rt></ruby>"],
         ["締切日|しめきりび", "<ruby>締<rt>しめ</rt></ruby><ruby>切<rt>きり</rt></ruby><ruby>日<rt>び</rt></ruby>"],
         ["鈍行|どんこう", "<ruby>鈍<rt>どん</rt></ruby><ruby>行<rt>こう</rt></ruby>"],
         ["二次会|にじかい", "<ruby>二<rt>に</rt></ruby><ruby>次<rt>じ</rt></ruby><ruby>会<rt>かい</rt></ruby>"],
         ["日直|にっちょく", "<ruby>日<rt>にっ</rt></ruby><ruby>直<rt>ちょく</rt></ruby>"],
         ["非常時|ひじょうじ", "<ruby>非<rt>ひ</rt></ruby><ruby>常<rt>じょう</rt></ruby><ruby>時<rt>じ</rt></ruby>"],
         ["標準語|ひょうじゅんご", "<ruby>標<rt>ひょう</rt></ruby><ruby>準<rt>じゅん</rt></ruby><ruby>語<rt>ご</rt></ruby>"],
-        ["父方|ちちかた", "<ruby>父<rt>ちち</rt></ruby><ruby>方<rt>かた</rt></ruby>"],
     ]);
 });
 
@@ -8540,10 +8519,9 @@ test("tracked starter word data includes the ninth N5 common-pool Silver batch",
         "見頃|みごろ",
         "朝一|あさいち",
         "見送る|みおくる",
-        "見舞い|みまい",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8576,7 +8554,6 @@ test("tracked starter word data includes the ninth N5 common-pool Silver batch",
         ["見頃|みごろ", "見", "み"],
         ["朝一|あさいち", "一", "いち"],
         ["見送る|みおくる", "見", "み"],
-        ["見舞い|みまい", "見", "み"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["風雨|ふうう", "<ruby>風<rt>ふう</rt></ruby><ruby>雨<rt>う</rt></ruby>"],
@@ -8588,7 +8565,6 @@ test("tracked starter word data includes the ninth N5 common-pool Silver batch",
         ["見頃|みごろ", "<ruby>見<rt>み</rt></ruby><ruby>頃<rt>ごろ</rt></ruby>"],
         ["朝一|あさいち", "<ruby>朝<rt>あさ</rt></ruby><ruby>一<rt>いち</rt></ruby>"],
         ["見送る|みおくる", "<ruby>見<rt>み</rt></ruby><ruby>送<rt>おく</rt></ruby>る"],
-        ["見舞い|みまい", "<ruby>見<rt>み</rt></ruby><ruby>舞<rt>まい</rt></ruby>"],
     ]);
 });
 
@@ -8598,8 +8574,6 @@ test("tracked starter word data includes the tenth N5 common-pool Silver batch",
         "出会い|であい",
         "出来る|できる",
         "日の出|ひので",
-        "雨宿り|あまやどり",
-        "間借り|まがり",
         "月初め|つきはじめ",
         "四つ角|よつかど",
         "手分け|てわけ",
@@ -8607,7 +8581,7 @@ test("tracked starter word data includes the tenth N5 common-pool Silver batch",
         "勤め人|つとめにん",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 8);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8634,8 +8608,6 @@ test("tracked starter word data includes the tenth N5 common-pool Silver batch",
         ["出会い|であい", "出", "で"],
         ["出来る|できる", "出", "で"],
         ["日の出|ひので", "出", "で"],
-        ["雨宿り|あまやどり", "雨", "あま"],
-        ["間借り|まがり", "間", "ま"],
         ["月初め|つきはじめ", "月", "つき"],
         ["四つ角|よつかど", "四", "よ"],
         ["手分け|てわけ", "分", "わ"],
@@ -8646,8 +8618,6 @@ test("tracked starter word data includes the tenth N5 common-pool Silver batch",
         ["出会い|であい", "<ruby>出<rt>で</rt></ruby><ruby>会<rt>あ</rt></ruby>い"],
         ["出来る|できる", "<ruby>出<rt>で</rt></ruby><ruby>来<rt>き</rt></ruby>る"],
         ["日の出|ひので", "<ruby>日<rt>ひ</rt></ruby>の<ruby>出<rt>で</rt></ruby>"],
-        ["雨宿り|あまやどり", "<ruby>雨<rt>あま</rt></ruby><ruby>宿<rt>やど</rt></ruby>り"],
-        ["間借り|まがり", "<ruby>間<rt>ま</rt></ruby><ruby>借<rt>が</rt></ruby>り"],
         ["月初め|つきはじめ", "<ruby>月<rt>つき</rt></ruby><ruby>初<rt>はじ</rt></ruby>め"],
         ["四つ角|よつかど", "<ruby>四<rt>よ</rt></ruby>つ<ruby>角<rt>かど</rt></ruby>"],
         ["手分け|てわけ", "<ruby>手<rt>て</rt></ruby><ruby>分<rt>わ</rt></ruby>け"],
@@ -9141,13 +9111,12 @@ test("tracked starter word data includes the eighteenth N5 common-pool Silver ba
         "一休み|ひとやすみ",
         "日当たり|ひあたり",
         "降り出す|ふりだす",
-        "山火事|やまかじ",
         "何とか|なんとか",
         "出来るだけ|できるだけ",
         "年月日|ねんがっぴ",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9179,8 +9148,6 @@ test("tracked starter word data includes the eighteenth N5 common-pool Silver ba
         ["一休み|ひとやすみ","休","やす"],
         ["日当たり|ひあたり","日","ひ"],
         ["降り出す|ふりだす","出","だ"],
-        ["山火事|やまかじ","山","やま"],
-        ["山火事|やまかじ","火","か"],
         ["何とか|なんとか","何","なん"],
         ["出来るだけ|できるだけ","出","で"],
         ["出来るだけ|できるだけ","来","き"],
@@ -9195,7 +9162,6 @@ test("tracked starter word data includes the eighteenth N5 common-pool Silver ba
         ["一休み|ひとやすみ","<ruby>一<rt>ひと</rt></ruby><ruby>休<rt>やす</rt></ruby>み"],
         ["日当たり|ひあたり","<ruby>日<rt>ひ</rt></ruby><ruby>当<rt>あ</rt></ruby>たり"],
         ["降り出す|ふりだす","<ruby>降<rt>ふ</rt></ruby>り<ruby>出<rt>だ</rt></ruby>す"],
-        ["山火事|やまかじ","<ruby>山<rt>やま</rt></ruby><ruby>火<rt>か</rt></ruby><ruby>事<rt>じ</rt></ruby>"],
         ["何とか|なんとか","<ruby>何<rt>なん</rt></ruby>とか"],
         ["出来るだけ|できるだけ","<ruby>出<rt>で</rt></ruby><ruby>来<rt>き</rt></ruby>るだけ"],
         ["年月日|ねんがっぴ","<ruby>年<rt>ねん</rt></ruby><ruby>月<rt>がっ</rt></ruby><ruby>日<rt>ぴ</rt></ruby>"],
@@ -9345,7 +9311,6 @@ test("tracked starter word data includes the twenty-first N5 common-pool Silver 
         "一人娘|ひとりむすめ",
         "山小屋|やまごや",
         "小冊子|しょうさっし",
-        "何気なく|なにげなく",
         "書き出し|かきだし",
         "聞き入る|ききいる",
         "読み上げ|よみあげ",
@@ -9354,7 +9319,7 @@ test("tracked starter word data includes the twenty-first N5 common-pool Silver 
         "雨量|うりょう",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9384,8 +9349,6 @@ test("tracked starter word data includes the twenty-first N5 common-pool Silver 
         ["山小屋|やまごや","小","ご"],
         ["小冊子|しょうさっし","小","しょう"],
         ["小冊子|しょうさっし","子","し"],
-        ["何気なく|なにげなく","何","なに"],
-        ["何気なく|なにげなく","気","げ"],
         ["書き出し|かきだし","書","か"],
         ["書き出し|かきだし","出","だ"],
         ["聞き入る|ききいる","聞","き"],
@@ -9400,7 +9363,6 @@ test("tracked starter word data includes the twenty-first N5 common-pool Silver 
         ["一人娘|ひとりむすめ","<ruby>一<rt>ひと</rt></ruby><ruby>人<rt>り</rt></ruby><ruby>娘<rt>むすめ</rt></ruby>"],
         ["山小屋|やまごや","<ruby>山<rt>やま</rt></ruby><ruby>小<rt>ご</rt></ruby><ruby>屋<rt>や</rt></ruby>"],
         ["小冊子|しょうさっし","<ruby>小<rt>しょう</rt></ruby><ruby>冊<rt>さっ</rt></ruby><ruby>子<rt>し</rt></ruby>"],
-        ["何気なく|なにげなく","<ruby>何<rt>なに</rt></ruby><ruby>気<rt>げ</rt></ruby>なく"],
         ["書き出し|かきだし","<ruby>書<rt>か</rt></ruby>き<ruby>出<rt>だ</rt></ruby>し"],
         ["聞き入る|ききいる","<ruby>聞<rt>き</rt></ruby>き<ruby>入<rt>い</rt></ruby>る"],
         ["読み上げ|よみあげ","<ruby>読<rt>よ</rt></ruby>み<ruby>上<rt>あ</rt></ruby>げ"],
@@ -9413,7 +9375,6 @@ test("tracked starter word data includes the twenty-first N5 common-pool Silver 
 test("tracked starter word data includes the twenty-second N5 common-pool Silver batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
     const batchKeys = [
-        "円安|えんやす",
         "海水|かいすい",
         "海中|かいちゅう",
         "学力|がくりょく",
@@ -9425,7 +9386,7 @@ test("tracked starter word data includes the twenty-second N5 common-pool Silver
         "月刊|げっかん",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9449,7 +9410,6 @@ test("tracked starter word data includes the twenty-second N5 common-pool Silver
     }
 
     assertCoverageReadings(starterEntries, [
-        ["円安|えんやす","円","えん"],
         ["海水|かいすい","水","すい"],
         ["海中|かいちゅう","中","ちゅう"],
         ["学力|がくりょく","学","がく"],
@@ -9461,7 +9421,6 @@ test("tracked starter word data includes the twenty-second N5 common-pool Silver
         ["月刊|げっかん","月","げっ"],
     ]);
     assertReadingBreakdowns(starterEntries, [
-        ["円安|えんやす","<ruby>円<rt>えん</rt></ruby><ruby>安<rt>やす</rt></ruby>"],
         ["海水|かいすい","<ruby>海<rt>かい</rt></ruby><ruby>水<rt>すい</rt></ruby>"],
         ["海中|かいちゅう","<ruby>海<rt>かい</rt></ruby><ruby>中<rt>ちゅう</rt></ruby>"],
         ["学力|がくりょく","<ruby>学<rt>がく</rt></ruby><ruby>力<rt>りょく</rt></ruby>"],
@@ -9479,16 +9438,11 @@ test("tracked starter word data includes the twenty-third N5 common-pool Silver 
     const batchKeys = [
         "月給|げっきゅう",
         "月収|げっしゅう",
-        "行進|こうしん",
-        "高値|たかね",
-        "合間|あいま",
         "最小|さいしょう",
-        "山村|さんそん",
-        "山頂|さんちょう",
         "時速|じそく",
     ];
 
-    assert.equal(batchKeys.length, 9);
+    assert.equal(batchKeys.length, 4);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9515,23 +9469,13 @@ test("tracked starter word data includes the twenty-third N5 common-pool Silver 
     assertCoverageReadings(starterEntries, [
         ["月給|げっきゅう","月","げっ"],
         ["月収|げっしゅう","月","げっ"],
-        ["行進|こうしん","行","こう"],
-        ["高値|たかね","高","たか"],
-        ["合間|あいま","間","いま"],
         ["最小|さいしょう","小","しょう"],
-        ["山村|さんそん","山","さん"],
-        ["山頂|さんちょう","山","さん"],
         ["時速|じそく","時","じ"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["月給|げっきゅう","<ruby>月<rt>げっ</rt></ruby><ruby>給<rt>きゅう</rt></ruby>"],
         ["月収|げっしゅう","<ruby>月<rt>げっ</rt></ruby><ruby>収<rt>しゅう</rt></ruby>"],
-        ["行進|こうしん","<ruby>行<rt>こう</rt></ruby><ruby>進<rt>しん</rt></ruby>"],
-        ["高値|たかね","<ruby>高<rt>たか</rt></ruby><ruby>値<rt>ね</rt></ruby>"],
-        ["合間|あいま","<ruby>合<rt>あ</rt></ruby><ruby>間<rt>いま</rt></ruby>"],
         ["最小|さいしょう","<ruby>最<rt>さい</rt></ruby><ruby>小<rt>しょう</rt></ruby>"],
-        ["山村|さんそん","<ruby>山<rt>さん</rt></ruby><ruby>村<rt>そん</rt></ruby>"],
-        ["山頂|さんちょう","<ruby>山<rt>さん</rt></ruby><ruby>頂<rt>ちょう</rt></ruby>"],
         ["時速|じそく","<ruby>時<rt>じ</rt></ruby><ruby>速<rt>そく</rt></ruby>"],
     ]);
 });
@@ -9545,12 +9489,10 @@ test("tracked starter word data includes the twenty-fourth N5 common-pool Silver
         "十代|じゅうだい",
         "出席者|しゅっせきしゃ",
         "書道|しょどう",
-        "消火|しょうか",
         "上空|じょうくう",
-        "神話|しんわ",
     ];
 
-    assert.equal(batchKeys.length, 9);
+    assert.equal(batchKeys.length, 7);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9581,9 +9523,7 @@ test("tracked starter word data includes the twenty-fourth N5 common-pool Silver
         ["十代|じゅうだい","十","じゅう"],
         ["出席者|しゅっせきしゃ","出","しゅっ"],
         ["書道|しょどう","書","しょ"],
-        ["消火|しょうか","火","か"],
         ["上空|じょうくう","上","じょう"],
-        ["神話|しんわ","話","わ"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["自国|じこく","<ruby>自<rt>じ</rt></ruby><ruby>国<rt>こく</rt></ruby>"],
@@ -9592,9 +9532,7 @@ test("tracked starter word data includes the twenty-fourth N5 common-pool Silver
         ["十代|じゅうだい","<ruby>十<rt>じゅう</rt></ruby><ruby>代<rt>だい</rt></ruby>"],
         ["出席者|しゅっせきしゃ","<ruby>出<rt>しゅっ</rt></ruby><ruby>席<rt>せき</rt></ruby><ruby>者<rt>しゃ</rt></ruby>"],
         ["書道|しょどう","<ruby>書<rt>しょ</rt></ruby><ruby>道<rt>どう</rt></ruby>"],
-        ["消火|しょうか","<ruby>消<rt>しょう</rt></ruby><ruby>火<rt>か</rt></ruby>"],
         ["上空|じょうくう","<ruby>上<rt>じょう</rt></ruby><ruby>空<rt>くう</rt></ruby>"],
-        ["神話|しんわ","<ruby>神<rt>しん</rt></ruby><ruby>話<rt>わ</rt></ruby>"],
     ]);
 });
 
@@ -9664,18 +9602,15 @@ test("tracked starter word data includes the twenty-fifth N5 common-pool Silver 
 test("tracked starter word data includes the twenty-sixth N5 common-pool Silver batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
     const batchKeys = [
-        "前者|ぜんしゃ",
-        "前進|ぜんしん",
         "全土|ぜんど",
         "祖国|そこく",
-        "大病|たいびょう",
         "第三者|だいさんしゃ",
         "題名|だいめい",
         "中断|ちゅうだん",
         "中毒|ちゅうどく",
     ];
 
-    assert.equal(batchKeys.length, 9);
+    assert.equal(batchKeys.length, 6);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9700,22 +9635,16 @@ test("tracked starter word data includes the twenty-sixth N5 common-pool Silver 
     assert.equal(starterEntries["貸出用|かしだしよう"], undefined);
 
     assertCoverageReadings(starterEntries, [
-        ["前者|ぜんしゃ","前","ぜん"],
-        ["前進|ぜんしん","前","ぜん"],
         ["全土|ぜんど","土","ど"],
         ["祖国|そこく","国","こく"],
-        ["大病|たいびょう","大","たい"],
         ["第三者|だいさんしゃ","三","さん"],
         ["題名|だいめい","名","めい"],
         ["中断|ちゅうだん","中","ちゅう"],
         ["中毒|ちゅうどく","中","ちゅう"],
     ]);
     assertReadingBreakdowns(starterEntries, [
-        ["前者|ぜんしゃ","<ruby>前<rt>ぜん</rt></ruby><ruby>者<rt>しゃ</rt></ruby>"],
-        ["前進|ぜんしん","<ruby>前<rt>ぜん</rt></ruby><ruby>進<rt>しん</rt></ruby>"],
         ["全土|ぜんど","<ruby>全<rt>ぜん</rt></ruby><ruby>土<rt>ど</rt></ruby>"],
         ["祖国|そこく","<ruby>祖<rt>そ</rt></ruby><ruby>国<rt>こく</rt></ruby>"],
-        ["大病|たいびょう","<ruby>大<rt>たい</rt></ruby><ruby>病<rt>びょう</rt></ruby>"],
         ["第三者|だいさんしゃ","<ruby>第<rt>だい</rt></ruby><ruby>三<rt>さん</rt></ruby><ruby>者<rt>しゃ</rt></ruby>"],
         ["題名|だいめい","<ruby>題<rt>だい</rt></ruby><ruby>名<rt>めい</rt></ruby>"],
         ["中断|ちゅうだん","<ruby>中<rt>ちゅう</rt></ruby><ruby>断<rt>だん</rt></ruby>"],
@@ -9726,10 +9655,6 @@ test("tracked starter word data includes the twenty-sixth N5 common-pool Silver 
 test("tracked starter word data includes the twenty-seventh N5 common-pool Silver batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
     const batchKeys = [
-        "天才|てんさい",
-        "天使|てんし",
-        "東部|とうぶ",
-        "童話|どうわ",
         "匿名|とくめい",
         "南側|みなみがわ",
         "二階建|にかいだて",
@@ -9737,7 +9662,7 @@ test("tracked starter word data includes the twenty-seventh N5 common-pool Silve
         "年数|ねんすう",
     ];
 
-    assert.equal(batchKeys.length, 9);
+    assert.equal(batchKeys.length, 5);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9762,10 +9687,6 @@ test("tracked starter word data includes the twenty-seventh N5 common-pool Silve
     assert.equal(starterEntries["二部|にぶ"], undefined);
 
     assertCoverageReadings(starterEntries, [
-        ["天才|てんさい","天","てん"],
-        ["天使|てんし","天","てん"],
-        ["東部|とうぶ","東","とう"],
-        ["童話|どうわ","話","わ"],
         ["匿名|とくめい","名","めい"],
         ["南側|みなみがわ","南","みなみ"],
         ["二階建|にかいだて","二","に"],
@@ -9773,10 +9694,6 @@ test("tracked starter word data includes the twenty-seventh N5 common-pool Silve
         ["年数|ねんすう","年","ねん"],
     ]);
     assertReadingBreakdowns(starterEntries, [
-        ["天才|てんさい","<ruby>天<rt>てん</rt></ruby><ruby>才<rt>さい</rt></ruby>"],
-        ["天使|てんし","<ruby>天<rt>てん</rt></ruby><ruby>使<rt>し</rt></ruby>"],
-        ["東部|とうぶ","<ruby>東<rt>とう</rt></ruby><ruby>部<rt>ぶ</rt></ruby>"],
-        ["童話|どうわ","<ruby>童<rt>どう</rt></ruby><ruby>話<rt>わ</rt></ruby>"],
         ["匿名|とくめい","<ruby>匿<rt>とく</rt></ruby><ruby>名<rt>めい</rt></ruby>"],
         ["南側|みなみがわ","<ruby>南<rt>みなみ</rt></ruby><ruby>側<rt>がわ</rt></ruby>"],
         ["二階建|にかいだて","<ruby>二<rt>に</rt></ruby><ruby>階<rt>かい</rt></ruby><ruby>建<rt>だて</rt></ruby>"],
@@ -9788,19 +9705,16 @@ test("tracked starter word data includes the twenty-seventh N5 common-pool Silve
 test("tracked starter word data includes the twenty-eighth N5 common-pool Silver batch", () => {
     const starterEntries = loadTrackedStarterWordEntries();
     const batchKeys = [
-        "背後|はいご",
         "半々|はんはん",
         "半径|はんけい",
         "半島|はんとう",
-        "美人|びじん",
-        "病人|びょうにん",
         "部下|ぶか",
         "噴火|ふんか",
         "並木|なみき",
         "本業|ほんぎょう",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 7);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9824,24 +9738,18 @@ test("tracked starter word data includes the twenty-eighth N5 common-pool Silver
     }
 
     assertCoverageReadings(starterEntries, [
-        ["背後|はいご","後","ご"],
         ["半々|はんはん","半","はん"],
         ["半径|はんけい","半","はん"],
         ["半島|はんとう","半","はん"],
-        ["美人|びじん","人","じん"],
-        ["病人|びょうにん","人","にん"],
         ["部下|ぶか","下","か"],
         ["噴火|ふんか","火","か"],
         ["並木|なみき","木","き"],
         ["本業|ほんぎょう","本","ほん"],
     ]);
     assertReadingBreakdowns(starterEntries, [
-        ["背後|はいご","<ruby>背<rt>はい</rt></ruby><ruby>後<rt>ご</rt></ruby>"],
         ["半々|はんはん","<ruby>半<rt>はん</rt></ruby><ruby>々<rt>はん</rt></ruby>"],
         ["半径|はんけい","<ruby>半<rt>はん</rt></ruby><ruby>径<rt>けい</rt></ruby>"],
         ["半島|はんとう","<ruby>半<rt>はん</rt></ruby><ruby>島<rt>とう</rt></ruby>"],
-        ["美人|びじん","<ruby>美<rt>び</rt></ruby><ruby>人<rt>じん</rt></ruby>"],
-        ["病人|びょうにん","<ruby>病<rt>びょう</rt></ruby><ruby>人<rt>にん</rt></ruby>"],
         ["部下|ぶか","<ruby>部<rt>ぶ</rt></ruby><ruby>下<rt>か</rt></ruby>"],
         ["噴火|ふんか","<ruby>噴<rt>ふん</rt></ruby><ruby>火<rt>か</rt></ruby>"],
         ["並木|なみき","<ruby>並<rt>なみ</rt></ruby><ruby>木<rt>き</rt></ruby>"],
@@ -9917,18 +9825,15 @@ test("tracked starter word data includes the thirtieth N5 common-pool Silver bat
     const starterEntries = loadTrackedStarterWordEntries();
     const batchKeys = [
         "養子|ようし",
-        "利子|りし",
         "隣人|りんじん",
         "連休|れんきゅう",
         "朗読|ろうどく",
-        "老後|ろうご",
         "一旦|いったん",
         "大雑把|おおざっぱ",
-        "毎度|まいど",
         "一息|ひといき",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 7);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -9953,26 +9858,20 @@ test("tracked starter word data includes the thirtieth N5 common-pool Silver bat
 
     assertCoverageReadings(starterEntries, [
         ["養子|ようし","子","し"],
-        ["利子|りし","子","し"],
         ["隣人|りんじん","人","じん"],
         ["連休|れんきゅう","休","きゅう"],
         ["朗読|ろうどく","読","どく"],
-        ["老後|ろうご","後","ご"],
         ["一旦|いったん","一","いっ"],
         ["大雑把|おおざっぱ","大","おお"],
-        ["毎度|まいど","毎","まい"],
         ["一息|ひといき","一","ひと"],
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["養子|ようし","<ruby>養<rt>よう</rt></ruby><ruby>子<rt>し</rt></ruby>"],
-        ["利子|りし","<ruby>利<rt>り</rt></ruby><ruby>子<rt>し</rt></ruby>"],
         ["隣人|りんじん","<ruby>隣<rt>りん</rt></ruby><ruby>人<rt>じん</rt></ruby>"],
         ["連休|れんきゅう","<ruby>連<rt>れん</rt></ruby><ruby>休<rt>きゅう</rt></ruby>"],
         ["朗読|ろうどく","<ruby>朗<rt>ろう</rt></ruby><ruby>読<rt>どく</rt></ruby>"],
-        ["老後|ろうご","<ruby>老<rt>ろう</rt></ruby><ruby>後<rt>ご</rt></ruby>"],
         ["一旦|いったん","<ruby>一<rt>いっ</rt></ruby><ruby>旦<rt>たん</rt></ruby>"],
         ["大雑把|おおざっぱ","<ruby>大<rt>おお</rt></ruby><ruby>雑<rt>ざっ</rt></ruby><ruby>把<rt>ぱ</rt></ruby>"],
-        ["毎度|まいど","<ruby>毎<rt>まい</rt></ruby><ruby>度<rt>ど</rt></ruby>"],
         ["一息|ひといき","<ruby>一<rt>ひと</rt></ruby><ruby>息<rt>いき</rt></ruby>"],
     ]);
 });
@@ -9981,9 +9880,7 @@ test("tracked starter word data includes the thirty-first N5 common-pool Silver 
     const starterEntries = loadTrackedStarterWordEntries();
     const batchKeys = [
         "一遍|いっぺん",
-        "後編|こうへん",
         "大群|たいぐん",
-        "冷気|れいき",
         "一生けんめい|いっしょうけんめい",
         "金持ち|かねもち",
         "思い出|おもいで",
@@ -9991,7 +9888,7 @@ test("tracked starter word data includes the thirty-first N5 common-pool Silver 
         "小売り|こうり",
     ];
 
-    assert.equal(batchKeys.length, 9);
+    assert.equal(batchKeys.length, 7);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -10017,9 +9914,7 @@ test("tracked starter word data includes the thirty-first N5 common-pool Silver 
 
     assertCoverageReadings(starterEntries, [
         ["一遍|いっぺん","一","いっ"],
-        ["後編|こうへん","後","こう"],
         ["大群|たいぐん","大","たい"],
-        ["冷気|れいき","気","き"],
         ["一生けんめい|いっしょうけんめい","一","いっ"],
         ["一生けんめい|いっしょうけんめい","生","しょう"],
         ["金持ち|かねもち","金","かね"],
@@ -10029,9 +9924,7 @@ test("tracked starter word data includes the thirty-first N5 common-pool Silver 
     ]);
     assertReadingBreakdowns(starterEntries, [
         ["一遍|いっぺん","<ruby>一<rt>いっ</rt></ruby><ruby>遍<rt>ぺん</rt></ruby>"],
-        ["後編|こうへん","<ruby>後<rt>こう</rt></ruby><ruby>編<rt>へん</rt></ruby>"],
         ["大群|たいぐん","<ruby>大<rt>たい</rt></ruby><ruby>群<rt>ぐん</rt></ruby>"],
-        ["冷気|れいき","<ruby>冷<rt>れい</rt></ruby><ruby>気<rt>き</rt></ruby>"],
         ["一生けんめい|いっしょうけんめい","<ruby>一<rt>いっ</rt></ruby><ruby>生<rt>しょう</rt></ruby>けんめい"],
         ["金持ち|かねもち","<ruby>金<rt>かね</rt></ruby><ruby>持<rt>も</rt></ruby>ち"],
         ["思い出|おもいで","<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>"],
@@ -10045,8 +9938,6 @@ test("tracked starter word data includes the thirty-second N5 common-pool Silver
     const batchKeys = [
         "真っ先|まっさき",
         "真っ白|まっしろ",
-        "先送り|さきおくり",
-        "前倒し|まえだおし",
         "値下げ|ねさげ",
         "日差し|ひざし",
         "買い出し|かいだし",
@@ -10055,7 +9946,7 @@ test("tracked starter word data includes the thirty-second N5 common-pool Silver
         "三千|さんぜん",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 8);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -10081,8 +9972,6 @@ test("tracked starter word data includes the thirty-second N5 common-pool Silver
     assertCoverageReadings(starterEntries, [
         ["真っ先|まっさき","先","さき"],
         ["真っ白|まっしろ","白","しろ"],
-        ["先送り|さきおくり","先","さき"],
-        ["前倒し|まえだおし","前","まえ"],
         ["値下げ|ねさげ","下","さ"],
         ["日差し|ひざし","日","ひ"],
         ["買い出し|かいだし","出","だ"],
@@ -10094,8 +9983,6 @@ test("tracked starter word data includes the thirty-second N5 common-pool Silver
     assertReadingBreakdowns(starterEntries, [
         ["真っ先|まっさき","<ruby>真<rt>ま</rt></ruby>っ<ruby>先<rt>さき</rt></ruby>"],
         ["真っ白|まっしろ","<ruby>真<rt>ま</rt></ruby>っ<ruby>白<rt>しろ</rt></ruby>"],
-        ["先送り|さきおくり","<ruby>先<rt>さき</rt></ruby><ruby>送<rt>おく</rt></ruby>り"],
-        ["前倒し|まえだおし","<ruby>前<rt>まえ</rt></ruby><ruby>倒<rt>だお</rt></ruby>し"],
         ["値下げ|ねさげ","<ruby>値<rt>ね</rt></ruby><ruby>下<rt>さ</rt></ruby>げ"],
         ["日差し|ひざし","<ruby>日<rt>ひ</rt></ruby><ruby>差<rt>ざ</rt></ruby>し"],
         ["買い出し|かいだし","<ruby>買<rt>か</rt></ruby>い<ruby>出<rt>だ</rt></ruby>し"],

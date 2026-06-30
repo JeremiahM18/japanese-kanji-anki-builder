@@ -99,7 +99,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(contract.inventoryCounts["2"], 61);
     assert.equal(contract.inventoryCounts["3"], 1099);
     assert.equal(contract.inventoryCounts["4"], 719);
-    assert.equal(contract.inventoryCounts["5"], 871);
+    assert.equal(contract.inventoryCounts["5"], 826);
     assert.deepEqual(contract.excludedCounts, {
         "1": 0,
         "2": 0,

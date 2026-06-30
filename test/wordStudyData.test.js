@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2790);
+    assert.equal(Object.keys(starterEntries).length, 2789);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 873,
+        5: 872,
     });
 });
 
@@ -7865,8 +7865,9 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.match(starterEntries["元気|げんき"].notes, /N4 元 -> げん/);
 });
 
-test("tracked starter word data includes the ten N5 word v2 common-pool Silver batches", () => {
+test("tracked starter word data includes the active N5 word v2 common-pool Silver batches and source-only phrase exclusion", () => {
     const starterEntries = loadTrackedStarterWordEntries();
+    const sourceOnlyPhraseKey = "一時に|いちじに";
     const batchKeys = [
         "家電|かでん",
         "空間|くうかん",
@@ -7877,7 +7878,6 @@ test("tracked starter word data includes the ten N5 word v2 common-pool Silver b
         "一日中|いちにちじゅう",
         "一年中|いちねんじゅう",
         "小人|しょうにん",
-        "一時に|いちじに",
         "時半|じはん",
         "上半身|じょうはんしん",
         "前半|ぜんはん",
@@ -7970,8 +7970,17 @@ test("tracked starter word data includes the ten N5 word v2 common-pool Silver b
         "主人公|しゅじんこう",
     ];
 
-    assert.equal(batchKeys.length, 100);
+    assert.equal(batchKeys.length, 99);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+    assertCoverageRoles(starterEntries, [[sourceOnlyPhraseKey, "support"]]);
+
+    const sourceOnlyPhraseEntry = starterEntries[sourceOnlyPhraseKey];
+    assert.equal(sourceOnlyPhraseEntry?.jlpt, 5);
+    assert.equal(sourceOnlyPhraseEntry?.source, "dictionary-common-pool");
+    assert.equal(sourceOnlyPhraseEntry?.tags?.includes("phrase"), true);
+    assert.match(sourceOnlyPhraseEntry?.levelPlacement?.reason || "", /source-only exclusion/);
+    assert.match(sourceOnlyPhraseEntry?.notes || "", /Rejected during governed N5 Gold review/);
+
     const promotedFromCommonPool = new Set([
         "年々|ねんねん",
         "天|てん",
@@ -8089,11 +8098,10 @@ test("tracked starter word data includes the second N5 common-pool Silver batch"
         "大部分|だいぶぶん",
         "定時|ていじ",
         "日光|にっこう",
-        "日食|にっしょく",
         "日本酒|にほんしゅ",
     ];
 
-    assert.equal(batchKeys.length, 10);
+    assert.equal(batchKeys.length, 9);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
 
     for (const key of batchKeys) {
@@ -8129,8 +8137,6 @@ test("tracked starter word data includes the second N5 common-pool Silver batch"
         ["大部分|だいぶぶん", "分", "ぶん"],
         ["定時|ていじ", "時", "じ"],
         ["日光|にっこう", "日", "にっ"],
-        ["日食|にっしょく", "日", "にっ"],
-        ["日食|にっしょく", "食", "しょく"],
         ["日本酒|にほんしゅ", "日", "に"],
         ["日本酒|にほんしゅ", "本", "ほん"],
     ]);
@@ -8143,7 +8149,6 @@ test("tracked starter word data includes the second N5 common-pool Silver batch"
         ["大部分|だいぶぶん", "<ruby>大<rt>だい</rt></ruby><ruby>部<rt>ぶ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>"],
         ["定時|ていじ", "<ruby>定<rt>てい</rt></ruby><ruby>時<rt>じ</rt></ruby>"],
         ["日光|にっこう", "<ruby>日<rt>にっ</rt></ruby><ruby>光<rt>こう</rt></ruby>"],
-        ["日食|にっしょく", "<ruby>日<rt>にっ</rt></ruby><ruby>食<rt>しょく</rt></ruby>"],
         ["日本酒|にほんしゅ", "<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>酒<rt>しゅ</rt></ruby>"],
     ]);
 });

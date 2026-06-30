@@ -1008,12 +1008,26 @@
       "sourceReading": "ちゅうしんぶ",
       "sourceAccent": "3"
     },
+    "中断|ちゅうだん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "中断",
+      "sourceReading": "ちゅうだん",
+      "sourceAccent": "0"
+    },
     "中止|ちゅうし": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "中止",
       "sourceReading": "ちゅうし",
       "sourceAccent": "0"
+    },
+    "中毒|ちゅうどく": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "中毒",
+      "sourceReading": "ちゅうどく",
+      "sourceAccent": "1"
     },
     "中火|ちゅうび": {
       "pattern": "3 [odaka]",
@@ -2826,6 +2840,13 @@
       "sourceQuery": "全国",
       "generatedReading": "ぜんこく"
     },
+    "全土|ぜんど": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "全土",
+      "sourceReading": "ぜんど",
+      "sourceAccent": "1"
+    },
     "全校|ぜんこう": {
       "pattern": "4 [odaka]",
       "sourceId": "voicevox-nemo-reading-query",
@@ -3597,11 +3618,25 @@
       "sourceReading": "ぜんげつ",
       "sourceAccent": "1,0"
     },
+    "前者|ぜんしゃ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "前者",
+      "sourceReading": "ぜんしゃ",
+      "sourceAccent": "1"
+    },
     "前週|ぜんしゅう": {
       "pattern": "4 [odaka]",
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "前週",
       "generatedReading": "ぜんしゅう"
+    },
+    "前進|ぜんしん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "前進",
+      "sourceReading": "ぜんしん",
+      "sourceAccent": "0"
     },
     "割く|さく": {
       "pattern": "1 [atamadaka]",
@@ -5605,6 +5640,13 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "大木",
       "generatedReading": "たいぼく"
+    },
+    "大病|たいびょう": {
+      "pattern": "0 [heiban] / 1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "大病",
+      "sourceReading": "たいびょう",
+      "sourceAccent": "0,1"
     },
     "大社|おおやしろ": {
       "pattern": "3 [nakadaka]",
@@ -13166,6 +13208,13 @@
       "sourceReading": "しゃちょう",
       "sourceAccent": "0"
     },
+    "祖国|そこく": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "祖国",
+      "sourceReading": "そこく",
+      "sourceAccent": "1"
+    },
     "祖父|そふ": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -13481,6 +13530,13 @@
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "笑顔",
       "sourceReading": "えがお",
+      "sourceAccent": "1"
+    },
+    "第三者|だいさんしゃ": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "第三者",
+      "sourceReading": "だいさんしゃ",
       "sourceAccent": "1"
     },
     "等|など": {
@@ -17811,6 +17867,13 @@
       "sourceWord": "題",
       "sourceReading": "だい",
       "sourceAccent": "1"
+    },
+    "題名|だいめい": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "題名",
+      "sourceReading": "だいめい",
+      "sourceAccent": "0"
     },
     "額|ひたい": {
       "pattern": "0 [heiban]",

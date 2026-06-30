@@ -1357,6 +1357,12 @@
       "sourceReading": "にじかい",
       "sourceAccent": "2,0"
     },
+    "二百|にひゃく": {
+      "pattern": "3 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "二百",
+      "generatedReading": "にひゃく"
+    },
     "二階建|にかいだて": {
       "pattern": "0 [heiban]",
       "sourceId": "kanjium-cc-by-sa-4.0",
@@ -4084,12 +4090,45 @@
       "sourceQuery": "十",
       "generatedReading": "じゅう"
     },
+    "十万|じゅうまん": {
+      "pattern": "0 [heiban]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "十万",
+      "sourceReading": "じゅうまん",
+      "sourceAccent": "0"
+    },
+    "十三|じゅうさん": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "十三",
+      "sourceReading": "じゅうさん",
+      "sourceAccent": "1"
+    },
+    "十九|じゅうきゅう": {
+      "pattern": "2 [odaka] / 1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "十九",
+      "generatedReading": "じゅうきゅう"
+    },
+    "十二|じゅうに": {
+      "pattern": "3 [odaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "十二",
+      "sourceReading": "じゅうに",
+      "sourceAccent": "3"
+    },
     "十代|じゅうだい": {
       "pattern": "1 [atamadaka]",
       "sourceId": "kanjium-cc-by-sa-4.0",
       "sourceWord": "十代",
       "sourceReading": "じゅうだい",
       "sourceAccent": "1"
+    },
+    "十八|じゅうはち": {
+      "pattern": "2 [odaka] / 2 [odaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "十八",
+      "generatedReading": "じゅうはち"
     },
     "十分|じゅうぶん": {
       "pattern": "3 [nakadaka]",
@@ -5125,6 +5164,12 @@
       "sourceWord": "四月",
       "sourceReading": "しがつ",
       "sourceAccent": "3"
+    },
+    "四百|よんひゃく": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "voicevox-nemo-accent-query",
+      "sourceQuery": "四百",
+      "generatedReading": "よんひゃく"
     },
     "回す|まわす": {
       "pattern": "0 [heiban]",
@@ -10343,6 +10388,13 @@
       "sourceReading": "ほん",
       "sourceAccent": "1"
     },
+    "本人|ほんにん": {
+      "pattern": "1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "本人",
+      "sourceReading": "ほんにん",
+      "sourceAccent": "1"
+    },
     "本名|ほんみょう": {
       "pattern": "4 [odaka]",
       "sourceId": "voicevox-nemo-reading-query",
@@ -10392,6 +10444,13 @@
       "sourceId": "voicevox-nemo-reading-query",
       "sourceQuery": "ほんもう",
       "generatedReading": "ほんもう"
+    },
+    "本校|ほんこう": {
+      "pattern": "0 [heiban] / 1 [atamadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "本校",
+      "sourceReading": "ほんこう",
+      "sourceAccent": "0,1"
     },
     "本棚|ほんだな": {
       "pattern": "1 [atamadaka]",
@@ -13062,6 +13121,13 @@
       "sourceId": "voicevox-nemo-accent-query",
       "sourceQuery": "百",
       "generatedReading": "ひゃく"
+    },
+    "百万|ひゃくまん": {
+      "pattern": "3 [nakadaka]",
+      "sourceId": "kanjium-cc-by-sa-4.0",
+      "sourceWord": "百万",
+      "sourceReading": "ひゃくまん",
+      "sourceAccent": "3"
     },
     "百円|ひゃくえん": {
       "pattern": "2 [nakadaka]",

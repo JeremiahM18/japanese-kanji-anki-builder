@@ -1643,6 +1643,7 @@ test("source evidence stays out of deck word and readiness pipelines except plat
         "jlptKanjiSourceInputTemplateService.js",
         "jlptKanjiSourceLevelDeltaService.js",
         "jlptTextbookConsensusTemplateService.js",
+        "databricksSnapshotExportService.js",
         "platinumKanjiSourceOriginService.js",
     ]);
     const offenders = [];

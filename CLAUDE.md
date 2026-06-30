@@ -100,7 +100,7 @@ Do not widen scope just because higher levels exist.
 
 Current posture:
 
-- N5 word work has a `308/646` strict Obsidian-certified subset plus 338 current word v2 dictionary-common-pool Silver additions; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the remaining Silver rows as downstream-certified
+- N5 word work has a `308/873` strict Obsidian-certified subset plus 565 current word v2 dictionary-common-pool Silver additions; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the remaining Silver rows as downstream-certified
 - N4 word work has a `700/719` strict Obsidian-certified subset plus 19 current word v2 Silver additions; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the new Silver rows as downstream-certified
 - N3 word work has a complete Silver generated surface plus partial Gold (`1081/1099`), current-standard Sapphire structural review in progress (`1038/1099`), and Platinum (`8/1099`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
@@ -131,7 +131,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at `1008/1465` across current N5/N4 generated rows, with N5 at `308/746` and N4 at `700/719`. Lower-lane prerequisites are complete for that certified subset, but the 438 current N5 word v2 Silver additions and 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
+N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at `1008/1592` across current N5/N4 generated rows, with N5 at `308/873` and N4 at `700/719`. Lower-lane prerequisites are complete for that certified subset, but the 565 current N5 word v2 Silver additions and 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
 
 That means:
 

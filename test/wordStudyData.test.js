@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2789);
+    assert.equal(Object.keys(starterEntries).length, 2788);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 872,
+        5: 871,
     });
 });
 
@@ -7865,9 +7865,8 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.match(starterEntries["元気|げんき"].notes, /N4 元 -> げん/);
 });
 
-test("tracked starter word data includes the active N5 word v2 common-pool Silver batches and source-only phrase exclusion", () => {
+test("tracked starter word data includes the active N5 word v2 common-pool Silver batches", () => {
     const starterEntries = loadTrackedStarterWordEntries();
-    const sourceOnlyPhraseKey = "一時に|いちじに";
     const batchKeys = [
         "家電|かでん",
         "空間|くうかん",
@@ -7972,14 +7971,7 @@ test("tracked starter word data includes the active N5 word v2 common-pool Silve
 
     assert.equal(batchKeys.length, 99);
     assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
-    assertCoverageRoles(starterEntries, [[sourceOnlyPhraseKey, "support"]]);
-
-    const sourceOnlyPhraseEntry = starterEntries[sourceOnlyPhraseKey];
-    assert.equal(sourceOnlyPhraseEntry?.jlpt, 5);
-    assert.equal(sourceOnlyPhraseEntry?.source, "dictionary-common-pool");
-    assert.equal(sourceOnlyPhraseEntry?.tags?.includes("phrase"), true);
-    assert.match(sourceOnlyPhraseEntry?.levelPlacement?.reason || "", /source-only exclusion/);
-    assert.match(sourceOnlyPhraseEntry?.notes || "", /Rejected during governed N5 Gold review/);
+    assert.equal(starterEntries["一時に|いちじに"], undefined);
 
     const promotedFromCommonPool = new Set([
         "年々|ねんねん",

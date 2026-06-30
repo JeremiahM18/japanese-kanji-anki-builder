@@ -103,13 +103,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2683);
+    assert.equal(Object.keys(starterEntries).length, 2692);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 766,
+        5: 775,
     });
 });
 
@@ -9474,5 +9474,67 @@ test("tracked starter word data includes the twenty-second N5 common-pool Silver
         ["空中|くうちゅう","<ruby>空<rt>くう</rt></ruby><ruby>中<rt>ちゅう</rt></ruby>"],
         ["月額|げつがく","<ruby>月<rt>げつ</rt></ruby><ruby>額<rt>がく</rt></ruby>"],
         ["月刊|げっかん","<ruby>月<rt>げっ</rt></ruby><ruby>刊<rt>かん</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the twenty-third N5 common-pool Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "月給|げっきゅう",
+        "月収|げっしゅう",
+        "行進|こうしん",
+        "高値|たかね",
+        "合間|あいま",
+        "最小|さいしょう",
+        "山村|さんそん",
+        "山頂|さんちょう",
+        "時速|じそく",
+    ];
+
+    assert.equal(batchKeys.length, 9);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 5, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n5"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assert.match(entry?.notes || "", /Silver-only/, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+    assert.equal(starterEntries["今夏|こんか"], undefined);
+
+    assertCoverageReadings(starterEntries, [
+        ["月給|げっきゅう","月","げっ"],
+        ["月収|げっしゅう","月","げっ"],
+        ["行進|こうしん","行","こう"],
+        ["高値|たかね","高","たか"],
+        ["合間|あいま","間","いま"],
+        ["最小|さいしょう","小","しょう"],
+        ["山村|さんそん","山","さん"],
+        ["山頂|さんちょう","山","さん"],
+        ["時速|じそく","時","じ"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["月給|げっきゅう","<ruby>月<rt>げっ</rt></ruby><ruby>給<rt>きゅう</rt></ruby>"],
+        ["月収|げっしゅう","<ruby>月<rt>げっ</rt></ruby><ruby>収<rt>しゅう</rt></ruby>"],
+        ["行進|こうしん","<ruby>行<rt>こう</rt></ruby><ruby>進<rt>しん</rt></ruby>"],
+        ["高値|たかね","<ruby>高<rt>たか</rt></ruby><ruby>値<rt>ね</rt></ruby>"],
+        ["合間|あいま","<ruby>合<rt>あ</rt></ruby><ruby>間<rt>いま</rt></ruby>"],
+        ["最小|さいしょう","<ruby>最<rt>さい</rt></ruby><ruby>小<rt>しょう</rt></ruby>"],
+        ["山村|さんそん","<ruby>山<rt>さん</rt></ruby><ruby>村<rt>そん</rt></ruby>"],
+        ["山頂|さんちょう","<ruby>山<rt>さん</rt></ruby><ruby>頂<rt>ちょう</rt></ruby>"],
+        ["時速|じそく","<ruby>時<rt>じ</rt></ruby><ruby>速<rt>そく</rt></ruby>"],
     ]);
 });

@@ -34,6 +34,88 @@ const N5_STANDALONE_NUMBER_WORDS = [
     { key: "十|じゅう", kanji: "十", reading: "じゅう", meaning: "ten" },
 ];
 
+const N5_PLATINUM_FIXED_COMMON_POOL_WORDS = new Set([
+    "中火|ちゅうび",
+    "木々|きぎ",
+    "何とか|なんとか",
+    "十九|じゅうきゅう",
+    "先々|さきざき",
+    "半々|はんはん",
+    "長さ|ながさ",
+    "十八|じゅうはち",
+    "ながい間|ながいあいだ",
+    "見頃|みごろ",
+    "人びと|ひとびと",
+    "読み|よみ",
+    "高さ|たかさ",
+    "四百|よんひゃく",
+    "今ごろ|いまごろ",
+    "国々|くにぐに",
+    "百万|ひゃくまん",
+    "国名|こくめい",
+    "小さめ|ちいさめ",
+    "三千|さんぜん",
+    "月々|つきづき",
+    "水たまり|みずたまり",
+    "お出かけ|おでかけ",
+    "生もの|なまもの",
+    "土日|どにち",
+    "外食|がいしょく",
+    "東北|とうほく",
+    "本名|ほんみょう",
+    "ひと月|ひとつき",
+    "右上|みぎうえ",
+    "十万|じゅうまん",
+    "一行|いちぎょう",
+    "大きな|おおきな",
+    "何で|なんで",
+    "南西|なんせい",
+    "行き|ゆき",
+    "毎時|まいじ",
+    "男女|だんじょ",
+    "入金|にゅうきん",
+    "語学|ごがく",
+    "生後|せいご",
+    "間もなく|まもなく",
+    "人々|ひとびと",
+    "読みなおす|よみなおす",
+    "国外|こくがい",
+    "外見|がいけん",
+    "小山|こやま",
+    "左上|ひだりうえ",
+    "十三|じゅうさん",
+    "本気|ほんき",
+    "南東|なんとう",
+    "前もって|まえもって",
+    "時半|じはん",
+    "身長|しんちょう",
+    "先に|さきに",
+    "うるう年|うるうどし",
+    "間食|かんしょく",
+    "語|ご",
+    "十二|じゅうに",
+    "本人|ほんにん",
+    "北上|ほくじょう",
+    "年下|としした",
+    "生まれ|うまれ",
+    "北西|ほくせい",
+    "日にち|ひにち",
+    "天国|てんごく",
+    "女の人|おんなのひと",
+    "二百|にひゃく",
+    "入国|にゅうこく",
+    "先ほど|さきほど",
+    "東南|とうなん",
+    "見本|みほん",
+    "人名|じんめい",
+    "出来る|できる",
+    "日々|ひび",
+    "生ごみ|なまごみ",
+    "一休み|ひとやすみ",
+    "毎分|まいふん",
+    "下見|したみ",
+]);
+
 function loadTrackedStarterWordEntries() {
     if (!trackedStarterWordEntriesCache) {
         trackedStarterWordEntriesCache = loadWordStudyData({
@@ -42,6 +124,14 @@ function loadTrackedStarterWordEntries() {
         });
     }
     return trackedStarterWordEntriesCache;
+}
+
+function assertCommonPoolPendingReviewNote(entry, key) {
+    if (N5_PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+        assert.doesNotMatch(entry?.notes || "", /still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+        return;
+    }
+    assert.match(entry?.notes || "", /Silver-only/, key);
 }
 
 function assertCoverageReadings(starterEntries, rows) {
@@ -103,13 +193,13 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2506);
+    assert.equal(Object.keys(starterEntries).length, 2505);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
         4: 719,
-        5: 589,
+        5: 588,
     });
 });
 
@@ -7945,7 +8035,7 @@ test("tracked starter word data includes the active N5 word v2 common-pool Silve
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
         if (!promotedFromCommonPool.has(key)) {
-            assert.match(entry?.notes || "", /Silver-only/, key);
+            assertCommonPoolPendingReviewNote(entry, key);
         }
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -7987,7 +8077,7 @@ test("tracked starter word data includes the first N5 common-pool Silver batch",
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
@@ -8037,7 +8127,7 @@ test("tracked starter word data includes the second N5 common-pool Silver batch"
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
@@ -8088,7 +8178,7 @@ test("tracked starter word data includes the third N5 common-pool Silver batch",
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
@@ -8135,7 +8225,7 @@ test("tracked starter word data includes the fourth N5 common-pool Silver batch"
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
@@ -8173,7 +8263,7 @@ test("tracked starter word data includes the fifth N5 common-pool Silver batch",
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
@@ -8209,7 +8299,7 @@ test("tracked starter word data includes the sixth N5 common-pool Silver batch",
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8246,7 +8336,7 @@ test("tracked starter word data includes the seventh N5 common-pool Silver batch
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8282,7 +8372,7 @@ test("tracked starter word data includes the eighth N5 common-pool Silver batch"
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8320,7 +8410,7 @@ test("tracked starter word data includes the ninth N5 common-pool Silver batch",
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8366,8 +8456,13 @@ test("tracked starter word data includes the tenth N5 common-pool Silver batch",
         assert.equal(entry?.tags?.includes("common"), true, key);
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
-        assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        if (key === "出来る|できる") {
+            assert.doesNotMatch(entry?.notes || "", /Source level claim unverified|Silver-only|Platinum\/Obsidian catch-up/, key);
+            assert.match(entry?.notes || "", /can-do\/be-able-to sense/, key);
+        } else {
+            assert.match(entry?.notes || "", /Source level claim unverified/, key);
+            assertCommonPoolPendingReviewNote(entry, key);
+        }
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8420,7 +8515,7 @@ test("tracked starter word data includes the eleventh N5 common-pool Silver batc
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8483,7 +8578,7 @@ test("tracked starter word data includes the twelfth N5 common-pool Silver batch
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8545,7 +8640,7 @@ test("tracked starter word data includes the thirteenth N5 common-pool Silver ba
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8598,7 +8693,7 @@ test("tracked starter word data includes the fourteenth N5 common-pool Silver ba
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8661,7 +8756,7 @@ test("tracked starter word data includes the fifteenth N5 common-pool Silver bat
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8722,7 +8817,7 @@ test("tracked starter word data includes the sixteenth N5 common-pool Silver bat
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8778,7 +8873,7 @@ test("tracked starter word data includes the seventeenth N5 common-pool Silver b
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8830,7 +8925,7 @@ test("tracked starter word data includes the eighteenth N5 common-pool Silver ba
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8889,7 +8984,7 @@ test("tracked starter word data includes the nineteenth N5 common-pool Silver ba
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -9155,7 +9250,7 @@ test("tracked starter word data includes the twenty-fifth N5 common-pool Silver 
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -9279,7 +9374,7 @@ test("tracked starter word data includes the twenty-eighth N5 common-pool Silver
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -9320,7 +9415,7 @@ test("tracked starter word data includes the twenty-ninth N5 common-pool Silver 
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -9444,7 +9539,7 @@ test("tracked starter word data includes the thirty-second N5 common-pool Silver
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -9493,7 +9588,7 @@ test("tracked starter word data includes the thirty-third N5 common-pool Silver 
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -9559,7 +9654,7 @@ test("tracked starter word data includes the thirty-fourth N5 common-pool Silver
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assert.match(entry?.notes || "", /Silver-only/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
         assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         assert.doesNotMatch(entry?.notes || "", /extra-source lane/, key);
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);

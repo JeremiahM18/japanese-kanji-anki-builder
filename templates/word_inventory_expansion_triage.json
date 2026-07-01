@@ -1999,10 +1999,10 @@
         "nextStep": "Keep as recorded N5 common-pool backlog. Re-run the selector after higher-priority N5 keep candidates are promoted and reviewed."
       },
       "今年|こんねん": {
-        "decision": "keep_candidate",
-        "priority": "high",
-        "reason": "N5 dictionary-common-pool extra candidate kept for Silver review: core this-year time word that belongs in an expanded N5 deck if the exact identity is still missing. Exact JMdict dictionary/commonness evidence is present; source level remains unverified; learner utility 83/100.",
-        "nextStep": "Promote only through a governed N5 word v2 Silver batch with DICTIONARY COMMON POOL and Source level claim unverified labels preserved, a natural beginner example, pitch verification, word audio, Gold, Sapphire, Platinum, and Obsidian catch-up gates."
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Rejected during N5 word Platinum product review: 今年|こんねん is a real formal/alternate reading with JMdict support, but the active N5 deck already contains core 今年|ことし. Adding a second same-written this-year card is likely to confuse beginners and lower deck quality.",
+        "nextStep": "Do not promote this exact N5 common-pool row unless a future alternate-reading policy explicitly teaches formal same-written variants with strong learner-facing contrast notes."
       },
       "毎月|まいげつ": {
         "decision": "keep_candidate",

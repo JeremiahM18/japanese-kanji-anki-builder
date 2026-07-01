@@ -1029,7 +1029,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
         `Legacy/unversioned platinum cards: ${report.legacyOrUnversionedPlatinumCount || 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationWordCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
-        `Non-Platinum ledger: ${report.nonShippingCount || 0}`,
+        `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
         `Needs review: ${report.needsReviewCount || 0}`,
         `Passed entries: ${report.passedCount || 0}`,
         `Failed entries: ${report.failedCount || 0}`,

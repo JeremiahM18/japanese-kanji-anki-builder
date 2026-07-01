@@ -586,7 +586,7 @@ test("evaluatePlatinumKanjiReviewSet can require every generated kanji to be pla
     assert.match(formatPlatinumKanjiReviewReport(report), /月/);
 });
 
-test("formatPlatinumKanjiReviewReport labels inactive decisions as the non-Platinum ledger", () => {
+test("formatPlatinumKanjiReviewReport labels inactive decisions as deferred/removed tracked", () => {
     const formatted = formatPlatinumKanjiReviewReport({
         totalEntries: 3,
         activePlatinumCount: 1,
@@ -595,8 +595,8 @@ test("formatPlatinumKanjiReviewReport labels inactive decisions as the non-Plati
         passed: true,
     });
 
-    assert.match(formatted, /Non-Platinum ledger: 2/);
-    assert.doesNotMatch(formatted, /Deferred\/removed tracked/);
+    assert.match(formatted, /Deferred\/removed tracked: 2/);
+    assert.doesNotMatch(formatted, /Non-Platinum ledger/);
 });
 
 test("evaluatePlatinumKanjiReviewSet does not pass an empty platinum set by default", () => {

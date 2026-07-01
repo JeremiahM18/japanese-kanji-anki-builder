@@ -14,12 +14,12 @@ test("lane authority duplication audit records word and kanji authority slimming
     assert.deepEqual(report.levels, [5, 4, 3, 2, 1]);
 
     assert.deepEqual(report.word.n5.counts, {
-        gold: 589,
-        sapphire: 589,
-        platinum: 308,
+        gold: 588,
+        sapphire: 588,
+        platinum: 407,
     });
-    assert.equal(report.word.n5.sapphireVsPlatinum.shared, 308);
-    assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.readingIncludes, 308);
+    assert.equal(report.word.n5.sapphireVsPlatinum.shared, 407);
+    assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.readingIncludes, 407);
     assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.qualityGates, 0);
     assert.equal(report.word.n3.sapphireMinusPlatinum, 1030);
 

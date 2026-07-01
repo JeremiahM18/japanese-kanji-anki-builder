@@ -100,7 +100,7 @@ Do not widen scope just because higher levels exist.
 
 Current posture:
 
-- N5 word work has a `308/589` strict Obsidian-certified subset plus 281 current word v2 dictionary-common-pool Gold additions; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the remaining Gold rows as downstream-certified
+- N5 word work has a `308/588` strict Obsidian-certified subset plus 280 current word v2 dictionary-common-pool rows without Obsidian proof. Gold and Sapphire are complete at `588/588`, current-standard Platinum is `407/588`, and 181 current N5 rows still need Platinum before Obsidian; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the remaining rows as downstream-certified.
 - N4 word work has a `700/719` strict Obsidian-certified subset plus 19 current word v2 Silver additions; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the new Silver rows as downstream-certified
 - N3 word work has a complete Silver generated surface plus partial Gold (`1081/1099`), current-standard Sapphire structural review in progress (`1038/1099`), and Platinum (`8/1099`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
@@ -131,7 +131,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at `1008/1308` across current N5/N4 generated rows, with N5 at `308/589` and N4 at `700/719`. Lower-lane prerequisites are complete for that certified subset, but the 281 current N5 word v2 Gold additions still need Sapphire, Platinum, and Obsidian, and the 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
+N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at `1008/1307` across current N5/N4 generated rows, with N5 at `308/588` and N4 at `700/719`. Lower-lane prerequisites are complete for that certified subset, but the 280 current N5 word v2 rows without Obsidian proof still need Obsidian, including 181 that still need current-standard Platinum first, and the 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
 
 That means:
 

@@ -311,7 +311,7 @@ test("Sapphire kanji evaluator requires prior Gold when precondition enforcement
     assert.match(missingGoldReport.results[0].failures.join("\n"), /Sapphire requires a prior Gold expectation/);
 });
 
-test("formatSapphireKanjiReviewReport labels inactive decisions as the non-Sapphire ledger", () => {
+test("formatSapphireKanjiReviewReport labels inactive decisions as deferred/removed tracked", () => {
     const formatted = formatSapphireKanjiReviewReport({
         totalEntries: 3,
         activeSapphireCount: 1,
@@ -320,8 +320,8 @@ test("formatSapphireKanjiReviewReport labels inactive decisions as the non-Sapph
         passed: true,
     });
 
-    assert.match(formatted, /Non-Sapphire ledger: 2/);
-    assert.doesNotMatch(formatted, /Deferred\/removed tracked/);
+    assert.match(formatted, /Deferred\/removed tracked: 2/);
+    assert.doesNotMatch(formatted, /Non-Sapphire ledger/);
 });
 
 test("Sapphire kanji evaluator compares protected snippets against decoded visible card text", () => {

@@ -89,7 +89,7 @@ test('buildWordReadingGapPlan hides deferred variants by default and ranks activ
     coverageSummary: {
       coveredReadings: 345,
       totalReadings: 651,
-      coverageLabel: 'N5 + N4',
+      coverageLabel: 'N4-N5',
       priorLevelCoveredReadings: 66,
       currentLevelCoveredReadings: 279,
     },
@@ -98,7 +98,7 @@ test('buildWordReadingGapPlan hides deferred variants by default and ranks activ
 
   assert.equal(plan.summary.activePlanItems, 2);
   assert.equal(plan.summary.deferredHiddenItems, 1);
-  assert.equal(plan.summary.coverageLabel, 'N5 + N4');
+  assert.equal(plan.summary.coverageLabel, 'N4-N5');
   assert.equal(plan.summary.suggestedCandidateItems, 0);
   assert.equal(plan.items[0].suggestedAction, 'promote_curated_example');
   assert.equal(plan.items[1].suggestedAction, 'editorial_review');
@@ -483,7 +483,7 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
       coveredReadings: 345,
       totalReadings: 651,
       coveragePercent: 52.99539170506912,
-      coverageLabel: 'N5 + N4',
+      coverageLabel: 'N4-N5',
       priorLevelCoveredReadings: 66,
       currentLevelCoveredReadings: 279,
     },
@@ -515,7 +515,7 @@ test('formatWordReadingGapPlan renders a batching-oriented queue', () => {
   });
 
   assert.match(text, /Word Reading Gap Plan \(N4\)/);
-  assert.match(text, /Coverage counted from decks: N5 \+ N4/);
+  assert.match(text, /Coverage counted from decks: N4-N5/);
   assert.match(text, /Recommended next batch \(1 item\)/);
   assert.match(text, /後 kun-reading うしろ/);
   assert.match(text, /suggested words: 後方/);

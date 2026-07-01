@@ -68,7 +68,7 @@ test("reading signal is exhausted only when active reading triage is cleared", (
             readingCoveragePercent: 74.5,
         },
         coverageScope: {
-            label: "N5 + N4",
+            label: "N4-N5",
         },
     });
 

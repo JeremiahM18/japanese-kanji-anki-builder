@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 
 const {
+  buildCoverageLabel,
   buildCoverageLevels,
   buildRequiredCoverageLevels,
   buildCoverageWordRows,
@@ -21,6 +22,13 @@ test('buildRequiredCoverageLevels expands selected lower-numbered decks to cumul
   assert.deepEqual(buildRequiredCoverageLevels([3]), [5, 4, 3]);
   assert.deepEqual(buildRequiredCoverageLevels([4, 3]), [5, 4, 3]);
   assert.deepEqual(buildRequiredCoverageLevels([1]), [5, 4, 3, 2, 1]);
+});
+
+test('buildCoverageLabel names contiguous cumulative scopes as level ranges', () => {
+  assert.equal(buildCoverageLabel([5]), 'N5');
+  assert.equal(buildCoverageLabel([5, 4]), 'N4-N5');
+  assert.equal(buildCoverageLabel([5, 4, 3]), 'N3-N5');
+  assert.equal(buildCoverageLabel([5, 3]), 'N5 + N3');
 });
 
 test('selected higher-level word decks can cover lower-level reading targets', () => {
@@ -53,6 +61,9 @@ test('selected higher-level word decks can cover lower-level reading targets', (
   });
 
   assert.deepEqual(coverageScope.coverageLevels, [5, 3]);
+  assert.equal(coverageScope.activeLevelRowCount, 1);
+  assert.equal(coverageScope.readingScopeRowCount, 2);
+  assert.deepEqual(coverageScope.sourceLevelCounts, { 3: 1, 5: 1 });
   assert.equal(report.summary.coverageLabel, 'N5 + N3');
   assert.equal(report.summary.coveredReadings, 2);
   assert.equal(report.summary.currentLevelCoveredReadings, 1);

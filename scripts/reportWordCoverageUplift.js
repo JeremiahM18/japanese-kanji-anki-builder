@@ -233,14 +233,17 @@ function formatWordCoverageUpliftReport(report, { details = false, maxExamples =
   lines.push('');
   lines.push(`Target audit: ${formatLevel(report.targetLevel)} kanji readings`);
   lines.push('Read-only diagnostic: does not change readiness, deferrals, review lanes, or proof ledgers.');
-  lines.push('Baseline counts only the target word deck; each step adds harder word decks down to the through level.');
+  lines.push('Counts are target-level reading coverage by ownership scope, not total rows across the scoped decks.');
+  lines.push('Baseline counts only the active target word deck; each step adds harder word decks down to the through level.');
   lines.push('');
 
   for (const [index, step] of report.steps.entries()) {
-    const prefix = index === 0 ? `Baseline ${formatLevel(step.addedLevel)} only` : `+ ${formatLevel(step.addedLevel)}`;
+    const coverageLabel = step.coverageLabel
+      || (Array.isArray(step.coverageLevels) ? step.coverageLevels.map(formatLevel).join(' + ') : formatLevel(step.addedLevel));
+    const prefix = `Count ${formatLevel(report.targetLevel)} in ${coverageLabel}`;
     const deltaText = index === 0
       ? ''
-      : `, +${step.deltaFromPrevious} from previous, +${step.deltaFromBaseline} total`;
+      : `, +${step.deltaFromPrevious} from previous, +${step.deltaFromBaseline} total after adding ${formatLevel(step.addedLevel)}`;
     lines.push(`${prefix}: ${step.coveredReadings}/${step.totalReadings} (${step.coveragePercent}), missing ${step.missingReadings}${deltaText}`);
   }
 

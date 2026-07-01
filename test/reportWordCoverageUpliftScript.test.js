@@ -203,6 +203,7 @@ test('formatWordCoverageUpliftReport prints a compact staircase with optional de
     throughLevel: 4,
     steps: [{
       addedLevel: 5,
+      coverageLabel: 'N5',
       coveredReadings: 2,
       totalReadings: 3,
       coveragePercent: '66.7%',
@@ -212,6 +213,7 @@ test('formatWordCoverageUpliftReport prints a compact staircase with optional de
       newlyCoveredReadings: [],
     }, {
       addedLevel: 4,
+      coverageLabel: 'N4-N5',
       coveredReadings: 3,
       totalReadings: 3,
       coveragePercent: '100.0%',
@@ -229,8 +231,9 @@ test('formatWordCoverageUpliftReport prints a compact staircase with optional de
 
   const text = formatWordCoverageUpliftReport(report, { details: true });
   assert.match(text, /Japanese Kanji Builder Word Coverage Uplift \(N5 through N4\)/);
-  assert.match(text, /Baseline counts only the target word deck/);
-  assert.match(text, /Baseline N5 only: 2\/3 \(66.7%\), missing 1/);
-  assert.match(text, /\+ N4: 3\/3 \(100.0%\), missing 0, \+1 from previous, \+1 total/);
+  assert.match(text, /Counts are target-level reading coverage by ownership scope, not total rows across the scoped decks/);
+  assert.match(text, /Baseline counts only the active target word deck/);
+  assert.match(text, /Count N5 in N5: 2\/3 \(66.7%\), missing 1/);
+  assert.match(text, /Count N5 in N4-N5: 3\/3 \(100.0%\), missing 0, \+1 from previous, \+1 total after adding N4/);
   assert.match(text, /火 on-reading か -> 火事 \(かじ, N4\)/);
 });

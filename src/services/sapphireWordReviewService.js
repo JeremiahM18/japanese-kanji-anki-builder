@@ -638,6 +638,7 @@ function evaluateSapphireWordReviewSet({
 
     return {
         totalEntries: reviewEntries.length,
+        generatedRowCount: generatedRows.length,
         activeSapphireCount: activeEntries.length,
         activeSapphireStatusCount: activeStatusEntries.length,
         currentReviewStandard: CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
@@ -664,22 +665,40 @@ function evaluateSapphireWordReviewSet({
     };
 }
 
+function resolveActiveDenominator(report = {}, activeCount = 0) {
+    return Number.isInteger(report.generatedRowCount) ? report.generatedRowCount : activeCount;
+}
+
+function formatSapphireWordResultDisposition(result = {}) {
+    const status = normalizeText(result.status);
+    if (NON_SHIPPING_STATUSES.includes(status)) {
+        return `inactive decision ${result.passed ? "valid" : "invalid"}`;
+    }
+    if (REVIEW_ONLY_STATUSES.includes(status)) {
+        return `review-only status ${result.passed ? "valid" : "invalid"}`;
+    }
+    return `Sapphire gate ${result.passed ? "pass" : "fail"}`;
+}
+
 function formatSapphireWordReviewReport(report = {}, { title = "Japanese Kanji Builder Sapphire Word Review" } = {}) {
+    const activeSapphireCount = report.activeSapphireCount ?? 0;
+    const generatedRowCount = resolveActiveDenominator(report, activeSapphireCount);
+    const currentStandardCount = report.currentStandardSapphireCount ?? 0;
     const lines = [
         title,
         "",
-        `Review entries: ${report.totalEntries || 0}`,
+        `Active generated rows: ${generatedRowCount}`,
         "Tier: Sapphire (current-standard structural gate; not Platinum or Obsidian proof)",
-        `Sapphire cards: ${report.activeSapphireCount ?? 0}`,
+        `Sapphire cards: ${activeSapphireCount}/${generatedRowCount}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD}`,
-        `Current-standard Sapphire cards: ${report.currentStandardSapphireCount ?? 0}`,
+        `Current-standard Sapphire cards: ${currentStandardCount}/${generatedRowCount}`,
         `Legacy/unversioned Sapphire cards: ${report.legacyOrUnversionedSapphireCount ?? 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationWordCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
-        `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
+        `Review ledger entries: ${report.totalEntries || 0}`,
+        `Deferred/removed tracked: ${report.nonShippingCount || 0} (audit-only; not active backlog)`,
         `Needs review: ${report.needsReviewCount || 0}`,
-        `Passed entries: ${report.passedCount || 0}`,
-        `Failed entries: ${report.failedCount || 0}`,
+        `Ledger validation failures: ${report.failedCount || 0}`,
         `Overall result: ${report.passed ? "passing" : "failing"}`,
     ];
 
@@ -724,7 +743,7 @@ function formatSapphireWordReviewReport(report = {}, { title = "Japanese Kanji B
     }
 
     for (const result of report.results || []) {
-        lines.push("", `- ${result.label}: manifest status=${result.status}; Sapphire gate ${result.passed ? "pass" : "fail"}`);
+        lines.push("", `- ${result.label}: manifest status=${result.status}; ${formatSapphireWordResultDisposition(result)}`);
         if (!result.passed) {
             for (const failure of result.failures) {
                 lines.push(`  ${failure}`);

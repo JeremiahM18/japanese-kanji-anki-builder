@@ -226,7 +226,7 @@ npm run deck:words:apkg -- --levels=5
 
 Run separate default `deck:words:ready` invocations serially. The default command writes through the shared `out/word-build` package directory, so parallel per-level runs can collide during media cleanup or package creation. Use `npm run deck:words:ready -- --levels=<level> --run-id=<id>` to isolate a generated output root under `out/run-outputs/<id>/word-n*` for local parallel build/package experiments. The run-id root only isolates generated build/package files; it does not certify cards, replace Gold/Sapphire/Platinum/Obsidian gates, coordinate proof/source writes, or make timing benchmarks safe to run in parallel.
 
-For reading readiness, `deck:words:ready` expands each requested word level to its cumulative easier-level support stack while keeping the packaged deck scoped to the requested level. For example, `--levels=3` packages N3 word cards but evaluates N3 reading coverage with N5 + N4 + N3 word support.
+For reading readiness, `deck:words:ready` expands each requested word level to its cumulative easier-level support stack while keeping the packaged deck scoped to the requested level. For example, `--levels=3` packages N3 word cards but evaluates N3 reading coverage with the N3-N5 word-support range. Reports keep the active deck count separate from the cumulative reading-scope count.
 
 Word readiness reports:
 

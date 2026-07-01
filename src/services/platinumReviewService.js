@@ -994,6 +994,7 @@ function evaluatePlatinumWordReviewSet({
 
     return {
         totalEntries: reviewEntries.length,
+        generatedRowCount: generatedRows.length,
         activePlatinumCount: activeEntries.length,
         currentReviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
         currentStandardPlatinumCount: reviewStandardSummary.currentStandardCount,
@@ -1017,22 +1018,40 @@ function evaluatePlatinumWordReviewSet({
     };
 }
 
+function resolveActiveDenominator(report = {}, activeCount = 0) {
+    return Number.isInteger(report.generatedRowCount) ? report.generatedRowCount : activeCount;
+}
+
+function formatPlatinumWordResultDisposition(result = {}) {
+    const status = normalizeText(result.status);
+    if (NON_SHIPPING_STATUSES.includes(status)) {
+        return `inactive decision ${result.passed ? "valid" : "invalid"}`;
+    }
+    if (REVIEW_ONLY_STATUSES.includes(status)) {
+        return `review-only status ${result.passed ? "valid" : "invalid"}`;
+    }
+    return `Platinum gate ${result.passed ? "pass" : "fail"}`;
+}
+
 function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji Builder Platinum Word Review" } = {}) {
+    const activePlatinumCount = report.activePlatinumCount || 0;
+    const generatedRowCount = resolveActiveDenominator(report, activePlatinumCount);
+    const currentStandardCount = report.currentStandardPlatinumCount || 0;
     const lines = [
         title,
         "",
-        `Review entries: ${report.totalEntries || 0}`,
+        `Active generated rows: ${generatedRowCount}`,
         "Tier: Platinum (current-standard card-surface inspection; not Obsidian certification)",
-        `Platinum cards: ${report.activePlatinumCount || 0}`,
+        `Platinum cards: ${activePlatinumCount}/${generatedRowCount}`,
         `Current review standard: ${report.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
-        `Current-standard Platinum cards: ${report.currentStandardPlatinumCount || 0}`,
+        `Current-standard Platinum cards: ${currentStandardCount}/${generatedRowCount}`,
         `Legacy/unversioned platinum cards: ${report.legacyOrUnversionedPlatinumCount || 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationWordCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
-        `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
+        `Review ledger entries: ${report.totalEntries || 0}`,
+        `Deferred/removed tracked: ${report.nonShippingCount || 0} (audit-only; not active backlog)`,
         `Needs review: ${report.needsReviewCount || 0}`,
-        `Passed entries: ${report.passedCount || 0}`,
-        `Failed entries: ${report.failedCount || 0}`,
+        `Ledger validation failures: ${report.failedCount || 0}`,
         `Overall result: ${report.passed ? "passing" : "failing"}`,
     ];
 
@@ -1075,7 +1094,7 @@ function formatPlatinumWordReviewReport(report = {}, { title = "Japanese Kanji B
     }
 
     for (const result of report.results || []) {
-        lines.push("", `- ${result.label}: manifest status=${result.status}; Platinum gate ${result.passed ? "pass" : "fail"}`);
+        lines.push("", `- ${result.label}: manifest status=${result.status}; ${formatPlatinumWordResultDisposition(result)}`);
         if (!result.passed) {
             for (const failure of result.failures) {
                 lines.push(`  ${failure}`);

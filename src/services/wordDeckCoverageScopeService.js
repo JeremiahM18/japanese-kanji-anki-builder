@@ -29,13 +29,38 @@ function buildRequiredCoverageLevels(levels = []) {
   );
 }
 
+function isContiguousCoverageRange(levels = []) {
+  if (!Array.isArray(levels) || levels.length < 2) {
+    return false;
+  }
+
+  const normalized = normalizeCoverageLevels(levels);
+  for (let index = 1; index < normalized.length; index += 1) {
+    if (normalized[index - 1] - normalized[index] !== 1) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function buildCoverageLabel(levels = []) {
-  return levels.map((level) => `N${level}`).join(' + ');
+  const normalized = normalizeCoverageLevels(levels);
+  if (normalized.length === 0) {
+    return '';
+  }
+  if (normalized.length === 1) {
+    return `N${normalized[0]}`;
+  }
+  if (isContiguousCoverageRange(normalized)) {
+    return `N${Math.min(...normalized)}-N${Math.max(...normalized)}`;
+  }
+  return normalized.map((level) => `N${level}`).join(' + ');
 }
 
 function buildCoverageWordRows({ level, wordTsvByLevel = {}, availableLevels = null }) {
   const coverageLevels = buildCoverageLevels(level, { availableLevels });
   const mergedRows = new Map();
+  const sourceLevelCounts = {};
 
   for (const coverageLevel of coverageLevels) {
     const tsv = wordTsvByLevel[coverageLevel];
@@ -43,7 +68,10 @@ function buildCoverageWordRows({ level, wordTsvByLevel = {}, availableLevels = n
       throw new Error(`Missing word TSV for cumulative coverage level N${coverageLevel}. Run npm run deck:words:ready -- --levels=${coverageLevel} first.`);
     }
 
-    for (const row of parseWordTsv(tsv)) {
+    const parsedRows = parseWordTsv(tsv);
+    sourceLevelCounts[coverageLevel] = parsedRows.length;
+
+    for (const row of parsedRows) {
       const key = buildWordStudyEntryKey({
         written: row?.Word || row?.word,
         reading: row?.Reading || row?.reading,
@@ -60,9 +88,19 @@ function buildCoverageWordRows({ level, wordTsvByLevel = {}, availableLevels = n
     }
   }
 
+  const targetLevel = Number(level);
+  const activeLevelRowCount = Number.isInteger(targetLevel)
+    ? sourceLevelCounts[targetLevel] || 0
+    : 0;
+
   return {
     coverageLevels,
+    activeLevel: targetLevel,
+    activeLevelLabel: Number.isInteger(targetLevel) ? `N${targetLevel}` : '',
+    activeLevelRowCount,
     coverageLabel: buildCoverageLabel(coverageLevels),
+    readingScopeRowCount: mergedRows.size,
+    sourceLevelCounts,
     wordRows: [...mergedRows.values()],
   };
 }

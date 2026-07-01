@@ -958,7 +958,7 @@ function formatPlatinumKanjiReviewReport(report = {}, { title = "Japanese Kanji 
         `Revalidation backlog/history cards: ${report.revalidationBacklogCount ?? report.legacyOrUnversionedPlatinumCount ?? 0}`,
         `Active cards with verification limitations: ${report.verificationLimitationKanjiCount || 0}`,
         `Verification limitations: ${report.verificationLimitationCount || 0}`,
-        `Deferred/removed tracked: ${report.nonShippingCount || 0}`,
+        `Non-Platinum ledger: ${report.nonShippingCount || 0}`,
         `Needs revalidation: ${report.needsRevalidationCount || 0}`,
         `Needs review: ${report.needsReviewCount || 0}`,
         `Passed entries: ${report.passedCount || 0}`,

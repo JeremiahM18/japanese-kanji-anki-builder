@@ -805,7 +805,12 @@ function buildWordDeckCompletionReport({
         ? buildCoverageWordRows({ level, wordTsvByLevel: coverageWordTsvByLevel, availableLevels: coverageLevels })
         : {
             coverageLevels: [level],
+            activeLevel: level,
+            activeLevelLabel: `N${level}`,
+            activeLevelRowCount: wordRows.length,
             coverageLabel: `N${level}`,
+            readingScopeRowCount: wordRows.length,
+            sourceLevelCounts: { [level]: wordRows.length },
             wordRows,
         };
     const inventory = buildWordDeckInventorySummary({
@@ -813,6 +818,11 @@ function buildWordDeckCompletionReport({
         starterEntries,
         jlptWordLevelContract,
         builtWordRows: wordRows,
+    });
+    const activeReadingCoverage = buildWordReadingCoverageReport({
+        kanjiRows,
+        wordRows,
+        levelLabel: `N${level}`,
     });
     const readingCoverage = buildWordReadingCoverageReport({
         kanjiRows,
@@ -865,6 +875,21 @@ function buildWordDeckCompletionReport({
         coverageScope: {
             levels: coverageScope.coverageLevels,
             label: coverageScope.coverageLabel,
+            activeLevel: coverageScope.activeLevel,
+            activeLevelLabel: coverageScope.activeLevelLabel,
+            activeLevelRowCount: coverageScope.activeLevelRowCount,
+            readingScopeRowCount: coverageScope.readingScopeRowCount,
+            sourceLevelCounts: coverageScope.sourceLevelCounts,
+            activeReadingCoverage: {
+                coveredReadings: activeReadingCoverage.summary.coveredReadings,
+                totalReadings: activeReadingCoverage.summary.totalReadings,
+                missingReadings: activeReadingCoverage.summary.totalReadings - activeReadingCoverage.summary.coveredReadings,
+            },
+            cumulativeReadingCoverage: {
+                coveredReadings: readingCoverage.summary.coveredReadings,
+                totalReadings: readingCoverage.summary.totalReadings,
+                missingReadings: readingCoverage.summary.totalReadings - readingCoverage.summary.coveredReadings,
+            },
         },
         triage: triage.summary,
         policyAudit,
@@ -919,7 +944,26 @@ function formatCardBackFieldCoverage(cardBackAudit) {
         .join(", ");
 }
 
+function formatCoverageSourceLevelCounts(sourceLevelCounts = {}) {
+    return Object.entries(sourceLevelCounts)
+        .map(([level, count]) => [Number(level), count])
+        .filter(([level]) => Number.isInteger(level))
+        .sort(([left], [right]) => left - right)
+        .map(([level, count]) => `N${level} ${count}`)
+        .join(", ");
+}
+
 function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
+    const activeLevelLabel = report.coverageScope?.activeLevelLabel || `N${report.level}`;
+    const cumulativeScopeLabel = report.coverageScope?.label || activeLevelLabel;
+    const activeLevelRowCount = report.coverageScope?.activeLevelRowCount ?? report.inventory.builtEligibleCount ?? 0;
+    const sourceLevelCountText = formatCoverageSourceLevelCounts(report.coverageScope?.sourceLevelCounts || {});
+    const activeReadingCoverage = report.coverageScope?.activeReadingCoverage || {};
+    const cumulativeReadingCoverage = report.coverageScope?.cumulativeReadingCoverage || {};
+    const totalTargetReadings = cumulativeReadingCoverage.totalReadings ?? report.readingCoverage?.totalReadings ?? 0;
+    const activeCoveredReadings = activeReadingCoverage.coveredReadings ?? report.readingCoverage?.currentLevelCoveredReadings ?? report.readingCoverage?.coveredReadings ?? 0;
+    const activeTotalReadings = activeReadingCoverage.totalReadings ?? totalTargetReadings;
+    const cumulativeCoveredReadings = cumulativeReadingCoverage.coveredReadings ?? report.readingCoverage?.coveredReadings ?? activeCoveredReadings;
     const lines = [
         `Japanese Kanji Builder Word Deck Completion Audit (N${report.level})`,
         "",
@@ -929,6 +973,16 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         `- Remaining open items are deferred variants only: ${report.readiness.allOpenItemsDeferred ? "yes" : "no"}`,
         `- Reading coverage: ${report.readiness.readingCoveragePercent}%`,
         `- Coverage counted from decks: ${report.coverageScope?.label || `N${report.level}`}`,
+        "",
+        "Deck row counts:",
+        `- Count ${activeLevelLabel}: ${activeLevelRowCount} active generated rows in ${activeLevelLabel}`,
+        ...(sourceLevelCountText ? [`- Source deck row counts for reading scope ${cumulativeScopeLabel}: ${sourceLevelCountText}`] : []),
+        "",
+        "Target reading counts:",
+        `- Count N${report.level} in ${activeLevelLabel}: ${activeCoveredReadings}/${activeTotalReadings} target readings covered by the active ${activeLevelLabel} deck`,
+        ...(cumulativeScopeLabel !== activeLevelLabel
+            ? [`- Count N${report.level} in ${cumulativeScopeLabel}: ${cumulativeCoveredReadings}/${totalTargetReadings} target readings covered by the ${cumulativeScopeLabel} reading scope`]
+            : []),
         "",
         "Vocabulary coverage:",
         `- Canonical inventory rows: ${report.inventory.canonicalInventoryCount}`,

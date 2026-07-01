@@ -80,13 +80,26 @@ test("reviewSapphireWordLevel CLI args default to strict current-standard review
 test("formatSapphireWordReviewReport labels inactive decisions as deferred/removed tracked", () => {
     const formatted = formatSapphireWordReviewReport({
         totalEntries: 3,
+        generatedRowCount: 1,
         activeSapphireCount: 1,
         currentStandardSapphireCount: 1,
         nonShippingCount: 2,
+        failedCount: 0,
         passed: true,
+        results: [
+            { label: "本 (ほん)", status: "sapphire", passed: true },
+            { label: "会う (あう)", status: "deferred", passed: true },
+        ],
     });
 
-    assert.match(formatted, /Deferred\/removed tracked: 2/);
+    assert.match(formatted, /Active generated rows: 1/);
+    assert.match(formatted, /Sapphire cards: 1\/1/);
+    assert.match(formatted, /Current-standard Sapphire cards: 1\/1/);
+    assert.match(formatted, /Review ledger entries: 3/);
+    assert.match(formatted, /Deferred\/removed tracked: 2 \(audit-only; not active backlog\)/);
+    assert.match(formatted, /会う \(あう\): manifest status=deferred; inactive decision valid/);
+    assert.doesNotMatch(formatted, /Passed entries/);
+    assert.doesNotMatch(formatted, /deferred; Sapphire gate pass/);
     assert.doesNotMatch(formatted, /Non-Sapphire ledger/);
 });
 

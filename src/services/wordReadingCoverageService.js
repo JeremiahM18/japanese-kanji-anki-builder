@@ -305,6 +305,30 @@ function countCoveredReadingsBySource(entries = [], source) {
   return entries.filter((entry) => entry.status === 'covered' && entry.coverageSource === source).length;
 }
 
+function normalizeCoverageLevels(levels = []) {
+  return [...new Set((Array.isArray(levels) ? levels : [])
+    .map((value) => Number(value))
+    .filter((value) => Number.isInteger(value) && value >= 1 && value <= 5)
+  )].sort((a, b) => b - a);
+}
+
+function buildCoverageLabel(levels = []) {
+  const normalized = normalizeCoverageLevels(levels);
+  if (normalized.length === 0) {
+    return '';
+  }
+  if (normalized.length === 1) {
+    return `N${normalized[0]}`;
+  }
+  const contiguous = normalized.every((level, index) => (
+    index === 0 || normalized[index - 1] - level === 1
+  ));
+  if (contiguous) {
+    return `N${Math.min(...normalized)}-N${Math.max(...normalized)}`;
+  }
+  return normalized.map((level) => `N${level}`).join(' + ');
+}
+
 function buildCoverageSourceSummary(allReadings = []) {
   return {
     coreCoveredReadings: countCoveredReadingsBySource(allReadings, 'core'),
@@ -346,7 +370,7 @@ function buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel = 'N5'
     levelLabel,
     targetLevel,
     coverageLevels,
-    coverageLabel: coverageLevels.map((level) => `N${level}`).join(' + '),
+    coverageLabel: buildCoverageLabel(coverageLevels),
     kanjiCount: coverage.length,
     totalReadings: allReadings.length,
     coveredReadings: allReadings.filter((entry) => entry.status === 'covered').length,

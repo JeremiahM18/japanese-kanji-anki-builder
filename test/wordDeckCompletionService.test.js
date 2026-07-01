@@ -499,6 +499,18 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
     assert.equal(report.inventory.builtEligibleCount, 1);
     assert.equal(report.readingCoverage.coveredReadings, 2);
     assert.equal(report.coverageScope.label, "N5");
+    assert.equal(report.coverageScope.activeLevelRowCount, 1);
+    assert.equal(report.coverageScope.readingScopeRowCount, 1);
+    assert.deepEqual(report.coverageScope.activeReadingCoverage, {
+        coveredReadings: 2,
+        totalReadings: 2,
+        missingReadings: 0,
+    });
+    assert.deepEqual(report.coverageScope.cumulativeReadingCoverage, {
+        coveredReadings: 2,
+        totalReadings: 2,
+        missingReadings: 0,
+    });
     assert.equal(report.pitchAccentAudit.fieldPresent, true);
     assert.equal(report.pitchAccentAudit.sourceMismatchPitchAccent, 0);
     assert.equal(report.pitchAccentAudit.sourceIdentityIssues, 0);
@@ -552,7 +564,20 @@ test("buildWordDeckCompletionReport reuses easier-deck coverage before asking fo
     assert.equal(report.readingCoverage.coveredReadings, 2);
     assert.equal(report.readingCoverage.priorLevelCoveredReadings, 1);
     assert.equal(report.readingCoverage.currentLevelCoveredReadings, 1);
-    assert.equal(report.coverageScope.label, "N5 + N4");
+    assert.equal(report.coverageScope.label, "N4-N5");
+    assert.equal(report.coverageScope.activeLevelRowCount, 1);
+    assert.equal(report.coverageScope.readingScopeRowCount, 2);
+    assert.deepEqual(report.coverageScope.sourceLevelCounts, { 4: 1, 5: 1 });
+    assert.deepEqual(report.coverageScope.activeReadingCoverage, {
+        coveredReadings: 1,
+        totalReadings: 2,
+        missingReadings: 1,
+    });
+    assert.deepEqual(report.coverageScope.cumulativeReadingCoverage, {
+        coveredReadings: 2,
+        totalReadings: 2,
+        missingReadings: 0,
+    });
 });
 
 test("buildWordDeckReadiness distinguishes deferred-variant readiness from active backlog", () => {
@@ -972,7 +997,7 @@ test("buildWordDeckExampleReadingAlignmentAudit treats preserved katakana loanwo
 
 test("formatWordDeckCompletionReport renders missing rows and source-only exclusions clearly", () => {
     const text = formatWordDeckCompletionReport({
-        level: 5,
+        level: 4,
         readiness: {
             status: "ready_with_deferred_variants",
             hasActiveTriageItems: false,
@@ -980,7 +1005,21 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
             readingCoveragePercent: 84.9,
         },
         coverageScope: {
-            label: "N5 + N4",
+            label: "N4-N5",
+            activeLevelLabel: "N4",
+            activeLevelRowCount: 719,
+            readingScopeRowCount: 1308,
+            sourceLevelCounts: { 4: 719, 5: 589 },
+            activeReadingCoverage: {
+                coveredReadings: 573,
+                totalReadings: 755,
+                missingReadings: 182,
+            },
+            cumulativeReadingCoverage: {
+                coveredReadings: 579,
+                totalReadings: 755,
+                missingReadings: 176,
+            },
         },
         inventory: {
             canonicalInventoryCount: 2,
@@ -1053,7 +1092,11 @@ test("formatWordDeckCompletionReport renders missing rows and source-only exclus
     });
 
     assert.match(text, /Status: ready_with_deferred_variants/);
-    assert.match(text, /Coverage counted from decks: N5 \+ N4/);
+    assert.match(text, /Coverage counted from decks: N4-N5/);
+    assert.match(text, /Count N4: 719 active generated rows in N4/);
+    assert.match(text, /Source deck row counts for reading scope N4-N5: N4 719, N5 589/);
+    assert.match(text, /Count N4 in N4: 573\/755 target readings covered by the active N4 deck/);
+    assert.match(text, /Count N4 in N4-N5: 579\/755 target readings covered by the N4-N5 reading scope/);
     assert.match(text, /Remaining open items are deferred variants only: yes/);
     assert.match(text, /Built starter-eligible rows: 1 \(50%\)/);
     assert.match(text, /Standalone-kanji hard block: disabled/);

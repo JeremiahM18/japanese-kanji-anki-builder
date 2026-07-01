@@ -16,10 +16,10 @@ test("lane authority duplication audit records word and kanji authority slimming
     assert.deepEqual(report.word.n5.counts, {
         gold: 588,
         sapphire: 588,
-        platinum: 407,
+        platinum: 438,
     });
-    assert.equal(report.word.n5.sapphireVsPlatinum.shared, 407);
-    assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.readingIncludes, 407);
+    assert.equal(report.word.n5.sapphireVsPlatinum.shared, 438);
+    assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.readingIncludes, 438);
     assert.equal(report.word.n5.sapphireVsPlatinum.identicalByField.qualityGates, 0);
     assert.equal(report.word.n3.sapphireMinusPlatinum, 1030);
 

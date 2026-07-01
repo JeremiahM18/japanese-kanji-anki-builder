@@ -77,6 +77,19 @@ test("reviewSapphireWordLevel CLI args default to strict current-standard review
     assert.deepEqual(legacyOptions.unknownArgs, ["--unexpected"]);
 });
 
+test("formatSapphireWordReviewReport labels inactive decisions as the non-Sapphire ledger", () => {
+    const formatted = formatSapphireWordReviewReport({
+        totalEntries: 3,
+        activeSapphireCount: 1,
+        currentStandardSapphireCount: 1,
+        nonShippingCount: 2,
+        passed: true,
+    });
+
+    assert.match(formatted, /Non-Sapphire ledger: 2/);
+    assert.doesNotMatch(formatted, /Deferred\/removed tracked/);
+});
+
 test("reviewSapphireWordLevel reads N3 Sapphire and prior Gold lane inputs", () => {
     const sapphireEntries = readSapphireReviewSet(3, { cwd: ROOT_DIR });
     const goldenExpectations = readGoldenReviewSet(3, { cwd: ROOT_DIR });

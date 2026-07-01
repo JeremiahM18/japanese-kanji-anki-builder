@@ -311,6 +311,19 @@ test("Sapphire kanji evaluator requires prior Gold when precondition enforcement
     assert.match(missingGoldReport.results[0].failures.join("\n"), /Sapphire requires a prior Gold expectation/);
 });
 
+test("formatSapphireKanjiReviewReport labels inactive decisions as the non-Sapphire ledger", () => {
+    const formatted = formatSapphireKanjiReviewReport({
+        totalEntries: 3,
+        activeSapphireCount: 1,
+        currentStandardSapphireCount: 1,
+        nonShippingCount: 2,
+        passed: true,
+    });
+
+    assert.match(formatted, /Non-Sapphire ledger: 2/);
+    assert.doesNotMatch(formatted, /Deferred\/removed tracked/);
+});
+
 test("Sapphire kanji evaluator compares protected snippets against decoded visible card text", () => {
     const fixtures = [
         buildCurrentStandardSapphireFixture({

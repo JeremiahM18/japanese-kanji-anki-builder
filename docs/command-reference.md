@@ -120,7 +120,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:review:n3` | Run the N3 word Gold regression benchmark; fails closed while generated rows lack current-standard Gold review entries |
 | `npm run deck:words:review:n2` | Run the N2 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
 | `npm run deck:words:review:n1` | Run the N1 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
-| `npm run deck:words:sapphire:n5` | Run the native N5 word Sapphire structural gate for active generated rows, with deferred/removed rows tracked separately |
+| `npm run deck:words:sapphire:n5` | Run the native N5 word Sapphire structural gate for active generated rows, with non-Sapphire ledger rows tracked separately |
 | `npm run deck:words:sapphire:n4` | Run the native N4 word Sapphire structural gate for active generated rows |
 | `npm run deck:words:sapphire:n3` | Run the native N3 word Sapphire structural gate; fails closed while generated rows lack current-standard Sapphire review entries |
 | `npm run deck:words:sapphire:n2` | Run the native N2 word Sapphire structural gate; fails closed until the generated level has reviewed Sapphire entries |

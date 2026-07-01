@@ -818,6 +818,19 @@ test("formatPlatinumWordReviewReport summarizes current-standard and legacy word
     assert.match(formatted, /Missing current-standard Platinum row sample \(1\/1\):/);
 });
 
+test("formatPlatinumWordReviewReport labels inactive decisions as the non-Platinum ledger", () => {
+    const formatted = formatPlatinumWordReviewReport({
+        totalEntries: 3,
+        activePlatinumCount: 1,
+        currentStandardPlatinumCount: 1,
+        nonShippingCount: 2,
+        passed: true,
+    });
+
+    assert.match(formatted, /Non-Platinum ledger: 2/);
+    assert.doesNotMatch(formatted, /Deferred\/removed tracked/);
+});
+
 test("evaluatePlatinumWordReviewSet does not pass an empty platinum set by default", () => {
     const report = evaluateWordPlatinum({
         rows: [buildRow()],

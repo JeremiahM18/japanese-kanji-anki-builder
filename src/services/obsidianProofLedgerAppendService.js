@@ -11,9 +11,16 @@ const {
     buildObsidianProofReconciliationReport,
 } = require("./obsidianProofReconciliationService");
 const {
+    buildCompatibilityEntries,
     buildEntryTargetKeys,
     getReviewSetRelativePath,
 } = require("./obsidianProofCompatibilityViewService");
+const {
+    entryHasSubstantiveCurrentStandardRereviewProof: kanjiEntryHasSubstantiveCurrentStandardRereviewProof,
+} = require("./platinumKanjiRereviewStatusService");
+const {
+    entryHasSubstantiveCurrentStandardRereviewProof: wordEntryHasSubstantiveCurrentStandardRereviewProof,
+} = require("./platinumWordObsidianProofService");
 const {
     ensureDir,
     isPathInside,
@@ -177,6 +184,7 @@ function buildReviewSetTargetIndex({ cwd, deckKind, level }) {
         resolvedSourceReviewSetPath,
         targetKeys,
         entries: entries.length,
+        reviewEntries: entries,
     };
 }
 
@@ -193,6 +201,49 @@ function assertEventsBindToReviewSet({ events, reviewSet, deckKind, level }) {
         if (!reviewSet.targetKeys.has(targetKey)) {
             throw new Error(`Obsidian proof event ${event.proofId} target ${targetKey} does not bind to ${reviewSet.sourceReviewSetPath}.`);
         }
+    }
+}
+
+function getSubstantiveProofPredicate(deckKind) {
+    if (deckKind === "kanji") {
+        return kanjiEntryHasSubstantiveCurrentStandardRereviewProof;
+    }
+    if (deckKind === "word") {
+        return wordEntryHasSubstantiveCurrentStandardRereviewProof;
+    }
+    throw new Error(`Unsupported Obsidian proof deck kind for semantic validation: ${deckKind}.`);
+}
+
+function assertEventsCountAsSubstantiveProof({ events, reviewSet, deckKind, level }) {
+    const { entries } = buildCompatibilityEntries({
+        entries: reviewSet.reviewEntries,
+        events,
+        deckKind,
+        level,
+    });
+    const predicate = getSubstantiveProofPredicate(deckKind);
+    const entriesByTargetKey = new Map();
+    for (const entry of entries) {
+        for (const targetKey of buildEntryTargetKeys(entry, { deckKind, level })) {
+            entriesByTargetKey.set(targetKey, entry);
+        }
+    }
+
+    const failures = [];
+    for (const event of events) {
+        const targetKey = buildObsidianProofTargetKey(event);
+        const entry = entriesByTargetKey.get(targetKey);
+        if (!entry || !predicate(entry)) {
+            failures.push(event.target.cardReviewed);
+        }
+    }
+
+    if (failures.length > 0) {
+        throw new Error([
+            "Obsidian proof draft events would not count as substantive current-standard proof in the status consumer.",
+            `Failing targets: ${failures.join(", ")}.`,
+            "Fix the draft proof so it satisfies the same structured rereviewProvenance, card identity, evidence checklist, and sentence-quality proof contract used by Obsidian status before appending.",
+        ].join(" "));
     }
 }
 
@@ -312,6 +363,12 @@ function buildObsidianProofLedgerAppendReport(options = {}) {
         level: scope.level,
     });
     assertEventsBindToReviewSet({
+        events: draft.events,
+        reviewSet,
+        deckKind: scope.deckKind,
+        level: scope.level,
+    });
+    assertEventsCountAsSubstantiveProof({
         events: draft.events,
         reviewSet,
         deckKind: scope.deckKind,

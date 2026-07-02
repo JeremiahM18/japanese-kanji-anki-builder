@@ -39,6 +39,22 @@ function makeWorkspace() {
     return rootDir;
 }
 
+function makeWordWorkspace() {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-word-append-"));
+    fs.mkdirSync(path.join(rootDir, "templates", "obsidian_proof_ledger"), { recursive: true });
+    fs.mkdirSync(path.join(rootDir, "out", "obsidian-proof", "drafts"), { recursive: true });
+    fs.writeFileSync(path.join(rootDir, "templates", "platinum_n5_word_review_set.json"), `${JSON.stringify([
+        {
+            word: "日本",
+            status: "platinum",
+            readingIncludes: ["にほん"],
+            meaningIncludes: ["Japan"],
+            exampleIncludes: ["日本に行きます。"],
+        },
+    ], null, 2)}\n`, "utf8");
+    return rootDir;
+}
+
 function buildProofEvent(overrides = {}) {
     return {
         schemaVersion: 1,
@@ -111,6 +127,83 @@ function buildProofEvent(overrides = {}) {
     };
 }
 
+function buildWordProofEvent(overrides = {}) {
+    return {
+        schemaVersion: 1,
+        recordType: "obsidian-proof-event",
+        proofId: "word-n5-obsidian-append-fixture-01",
+        target: {
+            deckKind: "word",
+            level: 5,
+            written: "日本",
+            reading: "にほん",
+            cardReviewed: "日本|にほん",
+        },
+        batch: {
+            id: "n5-word-obsidian-rereview-batch-999",
+            sequence: 999,
+        },
+        proof: {
+            type: "substantive current standard rereview",
+            reviewStandard: "word-platinum-v3-evidence-lanes",
+            reviewedAt: "2026-07-02",
+            reviewer: "word-rereview-owner",
+            reviewedAfterStandard: true,
+            mechanicalMigration: false,
+            result: "approved_for_current_standard_obsidian",
+            scope: "full word card rereview from square zero",
+            cardReviewed: "日本|にほん",
+            evidenceChecked: [
+                "Substantive post-v3 Obsidian rereview; not mechanically migrated.",
+                "Live generated word surface checked for 日本|にほん.",
+                "Governed Japanese-source evidence checked for 日本|にほん.",
+                "Learner-facing meaning checked for Japan.",
+                "Example sentence quality review checked for 日本に行きます。 / にほんにいきます。 / I go to Japan.",
+                "Notes support surface checked for source-level limitations.",
+                "Reading breakdown checked for 日 （に） / 本 （ほん）.",
+                "JLPT, coverage, focus, and covers labels checked for 日本|にほん.",
+                "Exact word reading audio identity checked for word-reading-日本-にほん.",
+                "Pitch accent source and rendered label checked.",
+                "Managed media provenance checked.",
+                "Golden regression checked as internal regression and not source truth.",
+                "Word-deck product fit and learner usefulness checked.",
+                "Verification limitations considered.",
+            ],
+            limitationDecision: "no active limitation remains",
+            sentenceQualityReview: {
+                example: "日本に行きます。",
+                reading: "にほんにいきます。",
+                translation: "I go to Japan.",
+                naturalJapanese: true,
+                learnerUseful: true,
+                levelAppropriate: true,
+                releaseQuality: true,
+                reviewerJudgment: "Fixture reviewer checked naturalness, usefulness, level fit, reading, and translation.",
+            },
+            reviewSession: {
+                mode: "card-by-card-observable-rereview",
+                source: "live-generated-card-and-tracked-evidence",
+                generatedFromPriorLaneOnly: false,
+                batchReportOnly: false,
+            },
+        },
+        authority: {
+            sourceOfTruth: "tracked-jsonl-obsidian-proof-ledger",
+            generatedCompatibilityView: true,
+            generatedSqliteMirror: true,
+            boundary: "Obsidian proof only; not source evidence, generated TSV authority, APKG authority, NLP certification, or release readiness.",
+        },
+        ledger: {
+            recordedAt: "2026-07-02",
+            recordedBy: "word-rereview-owner",
+            sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+            sourceCommit: "abcdef1",
+            representationMigration: false,
+        },
+        ...overrides,
+    };
+}
+
 function writeDraft(rootDir, value, fileName = "events.jsonl") {
     const filePath = path.join(rootDir, GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR, fileName);
     const text = Array.isArray(value)
@@ -162,6 +255,43 @@ test("append dry-run validates complete events without writing ledger output", (
     assert.equal(report.ledgerOutputPath, "templates/obsidian_proof_ledger/kanji_n3.jsonl");
     assert.deepEqual(report.targets, ["kanji:n3:常|じょう"]);
     assert.equal(fs.existsSync(ledgerPath), false);
+});
+
+test("append dry-run validates word proof against Obsidian status predicate", () => {
+    const rootDir = makeWordWorkspace();
+    const eventsPath = writeDraft(rootDir, [buildWordProofEvent()]);
+    const report = buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath,
+    });
+    const ledgerPath = path.join(rootDir, "templates", "obsidian_proof_ledger", "word_n5.jsonl");
+
+    assert.equal(report.passed, true);
+    assert.equal(report.write, false);
+    assert.equal(report.appendEvents, 1);
+    assert.equal(report.ledgerOutputPath, "templates/obsidian_proof_ledger/word_n5.jsonl");
+    assert.deepEqual(report.targets, ["word:n5:日本|にほん"]);
+    assert.equal(fs.existsSync(ledgerPath), false);
+});
+
+test("append rejects word proof that would not count in Obsidian status", () => {
+    const rootDir = makeWordWorkspace();
+    const baseEvent = buildWordProofEvent();
+    const eventsPath = writeDraft(rootDir, [buildWordProofEvent({
+        proof: {
+            ...baseEvent.proof,
+            evidenceChecked: baseEvent.proof.evidenceChecked.map((entry) => (
+                entry.startsWith("Exact word reading audio identity")
+                    ? "Exact word-reading-日本-にほん identity checked without the status checklist phrase."
+                    : entry
+            )),
+        },
+    })]);
+
+    assert.throws(() => buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath,
+    }), /would not count as substantive current-standard proof.*日本\|にほん/);
 });
 
 test("append rejects ad hoc lane-batch proof drafts", () => {

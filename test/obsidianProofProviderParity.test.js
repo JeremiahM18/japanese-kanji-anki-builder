@@ -523,6 +523,18 @@ test("provider parity script parses word rereview-status consumer and deck kind"
     assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
 });
 
+test("provider parity defaults to word rereview-status for word deck kind", () => {
+    const options = parseArgs([
+        "--levels=5",
+        "--deck-kind=word",
+    ]);
+
+    assert.equal(options.consumer, "word-rereview-status");
+    assert.equal(options.deckKind, "word");
+    assert.deepEqual(options.levels, [5]);
+    assert.equal(options.rowSource, ROW_SOURCES.TRACKED_REVIEW_SET);
+});
+
 test("provider parity script parses word platinum-level consumer and deck kind", () => {
     const options = parseArgs([
         "--levels=5,4",

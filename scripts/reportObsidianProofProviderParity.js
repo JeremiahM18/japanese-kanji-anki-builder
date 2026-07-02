@@ -127,6 +127,7 @@ function stableJson(value) {
 }
 
 function parseArgs(argv) {
+    let consumerProvided = false;
     const options = {
         consumer: SUPPORTED_CONSUMERS.KANJI_REREVIEW_STATUS,
         deckKind: "kanji",
@@ -154,6 +155,7 @@ function parseArgs(argv) {
             options.requireAllRows = true;
         } else if (arg.startsWith("--consumer=")) {
             options.consumer = parseStringOption(arg, "consumer");
+            consumerProvided = true;
         } else if (arg.startsWith("--deck-kind=")) {
             options.deckKind = parseStringOption(arg, "deck-kind").trim();
         } else if (arg.startsWith("--kanji=")) {
@@ -173,6 +175,10 @@ function parseArgs(argv) {
         } else {
             collectUnknownArg(options, arg);
         }
+    }
+
+    if (!consumerProvided && options.deckKind === "word") {
+        options.consumer = SUPPORTED_CONSUMERS.WORD_REREVIEW_STATUS;
     }
 
     return options;

@@ -100,8 +100,8 @@ Do not widen scope just because higher levels exist.
 
 Current posture:
 
-- N5 word work has a `418/588` strict Obsidian-certified subset plus 170 current word v2 dictionary-common-pool rows without Obsidian proof. Gold, Sapphire, and current-standard Platinum are complete at `588/588`; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the remaining rows as downstream-certified.
-- N4 word work has a `700/719` strict Obsidian-certified subset plus 19 current word v2 Silver additions; keep the certified subset frozen except for regressions or explicit editorial decisions, and do not claim the new Silver rows as downstream-certified
+- N5 word work has `10/588` current word Obsidian v2.5 certification. Gold, Sapphire, and current-standard Platinum are complete at `588/588`; the remaining `578` rows need real Obsidian v2.5 rereview, example-sentence quality judgment before sentence audio, exact sentence-audio proof, and governed JSONL proof. Legacy N5 Obsidian history remains audit-visible for `418` targets, but it is not current v2.5 certification.
+- N4 word work has `0/719` current word Obsidian v2.5 certification. The `700` older N4 Obsidian proof targets are legacy history, not current v2.5 certification; the 19 current word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian.
 - N3 word work has a complete Silver generated surface plus partial Gold (`1081/1099`), current-standard Sapphire structural review in progress (`1038/1099`), and Platinum (`8/1099`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
@@ -127,15 +127,15 @@ Keep the review layers separate.
 - A level can be Gold-reviewed and still not be release-ready.
 - Do not use Gold coverage as a substitute for Sapphire.
 - Do not use Sapphire or compatibility Platinum coverage as a substitute for Platinum content certification, Gold regression, or Obsidian proof.
-- For Obsidian batch work, follow [docs/obsidian-batch-workflow.md](docs/obsidian-batch-workflow.md): run status and batch commands as the work queue, refresh the generated surface, run the governed NLP support lane, perform the human review, run structural/reading verification, then run the fail-closed certification command only when the selected scope should be complete.
+- For Obsidian batch work, follow [docs/obsidian-batch-workflow.md](docs/obsidian-batch-workflow.md) and [docs/word-obsidian-v2.5-workflow.md](docs/word-obsidian-v2.5-workflow.md): run status and batch commands as the work queue, refresh the generated surface, run governed NLP support only as support, perform observable card-by-card Obsidian rereview, fix weak sentences before audio, run structural/reading/media verification, then run the fail-closed certification command only when the selected scope should be complete.
 
 ## N5/N4 Word Freeze
 
-N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at `1118/1307` across current N5/N4 generated rows, with N5 at `418/588` and N4 at `700/719`. Lower-lane prerequisites are complete for that certified subset, but the 170 current N5 word v2 rows without Obsidian proof still need Obsidian, and the 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
+Current word Obsidian v2.5 certification covers `10/1307` across current N5/N4 generated rows, with N5 at `10/588` and N4 at `0/719`; older word Obsidian proof is legacy history, not current v2.5 certification. Lower-lane prerequisites are complete for the `10` certified N5 rows; the remaining `578` N5 rows need Obsidian v2.5, the `700` older N4 proof targets need Obsidian v2.5, and the 19 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
 
 That means:
 
-- keep the N5 and N4 Obsidian-certified subsets frozen except for regressions, Sapphire decisions, or explicit editorial decisions
+- keep legacy N5/N4 word proof history audit-visible, but do not treat it as current v2.5 certification or churn rows just to preserve old claims
 - do not churn word rows just to move a metric once the active triage backlog is cleared
 - use `npm run deck:words:ready -- --levels=5 --require-no-active-triage` as the normal N5 word guard before and after changes that could affect the shared word-deck pipeline
 - use `npm run deck:words:ready -- --levels=5,4 --require-no-active-triage` as the normal N4 word guard before and after changes that could affect the shared word-deck pipeline

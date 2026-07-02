@@ -4,11 +4,15 @@ const {
 const {
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     REREVIEW_STATUS_CATEGORIES,
+    SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
     SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
     buildPlatinumWordRereviewStatusSummary,
 } = require("./platinumWordRereviewStatusService");
+const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+} = require("./platinumWordObsidianProofService");
 
-const OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE = "Current Obsidian certification is non-human governed native/fluent-quality proof for the scoped version. The gate verifies structure, source binding, protected snippets, exact word-reading audio identity, pitch source/render evidence, canonical proof binding, the full word-card evidence checklist, and card-bound word example-quality review evidence; future human/native review is separate provenance for the same standard.";
+const OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE = "Current Obsidian certification is non-human governed native/fluent-quality proof for the scoped version. The gate verifies structure, source binding, protected snippets, exact word-reading audio identity, pitch source/render evidence, canonical JSONL proof binding, the full word-card evidence checklist, card-bound word example-quality review evidence, and exact example-sentence audio provenance; future human/native review is separate provenance for the same standard, and legacy word Obsidian proof is dated history until v2.5 proof exists.";
 const MANUAL_WORD_REVIEW_BOUNDARY_NOTE = OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE;
 const REQUIRED_ZERO_COUNTS = Object.freeze(["blocked_or_failing", "needs_substantive_rereview"]);
 const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
@@ -20,9 +24,10 @@ const CERTIFICATION_AUTOMATION_CHECKS = Object.freeze([
     "card-bound Obsidian rereview provenance",
     "full word-card evidence checklist",
     "presence of actual example sentence quality review proof",
+    "presence of exact example sentence audio review proof",
 ]);
-const NEEDS_REREVIEW_EXPECTED = "explicit non-mechanical substantive current-standard Obsidian rereview proof after Platinum, including exact word-reading card identity binding, a full word-card evidence checklist, and actual example sentence quality review proof";
-const NEEDS_REREVIEW_ACTION = "Perform the Obsidian rereview from the live generated word card. Inspect and fix the actual written form, reading, meaning, example sentence, reading/translation, audio, pitch, labels, notes, and limitations if needed, then record rereviewProvenance with reviewedAfterStandard=true, mechanicalMigration=false, reviewer, reviewedAt, cardReviewed or equivalent identity binding, evidenceChecked, limitation decision, and example sentence quality review evidence covering natural Japanese, learner usefulness, level appropriateness, release quality, reading, and translation.";
+const NEEDS_REREVIEW_EXPECTED = `explicit non-mechanical substantive ${CURRENT_WORD_OBSIDIAN_STANDARD_VERSION} proof after Platinum, including exact word-reading card identity binding, a full word-card evidence checklist, actual example sentence quality review proof, and exact example sentence audio review proof`;
+const NEEDS_REREVIEW_ACTION = "Perform the Obsidian v2.5 rereview from the live generated word card. Inspect and fix the actual written form, reading, meaning, example sentence natural Japanese, reading/translation, learner usefulness, word audio, example sentence audio, pitch, labels, notes, and limitations if needed, then record JSONL proof with reviewedAfterStandard=true, mechanicalMigration=false, reviewer, reviewedAt, cardReviewed identity binding, evidenceChecked, limitation decision, example sentence quality review evidence, and sentenceAudioReview evidence covering exact category, source, voice, locale, asset, identity hash, example text, and example reading.";
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -167,9 +172,11 @@ function buildObsidianWordCertificationStatusSummary(levelReports = []) {
         certificationGate: {
             name: "word Obsidian certification",
             currentReviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+            currentObsidianStandard: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
             requiredZeroCounts: [...REQUIRED_ZERO_COUNTS],
             automationChecks: [...CERTIFICATION_AUTOMATION_CHECKS],
             requiredSentenceReviewProof: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
+            requiredSentenceAudioReviewProof: SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
             contentCertificationBoundary: OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE,
             manualJudgmentBoundary: MANUAL_WORD_REVIEW_BOUNDARY_NOTE,
         },
@@ -196,6 +203,7 @@ function formatObsidianWordCertificationStatusReport(summary = {}) {
         "Japanese Kanji Builder Word Obsidian Certification Status",
         "",
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
+        `Current Obsidian standard: ${gate.currentObsidianStandard || CURRENT_WORD_OBSIDIAN_STANDARD_VERSION}`,
         "Certification target: Obsidian (explicit non-mechanical current-version rereview proof)",
         `Result: ${summary.passed ? "passing" : "failing"}`,
         `Generated active word rows: ${totals.generatedRows || 0}`,
@@ -231,7 +239,7 @@ function formatObsidianWordCertificationStatusReport(summary = {}) {
         "Certification policy:",
         "- Platinum commands test the current card-surface requirements against the live generated rows.",
         "- This command is stricter: it fails when any intended release row is blocked/failing or still needs Obsidian proof.",
-        `- Obsidian proof must include structured rereviewProvenance, exact word-reading identity binding, a full word-card evidence checklist, and actual ${gate.requiredSentenceReviewProof || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence for the live card.`,
+        `- Obsidian proof must include structured rereviewProvenance, exact word-reading identity binding, a full word-card evidence checklist, actual ${gate.requiredSentenceReviewProof || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence, and exact ${gate.requiredSentenceAudioReviewProof || SENTENCE_AUDIO_REVIEW_PROOF_MARKER} evidence for the live card.`,
         `- ${gate.contentCertificationBoundary || gate.manualJudgmentBoundary || OBSIDIAN_WORD_REVIEW_BOUNDARY_NOTE}`
     );
 

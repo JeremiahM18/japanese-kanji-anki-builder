@@ -192,8 +192,8 @@ test("platinum word row builder uses the managed media root for exact word audio
 
 test("parseWordTsvForPlatinum preserves release-critical word card fields", () => {
     const rows = parseWordTsvForPlatinum([
-        "Word	Reading	ReadingBreakdown	Audio	PitchAccent	Meaning	JLPTLevel	CoverageRole	FocusKanji	CoversReading	KanjiBreakdown	ExampleSentence	Notes",
-        "今日	きょう	<ruby>今日<rt>きょう</rt></ruby>	[sound:word-今日-きょう.wav]	<span>きょう</span>	today	JLPT N5	JLPT core + reading coverage	今、日	今: いま ／ 日: ひ	<div>今</div>	今日は図書館へ行きます。	Common word.",
+        "Word	Reading	ReadingBreakdown	Audio	PitchAccent	Meaning	JLPTLevel	CoverageRole	FocusKanji	CoversReading	KanjiBreakdown	ExampleSentence	ExampleAudio	Notes",
+        "今日	きょう	<ruby>今日<rt>きょう</rt></ruby>	[sound:word-今日-きょう.wav]	<span>きょう</span>	today	JLPT N5	JLPT core + reading coverage	今、日	今: いま ／ 日: ひ	<div>今</div>	今日は図書館へ行きます。	[sound:word-example-今日-きょう.wav]	Common word.",
     ].join("\n"));
 
     assert.equal(rows.length, 1);
@@ -210,6 +210,7 @@ test("parseWordTsvForPlatinum preserves release-critical word card fields", () =
         coversReading: "今: いま ／ 日: ひ",
         kanjiBreakdown: "<div>今</div>",
         exampleSentence: "今日は図書館へ行きます。",
+        exampleAudio: "[sound:word-example-今日-きょう.wav]",
         notes: "Common word.",
     });
 });

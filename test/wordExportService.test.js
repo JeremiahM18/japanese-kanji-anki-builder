@@ -4,6 +4,9 @@ const assert = require("node:assert/strict");
 const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
 const {
+    buildWordExampleAudioIdentityHash,
+} = require("../src/services/wordAudioService");
+const {
     buildCandidatePool,
     buildBreakdownInference,
     buildContextualKanjiReadingMap,
@@ -157,6 +160,7 @@ test("loadAnkiNoteSchema can load the shared word note contract", () => {
         "CoversReading",
         "KanjiBreakdown",
         "ExampleSentence",
+        "ExampleAudio",
         "Notes",
     ]);
     assert.match(schema.qfmt, /{{Word}}/);
@@ -1818,7 +1822,7 @@ test("buildWordTsvForJlptLevel includes explicit learner-facing coverage metadat
     });
 
     const lines = result.tsv.trim().split("\n");
-    assert.equal(lines[0], "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes");
+    assert.equal(lines[0], "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tExampleAudio\tNotes");
     assert.match(lines[1], /\t<ruby>時<rt>じ<\/rt><\/ruby><ruby>間<rt>かん<\/rt><\/ruby>\t/);
     assert.match(lines[1], /\tJLPT core \+ reading coverage\t/);
     assert.match(lines[1], /\t時\t/);
@@ -1977,6 +1981,103 @@ test("buildWordTsvForJlptLevel emits governed word audio when a managed word-rea
         kanji: "時",
         relativePath: "audio/6642_時-word-reading-時間-じかん.wav",
     }]);
+});
+
+test("buildWordTsvForJlptLevel emits only identity-matched example sentence audio", async () => {
+    const example = {
+        japanese: "日曜日は家で休みます。",
+        reading: "にちようびはいえでやすみます。",
+        english: "I rest at home on Sunday.",
+    };
+    const yasumuIdentityHash = buildWordExampleAudioIdentityHash({
+        written: "休む",
+        reading: "やすむ",
+        exampleText: example.japanese,
+        exampleReading: example.reading,
+    });
+
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordStudyData: {
+            "休む|やすむ": {
+                written: "休む",
+                reading: "やすむ",
+                meaning: "to rest",
+                jlpt: 5,
+                coverage: {
+                    role: "both",
+                    focusKanji: ["休"],
+                    coversReadings: { 休: "やすむ" },
+                },
+                readingBreakdown: "<ruby>休<rt>やす</rt></ruby>む",
+                exampleSentence: example,
+            },
+            "休み|やすみ": {
+                written: "休み",
+                reading: "やすみ",
+                meaning: "rest / day off",
+                jlpt: 5,
+                coverage: {
+                    role: "both",
+                    focusKanji: ["休"],
+                    coversReadings: { 休: "やすみ" },
+                },
+                readingBreakdown: "<ruby>休<rt>やす</rt></ruby>み",
+                exampleSentence: example,
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            休: { jlpt: 5 },
+            日: { jlpt: 5 },
+            曜: { jlpt: 5 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "休む|やすむ": { written: "休む", reading: "やすむ", jlpt: 5 },
+                "休み|やすみ": { written: "休み", reading: "やすみ", jlpt: 5 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                return { meanings: [kanji], on_readings: [], kun_readings: [] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        audioService: {
+            async getManifest(kanji) {
+                if (kanji !== "休") {
+                    return null;
+                }
+                return {
+                    assets: {
+                        audio: [{
+                            path: `audio/4F11_休-word-example-sentence-${yasumuIdentityHash}.wav`,
+                            category: "word-example-sentence",
+                            text: example.japanese,
+                            reading: example.reading,
+                            identityHash: yasumuIdentityHash,
+                            voice: "女声1 / ノーマル",
+                            source: "voicevox-nemo",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        concurrency: 1,
+    });
+
+    const rows = result.tsv.trim().split("\n").slice(1).map((line) => line.split("\t"));
+    const byIdentity = new Map(rows.map((columns) => [`${columns[0]}|${columns[1]}`, columns]));
+    assert.equal(byIdentity.get("休む|やすむ")[12], `[sound:4F11_休-word-example-sentence-${yasumuIdentityHash}.wav]`);
+    assert.equal(byIdentity.get("休み|やすみ")[12], "");
 });
 
 test("buildWordTsvForJlptLevel renders governed pitch accents as contour graphs", async () => {

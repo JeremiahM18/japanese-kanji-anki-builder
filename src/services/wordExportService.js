@@ -21,7 +21,11 @@ const {
     GENERATED_PITCH_LABEL,
     isGeneratedPitchAccentSource,
 } = require("./wordPitchAccentVerificationService");
-const { findManagedWordAudioAsset } = require("./wordAudioService");
+const {
+    buildWordExampleAudioIdentityHash,
+    findManagedWordAudioAsset,
+    findManagedWordExampleAudioAsset,
+} = require("./wordAudioService");
 
 const deckEditorialPolicy = loadDeckEditorialPolicy();
 const WORD_FIELD_NAMES = loadAnkiNoteSchema("word").fieldNames;
@@ -274,6 +278,49 @@ async function resolveWordAudioReference({ candidate, focusKanji, audioService, 
     const { kanji, asset } = await findManagedWordAudioAsset({
         written: candidate?.written,
         reading: candidate?.pron,
+        focusKanji,
+        audioService,
+        mediaRootDir,
+    });
+
+    if (!asset?.path || !kanji) {
+        return {
+            audioField: "",
+            mediaRefs: [],
+        };
+    }
+
+    return {
+        audioField: formatAnkiAudioField(asset.path),
+        mediaRefs: [{
+            kind: "audio",
+            kanji,
+            relativePath: asset.path,
+        }],
+    };
+}
+
+async function resolveWordExampleAudioReference({ candidate, focusKanji, sentence, audioService, mediaRootDir = "" }) {
+    if (!audioService) {
+        return {
+            audioField: "",
+            mediaRefs: [],
+        };
+    }
+
+    const identityHash = sentence?.identityHash || buildWordExampleAudioIdentityHash({
+        written: candidate?.written,
+        reading: candidate?.pron,
+        exampleText: sentence?.japanese,
+        exampleReading: sentence?.reading,
+    });
+
+    const { kanji, asset } = await findManagedWordExampleAudioAsset({
+        written: candidate?.written,
+        reading: candidate?.pron,
+        exampleText: sentence?.japanese,
+        exampleReading: sentence?.reading,
+        identityHash,
         focusKanji,
         audioService,
         mediaRootDir,
@@ -1621,13 +1668,14 @@ function createWordExportService({
                 contextualKanjiReadings,
                 contextualKanjiReadingGroups,
             });
-            const exampleSentence = formatExampleSentence(selectWordSentence({
+            const selectedSentence = selectWordSentence({
                 candidate: entry.candidate,
                 curatedEntry: entry.curatedEntry,
                 sourceKanji: coverageMetadata.focusKanji[0] || "",
                 constituentKanji,
                 sentenceCorpus,
-            }));
+            });
+            const exampleSentence = formatExampleSentence(selectedSentence);
             const wordAudio = await resolveWordAudioReference({
                 candidate: {
                     written: entry.candidate.written,
@@ -1637,12 +1685,23 @@ function createWordExportService({
                 audioService,
                 mediaRootDir,
             });
+            const exampleAudio = await resolveWordExampleAudioReference({
+                candidate: {
+                    written: entry.candidate.written,
+                    pron: entry.curatedEntry?.reading || entry.candidate.pron,
+                },
+                focusKanji: coverageMetadata.focusKanji,
+                sentence: selectedSentence,
+                audioService,
+                mediaRootDir,
+            });
             const trustedLevel = getTrustedCandidateLevel({
                 candidate: entry.candidate,
                 curatedEntry: entry.curatedEntry,
                 jlptWordLevelContract,
             });
             mediaRefs.push(...wordAudio.mediaRefs);
+            mediaRefs.push(...exampleAudio.mediaRefs);
             const readingBreakdown = buildWordReadingBreakdown({
                 candidate: entry.candidate,
                 curatedEntry: entry.curatedEntry,
@@ -1667,6 +1726,7 @@ function createWordExportService({
                 escapeHtml(coverageMetadata.coversReading),
                 breakdownHtml,
                 exampleSentence,
+                exampleAudio.audioField,
                 buildWordNotes(entry.curatedEntry),
             ].map(tsvEscape).join("\t"));
         }

@@ -5,6 +5,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     OBSIDIAN_PROOF_LEDGER_AUTHORITY,
 } = require("../src/datasets/obsidianProofLedger");
 const {
@@ -246,10 +247,11 @@ function buildWordRow(overrides = {}) {
 function buildWordProvenance(overrides = {}) {
     return {
         type: "substantive current standard rereview",
+        obsidianStandardVersion: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
         reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
         batchId: "n5-word-obsidian-rereview-batch-002",
         reviewedAt: "2026-05-19",
-        reviewer: "codex-platinum-review",
+        reviewer: "fixture-review-owner",
         reviewedAfterStandard: true,
         mechanicalMigration: false,
         result: "approved_for_current_standard_platinum",
@@ -263,6 +265,7 @@ function buildWordProvenance(overrides = {}) {
             "notes/support surface: Core beginner noun for book.",
             "reading breakdown, kanji breakdown, JLPT level, coverage role, focus kanji, and covered-reading labels",
             "exact word-reading audio identity word-reading-本-ほん exists in out/word-build/package/media",
+            "exact example sentence audio identity checked for word-example-sentence 日本語の本を読みます。 / にほんごのほんをよみます。",
             "pitch accent source and rendered pitch label checked: kanjium-cc-by-sa-4.0 pattern 1 [atamadaka]",
             "managed media provenance and no silent fallback",
             "golden regression as internal regression only, not source truth",
@@ -279,6 +282,22 @@ function buildWordProvenance(overrides = {}) {
             levelAppropriate: true,
             releaseQuality: true,
             reviewerJudgment: "Current-standard whole-card revalidation with separated evidence lanes for 本|ほん checked generated surface, Japanese-source evidence, example sentence 日本語の本を読みます。, reading にほんごのほんをよみます。, translation I read a Japanese book., notes/support surface Core beginner noun for book., reading breakdown 本 （ほん） ／ book, meaning book, labels JLPT N5; JLPT core + reading coverage; focus 本; covers 本: ほん, audio word-reading-本-ほん, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations.",
+        },
+        sentenceAudioReview: {
+            category: "word-example-sentence",
+            source: "voicevox-nemo",
+            voice: "女声1 / ノーマル",
+            locale: "ja-JP",
+            assetPath: "audio/672C_本-word-example-sentence-0123456789abcdef.wav",
+            identityHash: "0123456789abcdef",
+            example: "日本語の本を読みます。",
+            reading: "にほんごのほんをよみます。",
+            translation: "I read a Japanese book.",
+            exactExampleText: true,
+            exactExampleReading: true,
+            policyCompliant: true,
+            readyToReview: true,
+            reviewerJudgment: "Fixture example-sentence audio is generated only after the reviewed sentence passed natural-language and learner-usefulness review, then matched exact text, reading, category, source, voice, locale, asset, and identity hash.",
         },
         ...overrides,
     };
@@ -405,6 +424,7 @@ function buildWordProofEvent(overrides = {}) {
         },
         proof: {
             type: provenance.type,
+            obsidianStandardVersion: provenance.obsidianStandardVersion,
             reviewStandard: provenance.reviewStandard,
             reviewedAt: provenance.reviewedAt,
             reviewer: provenance.reviewer,
@@ -416,6 +436,7 @@ function buildWordProofEvent(overrides = {}) {
             evidenceChecked: provenance.evidenceChecked,
             limitationDecision: provenance.limitationDecision,
             sentenceQualityReview: provenance.sentenceQualityReview,
+            sentenceAudioReview: provenance.sentenceAudioReview,
         },
         authority: OBSIDIAN_PROOF_LEDGER_AUTHORITY,
         ledger: {
@@ -423,7 +444,7 @@ function buildWordProofEvent(overrides = {}) {
             recordedBy: "fixture-writer",
             sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
             sourceCommit: "abcdef1",
-            representationMigration: true,
+            representationMigration: false,
         },
         ...overrides,
     };
@@ -1075,6 +1096,61 @@ test("kanji rereview-status provider parity passes canonical ledger integrity af
     assert.equal(scope.inlineProjection.counts.needs_substantive_rereview, 1);
     assert.equal(scope.ledgerProjection.counts.substantive_current_standard_review_proven, 1);
     assert.equal(scope.ledgerProvider.ledgerProofsApplied, 1);
+});
+
+test("word rereview-status provider parity counts legacy same-target proof as superseded history", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-provider-parity-"));
+    const currentEvent = buildWordProofEvent();
+    const legacyProof = { ...currentEvent.proof };
+    delete legacyProof.obsidianStandardVersion;
+    delete legacyProof.sentenceAudioReview;
+    const legacyEvent = buildWordProofEvent({
+        proofId: "word-n5-obsidian-legacy-fixture-01",
+        batch: {
+            id: "n5-word-obsidian-legacy-fixture-batch",
+            sequence: 1,
+        },
+        proof: legacyProof,
+    });
+    writeLedger(rootDir, [legacyEvent, currentEvent]);
+    const { rereviewProvenance, ...entryWithoutInlineProof } = buildWordEntry();
+
+    const scope = buildWordRereviewStatusProviderParityForLevel({
+        rows: [buildWordRow()],
+        rawEntries: [entryWithoutInlineProof],
+        ...buildWordPriorLaneFixture(),
+        cwd: rootDir,
+        level: 5,
+        sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
+        wordPitchAccentData: {
+            sources: {
+                "kanjium-cc-by-sa-4.0": {
+                    name: "Kanjium pitch accent database",
+                    license: "CC BY-SA 4.0",
+                },
+            },
+            entries: {
+                "本|ほん": {
+                    pattern: "1 [atamadaka]",
+                    sourceId: "kanjium-cc-by-sa-4.0",
+                    sourceWord: "本",
+                    sourceReading: "ほん",
+                    sourceAccent: "1",
+                },
+            },
+        },
+        kanjiLevelData: null,
+    });
+
+    assert.equal(rereviewProvenance.cardReviewed, "本|ほん");
+    assert.equal(scope.passed, true);
+    assert.equal(scope.comparisonMode, "canonical-ledger-integrity");
+    assert.equal(scope.inlineProofCount, 0);
+    assert.equal(scope.ledgerProvider.ledgerProofEvents, 2);
+    assert.equal(scope.ledgerProvider.ledgerProofTargets, 1);
+    assert.equal(scope.ledgerProvider.ledgerProofsApplied, 1);
+    assert.equal(scope.ledgerProvider.ledgerProofEventsSuperseded, 1);
+    assert.equal(scope.ledgerProjection.counts.substantive_current_standard_review_proven, 1);
 });
 
 test("kanji platinum-level provider parity passes when structural projections match", () => {

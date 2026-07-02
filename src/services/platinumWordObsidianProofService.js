@@ -1,12 +1,17 @@
 const {
     CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
 } = require("./platinumReviewService");
+const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+} = require("../datasets/obsidianProofLedger");
 const { normalizeEvidenceEntries } = require("./platinumEvidenceService");
 
-const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive post-v3 Obsidian rereview";
+const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive Obsidian v2.5 rereview";
 const NON_MECHANICAL_PROOF_MARKER = "not mechanically migrated";
 const MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER = "missing_substantive_current_standard_word_rereview_proof";
 const SENTENCE_QUALITY_REVIEW_PROOF_MARKER = "example sentence quality review";
+const SENTENCE_AUDIO_REVIEW_PROOF_MARKER = "example sentence audio review";
+const WORD_EXAMPLE_SENTENCE_AUDIO_CATEGORY = "word-example-sentence";
 const STRUCTURED_REREVIEW_PROVENANCE_TYPE = "substantive current standard rereview";
 const WORD_SENTENCE_QUALITY_REVIEW_BOOLEAN_FIELDS = Object.freeze([
     "naturalJapanese",
@@ -51,6 +56,10 @@ const REQUIRED_WORD_REREVIEW_CHECKS = Object.freeze([
     {
         label: "exact word-reading audio identity",
         snippets: ["word reading audio", "word-reading"],
+    },
+    {
+        label: "exact example-sentence audio identity",
+        snippets: ["example sentence audio", "word-example-sentence"],
     },
     {
         label: "pitch source and rendered label",
@@ -155,6 +164,15 @@ function hasBaseStructuredRereviewProvenance(entry = {}) {
         && Boolean(normalizeText(provenance.reviewer || entry.reviewer));
 }
 
+function hasCurrentWordObsidianStandardVersion(entry = {}) {
+    const provenance = getRereviewProvenance(entry);
+    if (!provenance) {
+        return false;
+    }
+
+    return normalizeText(provenance.obsidianStandardVersion) === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION;
+}
+
 function hasWordCardIdentityProof(entry = {}) {
     const provenance = getRereviewProvenance(entry);
     if (!provenance) {
@@ -165,6 +183,7 @@ function hasWordCardIdentityProof(entry = {}) {
         provenance.cardReviewed,
         provenance.evidenceChecked,
         provenance.sentenceQualityReview,
+        provenance.sentenceAudioReview,
     ]);
     const word = normalizeProofText(entry.word);
     const readings = normalizeStringArray(entry.readingIncludes).map(normalizeProofText);
@@ -249,22 +268,54 @@ function hasWordSentenceQualityReviewProof(entry = {}) {
     return structuredWordSentenceQualityReviewPasses(entry) || textualWordSentenceQualityReviewPasses(entry);
 }
 
+function hasWordSentenceAudioReviewProof(entry = {}) {
+    const review = getRereviewProvenance(entry)?.sentenceAudioReview;
+    if (!isPlainRecord(review)) {
+        return false;
+    }
+
+    const reviewText = normalizeProofParts(review);
+    const examples = normalizeStringArray(entry.exampleIncludes).map(normalizeProofText);
+    const hasExampleBinding = proofTextIncludesEvery(reviewText, examples);
+    const hasExpectedCategory = normalizeText(review.category) === WORD_EXAMPLE_SENTENCE_AUDIO_CATEGORY;
+    const hasAsset = Boolean(normalizeText(review.assetPath));
+    const hasIdentityHash = /^[a-f0-9]{16}$/i.test(normalizeText(review.identityHash));
+    const requiredTruths = [
+        review.exactExampleText,
+        review.exactExampleReading,
+        review.policyCompliant,
+        review.readyToReview,
+    ];
+
+    return hasExpectedCategory
+        && hasExampleBinding
+        && hasAsset
+        && hasIdentityHash
+        && requiredTruths.every((value) => value === true);
+}
+
 function entryHasSubstantiveCurrentStandardRereviewProof(entry = {}) {
     return hasBaseStructuredRereviewProvenance(entry)
+        && hasCurrentWordObsidianStandardVersion(entry)
         && hasWordCardIdentityProof(entry)
         && wordRereviewEvidenceChecklistPasses(entry)
-        && hasWordSentenceQualityReviewProof(entry);
+        && hasWordSentenceQualityReviewProof(entry)
+        && hasWordSentenceAudioReviewProof(entry);
 }
 
 module.exports = {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     NON_MECHANICAL_PROOF_MARKER,
     REQUIRED_WORD_REREVIEW_CHECKS,
+    SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
     SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
     SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     entryHasSubstantiveCurrentStandardRereviewProof,
     hasBaseStructuredRereviewProvenance,
+    hasCurrentWordObsidianStandardVersion,
     hasWordCardIdentityProof,
+    hasWordSentenceAudioReviewProof,
     hasWordSentenceQualityReviewProof,
     wordRereviewEvidenceChecklistPasses,
 };

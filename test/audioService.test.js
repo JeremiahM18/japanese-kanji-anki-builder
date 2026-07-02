@@ -482,6 +482,53 @@ test("syncKanji imports managed word-reading audio even when kanji-reading audio
     }
 });
 
+test("syncKanji imports hash-identified word example sentence audio", async () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const mediaRootDir = path.join(rootDir, "media");
+        const audioSourceDir = path.join(rootDir, "sources");
+        fs.mkdirSync(audioSourceDir, { recursive: true });
+
+        fs.writeFileSync(
+            path.join(audioSourceDir, "日-word-example-sentence-0123456789abcdef.wav"),
+            Buffer.from("fake-example-sentence")
+        );
+        fs.writeFileSync(path.join(audioSourceDir, "日-word-example-sentence-0123456789abcdef.json"), JSON.stringify({
+            source: "voicevox-nemo",
+            voice: "女声1 / ノーマル",
+            locale: "ja-JP",
+            category: "word-example-sentence",
+            text: "日本に行きます。",
+            reading: "にほんにいきます。",
+        }, null, 2), "utf-8");
+
+        const audioService = createAudioService({
+            mediaRootDir,
+            audioSourceDir,
+        });
+
+        const result = await audioService.syncKanji("日", {
+            category: "word-example-sentence",
+            text: "日本に行きます。",
+            reading: "にほんにいきます。",
+            voice: "女声1 / ノーマル",
+            identityHash: "0123456789abcdef",
+        });
+
+        const exampleAsset = result.manifest.assets.audio.find((asset) => asset.category === "word-example-sentence");
+        assert.equal(result.found.audio, true);
+        assert.ok(exampleAsset);
+        assert.match(exampleAsset.path, /word-example-sentence-0123456789abcdef\.wav$/);
+        assert.equal(exampleAsset.text, "日本に行きます。");
+        assert.equal(exampleAsset.reading, "にほんにいきます。");
+        assert.equal(exampleAsset.identityHash, "0123456789abcdef");
+        assert.equal(exampleAsset.source, "voicevox-nemo");
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
 test("audio providers fall back when the first provider misses", async () => {
     const rootDir = makeTempDir();
 

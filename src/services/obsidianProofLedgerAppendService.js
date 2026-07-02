@@ -2,10 +2,13 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     DEFAULT_OBSIDIAN_PROOF_LEDGER_DIR,
     buildObsidianProofTargetKey,
+    buildObsidianProofVersionedTargetKey,
     loadObsidianProofLedger,
     parseObsidianProofLedgerEvent,
+    resolveObsidianProofStandardVersion,
 } = require("../datasets/obsidianProofLedger");
 const {
     buildObsidianProofReconciliationReport,
@@ -287,6 +290,21 @@ function assertAppendableProofReviewSession(events = []) {
         if (event.ledger.representationMigration) {
             throw new Error(`Obsidian proof append does not accept representationMigration=true events: ${event.proofId}. Use the dedicated migration command for representation migrations.`);
         }
+        if (
+            event.target.deckKind === "word"
+            && resolveObsidianProofStandardVersion(event) !== CURRENT_WORD_OBSIDIAN_STANDARD_VERSION
+        ) {
+            throw new Error([
+                `New word Obsidian proof event ${event.proofId} must use ${CURRENT_WORD_OBSIDIAN_STANDARD_VERSION}.`,
+                "Legacy word Obsidian proof remains history, but new word appends must carry v2.5 sentence-audio proof.",
+            ].join(" "));
+        }
+        if (
+            event.target.deckKind === "word"
+            && !event.proof.sentenceAudioReview
+        ) {
+            throw new Error(`New word Obsidian v2.5 proof event ${event.proofId} is missing proof.sentenceAudioReview.`);
+        }
         if (!event.proof.reviewSession) {
             throw new Error([
                 `Obsidian proof event ${event.proofId} is missing proof.reviewSession.`,
@@ -301,14 +319,14 @@ function assertAppendableProofReviewSession(events = []) {
 function assertNoDuplicateExistingEvents({ cwd, ledgerDir, events }) {
     const ledger = loadObsidianProofLedger({ cwd, ledgerDir });
     const existingProofIds = new Map(ledger.events.map((event) => [event.proofId, event]));
-    const existingTargetKeys = new Map(ledger.events.map((event) => [buildObsidianProofTargetKey(event), event]));
+    const existingTargetKeys = new Map(ledger.events.map((event) => [buildObsidianProofVersionedTargetKey(event), event]));
 
     for (const event of events) {
         const priorProof = existingProofIds.get(event.proofId);
         if (priorProof) {
             throw new Error(`Obsidian proof id ${event.proofId} already exists for ${priorProof.target.cardReviewed}.`);
         }
-        const targetKey = buildObsidianProofTargetKey(event);
+        const targetKey = buildObsidianProofVersionedTargetKey(event);
         const priorTarget = existingTargetKeys.get(targetKey);
         if (priorTarget) {
             throw new Error(`Obsidian proof target ${targetKey} already exists as ${priorTarget.proofId}.`);

@@ -3,6 +3,11 @@ const path = require("node:path");
 
 const { buildWordReviewStandardSummary } = require("./platinumReviewService");
 const { buildWordSapphireReviewStandardSummary } = require("./sapphireWordReviewService");
+const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+    buildObsidianProofTargetKey,
+    resolveObsidianProofStandardVersion,
+} = require("../datasets/obsidianProofLedger");
 
 function readJson(filePath, { readFileSync = fs.readFileSync } = {}) {
     return JSON.parse(readFileSync(filePath, "utf8"));
@@ -46,6 +51,69 @@ function countJsonlRecords(filePath, { existsSync = fs.existsSync, readFileSync 
         .length;
 }
 
+function countWordObsidianProofSnapshot(filePath, { existsSync = fs.existsSync, readFileSync = fs.readFileSync } = {}) {
+    if (!existsSync(filePath)) {
+        return {
+            rawEvents: 0,
+            currentEvents: 0,
+            currentTargets: 0,
+            legacyEvents: 0,
+            legacyTargets: 0,
+            legacyOnlyTargets: 0,
+            allTargets: 0,
+            supersededLegacyEvents: 0,
+        };
+    }
+
+    const currentTargetKeys = new Set();
+    const legacyTargetKeys = new Set();
+    const allTargetKeys = new Set();
+    let rawEvents = 0;
+    let currentEvents = 0;
+    let legacyEvents = 0;
+    let supersededLegacyEvents = 0;
+
+    const events = readFileSync(filePath, "utf8")
+        .split(/\r?\n/u)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => JSON.parse(line));
+
+    for (const event of events) {
+        rawEvents += 1;
+        const targetKey = buildObsidianProofTargetKey(event);
+        allTargetKeys.add(targetKey);
+        if (resolveObsidianProofStandardVersion(event) === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION) {
+            currentEvents += 1;
+            currentTargetKeys.add(targetKey);
+        } else {
+            legacyEvents += 1;
+            legacyTargetKeys.add(targetKey);
+        }
+    }
+
+    for (const targetKey of legacyTargetKeys) {
+        if (currentTargetKeys.has(targetKey)) {
+            supersededLegacyEvents += 1;
+        }
+    }
+
+    const legacyOnlyTargets = [...legacyTargetKeys]
+        .filter((targetKey) => !currentTargetKeys.has(targetKey))
+        .length;
+
+    return {
+        rawEvents,
+        currentEvents,
+        currentTargets: currentTargetKeys.size,
+        legacyEvents,
+        legacyTargets: legacyTargetKeys.size,
+        legacyOnlyTargets,
+        allTargets: allTargetKeys.size,
+        supersededLegacyEvents,
+    };
+}
+
 function buildLaneSnapshot(count, denominator) {
     const missing = Math.max(0, Number(denominator || 0) - Number(count || 0));
     return {
@@ -75,8 +143,14 @@ function buildProductDocumentationSnapshot({
 
     const wordN5Denominator = countWordContractDenominator(wordContract, 5);
     const wordN4Denominator = countWordContractDenominator(wordContract, 4);
-    const wordN5ObsidianProof = countLedger("word", [5]);
-    const wordN4ObsidianProof = countLedger("word", [4]);
+    const wordN5ProofSnapshot = countWordObsidianProofSnapshot(path.join(proofLedgerDir, "word_n5.jsonl"), { existsSync, readFileSync });
+    const wordN4ProofSnapshot = countWordObsidianProofSnapshot(path.join(proofLedgerDir, "word_n4.jsonl"), { existsSync, readFileSync });
+    const wordN5ObsidianProof = wordN5ProofSnapshot.currentTargets;
+    const wordN4ObsidianProof = wordN4ProofSnapshot.currentTargets;
+    const wordLegacyObsidianProofTargets = wordN5ProofSnapshot.legacyTargets + wordN4ProofSnapshot.legacyTargets;
+    const wordLegacyOnlyObsidianProofTargets = wordN5ProofSnapshot.legacyOnlyTargets + wordN4ProofSnapshot.legacyOnlyTargets;
+    const wordRawObsidianProofEvents = wordN5ProofSnapshot.rawEvents + wordN4ProofSnapshot.rawEvents;
+    const wordSupersededLegacyProofEvents = wordN5ProofSnapshot.supersededLegacyEvents + wordN4ProofSnapshot.supersededLegacyEvents;
 
     return {
         kanjiDenominator: sumLevelCounts(kanjiContract, allLevels, countKanjiContractDenominator),
@@ -85,10 +159,19 @@ function buildProductDocumentationSnapshot({
         wordLockedDenominator: sumLevelCounts(wordContract, lockedWordLevels, countWordContractDenominator),
         kanjiObsidianProof: countLedger("kanji", lockedKanjiLevels),
         wordObsidianProof: wordN5ObsidianProof + wordN4ObsidianProof,
+        wordCurrentObsidianStandard: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+        wordLegacyObsidianProofTargets,
+        wordLegacyOnlyObsidianProofTargets,
+        wordRawObsidianProofEvents,
+        wordSupersededLegacyProofEvents,
         wordN5Denominator,
         wordN4Denominator,
         wordN5ObsidianProof,
         wordN4ObsidianProof,
+        wordN5LegacyObsidianProofTargets: wordN5ProofSnapshot.legacyTargets,
+        wordN4LegacyObsidianProofTargets: wordN4ProofSnapshot.legacyTargets,
+        wordN5RawObsidianProofEvents: wordN5ProofSnapshot.rawEvents,
+        wordN4RawObsidianProofEvents: wordN4ProofSnapshot.rawEvents,
     };
 }
 
@@ -136,29 +219,33 @@ function buildN3WordStatusPhrases(snapshot) {
 function buildProductStatusPhrases(productSnapshot = {}) {
     const wordN5Denominator = productSnapshot.wordN5Denominator ?? 300;
     const wordN4Denominator = productSnapshot.wordN4Denominator ?? 700;
-    const wordN5ObsidianProof = productSnapshot.wordN5ObsidianProof ?? 300;
-    const wordN4ObsidianProof = productSnapshot.wordN4ObsidianProof ?? 700;
+    const wordN5ObsidianProof = productSnapshot.wordN5ObsidianProof ?? 0;
+    const wordN4ObsidianProof = productSnapshot.wordN4ObsidianProof ?? 0;
     const wordN5Ratio = `${wordN5ObsidianProof}/${wordN5Denominator}`;
     const wordN4Ratio = `${wordN4ObsidianProof}/${wordN4Denominator}`;
     const wordLockedRatio = `${productSnapshot.wordObsidianProof}/${productSnapshot.wordLockedDenominator}`;
     const wordLockedUncertified = Math.max(0, Number(productSnapshot.wordLockedDenominator || 0) - Number(productSnapshot.wordObsidianProof || 0));
     const wordN5Uncertified = Math.max(0, Number(wordN5Denominator || 0) - Number(wordN5ObsidianProof || 0));
     const wordN4Uncertified = Math.max(0, Number(wordN4Denominator || 0) - Number(wordN4ObsidianProof || 0));
+    const wordLegacyTargets = productSnapshot.wordLegacyObsidianProofTargets ?? 0;
+    const wordRawEvents = productSnapshot.wordRawObsidianProofEvents ?? wordLegacyTargets;
+    const wordSupersededLegacy = productSnapshot.wordSupersededLegacyProofEvents ?? 0;
 
     return {
         employerGeneratedDenominators: `Current generated denominators cover \`${productSnapshot.kanjiDenominator}\` core kanji rows and \`${productSnapshot.wordDenominator}\` word rows across JLPT N5-N1.`,
-        employerWordDenominator: `| Words | \`${productSnapshot.wordDenominator}/${productSnapshot.wordDenominator}\` across N5-N1 | \`${productSnapshot.wordObsidianProof}/${productSnapshot.wordDenominator}\` |`,
+        employerWordDenominator: `| Words | \`${productSnapshot.wordDenominator}/${productSnapshot.wordDenominator}\` across N5-N1 | \`${productSnapshot.wordObsidianProof}/${productSnapshot.wordDenominator}\` current v2.5 |`,
         systemWordDenominator: `| Words | ${productSnapshot.wordDenominator} | ${productSnapshot.wordObsidianProof} |`,
         readmeN5KanjiObsidian: "| N5 kanji | `80/80` Obsidian-certified",
         readmeN4KanjiObsidian: "| N4 kanji | `212/212` Obsidian-certified",
         readmeN3KanjiObsidian: "| N3 kanji | `341/341` Obsidian-certified",
         readmeN2KanjiObsidian: "| N2 kanji | `349/349` Obsidian-certified",
-        readmeN5WordObsidian: `| N5 word | \`${wordN5Ratio}\` strict word Obsidian-certified`,
-        readmeN4WordObsidian: `| N4 word | \`${wordN4Ratio}\` strict word Obsidian-certified`,
-        claudeFrozenWordObsidian: `N5 and N4 Obsidian-certified subsets are strict Obsidian-certified at \`${wordLockedRatio}\` across current N5/N4 generated rows, with N5 at \`${wordN5Ratio}\` and N4 at \`${wordN4Ratio}\``,
-        productExitN5WordObsidian: `N5 word: strict non-human governed native/fluent-quality word Obsidian content certification covers \`${wordN5Ratio}\` current generated rows`,
-        productExitN4WordObsidian: `N4 word: strict non-human governed native/fluent-quality word Obsidian content certification covers \`${wordN4Ratio}\` current generated rows`,
-        releaseQaWordObsidian: `N5 word is strict non-human governed native/fluent-quality Obsidian-certified at \`${wordN5Ratio}\`; N4 word is strict non-human governed native/fluent-quality Obsidian-certified at \`${wordN4Ratio}\`; the ${wordLockedUncertified} current N5/N4 word rows without Obsidian proof (${wordN5Uncertified} N5, ${wordN4Uncertified} N4) are not release-certifiable until lower lanes and Obsidian proof catch up`,
+        readmeN5WordObsidian: `| N5 word | \`${wordN5Ratio}\` current word Obsidian v2.5-certified`,
+        readmeN4WordObsidian: `| N4 word | \`${wordN4Ratio}\` current word Obsidian v2.5-certified`,
+        claudeFrozenWordObsidian: `Current word Obsidian v2.5 certification covers \`${wordLockedRatio}\` across current N5/N4 generated rows, with N5 at \`${wordN5Ratio}\` and N4 at \`${wordN4Ratio}\`; older word Obsidian proof is legacy history, not current v2.5 certification`,
+        productExitN5WordObsidian: `N5 word: current word Obsidian v2.5 non-human governed native/fluent-quality content certification covers \`${wordN5Ratio}\` current generated rows`,
+        productExitN4WordObsidian: `N4 word: current word Obsidian v2.5 non-human governed native/fluent-quality content certification covers \`${wordN4Ratio}\` current generated rows`,
+        releaseQaWordObsidian: `N5 word is current word Obsidian v2.5-certified at \`${wordN5Ratio}\`; N4 word is current word Obsidian v2.5-certified at \`${wordN4Ratio}\`; the ${wordLockedUncertified} current N5/N4 word rows without current v2.5 proof (${wordN5Uncertified} N5, ${wordN4Uncertified} N4) are not release-certifiable until lower lanes and Obsidian v2.5 proof catch up`,
+        wordLegacyProofHistory: `Legacy word Obsidian proof history remains audit-visible at \`${wordLegacyTargets}\` N5/N4 targets and \`${wordRawEvents}\` raw ledger events; \`${wordSupersededLegacy}\` legacy events are superseded by current v2.5 proof.`,
         releaseProcessObsidianFirst: "first confirm the fail-closed Obsidian native/fluent-quality content-certification gate and its lower-lane prerequisite gates",
         systemObsidianProofNode: "Proof + natural-language certification",
         closeoutLowerLaneMatrix: "lower-lane Silver/Gold/Sapphire/Platinum count matrix",
@@ -343,11 +430,16 @@ function auditDocumentationText({
         kanjiLockedDenominator: 982,
         wordLockedDenominator: 1307,
         kanjiObsidianProof: 982,
-        wordObsidianProof: 1108,
+        wordObsidianProof: 0,
+        wordCurrentObsidianStandard: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+        wordLegacyObsidianProofTargets: 1108,
+        wordLegacyOnlyObsidianProofTargets: 1108,
+        wordRawObsidianProofEvents: 1108,
+        wordSupersededLegacyProofEvents: 0,
         wordN5Denominator: 588,
         wordN4Denominator: 719,
-        wordN5ObsidianProof: 408,
-        wordN4ObsidianProof: 700,
+        wordN5ObsidianProof: 0,
+        wordN4ObsidianProof: 0,
     };
     const productPhrases = buildProductStatusPhrases(product);
     const failures = [];
@@ -446,6 +538,7 @@ function auditDocumentationText({
     addFailure(failures, productExitCriteria.includes(productPhrases.productExitN5WordObsidian), "docs/product-exit-criteria.md N5 word posture must headline Obsidian certification.");
     addFailure(failures, productExitCriteria.includes(productPhrases.productExitN4WordObsidian), "docs/product-exit-criteria.md N4 word posture must headline Obsidian certification.");
     addFailure(failures, releaseQaChecklist.includes(productPhrases.releaseQaWordObsidian), "docs/release-qa-checklist.md word spot review must headline Obsidian certification.");
+    addFailure(failures, readme.includes(productPhrases.wordLegacyProofHistory), "README.md must separate legacy word Obsidian proof history from current v2.5 certification.");
     addFailure(failures, releaseProcess.includes(productPhrases.releaseProcessObsidianFirst), "docs/release-process.md release checklist must put Obsidian certification before lower-lane prerequisite detail.");
     addFailure(failures, systemArchitecture.includes(productPhrases.systemObsidianProofNode), "docs/system-architecture.md architecture graph must identify Obsidian as proof plus natural-language certification.");
 
@@ -547,7 +640,8 @@ function formatDocumentationStatusAuditReport(report = {}) {
         `- kanji generated: ${snapshot.product?.kanjiDenominator ?? "unknown"}`,
         `- word generated: ${snapshot.product?.wordDenominator ?? "unknown"}`,
         `- kanji Obsidian proof: ${snapshot.product?.kanjiObsidianProof ?? "unknown"}/${snapshot.product?.kanjiLockedDenominator ?? "unknown"} locked N5-N2`,
-        `- word Obsidian proof: ${snapshot.product?.wordObsidianProof ?? "unknown"}/${snapshot.product?.wordLockedDenominator ?? "unknown"} locked N5-N4`,
+        `- word current Obsidian v2.5 proof: ${snapshot.product?.wordObsidianProof ?? "unknown"}/${snapshot.product?.wordLockedDenominator ?? "unknown"} locked N5-N4`,
+        `- word legacy Obsidian proof history: ${snapshot.product?.wordLegacyObsidianProofTargets ?? "unknown"} targets; ${snapshot.product?.wordRawObsidianProofEvents ?? "unknown"} raw ledger events`,
         `- markdown files link-checked: ${report.markdownLinks?.checkedFiles ?? "not run"}`,
         "",
         `Result: ${report.passed ? "passing" : "failing"}`,

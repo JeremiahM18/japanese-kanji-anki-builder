@@ -197,6 +197,7 @@ function createLocalDirectoryProvider({
                     const requestedCategory = typeof input?.category === "string" ? input.category : "";
                     const requestedText = typeof input?.text === "string" ? input.text : "";
                     const requestedReading = typeof input?.reading === "string" ? input.reading : "";
+                    const requestedIdentityHash = typeof input?.identityHash === "string" ? input.identityHash : "";
 
                     if (requestedCategory && typeof sidecarMetadata?.category === "string" && sidecarMetadata.category !== requestedCategory) {
                         continue;
@@ -205,6 +206,9 @@ function createLocalDirectoryProvider({
                         continue;
                     }
                     if (requestedReading && typeof sidecarMetadata?.reading === "string" && sidecarMetadata.reading !== requestedReading) {
+                        continue;
+                    }
+                    if (requestedIdentityHash && typeof sidecarMetadata?.identityHash === "string" && sidecarMetadata.identityHash !== requestedIdentityHash) {
                         continue;
                     }
 
@@ -222,6 +226,7 @@ function createLocalDirectoryProvider({
                         category: typeof sidecarMetadata?.category === "string" ? sidecarMetadata.category : undefined,
                         text: typeof sidecarMetadata?.text === "string" ? sidecarMetadata.text : undefined,
                         reading: typeof sidecarMetadata?.reading === "string" ? sidecarMetadata.reading : undefined,
+                        identityHash: typeof sidecarMetadata?.identityHash === "string" ? sidecarMetadata.identityHash : undefined,
                         voice: typeof sidecarMetadata?.voice === "string" ? sidecarMetadata.voice : undefined,
                         locale: typeof sidecarMetadata?.locale === "string" ? sidecarMetadata.locale : undefined,
                         notes: typeof sidecarMetadata?.notes === "string" ? sidecarMetadata.notes : undefined,

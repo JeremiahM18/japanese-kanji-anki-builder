@@ -91,6 +91,7 @@ function parseWordTsvForPlatinum(tsv) {
             coversReading: mapped.CoversReading || "",
             kanjiBreakdown: mapped.KanjiBreakdown || "",
             exampleSentence: mapped.ExampleSentence || "",
+            exampleAudio: mapped.ExampleAudio || "",
             notes: mapped.Notes || "",
         });
     }

@@ -171,11 +171,21 @@ npm run deck:words:expansion-support -- --levels=<level>
 
 Word NLP is broader than kanji NLP: it runs model/runtime checks, tokenization, embeddings, example reranking, sense-fit warnings, reading-gap candidate discovery, review packets, draft proposals, artifact validation, and `nlp:governance-gate`. Review packets point the Obsidian pass at exact word-reading targets, tokenizer issues, example alternatives, sense-fit risks, and candidate words. It still cannot certify Obsidian proof or write tracked templates.
 
-4. Run the Obsidian rereview for each queued word card against the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, native/fluent-quality content criteria, and any NLP signals. Fix tracked source/card data first when NLP or the rubric exposes a real issue, then regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed.
+4. Run the Obsidian rereview for each queued word card against the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, native/fluent-quality content criteria, and any NLP signals. The example sentence is reviewed as card content before any example-sentence audio is generated. Fix tracked source/card data first when NLP or the rubric exposes a real issue, then regenerate, rerun relevant gates, and rerun NLP if the affected support artifact changed.
 
-5. Record Obsidian proof only after the live generated word row is actually rereviewed. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
+5. After the sentence passes review, generate, sync, and review exact example-sentence audio for the approved live sentence surface only:
 
-6. Verify the batch. Use the native word Sapphire alias for structural coverage, then rerun the Obsidian status queue for proof posture.
+```bash
+npm run media:voicevox:word-examples -- --level=<level> --word=<written1>,<written2>
+npm run media:sync:word-examples -- --level=<level> --word=<written1>,<written2>
+npm run media:review:word-example-audio -- --level=<level> --word=<written1>,<written2>
+```
+
+Example-sentence audio is downstream evidence for an accepted sentence. It is not a substitute for the Obsidian natural-language review and must not be generated for weak or unresolved sentences.
+
+6. Record Obsidian proof only after the live generated word row is actually rereviewed and the exact example-sentence audio review is clean. Word proof must bind exact written+reading identity, structured `rereviewProvenance`, the full word-card `evidenceChecked` checklist, actual example-sentence quality evidence, and `sentenceAudioReview` evidence for the `word-example-sentence` asset. Canonical JSONL is the NoSQL proof ledger; generated SQLite output is query support only.
+
+7. Verify the batch. Use the native word Sapphire alias for structural coverage, then rerun the Obsidian status queue for proof posture.
 
 ```bash
 npm run deck:words:sapphire:n<level>
@@ -185,7 +195,7 @@ npm run deck:words:platinum:batch -- --level=<level> --limit=8 --queue=substanti
 
 Replace `n<level>` with the actual npm alias when one exists, such as `deck:words:sapphire:n4`.
 
-7. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
+8. Run the fail-closed certification gate only when the selected scope is expected to be fully Obsidian:
 
 ```bash
 npm run deck:words:obsidian:certify-status -- --levels=<level>
@@ -505,17 +515,22 @@ npm run doctor:voicevox
 npm run media:voicevox -- --list-speakers
 npm run media:voicevox -- --level=5 --speaker-id=10005 --concurrency=4
 npm run media:voicevox:words -- --level=5 --speaker-id=10005 --concurrency=4
+npm run media:voicevox:word-examples -- --level=5 --speaker-id=10005 --word=<written1>,<written2>
 npm run voicevox:stop
 npm run media:sync -- --level=5 --limit=100
 npm run media:sync:words -- --level=5
+npm run media:sync:word-examples -- --level=5 --word=<written1>,<written2>
 npm run media:review:audio -- --level=5 --limit=25
 npm run media:review:word-audio -- --level=5 --limit=25
+npm run media:review:word-example-audio -- --level=5 --word=<written1>,<written2>
 npm run data:audit:audio -- --json
 ```
 
 Use the npm scripts for governed audio work. The word-audio generator is `scripts/generateWordVoicevoxAudio.js` behind `npm run media:voicevox:words`; `scripts/generateVoicevoxWordAudio.js` is not a repo path.
 
-`media:review:audio` and `media:review:word-audio` are scoped review packets for exact card audio identity and listening QA on the selected cards. They do not prove full-level media completeness. Full-level media completeness must come from `deck:ready -- --levels=<level>` and the relevant policy audits, such as `data:audit:audio -- --json` and `data:audit:stroke-order -- --json` for kanji media.
+`media:voicevox:word-examples` is only for approved live word example sentences after Obsidian card-surface review has accepted the sentence text, reading, translation, level fit, and learner usefulness. Do not use it before fixing or deferring weak sentences.
+
+`media:review:audio`, `media:review:word-audio`, and `media:review:word-example-audio` are scoped review packets for exact card audio identity and listening QA on the selected cards. They do not prove full-level media completeness or prove that an example sentence is natural. Full-level media completeness must come from `deck:ready -- --levels=<level>` and the relevant policy audits, such as `data:audit:audio -- --json` and `data:audit:stroke-order -- --json` for kanji media.
 
 The release audio policy requires:
 

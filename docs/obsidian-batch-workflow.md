@@ -184,13 +184,27 @@ Review packets point the Obsidian pass at exact word-reading targets, tokenizer 
 
 5. Rereview each queued word card under the Obsidian checklist.
 
-The Obsidian pass checks the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, natural Japanese/native-fluent quality, and any NLP signals.
+The current word Obsidian standard is `word-obsidian-v2.5-sentence-audio`. The dedicated workflow is [Word Obsidian v2.5 Workflow](word-obsidian-v2.5-workflow.md). Old word Obsidian proof is legacy history for this lane: useful for audit continuity, but not enough for current v2.5 certification.
+
+The Obsidian pass checks the live generated row, exact written-reading identity, source evidence, word audio, pitch evidence/rendering, reading breakdown, support labels, example naturalness, learner usefulness, level fit, release quality, reading, translation, natural Japanese/native-fluent quality, and any NLP signals. The example sentence must be reviewed first as real card content: it has to be natural Japanese, level-appropriate, useful for the learner, aligned with the target word reading and meaning, and supported by an accurate reading and translation.
 
 If NLP or the batch rubric exposes a real issue, fix tracked source/card data first. Then regenerate, rerun the affected gates, rerun NLP if its support artifact changed, and only then continue.
+
+Do not generate example-sentence audio before the sentence review passes. If the sentence is weak, misleading, unnatural, stale, over-leveled, poorly translated, or product-bad, fix/defer/remove the card through the governed upstream path first. Generate and sync example-sentence audio only after the approved live sentence surface is stable:
+
+```bash
+npm run media:voicevox:word-examples -- --level=<level> --word=<written1>,<written2>
+npm run media:sync:word-examples -- --level=<level> --word=<written1>,<written2>
+npm run media:review:word-example-audio -- --level=<level> --word=<written1>,<written2>
+```
+
+Example-sentence audio is card-level evidence for the already-reviewed sentence. It does not certify Obsidian by itself, does not replace natural-language review, and must never be created to make a weak sentence look complete.
 
 6. Record Obsidian proof only after the review happened.
 
 Only after the live generated word row is actually rereviewed should Obsidian proof be added. New substantive word proof should be recorded directly as canonical JSONL ledger events, not as inline `rereviewProvenance` that gets migrated later. Word proof must bind exact written+reading identity, the full word-card `evidenceChecked` checklist, and actual example-sentence quality evidence.
+
+For `word-obsidian-v2.5-sentence-audio`, the JSONL proof event must also carry structured `sentenceAudioReview` evidence with exact `word-example-sentence` category, source, voice, locale, asset path, identity hash, example text, example reading, translation, policy compliance, and reviewer judgment. Canonical JSONL is the NoSQL proof ledger; the SQLite mirror is local query support only.
 
 Use the governed appender with an ignored/local draft input, dry-run first, and write only after the dry-run report is clean:
 

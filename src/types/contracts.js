@@ -13,9 +13,10 @@
  * @property {number=} width
  * @property {number=} height
  * @property {number=} durationMs
- * @property {"kanji-reading"|"word-reading"|"sentence"=} category
+ * @property {"kanji-reading"|"word-reading"|"word-example-sentence"|"sentence"=} category
  * @property {string=} text
  * @property {string=} reading
+ * @property {string=} identityHash
  * @property {string=} voice
  * @property {string=} locale
  * @property {string=} notes
@@ -40,9 +41,10 @@
  * @property {string} extension
  * @property {string} source
  * @property {string=} url
- * @property {"kanji-reading"|"word-reading"|"sentence"=} category
+ * @property {"kanji-reading"|"word-reading"|"word-example-sentence"|"sentence"=} category
  * @property {string=} text
  * @property {string=} reading
+ * @property {string=} identityHash
  * @property {string=} voice
  * @property {string=} locale
  * @property {string=} notes

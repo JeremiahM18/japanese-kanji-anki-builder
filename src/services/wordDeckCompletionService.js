@@ -593,6 +593,7 @@ function buildWordDeckCardBackAudit({ wordRows, maxMissingRows = 20 }) {
             appliesTo: (row) => hasJapaneseKanji(row?.Word || row?.word),
         },
         { key: "exampleSentence", label: "example sentence", fieldName: "ExampleSentence", required: true },
+        { key: "exampleAudio", label: "example audio", fieldName: "ExampleAudio", required: false },
         { key: "notes", label: "notes", fieldName: "Notes", required: false },
     ];
     const fields = Object.fromEntries(

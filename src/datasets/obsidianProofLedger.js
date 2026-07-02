@@ -19,6 +19,9 @@ const OBSIDIAN_PROOF_LEDGER_AUTHORITY = Object.freeze({
     boundary: "Obsidian proof only; not source evidence, generated TSV authority, APKG authority, NLP certification, or release readiness.",
 });
 const DEFAULT_OBSIDIAN_PROOF_LEDGER_DIR = path.join("templates", "obsidian_proof_ledger");
+const CURRENT_WORD_OBSIDIAN_STANDARD_VERSION = "word-obsidian-v2.5-sentence-audio";
+const LEGACY_WORD_OBSIDIAN_STANDARD_VERSION = "legacy-word-obsidian-v2.0";
+const WORD_EXAMPLE_SENTENCE_AUDIO_CATEGORY = "word-example-sentence";
 
 const proofIdSchema = z.string().regex(/^[a-z0-9][a-z0-9._:-]*$/);
 const deckKindSchema = z.enum(["kanji", "word"]);
@@ -55,9 +58,27 @@ const proofReviewSessionSchema = z.object({
     batchReportOnly: z.literal(false),
 }).strict();
 
+const sentenceAudioReviewSchema = z.object({
+    category: z.literal(WORD_EXAMPLE_SENTENCE_AUDIO_CATEGORY),
+    source: z.string().min(1),
+    voice: z.string().min(1),
+    locale: z.string().min(1),
+    assetPath: z.string().min(1),
+    identityHash: z.string().regex(/^[a-f0-9]{16}$/i),
+    example: z.string().min(1),
+    reading: z.string().min(1),
+    translation: z.string().min(1),
+    exactExampleText: z.literal(true),
+    exactExampleReading: z.literal(true),
+    policyCompliant: z.literal(true),
+    readyToReview: z.literal(true),
+    reviewerJudgment: z.string().min(1),
+}).strict();
+
 const proofSchema = z.object({
     type: z.literal("substantive current standard rereview"),
     reviewStandard: z.string().min(1),
+    obsidianStandardVersion: z.string().min(1).optional(),
     reviewedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     reviewer: z.string().min(1),
     reviewedAfterStandard: z.literal(true),
@@ -68,6 +89,7 @@ const proofSchema = z.object({
     evidenceChecked: z.array(z.string().min(1)).min(8),
     limitationDecision: z.string().min(1),
     sentenceQualityReview: sentenceQualityReviewSchema,
+    sentenceAudioReview: sentenceAudioReviewSchema.optional(),
     reviewSession: proofReviewSessionSchema.optional(),
 }).strict();
 
@@ -115,6 +137,24 @@ function buildObsidianProofTargetKey(event) {
     ].join(":");
 }
 
+function resolveObsidianProofStandardVersion(event) {
+    const explicitVersion = String(event?.proof?.obsidianStandardVersion || "").trim();
+    if (explicitVersion) {
+        return explicitVersion;
+    }
+    if (event?.target?.deckKind === "word") {
+        return LEGACY_WORD_OBSIDIAN_STANDARD_VERSION;
+    }
+    return "legacy-kanji-obsidian-standard";
+}
+
+function buildObsidianProofVersionedTargetKey(event) {
+    return [
+        buildObsidianProofTargetKey(event),
+        resolveObsidianProofStandardVersion(event),
+    ].join(":");
+}
+
 function assertRelativeTemplatePath(value, label) {
     const normalized = String(value || "").replace(/\\/g, "/");
     if (path.isAbsolute(normalized) || normalized.includes("../") || normalized === "..") {
@@ -143,6 +183,13 @@ function parseObsidianProofLedgerEvent(value, { filePath = "<memory>", lineNumbe
     }
     if (event.target.deckKind === "word" && event.proof.sentenceQualityReview.releaseQuality !== true) {
         throw new Error(`${filePath}:${lineNumber} word proof must include sentenceQualityReview.releaseQuality=true.`);
+    }
+    if (
+        event.target.deckKind === "word"
+        && resolveObsidianProofStandardVersion(event) === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION
+        && !event.proof.sentenceAudioReview
+    ) {
+        throw new Error(`${filePath}:${lineNumber} word Obsidian v2.5 proof must include proof.sentenceAudioReview.`);
     }
     assertRelativeTemplatePath(event.ledger.sourceReviewSetPath, `${filePath}:${lineNumber} ledger.sourceReviewSetPath`);
     return event;
@@ -214,7 +261,7 @@ function loadObsidianProofLedger(options = {}) {
     const { ledgerDir, files } = resolveObsidianProofLedgerFiles(options);
     const events = [];
     const proofIds = new Map();
-    const targetKeys = new Map();
+    const versionedTargetKeys = new Map();
 
     for (const file of files) {
         const fileEvents = loadObsidianProofLedgerFile(file);
@@ -225,12 +272,12 @@ function loadObsidianProofLedger(options = {}) {
             }
             proofIds.set(event.proofId, file);
 
-            const targetKey = buildObsidianProofTargetKey(event);
-            const priorTargetFile = targetKeys.get(targetKey);
+            const versionedTargetKey = buildObsidianProofVersionedTargetKey(event);
+            const priorTargetFile = versionedTargetKeys.get(versionedTargetKey);
             if (priorTargetFile) {
-                throw new Error(`Duplicate Obsidian proof target ${targetKey} in ${file}; first seen in ${priorTargetFile}.`);
+                throw new Error(`Duplicate Obsidian proof target ${versionedTargetKey} in ${file}; first seen in ${priorTargetFile}.`);
             }
-            targetKeys.set(targetKey, file);
+            versionedTargetKeys.set(versionedTargetKey, file);
 
             events.push(event);
         }
@@ -258,20 +305,26 @@ function buildRereviewProvenanceFromLedgerEvent(event) {
         evidenceChecked: event.proof.evidenceChecked,
         limitationDecision: event.proof.limitationDecision,
         sentenceQualityReview: event.proof.sentenceQualityReview,
+        ...(event.proof.obsidianStandardVersion ? { obsidianStandardVersion: event.proof.obsidianStandardVersion } : {}),
+        ...(event.proof.sentenceAudioReview ? { sentenceAudioReview: event.proof.sentenceAudioReview } : {}),
         ...(event.proof.reviewSession ? { reviewSession: event.proof.reviewSession } : {}),
     };
 }
 
 module.exports = {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     DEFAULT_OBSIDIAN_PROOF_LEDGER_DIR,
+    LEGACY_WORD_OBSIDIAN_STANDARD_VERSION,
     OBSIDIAN_PROOF_EVENT_RECORD_TYPE,
     OBSIDIAN_PROOF_LEDGER_AUTHORITY,
     OBSIDIAN_PROOF_LEDGER_SCHEMA_VERSION,
     buildObsidianProofTargetKey,
+    buildObsidianProofVersionedTargetKey,
     buildRereviewProvenanceFromLedgerEvent,
     expectedReviewStandardForDeckKind,
     loadObsidianProofLedger,
     obsidianProofLedgerEventSchema,
     parseObsidianProofLedgerEvent,
     resolveObsidianProofLedgerFiles,
+    resolveObsidianProofStandardVersion,
 };

@@ -14,6 +14,7 @@
     "CoversReading",
     "KanjiBreakdown",
     "ExampleSentence",
+    "ExampleAudio",
     "Notes"
   ],
   "cssLines": [
@@ -230,6 +231,9 @@
     ".notes, .example {",
     "  font-size: 16px;",
     "  line-height: 1.5;",
+    "}",
+    ".example-audio {",
+    "  margin-top: 8px;",
     "}"
   ],
   "qfmt": "<div class=\"word\">{{Word}}</div>",
@@ -244,7 +248,7 @@
     "{{#CoverageRole}}<div class=\"word-coverage\">{{CoverageRole}}</div>{{/CoverageRole}}",
     "{{#FocusKanji}}<div class=\"section study-focus\"><div class=\"section-title\">Study Focus</div><div class=\"focus-line\"><span class=\"focus-label\">Kanji:</span> {{FocusKanji}}</div>{{#CoversReading}}<div class=\"focus-line\"><span class=\"focus-label\">Reading:</span> {{CoversReading}}</div>{{/CoversReading}}</div>{{/FocusKanji}}",
     "{{#KanjiBreakdown}}<div class=\"section\"><div class=\"section-title\">Kanji Breakdown</div>{{KanjiBreakdown}}</div>{{/KanjiBreakdown}}",
-    "{{#ExampleSentence}}<div class=\"section\"><div class=\"section-title\">Example</div><div class=\"example\">{{ExampleSentence}}</div></div>{{/ExampleSentence}}",
+    "{{#ExampleSentence}}<div class=\"section\"><div class=\"section-title\">Example</div><div class=\"example\">{{ExampleSentence}}{{#ExampleAudio}}<div class=\"example-audio\">{{ExampleAudio}}</div>{{/ExampleAudio}}</div></div>{{/ExampleSentence}}",
     "{{#Notes}}<div class=\"section\"><div class=\"section-title\">Notes</div><div class=\"notes\">{{Notes}}</div></div>{{/Notes}}"
   ]
 }

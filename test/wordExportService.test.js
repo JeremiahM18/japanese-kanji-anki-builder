@@ -2080,6 +2080,87 @@ test("buildWordTsvForJlptLevel emits only identity-matched example sentence audi
     assert.equal(byIdentity.get("休み|やすみ")[12], "");
 });
 
+test("buildWordTsvForJlptLevel resolves example audio with katakana-preserved readings", async () => {
+    const example = {
+        japanese: "ノートに名前を書きます。",
+        reading: "のーとになまえをかきます。",
+        english: "I write my name in the notebook.",
+    };
+    const exportedReading = "ノートになまえをかきます。";
+    const identityHash = buildWordExampleAudioIdentityHash({
+        written: "書く",
+        reading: "かく",
+        exampleText: example.japanese,
+        exampleReading: exportedReading,
+    });
+
+    const wordExportService = createWordExportService({
+        sentenceCorpus: [],
+        curatedStudyData: {},
+        wordStudyData: {
+            "書く|かく": {
+                written: "書く",
+                reading: "かく",
+                meaning: "to write",
+                jlpt: 5,
+                coverage: {
+                    role: "both",
+                    focusKanji: ["書"],
+                    coversReadings: { 書: "かく" },
+                },
+                readingBreakdown: "<ruby>書<rt>か</rt></ruby>く",
+                exampleSentence: example,
+            },
+        },
+    });
+
+    const result = await wordExportService.buildWordTsvForJlptLevel({
+        levelNumber: 5,
+        jlptOnlyJson: {
+            書: { jlpt: 5 },
+        },
+        jlptWordLevelContract: {
+            wordLevels: {
+                "書く|かく": { written: "書く", reading: "かく", jlpt: 5 },
+            },
+        },
+        kanjiApiClient: {
+            async getKanji(kanji) {
+                return { meanings: [kanji], on_readings: [], kun_readings: [] };
+            },
+            async getWords() {
+                return [];
+            },
+        },
+        audioService: {
+            async getManifest(kanji) {
+                if (kanji !== "書") {
+                    return null;
+                }
+                return {
+                    assets: {
+                        audio: [{
+                            path: `audio/66F8_書-word-example-sentence-${identityHash}.wav`,
+                            category: "word-example-sentence",
+                            text: example.japanese,
+                            reading: exportedReading,
+                            identityHash,
+                            voice: "女声1 / ノーマル",
+                            source: "voicevox-nemo",
+                            locale: "ja-JP",
+                        }],
+                    },
+                };
+            },
+        },
+        concurrency: 1,
+    });
+
+    const columns = result.tsv.trim().split("\n")[1].split("\t");
+    assert.equal(columns[11], `ノートに名前を書きます。 ／ ${exportedReading} ／ I write my name in the notebook.`);
+    assert.equal(columns[12], `[sound:66F8_書-word-example-sentence-${identityHash}.wav]`);
+});
+
 test("buildWordTsvForJlptLevel renders governed pitch accents as contour graphs", async () => {
     const wordExportService = createWordExportService({
         sentenceCorpus: [],

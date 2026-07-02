@@ -959,6 +959,7 @@ function createExportService({
         formatKanjiMeanings,
         formatNotesWithRuby,
         formatRubyText,
+        preserveKatakanaInSentenceReading,
         formatStudyWordKanjiLabels,
     };
 }
@@ -972,6 +973,7 @@ module.exports = {
     formatExampleSentence,
     formatKanjiMeanings,
     formatNotesWithRuby,
+    preserveKatakanaInSentenceReading,
     formatRubyText,
     formatStudyWordKanjiLabels,
 };

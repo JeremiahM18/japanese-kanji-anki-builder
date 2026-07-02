@@ -403,16 +403,22 @@ function buildProviderParityOutcome({
 
     if (canonicalLedgerMode) {
         const ledgerProofEvents = Number(ledgerProvider.summary?.ledgerProofEvents || 0);
+        const ledgerProofTargets = Number(ledgerProvider.summary?.ledgerProofTargets || ledgerProofEvents);
         const ledgerProofsApplied = Number(ledgerProvider.summary?.ledgerProofsApplied || 0);
+        const ledgerProofEventsSuperseded = Number(ledgerProvider.summary?.ledgerProofEventsSuperseded || 0);
         const inlineProofsOmitted = Number(ledgerProvider.summary?.inlineProofsOmitted || 0);
-        const passed = ledgerProofEvents === ledgerProofsApplied && inlineProofsOmitted === 0;
+        const passed = ledgerProofTargets === ledgerProofsApplied
+            && ledgerProofEvents === ledgerProofsApplied + ledgerProofEventsSuperseded
+            && inlineProofsOmitted === 0;
         return {
             comparisonMode: "canonical-ledger-integrity",
             passed,
             mismatch: passed ? null : {
                 ledgerProviderIntegrity: {
                     ledgerProofEvents,
+                    ledgerProofTargets,
                     ledgerProofsApplied,
+                    ledgerProofEventsSuperseded,
                     inlineProofsOmitted,
                 },
             },
@@ -1780,7 +1786,7 @@ function formatObsidianProofProviderParityReport(report = {}) {
         "",
         "Parity contract:",
         "- During dual-read transition, inline rereviewProvenance and canonical JSONL-derived rereviewProvenance must produce identical consumer counts.",
-        "- After inline proof is removed, canonical ledger integrity must prove every scoped ledger event binds to a tracked review-set entry and applies cleanly.",
+        "- After inline proof is removed, canonical ledger integrity must prove every scoped ledger event binds to a tracked review-set entry, with older same-target events explicitly counted as superseded proof history.",
         "- Queue samples, selected cards, classifications, and card-level Obsidian statuses must match before a consumer is switched.",
         "- Word batch report queue samples, selected word identities, summaries, review statuses, and risk flags must match before deck:words:platinum:batch reads the proof provider by default.",
         "- Word certification status totals, zero-failure gate posture, and failure objects must match before deck:words:obsidian:certify-status reads the proof provider by default.",
@@ -1802,7 +1808,9 @@ function formatObsidianProofProviderParityReport(report = {}) {
             `- Source entries: ${scope.inlineProvider?.sourceEntries || 0}`,
             `- Inline proofs in source: ${scope.inlineProofCount || 0}`,
             `- Ledger proof events: ${scope.ledgerProvider?.ledgerProofEvents || 0}`,
+            `- Ledger proof targets: ${scope.ledgerProvider?.ledgerProofTargets || scope.ledgerProvider?.ledgerProofEvents || 0}`,
             `- Ledger proofs applied: ${scope.ledgerProvider?.ledgerProofsApplied || 0}`,
+            `- Superseded ledger events: ${scope.ledgerProvider?.ledgerProofEventsSuperseded || 0}`,
             `- Inline proofs omitted by ledger provider: ${scope.ledgerProvider?.inlineProofsOmitted || 0}`
         );
         if (!scope.passed && scope.mismatch) {

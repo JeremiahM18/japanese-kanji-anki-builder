@@ -43,12 +43,15 @@ function normalizeTokenForFileName(value) {
         .replace(/^_+|_+$/g, "");
 }
 
-function buildAudioFileCandidates({ kanji, reading, text, category = "kanji-reading" }) {
+function buildAudioFileCandidates({ kanji, reading, text, category = "kanji-reading", identityHash = "" }) {
     const normalizedKanji = normalizeKanji(kanji);
     const normalizedReading = normalizeTokenForFileName(reading);
     const normalizedText = normalizeTokenForFileName(text);
+    const normalizedCategory = normalizeTokenForFileName(category);
+    const normalizedIdentityHash = normalizeTokenForFileName(identityHash);
+    const skipGenericKanjiCandidates = category === "word-reading" || category === "word-example-sentence";
     const candidates = new Set(
-        category === "word-reading"
+        skipGenericKanjiCandidates
             ? []
             : buildKanjiFileCandidates(normalizedKanji)
     );
@@ -76,11 +79,22 @@ function buildAudioFileCandidates({ kanji, reading, text, category = "kanji-read
         candidates.add(`${normalizedKanji}-${normalizedText}-${normalizedReading}`);
     }
 
+    if (normalizedCategory && normalizedText && normalizedReading) {
+        candidates.add(`${normalizedKanji}-${normalizedCategory}-${normalizedText}-${normalizedReading}`);
+    }
+
+    if (normalizedCategory && normalizedIdentityHash) {
+        candidates.add(`${normalizedKanji}-${normalizedCategory}-${normalizedIdentityHash}`);
+        if (normalizedText && normalizedReading) {
+            candidates.add(`${normalizedKanji}-${normalizedCategory}-${normalizedText}-${normalizedReading}-${normalizedIdentityHash}`);
+        }
+    }
+
     return [...candidates];
 }
 
 function buildAudioAssetKey(asset) {
-    return [asset.category || "", asset.text || "", asset.reading || "", asset.voice || "", asset.locale || ""]
+    return [asset.category || "", asset.text || "", asset.reading || "", asset.identityHash || "", asset.voice || "", asset.locale || ""]
         .map((value) => String(value).toLowerCase())
         .join("|");
 }
@@ -101,6 +115,7 @@ function scoreAudioAsset(asset, preferences = {}) {
     const categoryPriority = {
         "kanji-reading": 30,
         "word-reading": 20,
+        "word-example-sentence": 15,
         sentence: 10,
     };
 
@@ -115,6 +130,10 @@ function scoreAudioAsset(asset, preferences = {}) {
     }
 
     if (preferences.reading && asset.reading === preferences.reading) {
+        score += 20;
+    }
+
+    if (preferences.identityHash && asset.identityHash === preferences.identityHash) {
         score += 20;
     }
 
@@ -155,8 +174,15 @@ async function findMatchingAudioAsset(sourceDir, { kanji, reading, text }) {
     return null;
 }
 
-function buildDestinationStem({ mediaId, category, text, reading }) {
-    const parts = [mediaId, normalizeTokenForFileName(category || "kanji-reading")];
+function buildDestinationStem({ mediaId, category, text, reading, identityHash }) {
+    const normalizedCategory = normalizeTokenForFileName(category || "kanji-reading");
+    const normalizedIdentityHash = normalizeTokenForFileName(identityHash);
+    const parts = [mediaId, normalizedCategory];
+
+    if (normalizedIdentityHash) {
+        parts.push(normalizedIdentityHash);
+        return parts.join("-");
+    }
 
     for (const token of [text, reading].map(normalizeTokenForFileName).filter(Boolean)) {
         parts.push(token);
@@ -170,6 +196,7 @@ function mergeAudioMetadata(asset, requestedMetadata) {
         category: cleanToken(asset?.category) || requestedMetadata.category || "kanji-reading",
         text: cleanToken(asset?.text) || requestedMetadata.text || "",
         reading: cleanToken(asset?.reading) || requestedMetadata.reading || undefined,
+        identityHash: cleanToken(asset?.identityHash) || requestedMetadata.identityHash || undefined,
         voice: cleanToken(asset?.voice) || requestedMetadata.voice || undefined,
         locale: cleanToken(asset?.locale) || requestedMetadata.locale || "ja-JP",
         notes: cleanToken(asset?.notes) || undefined,
@@ -183,6 +210,7 @@ function findReusableManagedAudioAsset(audioAssets, preferences = {}) {
     const requestedCategory = cleanToken(preferences.category);
     const requestedText = cleanToken(preferences.text);
     const requestedReading = cleanToken(preferences.reading);
+    const requestedIdentityHash = cleanToken(preferences.identityHash);
 
     const scopedAssets = assets.filter((asset) => {
         if (requestedCategory && cleanToken(asset?.category) !== requestedCategory) {
@@ -192,6 +220,9 @@ function findReusableManagedAudioAsset(audioAssets, preferences = {}) {
             return false;
         }
         if (requestedReading && cleanToken(asset?.reading) !== requestedReading) {
+            return false;
+        }
+        if (requestedIdentityHash && cleanToken(asset?.identityHash) !== requestedIdentityHash) {
             return false;
         }
         return true;
@@ -235,6 +266,7 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
             reading: cleanToken(metadata.reading) || undefined,
             voice: cleanToken(metadata.voice) || undefined,
             locale: cleanToken(metadata.locale) || "ja-JP",
+            identityHash: cleanToken(metadata.identityHash) || undefined,
         };
 
         const existingManifest = await getManifest(normalizedKanji);
@@ -246,6 +278,7 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
                 category: normalizedMetadata.category,
                 text: normalizedMetadata.text,
                 reading: normalizedMetadata.reading,
+                identityHash: normalizedMetadata.identityHash,
             }, providerMetrics);
         const audioAsset = audioLookup.asset;
         const mergedMetadata = mergeAudioMetadata(audioAsset, normalizedMetadata);
@@ -286,6 +319,7 @@ function createAudioService({ mediaRootDir, audioSourceDir, providers = [], mani
                 category: mergedMetadata.category,
                 text: mergedMetadata.text,
                 reading: mergedMetadata.reading,
+                identityHash: mergedMetadata.identityHash,
                 voice: mergedMetadata.voice,
                 locale: mergedMetadata.locale,
                 notes: mergedMetadata.notes || `Imported from ${audioAsset.fileName}`,

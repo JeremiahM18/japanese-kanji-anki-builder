@@ -14,6 +14,11 @@ test("loadAudioSourcePolicy parses the tracked release audio contract", () => {
     assert.equal(policy.releaseAudio.primarySpeakerId, 10005);
     assert.equal(policy.releaseAudio.primarySpeakerName, "女声1");
     assert.deepEqual(policy.releaseAudio.allowedSourceIds, ["voicevox-nemo"]);
+    assert.deepEqual(policy.releaseAudio.allowedCategories, [
+        "kanji-reading",
+        "word-reading",
+        "word-example-sentence",
+    ]);
     assert.equal(policy.releaseAudio.requiredLocale, "ja-JP");
     assert.equal(buildDefaultAudioSourcePolicyPath(), policy.policyPath);
 });

@@ -284,6 +284,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run media:plan` | Report missing media and accepted filenames |
 | `npm run media:sync` | Sync media into managed storage |
 | `npm run media:sync:words` | Sync governed word audio into managed storage |
+| `npm run media:sync:word-examples` | Sync governed word example-sentence audio into managed storage after the sentence has already passed Obsidian card-surface review; not a sentence-quality gate |
 | `npm run media:report` | Report managed media coverage |
 | `npm run media:sources` | Report configured managed media source folders |
 | `npm run media:report:animations` | Report missing managed stroke-order animation files |
@@ -293,7 +294,9 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run media:import:audio` | Import governed local audio files into managed media |
 | `npm run media:voicevox` | Generate governed kanji reading audio through local VOICEVOX |
 | `npm run media:voicevox:words` | Generate governed word reading audio through local VOICEVOX |
+| `npm run media:voicevox:word-examples` | Generate governed word example-sentence VOICEVOX audio only for already-reviewed, accepted live example sentences; not a replacement for Obsidian natural-language review |
 | `npm run media:review:audio` | Emit scoped kanji audio review packets for selected cards; not a full-level media-completeness gate |
 | `npm run media:review:word-audio` | Emit scoped word audio review packets for selected cards; not a full-level media-completeness gate |
+| `npm run media:review:word-example-audio` | Emit scoped word example-sentence audio review packets for exact sentence audio identity after audio generation/sync; not proof that the sentence itself is natural or useful |
 | `npm run data:import:pitch:kanjium` | Import governed Kanjium pitch-accent data into the canonical word pitch store |
 | `npm run data:import:pitch:voicevox` | Import generated VOICEVOX pitch-accent support labels into the canonical word pitch store |

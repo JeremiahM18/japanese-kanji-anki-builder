@@ -12,6 +12,7 @@ const {
     CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
 } = require("../src/services/sapphireWordReviewService");
 const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     buildPlatinumWordRereviewStatusReport,
     buildPlatinumWordRereviewStatusSummary,
@@ -182,11 +183,13 @@ function buildRereviewProvenance({
     pitchLabel = "Pitch 1: 0",
     pitchPattern = "0 [heiban]",
     includeEvidenceChecklist = true,
-    includeSentenceQualityReview = false,
+    includeSentenceQualityReview = true,
+    includeSentenceAudioReview = true,
 } = {}) {
     return {
         type: "substantive current standard rereview",
         reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        obsidianStandardVersion: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
         reviewedAt: "2026-05-14",
         reviewer: "content-review",
         reviewedAfterStandard: true,
@@ -204,6 +207,7 @@ function buildRereviewProvenance({
                 `reading breakdown ${breakdown.join(" and ")}; kanji breakdown checked`,
                 `JLPT level, coverage role, focus ${focus.join(" and ")}, and covers ${covers.join(" and ")}`,
                 `exact word-reading audio identity word-reading-${word}-${reading}`,
+                `exact example sentence audio identity word-example-sentence-${word}-${reading}`,
                 `pitch accent source pattern ${pitchPattern} and rendered label ${pitchLabel}`,
                 "managed media provenance and no silent fallback",
                 "golden regression as internal regression only, not source truth",
@@ -220,6 +224,24 @@ function buildRereviewProvenance({
                 learnerUseful: true,
                 levelAppropriate: true,
                 releaseQuality: true,
+            },
+        } : {}),
+        ...(includeSentenceAudioReview ? {
+            sentenceAudioReview: {
+                category: "word-example-sentence",
+                source: "voicevox-nemo",
+                voice: "女声1 / ノーマル",
+                locale: "ja-JP",
+                assetPath: `audio/${word}-word-example-sentence-0123456789abcdef.wav`,
+                identityHash: "0123456789abcdef",
+                example,
+                reading,
+                translation: "fixture translation",
+                exactExampleText: true,
+                exactExampleReading: true,
+                policyCompliant: true,
+                readyToReview: true,
+                reviewerJudgment: "Fixture sentence audio is exact, policy-compliant, and ready for card-level review.",
             },
         } : {}),
     };
@@ -430,6 +452,26 @@ test("word rereview status accepts structured sentence-quality evidence bound to
     assert.equal(wordRereviewEvidenceChecklistPasses(entry), true);
     assert.equal(hasWordSentenceQualityReviewProof(entry), true);
     assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), true);
+});
+
+test("word rereview status requires exact sentence-audio proof for v2.5", () => {
+    const entry = buildEntry({
+        entryOverrides: {
+            rereviewProvenance: buildRereviewProvenance({
+                includeSentenceAudioReview: false,
+            }),
+        },
+    });
+    const report = buildReport({
+        rows: [buildRow()],
+        entries: [entry],
+        level: 5,
+    });
+
+    assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), false);
+    assert.equal(report.counts.substantive_current_standard_review_proven, 0);
+    assert.equal(report.cards[0].status, "needs_substantive_rereview");
+    assert.match(report.cards[0].reasons.join("\n"), /exact example sentence audio review proof/);
 });
 
 test("word rereview status reports dirty evidence lanes as blocked or failing", () => {

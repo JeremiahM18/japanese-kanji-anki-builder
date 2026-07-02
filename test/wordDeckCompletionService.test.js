@@ -481,13 +481,13 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
             "日\t日\tday\tひ\tday\t\t\tくん: ひ\t\t\t\t今日 （きょう） - today\t",
         ].join("\n"),
         wordTsv: [
-            "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
-            "今日\tきょう\t<ruby>今日<rt>きょう</rt></ruby>\t[sound:today.wav]\t<div>Pitch: 1 [atamadaka]</div>\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div><div>日</div>\t今日は休みです。 ／ きょうはやすみです。 ／ Today is a day off.\t",
+            "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tExampleAudio\tNotes",
+            "今日\tきょう\t<ruby>今日<rt>きょう</rt></ruby>\t[sound:today.wav]\t<div>Pitch: 1 [atamadaka]</div>\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div><div>日</div>\t今日は休みです。 ／ きょうはやすみです。 ／ Today is a day off.\t\t",
         ].join("\n"),
         coverageWordTsvByLevel: {
             5: [
-                "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tNotes",
-                "今日\tきょう\t<ruby>今日<rt>きょう</rt></ruby>\t[sound:today.wav]\t<div>Pitch: 1 [atamadaka]</div>\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div><div>日</div>\t今日は休みです。 ／ きょうはやすみです。 ／ Today is a day off.\t",
+                "Word\tReading\tReadingBreakdown\tAudio\tPitchAccent\tMeaning\tJLPTLevel\tCoverageRole\tFocusKanji\tCoversReading\tKanjiBreakdown\tExampleSentence\tExampleAudio\tNotes",
+                "今日\tきょう\t<ruby>今日<rt>きょう</rt></ruby>\t[sound:today.wav]\t<div>Pitch: 1 [atamadaka]</div>\ttoday\tJLPT N5\tJLPT core + reading coverage\t今、日\t今: いま ／ 日: ひ\t<div>今</div><div>日</div>\t今日は休みです。 ／ きょうはやすみです。 ／ Today is a day off.\t\t",
             ].join("\n"),
         },
         wordPitchAccentData: buildPitchAccentData({

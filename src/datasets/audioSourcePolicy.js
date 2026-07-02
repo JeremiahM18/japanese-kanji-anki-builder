@@ -10,7 +10,7 @@ const releaseAudioSchema = z.object({
     requireSingleSourcePerDeck: z.boolean().default(true),
     requireVoiceMetadata: z.boolean().default(true),
     requiredLocale: z.string().min(1),
-    allowedCategories: z.array(z.enum(["kanji-reading", "word-reading", "sentence"])).min(1),
+    allowedCategories: z.array(z.enum(["kanji-reading", "word-reading", "word-example-sentence", "sentence"])).min(1),
     wordDeckAudioEnabled: z.boolean().default(false),
     remoteAudioProvidersAllowed: z.boolean().default(false),
 });

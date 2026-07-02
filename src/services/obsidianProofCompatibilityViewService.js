@@ -2,10 +2,12 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     OBSIDIAN_PROOF_LEDGER_AUTHORITY,
     buildObsidianProofTargetKey,
     buildRereviewProvenanceFromLedgerEvent,
     loadObsidianProofLedger,
+    resolveObsidianProofStandardVersion,
 } = require("../datasets/obsidianProofLedger");
 const {
     assertSafeGeneratedPath,
@@ -106,16 +108,45 @@ function stripInlineRereviewProvenance(entry = {}) {
     return copy;
 }
 
+function getObsidianProofPriority(event) {
+    if (
+        event?.target?.deckKind === "word"
+        && resolveObsidianProofStandardVersion(event) === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION
+    ) {
+        return 100;
+    }
+    if (event?.proof?.obsidianStandardVersion) {
+        return 50;
+    }
+    return 10;
+}
+
+function groupEventsByTargetKey(events = []) {
+    const groups = new Map();
+    for (const event of events) {
+        const targetKey = buildObsidianProofTargetKey(event);
+        if (!groups.has(targetKey)) {
+            groups.set(targetKey, []);
+        }
+        groups.get(targetKey).push(event);
+    }
+    for (const group of groups.values()) {
+        group.sort((a, b) => (
+            getObsidianProofPriority(b) - getObsidianProofPriority(a)
+            || String(b.proof?.reviewedAt || "").localeCompare(String(a.proof?.reviewedAt || ""))
+            || String(b.proofId || "").localeCompare(String(a.proofId || ""))
+        ));
+    }
+    return groups;
+}
+
 function buildCompatibilityEntries({
     entries = [],
     events = [],
     deckKind,
     level,
 }) {
-    const eventsByTargetKey = new Map(events.map((event) => [
-        buildObsidianProofTargetKey(event),
-        event,
-    ]));
+    const eventsByTargetKey = groupEventsByTargetKey(events);
     const appliedTargetKeys = new Set();
     let inlineProofsOmitted = 0;
     let ledgerProofsApplied = 0;
@@ -123,7 +154,7 @@ function buildCompatibilityEntries({
     const compatibilityEntries = entries.map((entry) => {
         const targetKeys = buildEntryTargetKeys(entry, { deckKind, level });
         const matchingEvents = targetKeys
-            .map((targetKey) => eventsByTargetKey.get(targetKey))
+            .map((targetKey) => (eventsByTargetKey.get(targetKey) || [])[0])
             .filter(Boolean);
 
         if (matchingEvents.length > 1) {
@@ -147,6 +178,8 @@ function buildCompatibilityEntries({
         return compatibilityEntry;
     });
 
+    const ledgerProofTargets = new Set(events.map((event) => buildObsidianProofTargetKey(event)));
+    const ledgerProofEventsSuperseded = events.length - ledgerProofTargets.size;
     const unappliedEvents = events.filter((event) => !appliedTargetKeys.has(buildObsidianProofTargetKey(event)));
     if (unappliedEvents.length > 0) {
         const targets = unappliedEvents.map((event) => event.target.cardReviewed).join(", ");
@@ -160,7 +193,9 @@ function buildCompatibilityEntries({
             level,
             sourceEntries: entries.length,
             ledgerProofEvents: events.length,
+            ledgerProofTargets: ledgerProofTargets.size,
             ledgerProofsApplied,
+            ledgerProofEventsSuperseded,
             inlineProofsOmitted,
             entriesWithoutLedgerProof: entries.length - ledgerProofsApplied,
         },
@@ -307,7 +342,10 @@ function formatObsidianProofCompatibilityViewReport(report = {}) {
             lines.push([
                 `- ${reviewSet.deckKind}:N${reviewSet.level}`,
                 `source entries=${reviewSet.sourceEntries}`,
+                `ledger proof events=${reviewSet.ledgerProofEvents}`,
+                `ledger proof targets=${reviewSet.ledgerProofTargets}`,
                 `ledger proofs applied=${reviewSet.ledgerProofsApplied}`,
+                `superseded ledger events=${reviewSet.ledgerProofEventsSuperseded}`,
                 `inline proofs omitted=${reviewSet.inlineProofsOmitted}`,
                 `output sha256=${reviewSet.outputHash?.sha256 || "(missing)"}`,
                 `output=${reviewSet.outputReviewSetPath}`,

@@ -8,11 +8,15 @@ const { buildWordIdentity } = require("./platinumWordBatchReportService");
 const {
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     NON_MECHANICAL_PROOF_MARKER,
+    SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
     SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
     SUBSTANTIVE_REREVIEW_PROOF_MARKER,
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     entryHasSubstantiveCurrentStandardRereviewProof,
     hasBaseStructuredRereviewProvenance,
+    hasCurrentWordObsidianStandardVersion,
     hasWordCardIdentityProof,
+    hasWordSentenceAudioReviewProof,
     hasWordSentenceQualityReviewProof,
     wordRereviewEvidenceChecklistPasses,
 } = require("./platinumWordObsidianProofService");
@@ -104,21 +108,25 @@ function buildMissingRereviewProofReason(entry = {}) {
     const currentStandardEvidence = normalizeEvidenceEntries(entry.reviewEvidence)
         .some((evidence) => evidence.type === "current-standard-review");
     const hasBaseProvenance = hasBaseStructuredRereviewProvenance(entry);
+    const hasCurrentObsidianVersion = hasCurrentWordObsidianStandardVersion(entry);
     const hasCardIdentity = hasWordCardIdentityProof(entry);
     const hasEvidenceChecklist = wordRereviewEvidenceChecklistPasses(entry);
     const hasSentenceQualityProof = hasWordSentenceQualityReviewProof(entry);
+    const hasSentenceAudioProof = hasWordSentenceAudioReviewProof(entry);
     const observed = [
         hasRevalidatedAt ? "revalidatedAt" : "",
         currentStandardEvidence ? "current-standard-review lane" : "",
         hasBaseProvenance ? "base rereviewProvenance metadata" : "",
+        hasBaseProvenance && !hasCurrentObsidianVersion ? `legacy or missing Obsidian standard version instead of ${CURRENT_WORD_OBSIDIAN_STANDARD_VERSION}` : "",
         hasBaseProvenance && !hasCardIdentity ? "rereviewProvenance without word-reading card identity binding" : "",
         hasBaseProvenance && !hasEvidenceChecklist ? "rereviewProvenance without full word-card evidence checklist" : "",
         hasBaseProvenance && !hasSentenceQualityProof ? "rereviewProvenance without actual example sentence quality review proof" : "",
+        hasBaseProvenance && !hasSentenceAudioProof ? "rereviewProvenance without exact example sentence audio review proof" : "",
     ].filter(Boolean);
 
     return [
         MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
-        "requires explicit non-mechanical post-v3 Obsidian rereview proof with word-reading card identity binding, full word-card evidence checklist, and actual example sentence quality review proof",
+        `requires explicit non-mechanical ${CURRENT_WORD_OBSIDIAN_STANDARD_VERSION} proof with word-reading card identity binding, full word-card evidence checklist, actual example sentence quality review proof, and exact example sentence audio review proof`,
         observed.length > 0 ? `observed ${observed.join(" and ")} only` : "no current-standard rereview provenance observed",
     ].join(": ");
 }
@@ -297,7 +305,9 @@ function buildPlatinumWordRereviewStatusReport({
             nonMechanicalMarker: NON_MECHANICAL_PROOF_MARKER,
             missingProofMarker: MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
             sentenceQualityReviewProofMarker: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
-            note: "revalidatedAt and required v3 current-standard-review lane text are Platinum evidence, not standalone proof of substantive post-v3 Obsidian rereview or actual word example sentence quality review",
+            sentenceAudioReviewProofMarker: SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
+            obsidianStandardVersion: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+            note: "revalidatedAt and required v3 current-standard-review lane text are Platinum evidence, not standalone proof of Obsidian v2.5 rereview, actual word example sentence quality review, or exact example sentence audio proof",
         },
         counts,
         passed: counts.blocked_or_failing === 0,
@@ -330,10 +340,12 @@ function buildPlatinumWordRereviewStatusSummary(levelReports = []) {
     const reports = Array.isArray(levelReports) ? levelReports : [];
     return {
         currentReviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+        obsidianStandardVersion: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
         proofMarker: SUBSTANTIVE_REREVIEW_PROOF_MARKER,
         nonMechanicalMarker: NON_MECHANICAL_PROOF_MARKER,
         missingProofMarker: MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
         sentenceQualityReviewProofMarker: SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
+        sentenceAudioReviewProofMarker: SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
         passed: reports.every((report) => report.passed),
         totals: buildAggregateCounts(reports),
         levels: reports,
@@ -358,6 +370,7 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
         "Japanese Kanji Builder Word Obsidian Proof Status",
         "",
         `Current review standard: ${summary.currentReviewStandard || CURRENT_WORD_PLATINUM_REVIEW_STANDARD}`,
+        `Current Obsidian standard: ${summary.obsidianStandardVersion || CURRENT_WORD_OBSIDIAN_STANDARD_VERSION}`,
         `Result: ${summary.passed ? "passing" : "failing"}`,
         `Generated active word rows: ${totals.generatedRows || 0}`,
         `Review entries: ${totals.reviewEntries || 0}`,
@@ -393,7 +406,8 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
         "- Tier model: Silver = generated surface exists, Gold = golden regression, Sapphire = structural gate, Platinum = current-standard card-surface inspection, Obsidian = explicit non-mechanical current-version certification proof.",
         "- Generated deck rows are the certification denominator. Platinum subsets do not shrink the Obsidian queue.",
         `- ${summary.missingProofMarker || MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: Platinum lane validity is not counted as Obsidian certification proof by itself.`,
-        `- To count as Obsidian certified, an entry must carry structured rereviewProvenance with explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance, ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, exact word-reading card identity binding, a full word-card evidence checklist, and actual ${summary.sentenceQualityReviewProofMarker || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence.`,
+        `- To count as current Obsidian certified, an entry must carry structured rereviewProvenance with ${summary.obsidianStandardVersion || CURRENT_WORD_OBSIDIAN_STANDARD_VERSION}, explicit ${summary.proofMarker || SUBSTANTIVE_REREVIEW_PROOF_MARKER} provenance, ${summary.nonMechanicalMarker || NON_MECHANICAL_PROOF_MARKER} language, exact word-reading card identity binding, a full word-card evidence checklist, actual ${summary.sentenceQualityReviewProofMarker || SENTENCE_QUALITY_REVIEW_PROOF_MARKER} evidence, and exact ${summary.sentenceAudioReviewProofMarker || SENTENCE_AUDIO_REVIEW_PROOF_MARKER} evidence.`,
+        "- Legacy word Obsidian proof remains dated history and does not count as current v2.5 certification.",
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );
 
@@ -419,9 +433,11 @@ function formatPlatinumWordRereviewStatusReport(summary = {}) {
 }
 
 module.exports = {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     NON_MECHANICAL_PROOF_MARKER,
     REREVIEW_STATUS_CATEGORIES,
+    SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
     SENTENCE_QUALITY_REVIEW_PROOF_MARKER,
     SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     buildPlatinumWordRereviewStatusReport,

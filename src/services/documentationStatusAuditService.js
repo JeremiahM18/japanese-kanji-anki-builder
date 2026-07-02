@@ -339,14 +339,14 @@ function auditDocumentationText({
     const phrases = buildN3WordStatusPhrases(snapshot);
     const product = productSnapshot || snapshot.product || {
         kanjiDenominator: 2212,
-        wordDenominator: 2263,
+        wordDenominator: 2505,
         kanjiLockedDenominator: 982,
-        wordLockedDenominator: 1065,
+        wordLockedDenominator: 1307,
         kanjiObsidianProof: 982,
-        wordObsidianProof: 1000,
-        wordN5Denominator: 346,
+        wordObsidianProof: 1108,
+        wordN5Denominator: 588,
         wordN4Denominator: 719,
-        wordN5ObsidianProof: 300,
+        wordN5ObsidianProof: 408,
         wordN4ObsidianProof: 700,
     };
     const productPhrases = buildProductStatusPhrases(product);

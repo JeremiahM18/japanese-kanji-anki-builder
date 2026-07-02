@@ -6,6 +6,7 @@ const {
     formatAnkiAudioField,
     formatAnkiStrokeOrderField,
     formatExampleSentence,
+    preserveKatakanaInSentenceReading,
 } = require("./exportService");
 const { buildOfflineFallbackCard } = require("./previewCardService");
 const { mapWithConcurrency } = require("../utils/concurrency");
@@ -308,18 +309,19 @@ async function resolveWordExampleAudioReference({ candidate, focusKanji, sentenc
         };
     }
 
+    const exampleReading = preserveKatakanaInSentenceReading(sentence?.japanese, sentence?.reading);
     const identityHash = sentence?.identityHash || buildWordExampleAudioIdentityHash({
         written: candidate?.written,
         reading: candidate?.pron,
         exampleText: sentence?.japanese,
-        exampleReading: sentence?.reading,
+        exampleReading,
     });
 
     const { kanji, asset } = await findManagedWordExampleAudioAsset({
         written: candidate?.written,
         reading: candidate?.pron,
         exampleText: sentence?.japanese,
-        exampleReading: sentence?.reading,
+        exampleReading,
         identityHash,
         focusKanji,
         audioService,

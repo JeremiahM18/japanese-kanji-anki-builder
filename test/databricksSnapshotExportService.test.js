@@ -9,6 +9,9 @@ const {
     parseSnapshotId,
 } = require("../src/services/databricksSnapshotExportService");
 const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+} = require("../src/datasets/obsidianProofLedger");
+const {
     CURRENT_KANJI_PLATINUM_REVIEW_STANDARD,
 } = require("../src/services/platinumKanjiReviewService");
 const {
@@ -152,9 +155,16 @@ function wordPlatinumEntry(word, reading) {
     };
 }
 
-function proofEvent({ deckKind, written, reading, reviewStandard }) {
+function proofEvent({
+    deckKind,
+    written,
+    reading,
+    reviewStandard,
+    proofId = `${deckKind}-proof-1`,
+    obsidianStandardVersion,
+}) {
     return {
-        proofId: `${deckKind}-proof-1`,
+        proofId,
         target: {
             deckKind,
             level: 1,
@@ -169,6 +179,7 @@ function proofEvent({ deckKind, written, reading, reviewStandard }) {
             reviewedAt: "2026-06-09",
             reviewer: "fixture",
             reviewStandard,
+            ...(obsidianStandardVersion ? { obsidianStandardVersion } : {}),
             result: "approved",
             evidenceChecked: [
                 "generated surface",
@@ -357,6 +368,15 @@ test("databricks snapshot writes required metadata files without granting certif
                     written: "日本",
                     reading: "にほん",
                     reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+                    proofId: "word-proof-legacy",
+                }),
+                proofEvent({
+                    deckKind: "word",
+                    written: "日本",
+                    reading: "にほん",
+                    reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+                    proofId: "word-proof-v25",
+                    obsidianStandardVersion: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
                 }),
             ],
         }),
@@ -364,7 +384,13 @@ test("databricks snapshot writes required metadata files without granting certif
 
     assert.equal(result.manifest.counts.kanjiGenerated, 1);
     assert.equal(result.manifest.counts.wordGenerated, 1);
-    assert.equal(result.manifest.counts.totalProofEvents, 2);
+    assert.equal(result.manifest.counts.wordProofEvents, 2);
+    assert.equal(result.manifest.counts.totalProofEvents, 3);
+    assert.equal(result.manifest.counts.kanjiCurrentObsidianTargets, 1);
+    assert.equal(result.manifest.counts.wordCurrentObsidianV25Targets, 1);
+    assert.equal(result.manifest.counts.wordCurrentObsidianV25ProofEvents, 1);
+    assert.equal(result.manifest.counts.wordLegacyObsidianProofEvents, 1);
+    assert.equal(result.manifest.counts.totalCurrentObsidianTargets, 2);
     assert.equal(result.manifest.snapshotCompletenessStatus, "complete");
     assert.match(result.manifest.authorityBoundary, /analytics\/reporting artifacts only/);
     assert.deepEqual(result.files, [
@@ -389,6 +415,13 @@ test("databricks snapshot writes required metadata files without granting certif
     assert.equal(mediaRows.some((row) => row.sha256), true);
     const laneRows = readNdjson(path.join(outputDir, "lane_coverage.ndjson"));
     assert.equal(laneRows.find((row) => row.deckKind === "word" && row.lane === "obsidian").count, 1);
+    const proofRows = readNdjson(path.join(outputDir, "obsidian_proof_events.ndjson"));
+    const wordProofRows = proofRows.filter((row) => row.deckKind === "word");
+    assert.equal(wordProofRows.length, 2);
+    assert.equal(new Set(wordProofRows.map((row) => row.proofTargetKey)).size, 1);
+    assert.equal(new Set(wordProofRows.map((row) => row.versionedProofTargetKey)).size, 2);
+    assert.equal(wordProofRows.find((row) => row.obsidianStandardVersion === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION).countsForCurrentObsidian, true);
+    assert.equal(wordProofRows.find((row) => row.legacyProof).countsForCurrentObsidian, false);
 });
 
 test("databricks snapshot rejects duplicate generated card identities", () => {
@@ -425,6 +458,40 @@ test("databricks snapshot rejects proof events without active Platinum binding",
             })],
         }),
     }), /not bound to active current-standard Platinum/u);
+});
+
+test("databricks snapshot preserves legacy history but rejects duplicate current word Obsidian v2.5 targets", () => {
+    const { rootDir, closeoutReport } = createFixtureRepo();
+    assert.throws(() => buildDatabricksSnapshot({
+        rootDir,
+        snapshotId: "duplicate-current-v25-proof",
+        levels: [1],
+        execFileSync: createGitStub(rootDir),
+        runCommandEvidenceFn: stubCommandEvidence,
+        buildCloseoutReportFn: () => closeoutReport,
+        buildSourceEvidenceSummaryRowsFn: () => [],
+        loadProofLedgerFn: () => ({
+            files: [],
+            events: [
+                proofEvent({
+                    deckKind: "word",
+                    written: "日本",
+                    reading: "にほん",
+                    reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+                    proofId: "word-proof-v25-a",
+                    obsidianStandardVersion: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+                }),
+                proofEvent({
+                    deckKind: "word",
+                    written: "日本",
+                    reading: "にほん",
+                    reviewStandard: CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
+                    proofId: "word-proof-v25-b",
+                    obsidianStandardVersion: CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
+                }),
+            ],
+        }),
+    }), /Duplicate versioned Obsidian proof target/u);
 });
 
 test("databricks snapshot rejects generated count mismatches", () => {

@@ -11,9 +11,12 @@ const { loadJlptWordLevelContract } = require("../datasets/jlptWordLevelContract
 const { loadJlptKanjiSourceEvidence } = require("../datasets/jlptKanjiSourceEvidence");
 const { loadJlptWordSourceEvidence } = require("../datasets/jlptWordSourceEvidence");
 const {
+    CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     OBSIDIAN_PROOF_LEDGER_AUTHORITY,
     buildObsidianProofTargetKey,
+    buildObsidianProofVersionedTargetKey,
     loadObsidianProofLedger,
+    resolveObsidianProofStandardVersion,
 } = require("../datasets/obsidianProofLedger");
 const { auditJlptKanjiSourceEvidence } = require("./jlptKanjiSourceEvidenceService");
 const {
@@ -149,12 +152,16 @@ const proofEventRowSchema = z.object({
     recordType: z.literal("obsidian_proof_event"),
     proofId: z.string().min(1),
     proofTargetKey: z.string().min(1),
+    versionedProofTargetKey: z.string().min(1),
     cardKey: z.string().min(1),
     deckKind: deckKindSchema,
     level: z.number().int().min(1).max(5),
     levelLabel: z.string().regex(/^N[1-5]$/),
     written: z.string().min(1),
     reading: z.string().min(1),
+    obsidianStandardVersion: z.string().min(1),
+    countsForCurrentObsidian: z.boolean(),
+    legacyProof: z.boolean(),
     sourceReviewSetPath: z.string().min(1),
     sourceCommit: z.string().min(1),
     reviewedAt: z.string().min(1),
@@ -761,10 +768,17 @@ function buildReviewDecisionRows({ rootDir, levels, cardSurfaceRows }) {
 function buildObsidianProofEventRows({ rootDir, loadProofLedgerFn = loadObsidianProofLedger, platinumCardKeys }) {
     const ledger = loadProofLedgerFn({ cwd: rootDir });
     const rows = [];
-    const seenProofTargets = new Map();
+    const seenProofIds = new Map();
+    const seenVersionedProofTargets = new Map();
     for (const event of ledger.events || []) {
         const proofTargetKey = buildObsidianProofTargetKey(event);
-        addUnique(seenProofTargets, proofTargetKey, "Obsidian proof target");
+        const versionedProofTargetKey = buildObsidianProofVersionedTargetKey(event);
+        const obsidianStandardVersion = resolveObsidianProofStandardVersion(event);
+        const countsForCurrentObsidian = event.target.deckKind === "word"
+            ? obsidianStandardVersion === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION
+            : true;
+        addUnique(seenProofIds, event.proofId, "Obsidian proof id");
+        addUnique(seenVersionedProofTargets, versionedProofTargetKey, "versioned Obsidian proof target");
         const cardKey = buildCardKey({
             deckKind: event.target.deckKind,
             level: event.target.level,
@@ -779,12 +793,16 @@ function buildObsidianProofEventRows({ rootDir, loadProofLedgerFn = loadObsidian
             recordType: "obsidian_proof_event",
             proofId: event.proofId,
             proofTargetKey,
+            versionedProofTargetKey,
             cardKey,
             deckKind: event.target.deckKind,
             level: event.target.level,
             levelLabel: formatLevelLabel(event.target.level),
             written: event.target.written,
             reading: event.target.reading,
+            obsidianStandardVersion,
+            countsForCurrentObsidian,
+            legacyProof: !countsForCurrentObsidian,
             sourceReviewSetPath: event.ledger.sourceReviewSetPath,
             sourceCommit: event.ledger.sourceCommit,
             reviewedAt: event.proof.reviewedAt,
@@ -799,22 +817,31 @@ function buildObsidianProofEventRows({ rootDir, loadProofLedgerFn = loadObsidian
         });
     }
     return {
-        rows: rows.sort((left, right) => compareStableStrings(left.proofTargetKey, right.proofTargetKey)),
+        rows: rows.sort((left, right) => (
+            compareStableStrings(left.versionedProofTargetKey, right.versionedProofTargetKey)
+            || compareStableStrings(left.proofId, right.proofId)
+        )),
         files: ledger.files || [],
     };
 }
 
-function indexProofRowsByDeckLevel(rows) {
+function indexCurrentProofTargetsByDeckLevel(rows) {
     const counts = new Map();
     for (const row of rows) {
+        if (!row.countsForCurrentObsidian) {
+            continue;
+        }
         const key = `${row.deckKind}:${row.level}`;
-        counts.set(key, (counts.get(key) || 0) + 1);
+        if (!counts.has(key)) {
+            counts.set(key, new Set());
+        }
+        counts.get(key).add(row.proofTargetKey);
     }
-    return counts;
+    return new Map([...counts.entries()].map(([key, targetKeys]) => [key, targetKeys.size]));
 }
 
 function buildLaneCoverageRows({ closeoutReport, proofRows }) {
-    const proofCounts = indexProofRowsByDeckLevel(proofRows);
+    const proofCounts = indexCurrentProofTargetsByDeckLevel(proofRows);
     const rows = [];
     for (const laneRow of closeoutReport.laneRows || []) {
         for (const laneName of ["silver", "gold", "sapphire", "platinum"]) {
@@ -1268,6 +1295,14 @@ function countRowsByDeckKindLevel(rows, deckKind, level) {
     return rows.filter((row) => row.deckKind === deckKind && Number(row.level) === Number(level)).length;
 }
 
+function countCurrentProofTargetsByDeckKindLevel(rows, deckKind, level) {
+    return new Set(rows.filter((row) => (
+        row.deckKind === deckKind
+        && Number(row.level) === Number(level)
+        && row.countsForCurrentObsidian
+    )).map((row) => row.proofTargetKey)).size;
+}
+
 function addFinding(findings, key, passed, invariant, observed, expected, severity = "error") {
     findings.push({
         schemaVersion: SCHEMA_VERSION,
@@ -1324,12 +1359,12 @@ function validateCountPreservation({ closeoutReport, cardSurfaceRows, reviewDeci
             && row.level === laneRow.level
             && row.lane === "obsidian"
         ));
-        const proofCount = countRowsByDeckKindLevel(proofRows, laneRow.deckKind, laneRow.level);
+        const proofCount = countCurrentProofTargetsByDeckKindLevel(proofRows, laneRow.deckKind, laneRow.level);
         addFinding(
             findings,
             `${laneRow.deckKind}:n${laneRow.level}:obsidian-proof-count-preserved`,
             proofCount === obsidianCoverage.count,
-            "Obsidian coverage must be counted only from canonical proof events.",
+            "Obsidian coverage must be counted only from canonical current-certification proof targets.",
             proofCount,
             obsidianCoverage.count
         );
@@ -1463,6 +1498,19 @@ function buildOutputInventory(rootDir, outputDir, fileRows) {
 }
 
 function summarizeCounts({ cardSurfaceRows, reviewDecisionRows, proofRows, laneCoverageRows }) {
+    const kanjiCurrentProofTargets = new Set(proofRows.filter((row) => (
+        row.deckKind === "kanji"
+        && row.countsForCurrentObsidian
+    )).map((row) => row.proofTargetKey)).size;
+    const wordCurrentProofTargets = new Set(proofRows.filter((row) => (
+        row.deckKind === "word"
+        && row.countsForCurrentObsidian
+    )).map((row) => row.proofTargetKey)).size;
+    const wordCurrentProofEvents = proofRows.filter((row) => (
+        row.deckKind === "word"
+        && row.obsidianStandardVersion === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION
+    )).length;
+    const wordLegacyProofEvents = proofRows.filter((row) => row.deckKind === "word" && row.legacyProof).length;
     return {
         kanjiGenerated: countRowsByDeckKind(cardSurfaceRows, "kanji"),
         wordGenerated: countRowsByDeckKind(cardSurfaceRows, "word"),
@@ -1470,6 +1518,11 @@ function summarizeCounts({ cardSurfaceRows, reviewDecisionRows, proofRows, laneC
         kanjiProofEvents: countRowsByDeckKind(proofRows, "kanji"),
         wordProofEvents: countRowsByDeckKind(proofRows, "word"),
         totalProofEvents: proofRows.length,
+        kanjiCurrentObsidianTargets: kanjiCurrentProofTargets,
+        wordCurrentObsidianV25Targets: wordCurrentProofTargets,
+        wordCurrentObsidianV25ProofEvents: wordCurrentProofEvents,
+        wordLegacyObsidianProofEvents: wordLegacyProofEvents,
+        totalCurrentObsidianTargets: kanjiCurrentProofTargets + wordCurrentProofTargets,
         reviewDecisions: reviewDecisionRows.length,
         laneCoverageRows: laneCoverageRows.length,
     };

@@ -20056,7 +20056,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 一緒|いっしょ, reading いっしょ, example sentence 友だちと一緒に行きます。, reading line ともだちといっしょにいきます。, English line I go together with my friend., and the exported reading line for release quality."
+        "detail": "Example review checked 一緒|いっしょ, reading いっしょ, example sentence 友だちと一緒に行きます。, reading line ともだちといっしょにいきます。, English line I will go with my friend., and the exported reading line for release quality."
       },
       {
         "type": "manual-review",
@@ -20066,7 +20066,7 @@
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一緒|いっしょ checked generated surface, Japanese-source evidence from JMdict entrySeq 1163400, example sentence 友だちと一緒に行きます。, reading ともだちといっしょにいきます。, translation I go together with my friend., notes/support surface Core beginner word for doing something together; 緒 is higher-level kanji support and generated pitch remains visibly labeled., reading breakdown 一 （いっ）; 緒 （しょ）, meaning together, labels JLPT N5; JLPT core + reading coverage; focus 一、緒; covers 一: いっ ／ 緒: しょ, audio word-reading-一緒-いっしょ, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 一緒|いっしょ checked generated surface, Japanese-source evidence from JMdict entrySeq 1163400, example sentence 友だちと一緒に行きます。, reading ともだちといっしょにいきます。, translation I will go with my friend., notes/support surface Core beginner word for doing something together; 緒 is higher-level kanji support and generated pitch remains visibly labeled., reading breakdown 一 （いっ）; 緒 （しょ）, meaning together, labels JLPT N5; JLPT core + reading coverage; focus 一、緒; covers 一: いっ ／ 緒: しょ, audio word-reading-一緒-いっしょ, pitch accent source voicevox-nemo-accent-query pattern 3 [odaka] rendered Pitch 1: 3 / Generated pitch (unverified). Governed generated pitch evidence is visibly labeled Generated pitch (unverified); dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "fixSummary": "Replaced the harder 勉強 example with a simpler together-with-a-friend sentence and protected the higher-level 緒 support label.",
@@ -30114,7 +30114,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 椅子|いす, reading いす, example sentence 椅子に座ってください。, reading line いすにすわってください。, English line Please sit in the chair., and the exported reading line for release quality."
+        "detail": "Example review checked 椅子|いす, reading いす, example sentence 椅子に座ってください。, reading line いすにすわってください。, English line Please sit on the chair., and the exported reading line for release quality."
       },
       {
         "type": "manual-review",
@@ -30124,7 +30124,7 @@
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 椅子|いす checked generated surface, Japanese-source evidence from JMdict entrySeq 1157070, example sentence 椅子に座ってください。, reading いすにすわってください。, translation Please sit in the chair., notes/support surface Core classroom/household noun for chair; 椅 is outside the JLPT kanji contract and the N5 reading support remains 子 -> す., reading breakdown 椅 （い） ／ chair; 子 （す） ／ child, meaning chair, labels JLPT N5; Reading coverage support; focus 子; covers 子: す, audio word-reading-椅子-いす, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 椅子|いす checked generated surface, Japanese-source evidence from JMdict entrySeq 1157070, example sentence 椅子に座ってください。, reading いすにすわってください。, translation Please sit on the chair., notes/support surface Core classroom/household noun for chair; 椅 is outside the JLPT kanji contract and the N5 reading support remains 子 -> す., reading breakdown 椅 （い） ／ chair; 子 （す） ／ child, meaning chair, labels JLPT N5; Reading coverage support; focus 子; covers 子: す, audio word-reading-椅子-いす, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "fixSummary": "Revalidated 椅子|いす under the current word Sapphire standard and protected the generated example, notes/support surface, labels, audio, pitch, and source-bound field evidence.",

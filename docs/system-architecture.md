@@ -134,13 +134,13 @@ The architecture is product- and level-agnostic. The current repo snapshot prove
 | Product surface | Generated denominator | Obsidian-certified denominator | Boundary |
 | --- | ---: | ---: | --- |
 | Core kanji | 2212 | 982 | The scoped release lock covers the completed N5-N2 denominator. Remaining generated rows are not Obsidian-certified. |
-| Words | 2505 | 200 | Current word Obsidian v2.5 covers the current N5 v2.5 batches. Legacy N5/N4 word proof history remains audit-visible, but it is not current v2.5 certification. |
+| Words | 2505 | 300 | Current word Obsidian v2.5 covers the current N5 v2.5 batches. Legacy N5/N4 word proof history remains audit-visible, but it is not current v2.5 certification. |
 
 Obsidian counts for completed scopes are verified by fail-closed certification gates:
 
 - Kanji locked scope: `982/982` Obsidian certified.
-- Word locked scope: `200/1307` current word Obsidian v2.5-certified for current N5/N4 generated rows; `1088` rows need Obsidian v2.5 and `19` rows are blocked on lower lanes. Legacy word proof history remains audit-visible at `1118` N5/N4 targets and `1318` raw ledger events, with `200` legacy events superseded by current v2.5 proof.
-- Proof ledger validation: `2300` events across 6 JSONL files.
+- Word locked scope: `300/1307` current word Obsidian v2.5-certified for current N5/N4 generated rows; `988` Platinum-passing rows need Obsidian v2.5 and `19` rows are blocked on lower lanes. Legacy word proof history remains audit-visible at `1118` N5/N4 targets and `1418` raw ledger events, with `253` legacy events superseded by current v2.5 proof.
+- Proof ledger validation: `2400` events across 6 JSONL files.
 
 ## Expansion Workflow Pattern
 

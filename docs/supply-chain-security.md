@@ -85,10 +85,10 @@ Dependency license compliance is governed by [../templates/dependency_license_po
 
 ## Routine Maintenance Snapshot
 
-As of 2026-06-03, the recurring supply-chain maintenance items are:
+As of 2026-07-03, the recurring supply-chain maintenance items are:
 
 - Keep the lifecycle-script package allowlist above exact by package and version; any package-lock change that adds, removes, or changes `fsevents`, `onnxruntime-node`, `protobufjs`, `sharp`, or another install-script package must be reviewed before trusting install output.
-- Keep reviewed license exceptions in [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) current by package, reason, owner, `reviewedAt`, and `nextReview`. The current sharp/libvips exception review is due on 2026-07-02.
+- Keep reviewed license exceptions in [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) current by package, reason, owner, `reviewedAt`, and `nextReview`. The current sharp/libvips exception review is due on 2026-08-03.
 - Rerun `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, `npm run security:advisories`, and `npm run security:secrets` after dependency, workflow, release-artifact, NOTICE, or policy changes.
 - Treat green maintenance checks as supply-chain hygiene only. They do not close hosted alert regressions, source-governance, release-trust, attestation-proof, APKG import, mobile, accessibility, listening, or manual QA blockers.
 

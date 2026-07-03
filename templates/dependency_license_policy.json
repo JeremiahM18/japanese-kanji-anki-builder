@@ -53,24 +53,24 @@
       "packageNamePrefix": "@img/sharp-libvips-",
       "reason": "Optional platform libvips binary packages pulled by sharp. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
       "owner": "Repository owner",
-      "reviewedAt": "2026-06-02",
-      "nextReview": "2026-07-02"
+      "reviewedAt": "2026-07-03",
+      "nextReview": "2026-08-03"
     },
     {
       "licenseExpression": "Apache-2.0 AND LGPL-3.0-or-later",
       "packageNamePrefix": "@img/sharp-win32-",
       "reason": "Optional Windows sharp binary packages with libvips linkage. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
       "owner": "Repository owner",
-      "reviewedAt": "2026-06-02",
-      "nextReview": "2026-07-02"
+      "reviewedAt": "2026-07-03",
+      "nextReview": "2026-08-03"
     },
     {
       "licenseExpression": "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
       "packageName": "@img/sharp-wasm32",
       "reason": "Optional sharp WebAssembly binary package with mixed permissive/LGPL terms. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
       "owner": "Repository owner",
-      "reviewedAt": "2026-06-02",
-      "nextReview": "2026-07-02"
+      "reviewedAt": "2026-07-03",
+      "nextReview": "2026-08-03"
     }
   ],
   "deniedLicensePatterns": [

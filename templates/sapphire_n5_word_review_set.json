@@ -17351,7 +17351,7 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 語らう|かたらう, reading かたらう, example sentence 友だちと楽しく語らう。, reading line ともだちとたのしくかたらう。, English line I enjoy talking together with my friend., and the exported reading line for release quality."
+        "detail": "Example review checked 語らう|かたらう, reading かたらう, example sentence 友だちと楽しく語らう。, reading line ともだちとたのしくかたらう。, English line I enjoy talking with my friend., and the exported reading line for release quality."
       },
       {
         "type": "manual-review",
@@ -17361,7 +17361,7 @@
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 語らう|かたらう checked generated surface, Japanese-source evidence from JMdict entrySeq 1270920, example sentence 友だちと楽しく語らう。, reading ともだちとたのしくかたらう。, translation I enjoy talking together with my friend., notes/support surface Dictionary-backed support verb for 語 -> かたらう; kept support-only and not as a core substitute for beginner 話す or 話., reading breakdown 語 （かた） ／ language / word, meaning talk together / converse, labels JLPT N5; Reading coverage support; focus 語; covers 語: かたらう, audio word-reading-語らう-かたらう, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 語らう|かたらう checked generated surface, Japanese-source evidence from JMdict entrySeq 1270920, example sentence 友だちと楽しく語らう。, reading ともだちとたのしくかたらう。, translation I enjoy talking with my friend., notes/support surface Dictionary-backed support verb for 語 -> かたらう; kept support-only and not as a core substitute for beginner 話す or 話., reading breakdown 語 （かた） ／ language / word, meaning talk together / converse, labels JLPT N5; Reading coverage support; focus 語; covers 語: かたらう, audio word-reading-語らう-かたらう, pitch accent source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka] rendered Pitch 1: 3, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "fixSummary": "Tightened the note and rationale so this remains a support-only reading card rather than a core beginner substitute for 話す or 話.",
@@ -23163,14 +23163,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 行き|ゆき, reading ゆき, learner meaning bound for / going to, and product review checked example 東京行きの電車に乗ります。 / とうきょうゆきのでんしゃにのります。 / I ride the train bound for Tokyo. for the shipped word-card surface; source meaning support: the way there; outbound leg; outbound trip; departing leg; bound for ...; outbound ticket; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 行き|ゆき as bound for / going to vocabulary. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1578790; jmdictPriority=ichi1,news1,nf12; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 行き|ゆき, reading ゆき, learner meaning bound for / going to, and product review checked example 東京行きの電車に乗ります。 / とうきょうゆきのでんしゃにのります。 / I take the train bound for Tokyo. for the shipped word-card surface; source meaning support: the way there; outbound leg; outbound trip; departing leg; bound for ...; outbound ticket; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 行き|ゆき as bound for / going to vocabulary. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1578790; jmdictPriority=ichi1,news1,nf12; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "live generated N5 word TSV surface via scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 行き|ゆき: word 行き, reading ゆき, meaning bound for / going to, example 東京行きの電車に乗ります。, reading とうきょうゆきのでんしゃにのります。, translation I ride the train bound for Tokyo., audio word-reading-行き-ゆき, reading breakdown 行 （ゆ）き, kanji breakdown 行 ゆ 行 （ゆ） ／ go / carry out / line Stroke order On: アン、 ギョウ、 コウ Kun: -い.き、 -ゆ.き、 い.く、 おこ.なう、 ゆ.く, labels JLPT N5; Reading coverage support; focus 行; covers 行: ゆ."
+        "detail": "Generated word-card surface inspected for 行き|ゆき: word 行き, reading ゆき, meaning bound for / going to, example 東京行きの電車に乗ります。, reading とうきょうゆきのでんしゃにのります。, translation I take the train bound for Tokyo., audio word-reading-行き-ゆき, reading breakdown 行 （ゆ）き, kanji breakdown 行 ゆ 行 （ゆ） ／ go / carry out / line Stroke order On: アン、 ギョウ、 コウ Kun: -い.き、 -ゆ.き、 い.く、 おこ.なう、 ゆ.く, labels JLPT N5; Reading coverage support; focus 行; covers 行: ゆ."
       },
       {
         "type": "level-contract",
@@ -23207,7 +23207,7 @@
       {
         "type": "example-review",
         "source": "Sapphire product Japanese example review",
-        "detail": "Example review checked 行き|ゆき: 東京行きの電車に乗ります。 / とうきょうゆきのでんしゃにのります。 / I ride the train bound for Tokyo.; the sentence naturally contains the written form and the reading line contains ゆき."
+        "detail": "Example review checked 行き|ゆき: 東京行きの電車に乗ります。 / とうきょうゆきのでんしゃにのります。 / I take the train bound for Tokyo.; the sentence naturally contains the written form and the reading line contains ゆき."
       },
       {
         "type": "manual-review",
@@ -37714,14 +37714,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 休業|きゅうぎょう, reading きゅうぎょう, learner meaning temporary closure / business suspension, and product review checked example この店は月曜日に休業します。 / このみせはげつようびにきゅうぎょうします。 / This store is closed on Mondays. for the shipped word-card surface; source meaning support: suspension of business; temporary closure (of a store, school, etc.); shutdown; holiday; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 休業|きゅうぎょう as store-closure and schedule vocabulary. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1227700; jmdictPriority=ichi1,news1,nf07; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 休業|きゅうぎょう, reading きゅうぎょう, learner meaning temporary closure / business suspension, and product review checked example この店は月曜日に休業します。 / このみせはげつようびにきゅうぎょうします。 / This store will be closed on Monday. for the shipped word-card surface; source meaning support: suspension of business; temporary closure (of a store, school, etc.); shutdown; holiday; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 休業|きゅうぎょう as store-closure and schedule vocabulary. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1227700; jmdictPriority=ichi1,news1,nf07; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "live generated N5 word TSV surface via scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 休業|きゅうぎょう: word 休業, reading きゅうぎょう, meaning temporary closure / business suspension, example この店は月曜日に休業します。, reading このみせはげつようびにきゅうぎょうします。, translation This store is closed on Mondays., audio word-reading-休業-きゅうぎょう, reading breakdown 休 （きゅう）業 （ぎょう）, kanji breakdown 休 きゅう 休 （きゅう） ／ rest / take a day off Stroke order On: キュウ Kun: やす.まる、 やす.む、 やす.める 業 JLPT N4 kanji ぎょう 業 （ぎょう） ／ business / work / study Stroke order On: ギョウ、 ゴウ Kun: わざ, labels JLPT N5; Reading coverage support; focus 休; covers 休: きゅう."
+        "detail": "Generated word-card surface inspected for 休業|きゅうぎょう: word 休業, reading きゅうぎょう, meaning temporary closure / business suspension, example この店は月曜日に休業します。, reading このみせはげつようびにきゅうぎょうします。, translation This store will be closed on Monday., audio word-reading-休業-きゅうぎょう, reading breakdown 休 （きゅう）業 （ぎょう）, kanji breakdown 休 きゅう 休 （きゅう） ／ rest / take a day off Stroke order On: キュウ Kun: やす.まる、 やす.む、 やす.める 業 JLPT N4 kanji ぎょう 業 （ぎょう） ／ business / work / study Stroke order On: ギョウ、 ゴウ Kun: わざ, labels JLPT N5; Reading coverage support; focus 休; covers 休: きゅう."
       },
       {
         "type": "level-contract",
@@ -37758,7 +37758,7 @@
       {
         "type": "example-review",
         "source": "Sapphire product Japanese example review",
-        "detail": "Example review checked 休業|きゅうぎょう: この店は月曜日に休業します。 / このみせはげつようびにきゅうぎょうします。 / This store is closed on Mondays.; the sentence naturally contains the written form and the reading line contains きゅうぎょう."
+        "detail": "Example review checked 休業|きゅうぎょう: この店は月曜日に休業します。 / このみせはげつようびにきゅうぎょうします。 / This store will be closed on Monday.; the sentence naturally contains the written form and the reading line contains きゅうぎょう."
       },
       {
         "type": "manual-review",
@@ -41027,14 +41027,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 期間|きかん, reading きかん, learner meaning period / term / interval, and product review checked example この期間は忙しいです。 / このきかんはいそがしいです。 / This period is busy. for the shipped word-card surface; source meaning support: period; term; interval; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL expansion route. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 期間|きかん as period / term / interval vocabulary. 期=N2 support stays visibly labeled. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1220550; jmdictPriority=ichi1,news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 期間|きかん, reading きかん, learner meaning period / term / interval, and product review checked example この期間は忙しいです。 / このきかんはいそがしいです。 / I am busy during this period. for the shipped word-card surface; source meaning support: period; term; interval; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL expansion route. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 期間|きかん as period / term / interval vocabulary. 期=N2 support stays visibly labeled. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1220550; jmdictPriority=ichi1,news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "live generated N5 word TSV surface via scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 期間|きかん: word 期間, reading きかん, meaning period / term / interval, example この期間は忙しいです。, reading このきかんはいそがしいです。, translation This period is busy., audio word-reading-期間-きかん, reading breakdown 期 （き）間 （かん）, kanji breakdown 期 JLPT N2 kanji き 期 （き） ／ deadline / period / term Stroke order On: キ、 ゴ 間 かん 間 （かん） ／ interval / time Stroke order On: カン、 ケン Kun: あい、 あいだ、 ま, labels JLPT N5; Reading coverage support; focus 間; covers 間: かん."
+        "detail": "Generated word-card surface inspected for 期間|きかん: word 期間, reading きかん, meaning period / term / interval, example この期間は忙しいです。, reading このきかんはいそがしいです。, translation I am busy during this period., audio word-reading-期間-きかん, reading breakdown 期 （き）間 （かん）, kanji breakdown 期 JLPT N2 kanji き 期 （き） ／ deadline / period / term Stroke order On: キ、 ゴ 間 かん 間 （かん） ／ interval / time Stroke order On: カン、 ケン Kun: あい、 あいだ、 ま, labels JLPT N5; Reading coverage support; focus 間; covers 間: かん."
       },
       {
         "type": "level-contract",
@@ -41071,7 +41071,7 @@
       {
         "type": "example-review",
         "source": "Sapphire product Japanese example review",
-        "detail": "Example review checked 期間|きかん: この期間は忙しいです。 / このきかんはいそがしいです。 / This period is busy.; the sentence naturally contains the written form and the reading line contains きかん."
+        "detail": "Example review checked 期間|きかん: この期間は忙しいです。 / このきかんはいそがしいです。 / I am busy during this period.; the sentence naturally contains the written form and the reading line contains きかん."
       },
       {
         "type": "manual-review",
@@ -44771,14 +44771,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 午前中|ごぜんちゅう, reading ごぜんちゅう, learner meaning during the morning, and product review checked example 午前中に買い物をします。 / ごぜんちゅうにかいものをします。 / I will shop during the morning. for the shipped word-card surface; source meaning support: in the morning; during the morning; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 午前中|ごぜんちゅう as during-the-morning vocabulary.; entrySeq=1269070; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 午前中|ごぜんちゅう, reading ごぜんちゅう, learner meaning during the morning, and product review checked example 午前中に買い物をします。 / ごぜんちゅうにかいものをします。 / I will go shopping in the morning. for the shipped word-card surface; source meaning support: in the morning; during the morning; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 午前中|ごぜんちゅう as during-the-morning vocabulary.; entrySeq=1269070; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "live generated N5 word TSV surface via scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 午前中|ごぜんちゅう: word 午前中, reading ごぜんちゅう, meaning during the morning, example 午前中に買い物をします。, reading ごぜんちゅうにかいものをします。, translation I will shop during the morning., audio word-reading-午前中-ごぜんちゅう, reading breakdown 午 （ご）前 （ぜん）中 （ちゅう）, kanji breakdown 午 ご 午 （ご） ／ noon / midday Stroke order On: ゴ Kun: うま 前 ぜん 前 （ぜん） ／ front / before Stroke order On: ゼン Kun: -まえ 中 ちゅう 中 （ちゅう） ／ inside / middle Stroke order On: チュウ Kun: あた.る、 うち、 なか, labels JLPT N5; Reading coverage support; focus 午、前、中; covers 午: ご ／ 前: ぜん ／ 中: ちゅう."
+        "detail": "Generated word-card surface inspected for 午前中|ごぜんちゅう: word 午前中, reading ごぜんちゅう, meaning during the morning, example 午前中に買い物をします。, reading ごぜんちゅうにかいものをします。, translation I will go shopping in the morning., audio word-reading-午前中-ごぜんちゅう, reading breakdown 午 （ご）前 （ぜん）中 （ちゅう）, kanji breakdown 午 ご 午 （ご） ／ noon / midday Stroke order On: ゴ Kun: うま 前 ぜん 前 （ぜん） ／ front / before Stroke order On: ゼン Kun: -まえ 中 ちゅう 中 （ちゅう） ／ inside / middle Stroke order On: チュウ Kun: あた.る、 うち、 なか, labels JLPT N5; Reading coverage support; focus 午、前、中; covers 午: ご ／ 前: ぜん ／ 中: ちゅう."
       },
       {
         "type": "level-contract",
@@ -44815,7 +44815,7 @@
       {
         "type": "example-review",
         "source": "Sapphire product Japanese example review",
-        "detail": "Example review checked 午前中|ごぜんちゅう: 午前中に買い物をします。 / ごぜんちゅうにかいものをします。 / I will shop during the morning.; the sentence naturally contains the written form and the reading line contains ごぜんちゅう."
+        "detail": "Example review checked 午前中|ごぜんちゅう: 午前中に買い物をします。 / ごぜんちゅうにかいものをします。 / I will go shopping in the morning.; the sentence naturally contains the written form and the reading line contains ごぜんちゅう."
       },
       {
         "type": "manual-review",
@@ -45120,14 +45120,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 月末|げつまつ, reading げつまつ, learner meaning end of the month, and product review checked example 月末にお金を払います。 / げつまつにおかねをはらいます。 / I pay money at the end of the month. for the shipped word-card surface; source meaning support: end of the month; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 月末|げつまつ as monthly deadline vocabulary. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1255840; jmdictPriority=ichi1,news1,nf15; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 月末|げつまつ, reading げつまつ, learner meaning end of the month, and product review checked example 月末にお金を払います。 / げつまつにおかねをはらいます。 / I pay at the end of the month. for the shipped word-card surface; source meaning support: end of the month; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL extra-source lane. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 月末|げつまつ as monthly deadline vocabulary. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1255840; jmdictPriority=ichi1,news1,nf15; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "live generated N5 word TSV surface via scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 月末|げつまつ: word 月末, reading げつまつ, meaning end of the month, example 月末にお金を払います。, reading げつまつにおかねをはらいます。, translation I pay money at the end of the month., audio word-reading-月末-げつまつ, reading breakdown 月 （げつ）末 （まつ）, kanji breakdown 月 げつ 月 （げつ） ／ month / moon Stroke order On: ガツ、 ゲツ Kun: つき 末 JLPT N3 kanji まつ 末 （まつ） ／ weekend / end Stroke order On: バツ、 マツ Kun: うら、 うれ、 すえ, labels JLPT N5; Reading coverage support; focus 月; covers 月: げつ."
+        "detail": "Generated word-card surface inspected for 月末|げつまつ: word 月末, reading げつまつ, meaning end of the month, example 月末にお金を払います。, reading げつまつにおかねをはらいます。, translation I pay at the end of the month., audio word-reading-月末-げつまつ, reading breakdown 月 （げつ）末 （まつ）, kanji breakdown 月 げつ 月 （げつ） ／ month / moon Stroke order On: ガツ、 ゲツ Kun: つき 末 JLPT N3 kanji まつ 末 （まつ） ／ weekend / end Stroke order On: バツ、 マツ Kun: うら、 うれ、 すえ, labels JLPT N5; Reading coverage support; focus 月; covers 月: げつ."
       },
       {
         "type": "level-contract",
@@ -45164,7 +45164,7 @@
       {
         "type": "example-review",
         "source": "Sapphire product Japanese example review",
-        "detail": "Example review checked 月末|げつまつ: 月末にお金を払います。 / げつまつにおかねをはらいます。 / I pay money at the end of the month.; the sentence naturally contains the written form and the reading line contains げつまつ."
+        "detail": "Example review checked 月末|げつまつ: 月末にお金を払います。 / げつまつにおかねをはらいます。 / I pay at the end of the month.; the sentence naturally contains the written form and the reading line contains げつまつ."
       },
       {
         "type": "manual-review",
@@ -45896,7 +45896,7 @@
       "Pitch 1: 4",
       "Generated pitch (unverified)"
     ],
-    "selectionRationale": "N5 word v2 vocabulary-level placement for high-value daily/work/school break language; DICTIONARY COMMON POOL extra-source selector; 休=きゅう is an N5 anchor and 憩=N1 support stays visibly labeled; source level claim is unverified. Reviewed for Sapphire as common/useful, learner-friendly, level-appropriate, natural in the reviewed example, not approved for coverage alone, generated pitch is visibly labeled as unverified. Accepted as practical break/rest vocabulary with a natural ten-minute-break example; 憩 remains outside-level support and generated pitch remains visibly labeled.",
+    "selectionRationale": "N5 word v2 vocabulary-level placement for high-value daily/work/school break language; DICTIONARY COMMON POOL extra-source selector; 休=きゅう is an N5 anchor and 憩=N1 support stays visibly labeled; source level claim is unverified. Reviewed for Sapphire as common/useful, learner-friendly, level-appropriate, natural in the reviewed example, not approved for coverage alone, generated pitch is visibly labeled as unverified. Accepted as practical break/rest vocabulary with a natural short-break example; 憩 remains outside-level support and generated pitch remains visibly labeled.",
     "levelPlacementReason": "N5 word v2 vocabulary-level placement for high-value daily/work/school break language; DICTIONARY COMMON POOL extra-source selector; 休=きゅう is an N5 anchor and 憩=N1 support stays visibly labeled; source level claim is unverified.",
     "reviewedAt": "2026-07-01",
     "reviewer": "codex-sapphire-review",
@@ -45907,14 +45907,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 休憩|きゅうけい, reading きゅうけい, learner meaning rest / break / recess, and product review checked example 十分休憩します。 / じゅっぷんきゅうけいします。 / I take a ten-minute break. for the shipped word-card surface; source meaning support: rest; break; recess; intermission; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL expansion route. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 休憩|きゅうけい as rest / break / recess vocabulary. 憩=N1 support stays visibly labeled. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1227720; jmdictPriority=ichi1,news1,nf08; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 休憩|きゅうけい, reading きゅうけい, learner meaning rest / break / recess, and product review checked example 少し休憩します。 / すこしきゅうけいします。 / I take a short break. for the shipped word-card surface; source meaning support: rest; break; recess; intermission; row support note: N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL expansion route. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 休憩|きゅうけい as rest / break / recess vocabulary. 憩=N1 support stays visibly labeled. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up.; entrySeq=1227720; jmdictPriority=ichi1,news1,nf08; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "live generated N5 word TSV surface via scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 休憩|きゅうけい: word 休憩, reading きゅうけい, meaning rest / break / recess, example 十分休憩します。, reading じゅっぷんきゅうけいします。, translation I take a ten-minute break., audio word-reading-休憩-きゅうけい, reading breakdown 休 （きゅう）憩 （けい）, kanji breakdown 休 きゅう 休 （きゅう） ／ rest / take a day off Stroke order On: キュウ Kun: やす.まる、 やす.む、 やす.める 憩 JLPT N1 kanji けい 憩 （けい） ／ rest / respite Stroke order On: ケイ Kun: いこ.い、 いこ.う, labels JLPT N5; Reading coverage support; focus 休; covers 休: きゅう."
+        "detail": "Generated word-card surface inspected for 休憩|きゅうけい: word 休憩, reading きゅうけい, meaning rest / break / recess, example 少し休憩します。, reading すこしきゅうけいします。, translation I take a short break., audio word-reading-休憩-きゅうけい, reading breakdown 休 （きゅう）憩 （けい）, kanji breakdown 休 きゅう 休 （きゅう） ／ rest / take a day off Stroke order On: キュウ Kun: やす.まる、 やす.む、 やす.める 憩 JLPT N1 kanji けい 憩 （けい） ／ rest / respite Stroke order On: ケイ Kun: いこ.い、 いこ.う, labels JLPT N5; Reading coverage support; focus 休; covers 休: きゅう."
       },
       {
         "type": "level-contract",
@@ -45951,17 +45951,17 @@
       {
         "type": "example-review",
         "source": "Sapphire product Japanese example review",
-        "detail": "Example review checked 休憩|きゅうけい: 十分休憩します。 / じゅっぷんきゅうけいします。 / I take a ten-minute break.; the sentence naturally contains the written form and the reading line contains きゅうけい."
+        "detail": "Example review checked 休憩|きゅうけい: 少し休憩します。 / すこしきゅうけいします。 / I take a short break.; the sentence naturally contains the written form and the reading line contains きゅうけい."
       },
       {
         "type": "manual-review",
         "source": "Sapphire product review",
-        "detail": "Manual Sapphire review judged 休憩|きゅうけい common/useful, learner-friendly, level-appropriate, natural in the reviewed example, not approved for coverage alone, generated pitch is visibly labeled as unverified for the N5 word deck, with learner meaning rest / break / recess; risk flags reviewed: reading-coverage support row; verify learner usefulness instead of approving for coverage alone; generated pitch source; visible label is required and dictionary-backed pitch remains unverified; contains outside-level kanji label(s): JLPT N1 kanji; meaning has several glosses; verify the learner-facing gloss is not noisy or misleading. Accepted as practical break/rest vocabulary with a natural ten-minute-break example; 憩 remains outside-level support and generated pitch remains visibly labeled."
+        "detail": "Manual Sapphire review judged 休憩|きゅうけい common/useful, learner-friendly, level-appropriate, natural in the reviewed example, not approved for coverage alone, generated pitch is visibly labeled as unverified for the N5 word deck, with learner meaning rest / break / recess; risk flags reviewed: reading-coverage support row; verify learner usefulness instead of approving for coverage alone; generated pitch source; visible label is required and dictionary-backed pitch remains unverified; contains outside-level kanji label(s): JLPT N1 kanji; meaning has several glosses; verify the learner-facing gloss is not noisy or misleading. Accepted as practical break/rest vocabulary with a natural short-break example; 憩 remains outside-level support and generated pitch remains visibly labeled."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word Sapphire review using generated N5 word batch report, governed JMdict rows, Gold regression, starter data, pitch data, and separated evidence lanes",
-        "detail": "Current-standard whole-card revalidation for 休憩|きゅうけい checked generated surface, Japanese-source evidence from JMdict, example sentence 十分休憩します。, notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL expansion route. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 休憩|きゅうけい as rest / break / recess vocabulary. 憩=N1 support stays visibly labeled. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up., reading breakdown 休 （きゅう）憩 （けい）, meaning rest / break / recess, labels JLPT N5; Reading coverage support; focus 休; covers 休: きゅう, audio word-reading-休憩-きゅうけい, pitch accent source voicevox-nemo-reading-query pattern 4 [odaka] rendered Pitch 1: 4; Generated pitch (unverified), media provenance, release judgment common/useful, learner-friendly, level-appropriate, natural in the reviewed example, not approved for coverage alone, generated pitch is visibly labeled as unverified, and verification limitations no active limitations. Accepted as practical break/rest vocabulary with a natural ten-minute-break example; 憩 remains outside-level support and generated pitch remains visibly labeled."
+        "detail": "Current-standard whole-card revalidation for 休憩|きゅうけい checked generated surface, Japanese-source evidence from JMdict, example sentence 少し休憩します。, notes/support surface N5 word v2 Silver common-word expansion from the DICTIONARY COMMON POOL expansion route. Label: Source level claim unverified; the source level is treated only as a discovery hint. Exact governed JMdict/commonness verification supports 休憩|きゅうけい as rest / break / recess vocabulary. 憩=N1 support stays visibly labeled. This row remains Silver-only and still needs normal Gold/Sapphire/Platinum/Obsidian catch-up., reading breakdown 休 （きゅう）憩 （けい）, meaning rest / break / recess, labels JLPT N5; Reading coverage support; focus 休; covers 休: きゅう, audio word-reading-休憩-きゅうけい, pitch accent source voicevox-nemo-reading-query pattern 4 [odaka] rendered Pitch 1: 4; Generated pitch (unverified), media provenance, release judgment common/useful, learner-friendly, level-appropriate, natural in the reviewed example, not approved for coverage alone, generated pitch is visibly labeled as unverified, and verification limitations no active limitations. Accepted as practical break/rest vocabulary with a natural short-break example; 憩 remains outside-level support and generated pitch remains visibly labeled."
       }
     ],
     "migrationProvenance": {

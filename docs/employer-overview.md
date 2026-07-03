@@ -70,7 +70,7 @@ This is a scoped content/package release lock, not a blanket claim that every pr
 | Surface | Current generated denominator | Current Obsidian-certified denominator | Boundary |
 | --- | --- | --- | --- |
 | Core kanji | `2212/2212` across N5-N1 | `982/2212` | The lock covers N5-N2. Remaining generated kanji rows are not Obsidian-certified. |
-| Words | `2505/2505` across N5-N1 | `200/2505` current v2.5 | Current word Obsidian v2.5 covers the current N5 v2.5 batches. Legacy N5/N4 word proof history remains audit-visible, but it is not current v2.5 certification. |
+| Words | `2505/2505` across N5-N1 | `300/2505` current v2.5 | Current word Obsidian v2.5 covers the current N5 v2.5 batches. Legacy N5/N4 word proof history remains audit-visible, but it is not current v2.5 certification. |
 
 ## Why This Is More Than A Deck
 

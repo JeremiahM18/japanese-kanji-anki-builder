@@ -26,6 +26,12 @@ and governed JSONL proof-ledger append.
 
 - Do not generate example-sentence audio before verifying the sentence is good,
   natural, useful, level-appropriate, and correctly translated.
+- Treat each exact written form plus exact reading as its own word-card
+  identity. Kana/kanji orthographic variants with the same reading and broad
+  meaning are not duplicates by default; for example, a kana-mixed
+  single-kanji `たべもの` surface and a fuller-kanji `たべもの` surface are
+  unique learner-facing identities unless governed product review proves one is
+  genuinely low-value clutter for reasons beyond same reading or same gloss.
 - Do not append proof for a weak, misleading, stale, product-bad, or
   level-inappropriate card.
 - Do not treat old word Obsidian proof, Platinum proof, NLP output, generated

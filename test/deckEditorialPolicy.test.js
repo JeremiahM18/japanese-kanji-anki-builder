@@ -8,6 +8,7 @@ test("tracked deck editorial policy carries phrase and noisy-meaning patterns", 
 
     assert.equal(policy.schemaVersion, 1);
     assert.ok(policy.wordDeck.excludedWordCardTags.includes("phrase"));
+    assert.equal(policy.wordDeck.excludedWordCardTags.includes("duplicate-variant"), false);
     assert.ok(policy.wordDeck.phraseEndingPatterns.length >= 4);
     assert.ok(policy.wordDeck.lexicalizedUsageSuffixPatterns.length >= 1);
     assert.ok(policy.wordDeck.adjectiveNounPhrasePatterns.length >= 1);

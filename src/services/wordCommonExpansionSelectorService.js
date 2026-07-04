@@ -2188,7 +2188,7 @@ function buildCommonPoolLearnerValueClassification(row = {}, {
         reasons.push("useful candidate with harder or outside-JLPT support kanji label needs");
     } else if (score >= 80) {
         bucket = "core_candidate";
-        reasons.push("high learner utility with target-level kanji and no support-label or duplicate risk");
+        reasons.push("high learner utility with target-level kanji and no support-label blocker or same-written ambiguity");
     } else {
         bucket = "family_representative";
         reasons.push("reviewable representative for this target-kanji learner family");

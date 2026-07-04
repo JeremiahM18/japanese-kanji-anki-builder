@@ -38,7 +38,7 @@ CoversReading: 雨: さめ
 KanjiBreakdown:
   春[はる] - spring, JLPT N4 kanji, stroke order 6625_春-stroke-order.gif, On: シュン, Kun: はる
   雨[さめ] - rain, stroke order 96E8_雨-stroke-order.gif, On: ウ, Kun: -さめ、 あま-、 あめ
-ExampleSentence: 春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat harusame soup.
+ExampleSentence: 春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat glass noodle soup.
 Notes: Common food and seasonal word; retained because it gives a real learner-facing 春雨 word for the 雨 -> さめ pattern.
 ```
 
@@ -47,7 +47,7 @@ Notes: Common food and seasonal word; retained because it gives a real learner-f
 ```tsv
 Surface	Reading	Meaning	Example
 日	ひ	day / sun	今日はいい日です。 ／ きょうはいいひです。 ／ Today is a good day.
-春雨	はるさめ	glass noodles / spring rain	春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat harusame soup.
+春雨	はるさめ	glass noodles / spring rain	春雨スープを食べます。 ／ はるさめスープをたべます。 ／ I eat glass noodle soup.
 ```
 
 The tracked mini fixture in [../examples/n5-mini](../examples/n5-mini) contains sample input metadata and exact generated TSV rows. The previews above are plain-text summaries of exported fields.

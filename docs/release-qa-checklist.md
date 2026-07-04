@@ -102,7 +102,7 @@ The packet must name the release candidate, deck kind, JLPT levels, automated re
 
 ## Word deck manual spot review
 
-- Import each word level being shipped into Anki only after the fail-closed Obsidian certification gate and its lower-lane prerequisite gates pass. N5 word is current word Obsidian v2.5-certified at `400/588`; N4 word is current word Obsidian v2.5-certified at `0/719`; the 907 current N5/N4 word rows without current v2.5 proof (188 N5, 719 N4) are not release-certifiable until lower lanes and Obsidian v2.5 proof catch up. N5/N4 still require release artifact QA, accessibility, and listening checks before release-ready product claims.
+- Import each word level being shipped into Anki only after the fail-closed Obsidian certification gate and its lower-lane prerequisite gates pass. N5 word is current word Obsidian v2.5-certified at `500/588`; N4 word is current word Obsidian v2.5-certified at `0/719`; the 807 current N5/N4 word rows without current v2.5 proof (88 N5, 719 N4) are not release-certifiable until lower lanes and Obsidian v2.5 proof catch up. N5/N4 still require release artifact QA, accessibility, and listening checks before release-ready product claims.
 - For Obsidian-certified word scopes, sample packaged cards for import, render, layout, media, and accessibility anomalies. Do not treat this pass as a replacement for the Obsidian native/fluent-quality content gate; any real content issue reopens Sapphire, Platinum, and Obsidian before release.
 - Spot-check beginner core words render the expected fields, media, badges, examples, and breakdown panels in the packaged APKG.
 - Spot-check support words render the expected fields, media, badges, examples, and breakdown panels in the packaged APKG.

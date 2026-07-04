@@ -7255,7 +7255,7 @@
       "話しことば|はなしことば": {
         "decision": "reject_candidate",
         "priority": "low",
-        "reason": "Reject this exact N5 dictionary-common-pool row: spoken-language register vocabulary is not core N5 learner work, and keeping both kana/kanji orthographic variants would add low-value duplicate clutter. Exact JMdict/commonness evidence does not overcome the learner-fit problem for this queue.",
+        "reason": "Reject this exact N5 dictionary-common-pool row: spoken-language register vocabulary is not core N5 learner work, and governed review found this orthographic variant would add low-value clutter for this queue. Exact JMdict/commonness evidence does not overcome the learner-fit problem.",
         "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later explicit register/usage vocabulary pass with one chosen learner-facing surface."
       },
       "晴れ間|はれま": {
@@ -9573,7 +9573,7 @@
       "書きことば|かきことば": {
         "decision": "reject_candidate",
         "priority": "low",
-        "reason": "Reject this exact N5 dictionary-common-pool row: written-language register vocabulary is not strong N5 common-pool work, governed 言葉 already covers the core word, and keeping orthographic/register variants would add low-value duplicate clutter.",
+        "reason": "Reject this exact N5 dictionary-common-pool row: written-language register vocabulary is not strong N5 common-pool work, governed 言葉 already covers the core word, and governed review found this orthographic/register variant would add low-value clutter for this queue.",
         "nextStep": "Do not promote this exact identity from the N5 common-pool queue. Reopen only in a later explicit register/usage vocabulary pass with one chosen learner-facing surface."
       },
       "以来|いらい": {
@@ -11963,7 +11963,7 @@
       "話し言葉|はなしことば": {
         "decision": "reject_candidate",
         "priority": "low",
-        "reason": "Reject this exact N5 dictionary-common-pool row: spoken-language register vocabulary is not core N5 learner work, and keeping the kanji variant alongside 話しことば would add low-value duplicate clutter with harder support labels.",
+        "reason": "Reject this exact N5 dictionary-common-pool row: spoken-language register vocabulary is not core N5 learner work, and governed review found the kanji variant alongside 話しことば would add low-value clutter with harder support labels.",
         "nextStep": "Do not promote this exact row from the N5 common-pool queue. Reconsider only in a later explicit register/usage vocabulary pass with one chosen learner-facing surface."
       },
       "雨が降る|あめがふる": {

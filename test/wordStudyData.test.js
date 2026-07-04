@@ -7921,6 +7921,22 @@ test("tracked starter word data protects current-standard N5 platinum examples a
     assert.match(starterEntries["下手|へた"].notes, /上手 counterpart/);
 });
 
+test("tracked starter word data treats kana-kanji variants as separate exact word identities", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const mixedKanaFood = starterEntries["食べもの|たべもの"];
+    const fullerKanjiFood = starterEntries["食べ物|たべもの"];
+
+    assert.equal(mixedKanaFood?.written, "食べもの");
+    assert.equal(fullerKanjiFood?.written, "食べ物");
+    assert.equal(mixedKanaFood?.reading, "たべもの");
+    assert.equal(fullerKanjiFood?.reading, "たべもの");
+    assert.equal(mixedKanaFood?.jlpt, 5);
+    assert.equal(fullerKanjiFood?.jlpt, 5);
+    assert.notEqual(mixedKanaFood?.exampleSentence?.japanese, fullerKanjiFood?.exampleSentence?.japanese);
+    assert.doesNotMatch([...(mixedKanaFood?.tags || []), mixedKanaFood?.notes || ""].join(" "), /duplicate-variant|silent duplicate/i);
+    assert.doesNotMatch([...(fullerKanjiFood?.tags || []), fullerKanjiFood?.notes || ""].join(" "), /duplicate-variant|silent duplicate/i);
+});
+
 test("tracked starter word data carries explicit N5 reading-coverage contracts for key learner-facing words", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 
@@ -8110,8 +8126,8 @@ test("tracked starter word data carries explicit N5 reading-coverage contracts f
     assert.match(starterEntries["三百|さんびゃく"].notes, /number-sound change/);
     assert.equal(starterEntries["上手|じょうず"].exampleSentence.japanese, "友だちは日本語が上手です。");
     assert.equal(starterEntries["生える|はえる"].exampleSentence.japanese, "草が生えています。");
-    assert.equal(starterEntries["北東|ほくとう"].exampleSentence.japanese, "学校は北東にあります。");
-    assert.equal(starterEntries["小川|おがわ"].exampleSentence.japanese, "小川があります。");
+    assert.equal(starterEntries["北東|ほくとう"].exampleSentence.japanese, "学校は駅の北東にあります。");
+    assert.equal(starterEntries["小川|おがわ"].exampleSentence.japanese, "家の近くに小川があります。");
     assert.equal(starterEntries["上下|じょうげ"].exampleSentence.japanese, "上下に動きます。");
     assert.match(starterEntries["元気|げんき"].notes, /N4 元 -> げん/);
 });

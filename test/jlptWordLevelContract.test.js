@@ -108,6 +108,8 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
         "5": 0,
     });
     assert.deepEqual(Object.keys(contract.excludedWordLevels), []);
+    assert.equal(contract.wordLevels["食べもの|たべもの"]?.jlpt, 5);
+    assert.equal(contract.wordLevels["食べ物|たべもの"]?.jlpt, 5);
     const n5RoutedMoveTargets = {
         "お弁当|おべんとう": 3,
         "泳ぐ|およぐ": 2,

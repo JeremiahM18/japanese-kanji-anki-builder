@@ -24873,7 +24873,7 @@
       "川 （がわ）"
     ],
     "exampleIncludes": [
-      "小川があります。"
+      "家の近くに小川があります。"
     ],
     "notesIncludes": [
       "Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5."
@@ -24909,18 +24909,18 @@
       {
         "type": "japanese-source",
         "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
-        "detail": "JMdict exact row entrySeq=1348460 verifies 小川|おがわ, reading おがわ, dictionary meaning stream; brook; creek, priority markers ichi1,news1,nf06; product review kept learner meaning stream / brook and checked example sentence 小川があります。 with reading おがわがあります。 for the shipped word-card surface."
+        "detail": "JMdict exact row entrySeq=1348460 verifies 小川|おがわ, reading おがわ, dictionary meaning stream; brook; creek, priority markers ichi1,news1,nf06; product review kept learner meaning stream / brook and checked corrected example sentence 家の近くに小川があります。 with reading いえのちかくにおがわがあります。 for the shipped word-card surface."
       }
     ],
-    "fixSummary": "Replaced the harder park/flowing sentence with a simple existence sentence and scoped 小川 as support-only.",
+    "fixSummary": "Obsidian v2.5 regression review replaced the too-bare simple existence sentence with a natural place-context sentence and kept 小川 scoped as support-only.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-05-20",
-    "revalidationSummary": "Substantive current-standard Obsidian rereview for 小川|おがわ on 2026-05-20, not a mechanical migration: rechecked evidence lanes, generated surface, governed Japanese-source identity, example sentence quality, learner-facing meaning, notes/support surface, reading breakdown, kanji breakdown, JLPT/coverage/focus/covers labels, exact word-reading audio identity, pitch accent source and rendered label, media provenance, learner usefulness, and verification limitations. Risk review: 小川 is a common nature/place word supporting 小 -> お; the card is support-only for N5 and should not replace the core 川 card, while the stream/brook meaning and example remain natural.",
+    "revalidatedAt": "2026-07-04",
+    "revalidationSummary": "Current-standard Platinum regression review for 小川|おがわ on 2026-07-04: Obsidian v2.5 surface review found the inherited example sentence too bare for proof, replaced it with 家の近くに小川があります。 / いえのちかくにおがわがあります。 / There is a stream near my house., and rechecked evidence lanes, generated surface, governed Japanese-source identity, notes/support surface, reading breakdown, kanji breakdown, JLPT/coverage/focus/covers labels, exact word-reading audio identity, pitch accent source and rendered label, media provenance, learner usefulness, and verification limitations. Risk review: 小川 is a common nature/place word supporting 小 -> お; the card is support-only for N5 and should not replace the core 川 card.",
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 小川|おがわ: word 小川, reading おがわ, meaning stream / brook, example 小川があります。, audio word-reading-小川-おがわ, reading breakdown 小 （お）; 川 （がわ）, labels JLPT N5; Reading coverage support; focus 小; covers 小: お, pitch accent Pitch 1: 0, and notes/support surface Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5.."
+        "detail": "Generated word-card surface inspected for 小川|おがわ: word 小川, reading おがわ, meaning stream / brook, example 家の近くに小川があります。, reading いえのちかくにおがわがあります。, translation There is a stream near my house., audio word-reading-小川-おがわ, reading breakdown 小 （お）; 川 （がわ）, labels JLPT N5; Reading coverage support; focus 小; covers 小: お, pitch accent Pitch 1: 0, and notes/support surface Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5.."
       },
       {
         "type": "level-contract",
@@ -24957,17 +24957,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 小川|おがわ, reading おがわ, example sentence 小川があります。, reading line おがわがあります。, English line There is a stream., and the exported reading line for release quality."
+        "detail": "Example review checked 小川|おがわ, reading おがわ, corrected example sentence 家の近くに小川があります。, reading line いえのちかくにおがわがあります。, English line There is a stream near my house., and the exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 小川|おがわ common or useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading おがわ, meaning stream / brook, example sentence 小川があります。, notes/support surface Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5., and no active verification limitations."
+        "detail": "Manual review judged 小川|おがわ common or useful, learner-friendly, level-appropriate, and natural for the N5 word deck after replacing the too-bare inherited example with 家の近くに小川があります。, with accurate reading おがわ, meaning stream / brook, notes/support surface Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5., and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 小川|おがわ checked generated surface, Japanese-source evidence from JMdict entrySeq 1348460, example sentence 小川があります。, reading おがわがあります。, translation There is a stream., notes/support surface Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5., reading breakdown 小 （お）; 川 （がわ）, meaning stream / brook, labels JLPT N5; Reading coverage support; focus 小; covers 小: お, audio word-reading-小川-おがわ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 小川|おがわ checked generated surface, Japanese-source evidence from JMdict entrySeq 1348460, corrected example sentence 家の近くに小川があります。, reading いえのちかくにおがわがあります。, translation There is a stream near my house., notes/support surface Dictionary-backed nature/place word for stream; useful for 小 -> お coverage but support-only for N5., reading breakdown 小 （お）; 川 （がわ）, meaning stream / brook, labels JLPT N5; Reading coverage support; focus 小; covers 小: お, audio word-reading-小川-おがわ, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ]
   },
@@ -25118,7 +25118,7 @@
       "東 （とう）"
     ],
     "exampleIncludes": [
-      "学校は北東にあります。"
+      "学校は駅の北東にあります。"
     ],
     "notesIncludes": [
       "Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts."
@@ -25154,7 +25154,7 @@
       {
         "type": "japanese-source",
         "source": "JMdict English dictionary source (EDRDG) governed local exact row from downloads/jmdict-word-verification.tsv pinned by templates/word_source_manifest.json",
-        "detail": "JMdict exact row entrySeq=1584190 verifies 北東|ほくとう, reading ほくとう, dictionary meaning northeast, priority markers ichi1,news1,nf06; product review kept learner meaning northeast and checked example sentence 学校は北東にあります。 with reading がっこうはほくとうにあります。 for the shipped word-card surface."
+        "detail": "JMdict exact row entrySeq=1584190 verifies 北東|ほくとう, reading ほくとう, dictionary meaning northeast, priority markers ichi1,news1,nf06; product review kept learner meaning northeast and checked example sentence 学校は駅の北東にあります。 with reading がっこうはえきのほくとうにあります。 for the shipped word-card surface."
       }
     ],
     "fixSummary": "Replaced the harder sky sentence with a simpler school-location example and scoped 北東 as support-only direction coverage.",
@@ -25165,7 +25165,7 @@
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/platinumWordBatchReport.js and scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 北東|ほくとう: word 北東, reading ほくとう, meaning northeast, example 学校は北東にあります。, audio word-reading-北東-ほくとう, reading breakdown 北 （ほく）; 東 （とう）, labels JLPT N5; Reading coverage support; focus 北; covers 北: ほく, pitch accent Pitch 1: 0, and notes/support surface Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts.."
+        "detail": "Generated word-card surface inspected for 北東|ほくとう: word 北東, reading ほくとう, meaning northeast, example 学校は駅の北東にあります。, audio word-reading-北東-ほくとう, reading breakdown 北 （ほく）; 東 （とう）, labels JLPT N5; Reading coverage support; focus 北; covers 北: ほく, pitch accent Pitch 1: 0, and notes/support surface Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts.."
       },
       {
         "type": "level-contract",
@@ -25202,17 +25202,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 北東|ほくとう, reading ほくとう, example sentence 学校は北東にあります。, reading line がっこうはほくとうにあります。, English line The school is to the northeast., and the exported reading line for release quality."
+        "detail": "Example review checked 北東|ほくとう, reading ほくとう, example sentence 学校は駅の北東にあります。, reading line がっこうはえきのほくとうにあります。, English line The school is northeast of the station., and the exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 北東|ほくとう common or useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading ほくとう, meaning northeast, example sentence 学校は北東にあります。, notes/support surface Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts., and no active verification limitations."
+        "detail": "Manual review judged 北東|ほくとう common or useful, learner-friendly, level-appropriate, and natural for the N5 word deck, with accurate reading ほくとう, meaning northeast, example sentence 学校は駅の北東にあります。, notes/support surface Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts., and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report, governed local JMdict exact rows, generated TSV output, media reports, pitch source data, and platinum evidence",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 北東|ほくとう checked generated surface, Japanese-source evidence from JMdict entrySeq 1584190, example sentence 学校は北東にあります。, reading がっこうはほくとうにあります。, translation The school is to the northeast., notes/support surface Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts., reading breakdown 北 （ほく）; 東 （とう）, meaning northeast, labels JLPT N5; Reading coverage support; focus 北; covers 北: ほく, audio word-reading-北東-ほくとう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 北東|ほくとう checked generated surface, Japanese-source evidence from JMdict entrySeq 1584190, example sentence 学校は駅の北東にあります。, reading がっこうはえきのほくとうにあります。, translation The school is northeast of the station., notes/support surface Dictionary-backed direction word for northeast; useful for 北 -> ほく coverage and basic map/direction contexts., reading breakdown 北 （ほく）; 東 （とう）, meaning northeast, labels JLPT N5; Reading coverage support; focus 北; covers 北: ほく, audio word-reading-北東-ほくとう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0. Dictionary-backed pitch evidence is bound to the exact word-reading identity., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ]
   },
@@ -41204,7 +41204,7 @@
     "readingIncludes": [
       "ひとびと"
     ],
-    "selectionRationale": "Common people vocabulary in a learner-friendly mixed-kana written form; accepted as the selected people-vocabulary support card while the later 人々 variant remains duplicate-risk review work.",
+    "selectionRationale": "Common people vocabulary in a learner-friendly mixed-kana written form; accepted as its own exact written-form/reading identity. The 人々|ひとびと card is also a distinct learner-facing identity when governed review approves its surface value.",
     "reviewedAt": "2026-07-01",
     "reviewer": "codex-platinum-review",
     "fixSummary": "Removed the stale Silver-only/Platinum-catch-up note from the generated N5 word surface before Platinum approval; revalidated exact Gold, Sapphire, and current-standard Platinum evidence for 人びと|ひとびと.",
@@ -41264,7 +41264,7 @@
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 人びと|ひとびと common, useful, learner-friendly, and level-appropriate as people vocabulary; this keeps the mixed-kana form while flagging the later 人々 variant as duplicate-risk review work."
+        "detail": "Manual review judged 人びと|ひとびと common, useful, learner-friendly, and level-appropriate as people vocabulary; this keeps the mixed-kana exact identity and does not collapse the later 人々|ひとびと exact identity into it."
       },
       {
         "type": "current-standard-review",
@@ -44204,14 +44204,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv (EDRDG JMdict English; CC BY-SA 4.0)",
-        "detail": "JMdict governed local row verified 入金|にゅうきん, reading にゅうきん, learner meaning deposit / payment received, and product review checked example 今日、銀行に入金します。 for the shipped word-card surface; source meaning support: receipt of money; money received; receipts; depositing; deposit; payment; partial payment; entrySeq=1466040; jmdictPriority=ichi1,news1,nf18; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+        "detail": "JMdict governed local row verified 入金|にゅうきん, reading にゅうきん, learner meaning deposit / payment received, and product review checked example 今日、銀行で入金します。 for the shipped word-card surface; source meaning support: receipt of money; money received; receipts; depositing; deposit; payment; partial payment; entrySeq=1466040; jmdictPriority=ichi1,news1,nf18; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 入金|にゅうきん: word 入金, reading にゅうきん, meaning deposit / payment received, example 今日、銀行に入金します。, reading きょう、ぎんこうににゅうきんします。, translation Today I will deposit money at the bank., audio word-reading-入金-にゅうきん, notes/support surface Exact governed JMdict/commonness verification supports 入金|にゅうきん as banking and payment vocabulary, reading breakdown 入 （にゅう）; 金 （きん）, labels JLPT N5; Reading coverage support; focus 入; 金; covers 入: にゅう; 金: きん, and pitch label source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
+        "detail": "Generated word-card surface inspected for 入金|にゅうきん: word 入金, reading にゅうきん, meaning deposit / payment received, example 今日、銀行で入金します。, reading きょう、ぎんこうでにゅうきんします。, translation Today I will deposit money at the bank., audio word-reading-入金-にゅうきん, notes/support surface Exact governed JMdict/commonness verification supports 入金|にゅうきん as banking and payment vocabulary, reading breakdown 入 （にゅう）; 金 （きん）, labels JLPT N5; Reading coverage support; focus 入; 金; covers 入: にゅう; 金: きん, and pitch label source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
       },
       {
         "type": "level-contract",
@@ -44248,17 +44248,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 入金|にゅうきん, reading にゅうきん, sentence 今日、銀行に入金します。, reading きょう、ぎんこうににゅうきんします。, English line Today I will deposit money at the bank., and exported reading line for release quality."
+        "detail": "Example review checked 入金|にゅうきん, reading にゅうきん, sentence 今日、銀行で入金します。, reading きょう、ぎんこうでにゅうきんします。, English line Today I will deposit money at the bank., and exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 入金|にゅうきん common/useful, learner-friendly, and level-appropriate as deposit/payment-received banking vocabulary; not approved for coverage alone, with accurate reading にゅうきん, meaning deposit / payment received, example sentence 今日、銀行に入金します。, notes/support surface Exact governed JMdict/commonness verification supports 入金|にゅうきん as banking and payment vocabulary, and no active verification limitations."
+        "detail": "Manual review judged 入金|にゅうきん common/useful, learner-friendly, and level-appropriate as deposit/payment-received banking vocabulary; not approved for coverage alone, with accurate reading にゅうきん, meaning deposit / payment received, example sentence 今日、銀行で入金します。, notes/support surface Exact governed JMdict/commonness verification supports 入金|にゅうきん as banking and payment vocabulary, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 入金|にゅうきん checked generated surface, Japanese-source evidence, example sentence 今日、銀行に入金します。, notes/support surface Exact governed JMdict/commonness verification supports 入金|にゅうきん as banking and payment vocabulary, reading breakdown 入 （にゅう）; 金 （きん）, meaning deposit / payment received, labels JLPT N5; Reading coverage support; focus 入; 金; covers 入: にゅう; 金: きん, audio word-reading-入金-にゅうきん, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 入金|にゅうきん checked generated surface, Japanese-source evidence, example sentence 今日、銀行で入金します。, notes/support surface Exact governed JMdict/commonness verification supports 入金|にゅうきん as banking and payment vocabulary, reading breakdown 入 （にゅう）; 金 （きん）, meaning deposit / payment received, labels JLPT N5; Reading coverage support; focus 入; 金; covers 入: にゅう; 金: きん, audio word-reading-入金-にゅうきん, pitch accent source voicevox-nemo-accent-query pattern 4 [odaka] rendered Pitch 1: 4 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -44589,7 +44589,7 @@
       "Pitch 1: 2",
       "Generated pitch (unverified)"
     ],
-    "selectionRationale": "Common kanji iteration-mark spelling for people/everybody; promoted as a distinct written-surface literacy card from 人びと, not as silent duplicate clutter.",
+    "selectionRationale": "Common kanji iteration-mark spelling for people/everybody; promoted as its own exact written-form/reading identity with written-surface literacy value distinct from 人びと.",
     "reviewedAt": "2026-07-01",
     "reviewer": "codex-platinum-review",
     "fixSummary": "Removed the stale Silver-only/Platinum-catch-up note from the generated N5 word surface before Platinum approval; revalidated exact Gold, Sapphire, and current-standard Platinum evidence for 人々|ひとびと.",
@@ -44649,7 +44649,7 @@
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 人々|ひとびと common/useful, learner-friendly, and level-appropriate as the common 人々 kanji iteration-mark spelling for people/everybody; duplicate risk was reviewed against 人びと|ひとびと and this card is retained only for distinct written-surface literacy value, not as silent duplicate clutter or coverage filler, with accurate reading ひとびと, meaning people / everybody, example sentence 多くの人々が駅にいます。, notes/support surface Exact governed JMdict/commonness verification supports 人々|ひとびと as people / everybody vocabulary, and no active verification limitations."
+        "detail": "Manual review judged 人々|ひとびと common/useful, learner-friendly, and level-appropriate as the common 人々 kanji iteration-mark spelling for people/everybody; the exact identity was reviewed against 人びと|ひとびと for learner-facing surface value, and this card is retained for distinct written-surface literacy value rather than rejected merely because the reading or gloss overlaps, with accurate reading ひとびと, meaning people / everybody, example sentence 多くの人々が駅にいます。, notes/support surface Exact governed JMdict/commonness verification supports 人々|ひとびと as people / everybody vocabulary, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
@@ -44787,7 +44787,7 @@
       "Pitch 1: 3",
       "Pitch 2: 2"
     ],
-    "selectionRationale": "Core food vocabulary in a learner-friendly mixed-kana spelling; duplicate risk with 食べ物 was reviewed and the exact surface is retained for beginner readability.",
+    "selectionRationale": "Core food vocabulary in a learner-friendly mixed-kana spelling; the exact identity is retained for beginner readability alongside 食べ物|たべもの, which is a separate fuller-kanji learner-facing surface.",
     "reviewedAt": "2026-07-01",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
@@ -44846,7 +44846,7 @@
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 食べもの|たべもの common/useful, learner-friendly, and level-appropriate as core food vocabulary in a learner-friendly mixed-kana spelling; duplicate risk was reviewed against 食べ物|たべもの and this exact identity is retained for beginner readability, not as silent duplicate clutter or coverage filler, with accurate reading たべもの, meaning food, example sentence 好きな食べものは何ですか。, notes/support surface Exact governed JMdict/commonness verification supports 食べもの|たべもの as food vocabulary. The mixed-kana spelling is kept as the learner-friendly exact identity., and no active verification limitations."
+        "detail": "Manual review judged 食べもの|たべもの common/useful, learner-friendly, and level-appropriate as core food vocabulary in a learner-friendly mixed-kana spelling; the orthographic relationship with 食べ物|たべもの was reviewed for learner-facing surface value, and this exact identity is retained for beginner readability rather than rejected merely because the reading or gloss overlaps, with accurate reading たべもの, meaning food, example sentence 好きな食べものは何ですか。, notes/support surface Exact governed JMdict/commonness verification supports 食べもの|たべもの as food vocabulary. The mixed-kana spelling is kept as the learner-friendly exact identity., and no active verification limitations."
       },
       {
         "type": "current-standard-review",
@@ -45485,14 +45485,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv (EDRDG JMdict English; CC BY-SA 4.0)",
-        "detail": "JMdict governed local row verified 左上|ひだりうえ, reading ひだりうえ, learner meaning upper left, and product review checked example 左上に日付があります。 for the shipped word-card surface; source meaning support: upper left; entrySeq=1290920; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+        "detail": "JMdict governed local row verified 左上|ひだりうえ, reading ひだりうえ, learner meaning upper left, and product review checked example ノートの左上に日付があります。 for the shipped word-card surface; source meaning support: upper left; entrySeq=1290920; jmdictPriority=spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 左上|ひだりうえ: word 左上, reading ひだりうえ, meaning upper left, example 左上に日付があります。, reading ひだりうえにひづけがあります。, translation There is a date in the upper left., audio word-reading-左上-ひだりうえ, notes/support surface Exact governed JMdict/commonness verification supports 左上|ひだりうえ as upper left vocabulary, reading breakdown 左 （ひだり）; 上 （うえ）, labels JLPT N5; Reading coverage support; focus 左; 上; covers 左: ひだり; 上: うえ, and pitch label source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
+        "detail": "Generated word-card surface inspected for 左上|ひだりうえ: word 左上, reading ひだりうえ, meaning upper left, example ノートの左上に日付があります。, reading ノートのひだりうえにひづけがあります。, translation There is a date in the upper left of the notebook., audio word-reading-左上-ひだりうえ, notes/support surface Exact governed JMdict/commonness verification supports 左上|ひだりうえ as upper left vocabulary, reading breakdown 左 （ひだり）; 上 （うえ）, labels JLPT N5; Reading coverage support; focus 左; 上; covers 左: ひだり; 上: うえ, and pitch label source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
       },
       {
         "type": "level-contract",
@@ -45529,17 +45529,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 左上|ひだりうえ, reading ひだりうえ, sentence 左上に日付があります。, reading ひだりうえにひづけがあります。, English line There is a date in the upper left., and exported reading line for release quality."
+        "detail": "Example review checked 左上|ひだりうえ, reading ひだりうえ, sentence ノートの左上に日付があります。, reading ノートのひだりうえにひづけがあります。, English line There is a date in the upper left of the notebook., and exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 左上|ひだりうえ common/useful, learner-friendly, and level-appropriate as upper-left position vocabulary for forms, maps, and screens; not approved for coverage alone, with accurate reading ひだりうえ, meaning upper left, example sentence 左上に日付があります。, notes/support surface Exact governed JMdict/commonness verification supports 左上|ひだりうえ as upper left vocabulary, and no active verification limitations."
+        "detail": "Manual review judged 左上|ひだりうえ common/useful, learner-friendly, and level-appropriate as upper-left position vocabulary for forms, maps, and screens; not approved for coverage alone, with accurate reading ひだりうえ, meaning upper left, example sentence ノートの左上に日付があります。, notes/support surface Exact governed JMdict/commonness verification supports 左上|ひだりうえ as upper left vocabulary, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 左上|ひだりうえ checked generated surface, Japanese-source evidence, example sentence 左上に日付があります。, notes/support surface Exact governed JMdict/commonness verification supports 左上|ひだりうえ as upper left vocabulary, reading breakdown 左 （ひだり）; 上 （うえ）, meaning upper left, labels JLPT N5; Reading coverage support; focus 左; 上; covers 左: ひだり; 上: うえ, audio word-reading-左上-ひだりうえ, pitch accent source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 左上|ひだりうえ checked generated surface, Japanese-source evidence, example sentence ノートの左上に日付があります。, notes/support surface Exact governed JMdict/commonness verification supports 左上|ひだりうえ as upper left vocabulary, reading breakdown 左 （ひだり）; 上 （うえ）, meaning upper left, labels JLPT N5; Reading coverage support; focus 左; 上; covers 左: ひだり; 上: うえ, audio word-reading-左上-ひだりうえ, pitch accent source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -45583,14 +45583,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv (EDRDG JMdict English; CC BY-SA 4.0)",
-        "detail": "JMdict governed local row verified 十三|じゅうさん, reading じゅうさん, learner meaning thirteen / 13, and product review checked example 十三人います。 for the shipped word-card surface; source meaning support: thirteen; 13; king; entrySeq=1334610; jmdictPriority=news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+        "detail": "JMdict governed local row verified 十三|じゅうさん, reading じゅうさん, learner meaning thirteen / 13, and product review checked example 教室に十三人います。 for the shipped word-card surface; source meaning support: thirteen; 13; king; entrySeq=1334610; jmdictPriority=news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 十三|じゅうさん: word 十三, reading じゅうさん, meaning thirteen / 13, example 十三人います。, reading じゅうさんにんいます。, translation There are thirteen people., audio word-reading-十三-じゅうさん, notes/support surface Exact governed JMdict/commonness verification supports 十三|じゅうさん as practical number vocabulary with clean 十 and 三 anchors; non-number side senses are not the learner-facing default, reading breakdown 十 （じゅう）; 三 （さん）, labels JLPT N5; Reading coverage support; focus 十; 三; covers 十: じゅう; 三: さん, and pitch label source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1."
+        "detail": "Generated word-card surface inspected for 十三|じゅうさん: word 十三, reading じゅうさん, meaning thirteen / 13, example 教室に十三人います。, reading きょうしつにじゅうさんにんいます。, translation There are thirteen people in the classroom., audio word-reading-十三-じゅうさん, notes/support surface Exact governed JMdict/commonness verification supports 十三|じゅうさん as practical number vocabulary with clean 十 and 三 anchors; non-number side senses are not the learner-facing default, reading breakdown 十 （じゅう）; 三 （さん）, labels JLPT N5; Reading coverage support; focus 十; 三; covers 十: じゅう; 三: さん, and pitch label source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1."
       },
       {
         "type": "level-contract",
@@ -45627,17 +45627,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 十三|じゅうさん, reading じゅうさん, sentence 十三人います。, reading じゅうさんにんいます。, English line There are thirteen people., and exported reading line for release quality."
+        "detail": "Example review checked 十三|じゅうさん, reading じゅうさん, sentence 教室に十三人います。, reading きょうしつにじゅうさんにんいます。, English line There are thirteen people in the classroom., and exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 十三|じゅうさん common/useful, learner-friendly, and level-appropriate as number and counting vocabulary; non-number side senses are excluded and it is not approved for coverage alone, with accurate reading じゅうさん, meaning thirteen / 13, example sentence 十三人います。, notes/support surface Exact governed JMdict/commonness verification supports 十三|じゅうさん as practical number vocabulary with clean 十 and 三 anchors; non-number side senses are not the learner-facing default, and no active verification limitations."
+        "detail": "Manual review judged 十三|じゅうさん common/useful, learner-friendly, and level-appropriate as number and counting vocabulary; non-number side senses are excluded and it is not approved for coverage alone, with accurate reading じゅうさん, meaning thirteen / 13, example sentence 教室に十三人います。, notes/support surface Exact governed JMdict/commonness verification supports 十三|じゅうさん as practical number vocabulary with clean 十 and 三 anchors; non-number side senses are not the learner-facing default, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 十三|じゅうさん checked generated surface, Japanese-source evidence, example sentence 十三人います。, notes/support surface Exact governed JMdict/commonness verification supports 十三|じゅうさん as practical number vocabulary with clean 十 and 三 anchors; non-number side senses are not the learner-facing default, reading breakdown 十 （じゅう）; 三 （さん）, meaning thirteen / 13, labels JLPT N5; Reading coverage support; focus 十; 三; covers 十: じゅう; 三: さん, audio word-reading-十三-じゅうさん, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 十三|じゅうさん checked generated surface, Japanese-source evidence, example sentence 教室に十三人います。, notes/support surface Exact governed JMdict/commonness verification supports 十三|じゅうさん as practical number vocabulary with clean 十 and 三 anchors; non-number side senses are not the learner-facing default, reading breakdown 十 （じゅう）; 三 （さん）, meaning thirteen / 13, labels JLPT N5; Reading coverage support; focus 十; 三; covers 十: じゅう; 三: さん, audio word-reading-十三-じゅうさん, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -45670,7 +45670,7 @@
     "pitchAccentIncludes": [
       "Pitch 1: 0"
     ],
-    "selectionRationale": "Common every-month routine word and deliberately governed same-written alternate reading distinct from 毎月|まいつき; accepted after duplicate-risk review, not coverage alone.",
+    "selectionRationale": "Common every-month routine word and deliberately governed same-written alternate reading distinct from 毎月|まいつき; accepted as its own exact written-form/reading identity, not coverage alone.",
     "reviewedAt": "2026-07-01",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
@@ -45777,14 +45777,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv (EDRDG JMdict English; CC BY-SA 4.0)",
-        "detail": "JMdict governed local row verified 話し中|はなしちゅう, reading はなしちゅう, learner meaning busy (phone) / in the middle of talking, and product review checked example 電話は話し中です。 for the shipped word-card surface; source meaning support: busy (phone); in talks; discussion underway; entrySeq=1600920; jmdictPriority=news2,nf44; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+        "detail": "JMdict governed local row verified 話し中|はなしちゅう, reading はなしちゅう, learner meaning busy (phone) / in the middle of talking, and product review checked example 電話が話し中です。 for the shipped word-card surface; source meaning support: busy (phone); in talks; discussion underway; entrySeq=1600920; jmdictPriority=news2,nf44; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 話し中|はなしちゅう: word 話し中, reading はなしちゅう, meaning busy (phone) / in the middle of talking, example 電話は話し中です。, reading でんわははなしちゅうです。, translation The phone line is busy., audio word-reading-話し中-はなしちゅう, notes/support surface Exact governed JMdict/commonness verification supports 話し中|はなしちゅう as busy/on-a-call vocabulary; cleaner spelling kept while お話し中 and 話中 variants remain deferred, reading breakdown 話 （はな）し; 中 （ちゅう）, labels JLPT N5; Reading coverage support; focus 話; 中; covers 話: はな; 中: ちゅう, and pitch label source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0."
+        "detail": "Generated word-card surface inspected for 話し中|はなしちゅう: word 話し中, reading はなしちゅう, meaning busy (phone) / in the middle of talking, example 電話が話し中です。, reading でんわがはなしちゅうです。, translation The phone line is busy., audio word-reading-話し中-はなしちゅう, notes/support surface Exact governed JMdict/commonness verification supports 話し中|はなしちゅう as busy/on-a-call vocabulary; cleaner spelling kept while お話し中 and 話中 variants remain deferred, reading breakdown 話 （はな）し; 中 （ちゅう）, labels JLPT N5; Reading coverage support; focus 話; 中; covers 話: はな; 中: ちゅう, and pitch label source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0."
       },
       {
         "type": "level-contract",
@@ -45821,17 +45821,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 話し中|はなしちゅう, reading はなしちゅう, sentence 電話は話し中です。, reading でんわははなしちゅうです。, English line The phone line is busy., and exported reading line for release quality."
+        "detail": "Example review checked 話し中|はなしちゅう, reading はなしちゅう, sentence 電話が話し中です。, reading でんわがはなしちゅうです。, English line The phone line is busy., and exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 話し中|はなしちゅう common/useful, learner-friendly, and level-appropriate as phone/status vocabulary; cleaner spelling retained while variants remain deferred, and not approved for coverage alone, with accurate reading はなしちゅう, meaning busy (phone) / in the middle of talking, example sentence 電話は話し中です。, notes/support surface Exact governed JMdict/commonness verification supports 話し中|はなしちゅう as busy/on-a-call vocabulary; cleaner spelling kept while お話し中 and 話中 variants remain deferred, and no active verification limitations."
+        "detail": "Manual review judged 話し中|はなしちゅう common/useful, learner-friendly, and level-appropriate as phone/status vocabulary; cleaner spelling retained while variants remain deferred, and not approved for coverage alone, with accurate reading はなしちゅう, meaning busy (phone) / in the middle of talking, example sentence 電話が話し中です。, notes/support surface Exact governed JMdict/commonness verification supports 話し中|はなしちゅう as busy/on-a-call vocabulary; cleaner spelling kept while お話し中 and 話中 variants remain deferred, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 話し中|はなしちゅう checked generated surface, Japanese-source evidence, example sentence 電話は話し中です。, notes/support surface Exact governed JMdict/commonness verification supports 話し中|はなしちゅう as busy/on-a-call vocabulary; cleaner spelling kept while お話し中 and 話中 variants remain deferred, reading breakdown 話 （はな）し; 中 （ちゅう）, meaning busy (phone) / in the middle of talking, labels JLPT N5; Reading coverage support; focus 話; 中; covers 話: はな; 中: ちゅう, audio word-reading-話し中-はなしちゅう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 話し中|はなしちゅう checked generated surface, Japanese-source evidence, example sentence 電話が話し中です。, notes/support surface Exact governed JMdict/commonness verification supports 話し中|はなしちゅう as busy/on-a-call vocabulary; cleaner spelling kept while お話し中 and 話中 variants remain deferred, reading breakdown 話 （はな）し; 中 （ちゅう）, meaning busy (phone) / in the middle of talking, labels JLPT N5; Reading coverage support; focus 話; 中; covers 話: はな; 中: ちゅう, audio word-reading-話し中-はなしちゅう, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -46074,14 +46074,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv (EDRDG JMdict English; CC BY-SA 4.0)",
-        "detail": "JMdict governed local row verified 前もって|まえもって, reading まえもって, learner meaning in advance / beforehand, and product review checked example 前もって電話します。 for the shipped word-card surface; source meaning support: in advance; beforehand; previously; ahead of time; entrySeq=1603820; jmdictPriority=ichi1,news2,nf29; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+        "detail": "JMdict governed local row verified 前もって|まえもって, reading まえもって, learner meaning in advance / beforehand, and product review checked example 前もって先生に電話します。 for the shipped word-card surface; source meaning support: in advance; beforehand; previously; ahead of time; entrySeq=1603820; jmdictPriority=ichi1,news2,nf29; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 前もって|まえもって: word 前もって, reading まえもって, meaning in advance / beforehand, example 前もって電話します。, reading まえもってでんわします。, translation I will call in advance., audio word-reading-前もって-まえもって, notes/support surface Exact governed JMdict/commonness verification supports 前もって|まえもって as in advance / beforehand vocabulary, reading breakdown 前 （まえ）もって, labels JLPT N5; Reading coverage support; focus 前; covers 前: まえ, and pitch label source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
+        "detail": "Generated word-card surface inspected for 前もって|まえもって: word 前もって, reading まえもって, meaning in advance / beforehand, example 前もって先生に電話します。, reading まえもってせんせいにでんわします。, translation I will call the teacher in advance., audio word-reading-前もって-まえもって, notes/support surface Exact governed JMdict/commonness verification supports 前もって|まえもって as in advance / beforehand vocabulary, reading breakdown 前 （まえ）もって, labels JLPT N5; Reading coverage support; focus 前; covers 前: まえ, and pitch label source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
       },
       {
         "type": "level-contract",
@@ -46118,17 +46118,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 前もって|まえもって, reading まえもって, sentence 前もって電話します。, reading まえもってでんわします。, English line I will call in advance., and exported reading line for release quality."
+        "detail": "Example review checked 前もって|まえもって, reading まえもって, sentence 前もって先生に電話します。, reading まえもってせんせいにでんわします。, English line I will call the teacher in advance., and exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 前もって|まえもって common/useful, learner-friendly, and level-appropriate as lexical planning vocabulary for in-advance/beforehand contexts; not approved for coverage alone, with accurate reading まえもって, meaning in advance / beforehand, example sentence 前もって電話します。, notes/support surface Exact governed JMdict/commonness verification supports 前もって|まえもって as in advance / beforehand vocabulary, and no active verification limitations."
+        "detail": "Manual review judged 前もって|まえもって common/useful, learner-friendly, and level-appropriate as lexical planning vocabulary for in-advance/beforehand contexts; not approved for coverage alone, with accurate reading まえもって, meaning in advance / beforehand, example sentence 前もって先生に電話します。, notes/support surface Exact governed JMdict/commonness verification supports 前もって|まえもって as in advance / beforehand vocabulary, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 前もって|まえもって checked generated surface, Japanese-source evidence, example sentence 前もって電話します。, notes/support surface Exact governed JMdict/commonness verification supports 前もって|まえもって as in advance / beforehand vocabulary, reading breakdown 前 （まえ）もって, meaning in advance / beforehand, labels JLPT N5; Reading coverage support; focus 前; covers 前: まえ, audio word-reading-前もって-まえもって, pitch accent source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 前もって|まえもって checked generated surface, Japanese-source evidence, example sentence 前もって先生に電話します。, notes/support surface Exact governed JMdict/commonness verification supports 前もって|まえもって as in advance / beforehand vocabulary, reading breakdown 前 （まえ）もって, meaning in advance / beforehand, labels JLPT N5; Reading coverage support; focus 前; covers 前: まえ, audio word-reading-前もって-まえもって, pitch accent source voicevox-nemo-accent-query pattern 3 [nakadaka] rendered Pitch 1: 3 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -46173,14 +46173,14 @@
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv (EDRDG JMdict English; CC BY-SA 4.0)",
-        "detail": "JMdict governed local row verified 時半|じはん, reading じはん, learner meaning half past the hour, and product review checked example 三時半に会います。 for the shipped word-card surface; source meaning support: half past (the hour); entrySeq=1658480; jmdictPriority=news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+        "detail": "JMdict governed local row verified 時半|じはん, reading じはん, learner meaning half past the hour, and product review checked example 三時半に駅で会います。 for the shipped word-card surface; source meaning support: half past (the hour); entrySeq=1658480; jmdictPriority=news1,nf01; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 時半|じはん: word 時半, reading じはん, meaning half past the hour, example 三時半に会います。, reading さんじはんにあいます。, translation We will meet at half past three., audio word-reading-時半-じはん, notes/support surface Exact governed JMdict/commonness verification supports 時半|じはん as clock-time vocabulary, reading breakdown 時 （じ）; 半 （はん）, labels JLPT N5; Reading coverage support; focus 時; 半; covers 時: じ; 半: はん, and pitch label source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
+        "detail": "Generated word-card surface inspected for 時半|じはん: word 時半, reading じはん, meaning half past the hour, example 三時半に駅で会います。, reading さんじはんにえきであいます。, translation We will meet at the station at half past three., audio word-reading-時半-じはん, notes/support surface Exact governed JMdict/commonness verification supports 時半|じはん as clock-time vocabulary, reading breakdown 時 （じ）; 半 （はん）, labels JLPT N5; Reading coverage support; focus 時; 半; covers 時: じ; 半: はん, and pitch label source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
       },
       {
         "type": "level-contract",
@@ -46217,17 +46217,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 時半|じはん, reading じはん, sentence 三時半に会います。, reading さんじはんにあいます。, English line We will meet at half past three., and exported reading line for release quality."
+        "detail": "Example review checked 時半|じはん, reading じはん, sentence 三時半に駅で会います。, reading さんじはんにえきであいます。, English line We will meet at the station at half past three., and exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 時半|じはん common/useful, learner-friendly, and level-appropriate as half-past clock-time vocabulary; reviewed as a time-expression word row rather than an isolated suffix shortcut and not approved for coverage alone, with accurate reading じはん, meaning half past the hour, example sentence 三時半に会います。, notes/support surface Exact governed JMdict/commonness verification supports 時半|じはん as clock-time vocabulary, and no active verification limitations."
+        "detail": "Manual review judged 時半|じはん common/useful, learner-friendly, and level-appropriate as half-past clock-time vocabulary; reviewed as a time-expression word row rather than an isolated suffix shortcut and not approved for coverage alone, with accurate reading じはん, meaning half past the hour, example sentence 三時半に駅で会います。, notes/support surface Exact governed JMdict/commonness verification supports 時半|じはん as clock-time vocabulary, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 時半|じはん checked generated surface, Japanese-source evidence, example sentence 三時半に会います。, notes/support surface Exact governed JMdict/commonness verification supports 時半|じはん as clock-time vocabulary, reading breakdown 時 （じ）; 半 （はん）, meaning half past the hour, labels JLPT N5; Reading coverage support; focus 時; 半; covers 時: じ; 半: はん, audio word-reading-時半-じはん, pitch accent source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 時半|じはん checked generated surface, Japanese-source evidence, example sentence 三時半に駅で会います。, notes/support surface Exact governed JMdict/commonness verification supports 時半|じはん as clock-time vocabulary, reading breakdown 時 （じ）; 半 （はん）, meaning half past the hour, labels JLPT N5; Reading coverage support; focus 時; 半; covers 時: じ; 半: はん, audio word-reading-時半-じはん, pitch accent source voicevox-nemo-accent-query pattern 2 [nakadaka] rendered Pitch 1: 2 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -47052,22 +47052,22 @@
     "selectionRationale": "Useful route and direction vocabulary for going north/northbound contexts with clear 北 and 上 support readings; approved for navigation utility, not coverage alone.",
     "reviewedAt": "2026-07-01",
     "reviewer": "codex-platinum-review",
-    "fixSummary": "Removed the stale Silver-only/Platinum-catch-up note from the generated N5 word surface before Platinum approval; revalidated exact Gold, Sapphire, and current-standard Platinum evidence for 北上|ほくじょう.",
+    "fixSummary": "Removed the stale Silver-only/Platinum-catch-up note from the generated N5 word surface before Platinum approval; Obsidian v2.5 regression review replaced the too-thin route example before proof.",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-07-01",
-    "revalidationSummary": "Current-standard word Platinum revalidation with separated evidence lanes for 北上|ほくじょう checked generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations; no active limitations remain after the stale generated note was fixed.",
+    "revalidatedAt": "2026-07-04",
+    "revalidationSummary": "Current-standard word Platinum regression review for 北上|ほくじょう on 2026-07-04: Obsidian v2.5 surface review found the inherited example sentence too thin without route context, replaced it with バスはこの道を北上します。 / バスはこのみちをほくじょうします。 / The bus goes north on this road., and rechecked separated evidence lanes, generated surface, Japanese-source evidence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JMdict governed local row downloads/jmdict-word-verification.tsv (EDRDG JMdict English; CC BY-SA 4.0)",
-        "detail": "JMdict governed local row verified 北上|ほくじょう, reading ほくじょう, learner meaning going north / northbound, and product review checked example 電車は北上します。 for the shipped word-card surface; source meaning support: going north; entrySeq=1521070; jmdictPriority=news1,nf15; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
+        "detail": "JMdict governed local row verified 北上|ほくじょう, reading ほくじょう, learner meaning going north / northbound, and product review checked corrected example バスはこの道を北上します。 / バスはこのみちをほくじょうします。 / The bus goes north on this road. for the shipped word-card surface; source meaning support: going north; entrySeq=1521070; jmdictPriority=news1,nf15; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only"
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N5 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 北上|ほくじょう: word 北上, reading ほくじょう, meaning going north / northbound, example 電車は北上します。, reading でんしゃはほくじょうします。, translation The train goes north., audio word-reading-北上-ほくじょう, notes/support surface Exact governed JMdict/commonness verification supports 北上|ほくじょう as going-north/northbound vocabulary, reading breakdown 北 （ほく）; 上 （じょう）, labels JLPT N5; Reading coverage support; focus 北; 上; covers 北: ほく; 上: じょう, and pitch label source voicevox-nemo-reading-query pattern 1 [atamadaka] / 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
+        "detail": "Generated word-card surface inspected for 北上|ほくじょう: word 北上, reading ほくじょう, meaning going north / northbound, example バスはこの道を北上します。, reading バスはこのみちをほくじょうします。, translation The bus goes north on this road., audio word-reading-北上-ほくじょう, notes/support surface Exact governed JMdict/commonness verification supports 北上|ほくじょう as going-north/northbound vocabulary, reading breakdown 北 （ほく）; 上 （じょう）, labels JLPT N5; Reading coverage support; focus 北; 上; covers 北: ほく; 上: じょう, and pitch label source voicevox-nemo-reading-query pattern 1 [atamadaka] / 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence."
       },
       {
         "type": "level-contract",
@@ -47104,17 +47104,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example review checked 北上|ほくじょう, reading ほくじょう, sentence 電車は北上します。, reading でんしゃはほくじょうします。, English line The train goes north., and exported reading line for release quality."
+        "detail": "Example review checked 北上|ほくじょう, reading ほくじょう, corrected sentence バスはこの道を北上します。, reading バスはこのみちをほくじょうします。, English line The bus goes north on this road., and exported reading line for release quality."
       },
       {
         "type": "manual-review",
         "source": "platinum product review",
-        "detail": "Manual review judged 北上|ほくじょう common/useful, learner-friendly, and level-appropriate as route/direction vocabulary for going north or northbound contexts; not approved for coverage alone, with accurate reading ほくじょう, meaning going north / northbound, example sentence 電車は北上します。, notes/support surface Exact governed JMdict/commonness verification supports 北上|ほくじょう as going-north/northbound vocabulary, and no active verification limitations."
+        "detail": "Manual review judged 北上|ほくじょう common/useful, learner-friendly, and level-appropriate as route/direction vocabulary for going north or northbound contexts after replacing the too-thin inherited example with a route-context sentence; not approved for coverage alone, with accurate reading ほくじょう, meaning going north / northbound, notes/support surface Exact governed JMdict/commonness verification supports 北上|ほくじょう as going-north/northbound vocabulary, and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "manual current-standard word review using generated N5 word batch report and separated source/internal/review evidence lanes",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 北上|ほくじょう checked generated surface, Japanese-source evidence, example sentence 電車は北上します。, notes/support surface Exact governed JMdict/commonness verification supports 北上|ほくじょう as going-north/northbound vocabulary, reading breakdown 北 （ほく）; 上 （じょう）, meaning going north / northbound, labels JLPT N5; Reading coverage support; focus 北; 上; covers 北: ほく; 上: じょう, audio word-reading-北上-ほくじょう, pitch accent source voicevox-nemo-reading-query pattern 1 [atamadaka] / 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 北上|ほくじょう checked generated surface, Japanese-source evidence, corrected example sentence バスはこの道を北上します。, notes/support surface Exact governed JMdict/commonness verification supports 北上|ほくじょう as going-north/northbound vocabulary, reading breakdown 北 （ほく）; 上 （じょう）, meaning going north / northbound, labels JLPT N5; Reading coverage support; focus 北; 上; covers 北: ほく; 上: じょう, audio word-reading-北上-ほくじょう, pitch accent source voicevox-nemo-reading-query pattern 1 [atamadaka] / 1 [atamadaka] rendered Pitch 1: 1 / Generated pitch (unverified); generated guidance remains visibly labeled and is not dictionary-backed pitch evidence. Generated pitch (unverified) remains visible on the card; dictionary-backed pitch remains unverified., media provenance, release judgment common useful learner-friendly level-appropriate natural in the corrected route-context example, and verification limitations no active limitations."
       }
     ],
     "qualityGates": {
@@ -54663,7 +54663,7 @@
       {
         "type": "manual-review",
         "source": "manual Platinum product-fit and learner-usefulness review",
-        "detail": "Manual Platinum review judged 毎年|まいねん common/useful, learner-friendly, and level-appropriate as yearly routine vocabulary; retained as an explicit same-written alternate reading distinct from 毎年|まいとし after checking duplicate risk, example quality, and source support."
+        "detail": "Manual Platinum review judged 毎年|まいねん common/useful, learner-friendly, and level-appropriate as yearly routine vocabulary; retained as an explicit same-written alternate reading distinct from 毎年|まいとし after checking exact reading identity, example quality, and source support."
       },
       {
         "type": "current-standard-review",

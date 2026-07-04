@@ -34,6 +34,7 @@ That means:
 - Outside-JLPT support kanji do not choose the JLPT deck level, but they must be visibly labeled.
 - Constituent kanji must be visibly labeled on the card, including same-level, higher-level, and outside-JLPT kanji.
 - Reading coverage is scoped to the selected word-product levels. Do not duplicate support words if the reading is already taught well in another selected deck unless there is a clear editorial reason.
+- Word-card identity is exact written form plus exact reading. Kana/kanji orthographic variants with the same reading and broad meaning are not duplicates by default, because they can teach different learner-facing surfaces. Reject or defer one only after governed product review finds a real low-value clutter reason beyond "same reading" or "same gloss".
 - Every shipped word card must expose a learner-facing reading breakdown on the answer side.
 - Kanji words use ruby furigana; kana-only words render kana in the same reading-breakdown position.
 - Irregular compounds require curated reading-breakdown overrides or whole-word ruby fallback instead of false per-kanji slices.

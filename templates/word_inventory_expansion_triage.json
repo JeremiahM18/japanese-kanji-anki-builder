@@ -21186,6 +21186,2463 @@
         "priority": "low",
         "reason": "Reject this exact row: corpse meaning is sensitive and this spelling is a weak/archaic variant compared with already deferred 死体|したい; it is not a product-good N4 card surface.",
         "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "夏時間|なつじかん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Source-supported but summer time/daylight-saving vocabulary is less useful for the N4 learner deck than stronger daily time/weather rows, especially because Japan does not make it a routine everyday concept.",
+        "nextStep": "Reconsider only in a later time/calendar or travel-context batch with a natural example and source-level claim unverified label preserved."
+      },
+      "開校|かいこう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Opening/founding a school is valid school vocabulary, but it is administrative and lower immediate learner value than more common school-life words.",
+        "nextStep": "Reconsider in a later school-administration batch if the card surface has a concrete learner-facing example."
+      },
+      "金品|きんぴん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Money and goods/valuables has exact dictionary/commonness support, but the register is legal/news-like and less useful than cleaner everyday money or possession words.",
+        "nextStep": "Reconsider only in a money/news vocabulary pass with a natural example and clear learner-usefulness rationale."
+      },
+      "市営|しえい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: municipal-run is useful on everyday signs and transit/service names such as municipal buses or facilities; 営=N2 must be visibly labeled rather than hidden.",
+        "nextStep": "Queue only for later N4 Silver with a municipal transit/facility example, explicit 営=N2 support labeling, pitch/audio verification, and normal downstream gates."
+      },
+      "市外|しがい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: outside the city/city limits is practical place vocabulary with clean 市 and 外 anchors and exact dictionary/commonness support.",
+        "nextStep": "Queue only for later N4 Silver with a concrete outside-the-city example and normal verification gates."
+      },
+      "市街|しがい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Urban area/street-district vocabulary is valid and common, but the exact standalone surface competes with more learner-friendly 市街地 and needs harder-kanji support review for 街 before becoming an N4 card.",
+        "nextStep": "Reconsider alongside 市街地 or other town/city terms; preserve the source-level claim unverified label if promoted later."
+      },
+      "支社|ししゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Branch-office vocabulary is useful but business/workplace oriented and requires 支=N3 support, so it fits a harder word lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word Silver/common-pool review with a concrete company branch example and the source-level claim unverified label preserved."
+      },
+      "私服|しふく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: plain clothes/civilian clothes is common school and daily-life vocabulary with clean N4 私 and 服 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a school/plain-clothes example, pitch/audio verification, and normal downstream gates."
+      },
+      "紙幣|しへい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: banknote/paper money is practical money vocabulary and reinforces 紙, while 幣=N1 can be handled as an explicit support label.",
+        "nextStep": "Queue only for later N4 Silver with a simple cash/banknote example, explicit 幣=N1 support labeling, and normal verification gates."
+      },
+      "試食|ししょく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: tasting/free sample is useful food and shopping vocabulary with clean 試 and 食 anchors plus exact dictionary/commonness support.",
+        "nextStep": "Queue only for later N4 Silver with a supermarket/free-sample example, pitch/audio verification, and normal downstream gates."
+      },
+      "持込|もちこみ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Bringing/carrying in is useful on signs and rules, but this no-okurigana surface is less learner-friendly than 持ち込み and needs exact card-surface review before promotion.",
+        "nextStep": "Reconsider only if the deck deliberately accepts sign-style no-okurigana written forms; otherwise prefer a cleaner 持ち込み identity."
+      },
+      "自販|じはん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: 自販 is an abbreviation/fragment compared with learner-useful 自販機 or 自動販売機 and is not a good standalone N4 card surface.",
+        "nextStep": "Do not promote this exact abbreviation from common-pool discovery."
+      },
+      "実家|じっか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: parents' home/family home is common conversation vocabulary; 実=N3 should be labeled, not used to hide a useful word.",
+        "nextStep": "Queue only for later N4 Silver with a visiting/returning-to-family-home example, explicit 実=N3 support labeling, and normal verification gates."
+      },
+      "車道|しゃどう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: roadway/car lane is concrete street-safety vocabulary with clean 車 and 道 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a street/sidewalk contrast example, pitch/audio verification, and normal downstream gates."
+      },
+      "主治医|しゅじい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Primary/attending doctor is useful health vocabulary, but 治=N3 and the three-kanji medical surface make it a better fit for a harder word lane than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word Silver/common-pool review with a doctor/hospital example and explicit support-label handling."
+      },
+      "就業|しゅうぎょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Employment/starting work is source-supported but formal workplace vocabulary with 就=N1; it is not a product-good N4 expansion row.",
+        "nextStep": "Route only through N1 word review if that lane wants the exact identity; keep the source-level claim unverified label."
+      },
+      "集金|しゅうきん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Money collection is valid and common enough, but it is narrower than stronger everyday money/payment words and needs a careful school/fee example if used.",
+        "nextStep": "Reconsider in a money/school-life expansion after higher-value common-pool candidates."
+      },
+      "従事|じゅうじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Being engaged in work/duties is formal abstract vocabulary and requires 従=N1 support, so it belongs in a harder lane rather than N4 learner expansion.",
+        "nextStep": "Route only through N1 word review if that lane accepts this exact workplace/formal identity."
+      },
+      "書院|しょいん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: study-room/architectural or publishing-house usage is specialized and not a useful N4 learner card despite dictionary/commonness support.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "上体|じょうたい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: upper body is useful health, exercise, and posture vocabulary with clean 上 and 体 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a posture/exercise example, pitch/audio verification, and normal downstream gates."
+      },
+      "進路|しんろ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: future path/course is common school and life-planning vocabulary; 路=N3 should be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a school/career-path example, explicit 路=N3 support labeling, and normal downstream gates."
+      },
+      "水力|すいりょく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Hydraulic/water power has clean kanji support but is science/energy vocabulary and lower immediate N4 learner value than everyday water or power words.",
+        "nextStep": "Reconsider only in a science/environment vocabulary pass."
+      },
+      "棲息地|せいそくち": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: habitat meaning is domain-specific and this rare 棲 spelling is weaker than the standard 生息地 surface, with outside-JLPT support burden.",
+        "nextStep": "Do not promote this spelling variant from common-pool discovery."
+      },
+      "栖息地|せいそくち": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: habitat meaning is domain-specific and this rare 栖 spelling is weaker than the standard 生息地 surface, with outside-JLPT support burden.",
+        "nextStep": "Do not promote this spelling variant from common-pool discovery."
+      },
+      "生息地|せいそくち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Habitat is a legitimate word, but it is ecology/domain vocabulary and lower N4 product value than daily place/travel rows, especially with 息=N3 support needs.",
+        "nextStep": "Reconsider in a nature/science batch if the deck needs ecology vocabulary."
+      },
+      "接待|せったい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Business entertainment/hospitality is source-supported but workplace-register vocabulary and needs 接=N3 support, so it is not a good N4 common-pool Silver row.",
+        "nextStep": "Route only through N3 word review if a business/social hospitality card is wanted."
+      },
+      "摂待|せったい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: it is a weak alternate spelling for 接待 with harder 摂=N1 support and no product reason to teach this variant at N4.",
+        "nextStep": "Do not promote this spelling variant from common-pool discovery."
+      },
+      "千穐楽|せんしゅうらく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: final-performance/day-of-the-tournament vocabulary is specialized, and this 穐 variant adds outside-JLPT spelling noise.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "千秋樂|せんしゅうらく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: this old-form 樂 spelling is variant noise for a specialized performance/sumo term and is not an N4 learner card.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "千龝楽|せんしゅうらく": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: this rare 龝 spelling is variant noise for a specialized performance/sumo term and carries no useful N4 product value.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "前週|ぜんしゅう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: previous week is common, concrete calendar vocabulary with clean 前 and 週 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple last-week/previous-week example and normal verification gates."
+      },
+      "全身|ぜんしん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: whole body is useful health and daily-description vocabulary; 身 outside-JLPT should be explicitly labeled.",
+        "nextStep": "Queue only for later N4 Silver with a body/health example, explicit 身 support labeling, pitch/audio verification, and normal downstream gates."
+      },
+      "操業|そうぎょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Factory/business operation is formal industrial vocabulary with 操=N1 support and belongs in a harder lane, not N4 common-pool Silver.",
+        "nextStep": "Route only through N1 word review if that lane wants industrial/workplace vocabulary."
+      },
+      "足早|あしばや": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Hasty/quick-footed is source-supported but less immediately useful than ordinary speed/movement words and needs careful example-surface review.",
+        "nextStep": "Reconsider only in a movement/adverbial expression batch."
+      },
+      "多額|たがく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Large-sum vocabulary is useful but finance/news-register and needs 額=N3 support, making it a better harder-lane candidate than N4 Silver.",
+        "nextStep": "Route only through N3 word review with a concrete money/example sentence if accepted."
+      },
+      "体温|たいおん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: body temperature is practical health vocabulary; 温=N3 can be handled as a visible support label.",
+        "nextStep": "Queue only for later N4 Silver with a fever/body-temperature example, explicit 温=N3 support labeling, and normal downstream gates."
+      },
+      "体長|たいちょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Body length is valid but mostly animal/science description vocabulary and lower N4 learner value than more practical health/body words.",
+        "nextStep": "Reconsider only in a nature/science measurement batch."
+      },
+      "体内|たいない": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Inside the body is useful medical/science vocabulary but needs 内=N2 support and has a harder explanatory register than N4 common-pool Silver should carry.",
+        "nextStep": "Route only through N2 word review with a clear medical/science example if accepted."
+      },
+      "待合|まちあい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "The waiting-room/meeting-place concept is covered more cleanly by the already kept 待合室 identity; standalone 待合 is less learner-friendly as a card front.",
+        "nextStep": "Do not promote before a deliberate surface review against 待合室."
+      },
+      "退院|たいいん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: leaving/discharge from hospital is practical health vocabulary; 退=N3 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a hospital-discharge example, explicit 退=N3 support labeling, and normal verification gates."
+      },
+      "代表作|だいひょうさく": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Representative work/masterpiece is useful culture/media vocabulary, but it is less immediate than 作品 and needs 表=N3 support plus tighter example review.",
+        "nextStep": "Reconsider after stronger media/culture rows or in a creator/work-family batch."
+      },
+      "大通|おおどおり": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Main street/avenue is useful place vocabulary, but this no-okurigana surface is less learner-friendly than 大通り and needs exact written-form review before promotion.",
+        "nextStep": "Reconsider only if sign/place-name style no-okurigana forms are deliberately accepted."
+      },
+      "大店|おおだな": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: large merchant/large shop is dated or specialized as おおだな and not a natural N4 card surface for ordinary store vocabulary.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "短期間|たんきかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: short period is broadly useful time vocabulary; 期=N2 should be labeled rather than blocking a common expression.",
+        "nextStep": "Queue only for later N4 Silver with a simple short-period example, explicit 期=N2 support labeling, and normal downstream gates."
+      },
+      "茶屋|ちゃや": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: tea house/tea shop is useful travel/culture vocabulary with clean 茶 and 屋 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple tea-house/shop example and normal verification gates."
+      },
+      "着手|ちゃくしゅ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Starting/setting about a task is useful but formal work/project vocabulary, so it fits a harder review lane better than N4 common-pool Silver despite clean kanji anchors.",
+        "nextStep": "Route only through N3 word review with a concrete project/work example if accepted."
+      },
+      "著作|ちょさく": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Authorship/written work is useful but literary/legal-register vocabulary with 著=N2 support, not a strong N4 learner expansion row.",
+        "nextStep": "Route only through N2 word review if that lane wants writing/publication vocabulary."
+      },
+      "朝刊|ちょうかん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Morning newspaper is understandable and source-supported, but less central than 新聞 and needs 刊=N2 support; current N4 product value is not strong enough.",
+        "nextStep": "Reconsider in a media/news batch if newspaper-family coverage is needed."
+      },
+      "町角|まちかど": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Street corner is useful, but this 町角 surface is less standard/learner-friendly than 街角 and needs 角=N2 support review.",
+        "nextStep": "Reconsider only after written-form review against 街角 and other place vocabulary."
+      },
+      "調理|ちょうり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: cooking/food preparation is practical daily-life vocabulary; 調=N3 can be handled as explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a cooking/food-prep example, explicit 調=N3 support labeling, and normal downstream gates."
+      },
+      "長屋|ながや": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: row house/tenement is useful housing and town vocabulary with clean 長 and 屋 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a concrete housing/street example and normal verification gates."
+      },
+      "長家|ながや": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: it is a weaker alternate spelling for 長屋 and would add variant noise without a clear N4 product benefit.",
+        "nextStep": "Do not promote this spelling variant from common-pool discovery."
+      },
+      "通勤|つうきん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: commuting is highly practical work/life vocabulary; 勤=N3 should be visibly labeled.",
+        "nextStep": "Queue only for later N4 Silver with a commute-to-work/school example, explicit 勤=N3 support labeling, and normal downstream gates."
+      },
+      "通信販売|つうしんはんばい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Mail order/online shopping is useful, but this four-kanji compound is heavier than the learner-friendly 通販 surface and needs 信=N3 and 販=N2 support review.",
+        "nextStep": "Reconsider only after comparing against 通販 or a cleaner shopping vocabulary identity."
+      },
+      "通年|つうねん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: year-round/all-year is useful calendar and service-description vocabulary with clean 通 and 年 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a year-round/open-all-year example and normal verification gates."
+      },
+      "低学年|ていがくねん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: lower grades/younger school years is useful school-family vocabulary with clean target-level anchors.",
+        "nextStep": "Queue only for later N4 Silver with a school-grade example and normal verification gates."
+      },
+      "徹夜|てつや": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: staying up all night is common student/work/life vocabulary; 徹=N1 must be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a study/work all-night example, explicit 徹=N1 support labeling, and normal downstream gates."
+      },
+      "店内|てんない": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: inside the store is practical signage and shopping vocabulary; 内=N2 can be handled as visible support.",
+        "nextStep": "Queue only for later N4 Silver with a store/signage example, explicit 内=N2 support labeling, and normal verification gates."
+      },
+      "転職|てんしょく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Changing jobs is useful adult/work vocabulary but needs 職=N3 support and fits a harder word lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a career/job-change example if accepted."
+      },
+      "土手|どて": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: embankment/riverbank is concrete place vocabulary with clean 土 and 手 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a riverbank/embankment example and normal verification gates."
+      },
+      "同級|どうきゅう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: same grade/class is useful school vocabulary; 級=N1 should be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a class/grade example, explicit 級=N1 support labeling, and normal downstream gates."
+      },
+      "入園|にゅうえん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: entering kindergarten or a park/garden is useful school/place vocabulary with clean 入 and 園 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a kindergarten/park-entry example and normal verification gates."
+      },
+      "表紙|ひょうし": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: book cover/front cover is practical reading/classroom vocabulary; 表=N3 should be visibly labeled.",
+        "nextStep": "Queue only for later N4 Silver with a book-cover example, explicit 表=N3 support labeling, and normal downstream gates."
+      },
+      "病床|びょうしょう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Sickbed/hospital bed is medical-register vocabulary with 床=N2 support and is less learner-friendly than simpler hospital/body terms for N4.",
+        "nextStep": "Route only through N2 word review if a medical vocabulary batch wants this exact identity."
+      },
+      "病棟|びょうとう": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Hospital ward is useful but medical/institutional vocabulary with 棟=N1 support, so it belongs in a harder review lane.",
+        "nextStep": "Route only through N1 word review with a hospital-ward example if accepted."
+      },
+      "病牀|びょうしょう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: it is an old/rare alternate spelling for 病床 and adds outside-JLPT variant noise without N4 learner value.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "不自由|ふじゆう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: inconvenient/not free/limited is a useful contrast to 自由, but needs careful neutral examples and 由=N3 labeling.",
+        "nextStep": "Queue only for later N4 Silver with a neutral accessibility/inconvenience example, explicit 由=N3 support labeling, and normal downstream gates."
+      },
+      "併用|へいよう": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Combined/concurrent use is formal label/instruction vocabulary with 併=N1 support and is too hard-register for N4 common-pool Silver.",
+        "nextStep": "Route only through N1 word review if a formal instruction vocabulary batch wants it."
+      },
+      "並用|へいよう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: it is a weaker alternate spelling/variant beside standard 併用 and would add same-reading variant noise.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "漫画家|まんがか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: manga artist is highly learner-relevant culture/person vocabulary; 漫=N1 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a manga-artist example, explicit 漫=N1 support labeling, and normal downstream gates."
+      },
+      "密室|みっしつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Closed/locked-room vocabulary is mystery/legal-style and requires 密=N1 support, so it does not belong in N4 common-pool Silver.",
+        "nextStep": "Route only through N1 word review if that lane wants the exact identity."
+      },
+      "門下|もんか": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Pupil/disciple under a teacher is source-supported but formal and lower everyday value than clearer school/person vocabulary.",
+        "nextStep": "Reconsider only in a teacher/student relationship vocabulary pass."
+      },
+      "余地|よち": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Room/scope/margin is useful abstract vocabulary but needs 余=N3 support and is better suited to a harder learner lane.",
+        "nextStep": "Route only through N3 word review with a clear room-for-improvement/example sentence if accepted."
+      },
+      "幼稚園|ようちえん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: kindergarten is core school/family vocabulary; 幼=N2 and 稚=N1 must be explicit support labels.",
+        "nextStep": "Queue only for later N4 Silver with a kindergarten example, explicit 幼=N2 and 稚=N1 support labeling, and normal downstream gates."
+      },
+      "来店|らいてん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: visiting/coming to a store is common shopping/service vocabulary with clean 来 and 店 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a store-visit example and normal verification gates."
+      },
+      "旅費|りょひ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: travel expenses is practical travel/money vocabulary; 費=N2 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a travel-cost example, explicit 費=N2 support labeling, and normal downstream gates."
+      },
+      "醫院|いいん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: 醫院 is an old-form variant of 医院 and adds outside-JLPT spelling noise without learner benefit.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "運転士|うんてんし": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: train/bus driver or operator is useful transit vocabulary; 士=N1 should be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a public-transport driver/operator example, explicit 士=N1 support labeling, and normal verification gates."
+      },
+      "歩行者天国|ほこうしゃてんごく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Pedestrian zone is useful city vocabulary, but this long compound is heavy for N4 and should wait behind shorter, more reusable travel/place terms.",
+        "nextStep": "Reconsider in a city/travel batch if long compounds are deliberately accepted."
+      },
+      "昼御飯|ひるごはん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Lunch is useful, but this exact 御 spelling is less learner-friendly than kana-mixed 昼ご飯/昼ごはん and needs duplicate written-form review before promotion.",
+        "nextStep": "Reconsider only alongside the meal-word family and prefer the most natural learner-facing written surface."
+      },
+      "晩御飯|ばんごはん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Dinner/evening meal is useful, but this exact 御 spelling is less learner-friendly than kana-mixed 晩ご飯/晩ごはん and needs duplicate written-form review before promotion.",
+        "nextStep": "Reconsider only alongside the meal-word family and prefer the most natural learner-facing written surface."
+      },
+      "夜御飯|よるごはん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Evening meal is useful, but this exact 御 spelling is less learner-friendly than kana-mixed 夜ご飯/夜ごはん and needs duplicate written-form review before promotion.",
+        "nextStep": "Reconsider only alongside the meal-word family and prefer the most natural learner-facing written surface."
+      },
+      "医務室|いむしつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: infirmary/medical room is useful school and facility vocabulary; 務=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a school/facility infirmary example, explicit 務=N3 support labeling, and normal downstream gates."
+      },
+      "家庭医|かていい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Family doctor is useful health vocabulary, but the exact concept is less universal in everyday Japanese learner contexts and needs 庭=N3 support review.",
+        "nextStep": "Reconsider in a health/doctor vocabulary batch if the example can be natural and culturally clear."
+      },
+      "花言葉|はなことば": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Language of flowers is culturally interesting and source-supported, but it is lower functional value than stronger daily-life vocabulary and needs 葉=N3 support.",
+        "nextStep": "Reconsider only in a culture/flower vocabulary pass."
+      },
+      "教護院|きょうごいん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: reformatory/child-welfare institution vocabulary is specialized/dated and not a product-good N4 learner card.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "仕事柄|しごとがら": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "By nature of one's work is useful but idiomatic/formal and needs 柄=N1 support, so it belongs in a harder lane rather than N4 Silver.",
+        "nextStep": "Route only through N1 word review if an idiom/work-register batch wants it."
+      },
+      "世帯主|せたいぬし": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Head of household is administrative life vocabulary with 帯=N3 support and a harder register than N4 common-pool Silver should carry.",
+        "nextStep": "Route only through N3 word review with an address/form/household example if accepted."
+      },
+      "無医村|むいそん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: village without a doctor is narrow rural-health policy vocabulary with outside-JLPT 無 and no strong N4 learner payoff.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "院|いん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: standalone 院 is broad suffix-like institution vocabulary and behaves more like kanji/morpheme support than a clean word-card identity.",
+        "nextStep": "Do not promote standalone 院 as an N4 word from common-pool discovery; prefer concrete compounds such as 病院 when needed."
+      },
+      "動産|どうさん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: movable-property vocabulary is legal/administrative and not useful enough for the N4 learner deck despite clean kanji anchors.",
+        "nextStep": "Do not promote this legal-domain row from common-pool discovery."
+      },
+      "画質|がしつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: image/video quality is modern practical media/device vocabulary with clean 画 and 質 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a photo/video quality example and normal verification gates."
+      },
+      "引越し|ひっこし": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: moving house is highly practical life vocabulary; 越=N3 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a moving-house example, explicit 越=N3 support labeling, and normal downstream gates."
+      },
+      "掛け声|かけごえ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: shout/call/cheer is useful group activity and everyday expression vocabulary; 掛=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a sports/class activity example, explicit 掛=N3 support labeling, and normal verification gates."
+      },
+      "空きや|あきや": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: vacant-house vocabulary is valid, but this mixed 空きや surface is weaker than the standard 空き家 and would add duplicate variant noise.",
+        "nextStep": "Do not promote this spelling variant from common-pool discovery."
+      },
+      "言葉使い|ことばづかい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: word choice/use of language is practical classroom and communication vocabulary; 葉=N3 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a polite-language/word-choice example, explicit 葉=N3 support labeling, and normal downstream gates."
+      },
+      "控え室|ひかえしつ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Waiting room/dressing room is useful in venues, but the exact word is more event/facility-specific and needs 控=N1 support review.",
+        "nextStep": "Reconsider in a venue/facility vocabulary batch after higher-value place words."
+      },
+      "持帰り|もちかえり": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Takeout/take-home is useful, but this no-okurigana sign-style surface is less learner-friendly than 持ち帰り and needs exact written-form review.",
+        "nextStep": "Reconsider only if sign-style restaurant surfaces are deliberately accepted; otherwise prefer 持ち帰り."
+      },
+      "持込み|もちこみ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Bringing/carrying in is useful on rules and signs, but this written surface is still sign-style and needs comparison against 持ち込み before promotion.",
+        "nextStep": "Reconsider only if the deck deliberately accepts sign-style written forms for rules vocabulary."
+      },
+      "待合い|まちあい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "The waiting-room concept is already better represented by 待合室; standalone 待合い is less clean as a learner card.",
+        "nextStep": "Do not promote before deliberate surface review against 待合 and 待合室."
+      },
+      "題する|だいする": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "To be titled/named is source-supported and useful around books/media, but it is more formal and lower immediate N4 value than concrete title/book vocabulary.",
+        "nextStep": "Reconsider in a reading/media batch if a simple titled-work example is product-good."
+      },
+      "茶の間|ちゃのま": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: living room/home space is useful household vocabulary with clean 茶 and 間 anchors despite the kana connector.",
+        "nextStep": "Queue only for later N4 Silver with a home/living-room example and normal verification gates."
+      },
+      "日帰り|ひがえり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: day trip/same-day return is practical travel vocabulary with clean 日 and 帰 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a day-trip example and normal verification gates."
+      },
+      "問い合せ|といあわせ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: inquiry is useful, but this spelling variant is weaker than the standard 問い合わせ surface and would create duplicate card noise.",
+        "nextStep": "Do not promote this variant; prefer 問い合わせ if the deck accepts this identity."
+      },
+      "問合わせ|といあわせ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: inquiry is useful, but this compact spelling variant is less learner-friendly than 問い合わせ and duplicates the same card role.",
+        "nextStep": "Do not promote this variant; prefer 問い合わせ if the deck accepts this identity."
+      },
+      "旅立つ|たびだつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: to depart/start a journey is useful travel vocabulary, but the death euphemism sense needs controlled example review.",
+        "nextStep": "Queue only for later N4 Silver with a literal departure example and notes that avoid accidentally foregrounding the euphemistic death sense."
+      },
+      "待ち合せる|まちあわせる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: arranging to meet is useful, but this spelling variant is weaker than the standard 待ち合わせる surface.",
+        "nextStep": "Do not promote this variant; prefer 待ち合わせる if accepted."
+      },
+      "待ち合わせる|まちあわせる": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: arranging to meet is highly practical social/travel vocabulary with clean 待 and 合 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a station/meeting-time example and normal verification gates."
+      },
+      "合わせ持つ|あわせもつ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "To have both/also have is useful but abstract and example-sensitive; it is less immediate than concrete N4 common-pool candidates.",
+        "nextStep": "Reconsider in an abstract-expression batch with a clean, short example."
+      },
+      "引き続く|ひきつづく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "To continue/follow is useful but needs 続=N3 support and reads as a harder verb-family item than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a clear continuation example if accepted."
+      },
+      "あき屋|あきや": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: vacant-house vocabulary is valid, but this mixed あき屋 variant is weaker than standard 空き家 and adds duplicate spelling noise.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "あき家|あきや": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: vacant-house vocabulary is valid, but this mixed あき家 variant is weaker than standard 空き家 and adds duplicate spelling noise.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "ひと晩|ひとばん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: one night/overnight is practical time vocabulary with a learner-friendly mixed-kana surface.",
+        "nextStep": "Queue only for later N4 Silver with an overnight/one-night example and normal verification gates."
+      },
+      "お医者さん|おいしゃさん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: doctor is core daily health vocabulary in a natural polite/person form with 医 support.",
+        "nextStep": "Queue only for later N4 Silver with a simple doctor/clinic example and normal verification gates."
+      },
+      "フランス料理|フランスりょうり": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "French cuisine is understandable and learner-relevant, but it is a proper-country cuisine compound and lower priority than general food/cooking words.",
+        "nextStep": "Reconsider in a food/cuisine family batch if country-cuisine compounds are wanted."
+      },
+      "医科|いか": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Medical science/medical department is academic/institutional vocabulary and fits a harder lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review if a medical-school/department card is wanted."
+      },
+      "一発|いっぱつ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "One shot/one try is common but broad, slangy, and multi-sense; it needs careful example choice before becoming a learner-facing card.",
+        "nextStep": "Reconsider in an expression/action vocabulary batch with a safe concrete sense."
+      },
+      "運行|うんこう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: operation/running of buses or trains is useful transit vocabulary with clean 運 and 行 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a train/bus service example and normal verification gates."
+      },
+      "運送|うんそう": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Transport/shipping goods is source-supported but business/logistics oriented and lower learner value than passenger transit words.",
+        "nextStep": "Reconsider in a shipping/logistics or move-house vocabulary batch if needed."
+      },
+      "夏場|なつば": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: summertime/summer season is useful weather/season vocabulary with clean 夏 and 場 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a summer-season example and normal verification gates."
+      },
+      "科学者|かがくしゃ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: scientist is useful school/person/job vocabulary with clear 科学 and 者 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a scientist/science example and normal verification gates."
+      },
+      "歌集|かしゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Poetry collection/songbook is valid but literary/domain-specific and lower N4 product value than everyday reading/music words.",
+        "nextStep": "Reconsider only in a literature/music batch."
+      },
+      "会頭|かいとう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: society president/chair vocabulary is formal title language and not useful enough for N4 expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "会堂|かいどう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Church/chapel/hall vocabulary is source-supported but institution-specific and lower priority than more general building/place words.",
+        "nextStep": "Reconsider only in a religion/building vocabulary pass."
+      },
+      "回帰|かいき": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Return/recurrence/regression is abstract higher-register vocabulary and fits a harder lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review with a clear nontechnical example if accepted."
+      },
+      "開業|かいぎょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: opening a business/practice is useful storefront and work-life vocabulary with clean 開 and 業 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a shop/clinic opening example and normal verification gates."
+      },
+      "外野手|がいやしゅ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Outfielder is valid sports vocabulary, but it is baseball-domain language and lower priority than general people/place/action words.",
+        "nextStep": "Reconsider only in a sports vocabulary pass."
+      },
+      "急進|きゅうしん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Rapid/radical progress is abstract political or formal vocabulary and does not fit N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if a higher-lane abstract vocabulary batch wants it."
+      },
+      "強風|きょうふう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: strong wind/high wind is practical weather vocabulary with clean 強 and 風 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a weather/forecast example and normal verification gates."
+      },
+      "強味|つよみ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: strong point/strength is useful, but this 強味 spelling is weaker than the standard 強み surface and would add variant noise.",
+        "nextStep": "Do not promote this spelling variant from common-pool discovery."
+      },
+      "教科|きょうか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: school subject/curriculum is practical classroom vocabulary with clean 教 and 科 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a school-subject example and normal verification gates."
+      },
+      "業績|ぎょうせき": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Achievements/performance/results is useful but business/academic-register vocabulary and needs 績=N2 support, so it belongs in a harder lane.",
+        "nextStep": "Route only through N2 word review with a work/results example if accepted."
+      },
+      "業務|ぎょうむ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Business operations/duties is useful workplace vocabulary but needs 務=N3 support and is harder-register than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a concrete work-duty example if accepted."
+      },
+      "銀持|かねもち": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: rich person is useful as 金持ち/金持, but 銀持 is not a product-good learner-facing spelling.",
+        "nextStep": "Do not promote this spelling from common-pool discovery."
+      },
+      "区民|くみん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Ward resident is valid Japan civic vocabulary, but it is local-administration specific and lower priority than broader person/place words.",
+        "nextStep": "Reconsider in a civic/local-government batch if needed."
+      },
+      "区立|くりつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: ward-run/public-by-ward appears on schools, libraries, and facilities, and has clean 区 and 立 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a public facility example and normal verification gates."
+      },
+      "経験者|けいけんしゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Experienced person is useful but needs 経=N3 support and fits a harder work/life vocabulary lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a simple experience/person example if accepted."
+      },
+      "建前|たてまえ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Public stance/official position is culturally useful but abstract and example-sensitive, so it belongs in a harder lane than N4 Silver.",
+        "nextStep": "Route only through N3 word review with careful contrast/context if accepted."
+      },
+      "研究員|けんきゅういん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: researcher/lab worker is useful job and school/science vocabulary with clear 研究 and 員 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a lab/researcher example and normal verification gates."
+      },
+      "古代|こだい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: ancient times is useful history/school vocabulary with clean 古 and 代 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a history/ancient-times example and normal verification gates."
+      },
+      "顧問|こもん": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "medium",
+        "reason": "Advisor/club supervisor is useful in school/work contexts, but 顧=N1 makes it a harder-lane candidate rather than N4 common-pool Silver.",
+        "nextStep": "Route only through N1 word review if a club/work advisor card is accepted."
+      },
+      "公言|こうげん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Public declaration/profession is formal abstract vocabulary and does not fit N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if a higher-lane speech/statement batch wants it."
+      },
+      "公社|こうしゃ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: public corporation is administrative institution vocabulary and not useful enough for the N4 learner deck.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "公正|こうせい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Fairness/impartiality is useful but abstract civic vocabulary and fits a harder lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a clear fairness example if accepted."
+      },
+      "口頭|こうとう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: oral/verbal is useful classroom and communication vocabulary with clean 口 and 頭 anchors.",
+        "nextStep": "Queue only for later N4 Silver with an oral-answer/verbal-explanation example and normal verification gates."
+      },
+      "考古学|こうこがく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Archaeology is a valid school/academic word, but it is domain-specific and lower priority than broader school/science vocabulary.",
+        "nextStep": "Reconsider only in an academic-subject vocabulary pass."
+      },
+      "合理|ごうり": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Rationality is source-supported but abstract and less natural as a standalone learner card than 合理的 or concrete useful words.",
+        "nextStep": "Reconsider only after written/sense review against 合理的."
+      },
+      "作|さく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Work/piece/production is valid, but standalone 作 is broad and kanji-morpheme-like compared with clearer compounds such as 作品.",
+        "nextStep": "Reconsider only if a later card-surface review accepts standalone 作 as a distinct word identity."
+      },
+      "産業界|さんぎょうかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Industrial world is business/news vocabulary and too formal for N4 common-pool Silver despite source support.",
+        "nextStep": "Route only through N2 word review if a business/news lane wants it."
+      },
+      "産物|さんぶつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: product/produce/result is useful nature, business, and school vocabulary with clean 産 and 物 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a concrete produce/product example and normal verification gates."
+      },
+      "思考|しこう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Thought/thinking is useful but abstract and fits a harder learner lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a simple thinking/process example if accepted."
+      },
+      "試作|しさく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Prototype/trial manufacture is useful but work/manufacturing vocabulary and harder-register than N4 learner expansion.",
+        "nextStep": "Route only through N3 word review if a product/work vocabulary batch wants it."
+      },
+      "持主|もちぬし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: owner is useful, but this no-okurigana surface is weaker than standard 持ち主 and would add avoidable spelling noise.",
+        "nextStep": "Do not promote this variant; prefer 持ち主 if the deck accepts owner vocabulary."
+      },
+      "次元|じげん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Dimension/perspective/level is abstract science/discussion vocabulary and belongs in a harder lane than N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review with a clear nontechnical example if accepted."
+      },
+      "自立|じりつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: independence/self-reliance is useful life vocabulary with clean 自 and 立 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple independent-living/self-reliance example and normal verification gates."
+      },
+      "社会学|しゃかいがく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Sociology is valid academic vocabulary but domain-specific and lower priority than broader school/social words.",
+        "nextStep": "Reconsider only in an academic-subject vocabulary pass."
+      },
+      "社会的|しゃかいてき": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Social/societal is useful but adjectival 的 vocabulary with an outside-JLPT support burden, so it fits a harder lane better than N4 Silver.",
+        "nextStep": "Route only through N3 word review if adjectival social vocabulary is accepted."
+      },
+      "社会面|しゃかいめん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Newspaper social/local-news page is source-supported but media-specific and less useful than general news or society vocabulary.",
+        "nextStep": "Reconsider only in a newspaper/media vocabulary pass."
+      },
+      "社団法人|しゃだんほうじん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: incorporated association/legal-person vocabulary is legal/administrative and not deck-worthy for N4 expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "借地|しゃくち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Leased land is valid but real-estate/legal vocabulary and lower learner value than general housing/place words.",
+        "nextStep": "Reconsider only in a housing/legal vocabulary batch."
+      },
+      "弱者|じゃくしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: vulnerable/weak person is useful social vocabulary, but examples must stay neutral and respectful.",
+        "nextStep": "Queue only for later N4 Silver with a careful neutral example and normal verification gates."
+      },
+      "主題|しゅだい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: subject/theme is useful reading, class, and discussion vocabulary with clean 主 and 題 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a book/class theme example and normal verification gates."
+      },
+      "手口|てぐち": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Criminal technique/trick is common enough but crime-register and example-sensitive, so it should not jump ahead of safer everyday vocabulary.",
+        "nextStep": "Reconsider in a safety/news vocabulary batch with controlled example wording."
+      },
+      "手数料|てすうりょう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: handling/service fee is highly practical money/service vocabulary; 数=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a bank/shipping/service-fee example, explicit 数=N3 support labeling, and normal downstream gates."
+      },
+      "首席|しゅせき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Chief/top student/top seat is source-supported but formal and multi-sense, with 席=N3 support needs.",
+        "nextStep": "Reconsider only in a school/rank/title vocabulary pass."
+      },
+      "集合|しゅうごう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: gathering/meeting up is practical school, event, and group vocabulary with clean 集 and 合 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a meet-up/gathering example and normal verification gates."
+      },
+      "従業員|じゅうぎょういん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: employee/staff is common service and workplace vocabulary; 従=N1 must be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a shop/company employee example, explicit 従=N1 support labeling, and normal downstream gates."
+      },
+      "重度|じゅうど": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Severe illness/disability is useful but sensitive medical/social vocabulary and needs careful example/notes before learner-facing promotion.",
+        "nextStep": "Reconsider in a health/accessibility batch with respectful, controlled examples."
+      },
+      "重力|じゅうりょく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: gravity is useful school/science vocabulary with clean 重 and 力 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple science/gravity example and normal verification gates."
+      },
+      "出合|であい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: meeting/encounter is useful, but this no-okurigana variant is weaker than standard 出会い and duplicates the same learner role.",
+        "nextStep": "Do not promote this variant; prefer 出会い if accepted."
+      },
+      "出番|でばん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: one's turn/shift/time to act is useful event, work, and conversation vocabulary with clean 出 and 番 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a turn/shift example and normal verification gates."
+      },
+      "出品|しゅっぴん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: putting an item on display or for sale is useful marketplace/exhibition vocabulary with clean 出 and 品 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a sale/exhibition example and normal verification gates."
+      },
+      "所持|しょじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Possession/carrying on one's person is useful but legal/police-register vocabulary and fits a harder lane better than N4 Silver.",
+        "nextStep": "Route only through N2 word review with a safe everyday possession example if accepted."
+      },
+      "小切手|こぎって": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Cheque/check is valid money vocabulary but less common in modern daily learner contexts than cash/card/fee/payment words.",
+        "nextStep": "Reconsider only in a money/banking batch if still product-relevant."
+      },
+      "消費者|しょうひしゃ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: consumer/customer is useful product, service, and news vocabulary; 消=N3 and 費=N2 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a consumer/customer example, explicit 消=N3 and 費=N2 support labeling, and normal downstream gates."
+      },
+      "乗員|じょういん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: crew member is useful transit/travel vocabulary with clean 乗 and 員 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a train/plane crew example and normal verification gates."
+      },
+      "心理学|しんりがく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Psychology is a valid academic subject, but it is domain-specific and lower priority than broader school and feeling/thinking vocabulary.",
+        "nextStep": "Reconsider only in an academic-subject vocabulary pass."
+      },
+      "新品|しんぴん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: brand-new item is practical shopping/product vocabulary with clean 新 and 品 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a new/used item contrast example and normal verification gates."
+      },
+      "真意|しんい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Real intention/true meaning is useful but abstract and better suited to a harder word lane than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a clear intention/meaning example if accepted."
+      },
+      "真夏|まなつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: midsummer/height of summer is useful season/weather vocabulary with clean 真 and 夏 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a midsummer/weather example and normal verification gates."
+      },
+      "真理|しんり": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Truth is abstract philosophical vocabulary and belongs in a harder learner lane rather than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review if accepted by an abstract vocabulary batch."
+      },
+      "進行|しんこう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: progress/proceeding is useful event, work, and movement vocabulary with clean 進 and 行 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a meeting/event/progress example and normal verification gates."
+      },
+      "世界一|せかいいち": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: best/number one in the world is a common, learner-friendly expression with clean 世界 and 一 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple best-in-the-world example and normal verification gates."
+      },
+      "制作|せいさく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: production/creation is useful media and project vocabulary; 制=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a film/video/work production example, explicit 制=N3 support labeling, and normal downstream gates."
+      },
+      "青少年|せいしょうねん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: youth/young people is useful social and school vocabulary with clean 青 and 少年 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a youth/young-people example and normal verification gates."
+      },
+      "全会|ぜんかい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: whole assembly is formal meeting vocabulary and not useful enough as an N4 learner card.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "全集|ぜんしゅう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Complete works/collection is valid reading vocabulary, but it is literary/publishing-specific and lower priority than broader book/text terms.",
+        "nextStep": "Reconsider only in a reading/publishing vocabulary pass."
+      },
+      "全世界|ぜんせかい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: the whole world is common, useful global/place vocabulary with clean 全 and 世界 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a whole-world example and normal verification gates."
+      },
+      "全文|ぜんぶん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: full text/whole passage is useful reading and document vocabulary with clean 全 and 文 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a read-the-full-text example and normal verification gates."
+      },
+      "送料|そうりょう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: shipping/postage charge is highly practical shopping vocabulary with clean 送 and 料 anchors.",
+        "nextStep": "Queue only for later N4 Silver with an online-shopping/shipping-fee example and normal verification gates."
+      },
+      "足首|あしくび": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: ankle is practical body/health vocabulary with clean 足 and 首 anchors.",
+        "nextStep": "Queue only for later N4 Silver with an ankle-pain/injury example and normal verification gates."
+      },
+      "貸出用|かしだしよう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "For lending/circulation is useful around libraries, but this 用-suffixed label surface is sign/inventory-like and lower priority than cleaner 貸出 or 借りる-family words.",
+        "nextStep": "Reconsider only in a library/signage vocabulary pass."
+      },
+      "大作|たいさく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Large-scale work/masterpiece is valid media vocabulary, but less immediately useful than 作品, 制作, or other clearer media terms.",
+        "nextStep": "Reconsider in a media/creative-works batch if needed."
+      },
+      "知合|しりあい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: acquaintance is useful, but this no-okurigana variant is weaker than 知り合い and duplicates the same learner role.",
+        "nextStep": "Do not promote this variant; prefer 知り合い if accepted."
+      },
+      "地主|じぬし": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Landowner/landlord is valid but real-estate/social-role vocabulary and lower priority than broader housing/place words.",
+        "nextStep": "Reconsider only in a housing/real-estate vocabulary pass."
+      },
+      "着目|ちゃくもく": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Focusing attention is useful but abstract work/study vocabulary and fits a harder lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a clear focus-on example if accepted."
+      },
+      "着用|ちゃくよう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: wearing a uniform, helmet, or seat belt is practical clothing/safety vocabulary with clean 着 and 用 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a seat-belt/uniform wearing example and normal verification gates."
+      },
+      "定員|ていいん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: capacity/quota is practical transit, venue, and school vocabulary; 定=N2 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a bus/class/venue capacity example, explicit 定=N2 support labeling, and normal downstream gates."
+      },
+      "転用|てんよう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Diversion/repurposing is formal administrative/work vocabulary and fits a harder lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if accepted by a formal/work vocabulary batch."
+      },
+      "登場|とうじょう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: appearance/entrance on stage or in media is useful story/event/product vocabulary; 登=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a movie/story/stage example, explicit 登=N3 support labeling, and normal downstream gates."
+      },
+      "都民|とみん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: Tokyo resident/Tokyoite is useful civic/place vocabulary for Japan contexts with clean 都 and 民 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a Tokyo-resident example and normal verification gates."
+      },
+      "度合|どあい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Degree/extent is useful, but this no-okurigana surface is weaker than 度合い and needs exact written-form review.",
+        "nextStep": "Reconsider only after comparing against 度合い."
+      },
+      "当事者|とうじしゃ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Person concerned/interested party is useful but legal/administrative register and needs 当=N3 support, so it fits a harder lane.",
+        "nextStep": "Route only through N3 word review with a clear party/person-concerned example if accepted."
+      },
+      "頭部|とうぶ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: head/head region is useful body/health vocabulary with clean 頭 and 部 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a body/health example and normal verification gates."
+      },
+      "動員|どういん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Mobilization is formal news/organization vocabulary and does not fit N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if a higher-lane news/organization batch wants it."
+      },
+      "特産|とくさん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: local specialty/regional product is useful travel and food vocabulary with clean 特 and 産 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a regional specialty example and normal verification gates."
+      },
+      "特使|とくし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: special envoy is diplomacy/news vocabulary and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "特集|とくしゅう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: feature/special issue is useful media and magazine vocabulary with clean 特 and 集 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a magazine/video feature example and normal verification gates."
+      },
+      "特有|とくゆう": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Characteristic/peculiar to is useful but abstract explanatory vocabulary and fits a harder learner lane better than N4 Silver.",
+        "nextStep": "Route only through N3 word review with a clear characteristic-of example if accepted."
+      },
+      "難民|なんみん": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Refugee is important social/news vocabulary, but 難=N2 and the topic sensitivity make it a better fit for a harder lane with careful examples.",
+        "nextStep": "Route only through N2 word review with careful neutral wording if accepted."
+      },
+      "肉親|にくしん": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Blood relative is valid family vocabulary, but it is more formal than everyday family terms and lower immediate N4 value.",
+        "nextStep": "Reconsider in a family/social relationship batch if needed."
+      },
+      "入所|にゅうしょ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Admission to a facility/institution is administrative and sometimes carceral vocabulary, so it does not fit N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if a facility/admin batch wants it."
+      },
+      "農家|のうか": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: farmer/farmhouse is useful job, food, and rural-life vocabulary; 農=N2 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a farmer/farmhouse example, explicit 農=N2 support labeling, and normal downstream gates."
+      },
+      "売春|ばいしゅん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: prostitution is adult/sensitive vocabulary and not product-good for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "博物館|はくぶつかん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: museum is core travel/school vocabulary; 博=N1 should be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a museum visit example, explicit 博=N1 support labeling, and normal downstream gates."
+      },
+      "発注|はっちゅう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Placing an order is useful but business/procurement vocabulary and fits a harder lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review with a work/order example if accepted."
+      },
+      "発動|はつどう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Putting into operation/invocation is formal news/legal vocabulary and too hard-register for N4 Silver.",
+        "nextStep": "Route only through N2 word review if accepted by a formal vocabulary batch."
+      },
+      "品質|ひんしつ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: product/service quality is practical shopping and work vocabulary with clean 品 and 質 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a product-quality example and normal verification gates."
+      },
+      "不安定|ふあんてい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: unstable/insecure is useful condition/feeling vocabulary; 定=N2 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a weather/connection/condition example, explicit 定=N2 support labeling, and normal downstream gates."
+      },
+      "不祥事|ふしょうじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Scandal/misconduct is news/legal-register vocabulary with 祥=N1 support and is not N4 product-good.",
+        "nextStep": "Route only through N1 word review if a news/formal vocabulary batch wants it."
+      },
+      "不利|ふり": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: disadvantage/unfavorable position is useful school, game, and life vocabulary with clean 不 and 利 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple disadvantage example and normal verification gates."
+      },
+      "部員|ぶいん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: club/member or staff member is useful school and group vocabulary with clean 部 and 員 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a school-club member example and normal verification gates."
+      },
+      "部族|ぶぞく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Tribe is valid social vocabulary, but it is domain/context-sensitive and lower immediate N4 learner value.",
+        "nextStep": "Reconsider only in a culture/history/social vocabulary batch."
+      },
+      "物事|ものごと": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: things/matters is useful general vocabulary with clean 物 and 事 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple matters/things example and normal verification gates."
+      },
+      "分科会|ぶんかかい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: subcommittee/breakout session is administrative meeting vocabulary and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "母体|ぼたい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Mother's body/parent organization/base is source-supported but sensitive and multi-sense, requiring careful example and meaning-scope review.",
+        "nextStep": "Reconsider only in a health/organization vocabulary pass with controlled wording."
+      },
+      "方言|ほうげん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: dialect is useful language and regional-culture vocabulary with clean 方 and 言 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a dialect/language example and normal verification gates."
+      },
+      "本家|ほんけ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Head house/originator is valid but culturally specific and multi-sense, with lower immediate N4 learner value.",
+        "nextStep": "Reconsider only in a family/tradition or origin vocabulary pass."
+      },
+      "本場|ほんば": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: place of origin/home of something is useful food, travel, and culture vocabulary with clean 本 and 場 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a food/place-of-origin example and normal verification gates."
+      },
+      "民意|みんい": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Popular will/will of the people is civic/news vocabulary and too abstract for N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if a civic/news vocabulary batch wants it."
+      },
+      "民事|みんじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Civil affairs/civil case is legal vocabulary and does not fit N4 learner expansion.",
+        "nextStep": "Route only through N2 word review if a legal vocabulary lane accepts it."
+      },
+      "明暗|めいあん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: light and dark/contrast is useful descriptive vocabulary with clean 明 and 暗 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a light/dark contrast example and normal verification gates."
+      },
+      "問題点|もんだいてん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: problem point/issue is broadly useful school, work, and daily discussion vocabulary; 点=N2 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a simple issue/problem-point example, explicit 点=N2 support labeling, and normal downstream gates."
+      },
+      "野手|やしゅ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Fielder is valid sports vocabulary, but it is baseball-domain language and lower priority than general action/person words.",
+        "nextStep": "Reconsider only in a sports vocabulary pass."
+      },
+      "野心|やしん": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Ambition/aspiration is useful but abstract and sometimes negative in register, fitting a harder lane better than N4 Silver.",
+        "nextStep": "Route only through N3 word review with a careful ambition example if accepted."
+      },
+      "野鳥|やちょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: wild bird is useful nature vocabulary with clean 野 and 鳥 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a park/wild-bird example and normal verification gates."
+      },
+      "薬物|やくぶつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: drug/medicine is useful health/news vocabulary with clean 薬 and 物 anchors, but examples must avoid glamorizing misuse.",
+        "nextStep": "Queue only for later N4 Silver with a neutral medicine/drug-safety example and normal verification gates."
+      },
+      "有事|ゆうじ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Emergency/contingency is formal news/security vocabulary and too hard-register for N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if accepted by a news/civic vocabulary batch."
+      },
+      "用地|ようち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Site/land for use is valid but real-estate/administrative vocabulary and lower learner value than general place words.",
+        "nextStep": "Reconsider only in a land/housing vocabulary pass."
+      },
+      "立地|りっち": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Location/site conditions is useful in store/housing contexts, but it is business/real-estate register and less immediate than simpler location words.",
+        "nextStep": "Reconsider in a housing/business-location batch if needed."
+      },
+      "流通|りゅうつう": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "medium",
+        "reason": "Distribution/circulation is business/economics vocabulary and needs 流=N2 support, so it belongs in a harder lane.",
+        "nextStep": "Route only through N2 word review with a goods/distribution example if accepted."
+      },
+      "料理屋|りょうりや": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: restaurant/eating place is practical food and travel vocabulary with clean 料理 and 屋 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a restaurant example and normal verification gates."
+      },
+      "力説|りきせつ": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Emphasizing/stressing an argument is formal speech/reporting vocabulary and does not fit N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if a speech/reporting vocabulary batch wants it."
+      },
+      "林業|りんぎょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Forestry is valid industry vocabulary, but it is domain-specific and lower priority than general work/nature words.",
+        "nextStep": "Reconsider only in an industry/nature vocabulary pass."
+      },
+      "連合会|れんごうかい": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Association/federation is formal organization vocabulary and needs 連=N3 support, making it a harder-lane item.",
+        "nextStep": "Route only through N3 word review if an organization vocabulary batch accepts it."
+      },
+      "労働者|ろうどうしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: worker/laborer is useful work and social vocabulary; 労=N3 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a worker/labor example, explicit 労=N3 support labeling, and normal downstream gates."
+      },
+      "労動者|ろうどうしゃ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: worker/laborer is useful, but 労動者 is a weak/nonstandard variant beside 労働者 and would add spelling noise.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "気体|きたい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: gas/gaseous body is useful school/science vocabulary with clean 気 and 体 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a simple science/gas example and normal verification gates."
+      },
+      "急所|きゅうしょ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Vital point/weak point is valid but multi-sense and can become martial/crime/sensitive depending on the example.",
+        "nextStep": "Reconsider only with a safe, non-graphic weak-point/key-point example."
+      },
+      "終電|しゅうでん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: last train is highly practical transit and daily-life vocabulary with clean 終 and 電 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a missed/last-train example and normal verification gates."
+      },
+      "出社|しゅっしゃ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: going/coming to work is practical workplace daily-life vocabulary with clean 出 and 社 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a going-to-work example and normal verification gates."
+      },
+      "店名|てんめい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: store/shop name is useful shopping and navigation vocabulary with clean 店 and 名 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a shop-name example and normal verification gates."
+      },
+      "転送|てんそう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: forwarding/transfer is useful mail, phone, and digital vocabulary with clean 転 and 送 anchors.",
+        "nextStep": "Queue only for later N4 Silver with an email/mail-forwarding example and normal verification gates."
+      },
+      "遠出|とおで": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: outing/trip away from home is useful travel and leisure vocabulary with clean 遠 and 出 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a weekend outing example and normal verification gates."
+      },
+      "下味|したあじ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: seasoning food beforehand is useful cooking vocabulary with clean 下 and 味 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a cooking/seasoning example and normal verification gates."
+      },
+      "寒天|かんてん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Agar/freezing weather is valid but food-science or weather-register specific and lower priority than broader cooking/weather words.",
+        "nextStep": "Reconsider only in a food-ingredient or weather vocabulary pass."
+      },
+      "金銀|きんぎん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: gold and silver is useful color/material/money vocabulary with clean 金 and 銀 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a medals/materials example and normal verification gates."
+      },
+      "光年|こうねん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Light-year is valid science vocabulary, but it is domain-specific and lower priority than daily-life time/distance words.",
+        "nextStep": "Reconsider only in a science/space vocabulary pass."
+      },
+      "公道|こうどう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: public road is useful street/traffic vocabulary with clean 公 and 道 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a road/traffic example and normal verification gates."
+      },
+      "広間|ひろま": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: hall/spacious room is useful building/place vocabulary with clean 広 and 間 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a hall/large-room example and normal verification gates."
+      },
+      "時空|じくう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Space-time is science/fiction vocabulary and not useful enough for N4 common-pool Silver.",
+        "nextStep": "Reconsider only in a science/media vocabulary pass."
+      },
+      "自体|じたい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: itself/the thing itself is common explanatory vocabulary with clean 自 and 体 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a short itself/by-itself example and careful sense control."
+      },
+      "小春|こはる": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Late-autumn/lunisolar-month vocabulary is valid but seasonal/poetic and lower priority than ordinary calendar and weather terms.",
+        "nextStep": "Reconsider only in a seasonal/traditional-calendar vocabulary pass."
+      },
+      "小町|こまち": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: belle/town beauty is archaic/culture-specific and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "新月|しんげつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: new moon is useful nature/calendar vocabulary with clean 新 and 月 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a moon/calendar example and normal verification gates."
+      },
+      "洗車|せんしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: car washing is practical daily/service vocabulary with clean 洗 and 車 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a car-wash example and normal verification gates."
+      },
+      "長文|ちょうぶん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: long sentence/passage is useful reading and study vocabulary with clean 長 and 文 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a long-passage example and normal verification gates."
+      },
+      "年少|ねんしょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: young/younger age group is useful age and school vocabulary with clean 年 and 少 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a younger-child/school example and normal verification gates."
+      },
+      "本道|ほんどう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Main road/right road is source-supported but less common as a learner-facing surface than 公道, 大通り, or 道路-family words.",
+        "nextStep": "Reconsider only in a road/place vocabulary pass."
+      },
+      "引っ越し|ひっこし": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: moving house is highly practical life vocabulary and this is the most natural learner-facing surface; 越=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a moving-house example, explicit 越=N3 support labeling, and card-surface review against 引越し."
+      },
+      "顔ぶれ|かおぶれ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: lineup/members is useful group/event vocabulary with a learner-friendly mixed-kana surface.",
+        "nextStep": "Queue only for later N4 Silver with a team/member lineup example and normal verification gates."
+      },
+      "教え|おしえ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: teaching/lesson is useful school and advice vocabulary with clean 教 support.",
+        "nextStep": "Queue only for later N4 Silver with a teaching/lesson example and normal verification gates."
+      },
+      "建て前|たてまえ": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "Public stance/official position is culturally useful but abstract and example-sensitive, matching the harder-lane decision for 建前.",
+        "nextStep": "Route only through N3 word review with written-form comparison against 建前."
+      },
+      "思い切って|おもいきって": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Resolutely/boldly is useful, but the exact row is phrase/adverb-shaped and needs expression-policy review before word-deck promotion.",
+        "nextStep": "Reconsider only in an expression/adverbial vocabulary pass."
+      },
+      "持ち帰り|もちかえり": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: takeout/take-home is highly practical food and shopping vocabulary with the natural learner-facing surface.",
+        "nextStep": "Queue only for later N4 Silver with a restaurant takeout example and card-surface review against 持帰り."
+      },
+      "持ち込み|もちこみ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: bring-your-own/carry-on is practical travel, event, and rules vocabulary; 込=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a luggage/food-rule example, explicit 込=N3 support labeling, and surface review against 持込み."
+      },
+      "手もと|てもと": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: at hand/on hand is useful daily-life vocabulary with a learner-friendly mixed-kana surface, though sense scope needs control.",
+        "nextStep": "Queue only for later N4 Silver with a simple nearby/on-hand example and tight meaning selection."
+      },
+      "出会い|であい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: meeting/encounter is useful social vocabulary with the natural learner-facing surface.",
+        "nextStep": "Queue only for later N4 Silver with a simple meeting/encounter example and surface review against 出合い."
+      },
+      "出合い|であい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Meeting/encounter is useful, but this surface is weaker than 出会い and should not be promoted before written-form review.",
+        "nextStep": "Reconsider only if the deck deliberately wants this variant alongside or instead of 出会い."
+      },
+      "図る|はかる": {
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "medium",
+        "reason": "To plan/attempt/scheme is useful but broad and harder-register than N4 common-pool Silver.",
+        "nextStep": "Route only through N3 word review with a safe plan/attempt example if accepted."
+      },
+      "待ち合い|まちあい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "The waiting/meeting concept is better represented by 待合室 or 待ち合わせる; standalone 待ち合い is less clean as a learner card.",
+        "nextStep": "Do not promote before surface review against the waiting-room and meet-up family."
+      },
+      "知り合|しりあい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: acquaintance is useful, but this clipped written surface is weaker than standard 知り合い.",
+        "nextStep": "Do not promote this variant; prefer 知り合い."
+      },
+      "知合い|しりあい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: acquaintance is useful, but this spelling variant is weaker than standard 知り合い and duplicates the same role.",
+        "nextStep": "Do not promote this variant; prefer 知り合い."
+      },
+      "度合い|どあい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: degree/extent is useful explanatory vocabulary with the natural learner-facing surface.",
+        "nextStep": "Queue only for later N4 Silver with a simple degree/extent example and surface review against 度合."
+      },
+      "働き|はたらき": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: work/function/ability is useful daily and explanatory vocabulary with clean 働 support.",
+        "nextStep": "Queue only for later N4 Silver with a simple work/function example and normal verification gates."
+      },
+      "勉める|つとめる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: to endeavor is useful, but 勉める is a weak/rare spelling compared with standard 努める/務める-family surfaces.",
+        "nextStep": "Do not promote this spelling from common-pool discovery."
+      },
+      "明き|あき": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Space/vacancy/opening is useful, but this exact written surface is variant-like and needs review against 空き/空き席-family words.",
+        "nextStep": "Reconsider only in a vacancy/opening written-form review."
+      },
+      "問い合わせ|といあわせ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: inquiry/contact is highly practical service and school/work vocabulary with the natural learner-facing surface.",
+        "nextStep": "Queue only for later N4 Silver with an inquiry/contact example and surface review against rejected variants."
+      },
+      "夜明け|よあけ": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: dawn/daybreak is useful time and nature vocabulary with clean 夜 and 明 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a dawn/daybreak example and normal verification gates."
+      },
+      "利回り|りまわり": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Investment yield/return is valid but finance-specific and lower N4 product value than ordinary money/payment words.",
+        "nextStep": "Reconsider only in a finance vocabulary pass."
+      },
+      "立ち|たち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Departure/start/lapse and related senses are broad and suffix-like; the exact row is not a clean N4 card surface.",
+        "nextStep": "Reconsider only if a later surface review accepts a tightly scoped standalone 立ち card."
+      },
+      "力める|つとめる": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: to endeavor is useful, but 力める is a weak/rare spelling compared with standard 努める/務める-family surfaces.",
+        "nextStep": "Do not promote this spelling from common-pool discovery."
+      },
+      "手洗い|てあらい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: hand-washing/restroom is highly practical health and facility vocabulary with clean 手 and 洗 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a hand-washing example and normal verification gates."
+      },
+      "乗り場|のりば": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: boarding place/platform/stop is highly practical transit vocabulary with clean 乗 and 場 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a bus/train platform example and normal verification gates."
+      },
+      "水洗い|みずあらい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: washing with water is useful household/cooking vocabulary with clean 水 and 洗 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a washing-with-water example and normal verification gates."
+      },
+      "知り合い|しりあい": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: acquaintance is useful social vocabulary with the natural learner-facing surface.",
+        "nextStep": "Queue only for later N4 Silver with an acquaintance example and surface review against rejected variants."
+      },
+      "待合い室|まちあいしつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Waiting room is useful, but this exact surface is phrase-shaped and variant-like beside the cleaner 待合室 already kept for review.",
+        "nextStep": "Reconsider only if the waiting-room family explicitly needs this written variant."
+      },
+      "待ち合い室|まちあいしつ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: waiting room is useful, but this written variant is weaker than 待合室 and adds avoidable surface noise.",
+        "nextStep": "Do not promote this variant from common-pool discovery."
+      },
+      "買い手|かいて": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: buyer is useful shopping/marketplace vocabulary with clean 買 and 手 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a buyer/seller example and normal verification gates."
+      },
+      "食い物|くいもの": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: food/prey/victim is colloquial and multi-sense, and 食べ物 is the cleaner learner-facing food word.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "安楽死|あんらくし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: euthanasia is sensitive medical/ethical vocabulary and not product-good for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "意味合|いみあい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Nuance/connotation is useful, but this no-okurigana surface is weaker than 意味合い and needs written-form review.",
+        "nextStep": "Reconsider only after comparing against 意味合い."
+      },
+      "園長|えんちょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: kindergarten/principal or park/zoo director is useful school/facility vocabulary with clean 園 and 長 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a kindergarten/principal example and normal verification gates."
+      },
+      "会心|かいしん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Satisfaction/critical-hit vocabulary is source-supported but niche and multi-sense, needing careful context before promotion.",
+        "nextStep": "Reconsider only in an emotion/media/game vocabulary pass."
+      },
+      "海運|かいうん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Maritime transport/shipping is industry vocabulary and lower priority than general travel/transport words.",
+        "nextStep": "Reconsider only in a shipping/industry vocabulary pass."
+      },
+      "近海|きんかい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Coastal waters is geography/nature vocabulary and lower immediate N4 learner value than everyday sea/travel words.",
+        "nextStep": "Reconsider only in a geography/nature vocabulary pass."
+      },
+      "古書|こしょ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: used/old book is useful reading and shopping vocabulary with clean 古 and 書 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a used-book/bookstore example and normal verification gates."
+      },
+      "公使|こうし": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: envoy/diplomat rank is diplomacy vocabulary and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "公私|こうし": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Public and private matters is valid but abstract/formal and lower priority than concrete daily vocabulary.",
+        "nextStep": "Reconsider only in a civic/work-life vocabulary pass."
+      },
+      "公衆電話|こうしゅうでんわ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: public/pay phone is useful travel/facility vocabulary even if less common now; 衆=N1 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a public-phone example, explicit 衆=N1 support labeling, and normal downstream gates."
+      },
+      "公文書|こうぶんしょ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Official document/archive is valid but administrative and lower N4 learner value than everyday document/text vocabulary.",
+        "nextStep": "Reconsider only in a documents/civic vocabulary pass."
+      },
+      "公民館|こうみんかん": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: community center/public hall is useful local-facility vocabulary with clean 公, 民, and 館 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a community-center event example and normal verification gates."
+      },
+      "仕度|したく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: preparation/arrangements is useful daily-life vocabulary, with written-form review needed against 支度.",
+        "nextStep": "Queue only for later N4 Silver with a getting-ready example and surface review against 支度."
+      },
+      "使用者|しようしゃ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "User/employer is useful but multi-sense and can become legal/work-register depending on example.",
+        "nextStep": "Reconsider in a user/customer/work vocabulary pass with tight sense control."
+      },
+      "使用料|しようりょう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: usage fee/rent is practical money/service vocabulary with clean 使用 and 料 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a fee/rental example and normal verification gates."
+      },
+      "私文書|しぶんしょ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Private document is valid but legal/administrative vocabulary and lower priority than general document/text words.",
+        "nextStep": "Reconsider only in a documents/legal vocabulary pass."
+      },
+      "私有|しゆう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Private ownership is valid but abstract/property-register vocabulary and lower N4 learner value.",
+        "nextStep": "Reconsider only in a property/civic vocabulary pass."
+      },
+      "修学旅行|しゅうがくりょこう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: school trip is highly useful school/travel vocabulary; 修=N1 should be visible support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a school-trip example, explicit 修=N1 support labeling, and normal downstream gates."
+      },
+      "重体|じゅうたい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: serious/critical condition is useful health/news vocabulary, but examples must be careful and neutral.",
+        "nextStep": "Queue only for later N4 Silver with a controlled health/news example and normal verification gates."
+      },
+      "少少|しょうしょう": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: a little/a moment is useful, but 少少 is a weak spelling beside 少々 or kana and not a product-good N4 surface.",
+        "nextStep": "Do not promote this spelling from common-pool discovery."
+      },
+      "食品添加物|しょくひんてんかぶつ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Food additive is useful food-label vocabulary, but the long compound and 添=N1/加=N3 support burden make it a later review item.",
+        "nextStep": "Reconsider in a food-label/ingredients vocabulary pass."
+      },
+      "新薬|しんやく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: new medicine/new drug is useful health/news vocabulary with clean 新 and 薬 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a neutral medicine example and normal verification gates."
+      },
+      "声楽|せいがく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Vocal music is valid arts vocabulary but domain-specific and lower priority than general music/singing words.",
+        "nextStep": "Reconsider only in a music/arts vocabulary pass."
+      },
+      "前文|ぜんぶん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Preamble/opening part is valid document vocabulary but formal and lower value than 全文/full-text vocabulary.",
+        "nextStep": "Reconsider only in a documents/letter-writing vocabulary pass."
+      },
+      "早少女|さおとめ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: young rice planter/young girl is rare/cultural vocabulary and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "大回転|だいかいてん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Giant slalom/big rotation is valid but sports/specialized vocabulary and lower priority than general movement/sports words.",
+        "nextStep": "Reconsider only in a sports vocabulary pass."
+      },
+      "中次|なかつぎ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: the meanings are obscure and specialized, spanning relay/intermediary/baseball/tea-container senses without a clean N4 card role.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "同地|どうち": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Same place/that place is source-supported but reference-like and less learner-friendly than clearer place vocabulary.",
+        "nextStep": "Reconsider only if a later writing/news vocabulary batch needs this exact reference word."
+      },
+      "買手|かいて": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: buyer is useful, but this no-okurigana surface is weaker than 買い手 and duplicates the same card role.",
+        "nextStep": "Do not promote this variant; prefer 買い手."
+      },
+      "発起人|ほっきにん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Originator/promoter is source-supported but formal organization/event vocabulary and lower priority than everyday person words.",
+        "nextStep": "Reconsider only in an organization/event vocabulary pass."
+      },
+      "発病|はつびょう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: onset of illness/falling ill is useful health vocabulary with clean 発 and 病 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a neutral illness-onset example and normal verification gates."
+      },
+      "病理|びょうり": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Pathology is valid medical/science vocabulary but domain-specific and lower N4 learner value than general health words.",
+        "nextStep": "Reconsider only in a medical/science vocabulary pass."
+      },
+      "不作|ふさく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: poor crop/bad harvest is useful food/agriculture/news vocabulary with clean 不 and 作 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a harvest/crop example and normal verification gates."
+      },
+      "不発|ふはつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Misfire/failure to happen is source-supported but metaphorical and example-sensitive, with lower N4 product value.",
+        "nextStep": "Reconsider only in a news/action vocabulary pass with safe examples."
+      },
+      "文楽|ぶんらく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Bunraku is culturally important but specialized performing-arts vocabulary and lower priority than general culture/media words.",
+        "nextStep": "Reconsider only in a Japanese culture/performing-arts vocabulary pass."
+      },
+      "法律事務所|ほうりつじむしょ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Law office/law firm is useful but long, legal-domain vocabulary with multiple harder support labels, not a current N4 priority.",
+        "nextStep": "Reconsider only in a legal/workplace vocabulary pass."
+      },
+      "夜明|よあけ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: dawn is useful, but this no-okurigana surface is weaker than 夜明け and duplicates the same card role.",
+        "nextStep": "Do not promote this variant; prefer 夜明け."
+      },
+      "洋画|ようが": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: Western film or painting is useful media/art vocabulary with clean 洋 and 画 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a movie/art example and normal verification gates."
+      },
+      "月始|つきはじめ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Beginning of the month is useful, but this written surface needs review against 月初 and 月始め before promotion.",
+        "nextStep": "Reconsider only in a calendar written-form review."
+      },
+      "見世|みせ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: shop/store is useful, but 見世 is an archaic/variant surface compared with 店.",
+        "nextStep": "Do not promote this spelling from common-pool discovery."
+      },
+      "口語|こうご": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: spoken language/colloquial speech is useful language-learning vocabulary with clean 口 and 語 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a spoken-language example and normal verification gates."
+      },
+      "手洗|てあらい": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: hand-washing/restroom is useful, but this no-okurigana surface is weaker than 手洗い and duplicates the same role.",
+        "nextStep": "Do not promote this variant; prefer 手洗い."
+      },
+      "乗場|のりば": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: boarding place is useful, but this no-okurigana surface is weaker than 乗り場 and duplicates the same role.",
+        "nextStep": "Do not promote this variant; prefer 乗り場."
+      },
+      "水洗|すいせん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Washing/flushing with water is valid but less learner-friendly as a standalone surface than 水洗い or concrete restroom/washing words.",
+        "nextStep": "Reconsider only in a washing/facility written-form review."
+      },
+      "文語|ぶんご": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: written/literary language is useful language-study vocabulary with clean 文 and 語 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a written-language contrast example and normal verification gates."
+      },
+      "明月|めいげつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Bright/full/harvest moon is valid but poetic/seasonal and lower priority than ordinary moon/time words.",
+        "nextStep": "Reconsider only in a seasonal/nature vocabulary pass."
+      },
+      "洋書|ようしょ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: foreign/Western book is useful reading and bookstore vocabulary with clean 洋 and 書 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a bookstore/foreign-book example and normal verification gates."
+      },
+      "医学部|いがくぶ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: medical faculty/school is useful university/field-of-study vocabulary with clean 医学 and 部 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a university/medical-school example and normal verification gates."
+      },
+      "開始時刻|かいしじこく": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: starting time is practical schedule vocabulary; 刻=N3 should be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with an event-start-time example, explicit 刻=N3 support labeling, and normal downstream gates."
+      },
+      "口座番号|こうざばんごう": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: bank account number is practical banking/forms vocabulary; 座=N3 and 号=N3 should be labeled.",
+        "nextStep": "Queue only for later N4 Silver with a safe bank-form example, explicit 座=N3 and 号=N3 support labeling, and no real personal data."
+      },
+      "作業環境|さぎょうかんきょう": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Work environment is useful, but the long compound and 環=N1/境=N2 support burden make it a harder workplace review item.",
+        "nextStep": "Reconsider in a workplace vocabulary batch if a short natural example is accepted."
+      },
+      "生産者|せいさんしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: producer/grower/maker is useful food, product, and work vocabulary with clean 生産 and 者 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a food/product producer example and normal verification gates."
+      },
+      "中華料理|ちゅうかりょうり": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: Chinese food/cuisine is useful food and restaurant vocabulary; 華=N1 should be explicit support labeling.",
+        "nextStep": "Queue only for later N4 Silver with a Chinese-food example, explicit 華=N1 support labeling, and normal downstream gates."
+      },
+      "院生|いんせい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: graduate student is useful university/person vocabulary with clean 院 and 生 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a university/graduate-student example and normal verification gates."
+      },
+      "家長|かちょう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Head of family/patriarch/matriarch is valid but formal/traditional social vocabulary and lower N4 learner value.",
+        "nextStep": "Reconsider only in a family/social-role vocabulary pass."
+      },
+      "家名|かめい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Family name/house name/family honor is valid but formal/traditional and lower priority than everyday name/family words.",
+        "nextStep": "Reconsider only in a family/tradition vocabulary pass."
+      },
+      "懐石料理|かいせきりょうり": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Kaiseki cuisine is culturally useful but specialized, long, and carries 懐=N1 and 石=N2 support needs.",
+        "nextStep": "Reconsider only in a Japanese food/culture vocabulary pass."
+      },
+      "兼業農家|けんぎょうのうか": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Part-time farmer is a valid compound but narrow and long, with 兼=N1 and 農=N2 support needs.",
+        "nextStep": "Reconsider only in an agriculture/work vocabulary pass."
+      },
+      "語学力|ごがくりょく": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: language ability/skills is highly relevant study vocabulary with clean 語学 and 力 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a language-skill example and normal verification gates."
+      },
+      "校風|こうふう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: school tradition/spirit is useful school vocabulary with clean 校 and 風 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a school-spirit/custom example and normal verification gates."
+      },
+      "国元|くにもと": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Hometown/native place is valid but less common than 故郷 or 出身地-family words and lower priority for N4 expansion.",
+        "nextStep": "Reconsider only in a hometown/origin vocabulary pass."
+      },
+      "三文|さんもん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: paltry/cheap/worthless money expression is idiomatic/dated and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "四手|しで": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: Shinto paper streamer/tree vocabulary is specialized and not product-good for N4 expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "写真屋|しゃしんや": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: photo studio/camera shop is useful town and service vocabulary with clean 写真 and 屋 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a photo-shop example and normal verification gates."
+      },
+      "車台|しゃだい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Chassis/car body is technical vehicle vocabulary and lower priority than general car/transport words.",
+        "nextStep": "Reconsider only in a vehicle/technical vocabulary pass."
+      },
+      "終電車|しゅうでんしゃ": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Last train is useful, but 終電 already carries the cleaner common card role; 終電車 should wait for duplicate-surface review.",
+        "nextStep": "Reconsider only if the transit family deliberately wants both 終電 and 終電車."
+      },
+      "書写|しょしゃ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: copying/handwriting as a school subject is useful school/language vocabulary with clean 書 and 写 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a handwriting/school-subject example and normal verification gates."
+      },
+      "女医|じょい": {
+        "decision": "defer_candidate",
+        "priority": "medium",
+        "reason": "Female doctor is understandable, but the gender-marked role needs product review before becoming an N4 learner-facing card.",
+        "nextStep": "Reconsider only if the deck deliberately wants gender-marked profession vocabulary with careful examples."
+      },
+      "商業銀行|しょうぎょうぎんこう": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Commercial bank is valid finance vocabulary but long and business-specific, with 商=N3 support needs.",
+        "nextStep": "Reconsider only in a finance/business vocabulary pass."
+      },
+      "真水|まみず": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: fresh water is useful nature/daily-life vocabulary with clean 真 and 水 anchors, while finance senses can be ignored.",
+        "nextStep": "Queue only for later N4 Silver with a fresh-water example and tight sense control."
+      },
+      "人家|じんか": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Human habitation/house is valid but formal and less useful than ordinary 家/家屋/housing vocabulary.",
+        "nextStep": "Reconsider only in a housing/place vocabulary pass."
+      },
+      "水門|すいもん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Sluice/flood gate is infrastructure vocabulary and lower priority than general water/place words.",
+        "nextStep": "Reconsider only in an infrastructure/nature vocabulary pass."
+      },
+      "精神病院|せいしんびょういん": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: mental hospital is sensitive, long medical vocabulary with multiple harder support labels and not product-good for N4 expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "前場|ぜんば": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: morning trading session is finance-market vocabulary and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "大部屋|おおべや": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Large room/green room/hospital ward is valid but multi-sense and lower priority than clearer room/facility words.",
+        "nextStep": "Reconsider only in a room/facility vocabulary pass with tight sense selection."
+      },
+      "地下足袋|じかたび": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Work tabi are valid cultural/workwear vocabulary, but niche and lower priority than ordinary clothing/work words, with 袋=N2 support needs.",
+        "nextStep": "Reconsider only in a clothing/traditional-work vocabulary pass."
+      },
+      "地方団体|ちほうだんたい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Local public body is administrative vocabulary with 団=N2 support and lower N4 learner value than general local/place terms.",
+        "nextStep": "Reconsider only in a civic/administration vocabulary pass."
+      },
+      "茶室|ちゃしつ": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: tearoom/tea-ceremony room is useful culture/place vocabulary with clean 茶 and 室 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a tea-room example and normal verification gates."
+      },
+      "着水|ちゃくすい": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Landing on or hitting water is valid but aviation/space/sports-specific and lower priority than everyday water/action words.",
+        "nextStep": "Reconsider only in a technical/action vocabulary pass."
+      },
+      "朝晩|あさばん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: morning and evening/every day is practical daily-time vocabulary with clean 朝 and 晩 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a morning-and-evening routine example and normal verification gates."
+      },
+      "町屋|まちや": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: traditional townhouse/merchant house is useful town and travel-culture vocabulary with clean 町 and 屋 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a Kyoto/townhouse example and normal verification gates."
+      },
+      "町名|ちょうめい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: town/neighborhood/street name is useful address and local-place vocabulary with clean 町 and 名 anchors.",
+        "nextStep": "Queue only for later N4 Silver with an address/neighborhood-name example and normal verification gates."
+      },
+      "長町場|ながちょうば": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: long haul/time-consuming work and theatrical senses are obscure and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "天気図|てんきず": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: weather map is practical weather/study vocabulary with clean 天気 and 図 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a weather-map example and normal verification gates."
+      },
+      "転入|てんにゅう": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: moving into a city or transferring into a school is useful life/school vocabulary with clean 転 and 入 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a school/city transfer example and normal verification gates."
+      },
+      "二目|ふため": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: for a second time is obscure and not a clean learner-facing N4 word identity.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "父方|ちちかた": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: father's side/paternal side is useful family vocabulary with clean 父 and 方 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a family-side example and normal verification gates."
+      },
+      "風見|かざみ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Weather vane is valid but object-specific and lower priority than general weather/wind vocabulary.",
+        "nextStep": "Reconsider only in a weather/object vocabulary pass."
+      },
+      "分院|ぶんいん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Branch hospital/institution is valid but institutional and lower priority than general hospital/place words.",
+        "nextStep": "Reconsider only in a medical/facility vocabulary pass."
+      },
+      "分家|ぶんけ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Branch family is valid but traditional/family-system vocabulary and lower N4 product value.",
+        "nextStep": "Reconsider only in a family/tradition vocabulary pass."
+      },
+      "分室|ぶんしつ": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Detached office/annex is valid but administrative/facility vocabulary and lower priority than clearer room/place words.",
+        "nextStep": "Reconsider only in an office/facility vocabulary pass."
+      },
+      "母家|おもや": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Main building is valid, but this exact surface is less immediately useful and needs review against 主屋/母屋 variants.",
+        "nextStep": "Reconsider only in a building/written-variant review."
+      },
+      "本元|ほんもと": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: origin/main branch of family is formal/traditional and not useful enough for N4 learner expansion.",
+        "nextStep": "Do not promote this exact row from common-pool discovery."
+      },
+      "名医|めいい": {
+        "decision": "keep_candidate",
+        "priority": "medium",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: excellent/famous doctor is useful health/person vocabulary with clean 名 and 医 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a doctor-quality example and normal verification gates."
+      },
+      "名店|めいてん": {
+        "decision": "keep_candidate",
+        "priority": "high",
+        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: famous/well-known shop is useful shopping/food/travel vocabulary with clean 名 and 店 anchors.",
+        "nextStep": "Queue only for later N4 Silver with a famous-shop example and normal verification gates."
+      },
+      "日銀|にちぎん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Bank of Japan/BOJ is useful in news, but it is a proper institutional abbreviation and lower priority than general banking words.",
+        "nextStep": "Reconsider only in a finance/news vocabulary pass."
+      },
+      "金運|きんうん": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Luck with money is culturally understandable but fortune-telling/abstract and lower N4 functional value.",
+        "nextStep": "Reconsider only in a culture/fortune or money-expression pass."
+      },
+      "自|じ": {
+        "decision": "reject_candidate",
+        "priority": "low",
+        "reason": "Reject this exact row: self-/from is morpheme-like and not a clean standalone word-card identity for N4 Silver.",
+        "nextStep": "Do not promote this morpheme-like row from common-pool discovery."
+      },
+      "少子|しょうし": {
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Low birth rate/few children is social-policy vocabulary and fits a harder lane better than N4 common-pool Silver.",
+        "nextStep": "Route only through N2 word review if a social-issues vocabulary batch accepts it."
+      },
+      "今作|こんさく": {
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "This work/this title is media vocabulary but reference-like and lower priority than broader work/title words.",
+        "nextStep": "Reconsider only in a media/release vocabulary pass."
       }
     }
   },

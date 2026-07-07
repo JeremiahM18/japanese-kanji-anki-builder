@@ -1,7 +1,26 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
+const { loadJlptWordSourceEvidence } = require("../src/datasets/jlptWordSourceEvidence");
 const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
+const { loadWordSourceManifest } = require("../src/datasets/wordSourceManifest");
+const {
+    auditJlptWordSourceEvidence,
+    buildSourceAccessReport,
+    buildSourceAdequacyByLevel,
+} = require("../src/services/jlptWordSourceEvidenceService");
+const {
+    DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
+    buildExtraSourceAccessByLevel,
+    buildWordCommonExpansionSelectorReport,
+} = require("../src/services/wordCommonExpansionSelectorService");
+const {
+    buildSelectorManifestForSource,
+    loadSharedInputs,
+    loadTriageDecisionsByLevelSource,
+    resolveManifestPath,
+} = require("../src/services/wordExpansionSelectorSupportService");
+const { buildWordExpansionSignalReport } = require("../src/services/wordExpansionSignalService");
 const {
     buildWordLevelInventoryStatusReport,
     formatWordPreSilverInventoryStatusReport,
@@ -67,18 +86,6 @@ function readJsonIfExists(filePath, fallback = []) {
     return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
-function loadTriageDecisionsByLevelSource(triagePath = "") {
-    const normalizedPath = String(triagePath || "").trim();
-    if (!normalizedPath) {
-        return {};
-    }
-    const resolvedPath = path.resolve(process.cwd(), normalizedPath);
-    if (!fs.existsSync(resolvedPath)) {
-        throw new Error(`Word inventory expansion triage file does not exist: ${resolvedPath}`);
-    }
-    return JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
-}
-
 function readJsonlIfExists(filePath) {
     if (!fs.existsSync(filePath)) {
         return [];
@@ -124,27 +131,6 @@ function buildGovernedPreSilverByLevel({
     commonPoolLimit,
     frequencySource,
 } = {}) {
-    const { loadJlptWordSourceEvidence } = require("../src/datasets/jlptWordSourceEvidence");
-    const { loadWordSourceManifest } = require("../src/datasets/wordSourceManifest");
-    const {
-        auditJlptWordSourceEvidence,
-        buildSourceAccessReport,
-        buildSourceAdequacyByLevel,
-    } = require("../src/services/jlptWordSourceEvidenceService");
-    const {
-        DICTIONARY_COMMON_POOL_COMMAND_SOURCE,
-        buildExtraSourceAccessByLevel,
-        buildWordCommonExpansionSelectorReport,
-    } = require("../src/services/wordCommonExpansionSelectorService");
-    const {
-        buildSelectorManifestForSource,
-    } = require("./reportWordCommonExpansionSelector");
-    const {
-        loadSharedInputs,
-        resolveManifestPath,
-    } = require("./reportWordCandidateAgreement");
-    const { buildWordExpansionSignalReport } = require("./reportWordExpansionSignals");
-
     const sharedInputs = loadSharedInputs();
     const manifest = loadWordSourceManifest(resolveManifestPath(manifestPath));
     const wordSourceEvidence = loadJlptWordSourceEvidence(path.resolve(process.cwd(), sourceEvidencePath));

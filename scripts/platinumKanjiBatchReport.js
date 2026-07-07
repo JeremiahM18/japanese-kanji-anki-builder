@@ -3,7 +3,7 @@ const path = require("node:path");
 const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadCuratedStudyData } = require("../src/datasets/curatedStudyData");
-const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
+const { buildKanjiRowsForLevel } = require("../src/services/kanjiGeneratedRowsService");
 const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
     loadReviewSetWithObsidianProof,

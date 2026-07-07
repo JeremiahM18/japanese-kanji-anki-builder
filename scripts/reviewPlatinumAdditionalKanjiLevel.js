@@ -8,7 +8,7 @@ const {
     formatPlatinumKanjiReviewReport,
 } = require("../src/services/platinumKanjiReviewService");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain } = require("../src/utils/cliArgs");
-const { parseKanjiTsvForPlatinum } = require("./reviewPlatinumKanjiLevel");
+const { parseKanjiTsvForPlatinum } = require("../src/services/kanjiGeneratedRowsService");
 
 function parseArgs(argv) {
     const options = {

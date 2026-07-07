@@ -11,7 +11,7 @@ const {
 const { loadConfig } = require("../src/config");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { parseSapphireWordReviewSet } = require("../src/datasets/sapphireWordReviewSet");
-const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { buildWordRowsForLevel } = require("../src/services/wordGeneratedRowsService");
 const {
     WORD_BATCH_QUEUE_MODES,
     buildSapphireWordBatchReport,

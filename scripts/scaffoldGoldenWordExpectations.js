@@ -9,7 +9,7 @@ const {
     parseStringOption,
 } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
-const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { buildWordRowsForLevel } = require("../src/services/wordGeneratedRowsService");
 const {
     buildGoldWordExpectationScaffold,
     formatGoldWordExpectationScaffold,

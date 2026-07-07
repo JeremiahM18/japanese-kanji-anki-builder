@@ -22,7 +22,7 @@ const {
 } = require("../src/services/sapphireWordReviewService");
 const {
     buildWordRowsForLevel,
-} = require("./reviewPlatinumWordLevel");
+} = require("../src/services/wordGeneratedRowsService");
 
 function parseArgs(argv) {
     const args = {

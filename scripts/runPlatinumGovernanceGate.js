@@ -11,8 +11,8 @@ const {
     loadReviewSetWithObsidianProof,
     normalizeObsidianProofProviderMode,
 } = require("../src/services/obsidianProofProviderService");
-const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
-const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { buildKanjiRowsForLevel } = require("../src/services/kanjiGeneratedRowsService");
+const { buildWordRowsForLevel } = require("../src/services/wordGeneratedRowsService");
 const { readPriorLaneInputs: readKanjiPriorLaneInputs } = require("./reportPlatinumKanjiRereviewStatus");
 const { readPriorLaneInputs: readWordPriorLaneInputs } = require("./reportPlatinumWordRereviewStatus");
 const {

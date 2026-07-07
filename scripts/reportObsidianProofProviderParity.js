@@ -74,10 +74,10 @@ const {
 } = require("../src/utils/cliArgs");
 const {
     buildKanjiRowsForLevel,
-} = require("./reviewPlatinumKanjiLevel");
+} = require("../src/services/kanjiGeneratedRowsService");
 const {
     buildWordRowsForLevel,
-} = require("./reviewPlatinumWordLevel");
+} = require("../src/services/wordGeneratedRowsService");
 const {
     parseWordIdentities,
 } = require("./platinumWordBatchReport");

@@ -354,12 +354,12 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2515);
+    assert.equal(Object.keys(starterEntries).length, 2550);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
-        4: 729,
+        4: 764,
         5: 588,
     });
 });
@@ -7940,6 +7940,156 @@ test("tracked starter word data includes the first N4 common-pool Silver batch",
         ["英字|えいじ", "<ruby>英<rt>えい</rt></ruby><ruby>字<rt>じ</rt></ruby>"],
         ["家事|かじ", "<ruby>家<rt>か</rt></ruby><ruby>事<rt>じ</rt></ruby>"],
         ["開館|かいかん", "<ruby>開<rt>かい</rt></ruby><ruby>館<rt>かん</rt></ruby>"],
+    ]);
+});
+
+test("tracked starter word data includes the second N4 common-pool Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "今年度|こんねんど",
+        "事業|じぎょう",
+        "自動車|じどうしゃ",
+        "主人公|しゅじんこう",
+        "食品|しょくひん",
+        "食料|しょくりょう",
+        "新作|しんさく",
+        "赤字|あかじ",
+        "大学院|だいがくいん",
+        "知人|ちじん",
+        "店頭|てんとう",
+        "部門|ぶもん",
+        "本部|ほんぶ",
+        "文字通り|もじどおり",
+        "運動会|うんどうかい",
+        "区役所|くやくしょ",
+        "古着|ふるぎ",
+        "始業|しぎょう",
+        "市街地|しがいち",
+        "市役所|しやくしょ",
+        "社会科|しゃかいか",
+        "専門店|せんもんてん",
+        "大家族|だいかぞく",
+        "昼夜|ちゅうや",
+        "朝方|あさがた",
+    ];
+
+    assert.equal(batchKeys.length, 25);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 4, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n4"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    assert.match(starterEntries["区役所|くやくしょ"].notes, /役 is higher-level JLPT N3 support/);
+    assert.match(starterEntries["市街地|しがいち"].notes, /街 is higher-level JLPT N1 support/);
+    assert.match(starterEntries["市役所|しやくしょ"].notes, /役 is higher-level JLPT N3 support/);
+    assert.match(starterEntries["専門店|せんもんてん"].notes, /専 is higher-level JLPT N3 support/);
+
+    assertCoverageReadings(starterEntries, [
+        ["今年度|こんねんど", "今", "こん"],
+        ["今年度|こんねんど", "年", "ねん"],
+        ["今年度|こんねんど", "度", "ど"],
+        ["事業|じぎょう", "事", "じ"],
+        ["事業|じぎょう", "業", "ぎょう"],
+        ["自動車|じどうしゃ", "自", "じ"],
+        ["自動車|じどうしゃ", "動", "どう"],
+        ["自動車|じどうしゃ", "車", "しゃ"],
+        ["主人公|しゅじんこう", "主", "しゅ"],
+        ["主人公|しゅじんこう", "人", "じん"],
+        ["主人公|しゅじんこう", "公", "こう"],
+        ["食品|しょくひん", "食", "しょく"],
+        ["食品|しょくひん", "品", "ひん"],
+        ["食料|しょくりょう", "食", "しょく"],
+        ["食料|しょくりょう", "料", "りょう"],
+        ["新作|しんさく", "新", "しん"],
+        ["新作|しんさく", "作", "さく"],
+        ["赤字|あかじ", "赤", "あか"],
+        ["赤字|あかじ", "字", "じ"],
+        ["大学院|だいがくいん", "大", "だい"],
+        ["大学院|だいがくいん", "学", "がく"],
+        ["大学院|だいがくいん", "院", "いん"],
+        ["知人|ちじん", "知", "ち"],
+        ["知人|ちじん", "人", "じん"],
+        ["店頭|てんとう", "店", "てん"],
+        ["店頭|てんとう", "頭", "とう"],
+        ["部門|ぶもん", "部", "ぶ"],
+        ["部門|ぶもん", "門", "もん"],
+        ["本部|ほんぶ", "本", "ほん"],
+        ["本部|ほんぶ", "部", "ぶ"],
+        ["文字通り|もじどおり", "文", "も"],
+        ["文字通り|もじどおり", "字", "じ"],
+        ["文字通り|もじどおり", "通", "どおり"],
+        ["運動会|うんどうかい", "運", "うん"],
+        ["運動会|うんどうかい", "動", "どう"],
+        ["運動会|うんどうかい", "会", "かい"],
+        ["区役所|くやくしょ", "区", "く"],
+        ["区役所|くやくしょ", "役", "やく"],
+        ["区役所|くやくしょ", "所", "しょ"],
+        ["古着|ふるぎ", "古", "ふる"],
+        ["古着|ふるぎ", "着", "ぎ"],
+        ["始業|しぎょう", "始", "し"],
+        ["始業|しぎょう", "業", "ぎょう"],
+        ["市街地|しがいち", "市", "し"],
+        ["市街地|しがいち", "街", "がい"],
+        ["市街地|しがいち", "地", "ち"],
+        ["市役所|しやくしょ", "市", "し"],
+        ["市役所|しやくしょ", "役", "やく"],
+        ["市役所|しやくしょ", "所", "しょ"],
+        ["社会科|しゃかいか", "社", "しゃ"],
+        ["社会科|しゃかいか", "会", "かい"],
+        ["社会科|しゃかいか", "科", "か"],
+        ["専門店|せんもんてん", "専", "せん"],
+        ["専門店|せんもんてん", "門", "もん"],
+        ["専門店|せんもんてん", "店", "てん"],
+        ["大家族|だいかぞく", "大", "だい"],
+        ["大家族|だいかぞく", "家", "か"],
+        ["大家族|だいかぞく", "族", "ぞく"],
+        ["昼夜|ちゅうや", "昼", "ちゅう"],
+        ["昼夜|ちゅうや", "夜", "や"],
+        ["朝方|あさがた", "朝", "あさ"],
+        ["朝方|あさがた", "方", "がた"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["今年度|こんねんど", "<ruby>今<rt>こん</rt></ruby><ruby>年<rt>ねん</rt></ruby><ruby>度<rt>ど</rt></ruby>"],
+        ["事業|じぎょう", "<ruby>事<rt>じ</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>"],
+        ["自動車|じどうしゃ", "<ruby>自<rt>じ</rt></ruby><ruby>動<rt>どう</rt></ruby><ruby>車<rt>しゃ</rt></ruby>"],
+        ["主人公|しゅじんこう", "<ruby>主<rt>しゅ</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>公<rt>こう</rt></ruby>"],
+        ["食品|しょくひん", "<ruby>食<rt>しょく</rt></ruby><ruby>品<rt>ひん</rt></ruby>"],
+        ["食料|しょくりょう", "<ruby>食<rt>しょく</rt></ruby><ruby>料<rt>りょう</rt></ruby>"],
+        ["新作|しんさく", "<ruby>新<rt>しん</rt></ruby><ruby>作<rt>さく</rt></ruby>"],
+        ["赤字|あかじ", "<ruby>赤<rt>あか</rt></ruby><ruby>字<rt>じ</rt></ruby>"],
+        ["大学院|だいがくいん", "<ruby>大<rt>だい</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>院<rt>いん</rt></ruby>"],
+        ["知人|ちじん", "<ruby>知<rt>ち</rt></ruby><ruby>人<rt>じん</rt></ruby>"],
+        ["店頭|てんとう", "<ruby>店<rt>てん</rt></ruby><ruby>頭<rt>とう</rt></ruby>"],
+        ["部門|ぶもん", "<ruby>部<rt>ぶ</rt></ruby><ruby>門<rt>もん</rt></ruby>"],
+        ["本部|ほんぶ", "<ruby>本<rt>ほん</rt></ruby><ruby>部<rt>ぶ</rt></ruby>"],
+        ["文字通り|もじどおり", "<ruby>文<rt>も</rt></ruby><ruby>字<rt>じ</rt></ruby><ruby>通<rt>どお</rt></ruby>り"],
+        ["運動会|うんどうかい", "<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby><ruby>会<rt>かい</rt></ruby>"],
+        ["区役所|くやくしょ", "<ruby>区<rt>く</rt></ruby><ruby>役<rt>やく</rt></ruby><ruby>所<rt>しょ</rt></ruby>"],
+        ["古着|ふるぎ", "<ruby>古<rt>ふる</rt></ruby><ruby>着<rt>ぎ</rt></ruby>"],
+        ["始業|しぎょう", "<ruby>始<rt>し</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>"],
+        ["市街地|しがいち", "<ruby>市<rt>し</rt></ruby><ruby>街<rt>がい</rt></ruby><ruby>地<rt>ち</rt></ruby>"],
+        ["市役所|しやくしょ", "<ruby>市<rt>し</rt></ruby><ruby>役<rt>やく</rt></ruby><ruby>所<rt>しょ</rt></ruby>"],
+        ["社会科|しゃかいか", "<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>科<rt>か</rt></ruby>"],
+        ["専門店|せんもんてん", "<ruby>専<rt>せん</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>店<rt>てん</rt></ruby>"],
+        ["大家族|だいかぞく", "<ruby>大<rt>だい</rt></ruby><ruby>家<rt>か</rt></ruby><ruby>族<rt>ぞく</rt></ruby>"],
+        ["昼夜|ちゅうや", "<ruby>昼<rt>ちゅう</rt></ruby><ruby>夜<rt>や</rt></ruby>"],
+        ["朝方|あさがた", "<ruby>朝<rt>あさ</rt></ruby><ruby>方<rt>がた</rt></ruby>"],
     ]);
 });
 

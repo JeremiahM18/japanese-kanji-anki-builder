@@ -98,7 +98,7 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(contract.inventoryCounts["1"], 38);
     assert.equal(contract.inventoryCounts["2"], 61);
     assert.equal(contract.inventoryCounts["3"], 1099);
-    assert.equal(contract.inventoryCounts["4"], 729);
+    assert.equal(contract.inventoryCounts["4"], 764);
     assert.equal(contract.inventoryCounts["5"], 588);
     assert.deepEqual(contract.excludedCounts, {
         "1": 0,
@@ -1146,6 +1146,35 @@ test("tracked JLPT word contract keeps standalone words in their governed word l
     assert.equal(getJlptWordLevel(contract, "代わり|かわり"), 4);
     assert.equal(getJlptWordLevel(contract, "広告|こうこく"), 4);
     assert.equal(getJlptWordLevel(contract, "広がる|ひろがる"), 4);
+    for (const key of [
+        "今年度|こんねんど",
+        "事業|じぎょう",
+        "自動車|じどうしゃ",
+        "主人公|しゅじんこう",
+        "食品|しょくひん",
+        "食料|しょくりょう",
+        "新作|しんさく",
+        "赤字|あかじ",
+        "大学院|だいがくいん",
+        "知人|ちじん",
+        "店頭|てんとう",
+        "部門|ぶもん",
+        "本部|ほんぶ",
+        "文字通り|もじどおり",
+        "運動会|うんどうかい",
+        "区役所|くやくしょ",
+        "古着|ふるぎ",
+        "始業|しぎょう",
+        "市街地|しがいち",
+        "市役所|しやくしょ",
+        "社会科|しゃかいか",
+        "専門店|せんもんてん",
+        "大家族|だいかぞく",
+        "昼夜|ちゅうや",
+        "朝方|あさがた",
+    ]) {
+        assert.equal(getJlptWordLevel(contract, key), 4, `${key} should be governed in N4`);
+    }
     assert.equal(getJlptWordLevel(contract, "五月|ごがつ"), 5);
     assert.equal(getJlptWordLevel(contract, "四月|しがつ"), 5);
     assert.equal(getJlptWordLevel(contract, "七日|なのか"), 5);

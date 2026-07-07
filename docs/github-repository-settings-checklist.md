@@ -35,9 +35,9 @@ npm run security:github-settings
 
 Do not commit, paste, or log a token.
 
-## 2026-06-03 Live Result
+## 2026-07-07 Live Result
 
-Authenticated owner audit was rerun on 2026-06-03 against hosted `main` at `addccc85`. The hosted `main` branch matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `289` packages, Dependabot security updates are enabled and not paused, open CodeQL alerts are `0`, open secret-scanning alerts are `0`, open Dependabot alerts are `0`, and the latest hosted CI and CodeQL conclusions are `success`. The gate still fails only because hosted workflow content configures attestation verification but no successful hosted Release workflow run has proven the verification step yet.
+Authenticated owner audit was rerun on 2026-07-07 against hosted `main` at `e7c6784b`. The hosted `main` branch matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `288` packages, Dependabot security updates are enabled and not paused, open CodeQL alerts are `0`, open secret-scanning alerts are `0`, open Dependabot alerts are `0`, and the latest hosted CI and CodeQL conclusions are `success`. The gate still fails only because hosted workflow content configures attestation verification but no successful hosted Release workflow run has proven the verification step yet.
 
 | Setting | Live result | Status |
 | --- | --- | --- |
@@ -54,7 +54,7 @@ Authenticated owner audit was rerun on 2026-06-03 against hosted `main` at `addc
 | CodeQL workflow | `.github/workflows/codeql.yml` active; latest hosted CodeQL conclusion `success` | Verified |
 | Release workflow | `.github/workflows/release.yml` active | Verified |
 | Dependency Review | Hosted `.github/workflows/ci.yml` contains `actions/dependency-review-action` on pull requests with `fail-on-severity: moderate` | Verified |
-| Vulnerability alerts / Dependency Graph | `GET /vulnerability-alerts` returned `204`; Dependency Graph SBOM endpoint returned `289` packages | Verified |
+| Vulnerability alerts / Dependency Graph | `GET /vulnerability-alerts` returned `204`; Dependency Graph SBOM endpoint returned `288` packages | Verified |
 | Dependabot security updates | `GET /automated-security-fixes` returned `enabled:true` and `paused:false` | Verified |
 | Release attestation creation | Hosted `.github/workflows/release.yml` contains provenance and SBOM attestation steps for the release bundle | Verified |
 | Artifact attestation verification configured | Hosted workflow content configures constrained `gh attestation verify` with `--repo`, `--signer-workflow`, `--source-ref`, and `--source-digest` | Verified |
@@ -66,7 +66,7 @@ Authenticated owner audit was rerun on 2026-06-03 against hosted `main` at `addc
 | Private vulnerability reporting | `enabled:true` from `GET /repos/JeremiahM18/japanese-kanji-anki-builder/private-vulnerability-reporting` | Verified |
 | Latest release workflow conclusion | No recent release workflow conclusion was available from the workflow-runs endpoint | Unverified |
 
-Hosted evidence boundary: hosted `main` was at `addccc85` when the authenticated audit ran. Do not treat local, pull-request-only, or unpushed workflow changes as hosted proof.
+Hosted evidence boundary: hosted `main` was at `e7c6784b` when the authenticated audit ran. Do not treat local, pull-request-only, or unpushed workflow changes as hosted proof.
 
 ## Required Remediation
 
@@ -113,6 +113,13 @@ Completed on 2026-06-03:
 3. Merged the tracked release-workflow attestation verification step to hosted `main`; authenticated audit now reports artifact attestation verification as automated.
 4. Updated pinned GitHub Actions to Node24-compatible action releases and verified hosted check annotations report `0` Node20 deprecation notices.
 5. Updated Windows smoke jobs and required status-check policy from `windows-latest` to `windows-2025-vs2026`; hosted `main` CI check annotations now report `0` Windows image migration notices.
+
+Completed on 2026-07-07:
+
+1. Reran the transient scheduled CodeQL timeout; hosted CodeQL completed successfully.
+2. Remediated CodeQL alert #27 (`js/duplicate-property`) in PR #184 and merged it to hosted `main`.
+3. Verified latest hosted CI and CodeQL on `main` completed successfully.
+4. Reran owner-authenticated `npm run security:github-settings:auth`; open CodeQL, secret-scanning, and Dependabot alerts are all `0`.
 
 Remaining:
 

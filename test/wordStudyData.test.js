@@ -354,12 +354,12 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2505);
+    assert.equal(Object.keys(starterEntries).length, 2515);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
-        4: 719,
+        4: 729,
         5: 588,
     });
 });
@@ -7867,6 +7867,80 @@ test("tracked starter word data includes the second N4 word v2 common expansion 
     assert.match(starterEntries["凄い|すごい"].notes, /outside the JLPT kanji contract/);
     assert.match(starterEntries["味噌|みそ"].notes, /outside the JLPT kanji contract/);
     assert.match(starterEntries["無理|むり"].notes, /outside the JLPT kanji contract/);
+});
+
+test("tracked starter word data includes the first N4 common-pool Silver batch", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "工事|こうじ",
+        "作品|さくひん",
+        "体重|たいじゅう",
+        "地元|じもと",
+        "都市|とし",
+        "都心|としん",
+        "医院|いいん",
+        "英字|えいじ",
+        "家事|かじ",
+        "開館|かいかん",
+    ];
+
+    assert.equal(batchKeys.length, 10);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 4, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n4"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
+        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.match(entry?.notes || "", /TubeLex support/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["工事|こうじ", "工", "こう"],
+        ["工事|こうじ", "事", "じ"],
+        ["作品|さくひん", "作", "さく"],
+        ["作品|さくひん", "品", "ひん"],
+        ["体重|たいじゅう", "体", "たい"],
+        ["体重|たいじゅう", "重", "じゅう"],
+        ["地元|じもと", "地", "じ"],
+        ["地元|じもと", "元", "もと"],
+        ["都市|とし", "都", "と"],
+        ["都市|とし", "市", "し"],
+        ["都心|としん", "都", "と"],
+        ["都心|としん", "心", "しん"],
+        ["医院|いいん", "医", "い"],
+        ["医院|いいん", "院", "いん"],
+        ["英字|えいじ", "英", "えい"],
+        ["英字|えいじ", "字", "じ"],
+        ["家事|かじ", "家", "か"],
+        ["家事|かじ", "事", "じ"],
+        ["開館|かいかん", "開", "かい"],
+        ["開館|かいかん", "館", "かん"],
+    ]);
+    assertReadingBreakdowns(starterEntries, [
+        ["工事|こうじ", "<ruby>工<rt>こう</rt></ruby><ruby>事<rt>じ</rt></ruby>"],
+        ["作品|さくひん", "<ruby>作<rt>さく</rt></ruby><ruby>品<rt>ひん</rt></ruby>"],
+        ["体重|たいじゅう", "<ruby>体<rt>たい</rt></ruby><ruby>重<rt>じゅう</rt></ruby>"],
+        ["地元|じもと", "<ruby>地<rt>じ</rt></ruby><ruby>元<rt>もと</rt></ruby>"],
+        ["都市|とし", "<ruby>都<rt>と</rt></ruby><ruby>市<rt>し</rt></ruby>"],
+        ["都心|としん", "<ruby>都<rt>と</rt></ruby><ruby>心<rt>しん</rt></ruby>"],
+        ["医院|いいん", "<ruby>医<rt>い</rt></ruby><ruby>院<rt>いん</rt></ruby>"],
+        ["英字|えいじ", "<ruby>英<rt>えい</rt></ruby><ruby>字<rt>じ</rt></ruby>"],
+        ["家事|かじ", "<ruby>家<rt>か</rt></ruby><ruby>事<rt>じ</rt></ruby>"],
+        ["開館|かいかん", "<ruby>開<rt>かい</rt></ruby><ruby>館<rt>かん</rt></ruby>"],
+    ]);
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

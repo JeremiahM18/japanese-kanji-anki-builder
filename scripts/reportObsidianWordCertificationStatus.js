@@ -9,7 +9,7 @@ const {
 } = require("../src/datasets/wordStudyData");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
-const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { buildWordRowsForLevel } = require("../src/services/wordGeneratedRowsService");
 const { readPriorLaneInputs } = require("./reportPlatinumWordRereviewStatus");
 const {
     buildPlatinumWordRereviewStatusReport,

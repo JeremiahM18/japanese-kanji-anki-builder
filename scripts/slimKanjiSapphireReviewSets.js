@@ -22,7 +22,7 @@ const {
 } = require("../src/services/reviewLaneContextService");
 const {
     buildKanjiRowsForLevel,
-} = require("./reviewPlatinumKanjiLevel");
+} = require("../src/services/kanjiGeneratedRowsService");
 
 const ACTIVE_KANJI_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 const PLATINUM_ONLY_KANJI_SAPPHIRE_FIELDS = Object.freeze([

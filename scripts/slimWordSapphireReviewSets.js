@@ -21,7 +21,7 @@ const {
 } = require("../src/services/reviewLanePreconditionService");
 const {
     buildWordRowsForLevel,
-} = require("./reviewPlatinumWordLevel");
+} = require("../src/services/wordGeneratedRowsService");
 
 const ACTIVE_WORD_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 

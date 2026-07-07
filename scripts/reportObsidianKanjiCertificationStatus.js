@@ -1,7 +1,7 @@
 const { loadConfig } = require("../src/config");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
-const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
+const { buildKanjiRowsForLevel } = require("../src/services/kanjiGeneratedRowsService");
 const { readPriorLaneInputs } = require("./reportPlatinumKanjiRereviewStatus");
 const {
     buildPlatinumKanjiRereviewStatusReport,

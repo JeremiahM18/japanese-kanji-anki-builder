@@ -5,7 +5,7 @@ const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { parseSapphireWordReviewSet } = require("../src/datasets/sapphireWordReviewSet");
-const { buildWordRowsForLevel } = require("./reviewPlatinumWordLevel");
+const { buildWordRowsForLevel } = require("../src/services/wordGeneratedRowsService");
 const { evaluateSapphireWordReviewSet } = require("../src/services/sapphireWordReviewService");
 const {
     DEFAULT_WORD_BATCH_QUEUE_MODE,

@@ -34,7 +34,7 @@ const {
 } = require("../src/config");
 const {
     buildWordRowsForLevel,
-} = require("./reviewPlatinumWordLevel");
+} = require("../src/services/wordGeneratedRowsService");
 
 const DEFAULT_RECORDED_BY = "codex-inline-proof-migration";
 const DEFAULT_OBSIDIAN_PROOF_LEDGER_DIR = path.join("templates", "obsidian_proof_ledger");

@@ -34,17 +34,15 @@ const {
 } = require("../src/utils/cliArgs");
 const {
     DEFAULT_WORD_SOURCE_MANIFEST,
+    buildSelectorManifestForSource,
+    hasStrictFailure,
     loadSharedInputs,
     loadTriageDecisionsByLevelSource,
     resolveManifestPath,
-} = require("./reportWordCandidateAgreement");
-const {
-    buildSelectorManifestForSource,
-    hasStrictFailure,
     validateCommonPoolOptions,
     validateLevels,
-} = require("./reportWordCommonExpansionSelector");
-const { buildWordExpansionSignalReport } = require("./reportWordExpansionSignals");
+} = require("../src/services/wordExpansionSelectorSupportService");
+const { buildWordExpansionSignalReport } = require("../src/services/wordExpansionSignalService");
 
 const DEFAULT_PACKET_DIR = "out/word-silver-review-packets";
 

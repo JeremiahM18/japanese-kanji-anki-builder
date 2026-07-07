@@ -1,16 +1,15 @@
-const path = require("node:path");
-const fs = require("node:fs");
-
-const { loadJlptLevelContract } = require("../src/datasets/jlptLevelContract");
-const { loadJlptWordLevelContract } = require("../src/datasets/jlptWordLevelContract");
-const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
 const { loadWordSourceManifest } = require("../src/datasets/wordSourceManifest");
-const { loadWordStudyData } = require("../src/datasets/wordStudyData");
 const {
     buildWordCandidateAgreementReport,
     formatWordCandidateAgreementReport,
     normalizePlacementMode,
 } = require("../src/services/wordCandidateAgreementService");
+const {
+    DEFAULT_WORD_SOURCE_MANIFEST,
+    loadSharedInputs,
+    loadTriageDecisionsByLevelSource,
+    resolveManifestPath,
+} = require("../src/services/wordExpansionSelectorSupportService");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
@@ -18,8 +17,6 @@ const {
     parseCsvOption,
     parseNumericOption,
 } = require("../src/utils/cliArgs");
-
-const DEFAULT_WORD_SOURCE_MANIFEST = "templates/word_source_manifest.json";
 
 function parseArgs(argv) {
     const options = {
@@ -58,34 +55,6 @@ function parseArgs(argv) {
     }
 
     return options;
-}
-
-function resolveManifestPath(manifestPath = DEFAULT_WORD_SOURCE_MANIFEST) {
-    return path.resolve(process.cwd(), manifestPath || DEFAULT_WORD_SOURCE_MANIFEST);
-}
-
-function loadTriageDecisionsByLevelSource(triagePath = "") {
-    const normalizedPath = String(triagePath || "").trim();
-    if (!normalizedPath) {
-        return {};
-    }
-    const resolvedPath = path.resolve(process.cwd(), normalizedPath);
-    if (!fs.existsSync(resolvedPath)) {
-        throw new Error(`Word inventory expansion triage file does not exist: ${resolvedPath}`);
-    }
-    return JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
-}
-
-function loadSharedInputs() {
-    return {
-        jlptLevelContract: loadJlptLevelContract(path.join(process.cwd(), "templates", "jlpt_level_contract.json")),
-        jlptWordLevelContract: loadJlptWordLevelContract(path.join(process.cwd(), "templates", "jlpt_word_level_contract.json")),
-        starterEntries: loadWordStudyData({
-            starterPath: path.join(process.cwd(), "templates", "starter_word_study_data.json"),
-            localPath: null,
-        }),
-        wordPitchAccentData: loadWordPitchAccentData(path.join(process.cwd(), "templates", "word_pitch_accent_data.json")),
-    };
 }
 
 async function main() {

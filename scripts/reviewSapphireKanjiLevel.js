@@ -7,7 +7,7 @@ const {
 } = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
-const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
+const { buildKanjiRowsForLevel } = require("../src/services/kanjiGeneratedRowsService");
 const {
     CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
     evaluateSapphireKanjiReviewSet,

@@ -26,6 +26,33 @@ function listJavaScriptFiles(relativeDirectory) {
     return files;
 }
 
+function extractRequireSpecifiers(text) {
+    return [...text.matchAll(/require\(\s*["']([^"']+)["']\s*\)/gu)]
+        .map((match) => match[1]);
+}
+
+function resolveRelativeJavaScriptRequire(importerRelativePath, specifier) {
+    if (!specifier.startsWith(".")) {
+        return null;
+    }
+
+    const importerDirectory = path.dirname(path.join(repoRoot, importerRelativePath));
+    const absoluteBase = path.resolve(importerDirectory, specifier);
+    const candidates = [
+        absoluteBase,
+        `${absoluteBase}.js`,
+        path.join(absoluteBase, "index.js"),
+    ];
+
+    for (const candidate of candidates) {
+        if (fs.existsSync(candidate)) {
+            return path.relative(repoRoot, candidate).split(path.sep).join("/");
+        }
+    }
+
+    return null;
+}
+
 function listTextFiles(relativePath) {
     const absolutePath = path.join(repoRoot, relativePath);
     const entry = fs.statSync(absolutePath);
@@ -132,6 +159,33 @@ const TRACKED_TEST_IGNORED_DATA_READ_PATTERNS = Object.freeze([
     { label: "path.resolve repoRoot data", pattern: /path\.resolve\(\s*(?:repoRoot|ROOT_DIR)\s*,\s*["']data["']/u },
     { label: "fs.readFileSync data path", pattern: /fs\.readFileSync\(\s*["']data[\\/]/u },
     { label: "readRepoFile data path", pattern: /readRepoFile\(\s*["']data[\\/]/u },
+]);
+
+const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([
+    "scripts/auditGithubRepositorySettingsWithGhAuth.js -> scripts/auditGithubRepositorySettings.js",
+    "scripts/auditJlptKanjiSourceAccess.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
+    "scripts/createJlptTextbookConsensusTemplate.js -> scripts/createJlptKanjiSourceInputTemplate.js",
+    "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapPlan.js",
+    "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapTriage.js",
+    "scripts/importJlptKanjiSourceInput.js -> scripts/reportJlptKanjiSourceInputs.js",
+    "scripts/importJlptWordSourceInput.js -> scripts/reportJlptWordSourceInputs.js",
+    "scripts/importVoicevoxPitchAccents.js -> scripts/importKanjiumPitchAccents.js",
+    "scripts/prepareAdditionalKanjiDeck.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
+    "scripts/reportJlptKanjiSourceEvidenceCost.js -> scripts/importJlptKanjiSourceInput.js",
+    "scripts/reportJlptKanjiSourceEvidenceCost.js -> scripts/reportJlptKanjiSourceInputs.js",
+    "scripts/reportJlptKanjiSourceReviewPacket.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
+    "scripts/reportKanjiDeckPartitionPlan.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
+    "scripts/reportKanjiDeckReviewStatus.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
+    "scripts/reportObsidianKanjiCertificationStatus.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
+    "scripts/reportObsidianKanjiRereviewStatus.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
+    "scripts/reportObsidianProofProviderParity.js -> scripts/platinumWordBatchReport.js",
+    "scripts/reportObsidianWordCertificationStatus.js -> scripts/reportPlatinumWordRereviewStatus.js",
+    "scripts/reportObsidianWordRereviewStatus.js -> scripts/reportPlatinumWordRereviewStatus.js",
+    "scripts/reportPlatinumKanjiCertificationStatus.js -> scripts/reportObsidianKanjiCertificationStatus.js",
+    "scripts/reportPlatinumWordCertificationStatus.js -> scripts/reportObsidianWordCertificationStatus.js",
+    "scripts/reportWordReadingGapPlan.js -> scripts/reportWordReadingGapTriage.js",
+    "scripts/runPlatinumGovernanceGate.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
+    "scripts/runPlatinumGovernanceGate.js -> scripts/reportPlatinumWordRereviewStatus.js",
 ]);
 
 function normalizeWhitespace(value) {
@@ -274,6 +328,46 @@ test("tracked CI tests do not read ignored local data inputs", () => {
         violations,
         [],
         "Tracked CI tests must not read ignored root data/* inputs. Use tracked fixtures/contracts, temp fixtures, or explicit local-data release gates instead."
+    );
+});
+
+test("source services never import CLI scripts", () => {
+    const violations = [];
+
+    for (const relativePath of listJavaScriptFiles("src").sort()) {
+        const text = readRepoFile(relativePath);
+        for (const specifier of extractRequireSpecifiers(text)) {
+            const resolved = resolveRelativeJavaScriptRequire(relativePath, specifier);
+            if (resolved?.startsWith("scripts/")) {
+                violations.push(`${relativePath} -> ${resolved}`);
+            }
+        }
+    }
+
+    assert.deepEqual(
+        violations,
+        [],
+        "Reusable source modules must not import CLI scripts; move shared implementation into src/services and keep scripts as facades."
+    );
+});
+
+test("script-to-script imports stay explicit while shared logic moves into services", () => {
+    const actualEdges = [];
+
+    for (const relativePath of listJavaScriptFiles("scripts").sort()) {
+        const text = readRepoFile(relativePath);
+        for (const specifier of extractRequireSpecifiers(text)) {
+            const resolved = resolveRelativeJavaScriptRequire(relativePath, specifier);
+            if (resolved?.startsWith("scripts/")) {
+                actualEdges.push(`${relativePath} -> ${resolved}`);
+            }
+        }
+    }
+
+    assert.deepEqual(
+        actualEdges.sort(),
+        [...SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST].sort(),
+        "New script-to-script imports need explicit governance review. Shared command logic should usually live under src/services."
     );
 });
 

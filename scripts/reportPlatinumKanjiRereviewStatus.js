@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
-const { buildKanjiRowsForLevel } = require("./reviewPlatinumKanjiLevel");
+const { buildKanjiRowsForLevel } = require("../src/services/kanjiGeneratedRowsService");
 const {
     buildPlatinumKanjiRereviewStatusReport,
     buildPlatinumKanjiRereviewStatusSummary,

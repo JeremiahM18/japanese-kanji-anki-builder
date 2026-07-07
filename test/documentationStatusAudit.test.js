@@ -42,16 +42,16 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     assert.deepEqual(report.snapshot.sapphire, n3WordSnapshot.sapphire);
     assert.deepEqual(report.snapshot.platinum, n3WordSnapshot.platinum);
     assert.equal(report.snapshot.product.kanjiDenominator, 2212);
-    assert.equal(report.snapshot.product.wordDenominator, 2505);
+    assert.equal(report.snapshot.product.wordDenominator, 2515);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);
-    assert.equal(report.snapshot.product.wordLockedDenominator, 1307);
+    assert.equal(report.snapshot.product.wordLockedDenominator, 1317);
     assert.equal(report.snapshot.product.wordObsidianProof, 588);
     assert.equal(report.snapshot.product.wordLegacyObsidianProofTargets, 1118);
     assert.equal(report.snapshot.product.wordLegacyOnlyObsidianProofTargets, 700);
     assert.equal(report.snapshot.product.wordRawObsidianProofEvents, 1706);
     assert.equal(report.snapshot.product.wordSupersededLegacyProofEvents, 418);
     assert.equal(report.snapshot.product.wordN5Denominator, 588);
-    assert.equal(report.snapshot.product.wordN4Denominator, 719);
+    assert.equal(report.snapshot.product.wordN4Denominator, 729);
     assert.equal(report.snapshot.product.wordN5ObsidianProof, 588);
     assert.equal(report.snapshot.product.wordN4ObsidianProof, 0);
 });
@@ -155,10 +155,10 @@ test("documentation status audit catches undocumented package scripts", () => {
 test("documentation status audit catches stale generated denominator docs", () => {
     const files = readDocumentationFiles();
     files["docs/employer-overview.md"] = files["docs/employer-overview.md"]
-        .replace("`2505` word rows", "`1470` word rows")
-        .replace("`2505/2505` across N5-N1 | `588/2505` current v2.5", "`1470/1470` across N5-N1 | `987/1470`");
+        .replace("`2515` word rows", "`1470` word rows")
+        .replace("`2515/2515` across N5-N1 | `588/2515` current v2.5", "`1470/1470` across N5-N1 | `987/1470`");
     files["docs/system-architecture.md"] = files["docs/system-architecture.md"]
-        .replace("| Words | 2505 | 588 |", "| Words | 1470 | 987 |");
+        .replace("| Words | 2515 | 588 |", "| Words | 1470 | 987 |");
 
     const report = auditDocumentationText({
         files,

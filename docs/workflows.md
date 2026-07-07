@@ -391,6 +391,18 @@ Use the placement mode deliberately:
 
 Selector rows are still pre-trust. A row marked `ready_for_editorial_review` has source identity, dictionary support, commonness support, and a keep-style triage decision; it still needs explicit card approval, starter/contract edits in a later scoped expansion, examples, reading breakdown, kanji labels, audio, pitch, Gold, Sapphire, Platinum, and readiness gates before it becomes a shipped word card.
 
+Build Silver review packets only after the selector queue for the level is the intended work surface:
+
+```bash
+npm run deck:words:silver:packets -- --level=4 --limit=25 --source=common-pool --queue=silver --markdown
+npm run deck:words:silver:manifest:validate -- --input=out/word-silver-review-packets/<decision-manifest>.json
+npm run deck:words:silver:apply -- --input=out/word-silver-review-packets/<decision-manifest>.json
+```
+
+Word Silver packets are generated review-support artifacts for any N-level, not N4-only tooling. They aggregate selector, source, commonness, learner-utility, duplicate/variant, and risk signals so the reviewer can make governed keep/fix/defer/reject/remove/reroute decisions. Packets do not write tracked templates, approve cards, certify source truth, create Obsidian proof, or change release posture.
+
+A Word Silver decision manifest is the governed handoff between editorial review and tracked-template writes. The manifest must use `codex_editorial_review` provenance, not fake native/human-review claims, and keep/fix decisions must include the complete starter card surface plus source-claim labels, learner-fit rationale, duplicate/variant review, and product-risk review. The applicator dry-runs unless `--write` is provided; it only applies validated keep/fix rows to the level starter shard and `jlpt_word_level_contract.json`, skips defer/reject/remove/reroute rows, and still requires normal completion, gap-plan, Gold, Sapphire, Platinum, docs, and diff verification afterward.
+
 Every selector row carries a source-level label. For free/permitted candidate-discovery sources, the label is `Source level claim unverified`; do not remove, hide, or soften it for fallback rows. The label is separate from learner usefulness: a word can be useful/common/learner-friendly and still need the unverified source-level label until source adequacy reaches the governed universe standard.
 
 Standalone one-kanji written forms are queue-eligible when the level gate is active; do not block them only because the word is one kanji. If the active source row uses template notation in the reading, keep it as `needs_triage` until editorial review resolves whether the notation represents a useful card identity.

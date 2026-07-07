@@ -1208,7 +1208,6 @@ test("dictionary common pool filters to common non-duplicate kanji candidates in
                 月: 5,
                 大: 5,
                 社: 4,
-                本: 5,
                 山: 5,
                 川: 5,
                 既: 5,

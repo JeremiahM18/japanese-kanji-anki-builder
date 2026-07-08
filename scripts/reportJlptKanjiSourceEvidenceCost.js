@@ -23,13 +23,13 @@ const {
     summarizeMemorySamples,
 } = require("../src/utils/memoryUsage");
 const { summarizeReportShape } = require("../src/utils/reportSummary");
-const { buildReports } = require("./reportJlptKanjiSourceInputs");
+const { buildReports } = require("../src/services/jlptKanjiSourceInputReportService");
 const {
     DEFAULT_CONFIG,
     DEFAULT_CONTRACT,
     DEFAULT_EVIDENCE,
     run: runSourceInputImport,
-} = require("./importJlptKanjiSourceInput");
+} = require("../src/services/jlptKanjiSourceInputImportCommandService");
 
 const DEFAULT_SOURCE_EVIDENCE_BUDGET = Object.freeze({
     evidenceLoadMs: 1500,

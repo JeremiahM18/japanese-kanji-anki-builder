@@ -15,7 +15,7 @@ const {
     DEFAULT_SOURCE_INPUTS,
     buildSourceLevelDeltaReportFromPaths,
     formatWorklistPrioritySummary,
-} = require("./auditJlptKanjiSourceLevelDeltas");
+} = require("../src/services/jlptKanjiSourceLevelDeltaCommandService");
 
 const PACKET_SCHEMA = "jlpt-kanji-source-review-packet/v1";
 

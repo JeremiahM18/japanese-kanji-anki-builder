@@ -1641,6 +1641,7 @@ test("source evidence stays out of deck word and readiness pipelines except plat
         "jlptKanjiSourceImportService.js",
         "jlptKanjiSourceInputService.js",
         "jlptKanjiSourceInputTemplateService.js",
+        "jlptKanjiSourceLevelDeltaCommandService.js",
         "jlptKanjiSourceLevelDeltaService.js",
         "jlptTextbookConsensusTemplateService.js",
         "databricksSnapshotExportService.js",

@@ -13,7 +13,7 @@ const {
     DEFAULT_EVIDENCE,
     DEFAULT_SOURCE_INPUTS,
     buildSourceLevelDeltaReportFromPaths,
-} = require("./auditJlptKanjiSourceLevelDeltas");
+} = require("../src/services/jlptKanjiSourceLevelDeltaCommandService");
 
 function parseArgs(argv) {
     const options = {

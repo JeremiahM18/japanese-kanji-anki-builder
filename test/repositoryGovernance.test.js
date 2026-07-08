@@ -163,19 +163,14 @@ const TRACKED_TEST_IGNORED_DATA_READ_PATTERNS = Object.freeze([
 
 const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([
     "scripts/auditGithubRepositorySettingsWithGhAuth.js -> scripts/auditGithubRepositorySettings.js",
-    "scripts/auditJlptKanjiSourceAccess.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
     "scripts/createJlptTextbookConsensusTemplate.js -> scripts/createJlptKanjiSourceInputTemplate.js",
     "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapPlan.js",
     "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapTriage.js",
     "scripts/importJlptKanjiSourceInput.js -> scripts/reportJlptKanjiSourceInputs.js",
     "scripts/importJlptWordSourceInput.js -> scripts/reportJlptWordSourceInputs.js",
     "scripts/importVoicevoxPitchAccents.js -> scripts/importKanjiumPitchAccents.js",
-    "scripts/prepareAdditionalKanjiDeck.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
     "scripts/reportJlptKanjiSourceEvidenceCost.js -> scripts/importJlptKanjiSourceInput.js",
     "scripts/reportJlptKanjiSourceEvidenceCost.js -> scripts/reportJlptKanjiSourceInputs.js",
-    "scripts/reportJlptKanjiSourceReviewPacket.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
-    "scripts/reportKanjiDeckPartitionPlan.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
-    "scripts/reportKanjiDeckReviewStatus.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
     "scripts/reportWordReadingGapPlan.js -> scripts/reportWordReadingGapTriage.js",
 ]);
 
@@ -757,17 +752,16 @@ test("JLPT kanji source-evidence loaders stay in governed source and platinum-or
         loadJlptKanjiSourceEvidence: [
             "scripts/auditJlptKanjiSourceAccess.js",
             "scripts/auditJlptKanjiSourceEvidence.js",
-            "scripts/auditJlptKanjiSourceLevelDeltas.js",
             "scripts/createJlptKanjiSourceInputTemplate.js",
             "scripts/reportJlptKanjiSourceEvidenceCost.js",
             "scripts/reportJlptKanjiSourceInputs.js",
             "src/datasets/jlptKanjiSourceEvidence.js",
             "src/services/databricksSnapshotExportService.js",
+            "src/services/jlptKanjiSourceLevelDeltaCommandService.js",
             "src/services/platinumKanjiSourceOriginService.js",
         ],
         loadJlptKanjiSourceInputs: [
             "scripts/auditJlptKanjiSourceAccess.js",
-            "scripts/auditJlptKanjiSourceLevelDeltas.js",
             "scripts/createJlptKanjiSourceInputTemplate.js",
             "scripts/mergeJlptKanjiSourceBatch.js",
             "scripts/pinJlptKanjiSourceInput.js",
@@ -775,6 +769,7 @@ test("JLPT kanji source-evidence loaders stay in governed source and platinum-or
             "scripts/reportJlptKanjiSourceInputs.js",
             "scripts/reportJlptKanjiSourceReviewPacket.js",
             "src/datasets/jlptKanjiSourceInputs.js",
+            "src/services/jlptKanjiSourceLevelDeltaCommandService.js",
         ],
         loadJlptOfficialOccurrenceEvidence: [
             "scripts/reportJlptOfficialOccurrences.js",

@@ -354,12 +354,12 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2787);
+    assert.equal(Object.keys(starterEntries).length, 2820);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
-        4: 1001,
+        4: 1034,
         5: 588,
     });
 });
@@ -8479,6 +8479,165 @@ test("tracked starter word data includes the eighth through twelfth N4 common-po
     for (const key of nonAppliedKeys) {
         assert.equal(starterEntries[key], undefined, key);
     }
+});
+
+test("tracked starter word data includes the thirteenth and final N4 common-pool Silver batches", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "出社|しゅっしゃ",
+        "生産者|せいさんしゃ",
+        "中華料理|ちゅうかりょうり",
+        "店名|てんめい",
+        "転送|てんそう",
+        "遠出|とおで",
+        "下味|したあじ",
+        "語学力|ごがくりょく",
+        "公道|こうどう",
+        "広間|ひろま",
+        "自体|じたい",
+        "写真屋|しゃしんや",
+        "真水|まみず",
+        "洗車|せんしゃ",
+        "朝晩|あさばん",
+        "町名|ちょうめい",
+        "長文|ちょうぶん",
+        "天気図|てんきず",
+        "転入|てんにゅう",
+        "年少|ねんしょう",
+        "父方|ちちかた",
+        "名店|めいてん",
+        "引っ越し|ひっこし",
+        "教え|おしえ",
+        "持ち帰り|もちかえり",
+        "持ち込み|もちこみ",
+        "出会い|であい",
+        "働き|はたらき",
+        "問い合わせ|といあわせ",
+        "夜明け|よあけ",
+        "手洗い|てあらい",
+        "乗り場|のりば",
+        "知り合い|しりあい",
+    ];
+
+    assert.equal(batchKeys.length, 33);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 4, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n4"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
+        assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    for (const key of ["中華料理|ちゅうかりょうり", "引っ越し|ひっこし", "持ち込み|もちこみ"]) {
+        assert.match(starterEntries[key]?.notes || "", /Support label:/, key);
+    }
+
+    assertCoverageReadings(starterEntries, [
+        ["出社|しゅっしゃ", "出", "しゅっ"],
+        ["出社|しゅっしゃ", "社", "しゃ"],
+        ["生産者|せいさんしゃ", "生", "せい"],
+        ["生産者|せいさんしゃ", "産", "さん"],
+        ["生産者|せいさんしゃ", "者", "しゃ"],
+        ["中華料理|ちゅうかりょうり", "中", "ちゅう"],
+        ["中華料理|ちゅうかりょうり", "華", "か"],
+        ["中華料理|ちゅうかりょうり", "料", "りょう"],
+        ["中華料理|ちゅうかりょうり", "理", "り"],
+        ["店名|てんめい", "店", "てん"],
+        ["店名|てんめい", "名", "めい"],
+        ["転送|てんそう", "転", "てん"],
+        ["転送|てんそう", "送", "そう"],
+        ["遠出|とおで", "遠", "とお"],
+        ["遠出|とおで", "出", "で"],
+        ["下味|したあじ", "下", "した"],
+        ["下味|したあじ", "味", "あじ"],
+        ["語学力|ごがくりょく", "語", "ご"],
+        ["語学力|ごがくりょく", "学", "がく"],
+        ["語学力|ごがくりょく", "力", "りょく"],
+        ["公道|こうどう", "公", "こう"],
+        ["公道|こうどう", "道", "どう"],
+        ["広間|ひろま", "広", "ひろ"],
+        ["広間|ひろま", "間", "ま"],
+        ["自体|じたい", "自", "じ"],
+        ["自体|じたい", "体", "たい"],
+        ["写真屋|しゃしんや", "写", "しゃ"],
+        ["写真屋|しゃしんや", "真", "しん"],
+        ["写真屋|しゃしんや", "屋", "や"],
+        ["真水|まみず", "真", "ま"],
+        ["真水|まみず", "水", "みず"],
+        ["洗車|せんしゃ", "洗", "せん"],
+        ["洗車|せんしゃ", "車", "しゃ"],
+        ["朝晩|あさばん", "朝", "あさ"],
+        ["朝晩|あさばん", "晩", "ばん"],
+        ["町名|ちょうめい", "町", "ちょう"],
+        ["町名|ちょうめい", "名", "めい"],
+        ["長文|ちょうぶん", "長", "ちょう"],
+        ["長文|ちょうぶん", "文", "ぶん"],
+        ["天気図|てんきず", "天", "てん"],
+        ["天気図|てんきず", "気", "き"],
+        ["天気図|てんきず", "図", "ず"],
+        ["転入|てんにゅう", "転", "てん"],
+        ["転入|てんにゅう", "入", "にゅう"],
+        ["年少|ねんしょう", "年", "ねん"],
+        ["年少|ねんしょう", "少", "しょう"],
+        ["父方|ちちかた", "父", "ちち"],
+        ["父方|ちちかた", "方", "かた"],
+        ["名店|めいてん", "名", "めい"],
+        ["名店|めいてん", "店", "てん"],
+        ["引っ越し|ひっこし", "引", "ひ"],
+        ["引っ越し|ひっこし", "越", "こ"],
+        ["教え|おしえ", "教", "おし"],
+        ["持ち帰り|もちかえり", "持", "も"],
+        ["持ち帰り|もちかえり", "帰", "かえ"],
+        ["持ち込み|もちこみ", "持", "も"],
+        ["持ち込み|もちこみ", "込", "こ"],
+        ["出会い|であい", "出", "で"],
+        ["出会い|であい", "会", "あ"],
+        ["働き|はたらき", "働", "はたら"],
+        ["問い合わせ|といあわせ", "問", "と"],
+        ["問い合わせ|といあわせ", "合", "あ"],
+        ["夜明け|よあけ", "夜", "よ"],
+        ["夜明け|よあけ", "明", "あ"],
+        ["手洗い|てあらい", "手", "て"],
+        ["手洗い|てあらい", "洗", "あら"],
+        ["乗り場|のりば", "乗", "の"],
+        ["乗り場|のりば", "場", "ば"],
+        ["知り合い|しりあい", "知", "し"],
+        ["知り合い|しりあい", "合", "あ"],
+    ]);
+
+    const nonAppliedKeys = [
+        "院生|いんせい",
+        "金銀|きんぎん",
+        "校風|こうふう",
+        "書写|しょしゃ",
+        "新月|しんげつ",
+        "茶室|ちゃしつ",
+        "町屋|まちや",
+        "名医|めいい",
+        "顔ぶれ|かおぶれ",
+        "手もと|てもと",
+        "度合い|どあい",
+        "水洗い|みずあらい",
+        "買い手|かいて",
+    ];
+
+    for (const key of nonAppliedKeys) {
+        assert.equal(starterEntries[key], undefined, key);
+    }
+    assert.notEqual(starterEntries["手元|てもと"], undefined);
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

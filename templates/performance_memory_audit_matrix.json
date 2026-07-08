@@ -188,7 +188,7 @@
       "id": "jlpt-source-evidence-cost",
       "productArea": "jlpt-kanji-source-governance",
       "benchmarkClass": "timing-budget",
-      "command": "npm run data:benchmark:jlpt:sources:gate",
+      "command": "npm run data:benchmark:jlpt:sources:gate -- --source=shin_kanzen_master_kanji",
       "packageScript": "data:benchmark:jlpt:sources:gate",
       "ciPolicy": "manual-local",
       "workflowCommand": null,
@@ -211,7 +211,7 @@
           "fullEvidenceSerializationMs",
           "sourceEvidenceAuditMs"
         ],
-        "gateCommand": "npm run data:benchmark:jlpt:sources:gate"
+        "gateCommand": "npm run data:benchmark:jlpt:sources:gate -- --source=shin_kanzen_master_kanji"
       },
       "memorySampling": {
         "status": "present",

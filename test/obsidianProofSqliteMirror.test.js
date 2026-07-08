@@ -92,6 +92,7 @@ function inspectSqlite(dbPath) {
         "  'proofEvents': conn.execute('select count(*) from proof_events').fetchone()[0],",
         "  'evidenceChecks': conn.execute('select count(*) from evidence_checks').fetchone()[0],",
         "  'cardReviewed': conn.execute('select card_reviewed from proof_events').fetchone()[0],",
+        "  'obsidianStandardVersion': conn.execute('select obsidian_standard_version from proof_events').fetchone()[0],",
         "  'metadataSource': conn.execute(\"select value from metadata where key='sourceOfTruth'\").fetchone()[0],",
         "}",
         "conn.close()",
@@ -140,7 +141,42 @@ test("buildObsidianProofSqliteMirror writes a queryable local SQLite mirror", {
     assert.equal(inspected.proofEvents, 1);
     assert.equal(inspected.evidenceChecks, 8);
     assert.equal(inspected.cardReviewed, "常|じょう");
+    assert.equal(inspected.obsidianStandardVersion, "legacy-kanji-obsidian-standard");
     assert.equal(inspected.metadataSource, "templates/obsidian_proof_ledger/*.jsonl");
+});
+
+test("buildObsidianProofSqliteMirror allows versioned proof history for the same card target", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-sqlite-versioned-"));
+    writeLedger(rootDir, [
+        buildProofEvent(),
+        buildProofEvent({
+            proofId: "kanji-n3-obsidian-fixture-02",
+            proof: {
+                ...buildProofEvent().proof,
+                obsidianStandardVersion: "kanji-obsidian-v2",
+            },
+        }),
+    ]);
+
+    const report = queryObsidianProofSqliteMirror({
+        cwd: rootDir,
+        ledgerDir: "templates/obsidian_proof_ledger",
+        outputDir: "out/obsidian-proof/sqlite",
+        deckKind: "kanji",
+        level: 3,
+        target: "常|じょう",
+        limit: 5,
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.mirror.proofEvents, 2);
+    assert.equal(report.query.matchedProofEvents, 2);
+    assert.deepEqual(
+        report.query.rows.map((row) => row.obsidianStandardVersion).sort(),
+        ["kanji-obsidian-v2", "legacy-kanji-obsidian-standard"]
+    );
 });
 
 test("buildObsidianProofSqliteMirrorReport rejects unsafe database filenames", () => {

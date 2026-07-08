@@ -59,6 +59,7 @@ def initialize_schema(conn):
         CREATE TABLE proof_events (
             proof_id TEXT PRIMARY KEY,
             target_key TEXT NOT NULL UNIQUE,
+            obsidian_standard_version TEXT NOT NULL,
             deck_kind TEXT NOT NULL,
             level INTEGER NOT NULL,
             written TEXT NOT NULL,
@@ -112,7 +113,18 @@ def insert_metadata(conn, payload):
 
 def build_target_key(event):
     target = event["target"]
-    return f"{target['deckKind']}:n{target['level']}:{target['cardReviewed']}"
+    return f"{target['deckKind']}:n{target['level']}:{target['cardReviewed']}:{resolve_obsidian_standard_version(event)}"
+
+
+def resolve_obsidian_standard_version(event):
+    proof = event.get("proof") or {}
+    explicit_version = str(proof.get("obsidianStandardVersion") or "").strip()
+    if explicit_version:
+        return explicit_version
+    target = event.get("target") or {}
+    if target.get("deckKind") == "word":
+        return "legacy-word-obsidian-v2.0"
+    return "legacy-kanji-obsidian-standard"
 
 
 def insert_event(conn, event):
@@ -129,17 +141,18 @@ def insert_event(conn, event):
     conn.execute(
         """
         INSERT INTO proof_events(
-            proof_id, target_key, deck_kind, level, written, reading, card_reviewed,
+            proof_id, target_key, obsidian_standard_version, deck_kind, level, written, reading, card_reviewed,
             batch_id, batch_sequence, review_standard, reviewed_at, reviewer, result,
             scope, limitation_decision, recorded_at, recorded_by, source_review_set_path,
             source_commit, representation_migration, event_json, sentence_quality_json,
             authority_json, ledger_json
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             proof_id,
             build_target_key(event),
+            resolve_obsidian_standard_version(event),
             require_text(target.get("deckKind"), f"{proof_id}.target.deckKind"),
             int(target.get("level")),
             require_text(target.get("written"), f"{proof_id}.target.written"),

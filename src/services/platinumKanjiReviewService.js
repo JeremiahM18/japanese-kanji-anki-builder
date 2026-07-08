@@ -15,7 +15,9 @@ const {
     resolveKanjiSourceOriginIdsForEntry,
 } = require("./platinumKanjiSourceOriginService");
 const {
+    buildEntriesByIdentity,
     buildResolvedKanjiFields,
+    hasCurrentStandardKanjiSapphireStatus,
     resolveKanjiLaneContext,
 } = require("./reviewLaneContextService");
 const { decodeHtmlEntities } = require("../utils/text");
@@ -336,8 +338,22 @@ function buildPlatinumReviewKey({ kanji = "" } = {}) {
     return normalizeForCompare(kanji);
 }
 
-function findKanjiRowForEntry(rows = [], entry = {}) {
-    const matches = rows.filter((row) => row.kanji === entry.kanji);
+function buildKanjiRowsByKey(rows = []) {
+    const rowsByKey = new Map();
+    for (const row of Array.isArray(rows) ? rows : []) {
+        const key = row.kanji;
+        if (!rowsByKey.has(key)) {
+            rowsByKey.set(key, []);
+        }
+        rowsByKey.get(key).push(row);
+    }
+    return rowsByKey;
+}
+
+function findKanjiRowForEntry(rows = [], entry = {}, rowsByKey = null) {
+    const matches = rowsByKey
+        ? rowsByKey.get(entry.kanji) || []
+        : rows.filter((row) => row.kanji === entry.kanji);
     if (matches.length === 1) {
         return matches[0];
     }
@@ -708,6 +724,7 @@ function evaluatePlatinumKanjiEntry({
     rows = [],
     entry = {},
     goldExpectation,
+    rowsByKey = null,
     sourceOriginFailures = [],
     sourceOriginIds = [],
     sapphireEntry,
@@ -732,7 +749,7 @@ function evaluatePlatinumKanjiEntry({
             sapphireEntry,
             sourceOriginIds,
         }));
-        const row = findKanjiRowForEntry(rows, entry);
+        const row = findKanjiRowForEntry(rows, entry, rowsByKey);
         if (row?.error) {
             failures.push(row.error);
         } else if (!row) {
@@ -768,7 +785,7 @@ function evaluatePlatinumKanjiEntry({
         }
     } else if (NON_SHIPPING_STATUSES.includes(status)) {
         failures.push(...validateNonShippingEntry(entry));
-        const row = findKanjiRowForEntry(rows, entry);
+        const row = findKanjiRowForEntry(rows, entry, rowsByKey);
         if (row?.error) {
             failures.push(row.error);
         } else if (row) {
@@ -793,8 +810,9 @@ function evaluatePlatinumKanjiEntry({
 }
 
 function buildMissingPlatinumRows({ rows = [], activeEntries = [] } = {}) {
+    const activeKanji = new Set(activeEntries.map((entry) => entry.kanji));
     return rows
-        .filter((row) => !activeEntries.some((entry) => entry.kanji === row.kanji))
+        .filter((row) => !activeKanji.has(row.kanji))
         .map((row) => row.kanji)
         .sort();
 }
@@ -826,6 +844,7 @@ function evaluatePlatinumKanjiReviewSet({
     allowEmpty = false,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
+    const generatedRowsByKey = buildKanjiRowsByKey(generatedRows);
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const activeStatusEntries = reviewEntries.filter(hasActivePlatinumStatus);
     const activeEntries = reviewEntries.filter(isCurrentStandardPlatinumEntry);
@@ -857,12 +876,31 @@ function evaluatePlatinumKanjiReviewSet({
             ),
         })
         : new Map();
+    const goldenExpectationsByIdentity = Array.isArray(goldenExpectations)
+        ? buildEntriesByIdentity(goldenExpectations, {
+            getIdentity: (entry) => entry.kanji,
+        })
+        : null;
+    const currentStandardSapphireEntriesByIdentity = Array.isArray(sapphireEntries)
+        ? buildEntriesByIdentity(sapphireEntries, {
+            getIdentity: (entry) => entry.kanji,
+            includeEntry: hasCurrentStandardKanjiSapphireStatus,
+        })
+        : null;
+    const sapphireResultsByIdentity = Array.isArray(sapphireResults)
+        ? buildEntriesByIdentity(sapphireResults, {
+            getIdentity: (result) => result.kanji,
+        })
+        : null;
     const results = reviewEntries.map((entry) => {
         const laneContext = resolveKanjiLaneContext({
             entry,
             goldenExpectations,
+            goldenExpectationsByIdentity,
             sapphireEntries,
+            currentStandardSapphireEntriesByIdentity,
             sapphireResults,
+            sapphireResultsByIdentity,
         });
         const preconditionFailures = [
             ...(goldPreconditionFailures.get(entry.kanji) || []),
@@ -878,6 +916,7 @@ function evaluatePlatinumKanjiReviewSet({
                 rows: generatedRows,
                 entry,
                 goldExpectation: laneContext.goldExpectation,
+                rowsByKey: generatedRowsByKey,
                 sourceOriginIds,
                 sapphireEntry: laneContext.sapphireEntry,
             }), preconditionFailures);
@@ -886,6 +925,7 @@ function evaluatePlatinumKanjiReviewSet({
                 rows: generatedRows,
                 entry,
                 goldExpectation: laneContext.goldExpectation,
+                rowsByKey: generatedRowsByKey,
                 sourceOriginFailures: [`could not resolve kanji source-claim origin ids: ${error.message}`],
                 sapphireEntry: laneContext.sapphireEntry,
             }), preconditionFailures);

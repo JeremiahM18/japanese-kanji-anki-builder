@@ -254,6 +254,32 @@ function buildDefaultTrackedSourcePaths({ cwd = process.cwd() } = {}) {
     };
 }
 
+function loadTrackedSourceKanjiInputs({
+    paths = buildDefaultTrackedSourcePaths(),
+} = {}) {
+    const jlptLevelContract = loadJlptLevelContract(paths.jlptLevelContractPath);
+    const curatedStudyData = loadCuratedStudyData(null, {
+        starterPath: paths.starterCuratedStudyDataPath,
+    });
+    const componentContract = loadKanjiComponentContract(paths.kanjiComponentContractPath);
+    const readingReferenceContract = loadKanjiReadingReferenceContract(paths.kanjiReadingReferenceContractPath);
+    const platinumCardSourceManifest = loadPlatinumCardSourceManifest(paths.platinumCardSourceManifestPath);
+    const readingReferenceAudit = auditKanjiReadingReferenceContract({
+        readingReferenceContract,
+        jlptLevelContract,
+        platinumCardSourceManifest,
+    });
+
+    return {
+        jlptLevelContract,
+        curatedStudyData,
+        componentContract,
+        readingReferenceContract,
+        platinumCardSourceManifest,
+        readingReferenceAudit,
+    };
+}
+
 function countKanjiByLevel(jlptLevelContract = {}, level = 5) {
     return Object.values(jlptLevelContract.kanjiLevels || {})
         .filter((entryLevel) => Number(entryLevel) === Number(level))
@@ -651,25 +677,22 @@ function evaluateTrackedSourceKanjiPreflight({
     };
 }
 
-function buildTrackedSourceKanjiPreflight({
+function buildTrackedSourceKanjiPreflightWithSources({
     level = 5,
     cwd = process.cwd(),
     paths = buildDefaultTrackedSourcePaths({ cwd }),
+    kanjiInputs = null,
 } = {}) {
     const targetLevel = normalizeTrackedSourceLevel(level);
-
-    const jlptLevelContract = loadJlptLevelContract(paths.jlptLevelContractPath);
-    const curatedStudyData = loadCuratedStudyData(null, {
-        starterPath: paths.starterCuratedStudyDataPath,
-    });
-    const componentContract = loadKanjiComponentContract(paths.kanjiComponentContractPath);
-    const readingReferenceContract = loadKanjiReadingReferenceContract(paths.kanjiReadingReferenceContractPath);
-    const platinumCardSourceManifest = loadPlatinumCardSourceManifest(paths.platinumCardSourceManifestPath);
-    const readingReferenceAudit = auditKanjiReadingReferenceContract({
-        readingReferenceContract,
+    const inputs = kanjiInputs || loadTrackedSourceKanjiInputs({ paths });
+    const {
         jlptLevelContract,
+        curatedStudyData,
+        componentContract,
+        readingReferenceContract,
         platinumCardSourceManifest,
-    });
+        readingReferenceAudit,
+    } = inputs;
     const {
         contractPath: fieldSourceContractPath,
         fieldSourceContract,
@@ -695,22 +718,29 @@ function buildTrackedSourceKanjiPreflight({
     });
 
     return {
-        generatedAt: new Date().toISOString(),
-        passed: evaluation.passed,
-        certifiable: evaluation.certifiable,
-        scope: targetLevel === 5
-            ? N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE
-            : buildTrackedSourceKanjiPreflightScope(targetLevel),
-        sourceFiles: {
-            jlptLevelContractPath: paths.jlptLevelContractPath,
-            starterCuratedStudyDataPath: paths.starterCuratedStudyDataPath,
-            kanjiComponentContractPath: paths.kanjiComponentContractPath,
-            kanjiReadingReferenceContractPath: paths.kanjiReadingReferenceContractPath,
-            kanjiCardFieldSourceContractPath: fieldSourceContractPath,
-            platinumCardSourceManifestPath: paths.platinumCardSourceManifestPath,
+        fieldSourceContract,
+        report: {
+            generatedAt: new Date().toISOString(),
+            passed: evaluation.passed,
+            certifiable: evaluation.certifiable,
+            scope: targetLevel === 5
+                ? N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE
+                : buildTrackedSourceKanjiPreflightScope(targetLevel),
+            sourceFiles: {
+                jlptLevelContractPath: paths.jlptLevelContractPath,
+                starterCuratedStudyDataPath: paths.starterCuratedStudyDataPath,
+                kanjiComponentContractPath: paths.kanjiComponentContractPath,
+                kanjiReadingReferenceContractPath: paths.kanjiReadingReferenceContractPath,
+                kanjiCardFieldSourceContractPath: fieldSourceContractPath,
+                platinumCardSourceManifestPath: paths.platinumCardSourceManifestPath,
+            },
+            kanji: evaluation,
         },
-        kanji: evaluation,
     };
+}
+
+function buildTrackedSourceKanjiPreflight(options = {}) {
+    return buildTrackedSourceKanjiPreflightWithSources(options).report;
 }
 
 async function buildTrackedSourceKanjiArtifact({
@@ -718,17 +748,23 @@ async function buildTrackedSourceKanjiArtifact({
     cwd = process.cwd(),
     outDir = path.join(process.cwd(), "out", "product-readiness", `n${level}-tracked-source-kanji`),
     paths = buildDefaultTrackedSourcePaths({ cwd }),
+    kanjiInputs = null,
 } = {}) {
     const targetLevel = normalizeTrackedSourceLevel(level);
+    const inputs = kanjiInputs || loadTrackedSourceKanjiInputs({ paths });
     const rootDir = path.resolve(outDir);
     const exportsDir = path.join(rootDir, "exports");
     const reportsDir = path.join(rootDir, "reports");
     const kanjiTsvPath = path.join(exportsDir, `jlpt-n${targetLevel}-kanji.tsv`);
     const summaryPath = path.join(reportsDir, "tracked-source-kanji-artifact-summary.json");
-    const preflight = buildTrackedSourceKanjiPreflight({
+    const {
+        fieldSourceContract,
+        report: preflight,
+    } = buildTrackedSourceKanjiPreflightWithSources({
         level: targetLevel,
         cwd,
         paths,
+        kanjiInputs: inputs,
     });
 
     ensureDir(reportsDir);
@@ -767,27 +803,18 @@ async function buildTrackedSourceKanjiArtifact({
         };
     }
 
-    const jlptLevelContract = loadJlptLevelContract(paths.jlptLevelContractPath);
-    const componentContract = loadKanjiComponentContract(paths.kanjiComponentContractPath);
-    const readingReferenceContract = loadKanjiReadingReferenceContract(paths.kanjiReadingReferenceContractPath);
-    const fieldSourceContract = loadKanjiCardFieldSourceContractForLevel({
-        level: targetLevel,
-        cwd,
-        legacyPath: paths.kanjiCardFieldSourceContractPath,
-        contractsDir: paths.kanjiCardFieldSourceContractDir,
-    });
     const expectedHeader = loadAnkiNoteSchema("kanji").fieldNames;
     const buildOptions = {
         level: targetLevel,
         expectedHeader,
-        jlptLevelContract,
-        componentContract,
-        readingReferenceContract,
+        jlptLevelContract: inputs.jlptLevelContract,
+        componentContract: inputs.componentContract,
+        readingReferenceContract: inputs.readingReferenceContract,
         fieldSourceContract,
     };
     const tsv = formatKanjiSourceDerivedTsv(buildOptions);
     const repeatTsv = formatKanjiSourceDerivedTsv(buildOptions);
-    const expectedRows = jlptLevelContract.inventoryCounts?.[String(targetLevel)] || 0;
+    const expectedRows = inputs.jlptLevelContract.inventoryCounts?.[String(targetLevel)] || 0;
     const evaluation = evaluateKanjiTsvArtifact({
         tsv,
         repeatTsv,
@@ -834,6 +861,7 @@ async function buildTrackedSourceKanjiArtifacts({
 } = {}) {
     const targetLevels = normalizeTrackedSourceLevels({ levels });
     const reports = [];
+    const kanjiInputs = loadTrackedSourceKanjiInputs({ paths });
 
     for (const level of targetLevels) {
         reports.push(await buildTrackedSourceKanjiArtifact({
@@ -841,6 +869,7 @@ async function buildTrackedSourceKanjiArtifacts({
             cwd,
             outDir: outDir ? path.join(path.resolve(outDir), `n${level}-tracked-source-kanji`) : undefined,
             paths,
+            kanjiInputs,
         }));
     }
 

@@ -100,6 +100,24 @@ function resultFailures(result = {}) {
         .filter(Boolean);
 }
 
+function groupEntriesByKey(entries = [], getKey, includeEntry = () => true) {
+    const entriesByKey = new Map();
+    for (const entry of Array.isArray(entries) ? entries : []) {
+        if (!includeEntry(entry)) {
+            continue;
+        }
+        const key = normalizeText(getKey(entry));
+        if (!key) {
+            continue;
+        }
+        if (!entriesByKey.has(key)) {
+            entriesByKey.set(key, []);
+        }
+        entriesByKey.get(key).push(entry);
+    }
+    return entriesByKey;
+}
+
 function buildKanjiGoldPreconditionFailuresByKey({
     rows = [],
     entries = [],
@@ -108,6 +126,11 @@ function buildKanjiGoldPreconditionFailuresByKey({
 } = {}) {
     const failuresByKey = new Map();
     const expectations = Array.isArray(goldenExpectations) ? goldenExpectations : null;
+    const expectationEntriesByKey = expectations
+        ? groupEntriesByKey(expectations, (expectation) => expectation.kanji)
+        : null;
+    const matchedExpectationKeys = [];
+    const matchedExpectations = [];
 
     for (const entry of Array.isArray(entries) ? entries : []) {
         const kanji = normalizeText(entry.kanji);
@@ -120,7 +143,7 @@ function buildKanjiGoldPreconditionFailuresByKey({
             continue;
         }
 
-        const matchingExpectations = expectations.filter((expectation) => normalizeText(expectation.kanji) === kanji);
+        const matchingExpectations = expectationEntriesByKey.get(kanji) || [];
         if (matchingExpectations.length === 0) {
             appendFailure(failuresByKey, kanji, `${laneName} requires a prior Gold expectation for ${kanji}`);
             continue;
@@ -130,12 +153,20 @@ function buildKanjiGoldPreconditionFailuresByKey({
             continue;
         }
 
-        const report = evaluateGoldenReviewSet({
+        matchedExpectationKeys.push(kanji);
+        matchedExpectations.push(matchingExpectations[0]);
+    }
+
+    const report = matchedExpectations.length > 0
+        ? evaluateGoldenReviewSet({
             cards: rows,
-            expectations: matchingExpectations,
-        });
-        const result = report.results?.[0] || {};
-        if (!report.passed || !result.passed) {
+            expectations: matchedExpectations,
+        })
+        : { results: [] };
+
+    for (const [index, kanji] of matchedExpectationKeys.entries()) {
+        const result = report.results?.[index] || {};
+        if (!result.passed) {
             const details = resultFailures(result);
             appendFailure(
                 failuresByKey,
@@ -156,6 +187,11 @@ function buildWordGoldPreconditionFailuresByKey({
 } = {}) {
     const failuresByKey = new Map();
     const expectations = Array.isArray(goldenExpectations) ? goldenExpectations : null;
+    const expectationEntriesByKey = expectations
+        ? groupEntriesByKey(expectations, buildWordEntryIdentity)
+        : null;
+    const matchedExpectationKeys = [];
+    const matchedExpectations = [];
 
     for (const entry of Array.isArray(entries) ? entries : []) {
         const identity = buildWordEntryIdentity(entry);
@@ -168,7 +204,7 @@ function buildWordGoldPreconditionFailuresByKey({
             continue;
         }
 
-        const matchingExpectations = expectations.filter((expectation) => buildWordEntryIdentity(expectation) === identity);
+        const matchingExpectations = expectationEntriesByKey.get(identity) || [];
         if (matchingExpectations.length === 0) {
             appendFailure(failuresByKey, identity, `${laneName} requires a prior Gold expectation for ${identity}`);
             continue;
@@ -178,14 +214,21 @@ function buildWordGoldPreconditionFailuresByKey({
             continue;
         }
 
-        const report = evaluateGoldenWordReviewSet({
+        matchedExpectationKeys.push(identity);
+        matchedExpectations.push(matchingExpectations[0]);
+    }
+
+    const report = matchedExpectations.length > 0
+        ? evaluateGoldenWordReviewSet({
             rows,
-            expectations: matchingExpectations,
-        });
-        const result = report.results?.[0] || {};
-        const coverageFailures = Array.isArray(report.coverageFailures) ? report.coverageFailures : [];
-        if (!report.passed || !result.passed || coverageFailures.length > 0) {
-            const details = [...resultFailures(result), ...coverageFailures.map(normalizeText).filter(Boolean)];
+            expectations: matchedExpectations,
+        })
+        : { results: [] };
+
+    for (const [index, identity] of matchedExpectationKeys.entries()) {
+        const result = report.results?.[index] || {};
+        if (!result.passed) {
+            const details = resultFailures(result);
             appendFailure(
                 failuresByKey,
                 identity,
@@ -211,6 +254,10 @@ function buildCurrentStandardPreconditionFailuresByKey({
     const failuresByKey = new Map();
     const priorEntryList = Array.isArray(priorEntries) ? priorEntries : null;
     const priorResultList = Array.isArray(priorResults) ? priorResults : [];
+    const priorEntriesByKey = priorEntryList
+        ? groupEntriesByKey(priorEntryList, getPriorEntryKey, isCurrentStandardPriorEntry)
+        : null;
+    const priorResultsByKey = groupEntriesByKey(priorResultList, getResultKey);
 
     for (const entry of Array.isArray(entries) ? entries : []) {
         const key = normalizeText(getEntryKey(entry));
@@ -223,10 +270,7 @@ function buildCurrentStandardPreconditionFailuresByKey({
             continue;
         }
 
-        const matchingPriorEntries = priorEntryList.filter((priorEntry) => (
-            normalizeText(getPriorEntryKey(priorEntry)) === key
-            && (!isCurrentStandardPriorEntry || isCurrentStandardPriorEntry(priorEntry))
-        ));
+        const matchingPriorEntries = priorEntriesByKey.get(key) || [];
         if (matchingPriorEntries.length === 0) {
             appendFailure(failuresByKey, key, `${laneName} requires current-standard ${priorLaneName} coverage for ${key}`);
             continue;
@@ -235,7 +279,7 @@ function buildCurrentStandardPreconditionFailuresByKey({
             appendFailure(failuresByKey, key, `${laneName} requires unique current-standard ${priorLaneName} coverage for ${key}; found ${matchingPriorEntries.length}`);
         }
 
-        const matchingResult = priorResultList.find((result) => normalizeText(getResultKey(result)) === key);
+        const matchingResult = (priorResultsByKey.get(key) || [])[0];
         if (matchingResult && matchingResult.passed === false) {
             const details = resultFailures(matchingResult);
             appendFailure(

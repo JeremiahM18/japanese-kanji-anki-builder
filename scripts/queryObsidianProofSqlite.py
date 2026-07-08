@@ -43,11 +43,12 @@ def query_rows(conn, args):
     rows = conn.execute(
         f"""
         SELECT proof_id, deck_kind, level, written, reading, card_reviewed,
+               obsidian_standard_version,
                batch_id, batch_sequence, reviewed_at, reviewer, result,
                limitation_decision
         FROM proof_events
         {where_sql}
-        ORDER BY deck_kind, level, batch_sequence, card_reviewed, proof_id
+        ORDER BY deck_kind, level, batch_sequence, card_reviewed, obsidian_standard_version, proof_id
         LIMIT ?
         """,
         [*params, limit],
@@ -60,12 +61,13 @@ def query_rows(conn, args):
             "written": row[3],
             "reading": row[4],
             "cardReviewed": row[5],
-            "batchId": row[6],
-            "batchSequence": row[7],
-            "reviewedAt": row[8],
-            "reviewer": row[9],
-            "result": row[10],
-            "limitationDecision": row[11],
+            "obsidianStandardVersion": row[6],
+            "batchId": row[7],
+            "batchSequence": row[8],
+            "reviewedAt": row[9],
+            "reviewer": row[10],
+            "result": row[11],
+            "limitationDecision": row[12],
         }
         for row in rows
     ]

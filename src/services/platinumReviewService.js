@@ -7,9 +7,10 @@ const {
     validatePlatinumLaneAuthorityBoundary,
 } = require("./reviewLanePreconditionService");
 const {
+    buildEntriesByIdentity,
     buildResolvedWordFields,
-    resolveCurrentStandardWordSapphireEntry,
-    resolveWordGoldExpectation,
+    hasCurrentStandardWordSapphireStatus,
+    resolveWordLaneContext,
 } = require("./reviewLaneContextService");
 const {
     extractRenderedPitchAccentPattern,
@@ -328,8 +329,23 @@ function wordRowMatchesEntry(row = {}, entry = {}) {
     return includesAll(row.reading, expectedReadings);
 }
 
-function findWordRowForEntry(rows = [], entry = {}) {
-    const matches = rows.filter((row) => wordRowMatchesEntry(row, entry));
+function buildWordRowsByWritten(rows = []) {
+    const rowsByWritten = new Map();
+    for (const row of Array.isArray(rows) ? rows : []) {
+        const key = row.word;
+        if (!rowsByWritten.has(key)) {
+            rowsByWritten.set(key, []);
+        }
+        rowsByWritten.get(key).push(row);
+    }
+    return rowsByWritten;
+}
+
+function findWordRowForEntry(rows = [], entry = {}, rowsByWritten = null) {
+    const candidates = rowsByWritten
+        ? rowsByWritten.get(entry.word) || []
+        : rows;
+    const matches = candidates.filter((row) => wordRowMatchesEntry(row, entry));
     if (matches.length === 1) {
         return matches[0];
     }
@@ -754,6 +770,7 @@ function evaluatePlatinumEntry({
     goldExpectation = null,
     requireCurrentReviewStandard = false,
     rows = [],
+    rowsByWritten = null,
     entry = {},
     sapphireEntry = null,
     wordPitchAccentData = {},
@@ -773,7 +790,7 @@ function evaluatePlatinumEntry({
             requireCurrentReviewStandard,
             sapphireEntry,
         }));
-        const row = findWordRowForEntry(rows, entry);
+        const row = findWordRowForEntry(rows, entry, rowsByWritten);
         if (row?.error) {
             failures.push(row.error);
         } else if (!row) {
@@ -853,7 +870,7 @@ function evaluatePlatinumEntry({
         }
     } else if (NON_SHIPPING_STATUSES.includes(status)) {
         failures.push(...validateNonShippingEntry(entry));
-        const row = findWordRowForEntry(rows, entry);
+        const row = findWordRowForEntry(rows, entry, rowsByWritten);
         if (row?.error) {
             failures.push(row.error);
         } else if (row) {
@@ -877,8 +894,17 @@ function evaluatePlatinumEntry({
 }
 
 function buildMissingPlatinumRows({ rows = [], activeEntries = [] } = {}) {
+    const activeEntriesByWord = new Map();
+    for (const entry of activeEntries) {
+        if (!activeEntriesByWord.has(entry.word)) {
+            activeEntriesByWord.set(entry.word, []);
+        }
+        activeEntriesByWord.get(entry.word).push(entry);
+    }
+
     return rows
-        .filter((row) => !activeEntries.some((entry) => wordRowMatchesEntry(row, entry)))
+        .filter((row) => !(activeEntriesByWord.get(row.word) || [])
+            .some((entry) => wordRowMatchesEntry(row, entry)))
         .map((row) => formatWordReviewLabel(row.word, row.reading))
         .sort();
 }
@@ -912,6 +938,7 @@ function evaluatePlatinumWordReviewSet({
     allowEmpty = false,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
+    const generatedRowsByWritten = buildWordRowsByWritten(generatedRows);
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const activeEntries = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
     const reviewStandardSummary = buildWordReviewStandardSummary(activeEntries);
@@ -942,15 +969,32 @@ function evaluatePlatinumWordReviewSet({
             ),
         })
         : new Map();
+    const goldenExpectationsByIdentity = Array.isArray(goldenExpectations)
+        ? buildEntriesByIdentity(goldenExpectations, {
+            getIdentity: buildWordEntryIdentity,
+        })
+        : null;
+    const currentStandardSapphireEntriesByIdentity = Array.isArray(sapphireEntries)
+        ? buildEntriesByIdentity(sapphireEntries, {
+            getIdentity: buildWordEntryIdentity,
+            includeEntry: hasCurrentStandardWordSapphireStatus,
+        })
+        : null;
+    const sapphireResultsByIdentity = Array.isArray(sapphireResults)
+        ? buildEntriesByIdentity(sapphireResults, {
+            getIdentity: (result) => result.identity || buildWordEntryIdentity(result),
+        })
+        : null;
     const results = reviewEntries.map((entry) => {
         const identity = buildWordEntryIdentity(entry);
-        const goldContext = resolveWordGoldExpectation({
+        const laneContext = resolveWordLaneContext({
             entry,
             goldenExpectations,
-        });
-        const sapphireContext = resolveCurrentStandardWordSapphireEntry({
-            entry,
+            goldenExpectationsByIdentity,
             sapphireEntries,
+            currentStandardSapphireEntriesByIdentity,
+            sapphireResults,
+            sapphireResultsByIdentity,
         });
         const preconditionFailures = [
             ...(goldPreconditionFailures.get(identity) || []),
@@ -958,9 +1002,10 @@ function evaluatePlatinumWordReviewSet({
         ];
         return mergeFailuresIntoResult(evaluatePlatinumEntry({
             rows: generatedRows,
+            rowsByWritten: generatedRowsByWritten,
             entry,
-            goldExpectation: goldContext.entry,
-            sapphireEntry: sapphireContext.entry,
+            goldExpectation: laneContext.goldExpectation,
+            sapphireEntry: laneContext.sapphireEntry,
             wordPitchAccentData,
             kanjiLevelData,
             requireCurrentReviewStandard,

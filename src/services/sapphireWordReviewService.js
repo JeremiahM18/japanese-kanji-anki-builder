@@ -6,6 +6,7 @@ const {
     mergeFailuresIntoResult,
 } = require("./reviewLanePreconditionService");
 const {
+    buildEntriesByIdentity,
     buildResolvedWordFields,
     resolveWordGoldExpectation,
 } = require("./reviewLaneContextService");
@@ -334,8 +335,23 @@ function wordRowMatchesEntry(row = {}, entry = {}) {
     return includesAll(row.reading, expectedReadings);
 }
 
-function findWordRowForEntry(rows = [], entry = {}) {
-    const matches = rows.filter((row) => wordRowMatchesEntry(row, entry));
+function buildWordRowsByWritten(rows = []) {
+    const rowsByWritten = new Map();
+    for (const row of Array.isArray(rows) ? rows : []) {
+        const key = row.word;
+        if (!rowsByWritten.has(key)) {
+            rowsByWritten.set(key, []);
+        }
+        rowsByWritten.get(key).push(row);
+    }
+    return rowsByWritten;
+}
+
+function findWordRowForEntry(rows = [], entry = {}, rowsByWritten = null) {
+    const candidates = rowsByWritten
+        ? rowsByWritten.get(entry.word) || []
+        : rows;
+    const matches = candidates.filter((row) => wordRowMatchesEntry(row, entry));
     if (matches.length === 1) {
         return matches[0];
     }
@@ -504,6 +520,7 @@ function evaluateSapphireWordEntry({
     goldExpectation = null,
     requireCurrentReviewStandard = false,
     rows = [],
+    rowsByWritten = null,
     entry = {},
 } = {}) {
     const status = normalizeText(entry.status);
@@ -515,7 +532,7 @@ function evaluateSapphireWordEntry({
     }
 
     if (ACTIVE_WORD_SAPPHIRE_STATUSES.includes(status)) {
-        const row = findWordRowForEntry(rows, entry);
+        const row = findWordRowForEntry(rows, entry, rowsByWritten);
         if (row?.error) {
             failures.push(row.error);
         } else if (!row) {
@@ -529,7 +546,7 @@ function evaluateSapphireWordEntry({
         }
     } else if (NON_SHIPPING_STATUSES.includes(status)) {
         failures.push(...validateNonShippingEntry(entry));
-        const row = findWordRowForEntry(rows, entry);
+        const row = findWordRowForEntry(rows, entry, rowsByWritten);
         if (row?.error) {
             failures.push(row.error);
         } else if (row) {
@@ -553,8 +570,17 @@ function evaluateSapphireWordEntry({
 }
 
 function buildMissingSapphireRows({ rows = [], activeEntries = [] } = {}) {
+    const activeEntriesByWord = new Map();
+    for (const entry of activeEntries) {
+        if (!activeEntriesByWord.has(entry.word)) {
+            activeEntriesByWord.set(entry.word, []);
+        }
+        activeEntriesByWord.get(entry.word).push(entry);
+    }
+
     return rows
-        .filter((row) => !activeEntries.some((entry) => wordRowMatchesEntry(row, entry)))
+        .filter((row) => !(activeEntriesByWord.get(row.word) || [])
+            .some((entry) => wordRowMatchesEntry(row, entry)))
         .map((row) => formatWordReviewLabel(row.word, row.reading))
         .sort();
 }
@@ -583,6 +609,7 @@ function evaluateSapphireWordReviewSet({
     allowEmpty = false,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
+    const generatedRowsByWritten = buildWordRowsByWritten(generatedRows);
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const activeStatusEntries = reviewEntries.filter(hasActiveWordSapphireStatus);
     const activeEntries = reviewEntries.filter(isCurrentStandardWordSapphireEntry);
@@ -598,13 +625,20 @@ function evaluateSapphireWordReviewSet({
             laneName: "Sapphire",
         })
         : new Map();
+    const goldenExpectationsByIdentity = Array.isArray(goldenExpectations)
+        ? buildEntriesByIdentity(goldenExpectations, {
+            getIdentity: buildWordEntryIdentity,
+        })
+        : null;
     const results = reviewEntries.map((entry) => mergeFailuresIntoResult(
         evaluateSapphireWordEntry({
             rows: generatedRows,
+            rowsByWritten: generatedRowsByWritten,
             entry,
             goldExpectation: resolveWordGoldExpectation({
                 entry,
                 goldenExpectations,
+                goldenExpectationsByIdentity,
             }).entry,
             requireCurrentReviewStandard,
         }),

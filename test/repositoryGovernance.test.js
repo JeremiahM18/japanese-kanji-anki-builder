@@ -176,12 +176,6 @@ const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([
     "scripts/reportJlptKanjiSourceReviewPacket.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
     "scripts/reportKanjiDeckPartitionPlan.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
     "scripts/reportKanjiDeckReviewStatus.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
-    "scripts/reportObsidianKanjiCertificationStatus.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
-    "scripts/reportObsidianKanjiRereviewStatus.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
-    "scripts/reportObsidianWordCertificationStatus.js -> scripts/reportPlatinumWordRereviewStatus.js",
-    "scripts/reportObsidianWordRereviewStatus.js -> scripts/reportPlatinumWordRereviewStatus.js",
-    "scripts/reportPlatinumKanjiCertificationStatus.js -> scripts/reportObsidianKanjiCertificationStatus.js",
-    "scripts/reportPlatinumWordCertificationStatus.js -> scripts/reportObsidianWordCertificationStatus.js",
     "scripts/reportWordReadingGapPlan.js -> scripts/reportWordReadingGapTriage.js",
 ]);
 

@@ -5,7 +5,7 @@ const {
     buildWrittenVariants,
     formatPitchAccentPattern,
     importKanjiumPitchAccents,
-} = require("../scripts/importKanjiumPitchAccents");
+} = require("../src/services/kanjiumPitchAccentImportService");
 
 test("buildWrittenVariants includes conservative full-width numeric variants", () => {
     assert.deepEqual(buildWrittenVariants("一時"), ["一時", "１時"]);

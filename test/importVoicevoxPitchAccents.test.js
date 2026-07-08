@@ -5,7 +5,7 @@ const {
     buildVoicevoxPitchAccentEntry,
     flattenAudioQueryReading,
     formatVoicevoxPitchPattern,
-} = require("../scripts/importVoicevoxPitchAccents");
+} = require("../src/services/voicevoxPitchAccentImportService");
 
 function audioQuery({ accent = 1, moraTexts = [] } = {}) {
     return {

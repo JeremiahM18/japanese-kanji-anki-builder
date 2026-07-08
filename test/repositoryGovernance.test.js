@@ -164,11 +164,8 @@ const TRACKED_TEST_IGNORED_DATA_READ_PATTERNS = Object.freeze([
 const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([
     "scripts/auditGithubRepositorySettingsWithGhAuth.js -> scripts/auditGithubRepositorySettings.js",
     "scripts/createJlptTextbookConsensusTemplate.js -> scripts/createJlptKanjiSourceInputTemplate.js",
-    "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapPlan.js",
-    "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapTriage.js",
     "scripts/importJlptWordSourceInput.js -> scripts/reportJlptWordSourceInputs.js",
     "scripts/importVoicevoxPitchAccents.js -> scripts/importKanjiumPitchAccents.js",
-    "scripts/reportWordReadingGapPlan.js -> scripts/reportWordReadingGapTriage.js",
 ]);
 
 function normalizeWhitespace(value) {

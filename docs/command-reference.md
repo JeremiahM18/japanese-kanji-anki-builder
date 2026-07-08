@@ -32,8 +32,8 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run bench:build` | Measure local deck build/package performance for selected levels without applying a timing budget; use the gate variants for budget enforcement; add `-- --summary` for compact JSON run/package timing accounting or `-- --keys-only` for report-shape discovery without printing full run payloads |
 | `npm run bench:build:gate` | Manual local-data build performance guardrail; requires a ready workspace and writes benchmark output; append `-- --repeat=3` before budget changes or stability claims |
 | `npm run bench:build:cold-apkg:gate` | Manual local-data cold native APKG package-performance guardrail; clears the generated APKG cache and gates the package phase; append `-- --repeat=3` before budget changes or stability claims |
-| `npm run data:benchmark:jlpt:sources` | Measure the JLPT kanji source-evidence workflow cost without applying the budget gate; add `-- --summary` for compact JSON source/timing/accounting output or `-- --keys-only` for report-shape discovery without printing source assignment maps |
-| `npm run data:benchmark:jlpt:sources:gate` | Manual source-evidence workflow performance guardrail with the tracked default budget |
+| `npm run data:benchmark:jlpt:sources -- --source=<source-id>` | Measure the JLPT kanji source-evidence workflow cost without applying the budget gate; add `--summary` for compact JSON source/timing/accounting output or `--keys-only` for report-shape discovery without printing source assignment maps |
+| `npm run data:benchmark:jlpt:sources:gate -- --source=<source-id>` | Manual source-evidence workflow performance guardrail with the tracked default budget; the performance matrix uses `--source=shin_kanzen_master_kanji` as its runnable governed sample |
 | `npm run perf:memory:matrix` | Validate the tracked performance and memory audit matrix without running timing budgets |
 | `npm run ci:smoke` | Build deterministic smoke artifacts |
 | `npm run release:gate` | Validate smoke-fixture release artifact contracts |

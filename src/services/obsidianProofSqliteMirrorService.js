@@ -383,6 +383,7 @@ function formatObsidianProofSqliteQueryReport(report = {}) {
                 `- ${row.proofId}`,
                 `${row.deckKind}:N${row.level}`,
                 row.cardReviewed,
+                `obsidian=${row.obsidianStandardVersion || "unknown"}`,
                 `batch=${row.batchId}`,
                 `reviewedAt=${row.reviewedAt}`,
                 `reviewer=${row.reviewer}`,

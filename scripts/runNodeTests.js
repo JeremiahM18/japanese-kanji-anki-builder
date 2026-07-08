@@ -151,6 +151,7 @@ const TEST_SCOPES = Object.freeze({
         "jlptKanjiSourceReviewPacket.test.js",
         "jlptOfficialOccurrenceService.test.js",
         "jlptTaxonomyGovernance.test.js",
+        "jlptWordSourceInputCommandServices.test.js",
         "jlptWordSourceGovernance.test.js",
         "kanjidic2JlptSourceService.test.js",
         "kanjidic2ReadingReferenceService.test.js",

@@ -80,7 +80,7 @@ const {
 } = require("../src/services/wordGeneratedRowsService");
 const {
     parseWordIdentities,
-} = require("./platinumWordBatchReport");
+} = require("../src/services/wordIdentityService");
 const {
     buildPlatinumWordRereviewStatusReport,
 } = require("../src/services/platinumWordRereviewStatusService");

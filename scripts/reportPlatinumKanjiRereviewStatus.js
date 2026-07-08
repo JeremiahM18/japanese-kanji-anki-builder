@@ -1,9 +1,10 @@
 const { loadConfig } = require("../src/config");
-const fs = require("node:fs");
-const path = require("node:path");
 const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
 const { buildKanjiRowsForLevel } = require("../src/services/kanjiGeneratedRowsService");
+const {
+    readKanjiPriorLaneInputs,
+} = require("../src/services/platinumPriorLaneInputService");
 const {
     buildPlatinumKanjiRereviewStatusReport,
     buildPlatinumKanjiRereviewStatusSummary,
@@ -14,9 +15,6 @@ const {
     loadReviewSetWithObsidianProof,
     normalizeObsidianProofProviderMode,
 } = require("../src/services/obsidianProofProviderService");
-const {
-    evaluateSapphireKanjiReviewSet,
-} = require("../src/services/sapphireKanjiReviewService");
 
 function parseArgs(argv, { defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE } = {}) {
     const options = {
@@ -55,35 +53,6 @@ function readReviewSet(level, {
     }).entries;
 }
 
-function readJson(filePath) {
-    return JSON.parse(fs.readFileSync(filePath, "utf8"));
-}
-
-function readPriorLaneInputs(level, { rows } = {}) {
-    const goldenPath = path.join(process.cwd(), "templates", `golden_n${level}_review_set.json`);
-    const sapphirePath = path.join(process.cwd(), "templates", `sapphire_n${level}_review_set.json`);
-    if (!fs.existsSync(goldenPath)) {
-        throw new Error(`Missing prior Gold kanji review set at ${goldenPath}`);
-    }
-    if (!fs.existsSync(sapphirePath)) {
-        throw new Error(`Missing prior Sapphire kanji review set at ${sapphirePath}`);
-    }
-    const goldenExpectations = readJson(goldenPath);
-    const sapphireEntries = readJson(sapphirePath);
-    const sapphireReport = evaluateSapphireKanjiReviewSet({
-        rows,
-        entries: sapphireEntries,
-        goldenExpectations,
-        requireGoldPrecondition: true,
-        requireCurrentReviewStandard: true,
-    });
-    return {
-        goldenExpectations,
-        sapphireEntries,
-        sapphireResults: sapphireReport.results,
-    };
-}
-
 async function main({
     commandName = "deck:platinum:rereview-status",
     defaultProofProvider = OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
@@ -96,7 +65,7 @@ async function main({
     for (const level of options.levels) {
         const entries = readReviewSet(level, { proofProvider: options.proofProvider });
         const rows = await buildKanjiRowsForLevel({ level, config });
-        const priorLaneInputs = readPriorLaneInputs(level, { rows });
+        const priorLaneInputs = readKanjiPriorLaneInputs(level, { rows });
         levelReports.push(buildPlatinumKanjiRereviewStatusReport({
             rows,
             entries,
@@ -128,6 +97,6 @@ if (require.main === module) {
 module.exports = {
     main,
     parseArgs,
-    readPriorLaneInputs,
+    readPriorLaneInputs: readKanjiPriorLaneInputs,
     readReviewSet,
 };

@@ -178,14 +178,11 @@ const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([
     "scripts/reportKanjiDeckReviewStatus.js -> scripts/auditJlptKanjiSourceLevelDeltas.js",
     "scripts/reportObsidianKanjiCertificationStatus.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
     "scripts/reportObsidianKanjiRereviewStatus.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
-    "scripts/reportObsidianProofProviderParity.js -> scripts/platinumWordBatchReport.js",
     "scripts/reportObsidianWordCertificationStatus.js -> scripts/reportPlatinumWordRereviewStatus.js",
     "scripts/reportObsidianWordRereviewStatus.js -> scripts/reportPlatinumWordRereviewStatus.js",
     "scripts/reportPlatinumKanjiCertificationStatus.js -> scripts/reportObsidianKanjiCertificationStatus.js",
     "scripts/reportPlatinumWordCertificationStatus.js -> scripts/reportObsidianWordCertificationStatus.js",
     "scripts/reportWordReadingGapPlan.js -> scripts/reportWordReadingGapTriage.js",
-    "scripts/runPlatinumGovernanceGate.js -> scripts/reportPlatinumKanjiRereviewStatus.js",
-    "scripts/runPlatinumGovernanceGate.js -> scripts/reportPlatinumWordRereviewStatus.js",
 ]);
 
 function normalizeWhitespace(value) {

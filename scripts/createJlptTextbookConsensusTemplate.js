@@ -1,7 +1,7 @@
-const script = require("./createJlptKanjiSourceInputTemplate");
+const service = require("../src/services/jlptKanjiSourceInputTemplateCommandService");
 
 if (require.main === module) {
-    script.main();
+    service.main();
 }
 
-module.exports = script;
+module.exports = service;

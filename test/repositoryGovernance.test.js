@@ -166,11 +166,8 @@ const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([
     "scripts/createJlptTextbookConsensusTemplate.js -> scripts/createJlptKanjiSourceInputTemplate.js",
     "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapPlan.js",
     "scripts/discoverNlpReadingGapCandidates.js -> scripts/reportWordReadingGapTriage.js",
-    "scripts/importJlptKanjiSourceInput.js -> scripts/reportJlptKanjiSourceInputs.js",
     "scripts/importJlptWordSourceInput.js -> scripts/reportJlptWordSourceInputs.js",
     "scripts/importVoicevoxPitchAccents.js -> scripts/importKanjiumPitchAccents.js",
-    "scripts/reportJlptKanjiSourceEvidenceCost.js -> scripts/importJlptKanjiSourceInput.js",
-    "scripts/reportJlptKanjiSourceEvidenceCost.js -> scripts/reportJlptKanjiSourceInputs.js",
     "scripts/reportWordReadingGapPlan.js -> scripts/reportWordReadingGapTriage.js",
 ]);
 
@@ -754,9 +751,9 @@ test("JLPT kanji source-evidence loaders stay in governed source and platinum-or
             "scripts/auditJlptKanjiSourceEvidence.js",
             "scripts/createJlptKanjiSourceInputTemplate.js",
             "scripts/reportJlptKanjiSourceEvidenceCost.js",
-            "scripts/reportJlptKanjiSourceInputs.js",
             "src/datasets/jlptKanjiSourceEvidence.js",
             "src/services/databricksSnapshotExportService.js",
+            "src/services/jlptKanjiSourceInputReportService.js",
             "src/services/jlptKanjiSourceLevelDeltaCommandService.js",
             "src/services/platinumKanjiSourceOriginService.js",
         ],
@@ -766,9 +763,9 @@ test("JLPT kanji source-evidence loaders stay in governed source and platinum-or
             "scripts/mergeJlptKanjiSourceBatch.js",
             "scripts/pinJlptKanjiSourceInput.js",
             "scripts/reportJlptKanjiSourceEvidenceCost.js",
-            "scripts/reportJlptKanjiSourceInputs.js",
             "scripts/reportJlptKanjiSourceReviewPacket.js",
             "src/datasets/jlptKanjiSourceInputs.js",
+            "src/services/jlptKanjiSourceInputReportService.js",
             "src/services/jlptKanjiSourceLevelDeltaCommandService.js",
         ],
         loadJlptOfficialOccurrenceEvidence: [

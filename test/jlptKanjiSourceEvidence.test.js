@@ -1639,6 +1639,8 @@ test("source evidence stays out of deck word and readiness pipelines except plat
     const allowedGovernanceModules = new Set([
         "jlptKanjiSourceEvidenceService.js",
         "jlptKanjiSourceImportService.js",
+        "jlptKanjiSourceInputImportCommandService.js",
+        "jlptKanjiSourceInputReportService.js",
         "jlptKanjiSourceInputService.js",
         "jlptKanjiSourceInputTemplateService.js",
         "jlptKanjiSourceLevelDeltaCommandService.js",

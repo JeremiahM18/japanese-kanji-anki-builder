@@ -1,4 +1,5 @@
-const obsidianWordCertificationStatus = require("./reportObsidianWordCertificationStatus");
+const { invokeCliMain } = require("../src/utils/cliArgs");
+const obsidianWordCertificationStatus = require("../src/services/obsidianWordCertificationStatusCommandService");
 const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
 } = require("../src/services/obsidianProofProviderService");
@@ -6,10 +7,10 @@ const {
 module.exports = obsidianWordCertificationStatus;
 
 if (require.main === module) {
-    obsidianWordCertificationStatus.main({
+    invokeCliMain(() => obsidianWordCertificationStatus.main({
         commandName: "deck:words:platinum:certify-status",
         defaultProofProvider: OBSIDIAN_PROOF_PROVIDER_MODES.LEDGER_IF_AVAILABLE,
-    }).catch((error) => {
+    })).catch((error) => {
         console.error(error.stack || error);
         process.exit(1);
     });

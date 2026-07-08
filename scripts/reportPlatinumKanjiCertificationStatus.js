@@ -1,9 +1,10 @@
-const obsidianKanjiCertificationStatus = require("./reportObsidianKanjiCertificationStatus");
+const { invokeCliMain } = require("../src/utils/cliArgs");
+const obsidianKanjiCertificationStatus = require("../src/services/obsidianKanjiCertificationStatusCommandService");
 
 module.exports = obsidianKanjiCertificationStatus;
 
 if (require.main === module) {
-    obsidianKanjiCertificationStatus.main().catch((error) => {
+    invokeCliMain(obsidianKanjiCertificationStatus.main).catch((error) => {
         console.error(error.stack || error);
         process.exit(1);
     });

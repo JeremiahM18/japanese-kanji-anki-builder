@@ -1,4 +1,5 @@
-const platinumKanjiRereviewStatus = require("./reportPlatinumKanjiRereviewStatus");
+const { invokeCliMain } = require("../src/utils/cliArgs");
+const platinumKanjiRereviewStatus = require("../src/services/platinumKanjiRereviewStatusCommandService");
 const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
 } = require("../src/services/obsidianProofProviderService");
@@ -17,7 +18,7 @@ module.exports = {
 };
 
 if (require.main === module) {
-    main().catch((error) => {
+    invokeCliMain(main).catch((error) => {
         console.error(error.stack || error);
         process.exit(1);
     });

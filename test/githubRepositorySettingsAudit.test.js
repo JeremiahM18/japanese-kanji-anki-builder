@@ -13,12 +13,12 @@ const {
     getLatestWorkflowRun,
     listBranchProtectionPolicyGaps,
     parseArgs,
-} = require("../scripts/auditGithubRepositorySettings");
+} = require("../src/services/githubRepositorySettingsAuditService");
 const {
     buildAuthenticatedAuditEnv,
     formatAuthenticatedGithubSettingsAudit,
     resolveGithubAuditToken,
-} = require("../scripts/auditGithubRepositorySettingsWithGhAuth");
+} = require("../src/services/githubRepositorySettingsAuthenticatedAuditCommandService");
 
 function endpoint({ ok = true, statusCode = 200, body = {} } = {}) {
     return { ok, statusCode, body };

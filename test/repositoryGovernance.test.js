@@ -161,9 +161,7 @@ const TRACKED_TEST_IGNORED_DATA_READ_PATTERNS = Object.freeze([
     { label: "readRepoFile data path", pattern: /readRepoFile\(\s*["']data[\\/]/u },
 ]);
 
-const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([
-    "scripts/auditGithubRepositorySettingsWithGhAuth.js -> scripts/auditGithubRepositorySettings.js",
-]);
+const SCRIPT_TO_SCRIPT_IMPORT_ALLOWLIST = Object.freeze([]);
 
 function normalizeWhitespace(value) {
     return String(value).replace(/\s+/gu, " ");
@@ -805,7 +803,6 @@ test("JLPT runtime dataset readers use the governed JLPT JSON loader", () => {
 
 test("child process execution stays explicit and allowlisted", () => {
     const expectedFiles = [
-        "scripts/auditGithubRepositorySettingsWithGhAuth.js",
         "scripts/auditSecrets.js",
         "scripts/manageVoicevoxContainer.js",
         "scripts/reportJlptKanjiSourceOcrIntake.js",
@@ -817,6 +814,7 @@ test("child process execution stays explicit and allowlisted", () => {
         "src/services/databricksSnapshotExportService.js",
         "src/services/deckCloseoutStatusService.js",
         "src/services/focusedVerificationPlanService.js",
+        "src/services/githubRepositorySettingsAuthenticatedAuditCommandService.js",
         "src/services/laneOpsStatusService.js",
         "src/services/obsidianProofSqliteMirrorService.js",
         "src/services/productReadinessService.js",

@@ -15,7 +15,7 @@ const {
     formatPrioritySummary,
     parseArgs,
     run,
-} = require("../scripts/createJlptKanjiSourceInputTemplate");
+} = require("../src/services/jlptKanjiSourceInputTemplateCommandService");
 
 function buildGovernedSource(overrides = {}) {
     return {

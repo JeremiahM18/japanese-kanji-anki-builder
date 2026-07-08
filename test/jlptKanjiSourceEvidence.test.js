@@ -1642,6 +1642,7 @@ test("source evidence stays out of deck word and readiness pipelines except plat
         "jlptKanjiSourceInputImportCommandService.js",
         "jlptKanjiSourceInputReportService.js",
         "jlptKanjiSourceInputService.js",
+        "jlptKanjiSourceInputTemplateCommandService.js",
         "jlptKanjiSourceInputTemplateService.js",
         "jlptKanjiSourceLevelDeltaCommandService.js",
         "jlptKanjiSourceLevelDeltaService.js",

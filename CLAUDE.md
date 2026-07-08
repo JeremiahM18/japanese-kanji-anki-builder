@@ -101,7 +101,7 @@ Do not widen scope just because higher levels exist.
 Current posture:
 
 - N5 word work has strict current word Obsidian v2.5 certification for `588/588` current generated rows. Gold, Sapphire, and current-standard Platinum are complete at `588/588`; no N5 rows remain in the current v2.5 Obsidian backlog. Legacy N5 Obsidian history remains audit-visible, but it is not current v2.5 certification.
-- N4 word work has `0/764` current word Obsidian v2.5 certification. The `700` older N4 Obsidian proof targets are legacy history, not current v2.5 certification; the 64 current word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian.
+- N4 word work has `0/889` current word Obsidian v2.5 certification. The `700` older N4 Obsidian proof targets are legacy history, not current v2.5 certification; the 189 current word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian.
 - N3 word work has a complete Silver generated surface plus partial Gold (`1081/1099`), current-standard Sapphire structural review in progress (`1038/1099`), and Platinum (`8/1099`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
@@ -131,7 +131,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-Current word Obsidian v2.5 certification covers `588/1352` across current N5/N4 generated rows, with N5 at `588/588` and N4 at `0/764`; older word Obsidian proof is legacy history, not current v2.5 certification. Lower-lane prerequisites are complete for the `588` certified N5 rows; the `700` older N4 proof targets need Obsidian v2.5, and the 64 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
+Current word Obsidian v2.5 certification covers `588/1477` across current N5/N4 generated rows, with N5 at `588/588` and N4 at `0/889`; older word Obsidian proof is legacy history, not current v2.5 certification. Lower-lane prerequisites are complete for the `588` certified N5 rows; the `700` older N4 proof targets need Obsidian v2.5, and the 189 current N4 word v2 Silver additions still need Gold, Sapphire, Platinum, and Obsidian before any downstream certification claim.
 
 That means:
 

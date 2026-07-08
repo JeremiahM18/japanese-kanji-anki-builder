@@ -354,12 +354,12 @@ test("tracked starter word data resolves per-level split files deterministically
             "starter_word_study_data_n5.json",
         ]
     );
-    assert.equal(Object.keys(starterEntries).length, 2550);
+    assert.equal(Object.keys(starterEntries).length, 2675);
     assert.deepEqual(countsByLevel, {
         1: 38,
         2: 61,
         3: 1099,
-        4: 764,
+        4: 889,
         5: 588,
     });
 });
@@ -8091,6 +8091,184 @@ test("tracked starter word data includes the second N4 common-pool Silver batch"
         ["昼夜|ちゅうや", "<ruby>昼<rt>ちゅう</rt></ruby><ruby>夜<rt>や</rt></ruby>"],
         ["朝方|あさがた", "<ruby>朝<rt>あさ</rt></ruby><ruby>方<rt>がた</rt></ruby>"],
     ]);
+});
+
+test("tracked starter word data includes the third through seventh N4 common-pool Silver batches", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+    const batchKeys = [
+        "通院|つういん",
+        "同室|どうしつ",
+        "別室|べっしつ",
+        "空き家|あきや",
+        "一室|いっしつ",
+        "屋台|やたい",
+        "科目|かもく",
+        "開通|かいつう",
+        "教諭|きょうゆ",
+        "口座|こうざ",
+        "国道|こくどう",
+        "作者|さくしゃ",
+        "市内|しない",
+        "自宅|じたく",
+        "室内|しつない",
+        "主食|しゅしょく",
+        "手元|てもと",
+        "週間|しゅうかん",
+        "書物|しょもつ",
+        "商店|しょうてん",
+        "食用|しょくよう",
+        "新幹線|しんかんせん",
+        "新車|しんしゃ",
+        "深夜|しんや",
+        "進学|しんがく",
+        "世界的|せかいてき",
+        "前夜|ぜんや",
+        "走行|そうこう",
+        "送金|そうきん",
+        "担当者|たんとうしゃ",
+        "短時間|たんじかん",
+        "中古車|ちゅうこしゃ",
+        "著者|ちょしゃ",
+        "店舗|てんぽ",
+        "動作|どうさ",
+        "百貨店|ひゃっかてん",
+        "文庫|ぶんこ",
+        "味方|みかた",
+        "夜間|やかん",
+        "用品|ようひん",
+        "飲料水|いんりょうすい",
+        "自習|じしゅう",
+        "小文字|こもじ",
+        "待合室|まちあいしつ",
+        "番地|ばんち",
+        "洋室|ようしつ",
+        "一安心|ひとあんしん",
+        "英会話|えいかいわ",
+        "回目|かいめ",
+        "古本屋|ふるほんや",
+        "試着|しちゃく",
+        "中心部|ちゅうしんぶ",
+        "朝一番|あさいちばん",
+        "学用品|がくようひん",
+        "空室|くうしつ",
+        "産院|さんいん",
+        "試飲|しいん",
+        "次週|じしゅう",
+        "手料理|てりょうり",
+        "終業|しゅうぎょう",
+        "真夏日|まなつび",
+        "親元|おやもと",
+        "図工|ずこう",
+        "朝市|あさいち",
+        "二次会|にじかい",
+        "肉屋|にくや",
+        "夜店|よみせ",
+        "夜道|よみち",
+        "力仕事|ちからしごと",
+        "終着|しゅうちゃく",
+        "夜市|よいち",
+        "教え子|おしえご",
+        "言い方|いいかた",
+        "持ち帰る|もちかえる",
+        "手持ち|てもち",
+        "夜ご飯|よるごはん",
+        "働き口|はたらきぐち",
+        "かけ声|かけごえ",
+        "意思|いし",
+        "意図|いと",
+        "一体|いったい",
+        "一部|いちぶ",
+        "家計簿|かけいぼ",
+        "居心地|いごこち",
+        "業界|ぎょうかい",
+        "研究者|けんきゅうしゃ",
+        "県立|けんりつ",
+        "工業|こうぎょう",
+        "合計|ごうけい",
+        "作家|さっか",
+        "産業|さんぎょう",
+        "事務員|じむいん",
+        "事務室|じむしつ",
+        "自動|じどう",
+        "社会人|しゃかいじん",
+        "借金|しゃっきん",
+        "主力|しゅりょく",
+        "所有|しょゆう",
+        "心理|しんり",
+        "人工|じんこう",
+        "世代|せだい",
+        "全力|ぜんりょく",
+        "体験|たいけん",
+        "注目|ちゅうもく",
+        "町役場|まちやくば",
+        "発行|はっこう",
+        "不動産|ふどうさん",
+        "部品|ぶひん",
+        "文明|ぶんめい",
+        "本体|ほんたい",
+        "海外旅行|かいがいりょこう",
+        "自家用車|じかようしゃ",
+        "食料品店|しょくりょうひんてん",
+        "直近|ちょっきん",
+        "問合せ|といあわせ",
+        "都市ガス|としガス",
+        "間仕切り|まじきり",
+        "衣服|いふく",
+        "一字|いちじ",
+        "家庭教師|かていきょうし",
+        "会食|かいしょく",
+        "街頭|がいとう",
+        "客室|きゃくしつ",
+        "教訓|きょうくん",
+        "近郊|きんこう",
+    ];
+
+    assert.equal(batchKeys.length, 125);
+    assertCoverageRoles(starterEntries, batchKeys.map((key) => [key, "support"]));
+
+    for (const key of batchKeys) {
+        const entry = starterEntries[key];
+        assert.equal(entry?.jlpt, 4, key);
+        assert.equal(entry?.source, "dictionary-common-pool", key);
+        assert.equal(entry?.tags?.includes("n4"), true, key);
+        assert.equal(entry?.tags?.includes("common"), true, key);
+        assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
+        assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        assertCommonPoolPendingReviewNote(entry, key);
+        assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support|dictionary\/commonness\/frequency verification|JMdict\/commonness verification/, key);
+        assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
+        assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
+        assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
+        assert.ok(entry?.exampleSentence?.japanese, key);
+        assert.ok(entry?.exampleSentence?.reading, key);
+        assert.ok(entry?.exampleSentence?.english, key);
+    }
+
+    const supportLabelKeys = [
+        "世界的|せかいてき",
+        "担当者|たんとうしゃ",
+        "著者|ちょしゃ",
+        "店舗|てんぽ",
+        "百貨店|ひゃっかてん",
+        "文庫|ぶんこ",
+        "家計簿|かけいぼ",
+        "居心地|いごこち",
+        "事務員|じむいん",
+        "事務室|じむしつ",
+        "町役場|まちやくば",
+        "直近|ちょっきん",
+        "衣服|いふく",
+        "家庭教師|かていきょうし",
+        "街頭|がいとう",
+        "客室|きゃくしつ",
+        "教訓|きょうくん",
+        "近郊|きんこう",
+    ];
+
+    for (const key of supportLabelKeys) {
+        assert.match(starterEntries[key]?.notes || "", /Support label:/, key);
+    }
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

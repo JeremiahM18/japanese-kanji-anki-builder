@@ -1,6 +1,6 @@
 const path = require("node:path");
 const fs = require("node:fs");
-const { invokeCliMain, parseCsvOption, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
+const { invokeCliMain, parseNumericOption, parseStringOption, collectUnknownArg, assertNoUnknownArgs } = require("../src/utils/cliArgs");
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
 const { loadWordPitchAccentData } = require("../src/datasets/wordPitchAccentData");
@@ -18,27 +18,15 @@ const {
     loadReviewSetWithObsidianProof,
     normalizeObsidianProofProviderMode,
 } = require("../src/services/obsidianProofProviderService");
+const {
+    parseWordIdentities,
+    parseWordIdentity,
+} = require("../src/services/wordIdentityService");
 
 function parseLevel(value) {
     const normalized = String(value ?? "").trim().toUpperCase().replace(/^N/, "");
     const parsed = Number(normalized);
     return [1, 2, 3, 4, 5].includes(parsed) ? parsed : null;
-}
-
-function parseWordIdentity(value) {
-    const text = String(value ?? "").trim();
-    const separator = text.includes("|") ? "|" : ":";
-    const [word = "", reading = ""] = text.split(separator);
-    return {
-        word: word.trim(),
-        reading: reading.trim(),
-    };
-}
-
-function parseWordIdentities(arg, name) {
-    return parseCsvOption(arg, name)
-        .map(parseWordIdentity)
-        .filter((entry) => entry.word);
 }
 
 function parseArgs(argv) {

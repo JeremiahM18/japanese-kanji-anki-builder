@@ -13,8 +13,10 @@ const {
 } = require("../src/services/obsidianProofProviderService");
 const { buildKanjiRowsForLevel } = require("../src/services/kanjiGeneratedRowsService");
 const { buildWordRowsForLevel } = require("../src/services/wordGeneratedRowsService");
-const { readPriorLaneInputs: readKanjiPriorLaneInputs } = require("./reportPlatinumKanjiRereviewStatus");
-const { readPriorLaneInputs: readWordPriorLaneInputs } = require("./reportPlatinumWordRereviewStatus");
+const {
+    readKanjiPriorLaneInputs,
+    readWordPriorLaneInputs,
+} = require("../src/services/platinumPriorLaneInputService");
 const {
     buildPlatinumKanjiRereviewStatusReport,
 } = require("../src/services/platinumKanjiRereviewStatusService");

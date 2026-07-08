@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- Advanced the N4 word Silver generated surface through governed common-pool review from `739` to `764` rows, raising the all-level word denominator from `2525` to `2550` and the current N5/N4 word Obsidian v2.5 denominator from `1327` to `1352`; the new N4 rows remain lower-lane backlog until Gold, Sapphire, Platinum, and Obsidian catch up.
+- Advanced the N4 word Silver generated surface through governed common-pool review from `739` to `889` rows, raising the all-level word denominator from `2525` to `2675` and the current N5/N4 word Obsidian v2.5 denominator from `1327` to `1477`; the new N4 rows remain lower-lane backlog until Gold, Sapphire, Platinum, and Obsidian catch up.
 - Updated word lane status after the full N5 routed move-candidate target-level sweep: active N3 Silver is now `1099/1099` canonical rows, N3 word Gold review from `8/1099` to `1081/1099` is partial, Gold now has `18` generated rows still missing Gold, and current-standard Sapphire remains `1038/1099` with `61` generated rows still missing Sapphire. Platinum remains `8/1099` current-standard with `1091` generated rows still missing Platinum; N2 and N1 Silver card fields are complete at `61/61` and `38/38`; reading readiness remains incomplete for N3/N2/N1; N3 word is not locked/released; and no N3 word Obsidian proof is recorded.
 
 Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active work until separately locked.

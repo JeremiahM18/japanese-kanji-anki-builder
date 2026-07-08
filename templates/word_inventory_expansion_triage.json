@@ -22112,10 +22112,11 @@
         "nextStep": "Route only through N2 word review if a business/news lane wants it."
       },
       "産物|さんぶつ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: product/produce/result is useful nature, business, and school vocabulary with clean 産 and 物 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a concrete produce/product example and normal verification gates."
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-010 review: tracked source evidence records 産物|さんぶつ as a Tanos N1 single-source-family row, and the standalone product/produce/result surface is too formal/abstract for the N4 common-pool learner deck.",
+        "nextStep": "Route only through N1 word review if a later harder-level vocabulary lane wants this exact identity."
       },
       "思考|しこう": {
         "decision": "move_candidate",
@@ -22182,10 +22183,10 @@
         "nextStep": "Reconsider only in a housing/legal vocabulary batch."
       },
       "弱者|じゃくしゃ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: vulnerable/weak person is useful social vocabulary, but examples must stay neutral and respectful.",
-        "nextStep": "Queue only for later N4 Silver with a careful neutral example and normal verification gates."
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from N4 Silver after batch-010 review: vulnerable/weak-person wording is a real social/news word, but it is abstract and sensitive enough that it should not become an N4 learner card without stronger later-level framing.",
+        "nextStep": "Reconsider only in a later social/news vocabulary pass with careful non-stigmatizing examples and stronger fit evidence."
       },
       "主題|しゅだい": {
         "decision": "keep_candidate",
@@ -22329,10 +22330,11 @@
         "nextStep": "Queue only for later N4 Silver with a film/video/work production example, explicit 制=N3 support labeling, and normal downstream gates."
       },
       "青少年|せいしょうねん": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: youth/young people is useful social and school vocabulary with clean 青 and 少年 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a youth/young-people example and normal verification gates."
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-011 review: tracked source evidence records 青少年|せいしょうねん as a Tanos N2 single-source-family row, and the youth/young-people social-register noun is more formal than the N4 common-pool learner deck needs.",
+        "nextStep": "Route only through N2 word review if a later social/school vocabulary lane wants this exact identity."
       },
       "全会|ぜんかい": {
         "decision": "reject_candidate",
@@ -22623,10 +22625,10 @@
         "nextStep": "Route only through N2 word review if a legal vocabulary lane accepts it."
       },
       "明暗|めいあん": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: light and dark/contrast is useful descriptive vocabulary with clean 明 and 暗 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a light/dark contrast example and normal verification gates."
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from N4 Silver after batch-012 review: light-and-dark/contrast is valid, but the standalone abstract contrast surface is lower learner value than clearer descriptive words.",
+        "nextStep": "Reconsider only in a later descriptive/contrast vocabulary pass with a concrete learner-facing example."
       },
       "問題点|もんだいてん": {
         "decision": "keep_candidate",
@@ -22654,10 +22656,10 @@
         "nextStep": "Queue only for later N4 Silver with a park/wild-bird example and normal verification gates."
       },
       "薬物|やくぶつ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: drug/medicine is useful health/news vocabulary with clean 薬 and 物 anchors, but examples must avoid glamorizing misuse.",
-        "nextStep": "Queue only for later N4 Silver with a neutral medicine/drug-safety example and normal verification gates."
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from N4 Silver after batch-012 review: drug/chemical/medicine vocabulary is real and common, but standalone 薬物 is sensitive and often illegal-drug/news register rather than a clean N4 learner card.",
+        "nextStep": "Reconsider only in a later safety/news vocabulary pass with controlled examples and stronger fit evidence."
       },
       "有事|ゆうじ": {
         "decision": "move_candidate",
@@ -22712,10 +22714,11 @@
         "nextStep": "Route only through N3 word review if an organization vocabulary batch accepts it."
       },
       "労働者|ろうどうしゃ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: worker/laborer is useful work and social vocabulary; 労=N3 should be visible support labeling.",
-        "nextStep": "Queue only for later N4 Silver with a worker/labor example, explicit 労=N3 support labeling, and normal downstream gates."
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-012 review: worker/laborer is useful, but 労働者 is a formal social/work-register noun and overlaps with the cleaner 従業員 card already accepted for N4.",
+        "nextStep": "Route only through N3 word review if a later work/social vocabulary lane wants this exact identity."
       },
       "労動者|ろうどうしゃ": {
         "decision": "reject_candidate",
@@ -22724,10 +22727,11 @@
         "nextStep": "Do not promote this variant from common-pool discovery."
       },
       "気体|きたい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: gas/gaseous body is useful school/science vocabulary with clean 気 and 体 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a simple science/gas example and normal verification gates."
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-012 review: tracked source evidence records 気体|きたい as a Tanos N2 single-source-family row, and gas/gaseous-body vocabulary is science-domain language rather than N4 everyday vocabulary.",
+        "nextStep": "Route only through N2 word review if a later science vocabulary lane wants this exact identity."
       },
       "急所|きゅうしょ": {
         "decision": "defer_candidate",
@@ -23152,10 +23156,11 @@
         "nextStep": "Queue only for later N4 Silver with a school-trip example, explicit 修=N1 support labeling, and normal downstream gates."
       },
       "重体|じゅうたい": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: serious/critical condition is useful health/news vocabulary, but examples must be careful and neutral.",
-        "nextStep": "Queue only for later N4 Silver with a controlled health/news example and normal verification gates."
+        "decision": "move_candidate",
+        "targetLevel": "N2",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-011 review: tracked source evidence records 重体|じゅうたい as a Tanos N2 single-source-family row, and critical-condition health/news vocabulary is too heavy for the N4 common-pool learner deck.",
+        "nextStep": "Route only through N2 word review if a later health/news vocabulary lane wants this exact identity."
       },
       "少少|しょうしょう": {
         "decision": "reject_candidate",
@@ -23224,10 +23229,11 @@
         "nextStep": "Reconsider only in an organization/event vocabulary pass."
       },
       "発病|はつびょう": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: onset of illness/falling ill is useful health vocabulary with clean 発 and 病 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a neutral illness-onset example and normal verification gates."
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-012 review: tracked source evidence records 発病|はつびょう as a Tanos N1 single-source-family row, and onset-of-illness medical register is too hard for the N4 common-pool learner deck.",
+        "nextStep": "Route only through N1 word review if a later health/news vocabulary lane wants this exact identity."
       },
       "病理|びょうり": {
         "decision": "defer_candidate",
@@ -23236,10 +23242,10 @@
         "nextStep": "Reconsider only in a medical/science vocabulary pass."
       },
       "不作|ふさく": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: poor crop/bad harvest is useful food/agriculture/news vocabulary with clean 不 and 作 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a harvest/crop example and normal verification gates."
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from N4 Silver after batch-012 review: poor-crop/bad-harvest vocabulary is valid, but agriculture/news register is lower learner value than stronger food, weather, farming, and shopping words.",
+        "nextStep": "Reconsider only in a later food/agriculture/news vocabulary pass with stronger fit evidence."
       },
       "不発|ふはつ": {
         "decision": "defer_candidate",
@@ -23284,10 +23290,11 @@
         "nextStep": "Do not promote this spelling from common-pool discovery."
       },
       "口語|こうご": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: spoken language/colloquial speech is useful language-learning vocabulary with clean 口 and 語 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a spoken-language example and normal verification gates."
+        "decision": "move_candidate",
+        "targetLevel": "N3",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-012 review: spoken-language/colloquial-language vocabulary is useful for study, but it is meta-language above the N4 learner deck and prior tracked triage history already routes this exact identity above beginner work.",
+        "nextStep": "Route only through N3 word review if a later language-study vocabulary lane wants this exact identity."
       },
       "手洗|てあらい": {
         "decision": "reject_candidate",
@@ -23308,10 +23315,11 @@
         "nextStep": "Reconsider only in a washing/facility written-form review."
       },
       "文語|ぶんご": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: written/literary language is useful language-study vocabulary with clean 文 and 語 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a written-language contrast example and normal verification gates."
+        "decision": "move_candidate",
+        "targetLevel": "N1",
+        "priority": "low",
+        "reason": "Moved out of N4 Silver after batch-012 review: tracked source evidence records 文語|ぶんご as a Tanos N1 single-source-family row, and written/literary-language vocabulary is advanced language-study register.",
+        "nextStep": "Route only through N1 word review if a later language-study vocabulary lane wants this exact identity."
       },
       "明月|めいげつ": {
         "decision": "defer_candidate",
@@ -23326,10 +23334,10 @@
         "nextStep": "Queue only for later N4 Silver with a bookstore/foreign-book example and normal verification gates."
       },
       "医学部|いがくぶ": {
-        "decision": "keep_candidate",
-        "priority": "medium",
-        "reason": "N4 dictionary-common-pool discovery candidate kept as pre-Silver: medical faculty/school is useful university/field-of-study vocabulary with clean 医学 and 部 anchors.",
-        "nextStep": "Queue only for later N4 Silver with a university/medical-school example and normal verification gates."
+        "decision": "defer_candidate",
+        "priority": "low",
+        "reason": "Deferred from N4 Silver after batch-012 review: medical faculty/school is valid, but it is university/academic-domain vocabulary and too narrow for this N4 common-pool learner batch.",
+        "nextStep": "Reconsider only in a later academic/university vocabulary pass with stronger fit evidence."
       },
       "開始時刻|かいしじこく": {
         "decision": "keep_candidate",

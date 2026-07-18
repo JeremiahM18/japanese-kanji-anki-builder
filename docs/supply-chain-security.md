@@ -73,8 +73,8 @@ Lifecycle scripts are high-signal supply-chain risk. The current reviewed allowl
 | Package | Why allowed |
 | --- | --- |
 | `fsevents@2.3.3` | Optional macOS file-watcher dependency used by dev tooling. |
-| `onnxruntime-node@1.24.3` | Native ONNX runtime used by the assistive Transformers.js embedding lane. |
-| `protobufjs@7.6.4` | Transitive protobuf runtime dependency used by the assistive Transformers.js stack. |
+| `onnxruntime-node@1.21.0` | Native ONNX runtime used by the assistive Transformers.js embedding lane. |
+| `protobufjs@7.6.5` | Transitive protobuf runtime dependency used by the assistive Transformers.js stack. |
 | `sharp@0.34.5` | Native image runtime pulled by the assistive Transformers.js stack. |
 
 Any new or changed lifecycle-script package must be reviewed before the install step is trusted. The audit gate fails until the allowlist is updated with a specific reason.

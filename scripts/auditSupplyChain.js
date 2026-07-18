@@ -38,8 +38,8 @@ const ACTION_ALLOWLIST = Object.freeze({
 
 const LIFECYCLE_SCRIPT_ALLOWLIST = Object.freeze({
     "node_modules/fsevents@2.3.3": "Optional macOS file-watcher dependency used by dev tooling.",
-    "node_modules/onnxruntime-node@1.24.3": "Native ONNX runtime used by the assistive Transformers.js embedding lane.",
-    "node_modules/protobufjs@7.6.4": "Transitive protobuf runtime dependency used by the assistive Transformers.js stack.",
+    "node_modules/onnxruntime-node@1.21.0": "Native ONNX runtime used by the assistive Transformers.js embedding lane.",
+    "node_modules/protobufjs@7.6.5": "Transitive protobuf runtime dependency used by the assistive Transformers.js stack.",
     "node_modules/sharp@0.34.5": "Native image runtime pulled by the assistive Transformers.js stack.",
 });
 

@@ -86202,6 +86202,92 @@
     }
   },
   {
+    "word": "室内",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しつない"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2"
+    ],
+    "selectionRationale": "Manual review found 室内 independently learner-useful for homes, buildings, weather, sports, and indoor instructions. The visible JLPT N2 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 室内|しつない with reading しつない and meanings indoor; inside the room; entrySeq=1320350; jmdictPriority=ichi1,news1,nf05; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 室内|しつない: meaning indoors / inside a room; example 雨の日は室内で運動します。／あめのひはしつないでうんどうします。／On rainy days, I exercise indoors.; breakdown 室 しつ内 ない; exact audio word-reading-室内-しつない; rendered pitch 2."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 室内|しつない in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-室内-しつない passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しつない against exact audio identifier word-reading-室内-しつない."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka], rendered 2 for 室内|しつない."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The shoes sentence is natural and directly demonstrates indoors."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed indoor or inside-the-room value against the exact source row and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
     "word": "支度",
     "status": "sapphire",
     "readingIncludes": [
@@ -86378,6 +86464,92 @@
     }
   },
   {
+    "word": "事務室",
+    "status": "sapphire",
+    "readingIncludes": [
+      "じむしつ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2"
+    ],
+    "selectionRationale": "Manual review found 事務室 independently learner-useful for schools, offices, workplaces, and directions. The visible JLPT N3 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 事務室|じむしつ with reading じむしつ and meanings office (room); entrySeq=1314380; jmdictPriority=ichi1,news1,nf17; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 事務室|じむしつ: meaning office / office room; example 先生は事務室にいます。／せんせいはじむしつにいます。／The teacher is in the office.; breakdown 事 じ務 む室 しつ; exact audio word-reading-事務室-じむしつ; rendered pitch 2."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 事務室|じむしつ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-事務室-じむしつ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading じむしつ against exact audio identifier word-reading-事務室-じむしつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka], rendered 2 for 事務室|じむしつ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The school sentence is natural and clearly demonstrates office room."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed office-room value against the exact source entry and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
     "word": "書店",
     "status": "sapphire",
     "readingIncludes": [
@@ -86465,6 +86637,954 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Representation migration from the former word structural/Platinum card-surface compatibility lane into first-class Sapphire. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "古典",
+    "status": "sapphire",
+    "readingIncludes": [
+      "こてん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 古典 independently learner-useful for books, literature, culture, and school study. The selected sense is classic work or classical literature from the source row; the visible JLPT N1 support label is retained as context, and approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 古典|こてん with reading こてん and meanings classic (work, esp. book); the classics; entrySeq=1265860; jmdictPriority=ichi1,news1,nf07; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 古典|こてん: meaning classic / classical literature; example 学校で古典を勉強しました。／がっこうでこてんをべんきょうしました。／I studied classical literature at school.; breakdown 古 こ典 てん; exact audio word-reading-古典-こてん; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 古典|こてん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-古典-こてん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading こてん against exact audio identifier word-reading-古典-こてん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 古典|こてん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The literature-class sentence is natural and directly demonstrates classical literature."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed the classic-work sense and retained the higher-level support label after reviewing the source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "学用品",
+    "status": "sapphire",
+    "readingIncludes": [
+      "がくようひん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 学用品 independently learner-useful for school, shopping, supplies, and family planning; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 学用品|がくようひん with reading がくようひん and meanings school supplies; entrySeq=1761130; jmdictPriority=news2,nf43; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 学用品|がくようひん: meaning school supplies; example 新しい学用品を買いました。／あたらしいがくようひんをかいました。／I bought new school supplies.; breakdown 学 がく用 よう品 ひん; exact audio word-reading-学用品-がくようひん; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 学用品|がくようひん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-学用品-がくようひん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading がくようひん against exact audio identifier word-reading-学用品-がくようひん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 学用品|がくようひん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The shopping sentence is natural and clearly demonstrates school supplies."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed school-supplies value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "町役場",
+    "status": "sapphire",
+    "readingIncludes": [
+      "まちやくば"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 町役場 independently learner-useful for civic services, local administration, addresses, and town facilities. The visible JLPT N3 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 町役場|まちやくば with reading まちやくば and meanings town hall; entrySeq=1776840; jmdictPriority=news1,nf18; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 町役場|まちやくば: meaning town office / town hall; example 町役場で書類を出しました。／まちやくばでしょるいをだしました。／I submitted documents at the town office.; breakdown 町 まち役 やく場 ば; exact audio word-reading-町役場-まちやくば; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 町役場|まちやくば in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-町役場-まちやくば passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading まちやくば against exact audio identifier word-reading-町役場-まちやくば."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 町役場|まちやくば."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The address-change sentence is natural and directly demonstrates town hall."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed town-hall value against the exact source entry and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "日帰り",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ひがえり"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0",
+      "Pitch 2: 4",
+      "Pitch accent contour 4"
+    ],
+    "selectionRationale": "Manual review found 日帰り independently learner-useful for travel plans, transportation, and everyday scheduling; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 日帰り|ひがえり with reading ひがえり and meanings day trip; entrySeq=1463920; jmdictPriority=ichi1,news1,nf18; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 日帰り|ひがえり: meaning day trip / same-day return; example 京都へ日帰りで行きました。／きょうとへひがえりでいきました。／I went to Kyoto on a day trip.; breakdown 日 ひ帰 がえり; exact audio word-reading-日帰り-ひがえり; rendered pitch 0 and 4."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 日帰り|ひがえり in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-日帰り-ひがえり passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ひがえり against exact audio identifier word-reading-日帰り-ひがえり."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban] / 4 [odaka], rendered 0 and 4 for 日帰り|ひがえり."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The Kyoto sentence is natural and clearly demonstrates a same-day trip."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed day-trip value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "主人公",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しゅじんこう"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2"
+    ],
+    "selectionRationale": "Manual review found 主人公 independently learner-useful for books, films, stories, and discussing fictional or narrative roles. The selected sense is protagonist or main character from the multi-gloss source row; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 主人公|しゅじんこう with reading しゅじんこう and meanings protagonist; main character; hero; heroine; head (of a household); proprietor (of a store); entrySeq=1325680; jmdictPriority=news1,nf05; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 主人公|しゅじんこう: meaning protagonist / main character; example この話の主人公は高校生です。／このはなしのしゅじんこうはこうこうせいです。／The main character of this story is a high school student.; breakdown 主 しゅ人 じん公 こう; exact audio word-reading-主人公-しゅじんこう; rendered pitch 2."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 主人公|しゅじんこう in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-主人公-しゅじんこう passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しゅじんこう against exact audio identifier word-reading-主人公-しゅじんこう."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka], rendered 2 for 主人公|しゅじんこう."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The novel sentence is natural and directly demonstrates protagonist."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed the narrative main-character sense and excluded unrelated head or proprietor glosses."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "市外",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しがい"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Manual review found 市外 independently learner-useful for travel, addresses, transportation, and local services; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 市外|しがい with reading しがい and meanings outside the city; suburbs; entrySeq=1308170; jmdictPriority=ichi1,news1,nf19; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 市外|しがい: meaning outside the city; example 来月、市外へ引っ越します。／らいげつ、しがいへひっこします。／Next month I will move outside the city.; breakdown 市 し外 がい; exact audio word-reading-市外-しがい; rendered pitch 1."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 市外|しがい in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-市外-しがい passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しがい against exact audio identifier word-reading-市外-しがい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 1 [atamadaka], rendered 1 for 市外|しがい."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The phone-call sentence is natural and clearly demonstrates outside the city."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed outside-the-city value against the exact source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "不安定",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ふあんてい"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2"
+    ],
+    "selectionRationale": "Manual review found 不安定 independently learner-useful for weather, systems, work, health, and describing unsettled conditions. The selected sense is unstable or unsettled from the multi-gloss source row; the visible JLPT N2 support label is retained as context, and approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 不安定|ふあんてい with reading ふあんてい and meanings instability; insecurity; crankiness; entrySeq=1491190; jmdictPriority=ichi1,news1,nf05; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 不安定|ふあんてい: meaning unstable / unsettled; example 今日は天気が不安定です。／きょうはてんきがふあんていです。／The weather is unstable today.; breakdown 不 ふ安 あん定 てい; exact audio word-reading-不安定-ふあんてい; rendered pitch 2."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 不安定|ふあんてい in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-不安定-ふあんてい passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ふあんてい against exact audio identifier word-reading-不安定-ふあんてい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka], rendered 2 for 不安定|ふあんてい."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The internet-connection sentence is natural and directly demonstrates unstable."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed the practical unstable or unsettled sense and retained the higher-level support label after reviewing unrelated glosses."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "待合室",
+    "status": "sapphire",
+    "readingIncludes": [
+      "まちあいしつ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 待合室 independently learner-useful for clinics, stations, offices, and everyday directions; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 待合室|まちあいしつ with reading まちあいしつ and meanings waiting room; entrySeq=1410630; jmdictPriority=ichi1; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 待合室|まちあいしつ: meaning waiting room; example 病院の待合室で待っています。／びょういんのまちあいしつでまっています。／I am waiting in the hospital waiting room.; breakdown 待 まち合 あい室 しつ; exact audio word-reading-待合室-まちあいしつ; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 待合室|まちあいしつ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-待合室-まちあいしつ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading まちあいしつ against exact audio identifier word-reading-待合室-まちあいしつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 待合室|まちあいしつ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The clinic sentence is natural and clearly demonstrates waiting room."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed waiting-room value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "幼稚園",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ようちえん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 幼稚園 independently learner-useful for family, school, childcare, and community contexts. The visible JLPT N2 and N1 support labels are retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 幼稚園|ようちえん with reading ようちえん and meanings kindergarten (in Japan, non-compulsory education from age 3 until primary school); preschool; entrySeq=1545260; jmdictPriority=ichi1,news1,nf07; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 幼稚園|ようちえん: meaning kindergarten; example 弟は幼稚園に通っています。／おとうとはようちえんにかよっています。／My younger brother goes to kindergarten.; breakdown 幼 よう稚 ち園 えん; exact audio word-reading-幼稚園-ようちえん; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 幼稚園|ようちえん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-幼稚園-ようちえん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ようちえん against exact audio identifier word-reading-幼稚園-ようちえん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 幼稚園|ようちえん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The family sentence is natural and directly demonstrates kindergarten."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed kindergarten value and retained the higher-level support labels after reviewing the coverage-risk flag."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "深夜",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しんや"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Manual review found 深夜 independently learner-useful for schedules, safety, work, travel, and time descriptions. The visible JLPT N3 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 深夜|しんや with reading しんや and meanings late at night; entrySeq=1362810; jmdictPriority=news1,nf03; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 深夜|しんや: meaning late night / midnight hours; example 深夜に電話が鳴りました。／しんやにでんわがなりました。／The phone rang late at night.; breakdown 深 しん夜 や; exact audio word-reading-深夜-しんや; rendered pitch 1."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 深夜|しんや in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-深夜-しんや passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しんや against exact audio identifier word-reading-深夜-しんや."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 1 [atamadaka], rendered 1 for 深夜|しんや."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The train sentence is natural and clearly demonstrates late at night."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed late-night value against the exact source entry and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "出会い",
+    "status": "sapphire",
+    "readingIncludes": [
+      "であい"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 出会い independently learner-useful for relationships, stories, travel, and describing encounters. The selected sense is meeting or encounter from the multi-gloss source row; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 出会い|であい with reading であい and meanings meeting; rendezvous; encounter; meeting for the first time; coming across; confluence; entrySeq=1338400; jmdictPriority=news1,nf08,nf16; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 出会い|であい: meaning meeting / encounter; example 学校で新しい友だちとの出会いがありました。／がっこうであたらしいともだちとのであいがありました。／I had an encounter with a new friend at school.; breakdown 出 で会 あい; exact audio word-reading-出会い-であい; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 出会い|であい in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-出会い-であい passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading であい against exact audio identifier word-reading-出会い-であい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 出会い|であい."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The friendship sentence is natural and directly demonstrates an encounter."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed ordinary encounter value while excluding specialized rendezvous or confluence glosses."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
     }
   },
   {
@@ -86644,6 +87764,524 @@
     }
   },
   {
+    "word": "通年",
+    "status": "sapphire",
+    "readingIncludes": [
+      "つうねん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 通年 independently learner-useful for business hours, travel, services, products, and seasonal availability; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 通年|つうねん with reading つうねん and meanings all year; year round; entrySeq=1984000; jmdictPriority=news1,nf22; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 通年|つうねん: meaning year-round / all year; example この店は通年で開いています。／このみせはつうねんであいています。／This store is open year-round.; breakdown 通 つう年 ねん; exact audio word-reading-通年-つうねん; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 通年|つうねん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-通年-つうねん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading つうねん against exact audio identifier word-reading-通年-つうねん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 通年|つうねん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The store sentence is natural and clearly demonstrates all year."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed year-round value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "徹夜",
+    "status": "sapphire",
+    "readingIncludes": [
+      "てつや"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 徹夜 independently learner-useful for study, work, travel, and describing an all-night activity. The visible JLPT N1 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 徹夜|てつや with reading てつや and meanings staying up all night; entrySeq=1437700; jmdictPriority=ichi1,news1,nf11; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 徹夜|てつや: meaning staying up all night; example 宿題が多くて徹夜しました。／しゅくだいがおおくててつやしました。／I stayed up all night because I had a lot of homework.; breakdown 徹 てつ夜 や; exact audio word-reading-徹夜-てつや; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 徹夜|てつや in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-徹夜-てつや passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading てつや against exact audio identifier word-reading-徹夜-てつや."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 徹夜|てつや."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The exam sentence is natural and directly demonstrates staying up all night."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed staying-up-all-night value and retained the higher-level support label after reviewing the coverage-risk flag."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "本体",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ほんたい"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1",
+      "Pitch 2: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 本体 independently learner-useful for products, machines, shopping, and technical instructions. The selected sense is main unit or body from the multi-gloss source row; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 本体|ほんたい with reading ほんたい and meanings substance; true form; true character; main part; main unit; body (of a machine); object of worship (at a shrine, temple, etc.); noumenon; base price; pre-tax price; entrySeq=1522950; jmdictPriority=ichi1,news1,nf05; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 本体|ほんたい: meaning main unit / body; example パソコン本体は机の下にあります。／パソコンほんたいはつくえのしたにあります。／The computer&#39;s main unit is under the desk.; breakdown 本 ほん体 たい; exact audio word-reading-本体-ほんたい; rendered pitch 1 and 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 本体|ほんたい in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-本体-ほんたい passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ほんたい against exact audio identifier word-reading-本体-ほんたい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 1 [atamadaka] / 0 [heiban], rendered 1 and 0 for 本体|ほんたい."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The replacement-part sentence is natural and clearly demonstrates main unit."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed the product or machine main-unit sense and excluded unrelated philosophical, religious, and pricing glosses."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "今年度",
+    "status": "sapphire",
+    "readingIncludes": [
+      "こんねんど"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 今年度 independently learner-useful for work, school, budgets, schedules, and formal time references; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 今年度|こんねんど with reading こんねんど and meanings this year; this fiscal year; this school year; entrySeq=1657600; jmdictPriority=news1,nf03; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 今年度|こんねんど: meaning this fiscal year / this school year; example 今年度は新しいクラスで勉強します。／こんねんどはあたらしいクラスでべんきょうします。／This school year, I will study in a new class.; breakdown 今 こん年 ねん度 ど; exact audio word-reading-今年度-こんねんど; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 今年度|こんねんど in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-今年度-こんねんど passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading こんねんど against exact audio identifier word-reading-今年度-こんねんど."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 今年度|こんねんど."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The school-budget sentence is natural and directly demonstrates this school year."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed this fiscal-year or school-year value against the exact source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "控室",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ひかえしつ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 控室 independently learner-useful for events, theaters, offices, and places where people wait before appearing. The visible JLPT N1 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 控室|ひかえしつ with reading ひかえしつ and meanings waiting room; anteroom; antechamber; green room; entrySeq=1601430; jmdictPriority=ichi1,news1,nf13; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 控室|ひかえしつ: meaning waiting room / anteroom; example 発表の前に控室で待ちました。／はっぴょうのまえにひかえしつでまちました。／I waited in the waiting room before the presentation.; breakdown 控 ひかえ室 しつ; exact audio word-reading-控室-ひかえしつ; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 控室|ひかえしつ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-控室-ひかえしつ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ひかえしつ against exact audio identifier word-reading-控室-ひかえしつ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 控室|ひかえしつ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The performer sentence is natural and clearly demonstrates waiting room."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed waiting-room or anteroom value and retained the higher-level support label after reviewing the multi-gloss source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "家計簿",
+    "status": "sapphire",
+    "readingIncludes": [
+      "かけいぼ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2"
+    ],
+    "selectionRationale": "Manual review found 家計簿 independently learner-useful for budgeting, household finances, shopping, and daily planning. The visible JLPT N1 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 家計簿|かけいぼ with reading かけいぼ and meanings household account book; entrySeq=1191920; jmdictPriority=news1,nf20; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 家計簿|かけいぼ: meaning household account book / budget notebook; example 母は毎日家計簿をつけています。／はははまいにちかけいぼをつけています。／My mother keeps a household account book every day.; breakdown 家 か計 けい簿 ぼ; exact audio word-reading-家計簿-かけいぼ; rendered pitch 2."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 家計簿|かけいぼ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-家計簿-かけいぼ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading かけいぼ against exact audio identifier word-reading-家計簿-かけいぼ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka], rendered 2 for 家計簿|かけいぼ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The monthly-expenses sentence is natural and directly demonstrates household account book."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed household-account-book value against the exact source entry and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
     "word": "仕事中",
     "status": "sapphire",
     "readingIncludes": [
@@ -86733,6 +88371,272 @@
     }
   },
   {
+    "word": "店名",
+    "status": "sapphire",
+    "readingIncludes": [
+      "てんめい"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 店名 independently learner-useful for addresses, reservations, receipts, maps, and restaurant or shop descriptions; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 店名|てんめい with reading てんめい and meanings store name; shop name; restaurant name; entrySeq=2656450; jmdictPriority=spec1; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 店名|てんめい: meaning store name / shop name; example 店名を教えてください。／てんめいをおしえてください。／Please tell me the name of the shop.; breakdown 店 てん名 めい; exact audio word-reading-店名-てんめい; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 店名|てんめい in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-店名-てんめい passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading てんめい against exact audio identifier word-reading-店名-てんめい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 店名|てんめい."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The reservation sentence is natural and clearly demonstrates shop name."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed store-name value against the exact source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "古本屋",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ふるほんや"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 古本屋 independently learner-useful for shopping, books, neighborhoods, and describing secondhand bookstores; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 古本屋|ふるほんや with reading ふるほんや and meanings secondhand bookshop; secondhand bookstore; secondhand bookseller; entrySeq=1266170; jmdictPriority=spec1; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 古本屋|ふるほんや: meaning secondhand bookstore / used-book shop; example 古本屋で安い本を買いました。／ふるほんやでやすいほんをかいました。／I bought a cheap book at a secondhand bookstore.; breakdown 古 ふる本 ほん屋 や; exact audio word-reading-古本屋-ふるほんや; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 古本屋|ふるほんや in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-古本屋-ふるほんや passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ふるほんや against exact audio identifier word-reading-古本屋-ふるほんや."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 古本屋|ふるほんや."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The book-shopping sentence is natural and directly demonstrates used-book shop."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed secondhand-bookstore value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "食料品店",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しょくりょうひんてん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 5",
+      "Pitch accent contour 5"
+    ],
+    "selectionRationale": "Manual review found 食料品店 independently learner-useful for shopping, neighborhoods, food, and daily errands. Generated pitch is recorded as explicitly unverified; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. Generated pitch is visibly labeled and remains unverified. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 食料品店|しょくりょうひんてん with reading しょくりょうひんてん and meanings grocer; grocery store; entrySeq=1650990; jmdictPriority=news2,nf28; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 食料品店|しょくりょうひんてん: meaning grocery store / food shop; example 食料品店で牛乳を買いました。／しょくりょうひんてんでぎゅうにゅうをかいました。／I bought milk at the grocery store.; breakdown 食 しょく料 りょう品 ひん店 てん; exact audio word-reading-食料品店-しょくりょうひんてん; rendered pitch 5 with visible generated label."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 食料品店|しょくりょうひんてん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-食料品店-しょくりょうひんてん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しょくりょうひんてん against exact audio identifier word-reading-食料品店-しょくりょうひんてん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / voicevox-nemo-reading-query",
+        "detail": "Packet reports source pattern 5 [nakadaka], rendered 5 for 食料品店|しょくりょうひんてん; generated source is visibly labeled and dictionary-backed pitch remains unverified."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval. Generated pitch label was also visibly present."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The shopping sentence is natural and clearly demonstrates grocery store."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed grocery-store value against the exact source row and recorded the generated-pitch limitation rather than treating it as dictionary evidence."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment; the generated-pitch limitation was recorded explicitly."
+      }
+    ],
+    "verificationLimitations": [
+      {
+        "field": "PitchAccent",
+        "status": "generated",
+        "label": "Generated pitch (unverified)",
+        "reviewNote": "VOICEVOX Nemo supplied visible pitch guidance in the live packet; no dictionary-backed pitch source was available for this word-reading identity."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
     "word": "帰国",
     "status": "sapphire",
     "readingIncludes": [
@@ -86818,6 +88722,180 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Representation migration from the former word structural/Platinum card-surface compatibility lane into first-class Sapphire. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "市役所",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しやくしょ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2"
+    ],
+    "selectionRationale": "Manual review found 市役所 independently learner-useful for civic services, addresses, documents, and local administration. The visible JLPT N3 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 市役所|しやくしょ with reading しやくしょ and meanings municipal office; council; city hall; entrySeq=1308760; jmdictPriority=ichi1,news1,nf10; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 市役所|しやくしょ: meaning city hall / municipal office; example 市役所で住所を変えました。／しやくしょでじゅうしょをかえました。／I changed my address at city hall.; breakdown 市 し役 やく所 しょ; exact audio word-reading-市役所-しやくしょ; rendered pitch 2."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 市役所|しやくしょ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-市役所-しやくしょ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しやくしょ against exact audio identifier word-reading-市役所-しやくしょ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka], rendered 2 for 市役所|しやくしょ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The certificate sentence is natural and directly demonstrates city hall."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed city-hall or municipal-office value and retained the higher-level support label after reviewing the coverage-risk flag."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "待ち合わせる",
+    "status": "sapphire",
+    "readingIncludes": [
+      "まちあわせる"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 5",
+      "Pitch accent contour 5",
+      "Pitch 2: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 待ち合わせる independently learner-useful for travel, dates, friends, schedules, and arranging meetings; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 待ち合わせる|まちあわせる with reading まちあわせる and meanings to rendezvous; to meet at a prearranged place and time; to arrange to meet; entrySeq=1410520; jmdictPriority=ichi1,news2,nf42; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 待ち合わせる|まちあわせる: meaning to meet by arrangement; example 駅の前で友だちと待ち合わせます。／えきのまえでともだちとまちあわせます。／I will meet my friend in front of the station.; breakdown 待 まち合 あわせる; exact audio word-reading-待ち合わせる-まちあわせる; rendered pitch 5 and 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 待ち合わせる|まちあわせる in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-待ち合わせる-まちあわせる passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading まちあわせる against exact audio identifier word-reading-待ち合わせる-まちあわせる."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 5 [nakadaka] / 0 [heiban], rendered 5 and 0 for 待ち合わせる|まちあわせる."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The station sentence is natural and clearly demonstrates arranging to meet."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed meeting-by-arrangement value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
     }
   },
   {
@@ -86997,6 +89075,780 @@
     }
   },
   {
+    "word": "中古車",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ちゅうこしゃ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 中古車 independently learner-useful for shopping, transportation, budgets, and everyday vehicle descriptions; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 中古車|ちゅうこしゃ with reading ちゅうこしゃ and meanings used car; secondhand car; entrySeq=1424170; jmdictPriority=news1,nf13; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 中古車|ちゅうこしゃ: meaning used car; example 父は中古車を買いました。／ちちはちゅうこしゃをかいました。／My father bought a used car.; breakdown 中 ちゅう古 こ車 しゃ; exact audio word-reading-中古車-ちゅうこしゃ; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 中古車|ちゅうこしゃ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-中古車-ちゅうこしゃ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ちゅうこしゃ against exact audio identifier word-reading-中古車-ちゅうこしゃ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 中古車|ちゅうこしゃ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The dealership sentence is natural and directly demonstrates used car."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed used-car value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "店内",
+    "status": "sapphire",
+    "readingIncludes": [
+      "てんない"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Manual review found 店内 independently learner-useful for restaurants, shops, signs, rules, and directions. The visible JLPT N2 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 店内|てんない with reading てんない and meanings inside of a store (restaurant, café, etc.); store interior; on the premises; entrySeq=1440780; jmdictPriority=news1,nf09; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 店内|てんない: meaning inside a store; example 店内で写真を撮らないでください。／てんないでしゃしんをとらないでください。／Please do not take photos inside the store.; breakdown 店 てん内 ない; exact audio word-reading-店内-てんない; rendered pitch 1."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 店内|てんない in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-店内-てんない passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading てんない against exact audio identifier word-reading-店内-てんない."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 1 [atamadaka], rendered 1 for 店内|てんない."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The restaurant sentence is natural and clearly demonstrates inside a store."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed inside-the-store value against the exact source row and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "漫画家",
+    "status": "sapphire",
+    "readingIncludes": [
+      "まんがか"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 漫画家 independently learner-useful for occupations, books, media, and cultural discussions. The visible JLPT N1 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 漫画家|まんがか with reading まんがか and meanings cartoonist; comic book artist; manga artist; manga author; mangaka; entrySeq=1811920; jmdictPriority=news1,nf10; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 漫画家|まんがか: meaning manga artist; example 彼女は有名な漫画家です。／かのじょはゆうめいなまんがかです。／She is a famous manga artist.; breakdown 漫 まん画 が家 か; exact audio word-reading-漫画家-まんがか; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 漫画家|まんがか in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-漫画家-まんがか passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading まんがか against exact audio identifier word-reading-漫画家-まんがか."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 漫画家|まんがか."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The interview sentence is natural and directly demonstrates manga artist."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed manga-artist value against the exact source entry and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "会食",
+    "status": "sapphire",
+    "readingIncludes": [
+      "かいしょく"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 会食 independently learner-useful for work, formal invitations, family events, and dining with others; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 会食|かいしょく with reading かいしょく and meanings eating together; dining together; having a meal together; entrySeq=1198670; jmdictPriority=ichi1,news1,nf21; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 会食|かいしょく: meaning meal together / dining with others; example 仕事の後で会食があります。／しごとのあとでかいしょくがあります。／There is a meal together after work.; breakdown 会 かい食 しょく; exact audio word-reading-会食-かいしょく; rendered pitch 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 会食|かいしょく in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-会食-かいしょく passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading かいしょく against exact audio identifier word-reading-会食-かいしょく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 0 [heiban], rendered 0 for 会食|かいしょく."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The business sentence is natural and clearly demonstrates a meal together."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed dining-together value against the exact source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "商店",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しょうてん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Manual review found 商店 independently learner-useful for shopping, neighborhoods, signs, and describing shops or stores. The visible JLPT N3 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 商店|しょうてん with reading しょうてん and meanings shop; store; firm; entrySeq=1347180; jmdictPriority=ichi1,news1,nf05; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 商店|しょうてん: meaning shop / store; example 駅前の商店でパンを買いました。／えきまえのしょうてんでパンをかいました。／I bought bread at the shop in front of the station.; breakdown 商 しょう店 てん; exact audio word-reading-商店-しょうてん; rendered pitch 1."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 商店|しょうてん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-商店-しょうてん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しょうてん against exact audio identifier word-reading-商店-しょうてん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 1 [atamadaka], rendered 1 for 商店|しょうてん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The neighborhood sentence is natural and directly demonstrates shop."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed shop or store value against the exact source row and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "大家族",
+    "status": "sapphire",
+    "readingIncludes": [
+      "だいかぞく"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 大家族 independently learner-useful for family descriptions, household life, and cultural conversations; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 大家族|だいかぞく with reading だいかぞく and meanings large family; extended family; entrySeq=1413160; jmdictPriority=news1,nf24; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 大家族|だいかぞく: meaning large family / extended family; example 友だちの家は大家族です。／ともだちのいえはだいかぞくです。／My friend&#39;s household is a large family.; breakdown 大 だい家 か族 ぞく; exact audio word-reading-大家族-だいかぞく; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 大家族|だいかぞく in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-大家族-だいかぞく passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading だいかぞく against exact audio identifier word-reading-大家族-だいかぞく."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 大家族|だいかぞく."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The holiday sentence is natural and clearly demonstrates large family."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed large-family or extended-family value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "社会人",
+    "status": "sapphire",
+    "readingIncludes": [
+      "しゃかいじん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2"
+    ],
+    "selectionRationale": "Manual review found 社会人 independently learner-useful for school-to-work transitions, careers, and describing working adults; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 社会人|しゃかいじん with reading しゃかいじん and meanings working adult; full-fledged member of society; entrySeq=1322770; jmdictPriority=ichi1,news1,nf05; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 社会人|しゃかいじん: meaning working adult / member of society; example 兄は今年社会人になりました。／あにはことししゃかいじんになりました。／My older brother became a working adult this year.; breakdown 社 しゃ会 かい人 じん; exact audio word-reading-社会人-しゃかいじん; rendered pitch 2."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 社会人|しゃかいじん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-社会人-しゃかいじん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading しゃかいじん against exact audio identifier word-reading-社会人-しゃかいじん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka], rendered 2 for 社会人|しゃかいじん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The graduation sentence is natural and directly demonstrates working adult."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed working-adult value against the exact source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "自家用車",
+    "status": "sapphire",
+    "readingIncludes": [
+      "じかようしゃ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 自家用車 independently learner-useful for transportation, travel, households, and vehicle ownership; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 自家用車|じかようしゃ with reading じかようしゃ and meanings private car; private automobile; entrySeq=1658530; jmdictPriority=news2,nf26; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 自家用車|じかようしゃ: meaning private car / family car; example 自家用車で駅まで行きました。／じかようしゃでえきまでいきました。／I went to the station by private car.; breakdown 自 じ家 か用 よう車 しゃ; exact audio word-reading-自家用車-じかようしゃ; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 自家用車|じかようしゃ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-自家用車-じかようしゃ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading じかようしゃ against exact audio identifier word-reading-自家用車-じかようしゃ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 自家用車|じかようしゃ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The family-trip sentence is natural and clearly demonstrates private car."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed private-car value against the exact source entry."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "店舗",
+    "status": "sapphire",
+    "readingIncludes": [
+      "てんぽ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Manual review found 店舗 independently learner-useful for shopping, business, maps, websites, and describing a store or business location. The selected sense is shop, store, or establishment from the multi-gloss source row; the visible JLPT N1 support label is retained as context, and approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 店舗|てんぽ with reading てんぽ and meanings shop; store; establishment; restaurant; entrySeq=1440800; jmdictPriority=ichi1,news1,nf04; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 店舗|てんぽ: meaning shop / store / business location; example この会社は市内に店舗があります。／このかいしゃはしないにてんぽがあります。／This company has stores in the city.; breakdown 店 てん舗 ぽ; exact audio word-reading-店舗-てんぽ; rendered pitch 1."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 店舗|てんぽ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-店舗-てんぽ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading てんぽ against exact audio identifier word-reading-店舗-てんぽ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 1 [atamadaka], rendered 1 for 店舗|てんぽ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The online-shopping sentence is natural and directly demonstrates store or business location."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed the ordinary business-location sense, reviewed the restaurant and other glosses, and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
     "word": "会議室",
     "status": "sapphire",
     "readingIncludes": [
@@ -87083,6 +89935,264 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Representation migration from the former word structural/Platinum card-surface compatibility lane into first-class Sapphire. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "家庭教師",
+    "status": "sapphire",
+    "readingIncludes": [
+      "かていきょうし"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 4",
+      "Pitch accent contour 4"
+    ],
+    "selectionRationale": "Manual review found 家庭教師 independently learner-useful for education, family life, tutoring, and work descriptions. The visible JLPT N3 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 家庭教師|かていきょうし with reading かていきょうし and meanings (home) tutor; private tutor; private teacher; entrySeq=1192320; jmdictPriority=news1,nf17; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 家庭教師|かていきょうし: meaning private tutor / home tutor; example 妹は家庭教師に英語を習っています。／いもうとはかていきょうしにえいごをならっています。／My younger sister is learning English from a private tutor.; breakdown 家 か庭 てい教 きょう師 し; exact audio word-reading-家庭教師-かていきょうし; rendered pitch 4."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 家庭教師|かていきょうし in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-家庭教師-かていきょうし passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading かていきょうし against exact audio identifier word-reading-家庭教師-かていきょうし."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 4 [nakadaka], rendered 4 for 家庭教師|かていきょうし."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The family sentence is natural and clearly demonstrates private tutor."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed private-tutor value against the exact source entry and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "専門店",
+    "status": "sapphire",
+    "readingIncludes": [
+      "せんもんてん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 専門店 independently learner-useful for shopping, neighborhoods, products, and describing specialty retailers. The visible JLPT N3 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 専門店|せんもんてん with reading せんもんてん and meanings specialist shop; shop specializing in a particular type of product; entrySeq=1389930; jmdictPriority=news1,nf11; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 専門店|せんもんてん: meaning specialty shop; example この店は魚の専門店です。／このみせはさかなのせんもんてんです。／This shop specializes in fish.; breakdown 専 せん門 もん店 てん; exact audio word-reading-専門店-せんもんてん; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 専門店|せんもんてん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-専門店-せんもんてん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading せんもんてん against exact audio identifier word-reading-専門店-せんもんてん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 専門店|せんもんてん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The shopping sentence is natural and directly demonstrates specialty shop."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed specialist-shop value against the exact source row and retained the higher-level support label."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "英会話",
+    "status": "sapphire",
+    "readingIncludes": [
+      "えいかいわ"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Manual review found 英会話 independently learner-useful for language study, schools, work, and everyday communication; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 英会話|えいかいわ with reading えいかいわ and meanings English conversation; school for English conversation; entrySeq=1174380; jmdictPriority=spec1; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 英会話|えいかいわ: meaning English conversation; example 妹は英会話を習っています。／いもうとはえいかいわをならっています。／My younger sister is learning English conversation.; breakdown 英 えい会 かい話 わ; exact audio word-reading-英会話-えいかいわ; rendered pitch 3."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 英会話|えいかいわ in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-英会話-えいかいわ passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading えいかいわ against exact audio identifier word-reading-英会話-えいかいわ."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka], rendered 3 for 英会話|えいかいわ."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The class sentence is natural and clearly demonstrates English conversation."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed English-conversation value against the exact multi-gloss source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
     }
   },
   {
@@ -87173,6 +90283,182 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Representation migration from the former word structural/Platinum card-surface compatibility lane into first-class Sapphire. This is not Platinum card-surface inspection, Obsidian proof, release readiness, source-confidence upgrade, or deck movement authority."
+    }
+  },
+  {
+    "word": "二次会",
+    "status": "sapphire",
+    "readingIncludes": [
+      "にじかい"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 2",
+      "Pitch accent contour 2",
+      "Pitch 2: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 二次会 independently learner-useful for social plans, invitations, restaurants, and event conversations; it was retained after reviewing the coverage-risk flag, not merely for reading coverage.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 二次会|にじかい with reading にじかい and meanings after-party; second party (of the night); second meeting; entrySeq=1461880; jmdictPriority=news2,nf35; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 二次会|にじかい: meaning after-party / second party; example 二次会で友だちと話しました。／にじかいでともだちとはなしました。／I talked with friends at the after-party.; breakdown 二 に次 じ会 かい; exact audio word-reading-二次会-にじかい; rendered pitch 2 and 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 二次会|にじかい in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-二次会-にじかい passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading にじかい against exact audio identifier word-reading-二次会-にじかい."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 2 [nakadaka] / 0 [heiban], rendered 2 and 0 for 二次会|にじかい."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The invitation sentence is natural and directly demonstrates after-party."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed after-party value against the exact multi-gloss source row."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
+    }
+  },
+  {
+    "word": "百貨店",
+    "status": "sapphire",
+    "readingIncludes": [
+      "ひゃっかてん"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3",
+      "Pitch 2: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Manual review found 百貨店 independently learner-useful for shopping, travel, maps, and describing department stores. The visible JLPT N2 support label is retained as context; approval was not based on reading coverage alone.",
+    "reviewedAt": "2026-07-18",
+    "reviewer": "n4-word-sapphire-reviewer",
+    "reviewStandard": "word-sapphire-v1-evidence-lanes",
+    "revalidatedAt": "2026-07-18",
+    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
+        "detail": "JMdict row verified 百貨店|ひゃっかてん with reading ひゃっかてん and meanings department store; entrySeq=1488090; jmdictPriority=ichi1,news1,nf03; it supports the card fields, not JLPT placement or source truth."
+      }
+    ],
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live Sapphire batch packet",
+        "detail": "Hard checks passed for 百貨店|ひゃっかてん: meaning department store; example 駅前の百貨店で買い物をしました。／えきまえのひゃっかてんでかいものをしました。／I shopped at the department store in front of the station.; breakdown 百 ひゃっ貨 か店 てん; exact audio word-reading-百貨店-ひゃっかてん; rendered pitch 3 and 0."
+      },
+      {
+        "type": "golden-regression",
+        "source": "npm run deck:words:review:n4",
+        "detail": "N4 Gold regression gate passed 1034/1034 before this batch; precondition only."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json",
+        "detail": "Live packet places 百貨店|ひゃっかてん in the active N4 word-deck contract; this is internal placement context, not Japanese-source field evidence."
+      },
+      {
+        "type": "media-audit",
+        "source": "live Sapphire batch packet",
+        "detail": "Exact managed word-reading asset word-reading-百貨店-ひゃっかてん passed the packet audit."
+      },
+      {
+        "type": "audio-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed reading ひゃっかてん against exact audio identifier word-reading-百貨店-ひゃっかてん."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "live Sapphire batch packet / kanjium-cc-by-sa-4.0",
+        "detail": "Packet reports source pattern 3 [nakadaka] / 0 [heiban], rendered 3 and 0 for 百貨店|ひゃっかてん."
+      },
+      {
+        "type": "label-review",
+        "source": "live Sapphire batch packet",
+        "detail": "Reviewed JLPT N4 and Reading coverage support labels; coverage did not decide approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard review",
+        "detail": "The shopping sentence is natural and clearly demonstrates department store."
+      },
+      {
+        "type": "manual-review",
+        "source": "n4-word-sapphire-reviewer",
+        "detail": "Confirmed department-store value and retained the higher-level support label after reviewing the coverage-risk flag."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-sapphire-v1-evidence-lanes",
+        "detail": "Reviewed registered Japanese-source field evidence, generated surface, Gold precondition, level context, exact audio identity, pitch rendering, labels, and manual example judgment."
+      }
+    ],
+    "migrationProvenance": {
+      "migratedAt": "2026-07-18",
+      "migratedFrom": "native-word-sapphire-review",
+      "migrationType": "new",
+      "newStatus": "sapphire",
+      "newReviewStandard": "word-sapphire-v1-evidence-lanes",
+      "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
     }
   }
 ]

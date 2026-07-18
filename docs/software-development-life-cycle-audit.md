@@ -189,7 +189,7 @@ Current artifacts:
 
 Current commands: `npm run security:licenses` and `npm run security:licenses:write`.
 
-Current posture from 2026-06-02 tracked lockfile review: `285` dependency packages, `271` allowlisted package entries, and `14` reviewed exception package entries for optional `sharp`/`libvips` binary packages. Missing, denied, unreviewed, or overdue reviewed-exception licenses fail closed.
+Current posture from 2026-07-18 tracked lockfile review: `289` dependency packages, `275` allowlisted package entries, and `14` reviewed exception package entries for optional `sharp`/`libvips` binary packages. Missing, denied, unreviewed, or overdue reviewed-exception licenses fail closed.
 
 Remaining limitation: the license audit validates package-lock metadata and tracked exception currency. It is not legal advice, does not prove upstream license-text completeness, and does not replace manual NOTICE or attribution review before external release claims.
 

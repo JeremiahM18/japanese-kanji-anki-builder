@@ -151,14 +151,24 @@ test("tracked Sapphire word manifests are first-class structural review sets", (
 });
 
 test("word Sapphire migration preserves completed Platinum inputs without shrinking denominators", () => {
-    for (const level of [4]) {
-        const sapphireEntries = loadJson(path.join("templates", `sapphire_n${level}_word_review_set.json`));
-        const platinumEntries = loadJson(path.join("templates", `platinum_n${level}_word_review_set.json`));
-        const sapphireActiveCount = activeEntries(sapphireEntries).length;
-        const platinumActiveCount = platinumEntries.filter((entry) => ["platinum", "fixed_then_platinum"].includes(entry.status)).length;
+    const n4SapphireEntries = loadJson(path.join("templates", "sapphire_n4_word_review_set.json"));
+    const n4PlatinumEntries = loadJson(path.join("templates", "platinum_n4_word_review_set.json"));
+    const n4SapphireActiveKeys = new Set(activeEntries(n4SapphireEntries).map((entry) => buildWordStudyEntryKey({
+        written: entry.word,
+        reading: normalizeList(entry.readingIncludes)[0],
+    })));
+    const n4PlatinumActiveKeys = n4PlatinumEntries
+        .filter((entry) => ["platinum", "fixed_then_platinum"].includes(entry.status))
+        .map((entry) => buildWordStudyEntryKey({
+            written: entry.word,
+            reading: normalizeList(entry.readingIncludes)[0],
+        }));
 
-        assert.equal(sapphireEntries.length, platinumEntries.length, `N${level} total tracked decisions must be preserved`);
-        assert.equal(sapphireActiveCount, platinumActiveCount, `N${level} active structural coverage must be preserved`);
+    assert.equal(n4SapphireEntries.length, 740, "N4 word Sapphire tracked decisions must include current native review progress");
+    assert.ok(n4SapphireEntries.length >= n4PlatinumEntries.length, "N4 word Sapphire must not shrink prior tracked Platinum decisions");
+    assert.ok(n4SapphireActiveKeys.size >= n4PlatinumActiveKeys.length, "N4 active Sapphire coverage must preserve prior Platinum coverage");
+    for (const platinumKey of n4PlatinumActiveKeys) {
+        assert.ok(n4SapphireActiveKeys.has(platinumKey), `${platinumKey} Platinum entry must remain covered by N4 Sapphire`);
     }
 
     const n5SapphireEntries = loadJson(path.join("templates", "sapphire_n5_word_review_set.json"));

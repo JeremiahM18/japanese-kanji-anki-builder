@@ -164,7 +164,7 @@ test("word Sapphire migration preserves completed Platinum inputs without shrink
             reading: normalizeList(entry.readingIncludes)[0],
         }));
 
-    assert.equal(n4SapphireEntries.length, 996, "N4 word Sapphire tracked decisions must include current native review progress");
+    assert.equal(n4SapphireEntries.length, 1034, "N4 word Sapphire tracked decisions must include current native review progress");
     assert.ok(n4SapphireEntries.length >= n4PlatinumEntries.length, "N4 word Sapphire must not shrink prior tracked Platinum decisions");
     assert.ok(n4SapphireActiveKeys.size >= n4PlatinumActiveKeys.length, "N4 active Sapphire coverage must preserve prior Platinum coverage");
     for (const platinumKey of n4PlatinumActiveKeys) {

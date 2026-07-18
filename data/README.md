@@ -2,44 +2,53 @@
 
 ## Purpose
 
-This folder holds the local datasets and media that make the repo usable on a real workstation. These files are ignored by git on purpose: they are machine-local inputs, cached media, and editorial working data rather than source-controlled product code.
+This folder contains workstation-local datasets, editorial overlays, cached media, and media source files used by local builds.
 
 ## Scope
 
-Covered: ignored local JLPT data, local curation overlays, managed media folders, source media imports, audio/stroke-order provider guidance, and local-data bootstrap commands.
-
-Not covered: tracked product truth, release readiness, source-governance voting evidence, private source acquisition policy, or generated release artifacts.
+This guide covers ignored JLPT data, local curation, managed media, media imports, and bootstrap commands. It does not define tracked product truth, source-governance consensus, release readiness, or generated release artifacts.
 
 ## Authority Boundary
 
-Tracked contracts under `templates/` are the repository source of truth. Files under `data/` are local workstation inputs unless a tracked contract explicitly promotes a fact. This guide explains how to keep local data useful; it does not certify generated rows, Platinum, Obsidian, media QA, source truth, or release readiness.
+Tracked contracts under `templates/` are the repository source of truth. Files under `data/` are local inputs unless a tracked contract explicitly promotes a fact. This guide does not certify generated rows, Sapphire, Platinum, Obsidian, media QA, source truth, or release readiness.
 
-## What belongs here
+## Source Of Truth
 
-Required local datasets:
+Use these tracked contracts for governed behavior:
 
-- `kanji_jlpt_only.json` - JLPT kanji list by level
+- JLPT kanji: [../templates/jlpt_level_contract.json](../templates/jlpt_level_contract.json)
+- JLPT words: [../templates/jlpt_word_level_contract.json](../templates/jlpt_word_level_contract.json)
+- Kanji components: [../templates/kanji_component_contract.json](../templates/kanji_component_contract.json)
+- Kanji readings: [../templates/kanji_reading_reference_contract.json](../templates/kanji_reading_reference_contract.json)
+- Kanji card-field sources: [../templates/kanji_card_field_source_contract.json](../templates/kanji_card_field_source_contract.json) and [../templates/kanji_card_field_source_contracts](../templates/kanji_card_field_source_contracts)
+- Audio policy: [../templates/audio_source_policy.json](../templates/audio_source_policy.json)
+- Stroke-order policy: [../templates/stroke_order_source_policy.json](../templates/stroke_order_source_policy.json)
 
-Optional but high-value local datasets:
+The ignored `kanji_jlpt_only.json` file is required at runtime but must align with the tracked JLPT contract.
 
-- `KRADFILE` - local fallback for kanji-to-component and radical mapping; governed builds prefer `templates/kanji_component_contract.json`
-- `sentence_corpus.json` - sentence corpus used for deterministic learner-facing example selection
-- `curated_study_data.json` - local kanji curation overrides for meanings, notes, preferred words, blocked words, and examples
-- `word_study_data.json` - local word-deck curation overrides keyed by `written|reading`, for example `今日|きょう`
+## Inputs And Outputs
 
-Managed media output:
+Required local input:
+
+- `kanji_jlpt_only.json`
+
+Optional local inputs:
+
+- `KRADFILE` for local fallback component data
+- `sentence_corpus.json`
+- `curated_study_data.json`
+- `word_study_data.json`, keyed by exact `written|reading`
+
+Managed output and acquisition roots:
 
 - `media/`
-
-Local media source folders for acquisition and imports:
-
 - `media_sources/stroke-order/images/`
 - `media_sources/stroke-order/animations/`
 - `media_sources/audio/`
 
-## Recommended setup
+## Setup
 
-Use the repo bootstrap commands before hand-editing files:
+Use bootstrap commands before hand-editing local files:
 
 ```bash
 npm run corpus:init
@@ -48,212 +57,52 @@ npm run words:init
 npm run media:init
 ```
 
-Use these variants when you already have local files:
+Useful variants:
 
 ```bash
 npm run corpus:init -- --merge
 npm run curated:init -- --merge
 npm run curated:init -- --refresh-starter
 npm run words:init -- --merge
+npm run words:init -- --refresh-starter
 ```
 
-Guidance:
+Use `--merge` to preserve local editorial work while adding starter content. Use `--refresh-starter` to refresh stale starter-derived rows. Run `npm run data:sync:jlpt` after a local JLPT copy drifts.
 
-- Use `--merge` when you want new tracked starter content without overwriting local editorial work.
-- Use `--refresh-starter` when tracked starter kanji entries improved and you want stale starter-derived local copies refreshed while keeping true local custom entries intact.
-- Run `npm run data:verify:jlpt` after replacing or editing `kanji_jlpt_only.json` so missing rows or broken JLPT counts fail fast before they skew deck audits.
-- Run `npm run data:audit:jlpt` when you want the full contract audit across local JLPT data, tracked starter curation, and tracked Gold regression placement.
-- Run `npm run data:audit:jlpt:words` when you want to confirm the tracked starter word dataset still matches the repo-owned JLPT word-level contract.
-- Run `npm run data:sync:jlpt` when a workstation copy of `kanji_jlpt_only.json` has drifted and you want to rewrite its `jlpt` levels to match the tracked contract.
+## Curation
 
-The canonical repo-side JLPT taxonomy contract lives in [../templates/jlpt_level_contract.json](../templates/jlpt_level_contract.json). The local `kanji_jlpt_only.json` file is still required at runtime, but it is now treated as a workstation copy that must align to that tracked contract.
+Curated kanji data pins learner-facing display forms, meanings, notes, preferred words, blocked words, and examples. Curated word data defines exact study identities and keeps the `jlpt` field aligned with the tracked word-level contract.
 
-Tracked kanji source contracts now cover N5, N4, and N3 release-source availability without reading this ignored `data/` folder: [../templates/kanji_component_contract.json](../templates/kanji_component_contract.json), [../templates/kanji_reading_reference_contract.json](../templates/kanji_reading_reference_contract.json), [../templates/kanji_card_field_source_contract.json](../templates/kanji_card_field_source_contract.json), and [../templates/kanji_card_field_source_contracts](../templates/kanji_card_field_source_contracts). N2/N1 remain blocked until their governed card-field source contracts exist. These contracts do not replace local generated-row Platinum gates; they keep clean CI and source availability separate from workstation runtime inputs.
+Runtime loading uses tracked starter data first, then local ignored overrides. Starter improvements should flow into builds without overwriting intentional local edits.
 
-The canonical repo-side JLPT word-level contract lives in [../templates/jlpt_word_level_contract.json](../templates/jlpt_word_level_contract.json). It governs the tracked N5/N4 word surfaces and the current Silver N3/N2/N1 starter surfaces. Higher word levels remain incomplete Silver expansion lanes until their candidate-discovery, reading-gap triage, Gold, Platinum, and Obsidian work is populated.
+## Media
 
-The canonical repo-side release audio policy now lives in [../templates/audio_source_policy.json](../templates/audio_source_policy.json). Treat that file as the governing truth for shipped audio provenance and source discipline. The current release contract expects `voicevox-nemo` as the canonical shipped source, pins the release speaker to `女声1` (style id `10005`), requires explicit voice and locale metadata in managed manifests, and forbids a remote audio provider for released decks.
-
-Before generating governed audio on a new machine, run `npm run doctor:voicevox`. That preflight verifies that the local VOICEVOX Nemo engine is reachable and that the pinned release speaker is actually installed, which is a much safer check than discovering a generic `fetch failed` during generation.
-
-The canonical repo-side stroke-order source policy now lives in [../templates/stroke_order_source_policy.json](../templates/stroke_order_source_policy.json). Treat it as the governing truth for static image and animation provenance. The current release contract allows local/KanjiVG-style static images, allows the configured GitHub-backed animation mirrors, forbids remote static-image providers, and preserves source ids in managed manifests. Run `npm run data:audit:stroke-order -- --json` after changing media providers or importing stroke-order assets.
-
-## Curated kanji data
-
-Curated kanji entries are where the product locks in learner-facing choices that should not be left to generic inference.
-
-Use curation when you need to pin:
-
-- a better learner-facing display form
-- clearer meanings or notes
-- preferred or blocked study words
-- a better example sentence
-
-Example:
-
-```json
-{
-  "上": {
-    "displayWord": {
-      "written": "上",
-      "pron": "うえ"
-    },
-    "englishMeaning": "above / up",
-    "notes": "上 （うえ） - above ／ 上手 （じょうず） - skillful"
-  }
-}
-```
-
-Runtime loading uses the tracked starter pack plus tracked `starter_curated_study_data_*.json` batch files as the base layer, then applies local ignored overrides on top. That means starter improvements flow into builds without clobbering intentional local edits.
-
-## Curated word data
-
-Curated word study entries define exact study targets for the word deck.
-
-Key rule:
-
-- word identity is `written|reading`
-- use the `phrase` tag for curated entries that are useful as examples or references but should stay out of the default JLPT word deck, such as compositional phrases built from easier words
-- keep the `jlpt` field aligned with the tracked word-level contract for any entry that is part of the governed starter word surface
-
-That lets the deck intentionally keep `今日|きょう` while excluding `今日|こんにち` unless you explicitly curate both.
-
-Example:
-
-```json
-{
-  "今日|きょう": {
-    "written": "今日",
-    "reading": "きょう",
-    "meaning": "today",
-    "jlpt": 5,
-    "notes": "Irregular reading. Learn this as a whole word.",
-    "exampleSentence": {
-      "japanese": "今日は図書館へ行きます。",
-      "reading": "きょうはとしょかんへいきます。",
-      "english": "Today I am going to the library."
-    }
-  }
-}
-```
-
-## Media sourcing
-
-The repo supports both local media imports and optional remote fallback providers.
-
-Remote environment variables:
-
-- `REMOTE_STROKE_ORDER_IMAGE_BASE_URL`
-- `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
-- `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
-- `REMOTE_AUDIO_BASE_URL`
-
-The intended stroke-order animation priority is:
+Use reviewed local files, KanjiVG imports, or the configured animation mirrors. The animation priority is:
 
 1. `REMOTE_STROKE_ORDER_ANIMATION_BASE_URL`
 2. `REMOTE_STROKE_ORDER_ANIMCJK_BASE_URL`
 3. local imported files
 
-Use official KanjiVG static SVG imports, configured GitHub animation mirrors, or reviewed local source files with provenance captured in managed manifests.
+Recommended names are `<kanji>.svg`, `<kanji>-order.gif`, `<kanji>.mp3`, or an equivalent codepoint/reading name accepted by the import scripts. Preserve attribution, license, source id, voice, locale, and category metadata.
 
-### Stroke-order naming
-
-Recommended source names include:
-
-- `<kanji>.svg`
-- `<kanji>-bw.png`
-- `<kanji>-red.png`
-- `<kanji>-order.gif`
-- `<KANJI_CODEPOINT>.svg`
-- `<KANJI_CODEPOINT>-bw.png`
-- `U+<KANJI_CODEPOINT>-order.gif`
-
-Example for `日`:
-
-- `日.svg`
-- `日-bw.png`
-- `日-red.png`
-- `日-order.gif`
-- `65E5.svg`
-- `65E5-bw.png`
-- `U+65E5-order.gif`
-
-### Audio naming
-
-Recommended source names include:
-
-- `<kanji>.mp3`
-- `<kanji>_<reading>.mp3`
-- `<kanji>-<reading>.wav`
-- `<KANJI_CODEPOINT>.m4a`
-
-Example for `日`:
-
-- `日.mp3`
-- `日_にち.mp3`
-- `65E5.m4a`
-
-## Useful local-data workflows
-
-Inspect managed media coverage:
+Media commands:
 
 ```bash
 npm run media:report -- --limit=50
-```
-
-Sync media for a level or explicit kanji list:
-
-```bash
 npm run media:sync -- --level=5 --limit=25
-npm run media:sync -- --kanji=日,本,学
-```
-
-Import reviewed local stroke-order assets:
-
-```bash
-npm run media:import:stroke-order -- --input-dir=/path/to/downloaded/files
-```
-
-Import official KanjiVG SVGs:
-
-```bash
+npm run media:import:stroke-order -- --input-dir=/path/to/files
 npm run media:import:kanjivg -- --input-dir=/path/to/extracted-kanjivg/kanji --level=4
-```
-
-Import local audio:
-
-```bash
 npm run media:import:audio -- --input-dir=/path/to/audio --level=5
-```
-
-Generate audio from a local VOICEVOX engine:
-
-```bash
 npm run media:voicevox -- --list-speakers
-npm run media:voicevox -- --level=5 --speaker-id=10005 --concurrency=4
 npm run media:voicevox:words -- --level=5 --speaker-id=10005
 npm run media:sync:words -- --level=5
 ```
 
-The VOICEVOX generator now writes a sidecar JSON file next to each generated audio file so later managed-media sync can preserve release provenance instead of flattening everything into a generic local-file import. For a normal release-oriented run, leave the default source id alone so it stays aligned with `audio_source_policy.json`.
-
-## Audio sync endpoint
-
-```bash
-POST /media/日/audio/sync
-```
-
-Optional JSON body fields:
-
-- `category` such as `kanji-reading`, `word-reading`, or `sentence`
-- `text` to prefer a specific written form
-- `reading` to prefer a specific spoken form
-- `voice` to record voice provenance in the manifest
-- `locale` to record locale metadata in the manifest
+VOICEVOX should remain local. Run `npm run doctor:voicevox` before governed audio work. The audio policy expects VOICEVOX Nemo, release speaker `女声1` (style id `10005`), explicit provenance, and no remote release-audio provider.
 
 ## Verification
 
-Run the focused command for the local surface you changed:
+Run the focused checks for changed local data:
 
 ```bash
 npm run data:verify:jlpt
@@ -263,13 +112,14 @@ npm run data:audit:audio -- --json
 npm run data:audit:stroke-order -- --json
 ```
 
-Run deck, word, media, source, or release gates from [../docs/verification.md](../docs/verification.md) before using local data to support a product or release claim.
+Use [../docs/verification.md](../docs/verification.md) for deck, word, source, media, and release gates. Local-data checks do not replace review-lane or manual QA evidence.
+
+## Failure Semantics
+
+Bootstrap and audit commands are read-only unless their command explicitly offers a write or merge mode. A failing local-data check is a local input or contract-alignment problem; it is not permission to lower a review standard or shrink a product denominator.
 
 ## Update Triggers
 
-Update this guide when ignored local data paths, bootstrap commands, tracked source contracts, audio policy, stroke-order policy, media naming rules, VOICEVOX requirements, or local-data verification commands change.
+Update this guide when local paths, bootstrap commands, tracked contracts, audio or stroke-order policy, media naming, VOICEVOX requirements, or local-data verification commands change.
 
-## Notes
-
-- Keep original attribution and license information with any external source assets you download for personal use.
-- Use the top-level [README](../README.md) for build, review, packaging, and release workflows. This file is only for local data and media guidance.
+Keep original attribution and license information with external source assets. Use the top-level [README](../README.md) for product, review, packaging, and release workflows.

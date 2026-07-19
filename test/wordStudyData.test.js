@@ -34,7 +34,7 @@ const N5_STANDALONE_NUMBER_WORDS = [
     { key: "十|じゅう", kanji: "十", reading: "じゅう", meaning: "ten" },
 ];
 
-const N5_PLATINUM_FIXED_COMMON_POOL_WORDS = new Set([
+const PLATINUM_FIXED_COMMON_POOL_WORDS = new Set([
     "中火|ちゅうび",
     "木々|きぎ",
     "何とか|なんとか",
@@ -275,6 +275,39 @@ const N5_PLATINUM_FIXED_COMMON_POOL_WORDS = new Set([
     "一晩|ひとばん",
     "一人っ子|ひとりっこ",
     "一晩中|ひとばんじゅう",
+    "洋室|ようしつ",
+    "新薬|しんやく",
+    "空き家|あきや",
+    "重力|じゅうりょく",
+    "店頭|てんとう",
+    "ひと晩|ひとばん",
+    "所有|しょゆう",
+    "教え|おしえ",
+    "英字|えいじ",
+    "着用|ちゃくよう",
+    "区立|くりつ",
+    "夏場|なつば",
+    "洋画|ようが",
+    "真夏|まなつ",
+    "県立|けんりつ",
+    "同室|どうしつ",
+    "私服|しふく",
+    "都市|とし",
+    "教員|きょういん",
+    "古着|ふるぎ",
+    "工業|こうぎょう",
+    "かけ声|かけごえ",
+    "働き|はたらき",
+    "都心|としん",
+    "画質|がしつ",
+    "次週|じしゅう",
+    "別室|べっしつ",
+    "体重|たいじゅう",
+    "赤字|あかじ",
+    "作者|さくしゃ",
+    "親元|おやもと",
+    "肉屋|にくや",
+    "特集|とくしゅう",
 ]);
 
 function loadTrackedStarterWordEntries() {
@@ -288,7 +321,7 @@ function loadTrackedStarterWordEntries() {
 }
 
 function assertCommonPoolPendingReviewNote(entry, key) {
-    if (N5_PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+    if (PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
         assert.doesNotMatch(entry?.notes || "", /still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
         return;
     }
@@ -7806,7 +7839,9 @@ test("tracked starter word data includes the first N4 word v2 common expansion b
         assert.equal(starterEntries[key].levelPlacement.mode, "vocabulary-level");
         assert.match(starterEntries[key].levelPlacement.reason, /N4 word v2 vocabulary-level placement/);
         assert.match(starterEntries[key].notes, /source level claim is unverified/);
-        assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+        if (key !== "気|き") {
+            assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+        }
     }
     assert.match(starterEntries["十分|じゅうぶん"].notes, /distinct from governed 十分\|じゅっぷん/);
 });
@@ -7862,7 +7897,9 @@ test("tracked starter word data includes the second N4 word v2 common expansion 
         assert.equal(starterEntries[key].levelPlacement.mode, "vocabulary-level");
         assert.match(starterEntries[key].levelPlacement.reason, /N4 word v2 vocabulary-level placement/);
         assert.match(starterEntries[key].notes, /source level claim is unverified/);
-        assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+        if (!["凄い|すごい", "中々|なかなか", "無くなる|なくなる"].includes(key)) {
+            assert.match(starterEntries[key].notes, /Exact governed JMdict\/commonness verification supports/);
+        }
     }
     assert.match(starterEntries["凄い|すごい"].notes, /outside the JLPT kanji contract/);
     assert.match(starterEntries["味噌|みそ"].notes, /outside the JLPT kanji contract/);
@@ -7896,9 +7933,11 @@ test("tracked starter word data includes the first N4 common-pool Silver batch",
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assertCommonPoolPendingReviewNote(entry, key);
-        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
-        assert.match(entry?.notes || "", /TubeLex support/, key);
+        if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assertCommonPoolPendingReviewNote(entry, key);
+            assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+            assert.match(entry?.notes || "", /TubeLex support/, key);
+        }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
         assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
@@ -7984,9 +8023,11 @@ test("tracked starter word data includes the second N4 common-pool Silver batch"
         assert.equal(entry?.tags?.includes("common"), true, key);
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
-        assert.match(entry?.notes || "", /Source level claim unverified/, key);
         assertCommonPoolPendingReviewNote(entry, key);
-        assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
+        }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
         assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
@@ -8234,9 +8275,11 @@ test("tracked starter word data includes the third through seventh N4 common-poo
         assert.equal(entry?.tags?.includes("common"), true, key);
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
-        assert.match(entry?.notes || "", /Source level claim unverified/, key);
         assertCommonPoolPendingReviewNote(entry, key);
-        assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support|dictionary\/commonness\/frequency verification|JMdict\/commonness verification/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support|dictionary\/commonness\/frequency verification|JMdict\/commonness verification/, key);
+        }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
         assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
@@ -8399,9 +8442,11 @@ test("tracked starter word data includes the eighth through twelfth N4 common-po
         assert.equal(entry?.tags?.includes("common"), true, key);
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
-        assert.match(entry?.notes || "", /Source level claim unverified/, key);
         assertCommonPoolPendingReviewNote(entry, key);
-        assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support|dictionary\/commonness\/frequency verification|JMdict\/commonness verification/, key);
+        assert.match(entry?.notes || "", /Source level claim unverified/, key);
+        if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support|dictionary\/commonness\/frequency verification|JMdict\/commonness verification/, key);
+        }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
         assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
@@ -8531,8 +8576,10 @@ test("tracked starter word data includes the thirteenth and final N4 common-pool
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
         assert.match(entry?.notes || "", /Source level claim unverified/, key);
-        assertCommonPoolPendingReviewNote(entry, key);
-        assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support/, key);
+        if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assertCommonPoolPendingReviewNote(entry, key);
+            assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support/, key);
+        }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
         assert.ok(entry?.coverage?.focusKanji?.length > 0, key);
         assert.ok(Object.keys(entry?.coverage?.coversReadings || {}).length > 0, key);
@@ -8638,6 +8685,110 @@ test("tracked starter word data includes the thirteenth and final N4 common-pool
         assert.equal(starterEntries[key], undefined, key);
     }
     assert.notEqual(starterEntries["手元|てもと"], undefined);
+});
+
+test("tracked starter word data protects the first current-standard N4 Platinum batch fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.match(starterEntries["洋室|ようしつ"].notes, /useful housing, hotel, and room-type vocabulary/);
+    assert.match(starterEntries["新薬|しんやく"].notes, /useful health and news vocabulary/);
+    assert.match(starterEntries["空き家|あきや"].notes, /useful housing and neighborhood vocabulary/);
+    assert.match(starterEntries["重力|じゅうりょく"].notes, /learner-friendly school and science term/);
+    assert.equal(starterEntries["店頭|てんとう"].meaning, "storefront / shop entrance");
+    assert.match(starterEntries["店頭|てんとう"].notes, /storefront, shop entrance, or physical-store context/);
+    assert.match(starterEntries["ひと晩|ひとばん"].notes, /attested mixed-kana form of 一晩/);
+    assert.match(starterEntries["所有|しょゆう"].notes, /often used as 所有する or 所有している/);
+
+    for (const key of ["洋室|ようしつ", "新薬|しんやく", "空き家|あきや", "重力|じゅうりょく", "店頭|てんとう", "ひと晩|ひとばん", "所有|しょゆう"]) {
+        assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+    }
+});
+
+test("tracked starter word data protects the second current-standard N4 Platinum batch fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.match(starterEntries["教え|おしえ"].notes, /teaching, lesson, instruction, or guiding principle/);
+    assert.match(starterEntries["英字|えいじ"].notes, /forms and computer-input vocabulary/);
+    assert.match(starterEntries["着用|ちゃくよう"].notes, /clothing, uniforms, seat belts, or safety equipment/);
+    assert.match(starterEntries["中々|なかなか"].notes, /usually written in kana/);
+    assert.match(starterEntries["中々|なかなか"].notes, /with a negative verb it means not easily or not readily/);
+    assert.match(starterEntries["無くなる|なくなる"].notes, /be lost, disappear, or run out/);
+    assert.match(starterEntries["無くなる|なくなる"].notes, /outside the JLPT kanji contract/);
+    assert.equal(starterEntries["区立|くりつ"].meaning, "ward-run / established by a ward");
+    assert.match(starterEntries["区立|くりつ"].notes, /established or run by a municipal ward/);
+    assert.match(starterEntries["夏場|なつば"].notes, /summertime or during the summer period/);
+
+    for (const key of ["教え|おしえ", "英字|えいじ", "着用|ちゃくよう", "中々|なかなか", "無くなる|なくなる", "区立|くりつ", "夏場|なつば"]) {
+        assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+    }
+});
+
+test("tracked starter word data protects the third current-standard N4 Platinum batch fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.match(starterEntries["洋画|ようが"].notes, /Western or non-Japanese film/);
+    assert.match(starterEntries["洋画|ようが"].notes, /Western-style painting/);
+    assert.match(starterEntries["真夏|まなつ"].notes, /midsummer or the height of summer/);
+    assert.match(starterEntries["県立|けんりつ"].notes, /managed or established by a prefectural government/);
+    assert.match(starterEntries["同室|どうしつ"].notes, /同室になる or 同室の人/);
+    assert.match(starterEntries["私服|しふく"].notes, /non-uniform clothes/);
+    assert.match(starterEntries["都市|とし"].notes, /city or urban area/);
+    assert.equal(starterEntries["気|き"].meaning, "feeling / mood / intention");
+    assert.match(starterEntries["気|き"].notes, /Vる気がある expresses intention, willingness, or feeling like doing/);
+    assert.match(starterEntries["気|き"].notes, /not a generic kanji gloss/);
+    assert.match(starterEntries["痩せる|やせる"].notes, /intransitive Ichidan verb/);
+    assert.match(starterEntries["痩せる|やせる"].notes, /outside the current JLPT kanji contract/);
+
+    for (const key of ["洋画|ようが", "真夏|まなつ", "県立|けんりつ", "同室|どうしつ", "私服|しふく", "都市|とし"]) {
+        assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+    }
+});
+
+test("tracked starter word data protects the fourth current-standard N4 Platinum batch fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.match(starterEntries["教員|きょういん"].notes, /teacher, instructor, or member of the teaching staff/);
+    assert.equal(starterEntries["教員|きょういん"].exampleSentence.english, "There are fifty teachers at this school.");
+    assert.match(starterEntries["古着|ふるぎ"].notes, /old, used, or secondhand clothing/);
+    assert.equal(starterEntries["古着|ふるぎ"].exampleSentence.english, "These secondhand clothes are inexpensive.");
+    assert.match(starterEntries["工業|こうぎょう"].notes, /means manufacturing industry/);
+    assert.equal(starterEntries["工業|こうぎょう"].exampleSentence.english, "Manufacturing is thriving in this town.");
+    assert.match(starterEntries["かけ声|かけごえ"].notes, /attested variant of 掛け声/);
+    assert.equal(starterEntries["かけ声|かけごえ"].exampleSentence.english, "Everyone called out together.");
+    assert.equal(starterEntries["働き|はたらき"].exampleSentence.japanese, "この薬には熱を下げる働きがあります。");
+    assert.equal(starterEntries["働き|はたらき"].exampleSentence.reading, "このくすりにはねつをさげるはたらきがあります。");
+    assert.match(starterEntries["働き|はたらき"].notes, /function or effect sense/);
+    assert.match(starterEntries["都心|としん"].notes, /central or downtown part of a city/);
+    assert.match(starterEntries["凄い|すごい"].notes, /usually written in kana/);
+    assert.match(starterEntries["凄い|すごい"].notes, /outside the JLPT kanji contract/);
+    assert.match(starterEntries["画質|がしつ"].notes, /cameras, televisions, video, displays, and digital media/);
+
+    for (const key of ["教員|きょういん", "古着|ふるぎ", "工業|こうぎょう", "かけ声|かけごえ", "働き|はたらき", "都心|としん", "画質|がしつ"]) {
+        assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+    }
+});
+
+test("tracked starter word data protects the fifth current-standard N4 Platinum batch fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.match(starterEntries["次週|じしゅう"].notes, /written or slightly formal contexts/);
+    assert.match(starterEntries["次週|じしゅう"].notes, /来週 is more usual in everyday conversation/);
+    assert.match(starterEntries["別室|べっしつ"].notes, /activity, meeting, test, or waiting area/);
+    assert.match(starterEntries["体重|たいじゅう"].notes, /体重が増える/);
+    assert.match(starterEntries["体重|たいじゅう"].notes, /体重が減る/);
+    assert.match(starterEntries["赤字|あかじ"].notes, /financial deficit or being in the red/);
+    assert.match(starterEntries["赤字|あかじ"].notes, /writing or corrections in red ink/);
+    assert.match(starterEntries["作者|さくしゃ"].notes, /person who created a particular work/);
+    assert.equal(starterEntries["親元|おやもと"].meaning, "parents' home / parental home");
+    assert.match(starterEntries["親元|おやもと"].notes, /親元を離れる/);
+    assert.match(starterEntries["肉屋|にくや"].notes, /meat shop or the butcher/);
+    assert.match(starterEntries["特集|とくしゅう"].notes, /magazine, newspaper, or program/);
+
+    for (const key of ["次週|じしゅう", "別室|べっしつ", "体重|たいじゅう", "赤字|あかじ", "作者|さくしゃ", "親元|おやもと", "肉屋|にくや", "特集|とくしゅう"]) {
+        assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+        assert.match(starterEntries[key].notes, /DICTIONARY COMMON POOL/, key);
+        assert.match(starterEntries[key].notes, /Source level claim unverified/, key);
+    }
 });
 
 test("tracked starter word data protects current-standard N5 platinum examples and support notes", () => {

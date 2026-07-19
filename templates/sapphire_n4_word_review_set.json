@@ -24405,7 +24405,7 @@
     ],
     "meaningIncludes": [
       "storefront",
-      "in-store counter"
+      "shop entrance"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 0"
@@ -24414,20 +24414,20 @@
     "reviewedAt": "2026-07-17",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-17",
-    "revalidationSummary": "Current-standard Sapphire revalidation separated Japanese-source, generated-surface/internal, and manual-review evidence for the shipped 店頭 card. This is structural card certification only, not Platinum, Obsidian v2.5 proof, source truth, JLPT placement certification, or release readiness.",
+    "revalidatedAt": "2026-07-19",
+    "revalidationSummary": "Post-fix current-standard Sapphire revalidation checked the corrected 店頭 meaning storefront / shop entrance against the registered Japanese-source citation and regenerated learner-facing surface. Evidence lanes remain separated; this is structural certification only, not Platinum, Obsidian v2.5 proof, JLPT placement certification, or release readiness.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E5%BA%97%E9%A0%AD",
-        "detail": "Manual Japanese-source field check verified 店頭, reading てんとう, and the learner senses storefront and in-store counter. The source is used only for Sapphire word-field verification."
+        "detail": "Manual Japanese-source field check verified 店頭, reading てんとう, and the learner senses storefront and shop entrance. The source is used only for Sapphire word-field verification."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "npm run deck:words:sapphire:batch -- --level=4 --limit=8 --queue=missing-current-standard",
-        "detail": "Live batch report checked the shipped 店頭 card: meanings storefront / in-store counter; example この商品は店頭で買えます。; reading このしょうひんはてんとうでかえます。; audio word-reading-店頭-てんとう; rendered pitch 0; labels JLPT N4 and Reading coverage support."
+        "source": "live regenerated N4 word surface inspected through deck:words:platinum:batch",
+        "detail": "Post-fix live surface review checked 店頭: meanings storefront / shop entrance; example この商品は店頭で買えます。; reading このしょうひんはてんとうでかえます。; audio word-reading-店頭-てんとう; rendered pitch 0; labels JLPT N4 and Reading coverage support."
       },
       {
         "type": "golden-regression",
@@ -29582,7 +29582,7 @@
     ],
     "meaningIncludes": [
       "ward-run",
-      "municipal by ward"
+      "established by a ward"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 1"
@@ -29591,20 +29591,20 @@
     "reviewedAt": "2026-07-17",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-17",
-    "revalidationSummary": "Current-standard Sapphire structural revalidation with separate evidence lanes; not source truth or JLPT placement certification.",
+    "revalidatedAt": "2026-07-19",
+    "revalidationSummary": "Post-fix current-standard Sapphire revalidation checked the corrected 区立 meaning ward-run / established by a ward against the registered Japanese-source citation and regenerated learner-facing surface. Evidence lanes remain separated; this is structural certification only, not Platinum, Obsidian v2.5 proof, JLPT placement certification, or release readiness.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JLearn Japanese Dictionary https://jlearn.net/Dictionary/Browse/1620890-kuritsu-%E3%81%8F%E3%82%8A%E3%81%A4-%E5%8C%BA%E7%AB%8B; Kotobank https://kotobank.jp/word/%E5%8C%BA%E7%AB%8B-252668",
-        "detail": "Japanese-source field check verified 区立, reading くりつ, and ward-established/ward-run meaning, including institutional use."
+        "detail": "Manual Japanese-source field check verified 区立, reading くりつ, and the learner meanings ward-run and established by a ward. The sources are used only for Sapphire word-field verification."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
-        "source": "live N4 Sapphire batch report",
-        "detail": "Checked 区立|くりつ: ward-run / municipal by ward; 区立の図書館で本を借りました。; audio word-reading-区立-くりつ; pitch 1; N4 and Reading coverage support labels."
+        "source": "live regenerated N4 word surface inspected through deck:words:platinum:batch",
+        "detail": "Post-fix live surface review checked 区立: meanings ward-run / established by a ward; example 区立の図書館で本を借りました。; reading くりつのとしょかんでほんをかりました。; audio word-reading-区立-くりつ; rendered pitch 1; labels JLPT N4 and Reading coverage support."
       },
       {
         "type": "golden-regression",
@@ -32774,7 +32774,7 @@
     "meaningIncludes": [
       "feeling",
       "mood",
-      "spirit"
+      "intention"
     ],
     "pitchAccentIncludes": [
       "Pitch 1: 0"
@@ -32783,20 +32783,20 @@
     "reviewedAt": "2026-07-17",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-17",
-    "revalidationSummary": "Current-standard Sapphire structural revalidation with separated evidence lanes; no higher-lane certification.",
+    "revalidatedAt": "2026-07-19",
+    "revalidationSummary": "Revalidated the protected learner gloss after Platinum card-surface review aligned the broad 気 senses with the exact intention-pattern example; no higher-lane certification.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E6%B0%97",
-        "detail": "Japanese-source field check verified 気, reading き, broad mood/spirit senses, and motivation/intention usage after a verb."
+        "detail": "Japanese-source field check verified 気, reading き, and the selected feeling, mood, and intention senses, including motivation/intention usage after a verb."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "live N4 Sapphire batch report",
-        "detail": "Checked 気|き: feeling / mood / spirit; 今日は勉強する気があります。; audio word-reading-気-き; pitch 0; N4 and Reading coverage support."
+        "detail": "Checked 気|き: feeling / mood / intention; 今日は勉強する気があります。; audio word-reading-気-き; pitch 0; N4 and Reading coverage support."
       },
       {
         "type": "golden-regression",
@@ -32833,7 +32833,7 @@
       {
         "type": "example-review",
         "source": "manual Sapphire product review",
-        "detail": "今日は勉強する気があります。 naturally demonstrates motivation/intent and keeps the broad gloss set from being misleading."
+        "detail": "今日は勉強する気があります。 naturally demonstrates intention or willingness after a verb, and the corrected gloss now names that selected sense explicitly."
       },
       {
         "type": "manual-review",
@@ -35346,8 +35346,8 @@
     "reviewedAt": "2026-07-17",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-17",
-    "revalidationSummary": "Current-standard Sapphire structural certification with separate evidence lanes only.",
+    "revalidatedAt": "2026-07-19",
+    "revalidationSummary": "Revalidated the protected example after Platinum card-surface review replaced an awkward effect sentence with a natural function-pattern sentence; no higher-lane certification.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
@@ -35359,7 +35359,7 @@
       {
         "type": "generated-surface",
         "source": "live N4 Sapphire batch report",
-        "detail": "働き|はたらき: function / work; この薬の働きは強いです。; word-reading-働き-はたらき; pitch 0; N4 and Reading coverage support."
+        "detail": "働き|はたらき: function / work; この薬には熱を下げる働きがあります。; word-reading-働き-はたらき; pitch 0; N4 and Reading coverage support."
       },
       {
         "type": "golden-regression",
@@ -35396,7 +35396,7 @@
       {
         "type": "example-review",
         "source": "manual Sapphire product review",
-        "detail": "この薬の働きは強いです。 is natural and selects function/effect."
+        "detail": "この薬には熱を下げる働きがあります。 naturally demonstrates the function or effect sense through the productive 働きがある pattern."
       },
       {
         "type": "manual-review",
@@ -37447,13 +37447,13 @@
     "reviewedAt": "2026-07-17",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-17",
-    "revalidationSummary": "Structural Sapphire only.",
+    "revalidatedAt": "2026-07-19",
+    "revalidationSummary": "Structural Sapphire revalidated after Platinum card-surface review corrected the learner-facing English gloss from the awkward under-one's-parents wording to parental home.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JLearn https://jlearn.net/dictionary/%E8%A6%AA%E5%85%83",
-        "detail": "Verified 親元|おやもと, parents' home/under parents."
+        "detail": "Verified 親元|おやもと, parents' home/parental home."
       }
     ],
     "internalChecks": [

@@ -111,7 +111,7 @@ function summarizeBenchmarkRun(run = null) {
             mediaAssetCount: run.package?.mediaAssetCount || 0,
             exportCount: run.package?.exportCount || 0,
             ankiPackageSkipped: Boolean(run.package?.ankiPackageSkipped),
-            cacheHit: run.package?.integrityChecks?.cacheHit ?? run.package?.ankiPackageTimingsMs?.cacheHit ?? null,
+            cacheHit: run.package?.cacheHit ?? null,
             timingsMs: run.package?.timingsMs || null,
             ankiPackageTimingsMs: run.package?.ankiPackageTimingsMs || null,
             pythonTimingsMs: run.package?.pythonTimingsMs || null,
@@ -296,8 +296,12 @@ function cleanOutDir(dirPath) {
     });
 }
 
-function cleanApkgCacheDir() {
-    removeGeneratedPathSync(path.join(process.cwd(), "out", ".apkg-cache"), {
+function resolveBuildApkgCacheDir(outDir) {
+    return path.join(path.dirname(path.resolve(outDir)), ".apkg-cache");
+}
+
+function cleanApkgCacheDir(outDir = path.join(process.cwd(), "out", "build")) {
+    removeGeneratedPathSync(resolveBuildApkgCacheDir(outDir), {
         recursive: true,
         force: true,
         label: "APKG benchmark cache directory",
@@ -306,7 +310,7 @@ function cleanApkgCacheDir() {
 
 async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDir, doctorReport, coldApkgCache = false }) {
     if (coldApkgCache) {
-        cleanApkgCacheDir();
+        cleanApkgCacheDir(outDir);
     }
     cleanOutDir(outDir);
 
@@ -337,6 +341,7 @@ async function runBuildBenchmarkPass({ config, levels, limit, concurrency, outDi
             mediaAssetCount: summary.package.mediaAssetCount,
             exportCount: summary.package.exportCount,
             ankiPackageSkipped: Boolean(summary.package.ankiPackage?.skipped),
+            cacheHit: Boolean(summary.package.ankiPackage?.cacheHit),
             timingsMs: summary.package.timingsMs || null,
             ankiPackageTimingsMs: summary.package.ankiPackage?.timingsMs || null,
             pythonTimingsMs: summary.package.ankiPackage?.pythonTimingsMs || null,
@@ -501,6 +506,7 @@ module.exports = {
     main,
     parseArgs,
     resolveBenchmarkOutDirBase,
+    resolveBuildApkgCacheDir,
     resolveBudget,
     resolveRepeatCount,
     runBuildBenchmarkPass,

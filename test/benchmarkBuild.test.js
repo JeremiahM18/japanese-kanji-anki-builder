@@ -12,6 +12,7 @@ const {
     evaluateRepeatedBudget,
     formatRunMemory,
     parseArgs,
+    resolveBuildApkgCacheDir,
     resolveBenchmarkOutDirBase,
     resolveBudget,
     resolveRepeatCount,
@@ -75,6 +76,7 @@ test("build benchmark compact summary keeps timings and drops bulky coverage pay
                 mediaAssetCount: 2,
                 exportCount: 1,
                 ankiPackageSkipped: false,
+                cacheHit: true,
                 timingsMs: { copyMedia: 1 },
             },
             timingsMs: { export: 10 },
@@ -88,6 +90,7 @@ test("build benchmark compact summary keeps timings and drops bulky coverage pay
     const keys = buildBuildBenchmarkKeysOnly(result);
 
     assert.equal(summary.measured.durationMs, 123);
+    assert.equal(summary.measured.package.cacheHit, true);
     assert.equal(Object.hasOwn(summary.measured, "coverage"), false);
     assert.deepEqual(keys.children.measured.children.coverage.children.giant.type, "array");
 });
@@ -111,6 +114,19 @@ test("resolveBenchmarkOutDirBase defaults next to build output", () => {
     });
 
     assert.equal(resolved, path.join(process.cwd(), "out", "bench-build"));
+});
+
+test("build benchmark APKG cache is shared outside warmup and measured roots", () => {
+    const benchmarkRoot = path.join(process.cwd(), "out", "bench-build");
+
+    assert.equal(
+        resolveBuildApkgCacheDir(path.join(benchmarkRoot, "warmup")),
+        path.join(benchmarkRoot, ".apkg-cache"),
+    );
+    assert.equal(
+        resolveBuildApkgCacheDir(path.join(benchmarkRoot, "measured")),
+        path.join(benchmarkRoot, ".apkg-cache"),
+    );
 });
 
 test("cleanOutDir refuses non-generated workspace paths", () => {

@@ -14,7 +14,7 @@ This document defines the supported compatibility surface for shipped deck artif
 
 | Surface | Status | Notes |
 | --- | --- | --- |
-| Node.js 20+ | Supported | Project engine floor is Node `>=20`; CI verifies Node 20 and Node 22 |
+| Node.js 20.19+, 22.13+, or 24+ | Supported | Project engine range is Node `^20.19.0 \|\| ^22.13.0 \|\| >=24`, aligned with the ESLint 10 development toolchain; CI verifies the latest Node 20 and Node 22 releases |
 | Windows desktop build | Supported | Primary local development path |
 | macOS smoke build | Supported | Verified in CI smoke lane |
 | Ubuntu smoke build | Supported | Verified in CI smoke lane |

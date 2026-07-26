@@ -82,6 +82,30 @@ test("governed file transaction rolls back when post-write validation fails", ()
     assert.equal(fs.readFileSync(targetPath, "utf8"), "before\n");
 });
 
+test("governed file transaction revalidates a target immediately before replacement", () => {
+    const rootDir = makeWorkspace();
+    const transactionRoot = path.join(rootDir, "out", "file-transactions");
+    const lockPath = path.join(transactionRoot, "revalidation-fixture.lock");
+    const targetPath = path.join(rootDir, "templates", "target.json");
+    fs.writeFileSync(targetPath, "before\n");
+
+    assert.throws(() => runGovernedFileTransactionSync({
+        workspaceRoot: rootDir,
+        transactionRoot,
+        lockPath,
+        transactionName: "revalidation-fixture",
+        changes: [{ filePath: targetPath, data: "transaction\n" }],
+        injectFailure(phase) {
+            if (phase === "before-commit") {
+                fs.writeFileSync(targetPath, "concurrent-writer\n");
+            }
+        },
+    }), /aborted before commit.*target changed before commit/);
+
+    assert.equal(fs.readFileSync(targetPath, "utf8"), "concurrent-writer\n");
+    assert.equal(fs.existsSync(lockPath), false);
+});
+
 test("governed file transaction rejects concurrent writers and exposes orphan-lock recovery", () => {
     const rootDir = makeWorkspace();
     const lockPath = path.join(rootDir, "out", "file-transactions", "shared.lock");

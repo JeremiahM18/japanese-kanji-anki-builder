@@ -105,6 +105,19 @@ function readFileState(filePath, fsImpl = fs) {
     }
 }
 
+function assertTargetMatchesBeforeState(change, fsImpl = fs) {
+    const current = readFileState(change.filePath, fsImpl);
+    if (
+        current.exists !== change.beforeExists
+        || current.sha256 !== change.beforeSha256
+    ) {
+        throw new Error(
+            `Governed file transaction target changed before commit: ${change.filePath}; `
+            + `expected ${change.beforeSha256 || "(missing)"}, found ${current.sha256 || "(missing)"}.`
+        );
+    }
+}
+
 /**
  * @param {unknown} data
  * @param {BufferEncoding} [encoding]
@@ -443,7 +456,12 @@ function runGovernedFileTransactionSync({
         injectFailure?.("prepared", { journal, metadata });
 
         for (const change of journal.changes) {
+            assertTargetMatchesBeforeState(change, fsImpl);
+        }
+
+        for (const change of journal.changes) {
             injectFailure?.("before-commit", { change, journal, metadata });
+            assertTargetMatchesBeforeState(change, fsImpl);
             fsImpl.renameSync(change.stagePath, change.filePath);
             const committed = readFileState(change.filePath, fsImpl);
             if (committed.sha256 !== change.afterSha256) {
@@ -476,6 +494,14 @@ function runGovernedFileTransactionSync({
             fsImpl.rmSync(resolvedLockPath, { force: true });
             cleanupCompleted = true;
             throw error;
+        }
+        if (journal.committedIndexes.length === 0) {
+            removeTransactionArtifacts({ journal, fsImpl });
+            fsImpl.rmSync(resolvedLockPath, { force: true });
+            cleanupCompleted = true;
+            const wrapped = new Error(`Governed file transaction aborted before commit: ${error.message}`);
+            wrapped.cause = error;
+            throw wrapped;
         }
         const rollbackFailures = restoreTransactionTargets({ journal, fsImpl });
         if (rollbackFailures.length === 0) {

@@ -26,11 +26,13 @@ const {
 const DEFAULT_MODEL_ID = "paraphrase-multilingual-minilm-l12-v2-q8";
 const DEFAULT_CREATED_BY = "scripts/generateNlpEmbeddings.js";
 const DEFAULT_LANE = "assistive-example-reranking";
-const REUSE_POLICY_VERSION = 1;
+const REUSE_POLICY_VERSION = 2;
+const WORD_EMBEDDING_INPUT_COMPOSITION = "word-card-semantic-v2";
 const EMBEDDING_LIMITATIONS = Object.freeze([
     "Embedding artifacts are assistive-only review signals and must be human-reviewed before any learner-facing card change.",
     "Embedding artifacts are not source evidence and do not certify Gold, Sapphire, Platinum, Obsidian, or release readiness.",
     "Semantic similarity can miss Japanese sense, register, level-fit, and example-naturalness problems.",
+    "Word-card embeddings exclude the unbounded Notes field because it commonly contains source and placement provenance rather than core semantic surface; reviewers must inspect Notes separately.",
 ]);
 
 function sha256FileWithSize(filePath) {
@@ -101,6 +103,9 @@ function assertEmbeddingModel({ manifest, modelId, lane }) {
     if (!model.embeddingConfig) {
         throw new Error(`NLP embedding model ${modelId} must declare embeddingConfig.`);
     }
+    if (!model.inputPolicy) {
+        throw new Error(`NLP embedding model ${modelId} must declare inputPolicy.`);
+    }
     return model;
 }
 
@@ -117,12 +122,11 @@ function buildWordEmbeddingInput(row) {
         `reading: ${row.reading}`,
         row.meaning ? `meaning: ${row.meaning}` : null,
         row.exampleSentence ? `example: ${normalizeExampleForEmbedding(row.exampleSentence)}` : null,
-        row.notes ? `notes: ${row.notes}` : null,
     ].filter(Boolean);
     return parts.join("\n");
 }
 
-function buildWordEmbeddingGeneratorParameters({ level, lane, limit }) {
+function buildWordEmbeddingGeneratorParameters({ level, lane, limit, inputPolicy }) {
     const fullScope = !Number.isFinite(limit);
     return {
         task: "word-embedding-generation",
@@ -131,6 +135,12 @@ function buildWordEmbeddingGeneratorParameters({ level, lane, limit }) {
         lane,
         fullScope,
         limit: fullScope ? null : limit,
+        inputComposition: WORD_EMBEDDING_INPUT_COMPOSITION,
+        includedFields: "written,reading,meaning,exampleSentence",
+        excludedFields: "notes",
+        maxInputCharacters: inputPolicy.maxInputCharacters,
+        maxInputTokens: inputPolicy.maxInputTokens,
+        overflowPolicy: inputPolicy.overflowPolicy,
     };
 }
 
@@ -166,7 +176,12 @@ function buildNlpWordEmbeddingRunContext({
     const wordTsvHash = sha256FileWithSize(resolvedWordTsvPath);
     const manifestHash = sha256FileWithSize(resolvedManifestPath);
     const inputHashes = buildArtifactInputHashes([wordTsvHash, manifestHash], resolvedWorkspaceRoot);
-    const parameters = buildWordEmbeddingGeneratorParameters({ level, lane, limit });
+    const parameters = buildWordEmbeddingGeneratorParameters({
+        level,
+        lane,
+        limit,
+        inputPolicy: model.inputPolicy,
+    });
 
     return {
         allowRemoteModels,
@@ -244,10 +259,36 @@ function vectorMagnitude(vector = []) {
 }
 
 async function buildEmbeddingItems({ rows, level, embedTextFn }) {
+    const preparedRows = rows.map((row, index) => ({
+        index,
+        row,
+        inputText: buildWordEmbeddingInput(row),
+    }));
+    if (typeof embedTextFn.validateInput === "function") {
+        const inputPolicyErrors = [];
+        for (const prepared of preparedRows) {
+            try {
+                await embedTextFn.validateInput(prepared.inputText);
+            } catch (error) {
+                inputPolicyErrors.push(
+                    `row ${prepared.row.rowNumber || prepared.index + 2} `
+                    + `${prepared.row.written}|${prepared.row.reading}: ${error.message}`
+                );
+            }
+        }
+        if (inputPolicyErrors.length > 0) {
+            const sample = inputPolicyErrors.slice(0, 25);
+            const remainder = inputPolicyErrors.length - sample.length;
+            throw new Error(
+                `NLP embedding input policy rejected ${inputPolicyErrors.length} of ${preparedRows.length} rows before inference:\n`
+                + sample.map((message) => `- ${message}`).join("\n")
+                + (remainder > 0 ? `\n- ... ${remainder} additional rejected rows` : "")
+            );
+        }
+    }
     const items = [];
-    for (let index = 0; index < rows.length; index += 1) {
-        const row = rows[index];
-        const inputText = buildWordEmbeddingInput(row);
+    for (const prepared of preparedRows) {
+        const { index, row, inputText } = prepared;
         const vector = await embedTextFn(inputText);
         items.push({
             id: `n${level}-word-embedding-${String(index + 1).padStart(4, "0")}`,
@@ -302,6 +343,7 @@ async function buildNlpWordEmbeddingArtifact({
             pooling: runContext.model.embeddingConfig.pooling,
             normalized: runContext.model.embeddingConfig.normalized,
             distanceMetric: runContext.model.embeddingConfig.distanceMetric,
+            inputPolicy: runContext.model.inputPolicy,
             deterministic: {
                 requiresPinnedModel: true,
                 requiresPinnedRuntime: true,
@@ -381,5 +423,6 @@ module.exports = {
     buildWordEmbeddingInput,
     formatNlpEmbeddingGenerationSummary,
     parseWordDeckEmbeddingRows,
+    WORD_EMBEDDING_INPUT_COMPOSITION,
     writeNlpWordEmbeddingArtifact,
 };

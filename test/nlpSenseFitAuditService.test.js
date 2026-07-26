@@ -48,6 +48,11 @@ function buildManifest() {
                     distanceMetric: "cosine",
                     dtype: "q8",
                 },
+                inputPolicy: {
+                    maxInputCharacters: 4096,
+                    maxInputTokens: 128,
+                    overflowPolicy: "reject",
+                },
             },
         },
     };
@@ -88,6 +93,11 @@ function writeEmbeddingArtifact(dir) {
             pooling: "mean",
             normalized: true,
             distanceMetric: "cosine",
+            inputPolicy: {
+                maxInputCharacters: 4096,
+                maxInputTokens: 128,
+                overflowPolicy: "reject",
+            },
             deterministic: {
                 requiresPinnedModel: true,
                 requiresPinnedRuntime: true,

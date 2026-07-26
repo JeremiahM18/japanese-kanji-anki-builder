@@ -1,3 +1,7 @@
+const fs = require("node:fs");
+const path = require("node:path");
+const { z } = require("zod");
+
 const {
     ACTIVE_PLATINUM_STATUSES,
     CURRENT_WORD_PLATINUM_REVIEW_STANDARD,
@@ -17,6 +21,47 @@ const WORD_SOURCE_POSTURE_CATEGORIES = Object.freeze({
 
 const WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER = "word_source_independence_not_proven";
 const WORD_SOURCE_ORIGIN_LIMITATION_MARKER = "word_source_claim_origin_independence_not_evaluated";
+
+const wordSourceOriginPolicySchema = z.object({
+    version: z.literal(1),
+    checkedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/u),
+    mode: z.literal("limitation_only"),
+    limitationMarker: z.literal(WORD_SOURCE_ORIGIN_LIMITATION_MARKER),
+    platinumCardFieldReportMayProveOriginIndependence: z.literal(false),
+    originEvidenceAuthority: z.object({
+        manifest: z.literal("templates/word_source_manifest.json"),
+        auditCommand: z.literal("npm run data:audit:jlpt:word-sources -- --governance-strict"),
+        identity: z.literal("exact written|reading"),
+    }).strict(),
+    rule: z.string().min(1),
+    removalGate: z.string().min(1),
+}).strict();
+
+function getDefaultWordSourceOriginPolicy({
+    rootDir = process.cwd(),
+} = {}) {
+    const filePath = path.join(rootDir, "templates", "word_source_origin_policy.json");
+    let policy;
+    try {
+        policy = wordSourceOriginPolicySchema.parse(
+            JSON.parse(fs.readFileSync(filePath, "utf8"))
+        );
+    } catch (error) {
+        throw new Error(`Invalid word source-origin policy ${filePath}: ${error.message}`);
+    }
+    const authorityManifestPath = path.resolve(rootDir, policy.originEvidenceAuthority.manifest);
+    if (!fs.existsSync(authorityManifestPath)) {
+        throw new Error(`Word source-origin authority manifest is missing: ${authorityManifestPath}`);
+    }
+    const packageJson = JSON.parse(fs.readFileSync(path.resolve(rootDir, "package.json"), "utf8"));
+    const auditScript = policy.originEvidenceAuthority.auditCommand.match(/^npm run ([A-Za-z0-9:_-]+)/u)?.[1];
+    if (!auditScript || !packageJson.scripts?.[auditScript]) {
+        throw new Error(
+            `Word source-origin authority command is not registered: ${policy.originEvidenceAuthority.auditCommand}`
+        );
+    }
+    return policy;
+}
 
 function normalizeText(value) {
     return String(value ?? "").trim();
@@ -72,6 +117,7 @@ function resolveWordFieldVerificationSources(entry = {}, {
 }
 
 function classifyWordSourcePosture(entry = {}, options = {}) {
+    const originPolicy = options.originPolicy || getDefaultWordSourceOriginPolicy();
     const sources = resolveWordFieldVerificationSources(entry, options);
     const sourceGroups = [...new Set(sources.map((source) => source.independenceGroup).filter(Boolean))].sort();
     const sourceIds = sources.map((source) => source.sourceId).sort();
@@ -95,7 +141,7 @@ function classifyWordSourcePosture(entry = {}, options = {}) {
             category === WORD_SOURCE_POSTURE_CATEGORIES.SINGLE_SOURCE_FAMILY
                 ? WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER
                 : "",
-            WORD_SOURCE_ORIGIN_LIMITATION_MARKER,
+            originPolicy.limitationMarker,
         ].filter(Boolean),
     };
 }
@@ -141,6 +187,7 @@ function buildPlatinumWordSourcePostureReport({
     entries = [],
     level = null,
     manifest = getDefaultPlatinumCardSourceManifest(),
+    originPolicy = getDefaultWordSourceOriginPolicy(),
 } = {}) {
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const activeEntries = reviewEntries.filter((entry) => (
@@ -148,7 +195,7 @@ function buildPlatinumWordSourcePostureReport({
         && entryUsesCurrentWordPlatinumStandard(entry)
     ));
     const cards = activeEntries
-        .map((entry) => classifyWordSourcePosture(entry, { manifest }))
+        .map((entry) => classifyWordSourcePosture(entry, { manifest, originPolicy }))
         .sort((left, right) => left.identity.localeCompare(right.identity, "ja"));
     const counts = summarizeCards(cards);
 
@@ -161,10 +208,12 @@ function buildPlatinumWordSourcePostureReport({
             sourceIndependenceNotProven: WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER,
             sourceOriginIndependenceNotEvaluated: WORD_SOURCE_ORIGIN_LIMITATION_MARKER,
         },
+        originPolicy,
         policy: {
-            note: "A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration. Word placement/source-claim origin independence is surfaced as not evaluated until a word source-origin manifest exists.",
+            note: "A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration. The tracked word source-origin policy deliberately keeps placement/source-claim origin independence outside this card-field report.",
             structuralGate: "missing_governed_source must be zero for structurally current-standard word entries",
             independenceClaimGate: "independent_source_families_proven is required before claiming independent word-source corroboration",
+            originClaimGate: originPolicy.rule,
         },
         counts,
         sourceUse: summarizeSourceUse(cards),
@@ -197,6 +246,7 @@ function buildPlatinumWordSourcePostureSummary(levelReports = []) {
             sourceIndependenceNotProven: WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER,
             sourceOriginIndependenceNotEvaluated: WORD_SOURCE_ORIGIN_LIMITATION_MARKER,
         },
+        originPolicy: reports[0]?.originPolicy || getDefaultWordSourceOriginPolicy(),
         passed: reports.every((report) => report.passed),
         totals: buildAggregateCounts(reports),
         levels: reports,
@@ -250,7 +300,8 @@ function formatPlatinumWordSourcePostureReport(summary = {}) {
         "Policy:",
         "- This report is scoped to structurally current-standard word entries only. It does not count generated rows that still lack structural review.",
         `- ${summary.markers?.sourceIndependenceNotProven || WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER}: a structurally governed single-source entry must not be described as independently corroborated.`,
-        `- ${summary.markers?.sourceOriginIndependenceNotEvaluated || WORD_SOURCE_ORIGIN_LIMITATION_MARKER}: word source-claim origin independence is not evaluated until a word source-origin manifest exists.`,
+        `- ${summary.markers?.sourceOriginIndependenceNotEvaluated || WORD_SOURCE_ORIGIN_LIMITATION_MARKER}: ${summary.originPolicy?.rule || "word source-claim origin independence is governed separately and is not evaluated by this report."}`,
+        `- Origin authority: ${summary.originPolicy?.originEvidenceAuthority?.manifest || "templates/word_source_manifest.json"}; ${summary.originPolicy?.originEvidenceAuthority?.auditCommand || "npm run data:audit:jlpt:word-sources -- --governance-strict"}.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );
 
@@ -284,4 +335,6 @@ module.exports = {
     buildPlatinumWordSourcePostureSummary,
     classifyWordSourcePosture,
     formatPlatinumWordSourcePostureReport,
+    getDefaultWordSourceOriginPolicy,
+    wordSourceOriginPolicySchema,
 };

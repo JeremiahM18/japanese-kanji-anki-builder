@@ -18,6 +18,8 @@ function parseArgs(argv) {
             options.output = arg.split("=")[1];
         } else if (arg === "--check") {
             options.check = true;
+        } else {
+            throw new Error(`Unknown argument for normalizeCuratedStudyData: ${arg}`);
         }
     }
 

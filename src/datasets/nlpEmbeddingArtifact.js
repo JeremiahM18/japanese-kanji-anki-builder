@@ -61,6 +61,11 @@ const modelEvidenceSchema = z.object({
     pooling: z.enum(["model-default", "mean", "cls", "none"]),
     normalized: z.boolean(),
     distanceMetric: z.enum(["cosine", "dot-product", "euclidean"]),
+    inputPolicy: z.object({
+        maxInputCharacters: z.number().int().positive(),
+        maxInputTokens: z.number().int().positive(),
+        overflowPolicy: z.literal("reject"),
+    }).strict(),
     deterministic: deterministicSchema,
 }).strict();
 

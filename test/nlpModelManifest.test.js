@@ -70,6 +70,11 @@ function buildManifest(overrides = {}) {
                     distanceMetric: "cosine",
                     dtype: "q8",
                 },
+                inputPolicy: {
+                    maxInputCharacters: 4096,
+                    maxInputTokens: 128,
+                    overflowPolicy: "reject",
+                },
                 checkedAt: "2026-05-20",
                 localArtifact: {
                     path: "models/fixture.onnx",
@@ -222,6 +227,11 @@ test("tracked NLP model manifest loads with assistive-only boundaries", () => {
     assert.equal(Object.keys(manifest.models).length, 1);
     assert.equal(manifest.models["paraphrase-multilingual-minilm-l12-v2-q8"].status, "active");
     assert.equal(manifest.models["paraphrase-multilingual-minilm-l12-v2-q8"].embeddingConfig.embeddingDimension, 384);
+    assert.deepEqual(manifest.models["paraphrase-multilingual-minilm-l12-v2-q8"].inputPolicy, {
+        maxInputCharacters: 4096,
+        maxInputTokens: 128,
+        overflowPolicy: "reject",
+    });
     assert.equal(manifest.runtimes["transformers-js"].status, "active");
     assert.equal(manifest.runtimes["transformers-js"].packageVersion, "3.8.1");
     assert.equal(manifest.runtimes["onnxruntime-node"].status, "registered");

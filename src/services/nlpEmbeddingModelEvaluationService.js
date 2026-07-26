@@ -133,12 +133,74 @@ async function buildTransformersEmbedTextFn({
         cacheDir,
         allowRemoteModels,
     });
-    return async (text) => {
+    if (typeof extractor.tokenizer !== "function") {
+        throw new Error("Transformers.js feature extractor does not expose a callable tokenizer for input-policy enforcement.");
+    }
+    const validateInput = (text) => assertEmbeddingInputWithinPolicy(text, model.inputPolicy, {
+        tokenizer: extractor.tokenizer,
+    });
+    const embedText = async (text) => {
+        await validateInput(text);
         const output = await extractor(text, {
             pooling: model.embeddingConfig.pooling === "model-default" ? undefined : model.embeddingConfig.pooling,
             normalize: model.embeddingConfig.normalized,
+            truncation: false,
         });
         return Array.from(output.data);
+    };
+    embedText.validateInput = validateInput;
+    return embedText;
+}
+
+function countTokenIds(inputIds) {
+    if (Array.isArray(inputIds)) {
+        return inputIds.flat(Infinity).length;
+    }
+    if (ArrayBuffer.isView(inputIds?.data)) {
+        return inputIds.data.length;
+    }
+    if (Array.isArray(inputIds?.data)) {
+        return inputIds.data.flat(Infinity).length;
+    }
+    if (Array.isArray(inputIds?.dims) && inputIds.dims.length > 0) {
+        return inputIds.dims.reduce((product, value) => product * value, 1);
+    }
+    return null;
+}
+
+async function assertEmbeddingInputWithinPolicy(text, inputPolicy, {
+    tokenizer,
+} = {}) {
+    if (!inputPolicy || inputPolicy.overflowPolicy !== "reject") {
+        throw new Error("NLP embedding model must declare a reject-only inputPolicy.");
+    }
+    const normalized = String(text ?? "");
+    const characterCount = Array.from(normalized).length;
+    if (characterCount > inputPolicy.maxInputCharacters) {
+        throw new Error(
+            `NLP embedding input has ${characterCount} characters; policy maximum is ${inputPolicy.maxInputCharacters}. Silent truncation is forbidden.`
+        );
+    }
+    if (typeof tokenizer !== "function") {
+        throw new Error("NLP embedding token limit cannot be verified because no callable tokenizer was supplied.");
+    }
+    const tokenized = await tokenizer(normalized, {
+        add_special_tokens: true,
+        padding: false,
+        truncation: false,
+    });
+    const tokenCount = countTokenIds(tokenized?.input_ids);
+    if (!Number.isSafeInteger(tokenCount) || tokenCount < 1) {
+        throw new Error("NLP embedding tokenizer did not return a countable input_ids sequence.");
+    }
+    if (tokenCount > inputPolicy.maxInputTokens) {
+        throw new Error(
+            `NLP embedding input has ${tokenCount} tokens; policy maximum is ${inputPolicy.maxInputTokens}. Silent truncation is forbidden.`
+        );
+    }
+    return {
+        characterCount,
+        tokenCount,
     };
 }
 
@@ -189,6 +251,7 @@ async function buildNlpEmbeddingModelEvaluationReport({
             modelVersion: model.modelVersion,
             huggingFaceModelId: model.origin?.huggingFaceModelId || null,
             embeddingConfig: model.embeddingConfig || null,
+            inputPolicy: model.inputPolicy || null,
         },
         cacheDir: path.resolve(cacheDir),
         allowRemoteModels: Boolean(allowRemoteModels),
@@ -254,9 +317,11 @@ function writeEvaluationReport(filePath, report) {
 }
 
 module.exports = {
+    assertEmbeddingInputWithinPolicy,
     buildDefaultNlpEmbeddingBenchmarkPath,
     buildNlpEmbeddingModelEvaluationReport,
     buildTransformersEmbedTextFn,
+    countTokenIds,
     cosineSimilarity,
     evaluateEmbeddingBenchmark,
     formatNlpEmbeddingModelEvaluationReport,

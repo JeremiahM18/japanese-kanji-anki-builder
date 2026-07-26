@@ -12,7 +12,9 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run lint` | Run ESLint |
 | `npm run typecheck` | Run the staged JSDoc typecheck gate |
 | `npm run docs:status-audit` | Compare tracked documentation status language against current review counts, generated denominators, npm command routing, and lane boundaries; fails when README, CHANGELOG, CLAUDE, workflow, command-reference, verification, architecture, or overview docs drift from tracked status or omit Silver/Gold/Sapphire/Platinum/Obsidian separation |
-| `npm run supply-chain:audit` | Verify lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, workflow permissions, and release artifact boundaries |
+| `npm run vault:validate -- --vault="<absolute Kanji Builder vault path>" --max-age-days=14` | Read-only validation of Kanji Builder vault-note YAML, commit freshness, Markdown structure, duplicate titles/basenames, wikilinks, registered npm commands, repository path references, and high-confidence secret shapes; this does not certify repository lanes or make vault notes authoritative |
+| `npm run audit:workspace-side-effects -- --write-baseline=out/workspace-side-effects/<run-id>.json` | Create an immutable ignored/local workspace baseline before a command; after the command, rerun with `--baseline=<same path>` and optional explicit `--allow=<governed-prefixes>`. The report distinguishes unexpected changes, stable unreadable paths, skipped symlinks, missing roots, and `pass-with-limitations`; it does not make ignored files authoritative |
+| `npm run supply-chain:audit` | Verify lockfile registry/integrity, reviewed install-script packages, exact security-override policy/range posture, pinned GitHub Actions, workflow permissions, and release artifact boundaries |
 | `npm run security:advisories` | Run the internet-backed npm advisory audit gate at `moderate` severity or higher |
 | `npm run security:branch-protection` | Verify tracked branch-protection policy, documentation, and CI required-check names stay aligned |
 | `npm run security:github-settings` | Live-check hosted GitHub repository security settings and fail on unprotected or unverified P0 settings |
@@ -79,11 +81,11 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:apkg` | Build kanji `.apkg` artifacts |
 | `npm run deck:kanji:additional:ready` | Build the separate optional additional-unverified kanji TSV/APKG surface |
 | `npm run deck:kanji:review-status` | Report core/additional kanji generated, Gold, native Sapphire structural coverage, Platinum coverage, revalidation backlog, and duplicate-claim status |
-| `npm run deck:review:n5` | Run the N5 kanji Gold regression benchmark |
-| `npm run deck:review:n4` | Run the N4 kanji Gold regression benchmark |
-| `npm run deck:review:n3` | Run the N3 kanji Gold regression benchmark |
-| `npm run deck:review:n2` | Run the N2 kanji Gold regression benchmark |
-| `npm run deck:review:n1` | Run the N1 kanji Gold regression benchmark |
+| `npm run deck:review:n5` | Run the N5 kanji Gold regression benchmark with explicit tracked-manifest scope; direct script invocation must pass `--manifest-scoped` |
+| `npm run deck:review:n4` | Run the N4 kanji Gold regression benchmark with explicit tracked-manifest scope |
+| `npm run deck:review:n3` | Run the N3 kanji Gold regression benchmark with explicit tracked-manifest scope |
+| `npm run deck:review:n2` | Run the N2 kanji Gold regression benchmark with explicit tracked-manifest scope |
+| `npm run deck:review:n1` | Run the N1 kanji Gold regression benchmark with explicit tracked-manifest scope |
 | `npm run deck:kanji:additional:review:n5` | Run the additional-unverified N5 kanji Gold regression benchmark |
 | `npm run deck:kanji:additional:review:n4` | Run the additional-unverified N4 kanji Gold regression benchmark |
 | `npm run deck:kanji:additional:review:n3` | Run the additional-unverified N3 kanji Gold regression benchmark |
@@ -118,11 +120,11 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:sapphire:promote -- --level=3 --input=<reviewed-json> --write` | Merge reviewed word Sapphire candidate JSON into the tracked Sapphire manifest after validating live generated rows, matching Gold preconditions, and current-standard Sapphire evidence lanes; does not create Platinum, Obsidian proof, or release readiness |
 | `npm run deck:words:platinum:batch -- --level=5 --limit=8` | Build a read-only word Platinum packet for Sapphire-eligible rows; defaults to missing current-standard Platinum coverage. Use `--queue=blocked-current-standard` to surface current-standard Platinum rows that fail the native Platinum gate, and use `--queue=substantive-rereview` only for explicit Obsidian proof-status workflows |
 | `npm run data:migrate:word-sapphire-slim` | Dry-run a count-preserving word Sapphire manifest slimming migration that removes prior-lane copied fields only after unique generated-row, Gold, and evidence bindings resolve; `--write` updates tracked word Sapphire manifests only after the dry-run is clean and does not create Platinum, Obsidian proof, card approval, or denominator changes |
-| `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark |
-| `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark |
-| `npm run deck:words:review:n3` | Run the N3 word Gold regression benchmark; fails closed while generated rows lack current-standard Gold review entries |
-| `npm run deck:words:review:n2` | Run the N2 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
-| `npm run deck:words:review:n1` | Run the N1 word Gold regression benchmark; currently fails closed until native Gold rows are reviewed |
+| `npm run deck:words:review:n5` | Run the N5 word Gold regression benchmark with explicit full-generated-row scope; direct script invocation must choose exactly one of `--require-all` or `--manifest-scoped` |
+| `npm run deck:words:review:n4` | Run the N4 word Gold regression benchmark with explicit full-generated-row scope |
+| `npm run deck:words:review:n3` | Run the N3 word Gold regression benchmark with explicit full-generated-row scope; fails closed while generated rows lack current-standard Gold review entries |
+| `npm run deck:words:review:n2` | Run the N2 word Gold regression benchmark with explicit full-generated-row scope; currently fails closed until native Gold rows are reviewed |
+| `npm run deck:words:review:n1` | Run the N1 word Gold regression benchmark with explicit full-generated-row scope; currently fails closed until native Gold rows are reviewed |
 | `npm run deck:words:sapphire:n5` | Run the native N5 word Sapphire structural gate for active generated rows; deferred/removed records are audit-only and not active backlog |
 | `npm run deck:words:sapphire:n4` | Run the native N4 word Sapphire structural gate for active generated rows |
 | `npm run deck:words:sapphire:n3` | Run the native N3 word Sapphire structural gate; fails closed while generated rows lack current-standard Sapphire review entries |
@@ -137,7 +139,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:obsidian:certify-status -- --levels=5,4` | Fail-closed word Obsidian certification status; migrated N5/N4 word proof reads canonical JSONL through the scoped proof provider; prints local word-overlay path, mtime, staleness counts, and `stale_local_overlay` when starter-derived local rows are stale |
 | `npm run deck:words:platinum:rereview-status -- --levels=5,4` | Compatibility word proof-status alias for the Obsidian rereview-status posture; new proof work should use the Obsidian command name |
 | `npm run deck:words:platinum:certify-status -- --levels=5,4` | Compatibility word proof-status alias for the Obsidian certification posture; new proof work should use the Obsidian command name |
-| `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word source-family independence posture; command name remains legacy |
+| `npm run deck:words:platinum:source-posture -- --levels=5,4` | Classify active structurally current-standard word card-field source-family posture. The strict tracked `templates/word_source_origin_policy.json` forces the separate `word_source_claim_origin_independence_not_evaluated` limitation until an exact written-reading origin-evidence consumer exists; this report cannot prove placement/source-claim origin independence or substantive Platinum proof |
 | `npm run deck:words:level-anchor-audit -- --level=5` | Fail when canonical word rows lack a current-level kanji anchor or later all-easier-kanji placement lacks learner-fit rationale |
 | `npm run deck:words:completion -- --level=3` | Audit word inventory, generated coverage, policy checks, card-back field coverage, pitch accent, and reading coverage for a selected level |
 | `npm run deck:words:completion:n5` | Audit N5 word inventory and reading coverage |
@@ -204,7 +206,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run data:normalize:words:tubelex` | Normalize an ignored TubeLex Japanese frequency TSV plus the pinned JMdict exact-identity TSV into `downloads/tubelex-ja-frequency.tsv`; the derived output includes `written`, `reading`, `frequencyRank`, TubeLex rank/count/dispersion/category-concentration fields, match status, frequency band, source, and notes; raw TubeLex files stay ignored and the result is support/ranking evidence only |
 | `npm run deck:words:candidate-agreement -- --levels=5,4` | Rebuild the N5/N4 candidate universe from the governed word source manifest with source-purpose, agreement, triage, and placement signals; add `--placement-mode=vocabulary-level` when reviewing source-level vocabulary beyond kanji-anchor coverage |
 | `npm run deck:words:expansion-signals -- --levels=5,4` | Summarize per-level reading and configured-source enhancement exhaustion without claiming global common-vocabulary coverage or release readiness |
-| `npm run nlp:models:audit` | Validate the assistive-only NLP model registry before model-backed suggestion or draft lanes are trusted |
+| `npm run nlp:models:audit` | Validate the assistive-only NLP model registry, including reject-only embedding character/token limits, before model-backed suggestion or draft lanes are trusted |
 | `npm run nlp:doctor` | Preflight NLP runtimes, package-lock integrity, installed package metadata, tokenizer dictionaries, pinned model files or directory bundles, and assistive-only release boundaries |
 | `npm run nlp:tokenization:generate -- --level=5` | Generate governed assistive-only `kuromoji-js` tokenization artifacts from the generated word TSV, or reuse an unchanged artifact when generated TSV hash, manifest hash, runtime evidence, scope, level, and exact word-reading row identities still match |
 | `npm run nlp:tokenization:generate -- --deck=kanji --level=5` | Generate governed assistive-only `kuromoji-js` tokenization artifacts from the generated kanji TSV, or reuse an unchanged artifact when generated TSV hash, manifest hash, runtime evidence, scope, level, and exact kanji-card row identities still match |
@@ -212,7 +214,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run nlp:tokenization:audit` | Summarize validated tokenization artifacts into assistive review-packet signals without certifying cards or writing tracked templates |
 | `npm run nlp:embeddings:evaluate` | Re-run the tracked Japanese smoke benchmark for the active local embedding model; evaluation remains assistive-only and cannot certify cards |
 | `npm run nlp:embeddings:smoke-gate` | Run or reuse the tracked Japanese embedding smoke benchmark for the active local embedding model; unchanged passing smoke is reused from generated `out/nlp-runtime-smoke` metadata only when pinned inputs still match, and `--force-smoke` forces a fresh run |
-| `npm run nlp:embeddings:generate -- --level=5` | Generate governed assistive-only word-card embedding artifacts from the generated word TSV, or reuse an unchanged full-scope artifact when input hashes, model evidence, scope, target rows, and generation parameters still match |
+| `npm run nlp:embeddings:generate -- --level=5` | Generate governed assistive-only word-card embedding artifacts from exact written, reading, meaning, and example fields. The versioned composition deliberately excludes unbounded provenance-heavy Notes and records that limitation; the runtime counts Unicode code points and tokenizer IDs, rejects core semantic input above manifest limits, and disables silent truncation. Reuse binds the composition and input policy alongside hashes, model evidence, scope, target rows, and generation parameters |
 | `npm run nlp:embeddings:validate` | Validate governed embedding artifacts under `out/nlp-embeddings/`; embeddings remain assistive-only and require an active pinned embedding model before non-empty artifacts pass |
 | `npm run nlp:examples:rerank -- --level=5` | Generate assistive example-reranking suggestions from generated word rows, sentence corpus candidates, and validated word-card embeddings, or reuse an unchanged full-scope artifact when hashes and generation parameters such as `minCandidates` still match |
 | `npm run nlp:sense-fit:audit -- --level=5` | Generate assistive sense-fit warning suggestions for possible meaning/example/translation alignment risks, or reuse an unchanged full-scope artifact when hashes and generation parameters such as `threshold` still match |
@@ -226,6 +228,8 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run data:audit:jlpt` | Audit local-data kanji taxonomy, starter alignment, and Gold review placement; use `-- --strict --tracked-only` for clean CI tracked-input alignment |
 | `npm run data:verify:jlpt` | Verify tracked JLPT inventory contract shape and consistency |
 | `npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl` | Dry-run append of complete Obsidian proof-event drafts to the canonical JSONL ledger. Rerun with `--write` only after the dry-run is clean; rejects ad hoc lane-batch proof inputs, generated/automated author identities, missing card-by-card review-session assertions, schema drift, card-binding drift, tracked review-set target drift, duplicate proof ids, duplicate proof targets, canonical ledger path drift, and post-write reconciliation drift |
+| `npm run data:transactions:recover -- --lock=out/file-transactions/<transaction>.lock` | Dry-run hash-verified recovery inspection for an interrupted governed file transaction; add `--write` only when every recorded target is recoverable and no target contains unrecognized user changes |
+| `npm run data:migrate:sapphire-limitations` | Dry-run canonicalization of legacy word Sapphire limitation fields/statuses across the tracked N1-N5 word manifests; `--write` performs only the governed schema-vocabulary migration and does not review, promote, certify, or change denominators |
 | `npm run data:obsidian:proof:validate` | Validate canonical tracked JSONL Obsidian proof ledger files |
 | `npm run data:obsidian:proof:reconcile -- --levels=5,4,3,2` | Bind canonical JSONL proof to tracked review-set entries; if legacy inline proof exists during a transition, compare it to the ledger. `--allow-incomplete` may skip a missing review-set scope only when no scoped ledger proof exists for that scope |
 | `npm run data:obsidian:proof:migrate-inline -- --deck-kind=<kanji\|word> --levels=<levels>` | Dry-run migration from tracked inline `rereviewProvenance` into JSONL ledger events for not-yet-canonicalized kanji or word levels; use `--write --update-source-review-set` only after the dry-run reports exact identity, sentence-quality, and duplicate safety |

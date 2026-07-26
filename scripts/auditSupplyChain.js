@@ -40,7 +40,6 @@ const LIFECYCLE_SCRIPT_ALLOWLIST = Object.freeze({
     "node_modules/fsevents@2.3.3": "Optional macOS file-watcher dependency used by dev tooling.",
     "node_modules/onnxruntime-node@1.21.0": "Native ONNX runtime used by the assistive Transformers.js embedding lane.",
     "node_modules/protobufjs@7.6.5": "Transitive protobuf runtime dependency used by the assistive Transformers.js stack.",
-    "node_modules/sharp@0.34.5": "Native image runtime pulled by the assistive Transformers.js stack.",
 });
 
 const WORKFLOW_FILES = Object.freeze([
@@ -119,6 +118,51 @@ function escapeRegExp(value) {
 
 function countOccurrences(text, value) {
     return (text.match(new RegExp(escapeRegExp(value), "gu")) || []).length;
+}
+
+function parseSimpleSemver(value) {
+    const match = /^(\d+)\.(\d+)\.(\d+)$/u.exec(String(value || ""));
+    return match ? match.slice(1).map(Number) : null;
+}
+
+function compareSimpleSemver(left, right) {
+    for (let index = 0; index < 3; index += 1) {
+        if (left[index] !== right[index]) {
+            return left[index] < right[index] ? -1 : 1;
+        }
+    }
+    return 0;
+}
+
+function satisfiesReviewedSimpleRange(version, range) {
+    const parsedVersion = parseSimpleSemver(version);
+    const match = /^([~^]?)(\d+\.\d+\.\d+)$/u.exec(String(range || ""));
+    const minimum = match ? parseSimpleSemver(match[2]) : null;
+    if (!parsedVersion || !match || !minimum) {
+        throw new Error(`Unsupported dependency security override semver comparison: ${version} against ${range}`);
+    }
+    if (compareSimpleSemver(parsedVersion, minimum) < 0) {
+        return false;
+    }
+    if (!match[1]) {
+        return compareSimpleSemver(parsedVersion, minimum) === 0;
+    }
+    const upper = match[1] === "~"
+        ? [minimum[0], minimum[1] + 1, 0]
+        : minimum[0] > 0
+            ? [minimum[0] + 1, 0, 0]
+            : minimum[1] > 0
+                ? [0, minimum[1] + 1, 0]
+                : [0, 0, minimum[2] + 1];
+    return compareSimpleSemver(parsedVersion, upper) < 0;
+}
+
+function isCanonicalDate(value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/u.test(String(value || ""))) {
+        return false;
+    }
+    const parsed = new Date(`${value}T00:00:00.000Z`);
+    return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
 }
 
 function collectDependencySpecs(lockPackage) {
@@ -257,6 +301,139 @@ function auditPackageManifest({ packageJson, lock }) {
             packageCount: packageEntries.length,
             registryHosts: Object.fromEntries(registryHosts),
             lifecycleScripts,
+        },
+    };
+}
+
+function auditDependencySecurityOverrides({
+    packageJson,
+    lock,
+    policy,
+    asOfDate = new Date().toISOString().slice(0, 10),
+}) {
+    const errors = [];
+    const entries = Array.isArray(policy?.overrides) ? policy.overrides : [];
+    assertCondition(policy?.version === 1, errors, "Dependency security override policy must use version 1.");
+    assertCondition(
+        isCanonicalDate(policy?.checkedAt),
+        errors,
+        "Dependency security override policy checkedAt must be YYYY-MM-DD."
+    );
+    assertCondition(entries.length > 0, errors, "Dependency security override policy must govern every package.json override.");
+
+    const governedKeys = new Set();
+    const registeredScripts = new Set(Object.keys(packageJson.scripts || {}));
+    const expectedEntryFields = [
+        "parentPackage",
+        "packageName",
+        "forcedVersion",
+        "declaredParentRange",
+        "rangeCompatibility",
+        "securityAdvisory",
+        "scope",
+        "rationale",
+        "validationCommands",
+        "nextReview",
+    ].sort();
+    for (const entry of entries) {
+        const key = `${entry.parentPackage || "(missing)"}>${entry.packageName || "(missing)"}`;
+        assertCondition(!governedKeys.has(key), errors, `Dependency security override policy contains duplicate ${key}.`);
+        governedKeys.add(key);
+        const actualEntryFields = Object.keys(entry || {}).sort();
+        assertCondition(
+            actualEntryFields.length === expectedEntryFields.length
+                && actualEntryFields.every((field, index) => field === expectedEntryFields[index]),
+            errors,
+            `${key} must use the exact governed override-policy fields.`
+        );
+        assertCondition(!!entry.parentPackage, errors, `${key} must declare parentPackage.`);
+        assertCondition(!!entry.packageName, errors, `${key} must declare packageName.`);
+        assertCondition(!!entry.forcedVersion, errors, `${key} must declare forcedVersion.`);
+        assertCondition(!!entry.declaredParentRange, errors, `${key} must record the parent package's declared range.`);
+        assertCondition(
+            ["inside_declared_range", "outside_declared_range"].includes(entry.rangeCompatibility),
+            errors,
+            `${key} must classify rangeCompatibility.`
+        );
+        assertCondition(/^GHSA-[a-z0-9-]+$/u.test(entry.securityAdvisory || ""), errors, `${key} must bind a GHSA advisory.`);
+        assertCondition(!!entry.scope, errors, `${key} must state its runtime scope.`);
+        assertCondition(!!entry.rationale, errors, `${key} must state a review rationale.`);
+        assertCondition(
+            Array.isArray(entry.validationCommands) && entry.validationCommands.length >= 3,
+            errors,
+            `${key} must declare at least three validation commands.`
+        );
+        assertCondition(isCanonicalDate(entry.nextReview), errors, `${key} nextReview must be a real YYYY-MM-DD date.`);
+        assertCondition(
+            !entry.nextReview || entry.nextReview >= asOfDate,
+            errors,
+            `${key} security override review is overdue as of ${asOfDate}; nextReview=${entry.nextReview || "(missing)"}.`
+        );
+
+        const configured = packageJson.overrides?.[entry.parentPackage]?.[entry.packageName];
+        assertCondition(
+            configured === entry.forcedVersion,
+            errors,
+            `${key} policy expects ${entry.forcedVersion}, but package.json resolves ${configured || "(missing)"}.`
+        );
+        const locked = lock.packages?.[`node_modules/${entry.packageName}`]?.version;
+        assertCondition(
+            locked === entry.forcedVersion,
+            errors,
+            `${key} policy expects locked ${entry.packageName}@${entry.forcedVersion}, but package-lock.json has ${locked || "(missing)"}.`
+        );
+        const parentMetadata = lock.packages?.[`node_modules/${entry.parentPackage}`];
+        assertCondition(!!parentMetadata, errors, `${key} parent package is missing from package-lock.json.`);
+        const declaredRange = parentMetadata?.dependencies?.[entry.packageName]
+            || parentMetadata?.optionalDependencies?.[entry.packageName];
+        assertCondition(
+            declaredRange === entry.declaredParentRange,
+            errors,
+            `${key} records parent range ${entry.declaredParentRange}, but package-lock.json declares ${declaredRange || "(missing)"}.`
+        );
+        if (entry.forcedVersion && entry.declaredParentRange) {
+            try {
+                const computedCompatibility = satisfiesReviewedSimpleRange(
+                    entry.forcedVersion,
+                    entry.declaredParentRange
+                ) ? "inside_declared_range" : "outside_declared_range";
+                assertCondition(
+                    entry.rangeCompatibility === computedCompatibility,
+                    errors,
+                    `${key} rangeCompatibility is ${entry.rangeCompatibility}, but the reviewed semver comparison is ${computedCompatibility}.`
+                );
+            } catch (error) {
+                errors.push(error.message);
+            }
+        }
+        for (const command of Array.isArray(entry.validationCommands) ? entry.validationCommands : []) {
+            const scriptName = /^npm test(?:\s|$)/u.test(command)
+                ? "test"
+                : /^npm run ([A-Za-z0-9:_-]+)(?:\s|$)/u.exec(command)?.[1];
+            assertCondition(
+                Boolean(scriptName && registeredScripts.has(scriptName)),
+                errors,
+                `${key} validation command is not a registered npm script: ${command}`
+            );
+        }
+    }
+
+    for (const [parentPackage, childOverrides] of Object.entries(packageJson.overrides || {})) {
+        for (const packageName of Object.keys(childOverrides || {})) {
+            const key = `${parentPackage}>${packageName}`;
+            assertCondition(
+                governedKeys.has(key),
+                errors,
+                `package.json override ${key} is not governed by templates/dependency_security_overrides.json.`
+            );
+        }
+    }
+
+    return {
+        errors,
+        summary: {
+            checkedAt: policy?.checkedAt || null,
+            entries,
         },
     };
 }
@@ -506,10 +683,20 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
     };
 }
 
-function buildSupplyChainAuditReport({ cwd = process.cwd() } = {}) {
+function buildSupplyChainAuditReport({
+    cwd = process.cwd(),
+    asOfDate = new Date().toISOString().slice(0, 10),
+} = {}) {
     const packageJson = readJson(cwd, "package.json");
     const lock = readJson(cwd, "package-lock.json");
     const packageAudit = auditPackageManifest({ packageJson, lock });
+    const dependencyOverridePolicy = readJson(cwd, "templates/dependency_security_overrides.json");
+    const dependencyOverrideAudit = auditDependencySecurityOverrides({
+        packageJson,
+        lock,
+        policy: dependencyOverridePolicy,
+        asOfDate,
+    });
     const workflowAudits = WORKFLOW_FILES.map((relativePath) => {
         const text = readText(cwd, relativePath);
         return {
@@ -523,11 +710,13 @@ function buildSupplyChainAuditReport({ cwd = process.cwd() } = {}) {
     return {
         ok: [
             ...packageAudit.errors,
+            ...dependencyOverrideAudit.errors,
             ...workflowAudits.flatMap((audit) => audit.errors),
             ...releaseBoundaryAudit.errors,
         ].length === 0,
         errors: [
             ...packageAudit.errors,
+            ...dependencyOverrideAudit.errors,
             ...workflowAudits.flatMap((audit) => audit.errors),
             ...releaseBoundaryAudit.errors,
         ],
@@ -537,6 +726,7 @@ function buildSupplyChainAuditReport({ cwd = process.cwd() } = {}) {
             ...releaseBoundaryAudit.warnings,
         ],
         package: packageAudit.summary,
+        dependencySecurityOverrides: dependencyOverrideAudit.summary,
         workflows: workflowAudits.map((audit) => ({
             relativePath: audit.relativePath,
             actionUses: audit.summary.actionUses,
@@ -557,6 +747,13 @@ function formatSupplyChainAuditReport(report) {
 
     for (const entry of report.package.lifecycleScripts) {
         lines.push(`- ${entry.packageName}@${entry.version} (${entry.packagePath}) - ${entry.reason || "unreviewed"}`);
+    }
+
+    lines.push("Dependency security overrides:");
+    for (const entry of report.dependencySecurityOverrides.entries) {
+        lines.push(
+            `- ${entry.parentPackage} > ${entry.packageName}@${entry.forcedVersion}; ${entry.rangeCompatibility}; ${entry.securityAdvisory}; next review ${entry.nextReview}`
+        );
     }
 
     lines.push("GitHub Actions pins:");
@@ -605,6 +802,8 @@ if (require.main === module) {
 module.exports = {
     ACTION_ALLOWLIST,
     LIFECYCLE_SCRIPT_ALLOWLIST,
+    auditDependencySecurityOverrides,
     buildSupplyChainAuditReport,
     formatSupplyChainAuditReport,
+    satisfiesReviewedSimpleRange,
 };

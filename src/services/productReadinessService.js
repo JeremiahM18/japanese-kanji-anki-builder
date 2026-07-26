@@ -73,7 +73,7 @@ const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([
         label: "N5 kanji golden review",
         displayCommand: "npm run deck:review:n5",
         command: process.execPath,
-        args: [path.join("scripts", "reviewGoldenLevel.js"), "--level=5"],
+        args: [path.join("scripts", "reviewGoldenLevel.js"), "--level=5", "--manifest-scoped"],
     }),
     Object.freeze({
         id: "n5-word-golden-review",

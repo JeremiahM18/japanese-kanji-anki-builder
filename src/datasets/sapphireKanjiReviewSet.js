@@ -4,6 +4,9 @@ const {
     ALLOWED_SAPPHIRE_STATUSES,
     CURRENT_KANJI_SAPPHIRE_REVIEW_STANDARD,
 } = require("../services/sapphireKanjiReviewService");
+const {
+    kanjiSapphireVerificationLimitationSchema,
+} = require("./sapphireVerificationLimitations");
 
 const SINGLE_KANJI_RE = /^\p{Script=Han}$/u;
 
@@ -12,12 +15,6 @@ const evidenceEntrySchema = z.object({
     type: z.string().min(1),
     source: z.string().min(1),
     detail: z.string().min(1),
-}).passthrough();
-const verificationLimitationSchema = z.object({
-    field: z.string().min(1),
-    status: z.string().min(1),
-    label: z.string().min(1),
-    reviewNote: z.string().min(1),
 }).passthrough();
 const sapphireReviewAuditSchema = z.object({
     schemaVersion: z.number().int().positive().optional(),
@@ -48,7 +45,7 @@ const sapphireKanjiReviewEntrySchema = z.object({
     internalChecks: z.array(evidenceEntrySchema).optional(),
     reviewEvidence: z.array(evidenceEntrySchema).optional(),
     qualityGates: z.never().optional(),
-    verificationLimitations: z.array(verificationLimitationSchema).optional(),
+    verificationLimitations: z.array(kanjiSapphireVerificationLimitationSchema).optional(),
     fixSummary: z.string().optional(),
     sapphireReviewAudit: sapphireReviewAuditSchema.optional(),
     migrationProvenance: z.object({

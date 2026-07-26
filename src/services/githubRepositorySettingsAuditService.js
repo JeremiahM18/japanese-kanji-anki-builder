@@ -65,7 +65,10 @@ function buildAuditEndpoints(repo, branch) {
         { key: "automatedSecurityFixes", url: `${base}/automated-security-fixes` },
         { key: "dependencyGraphSbom", url: `${base}/dependency-graph/sbom` },
         { key: "privateVulnerabilityReporting", url: `${base}/private-vulnerability-reporting` },
-        { key: "actionsRuns", url: `${base}/actions/runs?per_page=20` },
+        {
+            key: "actionsRuns",
+            url: `${base}/actions/runs?branch=${encodeURIComponent(branch)}&per_page=20`,
+        },
         { key: "releaseWorkflowRuns", url: `${base}/actions/workflows/release.yml/runs?per_page=10` },
         { key: "ciWorkflow", url: `${base}/actions/workflows/ci.yml` },
         { key: "codeqlWorkflow", url: `${base}/actions/workflows/codeql.yml` },
@@ -489,8 +492,8 @@ function formatGithubSettingsAudit(audit) {
         `Open CodeQL alerts: ${audit.summary.openCodeScanningAlerts ?? "unknown"}`,
         `Open secret scanning alerts: ${audit.summary.openSecretScanningAlerts ?? "unknown"}`,
         `Open Dependabot alerts: ${audit.summary.openDependabotAlerts ?? "unknown"}`,
-        `Latest CI conclusion: ${audit.summary.latestCiConclusion || "unknown"}`,
-        `Latest CodeQL conclusion: ${audit.summary.latestCodeqlConclusion || "unknown"}`,
+        `Latest ${audit.branch} CI conclusion: ${audit.summary.latestCiConclusion || "unknown"}`,
+        `Latest ${audit.branch} CodeQL conclusion: ${audit.summary.latestCodeqlConclusion || "unknown"}`,
         `Latest Release conclusion: ${audit.summary.latestReleaseConclusion || "unknown"}`,
         "Findings:",
     ];

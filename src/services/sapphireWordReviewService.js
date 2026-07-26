@@ -10,6 +10,10 @@ const {
     buildResolvedWordFields,
     resolveWordGoldExpectation,
 } = require("./reviewLaneContextService");
+const {
+    normalizeLimitations,
+    validateWordSapphireVerificationLimitations,
+} = require("../datasets/sapphireVerificationLimitations");
 
 const ACTIVE_WORD_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 const NON_SHIPPING_STATUSES = platinumWordReview.NON_SHIPPING_STATUSES;
@@ -279,17 +283,7 @@ function buildWordSapphireReviewStandardSummary(entries = []) {
 }
 
 function normalizeWordVerificationLimitations(value) {
-    if (!Array.isArray(value)) {
-        return [];
-    }
-    return value
-        .filter((limitation) => limitation && typeof limitation === "object" && !Array.isArray(limitation))
-        .map((limitation) => ({
-            field: normalizeText(limitation.field),
-            status: normalizeText(limitation.status),
-            label: normalizeText(limitation.label),
-            reviewNote: normalizeText(limitation.reviewNote),
-        }));
+    return normalizeLimitations(value);
 }
 
 function buildWordSapphireVerificationLimitationSummary(entries = []) {
@@ -489,6 +483,7 @@ function validateActiveSapphireWordEntry(entry = {}, {
                 failures.push(`audio field did not include exact word-reading asset fragment: ${expectedAudioFragment}`);
             }
         }
+        failures.push(...validateWordSapphireVerificationLimitations(entry, row));
     }
 
     return failures;

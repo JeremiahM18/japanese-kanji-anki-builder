@@ -321,6 +321,8 @@ function parseArgs(argv) {
     for (const arg of argv) {
         if (arg.startsWith("--out=")) {
             options.out = arg.slice("--out=".length);
+        } else {
+            throw new Error(`Unknown argument for generateCycloneDxSbom: ${arg}`);
         }
     }
     return options;
@@ -352,5 +354,6 @@ if (require.main === module) {
 module.exports = {
     buildCycloneDxSbom,
     formatSbomReport,
+    parseArgs,
     validateCycloneDxSbom,
 };

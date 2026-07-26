@@ -18,7 +18,9 @@ function parseArgs(argv) {
     };
 
     for (const arg of argv) {
-        if (arg.startsWith("--input-dir=")) {
+        if (arg === "--json") {
+            continue;
+        } else if (arg.startsWith("--input-dir=")) {
             options.inputDir = arg.split("=")[1];
         } else if (arg.startsWith("--kanji=")) {
             options.kanji = parseCsvOption(arg, "kanji");
@@ -28,6 +30,8 @@ function parseArgs(argv) {
             options.levels = parseLevelsArgument(arg.split("=")[1]);
         } else if (arg.startsWith("--limit=")) {
             options.limit = Number(arg.split("=")[1]);
+        } else {
+            throw new Error(`Unknown argument for importKanjiVgStrokeOrder: ${arg}`);
         }
     }
 

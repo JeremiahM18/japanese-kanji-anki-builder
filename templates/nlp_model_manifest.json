@@ -158,7 +158,12 @@
         "distanceMetric": "cosine",
         "dtype": "q8"
       },
-      "checkedAt": "2026-05-20",
+      "inputPolicy": {
+        "maxInputCharacters": 4096,
+        "maxInputTokens": 128,
+        "overflowPolicy": "reject"
+      },
+      "checkedAt": "2026-07-26",
       "localArtifact": {
         "artifactKind": "directory",
         "path": "cache/nlp-models/transformers-js/Xenova/paraphrase-multilingual-MiniLM-L12-v2",
@@ -169,7 +174,7 @@
       "evaluation": {
         "benchmarkId": "jkb-ja-embedding-smoke-v1",
         "benchmarkPath": "templates/nlp_embedding_model_benchmark.json",
-        "evaluatedAt": "2026-05-20",
+        "evaluatedAt": "2026-07-26",
         "metrics": {
           "positiveMean": 0.9688339614903972,
           "negativeMean": 0.17439978322461092,

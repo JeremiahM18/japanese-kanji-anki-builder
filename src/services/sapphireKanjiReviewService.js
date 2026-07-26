@@ -8,6 +8,10 @@ const {
     buildResolvedKanjiFields,
     resolveKanjiGoldExpectation,
 } = require("./reviewLaneContextService");
+const {
+    normalizeLimitations,
+    validateKanjiSapphireVerificationLimitations,
+} = require("../datasets/sapphireVerificationLimitations");
 
 const ACTIVE_SAPPHIRE_STATUSES = Object.freeze(["sapphire", "fixed_then_sapphire"]);
 const NON_SHIPPING_STATUSES = platinumKanjiReview.NON_SHIPPING_STATUSES;
@@ -221,17 +225,7 @@ function buildKanjiSapphireReviewStandardSummary(entries = []) {
 }
 
 function normalizeKanjiVerificationLimitations(value) {
-    if (!Array.isArray(value)) {
-        return [];
-    }
-    return value
-        .filter((limitation) => limitation && typeof limitation === "object" && !Array.isArray(limitation))
-        .map((limitation) => ({
-            field: normalizeText(limitation.field),
-            status: normalizeText(limitation.status),
-            label: normalizeText(limitation.label),
-            reviewNote: normalizeText(limitation.reviewNote),
-        }));
+    return normalizeLimitations(value);
 }
 
 function buildKanjiSapphireVerificationLimitationSummary(entries = []) {
@@ -418,6 +412,7 @@ function validateActiveSapphireEntry(entry = {}, {
         if (normalizeStringArray(resolvedFields.notesIncludes).length > 0 && !includesAll(row.notes, resolvedFields.notesIncludes)) {
             failures.push(`notes field did not include protected snippet: ${resolvedFields.notesIncludes.join(", ")}`);
         }
+        failures.push(...validateKanjiSapphireVerificationLimitations(entry, row));
     }
 
     return failures;

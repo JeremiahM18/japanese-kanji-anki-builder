@@ -40,8 +40,14 @@ function buildSyntheticRows(entries = [], goldenExpectations = []) {
     return activeEntries(entries).map((entry) => {
         const reading = normalizeList(entry.readingIncludes)[0] || "";
         const golden = findGoldenExpectation(entry, goldenExpectations);
-        const pitchAccent = normalizeList(entry.pitchAccentIncludes)
-            .map((snippet) => `<span aria-label="${snippet}">${snippet}</span>`)
+        const pitchLimitationLabel = normalizeList(entry.verificationLimitations)
+            .find((limitation) => limitation.field === "pitchAccent")?.label;
+        const pitchAccent = [
+            pitchLimitationLabel,
+            ...normalizeList(entry.pitchAccentIncludes)
+                .map((snippet) => `<span aria-label="${snippet}">${snippet}</span>`),
+        ]
+            .filter(Boolean)
             .join(" ");
 
         return {

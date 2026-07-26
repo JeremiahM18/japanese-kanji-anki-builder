@@ -6,6 +6,12 @@ const { loadConfig } = require("../src/config");
 const { bootstrapSentenceCorpus } = require("../src/services/sentenceCorpusBootstrapService");
 
 function parseArgs(argv) {
+    const allowed = new Set(["--merge", "--json"]);
+    for (const arg of argv) {
+        if (!allowed.has(arg)) {
+            throw new Error(`Unknown argument for initSentenceCorpus: ${arg}`);
+        }
+    }
     return {
         merge: argv.includes("--merge"),
         json: argv.includes("--json"),

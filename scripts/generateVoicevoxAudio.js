@@ -24,7 +24,9 @@ function parseArgs(argv) {
     };
 
     for (const arg of argv) {
-        if (arg.startsWith("--level=")) {
+        if (arg === "--overwrite" || arg === "--list-speakers") {
+            continue;
+        } else if (arg.startsWith("--level=")) {
             options.level = parseLevelArgument(arg.split("=")[1]);
         } else if (arg.startsWith("--limit=")) {
             options.limit = Number(arg.split("=")[1]);
@@ -40,6 +42,8 @@ function parseArgs(argv) {
             options.voiceName = arg.split("=")[1].trim();
         } else if (arg.startsWith("--locale=")) {
             options.locale = arg.split("=")[1].trim();
+        } else {
+            throw new Error(`Unknown argument for generateVoicevoxAudio: ${arg}`);
         }
     }
 

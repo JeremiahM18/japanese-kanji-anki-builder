@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "checkedAt": "2026-07-26",
+  "mode": "limitation_only",
+  "limitationMarker": "word_source_claim_origin_independence_not_evaluated",
+  "platinumCardFieldReportMayProveOriginIndependence": false,
+  "originEvidenceAuthority": {
+    "manifest": "templates/word_source_manifest.json",
+    "auditCommand": "npm run data:audit:jlpt:word-sources -- --governance-strict",
+    "identity": "exact written|reading"
+  },
+  "rule": "Platinum card-field source posture may verify governed card fields and source-family corroboration. It must not claim independence from candidate, placement, or source-claim origin families. Origin independence remains a separate source-governance result and this report must retain the limitation marker.",
+  "removalGate": "Remove limitation_only mode only after an exact written|reading origin-evidence consumer is implemented, schema-validated, tested, documented, and independently reconciled with the word source-governance audit."
+}

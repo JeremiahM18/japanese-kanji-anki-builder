@@ -14,6 +14,10 @@ const {
   wordStudyEntrySchema,
 } = require("../datasets/wordStudyData");
 const { ensureDir, writeFileAtomicSync } = require("../utils/fs");
+const {
+  readFileState,
+  runGovernedFileTransactionSync,
+} = require("../utils/governedFileTransaction");
 
 const WORD_SILVER_PACKET_SCHEMA_VERSION = "word-silver-review-packet.v1";
 const WORD_SILVER_DECISION_MANIFEST_SCHEMA_VERSION =
@@ -669,6 +673,7 @@ function applyWordSilverDecisionManifest({
   manifestPath,
   rootDir = process.cwd(),
   write = false,
+  runFileTransaction = runGovernedFileTransactionSync,
 } = {}) {
   const validation = loadWordSilverDecisionManifest(manifestPath);
   if (!validation.ok) {
@@ -692,6 +697,7 @@ function applyWordSilverDecisionManifest({
   const root = path.resolve(rootDir);
 
   const wordContractPath = contractPath(root);
+  const contractBeforeState = readFileState(wordContractPath);
   const contract = readJsonIfExists(wordContractPath, {
     version: 1,
     wordLevels: {},
@@ -705,6 +711,7 @@ function applyWordSilverDecisionManifest({
     if (!startersByLevel.has(level)) {
       startersByLevel.set(level, {
         path: starterPath,
+        beforeSha256: readFileState(starterPath).sha256,
         data: readJsonIfExists(starterPath, {}),
       });
     }
@@ -764,15 +771,25 @@ function applyWordSilverDecisionManifest({
   });
 
   if (write) {
-    startersByLevel.forEach((starter) => {
-      ensureDir(path.dirname(starter.path));
-      writeFileAtomicSync(starter.path, `${JSON.stringify(starter.data, null, 2)}\n`);
-    });
-    ensureDir(path.dirname(wordContractPath));
-    writeFileAtomicSync(
-      wordContractPath,
-      `${JSON.stringify(rebuiltContract, null, 2)}\n`,
+    const transactionChanges = Array.from(startersByLevel.values()).map(
+      (starter) => ({
+        filePath: starter.path,
+        expectedBeforeSha256: starter.beforeSha256,
+        data: `${JSON.stringify(starter.data, null, 2)}\n`,
+      }),
     );
+    transactionChanges.push({
+      filePath: wordContractPath,
+      expectedBeforeSha256: contractBeforeState.sha256,
+      data: `${JSON.stringify(rebuiltContract, null, 2)}\n`,
+    });
+    runFileTransaction({
+      changes: transactionChanges,
+      lockPath: path.join(root, "out", "file-transactions", "word-silver-apply.lock"),
+      transactionName: `word-silver-${manifest.batchId}`,
+      transactionRoot: path.join(root, "out", "file-transactions"),
+      workspaceRoot: root,
+    });
   }
 
   return {

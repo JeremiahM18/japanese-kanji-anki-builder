@@ -292,7 +292,7 @@ No-go conditions:
 - The compatibility view fails to recreate ledger-derived `rereviewProvenance` for a migrated proof event.
 - The SQLite mirror cannot rebuild from JSONL without reading generated TSV/APKG output.
 - Any consumer switch changes `deck:kanji:obsidian:rereview-status -- --levels=5,4,3,2` counts without a matching proof-ledger change, or changes the completed N5/N4/N3/N2 certification pass posture without matching proof.
-- Any word consumer switch changes `deck:words:obsidian:rereview-status -- --levels=5,4` counts without a matching proof-ledger change, or changes the `1000/1000` Obsidian, `0` needs, `0` blocked N5/N4 word status.
+- Any word consumer switch changes `deck:words:obsidian:rereview-status -- --levels=5,4` counts without a matching proof-ledger change, changes the current proof numerator or generated denominator without the corresponding governed data change, or introduces any `needs_substantive_rereview` or `blocked_or_failing` row into a previously complete selected scope. Never encode a historical fixed denominator in this no-go condition.
 - `deck:kanji:obsidian:certify-status -- --levels=5,4,3,2` fails for any selected row.
 
 Switch consumers in small stages:

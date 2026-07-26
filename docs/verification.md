@@ -16,6 +16,7 @@ Benchmark budget commands are manual/local performance guardrails, not GitHub Ac
 - GitHub CodeQL scans JavaScript/TypeScript source and GitHub Actions workflow code in CI; there is no local npm equivalent for that hosted code-scanning upload gate.
 - Tagged release workflows create GitHub artifact attestations for release-bundle provenance and SBOM binding; there is no local npm equivalent for the hosted Sigstore-backed attestation upload gate.
 - [../test/hostileInputSecurity.test.js](../test/hostileInputSecurity.test.js) keeps adversarial parser, Anki HTML, media path, generated-output cleanup, Docker-helper, and supply-chain mutation fixtures explicit inside `npm test`.
+- [../test/cliFailClosedArgs.test.js](../test/cliFailClosedArgs.test.js) requires every script-level `parseArgs` surface to reject or explicitly collect unknown arguments; operational commands must not continue after a misspelled or unsupported option.
 
 ## Standard gate bundle
 
@@ -91,7 +92,27 @@ Scoped `npm test` runs are available for focused feedback only:
 - `npm test -- --scope=source-evidence`
 - `npm test -- --scope=word-lanes`
 
-The full `npm test` command remains part of the full merge gate.
+Every discovered `test/*.test.js` file must belong to at least one focused scope; [../test/runNodeTestsScript.test.js](../test/runNodeTestsScript.test.js) fails if a test is omitted. The full `npm test` command remains part of the full merge gate because focused scopes intentionally overlap and do not replace full-suite execution.
+
+## Workspace side-effect and vault validation
+
+Use the two-phase ignored/local side-effect audit around commands whose generated-output behavior matters:
+
+```bash
+npm run audit:workspace-side-effects -- --write-baseline=out/workspace-side-effects/<run-id>.json
+<command under review>
+npm run audit:workspace-side-effects -- --baseline=out/workspace-side-effects/<run-id>.json
+```
+
+Baselines are immutable and confined under `out/workspace-side-effects/`. `--allow=<prefixes>` must name explicit paths inside the governed roots. The policy SHA-256 hashes compact governed `data/`, `downloads/`, and CI/release-fixture files while high-volume `cache/` and generated `out/` files use size plus mtime metadata. Unreadable files/directories, missing roots, and skipped symlinks are reported as coverage limitations rather than silently omitted. A `pass-with-limitations` result proves no unexpected visible change; it does not prove inaccessible content was unchanged.
+
+Validate the external Kanji Builder vault project read-only with:
+
+```bash
+npm run vault:validate -- --vault="<absolute Kanji Builder vault project path>" --max-age-days=14
+```
+
+This checks YAML/frontmatter shape, current-note commit binding, real calendar dates, Markdown structure, duplicate titles/basenames, wikilinks, registered npm command references, contained repository-path references, and high-confidence secret shapes. It does not certify lane content or make vault notes repository authority.
 
 ## Product artifact gates
 

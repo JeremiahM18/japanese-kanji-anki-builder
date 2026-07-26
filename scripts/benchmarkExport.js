@@ -30,6 +30,8 @@ function parseArgs(argv) {
             options.offline = false;
         } else if (arg === "--offline") {
             options.offline = true;
+        } else {
+            throw new Error(`Unknown argument for benchmarkExport: ${arg}`);
         }
     }
 

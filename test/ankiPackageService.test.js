@@ -4,7 +4,10 @@ const path = require("node:path");
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { buildAnkiPackage } = require("../src/services/ankiPackageService");
+const {
+    buildAnkiPackage,
+    resolveApkgCachePaths,
+} = require("../src/services/ankiPackageService");
 const { resolvePythonCommand } = require("../src/services/toolchainService");
 
 function writeFile(filePath, text) {
@@ -27,6 +30,16 @@ function makeWorkspaceOutTempDir(prefix) {
 }
 
 const python = resolvePythonCommand();
+
+test("APKG runtime cache stays beside the selected package output root", () => {
+    const isolatedRoot = path.join(process.cwd(), "out", "isolated-cache-contract");
+    const packageRootDir = path.join(isolatedRoot, "package");
+    const cacheKey = "a".repeat(64);
+    const cachePaths = resolveApkgCachePaths(cacheKey, { packageRootDir });
+
+    assert.equal(cachePaths.cacheDir, path.join(isolatedRoot, ".apkg-cache"));
+    assert.equal(cachePaths.apkgPath, path.join(isolatedRoot, ".apkg-cache", `${cacheKey}.apkg`));
+});
 
 test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
     skip: !python,

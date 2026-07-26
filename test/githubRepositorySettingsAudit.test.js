@@ -186,7 +186,8 @@ test("authenticated GitHub settings wrapper gives actionable auth guidance", () 
 });
 
 test("buildAuditEndpoints covers hosted P0 settings", () => {
-    const keys = buildAuditEndpoints("owner/repo", "main").map((item) => item.key);
+    const endpoints = buildAuditEndpoints("owner/repo", "release/security");
+    const keys = endpoints.map((item) => item.key);
     assert.deepEqual(keys, [
         "repository",
         "branch",
@@ -206,6 +207,10 @@ test("buildAuditEndpoints covers hosted P0 settings", () => {
         "ciWorkflowContent",
         "releaseWorkflowContent",
     ]);
+    assert.equal(
+        endpoints.find((item) => item.key === "actionsRuns")?.url,
+        "https://api.github.com/repos/owner/repo/actions/runs?branch=release%2Fsecurity&per_page=20"
+    );
 });
 
 test("hosted workflow content helpers detect dependency review and attestation posture", () => {

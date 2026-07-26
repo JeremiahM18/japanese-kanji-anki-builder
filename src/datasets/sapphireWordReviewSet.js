@@ -5,18 +5,15 @@ const {
     CURRENT_WORD_SAPPHIRE_REVIEW_STANDARD,
     NON_SHIPPING_STATUSES,
 } = require("../services/sapphireWordReviewService");
+const {
+    wordSapphireVerificationLimitationSchema,
+} = require("./sapphireVerificationLimitations");
 
 const nonEmptyStringArraySchema = z.array(z.string().min(1));
 const evidenceEntrySchema = z.object({
     type: z.string().min(1),
     source: z.string().min(1),
     detail: z.string().min(1),
-}).passthrough();
-const verificationLimitationSchema = z.object({
-    field: z.string().min(1),
-    status: z.string().min(1),
-    label: z.string().min(1),
-    reviewNote: z.string().min(1),
 }).passthrough();
 const migrationProvenanceSchema = z.object({
     migratedAt: z.string().min(1).optional(),
@@ -53,7 +50,7 @@ const sapphireWordReviewEntrySchema = z.object({
     internalChecks: z.array(evidenceEntrySchema).optional(),
     reviewEvidence: z.array(evidenceEntrySchema).optional(),
     qualityGates: z.never().optional(),
-    verificationLimitations: z.array(verificationLimitationSchema).optional(),
+    verificationLimitations: z.array(wordSapphireVerificationLimitationSchema).optional(),
     decisionReason: z.string().optional(),
     fixSummary: z.string().optional(),
     migrationProvenance: migrationProvenanceSchema.optional(),

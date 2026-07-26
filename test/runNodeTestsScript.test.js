@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 const path = require("node:path");
 
 const {
@@ -45,7 +46,24 @@ test("runNodeTests can select expanded focused test scopes", () => {
     assert.ok(nlpArgs.some((file) => file.endsWith(path.join("test", "nlpGovernanceGateService.test.js"))));
     assert.ok(nlpArgs.some((file) => file.endsWith(path.join("test", "runWordNlpExpansionSupportScript.test.js"))));
     assert.ok(wordArgs.some((file) => file.endsWith(path.join("test", "reviewSapphireWordLevel.test.js"))));
+    assert.ok(wordArgs.some((file) => file.endsWith(path.join("test", "wordSilverReviewPipelineService.test.js"))));
+    assert.ok(wordArgs.some((file) => file.endsWith(path.join("test", "sapphireVerificationLimitations.test.js"))));
     assert.ok(ciArgs.some((file) => file.endsWith(path.join("test", "releaseGateService.test.js"))));
+});
+
+test("Obsidian proof scope includes the word certification CLI and transaction recovery", () => {
+    const args = buildNodeTestArgs("22.0.0", ["--scope=obsidian-proof"]);
+
+    assert.ok(args.some((file) => file.endsWith(path.join("test", "reportObsidianWordCertificationStatusScript.test.js"))));
+    assert.ok(args.some((file) => file.endsWith(path.join("test", "governedFileTransaction.test.js"))));
+    assert.ok(args.some((file) => file.endsWith(path.join("test", "recoverGovernedFileTransactionScript.test.js"))));
+});
+
+test("docs governance scope includes ignored workspace side-effect auditing", () => {
+    const args = buildNodeTestArgs("22.0.0", ["--scope=docs-governance"]);
+
+    assert.ok(args.some((file) => file.endsWith(path.join("test", "workspaceSideEffectAuditService.test.js"))));
+    assert.ok(args.some((file) => file.endsWith(path.join("test", "kanjiBuilderVaultValidationService.test.js"))));
 });
 
 test("runNodeTests focused scopes resolve to existing unique test files", () => {
@@ -54,6 +72,15 @@ test("runNodeTests focused scopes resolve to existing unique test files", () => 
         assert.equal(files.length > 0, true, `${scope} should include at least one test`);
         assert.equal(new Set(files).size, files.length, `${scope} should not include duplicate tests`);
     }
+});
+
+test("every discovered test belongs to at least one focused scope", () => {
+    const discovered = fs.readdirSync(__dirname)
+        .filter((fileName) => fileName.endsWith(".test.js"))
+        .sort();
+    const scoped = new Set(Object.values(TEST_SCOPES).flat());
+
+    assert.deepEqual(discovered.filter((fileName) => !scoped.has(fileName)), []);
 });
 
 test("runNodeTests rejects unknown test scopes", () => {

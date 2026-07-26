@@ -45,6 +45,9 @@ function modelEvidenceMatches(modelEvidence, model, modelId) {
         && modelEvidence.pooling === model.embeddingConfig.pooling
         && modelEvidence.normalized === model.embeddingConfig.normalized
         && modelEvidence.distanceMetric === model.embeddingConfig.distanceMetric
+        && modelEvidence.inputPolicy?.maxInputCharacters === model.inputPolicy?.maxInputCharacters
+        && modelEvidence.inputPolicy?.maxInputTokens === model.inputPolicy?.maxInputTokens
+        && modelEvidence.inputPolicy?.overflowPolicy === model.inputPolicy?.overflowPolicy
         && modelEvidence.deterministic?.requiresPinnedModel === true
         && modelEvidence.deterministic?.requiresPinnedRuntime === true
         && modelEvidence.deterministic?.requiresPinnedInputs === true;

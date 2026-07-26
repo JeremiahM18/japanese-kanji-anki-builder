@@ -7,6 +7,12 @@ const { formatWordStudyDataStalenessWarning } = require("../src/datasets/wordStu
 const { bootstrapWordStudyData } = require("../src/services/wordStudyBootstrapService");
 
 function parseArgs(argv) {
+    const allowed = new Set(["--merge", "--refresh-starter", "--json"]);
+    for (const arg of argv) {
+        if (!allowed.has(arg)) {
+            throw new Error(`Unknown argument for initWordStudyData: ${arg}`);
+        }
+    }
     return {
         merge: argv.includes("--merge"),
         refreshStarter: argv.includes("--refresh-starter"),

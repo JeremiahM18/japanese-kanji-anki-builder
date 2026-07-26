@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const path = require("node:path");
 
 const {
     N5_PRODUCT_READINESS_COMMANDS,
@@ -25,6 +26,10 @@ test("buildProductReadinessPlan defines the N5 automated product checkpoint", ()
         "n5-kanji-golden-review",
         "n5-word-golden-review",
     ]);
+    assert.deepEqual(
+        plan.commands.find((command) => command.id === "n5-kanji-golden-review").args,
+        [path.join("scripts", "reviewGoldenLevel.js"), "--level=5", "--manifest-scoped"],
+    );
 });
 
 test("buildProductReadinessPlan rejects unsupported levels", () => {

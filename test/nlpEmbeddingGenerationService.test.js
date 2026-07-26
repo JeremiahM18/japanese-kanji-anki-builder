@@ -42,6 +42,11 @@ function buildManifest() {
                     distanceMetric: "cosine",
                     dtype: "q8",
                 },
+                inputPolicy: {
+                    maxInputCharacters: 4096,
+                    maxInputTokens: 128,
+                    overflowPolicy: "reject",
+                },
             },
         },
     };
@@ -85,6 +90,7 @@ test("buildWordEmbeddingInput includes exact written-reading identity and review
     assert.match(input, /reading: にほんご/);
     assert.match(input, /meaning: Japanese language/);
     assert.match(input, /example: 日本語を勉強します。 \/ にほんごをべんきょうします。 \/ I study Japanese./);
+    assert.doesNotMatch(input, /Core beginner language word/);
 });
 
 test("buildNlpWordEmbeddingArtifact emits governed word-card embeddings", async () => {
@@ -113,6 +119,11 @@ test("buildNlpWordEmbeddingArtifact emits governed word-card embeddings", async 
 
     assert.equal(artifact.model.modelId, "fixtureEmbeddingModel");
     assert.equal(artifact.model.embeddingDimension, 3);
+    assert.deepEqual(artifact.model.inputPolicy, {
+        maxInputCharacters: 4096,
+        maxInputTokens: 128,
+        overflowPolicy: "reject",
+    });
     assert.equal(artifact.scope.targetKind, "word-card");
     assert.equal(artifact.scope.lane, "assistive-example-reranking");
     assert.equal(artifact.items.length, 1);
@@ -121,6 +132,47 @@ test("buildNlpWordEmbeddingArtifact emits governed word-card embeddings", async 
     assert.equal(artifact.items[0].embedding.vector.length, 3);
     assert.equal(artifact.authority.certifiesCards, false);
     assert.equal(artifact.generator.inputHashes.length, 2);
+    assert.equal(artifact.generator.parameters.reusePolicyVersion, 2);
+    assert.equal(artifact.generator.parameters.inputComposition, "word-card-semantic-v2");
+    assert.equal(artifact.generator.parameters.excludedFields, "notes");
+    assert.match(artifact.items[0].limitations.join(" "), /exclude the unbounded Notes field/);
+});
+
+test("embedding generation preflights every governed input before model inference", async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nlp-embedding-generation-"));
+    const wordTsvPath = writeWordTsv(dir);
+    const manifestPath = path.join(dir, "nlp_model_manifest.json");
+    fs.writeFileSync(manifestPath, JSON.stringify(buildManifest(), null, 2));
+    let embedCalls = 0;
+    let validationCalls = 0;
+
+    await assert.rejects(() => buildNlpWordEmbeddingArtifact({
+        wordTsvPath,
+        manifestPath,
+        workspaceRoot: dir,
+        level: 5,
+        modelId: "fixtureEmbeddingModel",
+        loadManifestFn: () => ({
+            ...buildManifest(),
+            manifestPath,
+        }),
+        buildEmbedTextFn: async () => {
+            const embedText = async () => {
+                embedCalls += 1;
+                return [0.1, 0.2, 0.3];
+            };
+            embedText.validateInput = async (text) => {
+                validationCalls += 1;
+                if (text.includes("お金")) {
+                    throw new Error("fixture token overflow");
+                }
+            };
+            return embedText;
+        },
+    }), /rejected 1 of 2 rows before inference[\s\S]*お金\|おかね.*fixture token overflow/u);
+
+    assert.equal(validationCalls, 2);
+    assert.equal(embedCalls, 0);
 });
 
 test("writeNlpWordEmbeddingArtifact writes artifacts accepted by the validator", async () => {

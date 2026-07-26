@@ -415,6 +415,52 @@ test("append write preserves JSONL boundaries when existing ledger lacks final n
     assert.match(ledgerLines[1], /kanji-n3-obsidian-append-fixture-02/);
 });
 
+test("append write rolls the ledger back when post-write reconciliation fails", () => {
+    const rootDir = makeWorkspace();
+    const eventsPath = writeDraft(rootDir, [buildProofEvent()]);
+    const ledgerPath = path.join(rootDir, "templates", "obsidian_proof_ledger", "kanji_n3.jsonl");
+
+    assert.throws(() => runObsidianProofLedgerAppend({
+        cwd: rootDir,
+        eventsPath,
+        write: true,
+        buildReconciliationReport() {
+            return {
+                passed: false,
+                totals: {
+                    ledgerProofs: 1,
+                    canonicalLedgerProofs: 0,
+                    proofMismatches: 1,
+                },
+                failures: ["injected reconciliation mismatch"],
+            };
+        },
+    }), /rolled back.*Post-write Obsidian proof reconciliation did not pass/);
+    assert.equal(fs.existsSync(ledgerPath), false);
+});
+
+test("append write revalidates duplicate targets after taking the transaction lock", () => {
+    const rootDir = makeWorkspace();
+    const eventsPath = writeDraft(rootDir, [buildProofEvent()]);
+    let prepareChanges = null;
+
+    assert.throws(() => runObsidianProofLedgerAppend({
+        cwd: rootDir,
+        eventsPath,
+        write: true,
+        runFileTransaction(options) {
+            prepareChanges = options.prepareChanges;
+            runObsidianProofLedgerAppend({
+                cwd: rootDir,
+                eventsPath,
+                write: true,
+            });
+            return options.prepareChanges();
+        },
+    }), /already exists/);
+    assert.equal(typeof prepareChanges, "function");
+});
+
 test("append rejects duplicate existing proof targets", () => {
     const rootDir = makeWorkspace();
     const eventsPath = writeDraft(rootDir, [buildProofEvent()]);

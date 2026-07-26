@@ -7,6 +7,11 @@ const {
 const { invokeCliMain } = require("../src/utils/cliArgs");
 
 function parseArgs(argv) {
+    for (const arg of argv) {
+        if (arg !== "--json") {
+            throw new Error(`Unknown argument for auditStrokeOrderPolicy: ${arg}`);
+        }
+    }
     return {
         json: argv.includes("--json"),
     };

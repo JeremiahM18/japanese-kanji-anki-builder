@@ -44,6 +44,11 @@ function buildManifest() {
                     distanceMetric: "cosine",
                     dtype: "q8",
                 },
+                inputPolicy: {
+                    maxInputCharacters: 4096,
+                    maxInputTokens: 128,
+                    overflowPolicy: "reject",
+                },
             },
         },
     };

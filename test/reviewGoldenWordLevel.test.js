@@ -1,7 +1,11 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { parseArgs, parseWordTsv } = require("../scripts/reviewGoldenWordLevel");
+const {
+    assertGoldenWordReviewScope,
+    parseArgs,
+    parseWordTsv,
+} = require("../scripts/reviewGoldenWordLevel");
 const { evaluateGoldenWordReviewSet } = require("../src/services/goldenReviewService");
 
 test("parseArgs accepts level, json, and require-all review mode", () => {
@@ -10,8 +14,30 @@ test("parseArgs accepts level, json, and require-all review mode", () => {
     assert.deepEqual(options, {
         json: true,
         level: 4,
+        manifestScoped: false,
         requireAllRows: true,
+        unknownArgs: [],
     });
+});
+
+test("word Gold review scope is explicit, exclusive, and rejects unsupported flags", () => {
+    assert.doesNotThrow(() => assertGoldenWordReviewScope({
+        manifestScoped: false,
+        requireAllRows: true,
+    }));
+    assert.doesNotThrow(() => assertGoldenWordReviewScope({
+        manifestScoped: true,
+        requireAllRows: false,
+    }));
+    assert.throws(
+        () => assertGoldenWordReviewScope({ manifestScoped: false, requireAllRows: false }),
+        /exactly one/
+    );
+    assert.throws(
+        () => assertGoldenWordReviewScope({ manifestScoped: true, requireAllRows: true }),
+        /exactly one/
+    );
+    assert.deepEqual(parseArgs(["--manifest-scoped", "--unexpected"]).unknownArgs, ["--unexpected"]);
 });
 
 test("parseWordTsv maps word deck TSV rows into reviewable objects", () => {

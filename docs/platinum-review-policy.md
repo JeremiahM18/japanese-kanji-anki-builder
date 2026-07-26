@@ -36,11 +36,13 @@ A card only reaches Sapphire coverage when it satisfies the current structural c
 
 Sapphire evidence is field-bound. A source entry that only says "reviewed" is not enough. The evidence text for an active card must explicitly name the reviewed word or kanji, the exported reading, and the learner-facing values it supports. Automated checks enforce that evidence is tied to the generated card surface; the governed review lane still owns the judgment that the cited source and final card are correct.
 
-If a real review attempt cannot verify a non-core or externally unavailable facet, do not silently block forever and do not mark it as verified. Ship only when the card remains accurate and learner-safe, the unresolved facet is visibly labeled or recorded as a known limitation, and the platinum evidence explains the review attempt and limitation. Generated pitch accent guidance is the model precedent: it may ship only with a visible `Generated pitch (unverified)` label and governed provenance, not as dictionary-backed proof. If the unverifiable item is core to the card's written form, reading, meaning, example correctness, or product fit, defer or remove the card instead of promoting it.
+If a real review attempt cannot verify a non-core or externally unavailable facet, do not silently block forever and do not mark it as verified. Ship only when the card remains accurate and learner-safe, the unresolved facet is visibly labeled or recorded as a known limitation, and the applicable review evidence explains the review attempt and limitation. Generated pitch accent guidance is the model precedent: it may ship only with a visible `Generated pitch (unverified)` label and governed provenance, not as dictionary-backed proof. If the unverifiable item is core to the card's written form, reading, meaning, example correctness, or product fit, defer or remove the card instead of promoting it.
 
-For core-kanji Sapphire, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as the target kanji, `DisplayWord`, `PrimaryReading`, `MeaningJP`, `KanjiMeanings`, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Sapphire.
+For core-kanji Sapphire, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must use one canonical field, one canonical status, an explicit label that says what is unverified or limited, a non-empty review note describing the review attempt, and a card-bound `manual-review` acknowledgement. The Sapphire report must render every label and status. A limitation that changes how a learner-facing field should be interpreted must also be visibly labeled on that field; internal source-depth limitations remain review metadata and must not be injected into learner Notes as editorial prose. Core truth fields such as the target kanji, `DisplayWord`, `PrimaryReading`, `MeaningJP`, `KanjiMeanings`, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Sapphire.
 
-For word Sapphire, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must name the exact facet, use an explicit visible label such as `... unverified` or `... limited verification`, describe the review attempt, appear in the exported `Notes` surface, and be mentioned in `manual-review` evidence. Core truth fields such as written form, reading, meaning, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Sapphire.
+For word Sapphire, record any allowed non-core limitation in `verificationLimitations` instead of burying it in prose. Each limitation must use one canonical field, one canonical status, an explicit label that says what is unverified or limited, a non-empty review note describing the review attempt, and a card-bound `manual-review` acknowledgement. The Sapphire report must render every label and status. Generated pitch limitations additionally require the learner-facing pitch field to display `Generated pitch (unverified)`; source-availability and source-priority limitations remain review metadata and must not be injected into learner Notes as editorial prose. Core truth fields such as written form, reading, meaning, example correctness, and product fit cannot use this escape hatch; unresolved uncertainty there still blocks Sapphire.
+
+Canonical Sapphire limitation status values are `externally_unverified`, `limited_source`, and `manual_review_only`. Word Sapphire permits only `pitchAccent`, `sourceAvailability`, and `sourcePriority`. Core-kanji Sapphire permits only `audioNaturalness`, `exampleSupportNuance`, `notesSupportNuance`, `sourceAvailability`, `strokeOrderSequence`, and `strokeOrderSourceDepth`. The Zod schemas reject legacy spellings, unknown fields, unknown statuses, and extra properties. `npm run data:migrate:sapphire-limitations` is a dry-run-first mechanical canonicalization command; `--write` changes schema vocabulary only and does not review, promote, certify, or change a denominator.
 
 For active word cards, `japanese-source` evidence must cite a source registered in `templates/platinum_card_source_manifest.json` for `word-field-verification`. Generated output, Gold regression expectations, tracked starter templates, ignored local data, source-claim lists, and local caches are useful internal evidence, but they are not Japanese-source verification by themselves. Kanji-reference sources may support `single-kanji-word-field-verification` only for one-kanji word cards.
 
@@ -178,7 +180,7 @@ Active word `reviewEvidence` must include all evidence types below:
 - `manual-review`: a final product judgment was made.
 - `current-standard-review`: the whole-card surface was revalidated under `word-platinum-v3-evidence-lanes`.
 
-Gold word regression remains required where applicable, but it is not word Sapphire source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in word `sourceEvidence`.
+Gold word regression remains required where applicable, but it is not word Platinum source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in word `sourceEvidence`.
 
 Required `qualityGates`:
 
@@ -205,7 +207,7 @@ All gates must be `true`. `fixed_then_platinum` entries must also include `fixSu
 
 Deferred and removed word entries must include `word`, `readingIncludes`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
-Active core-kanji Sapphire entries must include:
+Active core-kanji Platinum entries must include:
 
 - `kanji`
 - `status`
@@ -255,7 +257,7 @@ Active kanji `reviewEvidence` must include all evidence types below:
 - `manual-review`: a final product judgment was made.
 - `current-standard-review`: the whole-card surface was revalidated under `kanji-platinum-v3-evidence-lanes`.
 
-Gold kanji regression remains required where applicable, but it is not kanji Sapphire source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in kanji `sourceEvidence`.
+Gold kanji regression remains required where applicable, but it is not kanji Platinum source truth. It must appear as `golden-regression` in `internalChecks` and must not appear in kanji `sourceEvidence`.
 
 Required kanji `qualityGates`:
 
@@ -276,7 +278,7 @@ Required kanji `qualityGates`:
 - `strokeOrderTargetVerified`
 - `noSilentFallback`
 
-All kanji gates must be `true`. `fixed_then_sapphire` kanji entries must also include `fixSummary`.
+All kanji gates must be `true`. `fixed_then_platinum` kanji entries must also include `fixSummary`.
 
 Deferred and removed kanji entries must include `kanji`, `reviewedAt`, `reviewer`, and `decisionReason`.
 
@@ -327,7 +329,7 @@ The generated deck-row count is the certification denominator. Sapphire counts a
 
 The older `deck:platinum:rereview-status`, `deck:words:platinum:rereview-status`, `deck:kanji:platinum:certify-status`, and `deck:words:platinum:certify-status` names remain compatibility aliases only. Migrated kanji and word aliases default to the scoped `ledger-if-available` proof provider. Use the Obsidian names in new docs, release checklists, handoff prompts, and governance reports.
 
-`deck:words:platinum:source-posture` is the read-only word source-family posture report. It is scoped to structurally current-standard word entries only. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. Word source-claim origin and broad vocabulary-universe adequacy are checked separately by `deck:words:source-adequacy -- --governance-strict`; do not imply that Platinum/card-field source posture proves JLPT/common-word source-origin adequacy. Source-family posture counts are not a rereview selection pool and are not substantive platinum proof.
+`deck:words:platinum:source-posture` is the read-only word source-family posture report. It is scoped to structurally current-standard word entries only. A governed single source can satisfy structural word-field verification, but it does not prove independent source-family corroboration and is marked `word_source_independence_not_proven`. The strict tracked contract at `templates/word_source_origin_policy.json` additionally requires `word_source_claim_origin_independence_not_evaluated` on every card-field posture row: this report cannot prove independence from candidate, placement, or source-claim origin families. That limitation may be removed only after an exact written-reading origin-evidence consumer is implemented, schema-validated, tested, documented, and independently reconciled. Word source-claim origin and broad vocabulary-universe adequacy are checked separately by `deck:words:source-adequacy -- --governance-strict`; do not imply that Platinum/card-field source posture proves JLPT/common-word source-origin adequacy. Source-family posture counts are not a rereview selection pool and are not substantive platinum proof.
 
 `deck:platinum:governance-gate` is the local-data real-row governance gate for N5/N4 native Sapphire and word source/proof posture. It reads migrated kanji and word Obsidian proof through the scoped proof-provider path, defaulting to canonical JSONL for migrated levels; unmigrated levels still fall back through the provider path until their own scoped ledger exists. It fails dirty reviewed entries and missing governed word sources, surfaces bulk-template `revalidationSummary` patterns, marker-only example-quality automation, zero verification-limitations populations, missing Obsidian proof, and word source-family posture. If an explicitly configured incomplete word level has blocked rows, only rows missing active current-standard Sapphire coverage can be allowed; dirty reviewed entries still fail the gate. It does not edit cards or replace level-specific release commands.
 

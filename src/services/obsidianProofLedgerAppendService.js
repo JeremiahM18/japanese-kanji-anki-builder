@@ -25,10 +25,11 @@ const {
     entryHasSubstantiveCurrentStandardRereviewProof: wordEntryHasSubstantiveCurrentStandardRereviewProof,
 } = require("./platinumWordObsidianProofService");
 const {
-    ensureDir,
     isPathInside,
-    writeFileIfMissingSync,
 } = require("../utils/fs");
+const {
+    runGovernedFileTransactionSync,
+} = require("../utils/governedFileTransaction");
 
 const GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR = path.join("out", "obsidian-proof", "drafts");
 const DISALLOWED_NEW_PROOF_AUTHOR_PATTERN = /\b(?:codex|assistant|automation|automated|generator|generated|script|migration|bulk|lane-batch)\b/i;
@@ -336,13 +337,13 @@ function assertNoDuplicateExistingEvents({ cwd, ledgerDir, events }) {
     return ledger;
 }
 
-function appendJsonlEvents(filePath, events = []) {
-    ensureDir(path.dirname(filePath));
+function buildAppendedJsonlText(existingText = "", events = []) {
     const serialized = events.map((event) => JSON.stringify(event)).join("\n");
-    if (writeFileIfMissingSync(filePath, `${serialized}\n`, "utf8")) {
-        return;
+    if (!existingText) {
+        return `${serialized}\n`;
     }
-    fs.appendFileSync(filePath, `\n${serialized}\n`, "utf8");
+    const separator = existingText.endsWith("\n") ? "" : "\n";
+    return `${existingText}${separator}${serialized}\n`;
 }
 
 function summarizeBatches(events = []) {
@@ -420,32 +421,69 @@ function buildObsidianProofLedgerAppendReport(options = {}) {
     };
 }
 
-function writeObsidianProofLedgerAppend(report = {}) {
-    const ledgerOutputPath = path.resolve(report.cwd, report.ledgerOutputPath);
-    appendJsonlEvents(ledgerOutputPath, report.events || []);
-}
-
 function runObsidianProofLedgerAppend(options = {}) {
-    const report = buildObsidianProofLedgerAppendReport(options);
-    if (options.write) {
-        writeObsidianProofLedgerAppend(report);
-        const reconciliation = buildObsidianProofReconciliationReport({
-            cwd: report.cwd,
-            ledgerDir: report.ledgerDir,
-            deckKinds: [report.deckKind],
-            levels: [report.level],
-        });
-        report.reconciliation = {
-            passed: reconciliation.passed,
-            totals: reconciliation.totals,
-            failures: reconciliation.failures || [],
-        };
-        if (!reconciliation.passed) {
-            report.passed = false;
-            report.failures.push("Post-write Obsidian proof reconciliation did not pass.");
-        }
+    const preflight = buildObsidianProofLedgerAppendReport(options);
+    if (!options.write) {
+        return preflight;
     }
-    return report;
+    const runFileTransaction = options.runFileTransaction || runGovernedFileTransactionSync;
+    const buildReconciliationReport = options.buildReconciliationReport
+        || buildObsidianProofReconciliationReport;
+    const transactionRoot = path.join(preflight.cwd, "out", "file-transactions");
+    const lockPath = path.join(
+        transactionRoot,
+        `obsidian-${preflight.deckKind}-n${preflight.level}.lock`
+    );
+    const transaction = runFileTransaction({
+        workspaceRoot: preflight.cwd,
+        transactionRoot,
+        transactionName: `obsidian-${preflight.deckKind}-n${preflight.level}`,
+        lockPath,
+        prepareChanges() {
+            const report = buildObsidianProofLedgerAppendReport({
+                ...options,
+                write: true,
+            });
+            if (report.ledgerOutputPath !== preflight.ledgerOutputPath) {
+                throw new Error(
+                    "Obsidian proof draft scope changed between preflight and locked append; rerun the dry-run."
+                );
+            }
+            const ledgerOutputPath = path.resolve(report.cwd, report.ledgerOutputPath);
+            let existingText = "";
+            try {
+                existingText = fs.readFileSync(ledgerOutputPath, "utf8");
+            } catch (error) {
+                if (error?.code !== "ENOENT") {
+                    throw error;
+                }
+            }
+            return {
+                changes: [{
+                    filePath: ledgerOutputPath,
+                    data: buildAppendedJsonlText(existingText, report.events || []),
+                }],
+                metadata: report,
+            };
+        },
+        validateAfterWrite({ metadata: report }) {
+            const reconciliation = buildReconciliationReport({
+                cwd: report.cwd,
+                ledgerDir: report.ledgerDir,
+                deckKinds: [report.deckKind],
+                levels: [report.level],
+            });
+            report.reconciliation = {
+                passed: reconciliation.passed,
+                totals: reconciliation.totals,
+                failures: reconciliation.failures || [],
+            };
+            if (!reconciliation.passed) {
+                throw new Error("Post-write Obsidian proof reconciliation did not pass.");
+            }
+        },
+    });
+    return transaction.metadata;
 }
 
 function formatObsidianProofLedgerAppendReport(report = {}) {
@@ -502,12 +540,11 @@ function formatObsidianProofLedgerAppendReport(report = {}) {
 }
 
 module.exports = {
-    appendJsonlEvents,
+    buildAppendedJsonlText,
     buildObsidianProofLedgerAppendReport,
     formatObsidianProofLedgerAppendReport,
     GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR,
     parseDraftEventsText,
     readDraftProofEvents,
     runObsidianProofLedgerAppend,
-    writeObsidianProofLedgerAppend,
 };

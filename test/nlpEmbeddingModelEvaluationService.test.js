@@ -6,6 +6,7 @@ const {
 } = require("../src/datasets/nlpEmbeddingBenchmark");
 const {
     buildNlpEmbeddingModelEvaluationReport,
+    assertEmbeddingInputWithinPolicy,
     cosineSimilarity,
     evaluateEmbeddingBenchmark,
     formatNlpEmbeddingModelEvaluationReport,
@@ -62,6 +63,11 @@ function buildManifest() {
                     distanceMetric: "cosine",
                     dtype: "q8",
                 },
+                inputPolicy: {
+                    maxInputCharacters: 4096,
+                    maxInputTokens: 128,
+                    overflowPolicy: "reject",
+                },
             },
         },
     };
@@ -89,6 +95,35 @@ test("parseNlpEmbeddingBenchmark requires both positive and negative pairs", () 
             },
         ],
     })), /both positive and negative pairs/);
+});
+
+test("embedding input policy rejects character and token overflow without truncation", async () => {
+    const policy = {
+        maxInputCharacters: 8,
+        maxInputTokens: 4,
+        overflowPolicy: "reject",
+    };
+    const tokenizer = async (text, options) => {
+        assert.equal(options.truncation, false);
+        return { input_ids: { data: new BigInt64Array(Array.from(text).length) } };
+    };
+
+    assert.deepEqual(
+        await assertEmbeddingInputWithinPolicy("日本語", policy, { tokenizer }),
+        { characterCount: 3, tokenCount: 3 }
+    );
+    await assert.rejects(
+        assertEmbeddingInputWithinPolicy("123456789", policy, { tokenizer }),
+        /characters.*Silent truncation is forbidden/
+    );
+    await assert.rejects(
+        assertEmbeddingInputWithinPolicy("日本語です", policy, { tokenizer }),
+        /tokens.*Silent truncation is forbidden/
+    );
+    await assert.rejects(
+        assertEmbeddingInputWithinPolicy("日本語", policy),
+        /no callable tokenizer/
+    );
 });
 
 test("evaluateEmbeddingBenchmark scores semantic separation with supplied embeddings", async () => {

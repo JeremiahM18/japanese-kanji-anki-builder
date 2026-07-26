@@ -99,12 +99,22 @@ function computeApkgCacheKey({ packageRootDir, exports, levels, deckKind }) {
     return digest.digest("hex");
 }
 
-function resolveApkgCachePaths(cacheKey) {
+function resolveApkgCachePaths(cacheKey, {
+    packageRootDir,
+    cacheRootDir = null,
+} = {}) {
     if (!cacheKey) {
         return null;
     }
+    if (!packageRootDir || !String(packageRootDir).trim()) {
+        throw new Error("APKG cache resolution requires packageRootDir.");
+    }
 
-    const cacheDir = path.join(process.cwd(), "out", ".apkg-cache");
+    const resolvedPackageRoot = path.resolve(packageRootDir);
+    const resolvedCacheRoot = cacheRootDir
+        ? path.resolve(cacheRootDir)
+        : path.dirname(path.dirname(resolvedPackageRoot));
+    const cacheDir = path.join(resolvedCacheRoot, ".apkg-cache");
     assertSafeGeneratedPath(cacheDir, { label: "APKG cache directory" });
     const apkgPath = path.join(cacheDir, `${cacheKey}.apkg`);
     return {
@@ -267,6 +277,7 @@ async function buildAnkiPackage({
     mediaDir,
     levels,
     deckKind = "kanji",
+    cacheRootDir = null,
 }) {
     const totalStartedAt = performance.now();
     const timingsMs = {};
@@ -279,7 +290,10 @@ async function buildAnkiPackage({
 
     const cacheKeyStartedAt = performance.now();
     const cacheKey = computeApkgCacheKey({ packageRootDir, exports, levels, deckKind });
-    const cachePaths = resolveApkgCachePaths(cacheKey);
+    const cachePaths = resolveApkgCachePaths(cacheKey, {
+        packageRootDir,
+        cacheRootDir,
+    });
     const apkgPath = path.join(packageRootDir, buildApkgFileName(levels, deckKind));
     captureTiming(timingsMs, "computeCacheKey", cacheKeyStartedAt);
 
@@ -375,4 +389,5 @@ module.exports = {
     buildApkgFileName,
     buildDeckName,
     formatAnkiPackageSkipReason,
+    resolveApkgCachePaths,
 };

@@ -28,6 +28,8 @@ function parseArgs(argv) {
             options.words = arg.split("=")[1].split(",").map((item) => item.trim()).filter(Boolean);
         } else if (arg.startsWith("--tsv-path=")) {
             options.tsvPath = arg.split("=")[1].trim();
+        } else {
+            throw new Error(`Unknown argument for syncWordExampleAudio: ${arg}`);
         }
     }
 

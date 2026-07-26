@@ -266,6 +266,42 @@ test("word Silver applicator dry-runs then writes starter and contract updates",
     assert.match(formatWordSilverApplyReport(writeReport), /Required follow-up verification/);
 });
 
+test("word Silver applicator submits starter shards and the level contract as one transaction", () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-silver-transaction-"));
+    const templatesDir = path.join(rootDir, "templates");
+    const starterPath = path.join(templatesDir, "starter_word_study_data_n4.json");
+    const contractPath = path.join(templatesDir, "jlpt_word_level_contract.json");
+    const manifestPath = path.join(rootDir, "manifest.json");
+    writeJson(starterPath, {});
+    writeJson(contractPath, {
+        version: 1,
+        inventoryCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0 },
+        excludedCounts: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0 },
+        wordLevels: {},
+        excludedWordLevels: {},
+    });
+    writeJson(manifestPath, buildValidManifest());
+    let received = null;
+
+    applyWordSilverDecisionManifest({
+        manifestPath,
+        rootDir,
+        write: true,
+        runFileTransaction(options) {
+            received = options;
+            return { committed: true };
+        },
+    });
+
+    assert.equal(received.changes.length, 2);
+    assert.deepEqual(
+        received.changes.map((change) => path.basename(change.filePath)).sort(),
+        ["jlpt_word_level_contract.json", "starter_word_study_data_n4.json"]
+    );
+    assert.equal(received.changes.every((change) => Object.hasOwn(change, "expectedBeforeSha256")), true);
+    assert.match(received.lockPath, /word-silver-apply\.lock$/);
+});
+
 test("word Silver applicator rejects cross-level fixes for existing identities", () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-silver-cross-level-"));
     const templatesDir = path.join(rootDir, "templates");

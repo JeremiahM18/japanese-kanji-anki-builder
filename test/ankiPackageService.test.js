@@ -4,7 +4,10 @@ const path = require("node:path");
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { buildAnkiPackage } = require("../src/services/ankiPackageService");
+const {
+    buildAnkiPackage,
+    resolveApkgCachePaths,
+} = require("../src/services/ankiPackageService");
 const { resolvePythonCommand } = require("../src/services/toolchainService");
 
 function writeFile(filePath, text) {
@@ -27,6 +30,18 @@ function makeWorkspaceOutTempDir(prefix) {
 }
 
 const python = resolvePythonCommand();
+
+test("APKG runtime cache stays outside the cleaned build root", () => {
+    const benchmarkRoot = path.join(process.cwd(), "out", "bench-build");
+    const buildRoot = path.join(benchmarkRoot, "warmup");
+    const packageRootDir = path.join(buildRoot, "package");
+    const cacheKey = "a".repeat(64);
+    const cachePaths = resolveApkgCachePaths(cacheKey, { packageRootDir });
+
+    assert.equal(cachePaths.cacheDir, path.join(benchmarkRoot, ".apkg-cache"));
+    assert.equal(cachePaths.apkgPath, path.join(benchmarkRoot, ".apkg-cache", `${cacheKey}.apkg`));
+    assert.equal(path.relative(buildRoot, cachePaths.cacheDir).startsWith(".."), true);
+});
 
 test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
     skip: !python,
@@ -75,6 +90,7 @@ test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
             mediaDir,
             levels: [5],
             deckKind: "kanji",
+            cacheRootDir: rootDir,
         });
         assert.equal(first.skipped, false);
         assert.equal(first.cacheHit, undefined);
@@ -92,6 +108,7 @@ test("buildAnkiPackage reuses a sha-verified content-addressed APKG cache", {
             mediaDir,
             levels: [5],
             deckKind: "kanji",
+            cacheRootDir: rootDir,
         });
         assert.equal(second.skipped, false);
         assert.equal(second.cacheHit, true);

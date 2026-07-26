@@ -17,6 +17,7 @@ Covered:
 - source-input and source-evidence mistakes
 - VOICEVOX/Docker local runtime recovery
 - ignored local `out/`, `data/`, and `downloads/` recovery boundaries
+- interrupted governed multi-file transactions and orphaned transaction locks
 
 Not covered:
 
@@ -106,6 +107,33 @@ npm run product:artifacts:kanji:release-qa
 ```
 
 For card content defects, rerun the applicable Gold, native Sapphire or structural compatibility, Platinum, Obsidian, source, audio, stroke-order, accessibility, and product gates from [verification.md](verification.md). Do not use green package output as proof that real card data was rereviewed.
+
+## Governed File Transaction Recovery
+
+Word Silver application, Sapphire promotion, Sapphire limitation migration, and Obsidian proof append use the shared governed file-transaction layer. It stages same-directory temporary files durably, records before/after SHA-256 hashes and backups under `out/file-transactions/`, acquires an exclusive scoped lock, and rolls committed targets back in reverse order if a later write or post-write validator fails.
+
+Normal validation or write failures that roll back cleanly leave no recovery lock. If rollback cannot be completed safely, the transaction deliberately leaves its journal, backup files, and `.lock` file in place. Do not delete that lock or copy a backup by hand.
+
+Inspect a retained lock first:
+
+```bash
+npm run data:transactions:recover -- --lock=out/file-transactions/<transaction>.lock
+```
+
+The dry-run classifies every target by its current hash and fails closed when target contents match neither the recorded pre-transaction nor committed state. If every target is recoverable and no unrecognized user change exists, restore the recorded pre-transaction state:
+
+```bash
+npm run data:transactions:recover -- --lock=out/file-transactions/<transaction>.lock --write
+```
+
+After recovery:
+
+1. Re-run the original dry-run command and its validators.
+2. Inspect `git diff` and the affected ignored/local files.
+3. Record the failed transaction id, recovery action, and verification outcome in the incident or batch handoff.
+4. Do not resume proof append or promotion until the owning lane gate passes again.
+
+The recovery command is confined to lock files under `out/file-transactions/`. Before reading or restoring targets it verifies the recorded workspace, transaction root, transaction directory, journal, stage, backup, and target paths remain inside their governed roots, their nearest existing ancestors resolve inside the real workspace rather than through an outside symlink or junction, and lock/journal metadata agree. It restores only hash-verified recorded targets and removes the matching lock only after successful restoration.
 
 ## Dependency Recovery
 

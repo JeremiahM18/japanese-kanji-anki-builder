@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "roots": [
+    "data",
+    "downloads",
+    "cache",
+    "out",
+    ".ci-smoke",
+    ".release-gate",
+    ".release-smoke"
+  ],
+  "excludedPrefixes": [
+    "out/file-transactions",
+    "out/workspace-side-effects"
+  ],
+  "contentHashPrefixes": [
+    "data",
+    "downloads",
+    ".ci-smoke",
+    ".release-gate",
+    ".release-smoke"
+  ],
+  "hashMaxBytes": 1048576,
+  "authority": "This policy inventories ignored/local workspace side effects. Governed local data, downloads, and compact CI/release fixtures receive SHA-256 records up to hashMaxBytes; high-volume cache and generated out trees use size plus mtime metadata. It does not make ignored files authoritative, certify deck content, or replace source, lane, release, or manual QA gates."
+}

@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 const path = require("node:path");
 
 const {
@@ -56,4 +57,13 @@ test("branch protection audit report is readable for local verification", () => 
     assert.match(text, /Status: pass/);
     assert.match(text, /Required status checks: 13/);
     assert.match(text, /Dependency Review/);
+});
+
+test("CI pull requests are scoped to the protected main branch", () => {
+    const workflow = fs.readFileSync(path.join(repoRoot, ".github", "workflows", "ci.yml"), "utf8");
+
+    assert.match(
+        workflow,
+        /pull_request:\s*\r?\n\s+branches:\s*\r?\n\s+- main/
+    );
 });

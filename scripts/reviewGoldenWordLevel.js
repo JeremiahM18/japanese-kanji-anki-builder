@@ -1,6 +1,10 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const {
+    assertNoUnknownArgs,
+    collectUnknownArg,
+    invokeCliMain,
+} = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
@@ -17,20 +21,32 @@ function parseArgs(argv) {
     const args = {
         json: false,
         level: null,
+        manifestScoped: false,
         requireAllRows: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
             args.json = true;
+        } else if (arg === "--manifest-scoped") {
+            args.manifestScoped = true;
         } else if (arg === "--require-all") {
             args.requireAllRows = true;
         } else if (arg.startsWith("--level=")) {
             args.level = Number(arg.split("=")[1]);
+        } else {
+            collectUnknownArg(args, arg);
         }
     }
 
     return args;
+}
+
+function assertGoldenWordReviewScope(options = {}) {
+    if (options.requireAllRows === options.manifestScoped) {
+        throw new Error("Golden word review scope must use exactly one of --require-all or --manifest-scoped.");
+    }
 }
 
 function parseWordTsv(tsv) {
@@ -61,6 +77,8 @@ function parseWordTsv(tsv) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("deck:words:review:n<level>", options.unknownArgs);
+    assertGoldenWordReviewScope(options);
     const level = options.level;
 
     if (!Number.isInteger(level) || level < 1 || level > 5) {
@@ -121,6 +139,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+    assertGoldenWordReviewScope,
     main,
     parseArgs,
     parseWordTsv,

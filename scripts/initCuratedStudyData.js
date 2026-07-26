@@ -7,6 +7,12 @@ const { resolveTrackedStarterPaths } = require("../src/datasets/curatedStudyData
 const { bootstrapCuratedStudyData } = require("../src/services/curatedStudyBootstrapService");
 
 function parseArgs(argv) {
+    const allowed = new Set(["--merge", "--refresh-starter", "--json"]);
+    for (const arg of argv) {
+        if (!allowed.has(arg)) {
+            throw new Error(`Unknown argument for initCuratedStudyData: ${arg}`);
+        }
+    }
     return {
         merge: argv.includes("--merge"),
         refreshStarter: argv.includes("--refresh-starter"),

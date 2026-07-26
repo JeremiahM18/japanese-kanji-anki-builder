@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "checkedAt": "2026-07-26",
+  "overrides": [
+    {
+      "parentPackage": "@huggingface/transformers",
+      "packageName": "sharp",
+      "forcedVersion": "0.35.3",
+      "declaredParentRange": "^0.34.1",
+      "rangeCompatibility": "outside_declared_range",
+      "securityAdvisory": "GHSA-f88m-g3jw-g9cj",
+      "scope": "The active Transformers.js integration is text-embedding only. It does not invoke image decoding, image preprocessing, or vision pipelines.",
+      "rationale": "The upstream 3.8.1 package still declares vulnerable sharp ^0.34.1. The reviewed override moves the installed native dependency to the patched 0.35 line while retaining the already-pinned Transformers.js API used by this repository.",
+      "validationCommands": [
+        "npm run security:advisories",
+        "npm run supply-chain:audit",
+        "npm test -- --scope=nlp",
+        "npm run nlp:doctor",
+        "npm run nlp:governance-gate"
+      ],
+      "nextReview": "2026-08-26"
+    },
+    {
+      "parentPackage": "onnxruntime-node",
+      "packageName": "tar",
+      "forcedVersion": "7.5.22",
+      "declaredParentRange": "^7.0.1",
+      "rangeCompatibility": "inside_declared_range",
+      "securityAdvisory": "GHSA-r292-9mhp-454m",
+      "scope": "The override applies only to the ONNX Runtime installer dependency graph.",
+      "rationale": "The parent range accepts tar 7.5.22, which is newer than the vulnerable <=7.5.20 range, but npm overrides pin the reviewed patched resolution so a stale lock refresh cannot reintroduce the advisory.",
+      "validationCommands": [
+        "npm run security:advisories",
+        "npm run supply-chain:audit",
+        "npm test -- --scope=nlp"
+      ],
+      "nextReview": "2026-08-26"
+    }
+  ]
+}

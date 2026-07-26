@@ -41,6 +41,8 @@ function parseArgs(argv) {
             options.locale = arg.split("=")[1].trim();
         } else if (arg.startsWith("--tsv-path=")) {
             options.tsvPath = arg.split("=")[1].trim();
+        } else {
+            throw new Error(`Unknown argument for generateWordExampleVoicevoxAudio: ${arg}`);
         }
     }
 

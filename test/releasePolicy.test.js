@@ -97,6 +97,17 @@ test("product hardening docs exist for exit criteria, accessibility, and content
     assert.equal(notice.includes("VOICEVOX Nemo"), true);
 });
 
+test("declared Node support matches the ESLint 10 runtime floor", () => {
+    const expectedNodeRange = "^20.19.0 || ^22.13.0 || >=24";
+    const packageJson = JSON.parse(readRepoFile("package.json"));
+    const packageLock = JSON.parse(readRepoFile("package-lock.json"));
+    const compatibilityMatrix = readRepoFile(path.join("docs", "compatibility-matrix.md"));
+
+    assert.equal(packageJson.engines.node, expectedNodeRange);
+    assert.equal(packageLock.packages[""].engines.node, expectedNodeRange);
+    assert.equal(compatibilityMatrix.includes(expectedNodeRange.replaceAll("|", "\\|")), true);
+});
+
 test("NOTICE attributes the configured kanji dictionary API and upstream EDRDG data", () => {
     const notice = readRepoFile("NOTICE.md");
     const config = loadConfig({ cwd: repoRoot, env: {}, dotEnvFileName: ".missing-test-env" });

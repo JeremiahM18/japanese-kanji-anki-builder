@@ -99,6 +99,12 @@ const embeddingConfigSchema = z.object({
     dtype: z.string().min(1).optional(),
 }).strict();
 
+const modelInputPolicySchema = z.object({
+    maxInputCharacters: z.number().int().positive(),
+    maxInputTokens: z.number().int().positive(),
+    overflowPolicy: z.literal("reject"),
+}).strict();
+
 const modelSchema = z.object({
     name: z.string().min(1),
     status: modelStatusSchema,
@@ -114,6 +120,7 @@ const modelSchema = z.object({
     promotionPolicy: z.literal("human_review_required"),
     deterministic: modelDeterminismSchema,
     embeddingConfig: embeddingConfigSchema.optional(),
+    inputPolicy: modelInputPolicySchema.optional(),
     checkedAt: z.string().min(1),
     localArtifact: localArtifactSchema.optional(),
     evaluation: modelEvaluationSchema.optional(),
@@ -215,6 +222,9 @@ function parseNlpModelManifest(value) {
             }
             if (model.task === "embedding" && !model.embeddingConfig) {
                 throw new Error(`Active embedding NLP model ${modelId} must declare embeddingConfig.`);
+            }
+            if (model.task === "embedding" && !model.inputPolicy) {
+                throw new Error(`Active embedding NLP model ${modelId} must declare inputPolicy.`);
             }
             if (model.allowedUses.length === 0) {
                 throw new Error(`Active NLP model ${modelId} must declare at least one allowed assistive use.`);

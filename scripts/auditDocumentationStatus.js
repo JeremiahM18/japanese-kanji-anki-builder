@@ -5,6 +5,11 @@ const {
 } = require("../src/services/documentationStatusAuditService");
 
 function parseArgs(argv) {
+    for (const arg of argv) {
+        if (arg !== "--json") {
+            throw new Error(`Unknown argument for auditDocumentationStatus: ${arg}`);
+        }
+    }
     return {
         json: argv.includes("--json"),
     };

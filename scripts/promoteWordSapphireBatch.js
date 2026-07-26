@@ -11,6 +11,10 @@ const { buildWordRowsForLevel } = require("../src/services/wordGeneratedRowsServ
 const {
     promoteSapphireWordBatch,
 } = require("../src/services/sapphireWordPromotionService");
+const {
+    readFileState,
+    runGovernedFileTransactionSync,
+} = require("../src/utils/governedFileTransaction");
 
 function parseLevel(value) {
     const normalized = String(value ?? "").trim().toUpperCase().replace(/^N/, "");
@@ -48,10 +52,6 @@ function readJson(filePath) {
     return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
-function writeJson(filePath, value) {
-    fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
-}
-
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     assertNoUnknownArgs("deck:words:sapphire:promote", options.unknownArgs);
@@ -77,6 +77,7 @@ async function main() {
         throw new Error(`Missing prior Gold word review set at ${goldenPath}`);
     }
 
+    const targetBeforeState = readFileState(targetPath);
     const existingEntries = readJson(targetPath);
     const goldenExpectations = readJson(goldenPath);
     const candidatePayload = readJson(inputPath);
@@ -97,7 +98,17 @@ async function main() {
     });
 
     if (options.write) {
-        writeJson(targetPath, result.entries);
+        runGovernedFileTransactionSync({
+            changes: [{
+                filePath: targetPath,
+                expectedBeforeSha256: targetBeforeState.sha256,
+                data: `${JSON.stringify(result.entries, null, 2)}\n`,
+            }],
+            lockPath: path.join(process.cwd(), "out", "file-transactions", `word-sapphire-n${options.level}.lock`),
+            transactionName: `word-sapphire-n${options.level}`,
+            transactionRoot: path.join(process.cwd(), "out", "file-transactions"),
+            workspaceRoot: process.cwd(),
+        });
     }
 
     console.log(JSON.stringify({

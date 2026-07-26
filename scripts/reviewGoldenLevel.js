@@ -1,6 +1,10 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { invokeCliMain } = require("../src/utils/cliArgs");
+const {
+    assertNoUnknownArgs,
+    collectUnknownArg,
+    invokeCliMain,
+} = require("../src/utils/cliArgs");
 
 const { loadConfig } = require("../src/config");
 const { loadJlptOnlyJson } = require("../src/datasets/jlptOnlyJson");
@@ -16,21 +20,35 @@ function parseArgs(argv) {
     const args = {
         json: false,
         level: null,
+        manifestScoped: false,
+        unknownArgs: [],
     };
 
     for (const arg of argv) {
         if (arg === "--json") {
             args.json = true;
+        } else if (arg === "--manifest-scoped") {
+            args.manifestScoped = true;
         } else if (arg.startsWith("--level=")) {
             args.level = Number(arg.split("=")[1]);
+        } else {
+            collectUnknownArg(args, arg);
         }
     }
 
     return args;
 }
 
+function assertGoldenKanjiReviewScope(options = {}) {
+    if (!options.manifestScoped) {
+        throw new Error("Golden kanji review scope must be explicit: pass --manifest-scoped.");
+    }
+}
+
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    assertNoUnknownArgs("deck:review:n<level>", options.unknownArgs);
+    assertGoldenKanjiReviewScope(options);
     const level = options.level;
 
     if (![1, 2, 3, 4, 5].includes(level)) {
@@ -97,6 +115,7 @@ if (require.main === module) {
 
 
 module.exports = {
+    assertGoldenKanjiReviewScope,
     main,
     parseArgs,
 };

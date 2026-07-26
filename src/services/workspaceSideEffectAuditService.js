@@ -68,10 +68,15 @@ function isExcluded(relativePath, excludedPrefixes = []) {
 }
 
 function buildFileRecord(filePath, relativePath, hashMaxBytes, shouldHash) {
+    let fileHandle;
     let stats;
     try {
-        stats = fs.statSync(filePath);
+        fileHandle = fs.openSync(filePath, "r");
+        stats = fs.fstatSync(fileHandle);
     } catch (error) {
+        if (Number.isInteger(fileHandle)) {
+            fs.closeSync(fileHandle);
+        }
         return {
             path: relativePath,
             statError: error?.code || error?.name || "UNKNOWN",
@@ -85,12 +90,13 @@ function buildFileRecord(filePath, relativePath, hashMaxBytes, shouldHash) {
     };
     if (record.hashMode === "sha256") {
         try {
-            record.sha256 = sha256(fs.readFileSync(filePath));
+            record.sha256 = sha256(fs.readFileSync(fileHandle));
         } catch (error) {
             record.readError = error?.code || error?.name || "UNKNOWN";
             record.hashMode = "metadata-read-error";
         }
     }
+    fs.closeSync(fileHandle);
     return record;
 }
 

@@ -64,17 +64,35 @@ function parseFrontmatter(text, label) {
 
 function readGitHead(repositoryRoot) {
     const dotGitPath = path.join(path.resolve(repositoryRoot), ".git");
-    const gitDir = fs.statSync(dotGitPath).isFile()
-        ? path.resolve(path.dirname(dotGitPath), fs.readFileSync(dotGitPath, "utf8").replace(/^gitdir:\s*/u, "").trim())
-        : dotGitPath;
+    const dotGitHandle = fs.openSync(dotGitPath, "r");
+    let gitDir;
+    try {
+        const dotGitStats = fs.fstatSync(dotGitHandle);
+        if (dotGitStats.isDirectory()) {
+            gitDir = dotGitPath;
+        } else if (dotGitStats.isFile()) {
+            gitDir = path.resolve(
+                path.dirname(dotGitPath),
+                fs.readFileSync(dotGitHandle, "utf8").replace(/^gitdir:\s*/u, "").trim(),
+            );
+        } else {
+            throw new Error(`${dotGitPath} must be a Git directory or gitdir pointer file.`);
+        }
+    } finally {
+        fs.closeSync(dotGitHandle);
+    }
     const head = fs.readFileSync(path.join(gitDir, "HEAD"), "utf8").trim();
     if (!head.startsWith("ref: ")) {
         return head;
     }
     const ref = head.slice(5);
     const looseRefPath = path.join(gitDir, ...ref.split("/"));
-    if (fs.existsSync(looseRefPath)) {
+    try {
         return fs.readFileSync(looseRefPath, "utf8").trim();
+    } catch (error) {
+        if (error?.code !== "ENOENT") {
+            throw error;
+        }
     }
     const packedRefs = fs.readFileSync(path.join(gitDir, "packed-refs"), "utf8");
     const match = packedRefs.split(/\r?\n/u)

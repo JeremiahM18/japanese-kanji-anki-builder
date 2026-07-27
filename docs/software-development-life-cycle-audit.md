@@ -163,7 +163,7 @@ Remaining limitation: visibility metrics expose current SDLC health and review c
 
 ### P2: Add Release QA Evidence Packet
 
-Release QA now has a tracked template and fail-closed validator so automation success cannot be mistaken for APKG import, mobile, accessibility, listening, media, or source-governance evidence.
+Release QA now has a versioned tracked template and fail-closed validator so automation success cannot be mistaken for APKG import, mobile, accessibility, listening, media, or source-governance evidence. Packet version 2 binds the candidate to current Git HEAD and binds exactly one APKG per shipped deck kind to an isolated run-output path, byte size, and SHA-256.
 
 Current artifacts:
 
@@ -173,7 +173,7 @@ Current artifacts:
 
 Current command: `npm run product:release-qa:evidence`.
 
-Remaining limitation: this command validates that release-specific evidence was recorded in the packet. It does not perform the APKG import, mobile review, screen-reader review, listening review, or source-access work by itself.
+Remaining limitation: this command verifies the candidate commit and APKG file integrity and validates that release-specific evidence was recorded in the packet. It does not perform the APKG import, mobile review, screen-reader review, listening review, or source-access work by itself.
 
 ### P3: Add License Compliance Automation
 

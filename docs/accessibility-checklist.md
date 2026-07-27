@@ -11,6 +11,15 @@ npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
 ```
 
+For release-candidate or parallel builds, select the exact isolated output scope instead of the shared default roots:
+
+```bash
+npm run deck:review:accessibility -- --deck-kind=kanji --levels=<levels> --run-id=<release-candidate-id>
+npm run deck:review:accessibility -- --deck-kind=word --levels=<levels> --run-id=<release-candidate-id>
+```
+
+`--levels` accepts unique comma-separated N1-N5 values and is valid only with `--run-id`. `--out-dir-base=<generated-root>` may also be supplied with `--run-id` when the matching build used a non-default governed output base. The command resolves the package summary under the selected `out/run-outputs/<run-id>/<deck-kind>-n*/package/` scope and rejects a summary whose `rootDir` or `exportsDir` points anywhere else, including symbolic-link escapes. Omitting `--run-id` intentionally preserves the legacy shared `out/build` or `out/word-build` selection.
+
 The automated review currently checks:
 
 - Japanese-capable font stack on card CSS
@@ -18,6 +27,7 @@ The automated review currently checks:
 - audio field visibility when packaged audio exists
 - textual redundancy through example content
 - stroke-order or kanji-breakdown surface visibility
+- non-empty alt text on exported image tags
 - contrast ratios for key text classes against the card background
 
 ## Manual review

@@ -6,7 +6,7 @@ const { loadAnkiNoteSchema } = require("../src/config/ankiNoteSchema");
 const { buildAccessibilityReviewReport, formatAccessibilityReviewReport } = require("../src/services/accessibilityReviewService");
 const { resolveIsolatedOutputDir } = require("../src/services/outputIsolationService");
 const { assertNoUnknownArgs, collectUnknownArg, invokeCliMain, parseStringOption } = require("../src/utils/cliArgs");
-const { isPathInside } = require("../src/utils/fs");
+const { isPathInside, openVerifiedRegularFileSync } = require("../src/utils/fs");
 
 function parseScopedLevels(value) {
     const entries = String(value || "")
@@ -101,15 +101,20 @@ function loadAccessibilityPackageSummary(packageSummaryPath) {
     const packageRoot = path.dirname(resolvedSummaryPath);
     const expectedExportsDir = path.join(packageRoot, "exports");
     const packageRootStats = fs.lstatSync(packageRoot);
-    const summaryStats = fs.lstatSync(resolvedSummaryPath);
     if (packageRootStats.isSymbolicLink() || !packageRootStats.isDirectory()) {
         throw new Error(`Accessibility package root must be a regular directory: ${packageRoot}`);
     }
-    if (summaryStats.isSymbolicLink() || !summaryStats.isFile()) {
-        throw new Error(`Accessibility package summary must be a regular file: ${resolvedSummaryPath}`);
-    }
 
-    const summary = JSON.parse(fs.readFileSync(resolvedSummaryPath, "utf-8"));
+    const summaryHandle = openVerifiedRegularFileSync(
+        resolvedSummaryPath,
+        { label: "Accessibility package summary" }
+    );
+    let summary;
+    try {
+        summary = JSON.parse(fs.readFileSync(summaryHandle, "utf-8"));
+    } finally {
+        fs.closeSync(summaryHandle);
+    }
     if (!pathsEqual(summary?.rootDir, packageRoot)) {
         throw new Error(
             `Package summary rootDir must match the selected package root: expected ${packageRoot}, found ${summary?.rootDir || "(missing)"}.`

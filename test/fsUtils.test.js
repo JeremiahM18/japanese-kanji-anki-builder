@@ -8,6 +8,7 @@ const {
     assertSafeGeneratedPath,
     getDefaultGeneratedPathRoots,
     isPathInside,
+    openVerifiedRegularFileSync,
     readFileIfExistsSync,
     removeGeneratedPathSync,
     writeFileAtomicSync,
@@ -109,6 +110,28 @@ test("readFileIfExistsSync returns null only for missing files", () => {
 
         assert.equal(readFileIfExistsSync(filePath, "utf-8"), "present");
         assert.equal(readFileIfExistsSync(path.join(rootDir, "missing.txt"), "utf-8"), null);
+    } finally {
+        cleanupTempDir(rootDir);
+    }
+});
+
+test("openVerifiedRegularFileSync returns one verified descriptor and rejects directories", () => {
+    const rootDir = makeTempDir();
+
+    try {
+        const filePath = path.join(rootDir, "artifact.txt");
+        fs.writeFileSync(filePath, "verified", "utf-8");
+
+        const fileHandle = openVerifiedRegularFileSync(filePath, { label: "Test artifact" });
+        try {
+            assert.equal(fs.readFileSync(fileHandle, "utf-8"), "verified");
+        } finally {
+            fs.closeSync(fileHandle);
+        }
+        assert.throws(
+            () => openVerifiedRegularFileSync(rootDir, { label: "Test artifact" }),
+            /regular non-symbolic-link file/
+        );
     } finally {
         cleanupTempDir(rootDir);
     }

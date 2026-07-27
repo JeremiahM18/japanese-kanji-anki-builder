@@ -56,6 +56,25 @@ test("runProductReadinessGate passes when all checkpoint commands pass", async (
     assert.equal(calls.some((call) => call.includes("--surface=kanji")), true);
 });
 
+test("runProductReadinessGate forwards the required N5 kanji Golden scope argument", async () => {
+    let goldenKanjiArgs = null;
+    const report = await runProductReadinessGate({
+        runCommandFn(command, args) {
+            if (args[0] === path.join("scripts", "reviewGoldenLevel.js")) {
+                goldenKanjiArgs = [...args];
+            }
+            return { status: 0, stdout: "ok", stderr: "" };
+        },
+    });
+
+    assert.equal(report.passed, true);
+    assert.deepEqual(goldenKanjiArgs, [
+        path.join("scripts", "reviewGoldenLevel.js"),
+        "--level=5",
+        "--manifest-scoped",
+    ]);
+});
+
 test("buildSpawnOptions avoids shell-specific subprocess failures and supports large audit output", () => {
     const options = buildSpawnOptions("repo");
 

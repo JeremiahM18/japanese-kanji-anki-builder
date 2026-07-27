@@ -118,9 +118,9 @@ Keep the review layers separate.
 - Gold regression protects generated card output from drift. It checks reviewed learner-facing fields against the current governed contract.
 - Gold regression does not mean a card deserves to ship in version 1.
 - Sapphire is the current structural gate.
-- Native Sapphire commands and manifests own core-kanji and word structural review. Current `platinum` commands and manifests are compatibility names only for legacy/proof-provider inputs or unmigrated additional surfaces.
+- Native Sapphire commands and manifests own core-kanji and word structural review. Current core-kanji and word `platinum` commands and manifests remain the active card-surface Platinum lane; compatibility-only `platinum` names are limited to explicitly documented legacy/proof-provider aliases or unmigrated additional structural surfaces.
 - Platinum is the current card-surface inspection lane after matching Gold and active current-standard Sapphire.
-- Sapphire requires source evidence, explicit quality gates, and a keep/fix/defer/remove decision.
+- Sapphire requires separated source evidence, internal checks, review evidence, explicit verification limitations, structural checks, and a keep/fix/defer/remove decision. Platinum owns `qualityGates`; native Sapphire schemas reject that Platinum-only field.
 - Obsidian requires explicit non-mechanical current-version rereview proof.
 - Deck Ready is mechanical artifact readiness only. It is not Silver, Gold, Sapphire, Platinum, Obsidian, source truth, release readiness, APKG import QA, accessibility QA, mobile QA, or listening QA.
 - A card can be Gold-reviewed and still fail Sapphire.

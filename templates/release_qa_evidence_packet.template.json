@@ -5,7 +5,7 @@
     "generatedArtifact": false,
     "boundary": [
       "This packet records release-specific automated evidence, manual product QA evidence, and source-governance posture.",
-      "A completed packet is release evidence only for the named release candidate, deck kind, and JLPT levels.",
+      "A completed packet is release evidence only for the named release candidate and the per-artifact deck-kind/JLPT-level scopes.",
       "The candidate commit must equal repository HEAD, and every shipped deck kind must bind one APKG under the candidate run-output root to its actual byte size and SHA-256.",
       "It does not replace Platinum, Obsidian, hosted security, source-access, release-trust, or attestation gates."
     ]
@@ -16,12 +16,12 @@
     "deckKinds": [
       "kanji"
     ],
-    "levels": [
-      5
-    ],
     "artifacts": [
       {
         "deckKind": "kanji",
+        "levels": [
+          5
+        ],
         "path": "out/run-outputs/replace-with-run-id/kanji-n5/package/replace-with-kanji-deck.apkg",
         "bytes": 0,
         "sha256": ""

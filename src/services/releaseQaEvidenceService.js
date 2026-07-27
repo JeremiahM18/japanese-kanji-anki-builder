@@ -101,17 +101,30 @@ function inspectReleaseArtifact(entry, {
     repositoryRoot = process.cwd(),
     releaseCandidateId = "",
     scopedDeckKinds = new Set(),
-    scopedLevels = [],
 } = {}) {
     const failures = [];
     const rawDeckKind = entry?.deckKind;
     const deckKind = normalizeText(entry?.deckKind);
+    const levels = Array.isArray(entry?.levels) ? entry.levels : [];
+    const canonicalLevels = [...levels].sort((left, right) => right - left);
+    const levelsAreCanonical = (
+        levels.length > 0
+        && levels.every((level) => (
+            typeof level === "number"
+            && Number.isInteger(level)
+            && level >= 1
+            && level <= 5
+        ))
+        && new Set(levels).size === levels.length
+        && levels.every((level, index) => level === canonicalLevels[index])
+    );
     const portablePath = normalizePortableArtifactPath(entry?.path);
     const declaredBytes = entry?.bytes;
     const declaredSha256 = normalizeText(entry?.sha256);
     const label = deckKind || normalizeText(entry?.path) || "(missing artifact identity)";
     const result = {
         deckKind,
+        levels: [...levels],
         path: portablePath || normalizeText(entry?.path),
         declaredBytes,
         actualBytes: null,
@@ -131,11 +144,16 @@ function inspectReleaseArtifact(entry, {
     } else if (!scopedDeckKinds.has(deckKind)) {
         failures.push(`release artifact ${label} deckKind is outside scope.deckKinds.`);
     }
+    if (!levelsAreCanonical) {
+        failures.push(
+            `release artifact ${label} levels must contain unique integer JLPT levels from 5 through 1 in descending order.`
+        );
+    }
     if (!portablePath) {
         failures.push(`release artifact ${label} path must be a portable repository-relative path.`);
     } else {
-        const outputScopeSlug = VALID_RELEASE_DECK_KINDS.has(deckKind)
-            ? buildOutputScopeSlug({ deckKind, levels: scopedLevels })
+        const outputScopeSlug = VALID_RELEASE_DECK_KINDS.has(deckKind) && levelsAreCanonical
+            ? buildOutputScopeSlug({ deckKind, levels })
             : "";
         const expectedPrefix = outputScopeSlug
             ? `out/run-outputs/${releaseCandidateId}/${outputScopeSlug}/`
@@ -272,16 +290,6 @@ function validateReleaseCandidateBinding(scope = {}, {
         failures.push("scope.deckKinds must contain unique canonical deck kinds: kanji and/or word.");
     }
 
-    const levels = Array.isArray(scope.levels) ? scope.levels : [];
-    if (levels.length === 0) {
-        failures.push("scope.levels must name the shipped JLPT level(s).");
-    } else if (
-        levels.some((level) => typeof level !== "number" || !Number.isInteger(level) || level < 1 || level > 5)
-        || new Set(levels).size !== levels.length
-    ) {
-        failures.push("scope.levels must contain unique integer JLPT levels from 1 through 5.");
-    }
-
     const artifacts = Array.isArray(scope.artifacts) ? scope.artifacts : [];
     if (artifacts.length === 0) {
         failures.push("scope.artifacts must bind every shipped deck kind to an exact APKG path, byte size, and SHA-256.");
@@ -294,7 +302,6 @@ function validateReleaseCandidateBinding(scope = {}, {
             repositoryRoot,
             releaseCandidateId: normalizedReleaseCandidateId || releaseCandidateId,
             scopedDeckKinds,
-            scopedLevels: levels,
         });
         failures.push(...inspected.failures);
         artifactResults.push(inspected.result);
@@ -494,7 +501,10 @@ function buildReleaseQaEvidenceReport({
         repositoryCommit: candidateBinding.repositoryCommit,
         currentRepositoryCommit: candidateBinding.currentRepositoryCommit,
         deckKinds: packet.scope?.deckKinds || [],
-        levels: packet.scope?.levels || [],
+        deckScopes: candidateBinding.artifactResults.map((entry) => ({
+            deckKind: entry.deckKind,
+            levels: entry.levels,
+        })),
         artifactCount: candidateBinding.artifactResults.length,
         verifiedArtifactCount: candidateBinding.artifactResults.filter((entry) => entry.verified).length,
         artifacts: candidateBinding.artifactResults,
@@ -515,7 +525,9 @@ function formatReleaseQaEvidenceReport(report = {}) {
         `Repository commit: ${report.repositoryCommit || "unknown"}`,
         `Repository HEAD: ${report.currentRepositoryCommit || "unknown"}`,
         `Deck kinds: ${(report.deckKinds || []).join(", ") || "unknown"}`,
-        `Levels: ${(report.levels || []).join(", ") || "unknown"}`,
+        `Deck scopes: ${(report.deckScopes || [])
+            .map((scope) => `${scope.deckKind || "unknown"} ${(scope.levels || []).map((level) => `N${level}`).join("/") || "unknown"}`)
+            .join(", ") || "unknown"}`,
         `Verified artifacts: ${report.verifiedArtifactCount || 0}/${report.artifactCount || 0}`,
         `Automated evidence entries: ${report.automatedEvidenceCount || 0}`,
         `Manual evidence entries: ${report.manualEvidenceCount || 0}`,

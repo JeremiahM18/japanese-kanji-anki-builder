@@ -3,6 +3,14 @@ const path = require("node:path");
 
 const FULL_GIT_COMMIT_PATTERN = /^[a-f0-9]{40}$/u;
 
+function pathsEqual(leftPath, rightPath) {
+    const left = path.resolve(leftPath);
+    const right = path.resolve(rightPath);
+    return process.platform === "win32"
+        ? left.toLowerCase() === right.toLowerCase()
+        : left === right;
+}
+
 function resolveGitDirectory(repositoryRoot = process.cwd()) {
     const resolvedRepositoryRoot = path.resolve(repositoryRoot);
     const dotGitPath = path.join(resolvedRepositoryRoot, ".git");
@@ -35,8 +43,40 @@ function assertFullGitCommit(value, label = "Git commit") {
     return normalized;
 }
 
+function resolveGitCommonDirectory(gitDir) {
+    const commonDirPath = path.join(gitDir, "commondir");
+    let pointer;
+    try {
+        pointer = fs.readFileSync(commonDirPath, "utf8").trim();
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            return gitDir;
+        }
+        throw error;
+    }
+    if (!pointer) {
+        throw new Error(`${commonDirPath} contains an empty common Git directory pointer.`);
+    }
+    return path.resolve(gitDir, pointer);
+}
+
+function readLooseGitRef(gitDirectory, ref) {
+    try {
+        return assertFullGitCommit(
+            fs.readFileSync(path.join(gitDirectory, ...ref.split("/")), "utf8").trim(),
+            `Git ref ${ref}`
+        );
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            return null;
+        }
+        throw error;
+    }
+}
+
 function readGitHead(repositoryRoot = process.cwd()) {
     const gitDir = resolveGitDirectory(repositoryRoot);
+    const commonGitDir = resolveGitCommonDirectory(gitDir);
     const head = fs.readFileSync(path.join(gitDir, "HEAD"), "utf8").trim();
     if (!head.startsWith("ref: ")) {
         return assertFullGitCommit(head, "Detached Git HEAD");
@@ -46,18 +86,19 @@ function readGitHead(repositoryRoot = process.cwd()) {
     if (!ref) {
         throw new Error("Git HEAD contains an empty ref.");
     }
-    const looseRefPath = path.join(gitDir, ...ref.split("/"));
-    try {
-        return assertFullGitCommit(fs.readFileSync(looseRefPath, "utf8").trim(), `Git ref ${ref}`);
-    } catch (error) {
-        if (error?.code !== "ENOENT") {
-            throw error;
+    const gitDirectoryCandidates = pathsEqual(gitDir, commonGitDir)
+        ? [gitDir]
+        : [gitDir, commonGitDir];
+    for (const gitDirectory of gitDirectoryCandidates) {
+        const looseCommit = readLooseGitRef(gitDirectory, ref);
+        if (looseCommit) {
+            return looseCommit;
         }
     }
 
     let packedRefs;
     try {
-        packedRefs = fs.readFileSync(path.join(gitDir, "packed-refs"), "utf8");
+        packedRefs = fs.readFileSync(path.join(commonGitDir, "packed-refs"), "utf8");
     } catch (error) {
         if (error?.code === "ENOENT") {
             throw new Error(`Unable to resolve Git HEAD ref ${ref}: no loose or packed ref exists.`);
@@ -76,5 +117,6 @@ module.exports = {
     FULL_GIT_COMMIT_PATTERN,
     assertFullGitCommit,
     readGitHead,
+    resolveGitCommonDirectory,
     resolveGitDirectory,
 };

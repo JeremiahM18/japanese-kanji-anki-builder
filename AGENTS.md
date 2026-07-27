@@ -40,9 +40,11 @@ rerun the owning command for current evidence.
 - Keep Candidate discovery, Silver, Gold, Sapphire, Platinum, Obsidian,
   source governance, NLP support, media, Deck Ready, CI, release trust, and
   manual release QA as distinct authorities.
-- Silver is governed generated/intake coverage. Gold is generated-output
-  regression. Sapphire is structural certification. Platinum is current
-  card-surface inspection. Obsidian is explicit non-mechanical
+- Candidate, source, migration, and triage rows are pre-trust workflow inputs.
+  Silver begins only when a learner-facing generated row exists for the scoped
+  product. Gold is generated-output regression. Sapphire is structural
+  certification. Platinum is current card-surface inspection. Obsidian is
+  explicit non-mechanical
   current-version content-certification proof.
 - A prior lane never proves a later lane. Platinum is not Obsidian proof.
   Clean CI and Deck Ready are not release readiness.

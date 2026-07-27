@@ -257,10 +257,18 @@ test("root AGENTS guidance preserves durable authority, safety, and verification
     }
 
     assert.match(agents, /Keep kanji decks and word decks separate/);
-    assert.match(agents, /Silver is governed generated\/intake coverage/);
-    assert.match(agents, /Sapphire is structural certification/);
+    assert.match(
+        agents,
+        /Candidate, source, migration, and triage rows are pre-trust workflow inputs/,
+    );
+    assert.match(
+        agents,
+        /Silver begins only when a learner-facing generated row exists for the scoped\s+product/,
+    );
+    assert.doesNotMatch(agents, /Silver is governed generated\/intake coverage/);
+    assert.match(agents, /Sapphire is structural\s+certification/);
     assert.match(agents, /Platinum is current\s+card-surface inspection/);
-    assert.match(agents, /Obsidian is explicit non-mechanical/);
+    assert.match(agents, /Obsidian is\s+explicit non-mechanical/);
     assert.match(agents, /N5-only, N4-inclusive, and all-level scopes are not equivalent/);
     assert.match(agents, /Do not tag while required pre-release gates or manual QA are unresolved/);
     assert.doesNotMatch(agents, /\b\d+\/\d+\b/u, "AGENTS.md must not embed drift-prone live coverage counts.");

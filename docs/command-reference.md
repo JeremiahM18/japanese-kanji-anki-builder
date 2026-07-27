@@ -49,7 +49,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run product:artifacts:kanji:n3` | Build and validate the source-derived tracked-source N3 kanji TSV artifact |
 | `npm run product:artifacts:kanji:all` | Run the tracked-source kanji TSV artifact gate across N5 through N1, failing closed where source contracts are incomplete |
 | `npm run product:artifacts:kanji:release-qa` | Gate tracked-source kanji TSV, APKG, managed-media, and manual QA readiness across N5 through N1 |
-| `npm run product:release-qa:evidence` | Validate the release-specific QA evidence packet for APKG import, managed media, Anki import, mobile, accessibility, listening QA, accepted source-governance posture while source depth is incomplete, and known blockers |
+| `npm run product:release-qa:evidence` | Validate release QA packet version 2: current-HEAD candidate commit, one exact isolated-run APKG path/byte-size/SHA-256 binding per scoped deck kind, APKG import, managed media, Anki import, mobile, accessibility, listening QA, accepted source-governance posture while source depth is incomplete, and empty known blockers |
 | `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
 | `npm run dev` | Start the local development server with `nodemon` |
 | `npm start` | Start the local Express server; equivalent to `npm run start` |
@@ -97,7 +97,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:kanji:additional:platinum:n2` | Run the additional-unverified N2 kanji compatibility structural gate |
 | `npm run deck:kanji:additional:platinum:n1` | Run the additional-unverified N1 kanji compatibility structural gate |
 | `npm run deck:review:coverage` | Audit Gold regression coverage |
-| `npm run deck:review:accessibility` | Report automated accessibility checklist status for kanji or word decks |
+| `npm run deck:review:accessibility` | Report automated accessibility checklist status for kanji or word decks; pass `-- --deck-kind=<kanji|word> --levels=<levels> --run-id=<id>` to select the exact isolated build under `out/run-outputs/<id>/`, with optional matching `--out-dir-base`, instead of the legacy shared output root |
 | `npm run deck:platinum:rereview-status -- --levels=5,4,3,2` | Compatibility kanji rereview-status alias; proof-provider input now defaults to ledger-if-available, but new workflows should use `deck:kanji:obsidian:rereview-status` |
 | `npm run deck:platinum:governance-gate` | Run the local-data Platinum governance gate against real generated N5/N4 rows before release claims that depend on those rows; migrated kanji and word Obsidian proof inputs default to ledger-if-available |
 | `npm run deck:sapphire:n5` | Run the native N5 core-kanji Sapphire structural gate; fails closed if any generated row lacks current-standard Sapphire review |

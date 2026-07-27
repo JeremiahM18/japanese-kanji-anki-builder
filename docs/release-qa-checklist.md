@@ -10,8 +10,8 @@ This checklist is release artifact QA. For an Obsidian-certified scope, the nati
 - `git diff --check`
 - `npm run lint`
 - `npm run typecheck`
-- `npm run deck:review:accessibility -- --deck-kind=kanji`
-- `npm run deck:review:accessibility -- --deck-kind=word`
+- `npm run deck:review:accessibility -- --deck-kind=kanji --levels=<levels> --run-id=<release-candidate-id>` when kanji ships
+- `npm run deck:review:accessibility -- --deck-kind=word --levels=<levels> --run-id=<release-candidate-id>` when words ship
 - `npm run deck:kanji:review-status`
 - `npm run deck:closeout -- --levels=<levels>` before handoff, commit, or release-candidate review
 - `npm run product:artifacts:n5` when N5 word ships
@@ -37,13 +37,15 @@ This checklist is release artifact QA. For an Obsidian-certified scope, the nati
 
 Copy [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json) to `out/release-qa/release-qa-evidence.json` for the release candidate being reviewed.
 
+Build every shipped deck kind from the same clean commit with the same `--run-id=<release-candidate-id>` and exact `--levels=<levels>` scope. Record that full 40-character lowercase Git commit in `scope.repositoryCommit`. For each shipped deck kind, record exactly one repository-relative APKG path under its exact `out/run-outputs/<release-candidate-id>/<deck-kind>-n*/` scope, its positive byte size, and its lowercase SHA-256 in `scope.artifacts`. Run the validator from that same commit checkout; it resolves Git HEAD, streams each APKG, and rejects commit drift, missing or duplicate deck bindings, deck/level path-scope mismatches, path escapes, symbolic links, byte-size drift, and checksum drift.
+
 Replace every `pending` entry with release-specific evidence, then run:
 
 ```bash
 npm run product:release-qa:evidence
 ```
 
-The packet must name the release candidate, deck kind, JLPT levels, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, accepted source-governance risk posture when applicable, and known blockers. The manual QA fields are artifact evidence, not a replacement for Obsidian native/fluent-quality content certification. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists. While source evidence depth remains incomplete, the packet must record `sourceEvidenceDepthComplete: false`, `freePublicSourceExpansionPaused: true`, `acceptedRiskRecord: GOV-SRC-001`, `npm run data:audit:jlpt:source-access`, and `npm run data:audit:jlpt:sources -- --governance-strict --limit=25`.
+Packet version 2 must name the release candidate, exact repository commit, deck kinds, JLPT levels, exact APKG artifact bindings, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, accepted source-governance risk posture when applicable, and known blockers. The manual QA fields are artifact evidence, not a replacement for Obsidian native/fluent-quality content certification. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists. While source evidence depth remains incomplete, the packet must record `sourceEvidenceDepthComplete: false`, `freePublicSourceExpansionPaused: true`, `acceptedRiskRecord: GOV-SRC-001`, `npm run data:audit:jlpt:source-access`, and `npm run data:audit:jlpt:sources -- --governance-strict --limit=25`.
 
 ## Product readiness checks
 

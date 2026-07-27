@@ -60,6 +60,8 @@ npm run data:audit:audio -- --json
 npm run data:audit:stroke-order -- --json
 npm run deck:review:accessibility -- --deck-kind=kanji
 npm run deck:review:accessibility -- --deck-kind=word
+npm run deck:review:accessibility -- --deck-kind=kanji --levels=<levels> --run-id=<release-candidate-id>
+npm run deck:review:accessibility -- --deck-kind=word --levels=<levels> --run-id=<release-candidate-id>
 npm run product:artifacts:n5
 npm run product:artifacts:kanji:n5:preflight
 npm run product:artifacts:kanji:n5
@@ -126,7 +128,9 @@ It does not certify tracked-source kanji TSVs, `.apkg` files, managed media pack
 
 `product:artifacts:kanji:all` runs the same tracked-source kanji TSV gate across N5 through N1. Today N5, N4, and N3 pass and write TSV artifacts; N2 and N1 fail closed on missing governed card-field source contracts. That failure is expected until each level has a source-derived field contract in the existing governance lane.
 
-`product:release-qa:evidence` validates the release-specific packet copied from [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json). It fails until APKG import, managed-media provenance, manual Anki import, mobile QA, screen-reader/accessibility, listening QA, source-governance posture, accepted `GOV-SRC-001` posture when source evidence depth remains incomplete, and empty known blockers are recorded for the named release candidate.
+`deck:review:accessibility` reads the legacy shared kanji or word package root when `--run-id` is omitted. For release-candidate or parallel builds, pass the exact build `--run-id` and `--levels`; the command then reads only `out/run-outputs/<run-id>/<deck-kind>-n*/package/`. It rejects mismatched package-summary `rootDir`/`exportsDir` fields and symbolic-link escapes so a selected candidate cannot silently audit another build. `--out-dir-base` is allowed only with `--run-id` and must still resolve inside a governed generated-output root.
+
+`product:release-qa:evidence` validates packet version 2 copied from [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json). It requires the named release candidate to be a valid run ID, the full lowercase candidate commit to equal the current repository HEAD, and exactly one APKG binding for every scoped canonical deck kind (`kanji` and/or `word`). Every APKG must be a regular non-symbolic-link file under the candidate's exact deck-kind/level `out/run-outputs/<run-id>/<deck-kind>-n*/` scope and must match its declared positive byte size and lowercase SHA-256. It also fails until APKG import, managed-media provenance, manual Anki import, mobile QA, screen-reader/accessibility, listening QA, source-governance posture, accepted `GOV-SRC-001` posture when source evidence depth remains incomplete, and empty known blockers are recorded.
 
 `product:artifacts:kanji:release-qa` checks whether each selected kanji level has a passing tracked-source TSV artifact and then blocks release until APKG approval, managed stroke-order/audio media QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded. It intentionally cannot convert a green TSV gate into release readiness.
 

@@ -18,6 +18,35 @@ function readFileIfExistsSync(filePath, options) {
     }
 }
 
+function openVerifiedRegularFileSync(filePath, { label = "file" } = {}) {
+    const resolvedPath = path.resolve(filePath);
+    const noFollowFlag = Number.isInteger(fs.constants.O_NOFOLLOW)
+        ? fs.constants.O_NOFOLLOW
+        : 0;
+    let fileHandle;
+    try {
+        fileHandle = fs.openSync(resolvedPath, fs.constants.O_RDONLY | noFollowFlag);
+        const descriptorStats = fs.fstatSync(fileHandle, { bigint: true });
+        const pathStats = fs.lstatSync(resolvedPath, { bigint: true });
+        if (
+            !descriptorStats.isFile()
+            || pathStats.isSymbolicLink()
+            || !pathStats.isFile()
+        ) {
+            throw new Error(`${label} must be a regular non-symbolic-link file: ${resolvedPath}`);
+        }
+        if (descriptorStats.dev !== pathStats.dev || descriptorStats.ino !== pathStats.ino) {
+            throw new Error(`${label} changed while it was being opened: ${resolvedPath}`);
+        }
+        return fileHandle;
+    } catch (error) {
+        if (fileHandle !== undefined) {
+            fs.closeSync(fileHandle);
+        }
+        throw error;
+    }
+}
+
 function writeFileAtomicSync(filePath, data, options) {
     const resolvedTarget = path.resolve(filePath);
     const targetDir = path.dirname(resolvedTarget);
@@ -135,6 +164,7 @@ module.exports = {
     ensureDir,
     getDefaultGeneratedPathRoots,
     isPathInside,
+    openVerifiedRegularFileSync,
     readFileIfExistsSync,
     removeGeneratedPath,
     removeGeneratedPathSync,

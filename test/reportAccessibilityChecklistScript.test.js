@@ -123,7 +123,20 @@ test("loadAccessibilityPackageSummary accepts only the selected package root and
         },
     };
     fs.writeFileSync(packageSummaryPath, JSON.stringify(summary), "utf-8");
-    assert.deepEqual(loadAccessibilityPackageSummary(packageSummaryPath), summary);
+    const originalReadFileSync = fs.readFileSync;
+    let pathReadCount = 0;
+    fs.readFileSync = function readFileSyncThroughVerifiedDescriptor(target, ...args) {
+        if (typeof target === "string" && path.resolve(target) === path.resolve(packageSummaryPath)) {
+            pathReadCount += 1;
+        }
+        return originalReadFileSync.call(fs, target, ...args);
+    };
+    try {
+        assert.deepEqual(loadAccessibilityPackageSummary(packageSummaryPath), summary);
+    } finally {
+        fs.readFileSync = originalReadFileSync;
+    }
+    assert.equal(pathReadCount, 0);
 
     fs.writeFileSync(packageSummaryPath, JSON.stringify({
         ...summary,

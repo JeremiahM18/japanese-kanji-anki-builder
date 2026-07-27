@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
 
-const { isPathInside } = require("../utils/fs");
+const { isPathInside, openVerifiedRegularFileSync } = require("../utils/fs");
 const { FULL_GIT_COMMIT_PATTERN, readGitHead } = require("../utils/gitRepository");
 const { buildOutputScopeSlug, normalizeRunId } = require("./outputIsolationService");
 
@@ -66,31 +66,35 @@ function normalizePortableArtifactPath(value) {
     return segments.join("/");
 }
 
-function hashFileSha256Sync(filePath) {
-    const fileHandle = fs.openSync(filePath, "r");
+function hashFileHandleSha256Sync(fileHandle, filePath) {
     const hash = crypto.createHash("sha256");
     const buffer = Buffer.allocUnsafe(ARTIFACT_HASH_BUFFER_BYTES);
     let bytes = 0;
-    try {
-        let bytesRead;
-        do {
-            bytesRead = fs.readSync(fileHandle, buffer, 0, buffer.length, null);
-            if (bytesRead > 0) {
-                hash.update(buffer.subarray(0, bytesRead));
-                bytes += bytesRead;
-            }
-        } while (bytesRead > 0);
-        const stats = fs.fstatSync(fileHandle);
-        if (!stats.isFile() || stats.size !== bytes) {
-            throw new Error(`Artifact changed or stopped being a regular file while hashing: ${filePath}`);
+    let bytesRead;
+    do {
+        bytesRead = fs.readSync(fileHandle, buffer, 0, buffer.length, null);
+        if (bytesRead > 0) {
+            hash.update(buffer.subarray(0, bytesRead));
+            bytes += bytesRead;
         }
-    } finally {
-        fs.closeSync(fileHandle);
+    } while (bytesRead > 0);
+    const stats = fs.fstatSync(fileHandle, { bigint: true });
+    if (!stats.isFile() || stats.size !== BigInt(bytes)) {
+        throw new Error(`Artifact changed or stopped being a regular file while hashing: ${filePath}`);
     }
     return {
         bytes,
         sha256: hash.digest("hex"),
     };
+}
+
+function hashFileSha256Sync(filePath) {
+    const fileHandle = openVerifiedRegularFileSync(filePath, { label: "Release artifact" });
+    try {
+        return hashFileHandleSha256Sync(fileHandle, filePath);
+    } finally {
+        fs.closeSync(fileHandle);
+    }
 }
 
 function inspectReleaseArtifact(entry, {
@@ -167,32 +171,34 @@ function inspectReleaseArtifact(entry, {
     }
 
     try {
-        const artifactStats = fs.lstatSync(resolvedArtifactPath);
-        if (artifactStats.isSymbolicLink() || !artifactStats.isFile()) {
-            failures.push(`release artifact ${label} must be a regular non-symbolic-link file.`);
-            return { failures, result };
-        }
+        const artifactHandle = openVerifiedRegularFileSync(
+            resolvedArtifactPath,
+            { label: `Release artifact ${label}` }
+        );
+        try {
+            const realRepositoryRoot = fs.realpathSync(resolvedRepositoryRoot);
+            const realOutputRoot = fs.realpathSync(outputRoot);
+            const realArtifactPath = fs.realpathSync(resolvedArtifactPath);
+            if (!isPathInside(realOutputRoot, realRepositoryRoot)) {
+                failures.push("repository out directory resolves outside the repository.");
+                return { failures, result };
+            }
+            if (!isPathInside(realArtifactPath, realOutputRoot) || !pathsEqual(realArtifactPath, resolvedArtifactPath)) {
+                failures.push(`release artifact ${label} resolves through an untrusted symbolic-link path.`);
+                return { failures, result };
+            }
 
-        const realRepositoryRoot = fs.realpathSync(resolvedRepositoryRoot);
-        const realOutputRoot = fs.realpathSync(outputRoot);
-        const realArtifactPath = fs.realpathSync(resolvedArtifactPath);
-        if (!isPathInside(realOutputRoot, realRepositoryRoot)) {
-            failures.push("repository out directory resolves outside the repository.");
-            return { failures, result };
-        }
-        if (!isPathInside(realArtifactPath, realOutputRoot) || !pathsEqual(realArtifactPath, resolvedArtifactPath)) {
-            failures.push(`release artifact ${label} resolves through an untrusted symbolic-link path.`);
-            return { failures, result };
-        }
-
-        const integrity = hashFileSha256Sync(realArtifactPath);
-        result.actualBytes = integrity.bytes;
-        result.actualSha256 = integrity.sha256;
-        if (Number.isSafeInteger(declaredBytes) && declaredBytes > 0 && declaredBytes !== integrity.bytes) {
-            failures.push(`release artifact ${label} byte size mismatch: declared ${declaredBytes}, actual ${integrity.bytes}.`);
-        }
-        if (SHA256_PATTERN.test(declaredSha256) && declaredSha256 !== integrity.sha256) {
-            failures.push(`release artifact ${label} sha256 mismatch: declared ${declaredSha256}, actual ${integrity.sha256}.`);
+            const integrity = hashFileHandleSha256Sync(artifactHandle, realArtifactPath);
+            result.actualBytes = integrity.bytes;
+            result.actualSha256 = integrity.sha256;
+            if (Number.isSafeInteger(declaredBytes) && declaredBytes > 0 && declaredBytes !== integrity.bytes) {
+                failures.push(`release artifact ${label} byte size mismatch: declared ${declaredBytes}, actual ${integrity.bytes}.`);
+            }
+            if (SHA256_PATTERN.test(declaredSha256) && declaredSha256 !== integrity.sha256) {
+                failures.push(`release artifact ${label} sha256 mismatch: declared ${declaredSha256}, actual ${integrity.sha256}.`);
+            }
+        } finally {
+            fs.closeSync(artifactHandle);
         }
     } catch (error) {
         if (error?.code === "ENOENT") {

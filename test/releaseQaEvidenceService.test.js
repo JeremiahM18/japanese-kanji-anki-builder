@@ -29,6 +29,7 @@ function reviewedEvidence(overrides = {}) {
 function createCandidateFixture(t, {
     deckKinds = ["kanji", "word"],
     levels = [5, 4],
+    levelsByDeckKind = {},
 } = {}) {
     const repositoryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "release-qa-candidate-"));
     t.after(() => fs.rmSync(repositoryRoot, { recursive: true, force: true }));
@@ -39,12 +40,13 @@ function createCandidateFixture(t, {
     fs.writeFileSync(path.join(repositoryRoot, ".git", "HEAD"), `${repositoryCommit}\n`, "utf-8");
 
     const artifacts = deckKinds.map((deckKind) => {
+        const artifactLevels = levelsByDeckKind[deckKind] || levels;
         const artifactBytes = Buffer.from(`release artifact for ${deckKind}\n`, "utf-8");
         const portablePath = [
             "out",
             "run-outputs",
             releaseCandidateId,
-            `${deckKind}-n${levels.join("-n")}`,
+            `${deckKind}-n${artifactLevels.join("-n")}`,
             "package",
             `${deckKind}-deck.apkg`,
         ].join("/");
@@ -53,6 +55,7 @@ function createCandidateFixture(t, {
         fs.writeFileSync(artifactPath, artifactBytes);
         return {
             deckKind,
+            levels: [...artifactLevels],
             path: portablePath,
             bytes: artifactBytes.length,
             sha256: crypto.createHash("sha256").update(artifactBytes).digest("hex"),
@@ -79,7 +82,6 @@ function passingPacket(fixture) {
             releaseCandidateId: fixture.releaseCandidateId,
             repositoryCommit: fixture.repositoryCommit,
             deckKinds: fixture.deckKinds,
-            levels: fixture.levels,
             artifacts: fixture.artifacts.map((artifact) => ({ ...artifact })),
         },
         automatedEvidence: [
@@ -138,10 +140,35 @@ test("release QA evidence report passes only with exact commit and artifact bind
     assert.equal(report.artifactCount, 2);
     assert.equal(report.verifiedArtifactCount, 2);
     assert.equal(report.artifacts.every((artifact) => artifact.verified), true);
+    assert.deepEqual(report.deckScopes, [
+        { deckKind: "kanji", levels: [5, 4] },
+        { deckKind: "word", levels: [5, 4] },
+    ]);
     assert.deepEqual(report.requiredManualEvidenceIds, REQUIRED_MANUAL_EVIDENCE_IDS);
     assert.equal(report.automatedEvidenceCount, 3);
     assert.equal(report.manualEvidenceCount, REQUIRED_MANUAL_EVIDENCE_IDS.length);
     assert.deepEqual(report.failures, []);
+});
+
+test("release QA evidence report supports different level scopes per deck kind", (t) => {
+    const fixture = createCandidateFixture(t, {
+        levelsByDeckKind: {
+            kanji: [5, 4, 3, 2],
+            word: [5, 4],
+        },
+    });
+    const report = buildReleaseQaEvidenceReport({
+        packet: passingPacket(fixture),
+        repositoryRoot: fixture.repositoryRoot,
+    });
+
+    assert.equal(report.passed, true);
+    assert.deepEqual(report.deckScopes, [
+        { deckKind: "kanji", levels: [5, 4, 3, 2] },
+        { deckKind: "word", levels: [5, 4] },
+    ]);
+    assert.equal(report.artifacts[0].path.includes("/kanji-n5-n4-n3-n2/"), true);
+    assert.equal(report.artifacts[1].path.includes("/word-n5-n4/"), true);
 });
 
 test("release QA evidence template is fail-closed until every entry and candidate binding is replaced", () => {
@@ -253,7 +280,7 @@ test("release QA evidence report rejects malformed scope and artifact integrity 
     packet.scope.releaseCandidateId = "../unsafe";
     packet.scope.repositoryCommit = fixture.repositoryCommit.toUpperCase();
     packet.scope.deckKinds = ["kanji", "kanji"];
-    packet.scope.levels = [5, 5];
+    packet.scope.artifacts[0].levels = [5, 5];
     packet.scope.artifacts[0].bytes = 0;
     packet.scope.artifacts[0].sha256 = packet.scope.artifacts[0].sha256.toUpperCase();
 
@@ -266,7 +293,10 @@ test("release QA evidence report rejects malformed scope and artifact integrity 
         report.failures.includes("scope.deckKinds must contain unique canonical deck kinds: kanji and/or word."),
         true
     );
-    assert.equal(report.failures.includes("scope.levels must contain unique integer JLPT levels from 1 through 5."), true);
+    assert.equal(
+        report.failures.some((failure) => failure.includes("levels must contain unique integer JLPT levels")),
+        true
+    );
     assert.equal(report.failures.some((failure) => failure.includes("bytes must be a positive safe integer")), true);
     assert.equal(report.failures.some((failure) => failure.includes("sha256 must be 64 lowercase")), true);
 });
@@ -295,19 +325,33 @@ test("release QA evidence loader and CLI parsing support packet path overrides",
     );
 });
 
-test("Git HEAD resolution supports worktree pointers and packed refs without shelling out", (t) => {
-    const repositoryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "release-qa-worktree-"));
-    t.after(() => fs.rmSync(repositoryRoot, { recursive: true, force: true }));
-    const gitDirectory = path.join(repositoryRoot, ".git-data");
-    const repositoryCommit = "c".repeat(40);
-    fs.mkdirSync(gitDirectory, { recursive: true });
-    fs.writeFileSync(path.join(repositoryRoot, ".git"), "gitdir: .git-data\n", "utf-8");
-    fs.writeFileSync(path.join(gitDirectory, "HEAD"), "ref: refs/heads/release\n", "utf-8");
+test("Git HEAD resolution follows a linked worktree commondir for loose and packed refs", (t) => {
+    const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "release-qa-worktree-"));
+    t.after(() => fs.rmSync(fixtureRoot, { recursive: true, force: true }));
+    const repositoryRoot = path.join(fixtureRoot, "linked-worktree");
+    const commonGitDirectory = path.join(fixtureRoot, "common.git");
+    const worktreeGitDirectory = path.join(commonGitDirectory, "worktrees", "release");
+    const looseCommit = "b".repeat(40);
+    const packedCommit = "c".repeat(40);
+    fs.mkdirSync(repositoryRoot, { recursive: true });
+    fs.mkdirSync(path.join(commonGitDirectory, "refs", "heads"), { recursive: true });
+    fs.mkdirSync(worktreeGitDirectory, { recursive: true });
     fs.writeFileSync(
-        path.join(gitDirectory, "packed-refs"),
-        `# pack-refs with: peeled fully-peeled sorted\n${repositoryCommit} refs/heads/release\n`,
+        path.join(repositoryRoot, ".git"),
+        "gitdir: ../common.git/worktrees/release\n",
+        "utf-8"
+    );
+    fs.writeFileSync(path.join(worktreeGitDirectory, "commondir"), "../..\n", "utf-8");
+    fs.writeFileSync(path.join(worktreeGitDirectory, "HEAD"), "ref: refs/heads/release\n", "utf-8");
+    const looseRefPath = path.join(commonGitDirectory, "refs", "heads", "release");
+    fs.writeFileSync(looseRefPath, `${looseCommit}\n`, "utf-8");
+    fs.writeFileSync(
+        path.join(commonGitDirectory, "packed-refs"),
+        `# pack-refs with: peeled fully-peeled sorted\n${packedCommit} refs/heads/release\n`,
         "utf-8"
     );
 
-    assert.equal(readGitHead(repositoryRoot), repositoryCommit);
+    assert.equal(readGitHead(repositoryRoot), looseCommit);
+    fs.rmSync(looseRefPath);
+    assert.equal(readGitHead(repositoryRoot), packedCommit);
 });

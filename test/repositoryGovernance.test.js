@@ -210,6 +210,7 @@ test("CODEOWNERS covers critical repository governance paths", () => {
         "/scripts/ @JeremiahM18",
         "/test/ @JeremiahM18",
         "/README.md @JeremiahM18",
+        "/AGENTS.md @JeremiahM18",
         "/CONTRIBUTING.md @JeremiahM18",
         "/SECURITY.md @JeremiahM18",
         "/package.json @JeremiahM18",
@@ -219,6 +220,63 @@ test("CODEOWNERS covers critical repository governance paths", () => {
     for (const entry of requiredEntries) {
         assert.equal(codeowners.includes(entry), true, `Missing CODEOWNERS entry: ${entry}`);
     }
+});
+
+test("root AGENTS guidance preserves durable authority, safety, and verification rules", () => {
+    const agents = readRepoFile("AGENTS.md");
+    const contributing = readRepoFile("CONTRIBUTING.md");
+    const claude = readRepoFile("CLAUDE.md");
+
+    for (const requiredReference of [
+        "docs/review-system-forward-contract.md",
+        "docs/review-tier-governance.md",
+        "docs/platinum-obsidian-review-contract.md",
+        "docs/command-reference.md",
+        "docs/verification.md",
+        "docs/release-process.md",
+        "docs/release-qa-checklist.md",
+        "docs/recovery-and-rollback.md",
+    ]) {
+        assert.equal(agents.includes(requiredReference), true, `AGENTS.md missing ${requiredReference}.`);
+    }
+
+    for (const requiredCommand of [
+        "git status --short --branch",
+        "npm run lint",
+        "npm run typecheck",
+        "npm test",
+        "npm run docs:status-audit",
+        "npm run lane:authority:audit",
+        "npm run supply-chain:audit",
+        "npm run security:advisories",
+        "npm run ci:smoke",
+        "npm run release:gate",
+        "git diff --check",
+    ]) {
+        assert.equal(agents.includes(requiredCommand), true, `AGENTS.md missing ${requiredCommand}.`);
+    }
+
+    assert.match(agents, /Keep kanji decks and word decks separate/);
+    assert.match(agents, /Silver is governed generated\/intake coverage/);
+    assert.match(agents, /Sapphire is structural certification/);
+    assert.match(agents, /Platinum is current\s+card-surface inspection/);
+    assert.match(agents, /Obsidian is explicit non-mechanical/);
+    assert.match(agents, /N5-only, N4-inclusive, and all-level scopes are not equivalent/);
+    assert.match(agents, /Do not tag while required pre-release gates or manual QA are unresolved/);
+    assert.doesNotMatch(agents, /\b\d+\/\d+\b/u, "AGENTS.md must not embed drift-prone live coverage counts.");
+    assert.match(contributing, /\[AGENTS\.md\]\(AGENTS\.md\)/);
+
+    assert.doesNotMatch(
+        claude,
+        /Current `platinum` commands and manifests are compatibility names only/u,
+        "CLAUDE.md must not demote the active core Platinum lane to compatibility-only."
+    );
+    assert.doesNotMatch(
+        claude,
+        /Sapphire requires source evidence, explicit quality gates/u,
+        "CLAUDE.md must not assign Platinum qualityGates to native Sapphire."
+    );
+    assert.match(claude, /Platinum owns `qualityGates`; native Sapphire schemas reject that Platinum-only field/);
 });
 
 test("branch protection baseline names the required GitHub checks", () => {

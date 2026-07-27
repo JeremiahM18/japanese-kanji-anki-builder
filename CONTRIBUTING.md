@@ -86,6 +86,9 @@ npm run media:sync -- --level=5 --limit=1
 
 ## Repository Governance
 
+- Keep [AGENTS.md](AGENTS.md) aligned with the durable repository commands,
+  authority boundaries, safety rules, verification expectations, and
+  completion standard Codex should load automatically.
 - Keep [.github/CODEOWNERS](.github/CODEOWNERS) aligned with the critical paths that need code-owner review.
 - Keep [docs/branch-protection.md](docs/branch-protection.md) aligned with the exact required GitHub checks and branch protection rules for `main`.
 - Keep [docs/release-process.md](docs/release-process.md) aligned with the tagged release workflow and artifact policy.

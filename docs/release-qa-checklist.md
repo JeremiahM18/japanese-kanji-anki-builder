@@ -24,7 +24,7 @@ This checklist is release artifact QA. Obsidian content certification remains a 
 - `npm run product:artifacts:kanji:all` before cross-level kanji release claims
 - `npm run product:artifacts:kanji:release-qa` before a production/GA kanji claim; its manual-QA failure is expected and preserved for an automation-reviewed preview
 - `npm run product:release-qa:evidence` after the release-specific evidence packet is complete
-- `npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>` against the exact APKG assets
+- `npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory> --require-golden` against the exact APKG assets
 - `npm run product:readiness:n5` when N5 ships
 - `npm run nlp:governance-gate` when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed
 - `npm run ci:smoke`
@@ -44,7 +44,7 @@ Replace every `pending` entry with release-specific evidence, then run:
 
 ```bash
 npm run product:release-qa:evidence
-npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>
+npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory> --require-golden
 ```
 
 Every passed automated or artifact-QA entry and passed source-governance record must carry `repositoryCommit` equal to `scope.repositoryCommit`. Production packets allow only `passed` artifact QA. Preview packets may use `accepted-risk` only with reviewer/owner, date, evidence, the exact limitation allowed for that evidence ID, and `acceptedRiskRecord: PROD-REL-001`; the release policy must repeat the complete limitation set and exact preview label. `knownBlockers` must still be an explicit empty array: an accepted, disclosed limitation is not a hidden blocker, while any engineering regression, missing automated gate, ambiguous scope, or unexplained nonzero result remains a blocker. Source-access-gap and manual-citation-only lanes stay non-voting. While source depth is incomplete, keep `GOV-SRC-001` and both source-governance commands exact.
@@ -82,7 +82,7 @@ For hosted verification, download the draft inputs into an empty directory and a
 - Run the matching level-specific tracked-source kanji TSV gate for each shipped kanji level: `npm run product:artifacts:kanji:n5` for N5, `npm run product:artifacts:kanji:n4` for N4, and `npm run product:artifacts:kanji:n3` for N3. These gates build fresh source-derived TSVs from tracked contracts only and validate schema, row count, source-derived required fields, primary-reading reference membership, and deterministic repeated output. They still do not package `.apkg`, prove perceptual quality, or replace release-class evidence.
 - Run `npm run product:artifacts:kanji:all` before any cross-level kanji claim. Current expected posture is N5/N4/N3 passing and N2/N1 blocked on missing governed card-field source contracts, not silently skipped.
 - Run `npm run product:artifacts:kanji:release-qa` before production/GA. It must stay strict and blocked until manual APKG, mobile, screen-reader, listening, and visual media QA are actually recorded; an automation-reviewed preview documents that expected failure under `PROD-REL-001` instead of weakening the gate.
-- Run `npm run product:readiness:n5` for an N5 release. It combines current automated N5 audits, tracked-source N5 word and kanji TSV gates, and Gold regression checks, but it does not replace APKG inspection, packet validation, explicit preview limitations, or hosted release verification.
+- Run `npm run product:readiness:n5` locally for an N5 release. It combines local-data N5 audits, tracked-source N5 word and kanji TSV gates, and generated Gold regressions. Clean hosted Release runs `npm run product:readiness:n5 -- --tracked-only` for the six reproducible tracked-input checks and requires exact downloaded-APKG Golden inspection; neither mode replaces packet validation, explicit preview limitations, or hosted release verification.
 - Run the deck readiness command for each shipped kanji or word surface.
 - Run `npm run deck:closeout -- --levels=<levels>` after count-moving deck work and before handoff; update every release-facing count line it exposes as stale before claiming the bucket is closed.
 - Confirm tracked-source coverage, provenance, and known limitations match the intended release.

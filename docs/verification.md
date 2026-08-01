@@ -72,7 +72,7 @@ npm run product:artifacts:kanji:n3
 npm run product:artifacts:kanji:all
 npm run product:artifacts:kanji:release-qa
 npm run product:release-qa:evidence
-npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>
+npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory> --require-golden
 npm run product:readiness:n5
 npm run release:gate
 ```
@@ -133,7 +133,7 @@ It does not certify tracked-source kanji TSVs, `.apkg` files, managed media pack
 
 `product:release-qa:evidence` validates packet version 3 copied from [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json). It binds package version, `v*` tag, full lowercase current-HEAD commit, release class, candidate run, unique deck kinds, and exactly one APKG per deck kind. Every APKG declares canonical levels, isolated local path, unique portable release basename, note/card/media counts, positive byte size, and lowercase SHA-256. Automated and artifact-QA evidence must bind to the same commit. Production permits only passed artifact QA. An automation-reviewed preview must be a semantic prerelease distributed as a GitHub prerelease with the exact warning label and may use `accepted-risk` only under `PROD-REL-001` for governed limitations. Source posture and explicit empty blockers remain mandatory. `--artifact-dir=<dir> --expected-tag=<tag>` switches verification to downloaded release assets and rejects missing or undeclared files.
 
-`product:release-qa:apkg-inspect` reads the packet and independently inspects each APKG from `--artifact-dir`. It rejects unsafe, duplicate, encrypted, or corrupt ZIP members; noncanonical media maps or archive membership; SQLite integrity/schema/version failures; deck-name/count drift; note field-count or GUID failures; broken card references; and unresolved media references. It proves structural/package integrity only, not native Anki rendering, mobile behavior, screen-reader interaction, listening naturalness, or stroke-order visual correctness.
+`product:release-qa:apkg-inspect` reads the packet and independently inspects each APKG from `--artifact-dir`. It rejects unsafe, duplicate, encrypted, or corrupt ZIP members; noncanonical media maps or archive membership; SQLite integrity/schema/version failures; deck-name/count drift; note field-count or GUID failures; broken card references; and unresolved media references. Release evidence must add `--require-golden`, which also checks every packaged note and learner-facing field against the tracked full-level kanji or exact `written|reading` word Golden manifest and rejects missing, duplicate, unmatched, or extra rows. This still does not prove native Anki rendering, mobile behavior, screen-reader interaction, listening naturalness, or stroke-order visual correctness.
 
 `product:artifacts:kanji:release-qa` is the strict production/GA gate. It checks tracked-source TSV prerequisites and blocks until actual APKG approval, managed stroke-order/audio media QA, manual import, mobile, screen-reader, and listening QA are recorded. It is intentionally not weakened for automation-reviewed previews; those previews use packet-v3 accepted-risk evidence without claiming this strict gate passed.
 
@@ -141,7 +141,7 @@ Use `-- --require-certifiable` when the tracked source contracts are expected to
 
 Tracked CI tests must not read ignored root `data/*` inputs. Use tracked contracts, tracked fixtures, or explicit temp fixtures in CI. Exact kanji primary-reading checks against generated `OnReading`/`KunReading` remain in local generated-row Sapphire gates; the tracked KANJIDIC2 contract is reading-reference evidence only, and the tracked N5/N4/N3 card-field source contracts are source-provenance evidence only.
 
-`product:readiness:n5` runs the current automated N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, tracked-source N5 kanji TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks.
+`product:readiness:n5` runs the current local-data N5 product checkpoint: JLPT audits, governed audio provenance, tracked-source N5 word TSV generation, tracked-source N5 kanji TSV generation, N5 word-level placement audit, and N5 kanji and word Gold regression checks. `npm run product:readiness:n5 -- --tracked-only` is the clean-hosted companion: it derives only the runtime level map from the tracked JLPT contract, redirects every ignored input/output path into an isolated temporary workspace, runs the six checks that can be reproduced from tracked inputs, and deletes the workspace. It explicitly does not claim workstation-local media provenance or regenerated local Gold; the tagged workflow obtains full-level Golden regression directly from the exact downloaded APKGs via `product:release-qa:apkg-inspect -- --require-golden`.
 
 It does not run or gate on the JLPT kanji source-evidence audit yet. That audit is read-only transparency until taxonomy confidence is governed and passing. It also does not replace the all-level tracked-source kanji gate, `.apkg` artifacts, manual Anki import review, mobile behavior, screen-reader behavior, or listening QA.
 

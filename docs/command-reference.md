@@ -50,8 +50,8 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run product:artifacts:kanji:all` | Run the tracked-source kanji TSV artifact gate across N5 through N1, failing closed where source contracts are incomplete |
 | `npm run product:artifacts:kanji:release-qa` | Strict production/GA gate for tracked-source kanji TSV, APKG, managed-media, and actual human/device QA readiness across N5 through N1; intentionally remains blocked for automation-reviewed previews without that evidence |
 | `npm run product:release-qa:evidence` | Validate packet version 3: package version/tag/current-HEAD commit/release class, exact per-deck candidate APKG path/release name/note-card-media counts/bytes/SHA-256, commit-bound automated and artifact QA, production-versus-preview risk policy, source posture, and empty blockers; add `--artifact-dir=<dir> --expected-tag=<tag>` for exact downloaded release inputs |
-| `npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir>` | Independently inspect declared APKG ZIP safety/integrity, media membership, SQLite integrity/schema/version, deck names, note/card/media counts, field cardinality, GUID/card references, and packaged media references |
-| `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
+| `npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir> --require-golden` | Independently inspect declared APKG ZIP/media/SQLite/deck/note/card/reference integrity and require every packaged row to satisfy its tracked full-level Golden manifest |
+| `npm run product:readiness:n5` | Run the full local-data N5 product readiness checkpoint; add `-- --tracked-only` only for clean hosted verification with isolated tracked inputs and explicit local-evidence exclusions |
 | `npm run dev` | Start the local development server with `nodemon` |
 | `npm start` | Start the local Express server; equivalent to `npm run start` |
 | `npm run doctor` | Check setup, coverage, readiness, and next steps |

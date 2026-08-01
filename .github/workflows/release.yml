@@ -67,7 +67,7 @@ jobs:
         run: npm run product:release-qa:evidence -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --expected-tag="${GITHUB_REF_NAME}"
 
       - name: Inspect release APKG structures
-        run: npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}"
+        run: npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --require-golden
 
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
@@ -104,8 +104,8 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Run N5 readiness orchestrator
-        run: npm run product:readiness:n5
+      - name: Run tracked-only N5 readiness orchestrator
+        run: npm run product:readiness:n5 -- --tracked-only
 
       - name: Run release gate
         run: npm run release:gate -- --root-dir=.release-gate --keep-temp-dir --require-apkg-tools
@@ -162,7 +162,7 @@ jobs:
         run: |
           set -euo pipefail
           npm run product:release-qa:evidence -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --expected-tag="${GITHUB_REF_NAME}"
-          npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}"
+          npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --require-golden
 
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
@@ -219,7 +219,7 @@ jobs:
             .release-smoke/out .release-gate/out CHANGELOG.md NOTICE.md \
             docs/compatibility-matrix.md docs/branch-protection.md \
             docs/release-process.md docs/release-qa-checklist.md \
-            docs/releases/v0.3.0-beta.2-n5-automation-preview.md
+            docs/releases/v0.3.0-beta.3-n5-automation-preview.md
 
       - name: Generate and verify release asset checksums
         run: |

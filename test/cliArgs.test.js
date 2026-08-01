@@ -253,7 +253,7 @@ test("corpus and product parseArgs functions record unsupported flags", () => {
         "--check",
         "--oops",
     ]);
-    const readiness = parseProductReadinessArgs(["--level=5", "--json", "--oops"]);
+    const readiness = parseProductReadinessArgs(["--level=5", "--tracked-only", "--json", "--oops"]);
 
     assert.equal(corpusCoverage.limit, 14);
     assert.deepEqual(corpusCoverage.unknownArgs, ["--oops"]);
@@ -262,6 +262,7 @@ test("corpus and product parseArgs functions record unsupported flags", () => {
     assert.equal(normalizeCorpus.check, true);
     assert.deepEqual(normalizeCorpus.unknownArgs, ["--oops"]);
     assert.equal(readiness.level, 5);
+    assert.equal(readiness.trackedOnly, true);
     assert.equal(readiness.json, true);
     assert.deepEqual(readiness.unknownArgs, ["--oops"]);
 });

@@ -34,6 +34,12 @@ This document defines the supported compatibility surface for shipped deck artif
 
 Production/GA requires native import, rendering, stroke-order, audio, badge, accessibility, and applicable mobile verification. An automation-reviewed preview instead requires exact APKG structural inspection and explicit `PROD-REL-001` disclosure for every interaction/perception check that was not performed.
 
+## Note identity and preview upgrades
+
+Kanji APKG notes use the governed kanji identity. Word APKG notes use the repository's exact `written|reading` identity, so same-written alternate readings remain distinct Anki notes with distinct deterministic GUIDs.
+
+Word APKGs generated before `v0.3.0-beta.1` may have used written-only GUIDs. When testing this preview after importing an earlier locally generated word deck, use a fresh Anki profile or remove that earlier test deck before import; do not assume an in-place upgrade will reconcile the changed note identity without duplicates. This is an explicit preview migration boundary, not a native-client compatibility claim.
+
 ## Non-goals
 
 - formal screen-reader certification across every Anki client

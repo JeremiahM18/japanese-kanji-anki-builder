@@ -239,8 +239,11 @@ def compute_checksum(value: str) -> int:
     return int(hashlib.sha1(value.encode("utf-8")).hexdigest()[:8], 16)
 
 
-def build_guid(primary_field: str, level: int, deck_kind: str) -> str:
-    return hashlib.sha1(f"{deck_kind}:{level}:{primary_field}".encode("utf-8")).hexdigest()[:10]
+def build_guid(fields, level: int, deck_kind: str) -> str:
+    primary_identity = fields[0]
+    if deck_kind == "word":
+        primary_identity = f"{fields[0]}|{fields[1]}"
+    return hashlib.sha1(f"{deck_kind}:{level}:{primary_identity}".encode("utf-8")).hexdigest()[:10]
 
 
 def update_hash_with_file(digest, file_path: Path, label: str):
@@ -435,7 +438,7 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
             note_id = unique_seed + 2000 + len(note_rows)
             note_rows.append((
                 note_id,
-                build_guid(fields[0], level, deck_kind),
+                build_guid(fields, level, deck_kind),
                 model_id,
                 mod,
                 0,
@@ -468,6 +471,10 @@ def create_collection_db(db_path: Path, levels, package_exports_dir: Path, deck_
             ))
             order += 1
     capture_timing(timings_ms, "collection.parseRows", rows_started_at)
+
+    note_guids = [row[1] for row in note_rows]
+    if len(set(note_guids)) != len(note_guids):
+        raise RuntimeError("APKG note GUIDs must be unique for every generated note identity.")
 
     sqlite_started_at = time.perf_counter()
     conn = sqlite3.connect(str(db_path))

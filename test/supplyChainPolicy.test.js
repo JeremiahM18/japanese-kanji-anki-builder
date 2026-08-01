@@ -111,6 +111,16 @@ test("supply-chain audit report is readable for local verification", () => {
     assert.match(text, /Release artifact boundary:/);
 });
 
+test("supply-chain audit report preserves validation errors for malformed compatibility boundaries", () => {
+    const report = buildSupplyChainAuditReport({ cwd: repoRoot });
+    const sharpOverride = report.dependencySecurityOverrides.entries.find((entry) => entry.packageName === "sharp");
+    sharpOverride.compatibilityBoundary = {};
+
+    assert.doesNotThrow(() => formatSupplyChainAuditReport(report));
+    assert.match(formatSupplyChainAuditReport(report), /compatibility boundary: imports=unavailable/);
+    assert.match(formatSupplyChainAuditReport(report), /upstream unavailable declares unavailable/);
+});
+
 test("dependency override audit computes range posture and rejects recorded-range drift", () => {
     assert.equal(satisfiesReviewedSimpleRange("7.5.22", "^7.0.1"), true);
     assert.equal(satisfiesReviewedSimpleRange("0.35.3", "^0.34.1"), false);
@@ -145,7 +155,7 @@ test("outside-range override compatibility audit rejects an undeclared productio
         });
         assert.deepEqual(baseline.errors, []);
 
-        const visionPath = path.join(tempDir, "src", "services", "visionPipeline.js");
+        const visionPath = path.join(tempDir, "src", "services", "visionPipeline.jsx");
         fs.writeFileSync(
             visionPath,
             "const transformers = require(\"@huggingface/transformers\");\nmodule.exports = transformers;\n",
@@ -158,8 +168,37 @@ test("outside-range override compatibility audit rejects an undeclared productio
         });
         assert.equal(report.errors.some((error) => (
             /production import paths drifted/u.test(error)
-            && /src\/services\/visionPipeline\.js/u.test(error)
+            && /src\/services\/visionPipeline\.jsx/u.test(error)
         )), true);
+    } finally {
+        fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+});
+
+test("outside-range override compatibility audit ignores commented decoys and rejects computed imports", () => {
+    const tempDir = makeOverrideCompatibilityFixture();
+    try {
+        const { entry, policy } = loadSharpOverride();
+        const servicePath = path.join(tempDir, "src", "services", "nlpEmbeddingModelEvaluationService.js");
+        fs.writeFileSync(servicePath, `
+/*
+const { pipeline, env } = await import("@huggingface/transformers");
+pipeline("feature-extraction", "comment-only");
+*/
+async function build(task) {
+    const { pipeline: buildPipeline } = await import("@huggingface/" + "transformers");
+    return buildPipeline(task, "vision-model");
+}
+module.exports = { build };
+`, "utf8");
+
+        const report = auditOutOfRangeOverrideCompatibility({
+            cwd: tempDir,
+            entry,
+            policyCheckedAt: policy.checkedAt,
+        });
+        assert.equal(report.errors.some((error) => /cannot prove computed dynamic-import target/u.test(error)), true);
+        assert.equal(report.errors.some((error) => /production import paths drifted/u.test(error)), true);
     } finally {
         fs.rmSync(tempDir, { recursive: true, force: true });
     }

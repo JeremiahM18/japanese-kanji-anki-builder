@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const ts = require("typescript");
 
 const ACTION_ALLOWLIST = Object.freeze({
     "actions/checkout": {
@@ -76,6 +77,9 @@ const WORKFLOW_PERMISSION_EXCEPTIONS = Object.freeze({
 
 const FORBIDDEN_SCRIPT_SPEC_RE = /^(?:git\+|git:|github:|file:|link:|workspace:|http:|https:|npm:)/iu;
 const PINNED_SHA_RE = /^[a-f0-9]{40}$/u;
+const COMPUTED_REQUIRE_ALLOWLIST = Object.freeze({
+    "src/datasets/wordReadingGapTriageOverrides.js": Object.freeze(["contractPath"]),
+});
 
 function readText(cwd, relativePath) {
     return fs.readFileSync(path.join(cwd, relativePath), "utf-8");
@@ -91,7 +95,7 @@ function normalizePath(filePath) {
 
 function listProductionSourceFiles(cwd) {
     const files = [];
-    const extensions = new Set([".cjs", ".cts", ".js", ".mjs", ".mts", ".ts"]);
+    const extensions = new Set([".cjs", ".cts", ".js", ".jsx", ".mjs", ".mts", ".ts", ".tsx"]);
     const visit = (absolutePath) => {
         for (const entry of fs.readdirSync(absolutePath, { withFileTypes: true })) {
             const childPath = path.join(absolutePath, entry.name);
@@ -110,6 +114,117 @@ function listProductionSourceFiles(cwd) {
         }
     }
     return files.sort();
+}
+
+function isLiteralModuleSpecifier(node) {
+    return Boolean(node && (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)));
+}
+
+function resolveScriptKind(relativePath) {
+    if (relativePath.endsWith(".tsx")) {
+        return ts.ScriptKind.TSX;
+    }
+    if (relativePath.endsWith(".jsx")) {
+        return ts.ScriptKind.JSX;
+    }
+    return /\.[cm]?ts$/u.test(relativePath) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
+}
+
+function analyzeProductionModuleUsage({ relativePath, text }) {
+    const sourceFile = ts.createSourceFile(
+        relativePath,
+        text,
+        ts.ScriptTarget.Latest,
+        true,
+        resolveScriptKind(relativePath)
+    );
+    const moduleReferences = [];
+    const computedModuleLoads = [];
+    const pipelineCalls = [];
+    const unsupportedPipelineReferences = [];
+
+    const recordModuleCall = (node, kind) => {
+        const moduleSpecifier = node.arguments[0];
+        if (!isLiteralModuleSpecifier(moduleSpecifier)) {
+            computedModuleLoads.push({
+                expression: moduleSpecifier?.getText(sourceFile) || "(missing)",
+                kind,
+                line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+            });
+            return;
+        }
+        moduleReferences.push({
+            kind,
+            node,
+            specifier: moduleSpecifier.text,
+        });
+    };
+
+    const visit = (node) => {
+        if (ts.isImportDeclaration(node) && isLiteralModuleSpecifier(node.moduleSpecifier)) {
+            moduleReferences.push({ kind: "static-import", node, specifier: node.moduleSpecifier.text });
+        } else if (ts.isExportDeclaration(node) && isLiteralModuleSpecifier(node.moduleSpecifier)) {
+            moduleReferences.push({ kind: "static-export", node, specifier: node.moduleSpecifier.text });
+        } else if (ts.isCallExpression(node)) {
+            if (node.expression.kind === ts.SyntaxKind.ImportKeyword) {
+                recordModuleCall(node, "dynamic-import");
+            } else if (ts.isIdentifier(node.expression) && node.expression.text === "require") {
+                recordModuleCall(node, "require");
+            }
+            if (ts.isIdentifier(node.expression) && node.expression.text === "pipeline") {
+                const taskNode = node.arguments[0];
+                pipelineCalls.push({
+                    task: isLiteralModuleSpecifier(taskNode) ? taskNode.text : null,
+                });
+            }
+        }
+
+        if (ts.isIdentifier(node) && node.text === "pipeline") {
+            const isBindingName = ts.isBindingElement(node.parent) && node.parent.name === node;
+            const isDirectCall = ts.isCallExpression(node.parent) && node.parent.expression === node;
+            if (!isBindingName && !isDirectCall) {
+                unsupportedPipelineReferences.push({
+                    line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+                    text: node.parent.getText(sourceFile),
+                });
+            }
+        }
+        ts.forEachChild(node, visit);
+    };
+    visit(sourceFile);
+
+    return {
+        computedModuleLoads,
+        moduleReferences,
+        parseDiagnostics: sourceFile.parseDiagnostics,
+        pipelineCalls,
+        unsupportedPipelineReferences,
+    };
+}
+
+function hasReviewedTransformersBinding(reference) {
+    if (reference.kind !== "dynamic-import") {
+        return false;
+    }
+    const awaitExpression = reference.node.parent;
+    if (!ts.isAwaitExpression(awaitExpression) || awaitExpression.expression !== reference.node) {
+        return false;
+    }
+    const declaration = awaitExpression.parent;
+    if (!ts.isVariableDeclaration(declaration) || declaration.initializer !== awaitExpression) {
+        return false;
+    }
+    if (!ts.isObjectBindingPattern(declaration.name)) {
+        return false;
+    }
+    const bindingNames = declaration.name.elements.map((element) => (
+        !element.dotDotDotToken
+        && !element.propertyName
+        && ts.isIdentifier(element.name)
+            ? element.name.text
+            : null
+    )).sort();
+    return bindingNames.length === 2 && bindingNames[0] === "env" && bindingNames[1] === "pipeline";
 }
 
 function dependencyNameFromPackagePath(packagePath) {
@@ -314,14 +429,29 @@ function auditOutOfRangeOverrideCompatibility({ cwd, entry, policyCheckedAt }) {
         return { errors, summary: { productionImportPaths: [], activeModelTasks: [] } };
     }
 
-    const packageLiteralRe = new RegExp(`["']${escapeRegExp(entry.parentPackage)}["']`, "gu");
     const actualImportPaths = [];
+    const sourceAnalysisByPath = new Map();
     for (const relativePath of listProductionSourceFiles(cwd)) {
         const text = readText(cwd, relativePath);
-        if (packageLiteralRe.test(text)) {
+        const sourceAnalysis = analyzeProductionModuleUsage({ relativePath, text });
+        sourceAnalysisByPath.set(relativePath, sourceAnalysis);
+        for (const diagnostic of sourceAnalysis.parseDiagnostics) {
+            errors.push(
+                `${key} cannot parse production source ${relativePath}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, " ")}`
+            );
+        }
+        for (const load of sourceAnalysis.computedModuleLoads) {
+            const isReviewedComputedRequire = load.kind === "require"
+                && COMPUTED_REQUIRE_ALLOWLIST[relativePath]?.includes(load.expression);
+            assertCondition(
+                isReviewedComputedRequire,
+                errors,
+                `${key} cannot prove computed ${load.kind} target in ${relativePath}:${load.line}: ${load.expression}.`
+            );
+        }
+        if (sourceAnalysis.moduleReferences.some((reference) => reference.specifier === entry.parentPackage)) {
             actualImportPaths.push(relativePath);
         }
-        packageLiteralRe.lastIndex = 0;
     }
     assertCondition(
         actualImportPaths.length === declaredImportPaths.size
@@ -337,37 +467,36 @@ function auditOutOfRangeOverrideCompatibility({ cwd, entry, policyCheckedAt }) {
             errors.push(`${key} governed production import is missing: ${relativePath || "(missing)"}.`);
             continue;
         }
-        const text = fs.readFileSync(absolutePath, "utf-8");
-        const packageReferenceCount = (text.match(packageLiteralRe) || []).length;
-        packageLiteralRe.lastIndex = 0;
+        const sourceAnalysis = sourceAnalysisByPath.get(relativePath);
+        const packageReferences = sourceAnalysis?.moduleReferences.filter(
+            (reference) => reference.specifier === entry.parentPackage
+        ) || [];
         assertCondition(
-            packageReferenceCount === 1,
+            packageReferences.length === 1,
             errors,
-            `${key} governed production import ${relativePath} must contain exactly one literal ${entry.parentPackage} reference; found ${packageReferenceCount}.`
+            `${key} governed production import ${relativePath} must contain exactly one executable ${entry.parentPackage} import; found ${packageReferences.length}.`
         );
-        const dynamicImportRe = new RegExp(`const\\s*\\{\\s*pipeline\\s*,\\s*env\\s*\\}\\s*=\\s*await\\s+import\\(\\s*["']${escapeRegExp(entry.parentPackage)}["']\\s*\\)`, "u");
         assertCondition(
-            dynamicImportRe.test(text),
+            packageReferences.length === 1 && hasReviewedTransformersBinding(packageReferences[0]),
             errors,
             `${key} governed production import ${relativePath} must retain the reviewed dynamic { pipeline, env } import boundary.`
         );
-        const pipelineCallCount = (text.match(/\bpipeline\s*\(/gu) || []).length;
-        const literalPipelineTasks = [];
-        const literalPipelineRe = /\bpipeline\s*\(\s*(["'])([^"']+)\1/gu;
-        let match = literalPipelineRe.exec(text);
-        while (match !== null) {
-            literalPipelineTasks.push(match[2]);
-            match = literalPipelineRe.exec(text);
-        }
+        const pipelineCalls = sourceAnalysis?.pipelineCalls || [];
+        const literalPipelineTasks = pipelineCalls.map((call) => call.task).filter(Boolean);
         assertCondition(
-            pipelineCallCount === governedImport.pipelineCallCount,
+            pipelineCalls.length === governedImport.pipelineCallCount,
             errors,
-            `${key} governed production import ${relativePath} pipeline call count drifted; expected ${governedImport.pipelineCallCount}, found ${pipelineCallCount}.`
+            `${key} governed production import ${relativePath} pipeline call count drifted; expected ${governedImport.pipelineCallCount}, found ${pipelineCalls.length}.`
         );
         assertCondition(
-            literalPipelineTasks.length === pipelineCallCount,
+            literalPipelineTasks.length === pipelineCalls.length,
             errors,
             `${key} governed production import ${relativePath} must use a literal task for every Transformers pipeline call.`
+        );
+        assertCondition(
+            sourceAnalysis?.unsupportedPipelineReferences.length === 0,
+            errors,
+            `${key} governed production import ${relativePath} contains unsupported pipeline references at lines ${sourceAnalysis?.unsupportedPipelineReferences.map((reference) => reference.line).join(",") || "unknown"}; aliases and indirect calls require re-review.`
         );
         const expectedTasks = [...new Set(governedImport.pipelineTasks || [])].sort();
         const actualTasks = [...new Set(literalPipelineTasks)].sort();
@@ -1076,8 +1205,14 @@ function formatSupplyChainAuditReport(report) {
         if (entry.compatibilityBoundary) {
             const sourceBoundary = entry.compatibilityBoundary.sourceBoundary;
             const upstream = entry.compatibilityBoundary.upstreamEvidence;
+            const productionImports = Array.isArray(sourceBoundary?.productionImports)
+                ? sourceBoundary.productionImports
+                : [];
+            const activeModelTasks = Array.isArray(sourceBoundary?.activeModelTasks)
+                ? sourceBoundary.activeModelTasks
+                : [];
             lines.push(
-                `  compatibility boundary: imports=${sourceBoundary.productionImports.map((item) => item.path).join(",")}; pipeline tasks=${sourceBoundary.productionImports.flatMap((item) => item.pipelineTasks).join(",")}; active model tasks=${sourceBoundary.activeModelTasks.join(",")}; upstream ${upstream.latestParentVersion} declares ${upstream.latestDeclaredRange}`
+                `  compatibility boundary: imports=${productionImports.map((item) => item.path).join(",") || "unavailable"}; pipeline tasks=${productionImports.flatMap((item) => item.pipelineTasks || []).join(",") || "unavailable"}; active model tasks=${activeModelTasks.join(",") || "unavailable"}; upstream ${upstream?.latestParentVersion || "unavailable"} declares ${upstream?.latestDeclaredRange || "unavailable"}`
             );
         }
     }

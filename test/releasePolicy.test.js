@@ -63,6 +63,10 @@ test("release workflow is tag-driven and publishes release artifacts", () => {
     assert.equal(workflow.includes("release-artifacts.sha256"), true);
     assert.equal(workflow.includes("Verify release bundle attestations"), true);
     assert.equal(workflow.includes("gh attestation verify"), true);
+    assert.match(
+        workflow,
+        /name:\s*release-bundle-\$\{\{ github\.ref_name \}\}[\s\S]*?path:\s*\.release-bundle[\s\S]*?if-no-files-found:\s*error[\s\S]*?include-hidden-files:\s*true/u
+    );
     assert.equal(workflow.includes("npm run product:release-qa:evidence"), true);
     assert.equal(workflow.includes("npm run product:release-qa:apkg-inspect"), true);
     assert.equal(workflow.includes("--artifact-dir=\"${RELEASE_INPUT_DIR}\" --require-golden"), true);

@@ -263,6 +263,7 @@ jobs:
           name: release-bundle-${{ github.ref_name }}
           path: .release-bundle
           if-no-files-found: error
+          include-hidden-files: true
 
       - name: Publish verified GitHub prerelease assets
         env:

@@ -64,4 +64,4 @@ This checklist does not replace:
 - full AnkiDroid / AnkiMobile compatibility testing
 - a formal WCAG conformance review
 
-Add those gates before a production/GA claim. The `v0.3.0-beta.3` N5 preview explicitly excludes those claims.
+Add those gates before a production/GA claim. The `v0.3.0-beta.4` N5 preview explicitly excludes those claims.

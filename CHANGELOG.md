@@ -8,9 +8,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 No unreleased changes. Keep future entries release-facing and concise; detailed work belongs in git commit messages and tracked review manifests.
 
+## [0.3.0-beta.4] - 2026-08-01
+
+`0.3.0-beta.4` is the next N5-only **automation-reviewed preview** candidate. The immutable `v0.3.0-beta.3` workflow passed the complete verification job and every bundle step through checksum generation, provenance/SBOM attestation, and constrained attestation verification. It then failed closed before publication because `actions/upload-artifact` excludes hidden files by default and the staged bundle directory is `.release-bundle`. No beta.3 release was published; its draft, tag, workflow run, and attestations remain immutable failure evidence.
+
+### Changed
+
+- Made the immutable Actions evidence upload explicitly include the hidden `.release-bundle` directory, with independent release-policy and supply-chain audit regressions that fail if the opt-in is removed.
+- Advanced the release candidate to `v0.3.0-beta.4`; `v0.3.0-beta.1`, `v0.3.0-beta.2`, and `v0.3.0-beta.3` remain failed, unpublished attempts and must not be moved, deleted for reuse, or represented as releases.
+- Preserved the tracked downstream backlog outside this N5 release: N3 word Gold review from `8/1099` to `1081/1099`; Gold now has `18` generated rows still missing, current-standard Sapphire remains `1038/1099`, Platinum remains `8/1099`, and N3 word remains excluded from this candidate.
+
 ## [0.3.0-beta.3] - 2026-08-01
 
-`0.3.0-beta.3` is the next N5-only **automation-reviewed preview** candidate. The immutable `v0.3.0-beta.2` workflow verified the draft boundary, exact assets, packet, APKG structure, supply-chain controls, advisories, and tests, then failed closed because the local-data N5 coordinator was incorrectly invoked from a clean checkout without ignored `data/kanji_jlpt_only.json`. No beta.2 bundle, attestation, or published release was created.
+`0.3.0-beta.3` was an N5-only **automation-reviewed preview** attempt. Its immutable tagged workflow passed the complete verification job and every bundle gate through attestation verification, then failed closed because the hidden `.release-bundle` directory was excluded from the immutable Actions artifact upload. Publication was skipped, and no beta.3 release was published.
 
 ### Added
 

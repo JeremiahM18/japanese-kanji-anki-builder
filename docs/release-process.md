@@ -8,7 +8,7 @@ This document defines the tagged release procedure. A release claim is valid onl
 - Add a dated section to [CHANGELOG.md](../CHANGELOG.md) for every released version.
 - Keep `## [Unreleased]` at the top of the changelog while work is in flight.
 - Keep `## [Unreleased]` release-facing and concise. Detailed per-card and per-batch review history belongs in git commit messages, tracked review manifests, and gate output, not in the tagged release bundle.
-- Create Git tags as `v<package.json version>`, for example `v0.3.0-beta.3`.
+- Create Git tags as `v<package.json version>`, for example `v0.3.0-beta.4`.
 - Never move or reuse a failed release tag. Correct through protected `main` and issue a new semantic prerelease version.
 
 ## Release classes
@@ -27,7 +27,7 @@ An `automation-reviewed-preview` packet must use a semantic prerelease version, 
 - listening-naturalness-not-performed
 - stroke-sequence-visual-review-not-performed
 
-Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.3 N5 automation-reviewed preview](releases/v0.3.0-beta.3-n5-automation-preview.md). The immutable `v0.3.0-beta.1` and `v0.3.0-beta.2` tags are failed, unpublished attempts retained as evidence and must never be moved or reused.
+Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.4 N5 automation-reviewed preview](releases/v0.3.0-beta.4-n5-automation-preview.md). The immutable `v0.3.0-beta.1`, `v0.3.0-beta.2`, and `v0.3.0-beta.3` tags are failed, unpublished attempts retained as evidence and must never be moved or reused.
 
 ## Pre-merge release-process change
 

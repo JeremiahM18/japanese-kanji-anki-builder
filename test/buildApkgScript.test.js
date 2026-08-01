@@ -245,3 +245,100 @@ test("buildApkg.py round-trips TSV fields into the Anki SQLite collection", {
         fs.rmSync(tempRoot, { recursive: true, force: true });
     }
 });
+
+test("buildApkg.py gives same-written word readings distinct deterministic GUIDs", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "word-apkg-guid-identity-"));
+
+    try {
+        const outDir = path.join(tempRoot, "out", "build");
+        const packageRoot = path.join(outDir, "package");
+        const header = [
+            "Word",
+            "Reading",
+            "ReadingBreakdown",
+            "Audio",
+            "PitchAccent",
+            "Meaning",
+            "JLPTLevel",
+            "CoverageRole",
+            "FocusKanji",
+            "CoversReading",
+            "KanjiBreakdown",
+            "ExampleSentence",
+            "ExampleAudio",
+            "Notes",
+        ];
+        const rows = [
+            ["毎月", "まいつき", "毎月", "", "", "every month", "JLPT N5", "core", "月", "月: つき", "", "", "", ""],
+            ["毎月", "まいげつ", "毎月", "", "", "monthly", "JLPT N5", "support", "月", "月: げつ", "", "", "", ""],
+        ];
+        const fixtureTsv = `${[header, ...rows].map((row) => row.join("\t")).join("\n")}\n`;
+        writeFile(path.join(packageRoot, "exports", "jlpt-n5-words.tsv"), fixtureTsv);
+
+        const build = runBuildApkg(python, outDir, { deckKind: "word" });
+        const inspected = inspectApkg(python, build.filePath);
+        const guidByIdentity = new Map(inspected.notes.map((note) => [
+            `${note.fields[0]}|${note.fields[1]}`,
+            note.guid,
+        ]));
+
+        assert.equal(inspected.notes.length, 2);
+        assert.equal(new Set(inspected.notes.map((note) => note.guid)).size, 2);
+        assert.equal(
+            guidByIdentity.get("毎月|まいつき"),
+            crypto.createHash("sha1").update("word:5:毎月|まいつき").digest("hex").slice(0, 10)
+        );
+        assert.equal(
+            guidByIdentity.get("毎月|まいげつ"),
+            crypto.createHash("sha1").update("word:5:毎月|まいげつ").digest("hex").slice(0, 10)
+        );
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});
+
+test("buildApkg.py fails closed when duplicate word identities would reuse a GUID", {
+    skip: python ? false : "Python is unavailable",
+}, () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "word-apkg-duplicate-guid-"));
+
+    try {
+        const outDir = path.join(tempRoot, "out", "build");
+        const packageRoot = path.join(outDir, "package");
+        const header = [
+            "Word",
+            "Reading",
+            "ReadingBreakdown",
+            "Audio",
+            "PitchAccent",
+            "Meaning",
+            "JLPTLevel",
+            "CoverageRole",
+            "FocusKanji",
+            "CoversReading",
+            "KanjiBreakdown",
+            "ExampleSentence",
+            "ExampleAudio",
+            "Notes",
+        ];
+        const rows = [
+            ["毎月", "まいつき", "毎月", "", "", "every month", "JLPT N5", "core", "月", "月: つき", "", "", "", "first"],
+            ["毎月", "まいつき", "毎月", "", "", "monthly", "JLPT N5", "support", "月", "月: つき", "", "", "", "duplicate"],
+        ];
+        const fixtureTsv = `${[header, ...rows].map((row) => row.join("\t")).join("\n")}\n`;
+        writeFile(path.join(packageRoot, "exports", "jlpt-n5-words.tsv"), fixtureTsv);
+
+        const result = runBuildApkgRaw(python, outDir, { deckKind: "word" });
+
+        assert.notEqual(result.status, 0);
+        assert.match(result.stderr || result.stdout, /APKG note GUIDs must be unique/u);
+        assert.equal(
+            fs.existsSync(path.join(packageRoot, "japanese-kanji-builder-words-n5.apkg")),
+            false
+        );
+    } finally {
+        fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+});

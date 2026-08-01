@@ -6,11 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-No unreleased changes. Keep future entries release-facing and concise; detailed work belongs in git commit messages and tracked review manifests.
+Post-release governance changes remain release-facing and concise; detailed work belongs in git commit messages and tracked review manifests.
+
+### Changed
+
+- Recorded the successful beta.4 hosted and downloaded verification, mitigated `SEC-P0-004`, implemented `SEC-REQ-007`, and removed their obsolete pre-release deferrals only after checksum, SBOM, immutable Actions evidence, `7/7` constrained attestation, and owner-authenticated hosted-setting proof passed.
 
 ## [0.3.0-beta.4] - 2026-08-01
 
-`0.3.0-beta.4` is the next N5-only **automation-reviewed preview** candidate. The immutable `v0.3.0-beta.3` workflow passed the complete verification job and every bundle step through checksum generation, provenance/SBOM attestation, and constrained attestation verification. It then failed closed before publication because `actions/upload-artifact` excludes hidden files by default and the staged bundle directory is `.release-bundle`. No beta.3 release was published; its draft, tag, workflow run, and attestations remain immutable failure evidence.
+`0.3.0-beta.4` is the first published N5-only **automation-reviewed preview**. Tagged workflow `30706783927` succeeded at commit `f9b7c3f2423c5f26edc3c88857e3aedac44aeede`, published seven checksummed assets, retained the immutable Actions bundle, and proved all-file constrained attestations. The immutable `v0.3.0-beta.3` workflow passed the complete verification job and every bundle step through attestation verification, then failed closed before publication because `actions/upload-artifact` excluded the hidden `.release-bundle` directory. Its draft, tag, workflow run, and attestations remain immutable failure evidence.
 
 ### Changed
 

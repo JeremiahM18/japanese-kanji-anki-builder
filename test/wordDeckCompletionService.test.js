@@ -493,6 +493,7 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
         wordPitchAccentData: buildPitchAccentData({
             "今日|きょう": buildKanjiumPitchEntry({ word: "今日", reading: "きょう" }),
         }),
+        readingGapTriageOverrides: { N5: {} },
     });
 
     assert.equal(report.inventory.starterEligibleCount, 1);
@@ -516,6 +517,8 @@ test("buildWordDeckCompletionReport combines canonical inventory and reading cov
     assert.equal(report.pitchAccentAudit.sourceIdentityIssues, 0);
     assert.equal(report.readingBreakdownAudit.valid, true);
     assert.equal(report.cardBackAudit.valid, true);
+    assert.equal(report.triage.defaultDispositionItems, 0);
+    assert.equal(report.triage.staleOverrideItems, 0);
     assert.equal(report.readiness.status, "complete");
 });
 
@@ -612,6 +615,31 @@ test("buildWordDeckReadiness distinguishes deferred-variant readiness from activ
     });
     assert.equal(incomplete.status, "incomplete");
     assert.equal(incomplete.hasActiveTriageItems, true);
+});
+
+test("buildWordDeckReadiness fails closed on unconfigured or stale reading-gap overrides", () => {
+    for (const alignmentCounts of [
+        { defaultDispositionItems: 1, staleOverrideItems: 0 },
+        { defaultDispositionItems: 0, staleOverrideItems: 1 },
+    ]) {
+        const report = buildWordDeckReadiness({
+            inventory: { missingEligibleCount: 0 },
+            readingCoverage: { totalReadings: 100, coveredReadings: 84 },
+            triage: {
+                totalItems: 12,
+                editorialReviewItems: 0,
+                promoteCuratedExampleItems: 0,
+                deferVariantItems: 12,
+                ...alignmentCounts,
+            },
+            policyAudit: { valid: true },
+        });
+
+        assert.equal(report.status, "incomplete");
+        assert.equal(report.hasActiveTriageItems, false);
+        assert.equal(report.allOpenItemsDeferred, true);
+        assert.equal(report.hasTriageOverrideAlignmentViolations, true);
+    }
 });
 
 test("buildWordDeckReadiness stays incomplete when deck policy violations remain", () => {

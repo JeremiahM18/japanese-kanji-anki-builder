@@ -799,6 +799,7 @@ function buildWordDeckCompletionReport({
     wordPitchAccentData = {},
     coverageWordTsvByLevel = null,
     coverageLevels = null,
+    readingGapTriageOverrides = null,
 }) {
     const kanjiRows = parseKanjiTsv(kanjiTsv);
     const wordRows = parseWordTsv(wordTsv);
@@ -830,7 +831,9 @@ function buildWordDeckCompletionReport({
         wordRows: coverageScope.wordRows,
         levelLabel: `N${level}`,
     });
-    const triage = buildWordReadingGapTriage(readingCoverage);
+    const triage = readingGapTriageOverrides === null
+        ? buildWordReadingGapTriage(readingCoverage)
+        : buildWordReadingGapTriage(readingCoverage, { overridesByLevel: readingGapTriageOverrides });
     const policyAudit = buildWordDeckPolicyAudit({
         level,
         wordRows,
@@ -907,6 +910,7 @@ function buildWordDeckCompletionReport({
 function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudit, readingBreakdownAudit = null, kanjiBreakdownContextAudit = null, cardBackAudit = null, exampleReadingAlignmentAudit = null, pitchAccentAudit = null }) {
     const hasMissingStarterRows = (inventory?.missingEligibleCount || 0) > 0;
     const hasActiveTriageItems = ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0;
+    const hasTriageOverrideAlignmentViolations = ((triage?.defaultDispositionItems || 0) + (triage?.staleOverrideItems || 0)) > 0;
     const allOpenItemsDeferred = (triage?.totalItems || 0) > 0
         && (triage?.deferVariantItems || 0) === (triage?.totalItems || 0);
     const hasPolicyViolations = !policyAudit?.valid;
@@ -920,7 +924,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         : 0;
 
     let status = "incomplete";
-    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasKanjiBreakdownContextViolations && !hasCardBackViolations && !hasExampleReadingAlignmentViolations && !hasPitchAccentViolations) {
+    if (!hasMissingStarterRows && !hasActiveTriageItems && !hasTriageOverrideAlignmentViolations && !hasPolicyViolations && !hasReadingBreakdownViolations && !hasKanjiBreakdownContextViolations && !hasCardBackViolations && !hasExampleReadingAlignmentViolations && !hasPitchAccentViolations) {
         status = allOpenItemsDeferred ? "ready_with_deferred_variants" : "complete";
     }
 
@@ -928,6 +932,7 @@ function buildWordDeckReadiness({ inventory, readingCoverage, triage, policyAudi
         status,
         hasMissingStarterRows,
         hasActiveTriageItems,
+        hasTriageOverrideAlignmentViolations,
         hasPolicyViolations,
         hasReadingBreakdownViolations,
         hasKanjiBreakdownContextViolations,
@@ -971,6 +976,7 @@ function formatWordDeckCompletionReport(report, { maxEntries = 20 } = {}) {
         "Readiness:",
         `- Status: ${report.readiness.status}`,
         `- Active triage backlog cleared: ${report.readiness.hasActiveTriageItems ? "no" : "yes"}`,
+        `- Reading-gap override alignment clear: ${report.readiness.hasTriageOverrideAlignmentViolations ? "no" : "yes"}`,
         `- Remaining open items are deferred variants only: ${report.readiness.allOpenItemsDeferred ? "yes" : "no"}`,
         `- Reading coverage: ${report.readiness.readingCoveragePercent}%`,
         `- Coverage counted from decks: ${report.coverageScope?.label || `N${report.level}`}`,

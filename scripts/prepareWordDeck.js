@@ -180,7 +180,10 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     ]
                     : []),
                 ...(triage
-                    ? [`  triage backlog: ${triage.editorialReviewItems} review-needed before card work, ${triage.promoteCuratedExampleItems} actionable curated candidates, ${triage.deferVariantItems} deferred variants or low learner value`]
+                    ? [
+                        `  triage backlog: ${triage.editorialReviewItems} review-needed before card work, ${triage.promoteCuratedExampleItems} actionable curated candidates, ${triage.deferVariantItems} deferred variants or low learner value`,
+                        `  triage override alignment: ${triage.configuredOverrideItems || 0} tracked dispositions, ${triage.defaultDispositionItems || 0} unconfigured defaults, ${triage.staleOverrideItems || 0} stale tracked overrides`,
+                    ]
                     : []),
             ];
         })
@@ -237,6 +240,8 @@ function buildWordDeckExitCondition(summary = {}, options = {}) {
     const readingCoverageAudits = Object.values(summary.completion?.readingCoverageAuditByLevel || {});
     const hasActiveTriageBacklog = Object.values(summary.completion?.readingGapTriageByLevel || {})
         .some((triage) => ((triage?.editorialReviewItems || 0) + (triage?.promoteCuratedExampleItems || 0)) > 0);
+    const hasTriageOverrideAlignmentViolations = Object.values(summary.completion?.readingGapTriageByLevel || {})
+        .some((triage) => ((triage?.defaultDispositionItems || 0) + (triage?.staleOverrideItems || 0)) > 0);
     const hasPolicyViolations = readingCoverageAudits
         .some((audit) => !audit?.policyAudit?.valid);
     const hasReadingBreakdownViolations = readingCoverageAudits
@@ -248,19 +253,23 @@ function buildWordDeckExitCondition(summary = {}, options = {}) {
     const hasExampleReadingAlignmentViolations = readingCoverageAudits
         .some((audit) => audit?.exampleReadingAlignmentAudit && !audit.exampleReadingAlignmentAudit.valid);
     const blocksOnActiveTriage = options.requireNoActiveTriage && hasActiveTriageBacklog;
+    const blocksOnTriageOverrideAlignment = options.requireNoActiveTriage && hasTriageOverrideAlignmentViolations;
     const valid = hasFullTrueAnimationCoverage
         && !hasPolicyViolations
         && !hasReadingBreakdownViolations
         && !hasKanjiBreakdownContextViolations
         && !hasCardBackViolations
         && !hasExampleReadingAlignmentViolations
-        && !blocksOnActiveTriage;
+        && !blocksOnActiveTriage
+        && !blocksOnTriageOverrideAlignment;
 
     return {
         valid,
         hasFullTrueAnimationCoverage,
         hasActiveTriageBacklog,
+        hasTriageOverrideAlignmentViolations,
         blocksOnActiveTriage,
+        blocksOnTriageOverrideAlignment,
         hasPolicyViolations,
         hasReadingBreakdownViolations,
         hasKanjiBreakdownContextViolations,

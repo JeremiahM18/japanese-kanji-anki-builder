@@ -13,18 +13,8 @@
   },
   "releaseTrust": {
     "preRelease": {
-      "deferredRiskRecords": [
-        {
-          "id": "SEC-P0-004",
-          "reason": "Attestation verification proof requires the tagged release workflow to create and verify hosted attestations before the owner-authenticated hosted audit can close the risk."
-        }
-      ],
-      "deferredRequirementRecords": [
-        {
-          "id": "SEC-REQ-007",
-          "reason": "Release artifact trust is only partially implemented until a hosted tagged release workflow proves checksum, SBOM, provenance, and attestation verification evidence."
-        }
-      ]
+      "deferredRiskRecords": [],
+      "deferredRequirementRecords": []
     }
   },
   "trainingChecklist": {

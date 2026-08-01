@@ -390,13 +390,14 @@ function buildWordReadingCoverageReport({ kanjiRows, wordRows, levelLabel = 'N5'
   };
 }
 
-function buildWordReadingGapTriage(report) {
+function buildWordReadingGapTriage(report, {
+  overridesByLevel = loadWordReadingGapTriageOverrides(),
+} = {}) {
   const priorityRanks = {
     high: 0,
     medium: 1,
     low: 2,
   };
-  const overridesByLevel = loadWordReadingGapTriageOverrides();
   const levelOverrides = overridesByLevel[report.summary.levelLabel] || {};
 
   const items = report.kanji.flatMap((entry) => {
@@ -416,11 +417,12 @@ function buildWordReadingGapTriage(report) {
         priority = 'low';
       }
 
-      const override = levelOverrides[buildGapOverrideKey({
+      const overrideKey = buildGapOverrideKey({
         kanji: entry.kanji,
         readingType,
         reading: readingEntry.reading,
-      })];
+      });
+      const override = levelOverrides[overrideKey];
       if (override) {
         suggestedAction = override.suggestedAction;
         priority = override.priority || priority;
@@ -435,6 +437,8 @@ function buildWordReadingGapTriage(report) {
         gapKind: readingEntry.gapKind || 'distinct',
         priority,
         suggestedAction,
+        overrideKey,
+        overrideApplied: Boolean(override),
         targetLevel: override?.targetLevel,
         targetLevelReason: override?.targetLevelReason || '',
         editorialNote: override?.note || '',
@@ -462,17 +466,35 @@ function buildWordReadingGapTriage(report) {
     || a.kanji.localeCompare(b.kanji, 'ja')
     || a.reading.localeCompare(b.reading, 'ja')
   ));
+  const currentGapKeys = new Set(items.map((item) => item.overrideKey));
+  const configuredOverrideKeys = items
+    .filter((item) => item.overrideApplied)
+    .map((item) => item.overrideKey);
+  const unconfiguredGapKeys = items
+    .filter((item) => !item.overrideApplied)
+    .map((item) => item.overrideKey);
+  const staleOverrideKeys = Object.keys(levelOverrides)
+    .filter((key) => !currentGapKeys.has(key))
+    .sort((a, b) => a.localeCompare(b, 'ja'));
 
   return {
     levelLabel: report.summary.levelLabel,
     summary: {
       totalItems: items.length,
+      configuredOverrideItems: configuredOverrideKeys.length,
+      defaultDispositionItems: unconfiguredGapKeys.length,
+      staleOverrideItems: staleOverrideKeys.length,
       highPriorityItems: items.filter((item) => item.priority === 'high').length,
       mediumPriorityItems: items.filter((item) => item.priority === 'medium').length,
       lowPriorityItems: items.filter((item) => item.priority === 'low').length,
       editorialReviewItems: items.filter((item) => item.suggestedAction === 'editorial_review').length,
       promoteCuratedExampleItems: items.filter((item) => item.suggestedAction === 'promote_curated_example').length,
       deferVariantItems: items.filter((item) => item.suggestedAction === 'defer_variant').length,
+    },
+    overrideAlignment: {
+      configuredOverrideKeys,
+      unconfiguredGapKeys,
+      staleOverrideKeys,
     },
     items,
   };
@@ -567,6 +589,11 @@ function formatWordReadingGapTriage(triage, { maxItems = 50, includeVariants = f
   lines.push(`  - Review needed before card work: ${triage.summary.highPriorityItems}`);
   lines.push(`  - Actionable curated learner candidates: ${triage.summary.mediumPriorityItems}`);
   lines.push(`  - Deferred variants or low learner value: ${triage.summary.lowPriorityItems}`);
+  if (typeof triage.summary.configuredOverrideItems === 'number') {
+    lines.push(`  - Tracked editorial dispositions applied: ${triage.summary.configuredOverrideItems}`);
+    lines.push(`  - Default (unconfigured) dispositions: ${triage.summary.defaultDispositionItems}`);
+    lines.push(`  - Stale tracked dispositions: ${triage.summary.staleOverrideItems}`);
+  }
   lines.push('');
   lines.push('Product rule: create cards only for common, learner-friendly, useful words. If no good learner card exists, leave the reading uncovered or deferred.');
   lines.push('Review-needed items are not automatic card work; they need learner-value evidence first.');

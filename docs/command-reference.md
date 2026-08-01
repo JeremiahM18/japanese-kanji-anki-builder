@@ -160,7 +160,7 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run deck:words:reading-audit:n1` | Audit N1 word reading coverage |
 | `npm run deck:words:triage -- --level=3` | Classify selected-level word reading gaps into active, deferred, resolved, or routed work queues |
 | `npm run deck:words:triage:n4` | Classify N4 word reading gaps |
-| `npm run deck:words:triage:n5` | Classify N5 word reading gaps |
+| `npm run deck:words:triage:n5` | Classify N5 word reading gaps and report exact tracked/default/stale editorial-override alignment |
 | `npm run deck:words:triage:n3` | Classify N3 word reading gaps |
 | `npm run deck:words:triage:n2` | Classify N2 word reading gaps |
 | `npm run deck:words:triage:n1` | Classify N1 word reading gaps |

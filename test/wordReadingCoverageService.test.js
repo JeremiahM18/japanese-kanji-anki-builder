@@ -15,6 +15,7 @@ const {
   parseKanjiTsv,
   parseWordTsv,
 } = require('../src/services/wordReadingCoverageService');
+const { loadWordReadingGapTriageOverrides } = require('../src/datasets/wordReadingGapTriageOverrides');
 
 test('normalizeReadingToken normalizes katakana and dictionary punctuation', () => {
   assert.equal(normalizeReadingToken('オン: ショウ'), 'しょう');
@@ -353,6 +354,116 @@ test('buildWordReadingGapTriage respects tracked editorial override dispositions
   assert.match(formatWordReadingGapTriage(n3Triage, { includeVariants: true }), /deferred target level: N2/);
 });
 
+test('buildWordReadingGapTriage reports exact override alignment when equal totals mask drift', () => {
+  const report = {
+    summary: { levelLabel: 'N5' },
+    kanji: [
+      {
+        kanji: '万',
+        displayWord: '万',
+        onCoverage: [],
+        kunCoverage: [{
+          reading: 'よろず',
+          status: 'missing_example',
+          coverageSource: 'none',
+          matchingExamples: [],
+          deckExamples: [],
+          gapKind: 'distinct',
+        }],
+      },
+      {
+        kanji: '未',
+        displayWord: '未',
+        onCoverage: [],
+        kunCoverage: [{
+          reading: 'ひつじ',
+          status: 'missing_example',
+          coverageSource: 'none',
+          matchingExamples: [],
+          deckExamples: [],
+          gapKind: 'distinct',
+        }],
+      },
+    ],
+  };
+  const triage = buildWordReadingGapTriage(report, {
+    overridesByLevel: {
+      N5: {
+        '万|kun|よろず': {
+          suggestedAction: 'defer_variant',
+          priority: 'low',
+          note: 'Explicit current disposition.',
+        },
+        '旧|on|きゅう': {
+          suggestedAction: 'defer_variant',
+          priority: 'low',
+          note: 'Stale disposition.',
+        },
+      },
+    },
+  });
+
+  assert.equal(triage.summary.totalItems, 2);
+  assert.equal(triage.summary.configuredOverrideItems, 1);
+  assert.equal(triage.summary.defaultDispositionItems, 1);
+  assert.equal(triage.summary.staleOverrideItems, 1);
+  assert.deepEqual(triage.overrideAlignment.configuredOverrideKeys, ['万|kun|よろず']);
+  assert.deepEqual(triage.overrideAlignment.unconfiguredGapKeys, ['未|kun|ひつじ']);
+  assert.deepEqual(triage.overrideAlignment.staleOverrideKeys, ['旧|on|きゅう']);
+});
+
+test('tracked N5 overrides explicitly adjudicate current variants and omit retired gaps', () => {
+  const overrides = loadWordReadingGapTriageOverrides().N5;
+  const currentVariantKeys = [
+    '三|kun|みつ',
+    '二|kun|ふたたび',
+    '八|kun|やつ',
+    '六|kun|むい',
+    '六|kun|むつ',
+    '出|kun|いだす',
+    '出|kun|いでる',
+    '四|kun|よつ',
+    '大|kun|おおいに',
+    '天|kun|あまつ',
+    '来|kun|きたす',
+    '来|kun|きたる',
+    '生|kun|うむ',
+    '生|kun|おう',
+    '高|kun|たかまる',
+    '高|kun|たかめる',
+  ];
+  const retiredGapKeys = [
+    '上|kun|かみ',
+    '出|on|しゅつ',
+    '南|on|な',
+    '南|on|なん',
+    '友|on|ゆう',
+    '山|on|ざん',
+    '時|kun|どき',
+    '木|on|ぼく',
+    '来|kun|き',
+    '火|kun|び',
+    '父|on|ふ',
+    '生|on|しょう',
+    '見|on|けん',
+    '西|on|すい',
+    '雨|kun|あま',
+    '雨|on|う',
+  ];
+
+  assert.equal(currentVariantKeys.length, 16);
+  assert.equal(retiredGapKeys.length, 16);
+  assert.equal(Object.keys(overrides).length, 99);
+  for (const key of currentVariantKeys) {
+    assert.equal(overrides[key].suggestedAction, 'defer_variant', `${key} should be explicitly deferred`);
+    assert.equal(overrides[key].priority, 'low', `${key} should remain low priority`);
+    assert.ok(overrides[key].note, `${key} should record editorial reasoning`);
+  }
+  for (const key of retiredGapKeys) {
+    assert.equal(overrides[key], undefined, `${key} should not remain as a stale override`);
+  }
+});
+
 test('formatWordReadingGapTriage renders a practical backlog summary', () => {
   const text = formatWordReadingGapTriage({
     levelLabel: 'N5',
@@ -403,4 +514,3 @@ test('formatWordReadingGapTriage renders a practical backlog summary', () => {
   assert.match(text, /curated candidates: none yet \(review only; no card work without common learner-friendly evidence\)/);
   assert.match(text, /curated candidates: 後ろ \(うしろ\)/);
 });
-

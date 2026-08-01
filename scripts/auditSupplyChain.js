@@ -677,6 +677,11 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
         "release workflow must verify release bundle attestations with signer workflow, source ref, and source digest constraints."
     );
     assertCondition(
+        /name:\s*release-bundle-\$\{\{ github\.ref_name \}\}[\s\S]*?path:\s*\.release-bundle[\s\S]*?if-no-files-found:\s*error[\s\S]*?include-hidden-files:\s*true/u.test(releaseWorkflowText),
+        errors,
+        "release workflow must explicitly include the hidden .release-bundle directory in immutable Actions evidence."
+    );
+    assertCondition(
         releaseWorkflowText.includes("npm run product:release-qa:evidence")
             && releaseWorkflowText.includes("npm run product:release-qa:apkg-inspect")
             && releaseWorkflowText.includes("--artifact-dir=\"${RELEASE_INPUT_DIR}\"")

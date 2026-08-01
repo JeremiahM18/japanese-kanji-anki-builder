@@ -311,6 +311,29 @@ test("buildWordDeckExitCondition keeps JSON and text exit gates on one policy su
     assert.equal(buildWordDeckExitCondition(withActiveTriage, { requireNoActiveTriage: true }).valid, false);
     assert.equal(buildWordDeckExitCondition(withActiveTriage, { requireNoActiveTriage: true }).blocksOnActiveTriage, true);
 
+    for (const alignmentCounts of [
+        { defaultDispositionItems: 1, staleOverrideItems: 0 },
+        { defaultDispositionItems: 0, staleOverrideItems: 1 },
+    ]) {
+        const withOverrideDrift = buildReadyExitSummary({
+            completion: {
+                readingGapTriageByLevel: {
+                    N5: {
+                        editorialReviewItems: 0,
+                        promoteCuratedExampleItems: 0,
+                        ...alignmentCounts,
+                    },
+                },
+            },
+        });
+        assert.equal(buildWordDeckExitCondition(withOverrideDrift).valid, true);
+        const guardedExit = buildWordDeckExitCondition(withOverrideDrift, { requireNoActiveTriage: true });
+        assert.equal(guardedExit.valid, false);
+        assert.equal(guardedExit.hasActiveTriageBacklog, false);
+        assert.equal(guardedExit.hasTriageOverrideAlignmentViolations, true);
+        assert.equal(guardedExit.blocksOnTriageOverrideAlignment, true);
+    }
+
     const blockers = [
         [
             "hasFullTrueAnimationCoverage",

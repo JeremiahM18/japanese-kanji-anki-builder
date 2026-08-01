@@ -247,6 +247,7 @@ Word readiness reports:
 - explicit reading-coverage contract counts
 - selected-level reading coverage
 - active triage backlog
+- reading-gap override alignment, including unconfigured current gaps and stale tracked keys
 - deck-policy violations
 - sentence orthography review
 - reading-breakdown review
@@ -260,6 +261,8 @@ Use the N5 guard when changing stabilized N5 word content:
 ```bash
 npm run deck:words:ready -- --levels=5 --require-no-active-triage
 ```
+
+The stabilized guard fails when active editorial/promotion triage remains, when a current gap is using an unconfigured default disposition, or when a tracked override no longer matches a current gap. Intentional `defer_variant` rows are ready only when every current gap has an exact tracked disposition and no stale override keys remain.
 
 ## Plan word reading coverage
 

@@ -1,6 +1,6 @@
 {
   "name": "japanese_kanji_builder",
-  "version": "0.2.0",
+  "version": "0.3.0-beta.1",
   "description": "Governed JLPT kanji and vocabulary deck-build pipeline for Anki with deterministic exports, tracked contracts, curated data, media provenance, and CI readiness gates",
   "type": "commonjs",
   "main": "src/server.js",
@@ -266,6 +266,7 @@
     "product:artifacts:kanji:all": "node scripts/trackedSourceArtifacts.js --levels=5,4,3,2,1 --surface=kanji",
     "product:artifacts:kanji:release-qa": "node scripts/trackedSourceArtifacts.js --levels=5,4,3,2,1 --surface=kanji-release-qa",
     "product:release-qa:evidence": "node scripts/validateReleaseQaEvidence.js",
+    "product:release-qa:apkg-inspect": "python scripts/inspectReleaseApkg.py",
     "product:readiness:n5": "node scripts/productReadiness.js --level=5",
     "deck:review:n3": "node scripts/reviewGoldenLevel.js --level=3 --manifest-scoped",
     "deck:sapphire:n5": "node scripts/reviewSapphireKanjiLevel.js --level=5 --require-all",

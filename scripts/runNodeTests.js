@@ -27,6 +27,7 @@ const TEST_SCOPES = Object.freeze({
         "logger.test.js",
         "productReadinessService.test.js",
         "releaseGateService.test.js",
+        "releaseApkgInspection.test.js",
         "releasePolicy.test.js",
         "releaseQaEvidenceService.test.js",
         "sbomGeneration.test.js",

@@ -48,8 +48,9 @@ Forward review gates enforce prior lanes. Gold requires the generated card surfa
 | `npm run product:artifacts:kanji:n4` | Build and validate the source-derived tracked-source N4 kanji TSV artifact |
 | `npm run product:artifacts:kanji:n3` | Build and validate the source-derived tracked-source N3 kanji TSV artifact |
 | `npm run product:artifacts:kanji:all` | Run the tracked-source kanji TSV artifact gate across N5 through N1, failing closed where source contracts are incomplete |
-| `npm run product:artifacts:kanji:release-qa` | Gate tracked-source kanji TSV, APKG, managed-media, and manual QA readiness across N5 through N1 |
-| `npm run product:release-qa:evidence` | Validate release QA packet version 2: current-HEAD candidate commit, one exact isolated-run APKG path/byte-size/SHA-256 binding per scoped deck kind with that artifact's own canonical level list, APKG import, managed media, Anki import, mobile, accessibility, listening QA, accepted source-governance posture while source depth is incomplete, and empty known blockers |
+| `npm run product:artifacts:kanji:release-qa` | Strict production/GA gate for tracked-source kanji TSV, APKG, managed-media, and actual human/device QA readiness across N5 through N1; intentionally remains blocked for automation-reviewed previews without that evidence |
+| `npm run product:release-qa:evidence` | Validate packet version 3: package version/tag/current-HEAD commit/release class, exact per-deck candidate APKG path/release name/note-card-media counts/bytes/SHA-256, commit-bound automated and artifact QA, production-versus-preview risk policy, source posture, and empty blockers; add `--artifact-dir=<dir> --expected-tag=<tag>` for exact downloaded release inputs |
+| `npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir>` | Independently inspect declared APKG ZIP safety/integrity, media membership, SQLite integrity/schema/version, deck names, note/card/media counts, field cardinality, GUID/card references, and packaged media references |
 | `npm run product:readiness:n5` | Run the automated N5 product readiness checkpoint |
 | `npm run dev` | Start the local development server with `nodemon` |
 | `npm start` | Start the local Express server; equivalent to `npm run start` |

@@ -49,17 +49,12 @@ const WORKFLOW_FILES = Object.freeze([
 ]);
 
 const REQUIRED_RELEASE_BUNDLE_PATHS = Object.freeze([
-    ".release-smoke/out",
-    ".release-gate/out",
-    "CHANGELOG.md",
-    "NOTICE.md",
-    "docs/compatibility-matrix.md",
-    "docs/branch-protection.md",
-    "docs/release-process.md",
-    "docs/release-qa-checklist.md",
-    "out/security/sbom.cdx.json",
-    "out/security/dependency-licenses.json",
-    "release-artifacts.sha256",
+    ".release-bundle",
+    ".release-bundle/release-qa-evidence.json",
+    ".release-bundle/sbom.cdx.json",
+    ".release-bundle/dependency-licenses.json",
+    ".release-bundle/release-verification-materials.tar.gz",
+    ".release-bundle/release-artifacts.sha256",
 ]);
 
 const FORBIDDEN_WORKFLOW_TOKENS = Object.freeze([
@@ -76,7 +71,7 @@ const FORBIDDEN_WORKFLOW_TOKENS = Object.freeze([
 
 const WORKFLOW_PERMISSION_EXCEPTIONS = Object.freeze({
     ".github/workflows/codeql.yml": Object.freeze(["security-events: write"]),
-    ".github/workflows/release.yml": Object.freeze(["id-token: write", "attestations: write", "artifact-metadata: write"]),
+    ".github/workflows/release.yml": Object.freeze(["contents: write", "id-token: write", "attestations: write", "artifact-metadata: write"]),
 });
 
 const FORBIDDEN_SCRIPT_SPEC_RE = /^(?:git\+|git:|github:|file:|link:|workspace:|http:|https:|npm:)/iu;
@@ -574,9 +569,9 @@ function auditWorkflowFile({ relativePath, text }) {
     }
     if (permissionExceptions.has("id-token: write")) {
         assertCondition(
-            /^\s{4}permissions:\s*\r?\n\s{6}contents:\s+read\r?\n\s{6}id-token:\s+write\r?\n\s{6}attestations:\s+write\r?\n\s{6}artifact-metadata:\s+write/mu.test(text),
+            /^\s{4}permissions:\s*\r?\n\s{6}contents:\s+write\r?\n\s{6}id-token:\s+write\r?\n\s{6}attestations:\s+write\r?\n\s{6}artifact-metadata:\s+write/mu.test(text),
             errors,
-            `${relativePath} must scope id-token and attestation write permissions to the release bundle job.`
+            `${relativePath} must scope contents, id-token, and attestation write permissions to the release bundle job.`
         );
     }
     assertSupplyChainAuditBeforeEveryInstall(text, relativePath, errors);
@@ -624,9 +619,24 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
         "release_bundle must depend on release_verify before publishing bundle artifacts."
     );
     assertCondition(
-        releaseWorkflowText.includes("find .release-smoke/out .release-gate/out out/security/sbom.cdx.json out/security/dependency-licenses.json -type f -print0"),
+        releaseWorkflowText.includes("workflow_dispatch:")
+            && releaseWorkflowText.includes('test "${GITHUB_REF_TYPE}" = "tag"')
+            && releaseWorkflowText.includes("'v' + require('./package.json').version")
+            && releaseWorkflowText.includes('test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"'),
         errors,
-        "release workflow must checksum only the deterministic smoke, release-gate, SBOM, and dependency-license output paths."
+        "release workflow must permit explicit tag-ref dispatch and fail closed on ref, package version, tag, and commit drift."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("gh release view")
+            && releaseWorkflowText.includes("isDraft,isPrerelease")
+            && releaseWorkflowText.includes("gh release download"),
+        errors,
+        "release workflow must require and download an existing draft prerelease before verification."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("find .release-bundle -type f ! -name 'release-artifacts.sha256' -print0"),
+        errors,
+        "release workflow must checksum only the explicitly staged release bundle files."
     );
     assertCondition(
         releaseWorkflowText.includes("sort -z"),
@@ -634,7 +644,7 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
         "release workflow must sort checksum inputs deterministically."
     );
     assertCondition(
-        releaseWorkflowText.includes("xargs -0 sha256sum > release-artifacts.sha256"),
+        releaseWorkflowText.includes("xargs -0 sha256sum > .release-bundle/release-artifacts.sha256"),
         errors,
         "release workflow must emit release-artifacts.sha256 from null-delimited sha256sum input."
     );
@@ -644,7 +654,7 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
         "release workflow must create provenance and SBOM attestations for tagged release artifacts."
     );
     assertCondition(
-        releaseWorkflowText.includes("sbom-path: out/security/sbom.cdx.json"),
+        releaseWorkflowText.includes("sbom-path: .release-bundle/sbom.cdx.json"),
         errors,
         "release workflow must bind the generated CycloneDX SBOM into the SBOM attestation."
     );
@@ -656,6 +666,23 @@ function auditReleaseArtifactBoundary(releaseWorkflowText) {
             && releaseWorkflowText.includes("--source-digest"),
         errors,
         "release workflow must verify release bundle attestations with signer workflow, source ref, and source digest constraints."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("npm run product:release-qa:evidence")
+            && releaseWorkflowText.includes("npm run product:release-qa:apkg-inspect")
+            && releaseWorkflowText.includes("--artifact-dir=\"${RELEASE_INPUT_DIR}\"")
+            && releaseWorkflowText.includes("--expected-tag=\"${GITHUB_REF_NAME}\""),
+        errors,
+        "release workflow must validate exact downloaded release assets, APKG structures, and tag binding before publication."
+    );
+    assertCondition(
+        releaseWorkflowText.includes("gh release upload")
+            && releaseWorkflowText.includes("gh release edit")
+            && releaseWorkflowText.includes("--draft=false")
+            && releaseWorkflowText.includes("--prerelease")
+            && releaseWorkflowText.includes("--verify-tag"),
+        errors,
+        "release workflow must publish only the verified draft as a tagged GitHub prerelease."
     );
 
     for (const releasePath of REQUIRED_RELEASE_BUNDLE_PATHS) {

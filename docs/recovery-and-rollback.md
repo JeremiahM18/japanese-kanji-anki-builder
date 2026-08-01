@@ -54,11 +54,11 @@ Capture:
 
 Use this when a tagged release artifact, checksum, SBOM, or attestation is wrong or unverifiable.
 
-1. Stop distribution claims for the affected tag.
-2. Preserve the failed artifact, checksum output, attestation output, workflow URL, and commit SHA privately.
-3. Do not move or recreate the tag unless the owner explicitly approves a documented emergency action.
-4. Fix through a normal commit and create a new superseding tag.
-5. Update [../CHANGELOG.md](../CHANGELOG.md) and [release-process.md](release-process.md) if release behavior or known limitations changed.
+1. Stop distribution claims for the affected tag. If the draft is not yet published, keep it draft; if a prerelease was published, mark it clearly withdrawn and remove it from recommended downloads without deleting the evidence needed for investigation.
+2. Preserve the downloaded packet, APKGs, checksum output, APKG-inspector output, attestation output, workflow URL, release URL, and commit SHA privately.
+3. Do not move or recreate the tag and do not silently replace an APKG under the same version.
+4. Fix through protected `main`, rebuild from the corrected commit, complete a new packet, and create a new superseding semantic prerelease tag.
+5. Update [../CHANGELOG.md](../CHANGELOG.md), [release-process.md](release-process.md), the release-scope record, and affected risks if behavior or known limitations changed.
 
 Verification commands:
 
@@ -69,6 +69,8 @@ npm run security:branch-protection
 npm run security:licenses
 npm run security:secrets
 npm run security:sbom
+npm run product:release-qa:evidence -- --packet=<download-directory>/release-qa-evidence.json --artifact-dir=<download-directory> --expected-tag=<tag>
+npm run product:release-qa:apkg-inspect -- --packet=<download-directory>/release-qa-evidence.json --artifact-dir=<download-directory>
 npm test
 npm run release:gate
 ```
@@ -76,8 +78,8 @@ npm run release:gate
 After the release workflow publishes artifacts, verify downloaded files:
 
 ```bash
-sha256sum -c release-artifacts.sha256
-gh attestation verify <artifact-path> --repo JeremiahM18/japanese-kanji-anki-builder
+sha256sum -c .release-bundle/release-artifacts.sha256
+gh attestation verify <artifact-path> --repo JeremiahM18/japanese-kanji-anki-builder --signer-workflow github.com/JeremiahM18/japanese-kanji-anki-builder/.github/workflows/release.yml --source-ref refs/tags/<tag> --source-digest <full-commit>
 ```
 
 On Windows without `sha256sum`, use PowerShell `Get-FileHash -Algorithm SHA256 <artifact-path>` and compare each value to `release-artifacts.sha256`.
@@ -92,7 +94,7 @@ Use this when generated TSV, APKG, media, or release-gate output is incorrect.
 2. Do not edit generated artifacts by hand to make tests pass.
 3. Fix the tracked source, importer, exporter, media manifest, or review contract that owns the defect.
 4. Rebuild artifacts through governed commands.
-5. Keep manual QA evidence separate from automated gate output.
+5. Keep human/device QA evidence separate from automated gate output. For an automation-reviewed preview, preserve every explicit `PROD-REL-001` limitation rather than rewriting it as passed.
 
 Relevant commands:
 
@@ -227,7 +229,7 @@ Recovery is complete only when:
 - affected docs and changelog are updated when user-facing or release-facing behavior changed
 - all relevant automated gates are rerun
 - expected failures are named as blockers, not hidden
-- manual QA remains separate and recorded when required
+- human/device QA remains separate and is either passed for production/GA or explicitly accepted and labeled for an automation-reviewed prerelease
 - a focused commit records the recovery or mitigation
 
 ## Verification For This Runbook

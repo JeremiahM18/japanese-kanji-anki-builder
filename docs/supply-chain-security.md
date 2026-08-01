@@ -55,7 +55,7 @@ Run:
 npm run security:licenses
 ```
 
-This command validates dependency license expressions from `package-lock.json` against [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). Missing licenses, denied license patterns, unreviewed license expressions, and overdue reviewed exceptions fail closed. Tagged release bundles run `npm run security:licenses:write`, include `out/security/dependency-licenses.json`, and checksum that summary alongside smoke, release-gate, and SBOM outputs.
+This command validates dependency license expressions from `package-lock.json` against [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). Missing licenses, denied license patterns, unreviewed license expressions, and overdue reviewed exceptions fail closed. The tagged workflow writes the passing summary directly to `.release-bundle/dependency-licenses.json` and includes it in the checksum and attestation set.
 
 Run:
 
@@ -63,7 +63,7 @@ Run:
 npm run security:sbom
 ```
 
-This command builds a deterministic CycloneDX `1.6` SBOM model from `package-lock.json` and validates component count, npm package URLs, dependency graph references, and lockfile-derived hashes without writing an artifact. Tagged release bundles run `npm run security:sbom:write`, include `out/security/sbom.cdx.json`, and checksum that SBOM alongside smoke, release-gate, and dependency-license outputs.
+This command builds a deterministic CycloneDX `1.6` SBOM model from `package-lock.json` and validates component count, npm package URLs, dependency graph references, and lockfile-derived hashes without writing an artifact. The tagged workflow writes the same validated model directly to `.release-bundle/sbom.cdx.json` and includes it in the checksum and attestation set.
 
 ## Dependency Boundary
 
@@ -100,7 +100,7 @@ As of 2026-07-26, the recurring supply-chain maintenance items are:
 - Reassess and either remove or revalidate every entry in [../templates/dependency_security_overrides.json](../templates/dependency_security_overrides.json) by its `nextReview` date. Do not update a date without rerunning every recorded validation command.
 - Keep reviewed license exceptions in [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) current by package, reason, owner, `reviewedAt`, and `nextReview`. The current sharp/libvips exception review is due on 2026-08-03.
 - Rerun `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, `npm run security:advisories`, and `npm run security:secrets` after dependency, workflow, release-artifact, NOTICE, or policy changes.
-- Treat green maintenance checks as supply-chain hygiene only. They do not close hosted alert regressions, source-governance, release-trust, attestation-proof, APKG import, mobile, accessibility, listening, or manual QA blockers.
+- Treat green maintenance checks as supply-chain hygiene only. They do not close hosted alert regressions, source governance, release trust, attestation proof, product QA, or explicit preview limitations.
 
 The NLP dependency stack is assistive-only. It may generate review context, but it must not certify cards, approve source truth, or bypass Gold, Sapphire, Platinum, Obsidian, release, import, listening, or accessibility gates.
 
@@ -113,7 +113,7 @@ permissions:
   contents: read
 ```
 
-Do not add `contents: write`, broad write permissions, or release-publishing permissions without a separate threat-model update. `id-token: write`, `attestations: write`, and `artifact-metadata: write` are allowed only in the tagged release bundle job so GitHub artifact attestations can create Sigstore-backed provenance and SBOM attestations for release artifacts.
+Do not add broad write permissions or release-publishing permissions without a separate threat-model update. `contents: write`, `id-token: write`, `attestations: write`, and `artifact-metadata: write` are allowed exactly once and only in the tagged release bundle job: content write uploads the already verified assets and publishes the existing draft prerelease, while OIDC/attestation writes create Sigstore-backed provenance and SBOM attestations. Top-level and verification-job permissions remain read-only.
 
 Branch protection policy is tracked in `.github/branch-protection.main.json`. `npm run security:branch-protection` verifies that the policy, docs, and CI job names stay aligned before install and release jobs continue.
 
@@ -121,7 +121,7 @@ Secret prevention has two layers. Enable GitHub secret scanning and push protect
 
 Static analysis runs through `.github/workflows/codeql.yml`. It scans JavaScript/TypeScript source and GitHub Actions workflow code with CodeQL extended security and quality queries. The only allowed workflow write permission is `security-events: write` in the CodeQL analysis job so findings can be uploaded to GitHub code scanning.
 
-Release provenance runs through GitHub artifact attestations in `.github/workflows/release.yml`. The release bundle job attests the uploaded release paths, attaches the generated CycloneDX SBOM as an SBOM attestation, and verifies representative release bundle attestations with the GitHub CLI before upload. Consumers should still verify those attestations with the GitHub CLI before trusting a downloaded release bundle.
+Release provenance runs through GitHub artifact attestations in `.github/workflows/release.yml`. The workflow first downloads the exact draft packet/APKG inputs, rejects any missing or extra asset, validates hashes and tag/commit/version binding, and independently inspects APKG internals. The bundle job attests every staged file, attaches the generated CycloneDX SBOM, and runs constrained GitHub CLI verification for every file before uploading the final assets and publishing the draft prerelease. Consumers must still verify downloaded checksums and attestations.
 
 External actions are pinned to full commit SHAs resolved from their reviewed major-version tags. To update a pin, verify the new tag target with `git ls-remote`, update `.github/workflows/*.yml`, and rerun `npm run supply-chain:audit`.
 
@@ -144,23 +144,18 @@ Current reviewed action pins:
 
 ## Release Artifact Boundary
 
-The tagged release workflow is an artifact builder, not proof that public product decks are release-ready.
+The tagged release workflow is a verifier and publisher for one already defined candidate. It does not create content-lane or human/device evidence.
 
 The release bundle may include only:
 
-- deterministic smoke artifacts from `.release-smoke/out`
-- release-gate verification artifacts from `.release-gate/out`
-- the generated CycloneDX SBOM at `out/security/sbom.cdx.json`
-- the generated dependency-license summary at `out/security/dependency-licenses.json`
-- `CHANGELOG.md`
-- `NOTICE.md`
-- `docs/compatibility-matrix.md`
-- `docs/branch-protection.md`
-- `docs/release-process.md`
-- `docs/release-qa-checklist.md`
-- `release-artifacts.sha256`
+- exact packet-declared product APKG assets
+- `release-qa-evidence.json`
+- `.release-bundle/sbom.cdx.json`
+- `.release-bundle/dependency-licenses.json`
+- `.release-bundle/release-verification-materials.tar.gz`, containing deterministic smoke/release-gate outputs and tracked release documents
+- `.release-bundle/release-artifacts.sha256`
 
-It must not upload ignored local inputs such as `data/`, `downloads/`, `.env`, or `node_modules`. Product deck readiness still requires the product-specific gates, manual Anki import QA, listening QA, accessibility QA, and current review proof described in the release docs.
+The draft input directory must contain exactly the evidence packet and declared APKGs. The final staging directory is checksummed and attested as a closed set. Neither stage may upload ignored local inputs such as `data/`, `downloads/`, `.env`, caches, or `node_modules`. Product claims still require the exact release-class evidence: production/GA requires passed human/device QA, while a labeled automation-reviewed prerelease must disclose the accepted `PROD-REL-001` limitations.
 
 ## Verification
 

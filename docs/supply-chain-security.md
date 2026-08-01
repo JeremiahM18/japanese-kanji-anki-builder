@@ -83,10 +83,12 @@ The current dependency-security overrides are governed in [../templates/dependen
 
 | Parent | Forced package | Range posture | Security reason | Review |
 | --- | --- | --- | --- | --- |
-| `@huggingface/transformers@3.8.1` | `sharp@0.35.3` | Outside the parent-declared `^0.34.1` range | Patched resolution for `GHSA-f88m-g3jw-g9cj`; repository use is text-embedding-only and does not invoke image or vision pipelines. | Revalidate the full NLP scope and upstream compatibility by `2026-08-26`. |
+| `@huggingface/transformers@3.8.1` | `sharp@0.35.3` | Outside the parent-declared `^0.34.1` range | Patched resolution for `GHSA-f88m-g3jw-g9cj`; repository use is fail-closed to the one declared `feature-extraction` import and the active embedding model task. | Revalidate the live embedding benchmark and upstream compatibility by `2026-08-26`. |
 | `onnxruntime-node@1.21.0` | `tar@7.5.22` | Inside the parent-declared `^7.0.1` range | Pins a resolution newer than the vulnerable `GHSA-r292-9mhp-454m` range. | Revalidate the NLP scope by `2026-08-26`. |
 
-An unregistered override, version mismatch, parent mismatch, stale lock resolution, missing rationale, or overdue review fails `npm run supply-chain:audit`. The sharp override is a narrow compatibility exception, not permission to use Transformers.js image/vision paths; expanding NLP runtime scope requires removing or re-reviewing that assumption first.
+An unregistered override, version mismatch, parent mismatch, stale lock resolution, missing rationale, or overdue review fails `npm run supply-chain:audit`. An override outside its parent's declared range has additional fail-closed requirements: the audit scans `src/` and `scripts/` for exact production imports, requires literal declared pipeline tasks and call counts, reconciles active runtime/model tasks against the NLP model manifest, requires the live model evaluation in the validation set, and rejects stale upstream-resolution posture. The sharp override is therefore a narrow compatibility exception, not permission to use Transformers.js image/vision paths; any new import, computed or changed pipeline task, active non-embedding model, dependency version, or upstream parent-range resolution requires explicit re-review before the audit can pass.
+
+On 2026-08-01, `npm view @huggingface/transformers version dependencies.sharp --json` reported latest Transformers.js `4.2.0` still declaring `sharp ^0.34.5`, which excludes the forced `sharp 0.35.3`; simply upgrading the parent does not yet remove the exception. The current `npm run nlp:embeddings:evaluate` benchmark passes against the installed override with remote model downloads disabled. That result proves the pinned text-embedding runtime path works; it does not prove image/vision compatibility or grant card-certification authority.
 
 `onnxruntime-node` bundles the CPU runtime needed by the assistive Transformers.js embedding lane. On Linux x64 its postinstall script also attempts to download CUDA provider binaries from NuGet unless told to skip that optional GPU expansion. CI and release workflows set `ONNXRUNTIME_NODE_INSTALL=skip` on `npm ci` so clean runners do not depend on the external CUDA binary host for ordinary verification. This does not remove the package, change the lockfile, bypass lifecycle-script review, or certify NLP output; it only keeps the CI install boundary to the reviewed npm package contents.
 
@@ -94,7 +96,7 @@ Dependency license compliance is governed by [../templates/dependency_license_po
 
 ## Routine Maintenance Snapshot
 
-As of 2026-07-26, the recurring supply-chain maintenance items are:
+As of 2026-08-01, the recurring supply-chain maintenance items are:
 
 - Keep the lifecycle-script package allowlist above exact by package and version; any package-lock change that adds, removes, or changes `fsevents`, `onnxruntime-node`, `protobufjs`, or another install-script package must be reviewed before trusting install output.
 - Reassess and either remove or revalidate every entry in [../templates/dependency_security_overrides.json](../templates/dependency_security_overrides.json) by its `nextReview` date. Do not update a date without rerunning every recorded validation command.

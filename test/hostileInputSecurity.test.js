@@ -36,6 +36,8 @@ function makeTempRepo(prefix = "hostile-supply-chain-") {
         "package.json",
         "package-lock.json",
         path.join("templates", "dependency_security_overrides.json"),
+        path.join("templates", "nlp_model_manifest.json"),
+        path.join("src", "services", "nlpEmbeddingModelEvaluationService.js"),
         path.join(".github", "workflows", "codeql.yml"),
         path.join(".github", "workflows", "ci.yml"),
         path.join(".github", "workflows", "release.yml"),

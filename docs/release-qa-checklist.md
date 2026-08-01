@@ -1,8 +1,8 @@
 # Release QA Checklist
 
-Run this checklist after automated gates pass and before marking a deck milestone release-ready.
+Run this checklist after automated gates pass and before publishing a production release or an automation-reviewed preview.
 
-This checklist is release artifact QA. For an Obsidian-certified scope, the native/fluent-quality content-certification claim is owned by the fail-closed Obsidian gate and canonical proof ledger. Current Obsidian proof is non-human governed proof, and it must already check natural Japanese, sense and translation fit, learner usefulness, level fit, reading/example quality, evidence, limitations, and release-quality content. Release QA verifies the packaged APKG/import/render/media/accessibility/listening experience and records distribution blockers. If release QA exposes a content defect, stop the release, fix the source/card data, reopen the relevant Sapphire, Platinum, and Obsidian evidence, and rerun the gates.
+This checklist is release artifact QA. Obsidian content certification remains a separate fail-closed authority. Production/GA requires passed native import, rendering, mobile, interactive accessibility, listening, and visual media evidence. When those reviewers/devices are unavailable, an `automation-reviewed-preview` may ship only as a conspicuously labeled GitHub prerelease under accepted `PROD-REL-001`; it must record exactly what was not performed and must never translate automated checks into human evidence. If any automated or available review exposes a content defect, stop the release, fix source/card data, reopen relevant Sapphire, Platinum, and Obsidian evidence, and rerun the gates.
 
 ## Build verification
 
@@ -22,8 +22,9 @@ This checklist is release artifact QA. For an Obsidian-certified scope, the nati
 - `npm run product:artifacts:kanji:n3:preflight` when N3 kanji ships
 - `npm run product:artifacts:kanji:n3` when N3 kanji ships
 - `npm run product:artifacts:kanji:all` before cross-level kanji release claims
-- `npm run product:artifacts:kanji:release-qa` before any kanji release-ready claim
+- `npm run product:artifacts:kanji:release-qa` before a production/GA kanji claim; its manual-QA failure is expected and preserved for an automation-reviewed preview
 - `npm run product:release-qa:evidence` after the release-specific evidence packet is complete
+- `npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>` against the exact APKG assets
 - `npm run product:readiness:n5` when N5 ships
 - `npm run nlp:governance-gate` when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed
 - `npm run ci:smoke`
@@ -37,15 +38,18 @@ This checklist is release artifact QA. For an Obsidian-certified scope, the nati
 
 Copy [../templates/release_qa_evidence_packet.template.json](../templates/release_qa_evidence_packet.template.json) to `out/release-qa/release-qa-evidence.json` for the release candidate being reviewed.
 
-Build every shipped deck kind from the same clean commit with the same `--run-id=<release-candidate-id>`, but pass the exact `--levels=<levels>` shipped by that deck kind. Record that full 40-character lowercase Git commit in `scope.repositoryCommit`. For each shipped deck kind, record exactly one entry in `scope.artifacts` with its own canonical descending `levels` list, repository-relative APKG path under the matching `out/run-outputs/<release-candidate-id>/<deck-kind>-n*/` scope, positive byte size, and lowercase SHA-256. A mixed release may therefore bind, for example, kanji N5/N4/N3/N2 and word N5/N4 without inventing word N3/N2 scope. Run the validator from that same commit checkout; it resolves Git HEAD, streams each APKG, and rejects commit drift, missing or duplicate deck bindings, invalid or noncanonical per-artifact levels, deck/level path-scope mismatches, path escapes, symbolic links, byte-size drift, and checksum drift.
+Build every shipped deck kind from the same clean commit with the same `--run-id=<release-candidate-id>`, but pass the exact `--levels=<levels>` shipped by that deck kind. Packet version 3 records the semantic release version, matching `v*` tag, release class, full lowercase Git commit, exact deck kinds, and one APKG per deck kind. Every artifact records its canonical descending levels, isolated repository-relative path, unique portable release asset basename, exact note/card/media counts, positive byte size, and lowercase SHA-256. The validator rejects package-version/tag/commit drift, missing or duplicate bindings, invalid scope, path escapes, symbolic links, asset-directory extras, byte drift, and checksum drift.
 
 Replace every `pending` entry with release-specific evidence, then run:
 
 ```bash
 npm run product:release-qa:evidence
+npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>
 ```
 
-Packet version 2 must name the release candidate, exact repository commit, deck kinds, each artifact's own JLPT levels, exact APKG artifact bindings, automated release commands, APKG import result, managed-media provenance, manual Anki import result, mobile QA, screen-reader or no-color/zoom accessibility findings, listening QA, source-governance commands, accepted source-governance risk posture when applicable, and known blockers. The manual QA fields are artifact evidence, not a replacement for Obsidian native/fluent-quality content certification. `knownBlockers` must be an explicit empty array before release-ready claims. Source-access-gap and manual-citation-only lanes must remain non-voting unless exact permitted assignment/source evidence exists. While source evidence depth remains incomplete, the packet must record `sourceEvidenceDepthComplete: false`, `freePublicSourceExpansionPaused: true`, `acceptedRiskRecord: GOV-SRC-001`, `npm run data:audit:jlpt:source-access`, and `npm run data:audit:jlpt:sources -- --governance-strict --limit=25`.
+Every passed automated or artifact-QA entry and passed source-governance record must carry `repositoryCommit` equal to `scope.repositoryCommit`. Production packets allow only `passed` artifact QA. Preview packets may use `accepted-risk` only with reviewer/owner, date, evidence, the exact limitation allowed for that evidence ID, and `acceptedRiskRecord: PROD-REL-001`; the release policy must repeat the complete limitation set and exact preview label. `knownBlockers` must still be an explicit empty array: an accepted, disclosed limitation is not a hidden blocker, while any engineering regression, missing automated gate, ambiguous scope, or unexplained nonzero result remains a blocker. Source-access-gap and manual-citation-only lanes stay non-voting. While source depth is incomplete, keep `GOV-SRC-001` and both source-governance commands exact.
+
+For hosted verification, download the draft inputs into an empty directory and add `--artifact-dir=<download-directory> --expected-tag=<tag>` to the evidence command. The directory must contain exactly the packet and declared APKGs. The independent APKG inspector then validates ZIP traversal/duplication/encryption/CRC, exact media map and archive membership, SQLite `quick_check` and required tables, collection version, deck names, note/card/media counts, model field cardinality, GUID uniqueness, card references, and field media references.
 
 ## Product readiness checks
 
@@ -75,15 +79,15 @@ Packet version 2 must name the release candidate, exact repository commit, deck 
 - Run `npm run deck:platinum:governance-gate` in a local-data workspace before release claims that depend on current real generated N5/N4 rows. In clean CI without ignored `data/*` inputs, use its absence as a scope limitation rather than as proof that level platinum was validated.
 - Run `npm run product:artifacts:n5` for an N5 word release. It proves the N5 word TSV can be regenerated from tracked templates only, but it does not validate kanji TSVs, `.apkg` files, or media packages.
 - Run the level-specific tracked-source kanji preflight for each shipped kanji level: `npm run product:artifacts:kanji:n5:preflight` for N5, `npm run product:artifacts:kanji:n4:preflight` for N4, and `npm run product:artifacts:kanji:n3:preflight` for N3. These commands report whether tracked source contracts are sufficient without ignored local `data/` inputs. Component/radical source data is tracked in `templates/kanji_component_contract.json`, on/kun reading reference data is tracked in `templates/kanji_reading_reference_contract.json`, N5 card-field source provenance is tracked in `templates/kanji_card_field_source_contract.json`, and N4/N3 card-field source provenance is tracked in `templates/kanji_card_field_source_contracts/`.
-- Run the matching level-specific tracked-source kanji TSV gate for each shipped kanji level: `npm run product:artifacts:kanji:n5` for N5, `npm run product:artifacts:kanji:n4` for N4, and `npm run product:artifacts:kanji:n3` for N3. These gates build fresh source-derived TSVs from tracked contracts only and validate schema, row count, source-derived required fields, primary-reading reference membership, and deterministic repeated output. They still do not package `.apkg`, review media/listening quality, or replace manual QA.
+- Run the matching level-specific tracked-source kanji TSV gate for each shipped kanji level: `npm run product:artifacts:kanji:n5` for N5, `npm run product:artifacts:kanji:n4` for N4, and `npm run product:artifacts:kanji:n3` for N3. These gates build fresh source-derived TSVs from tracked contracts only and validate schema, row count, source-derived required fields, primary-reading reference membership, and deterministic repeated output. They still do not package `.apkg`, prove perceptual quality, or replace release-class evidence.
 - Run `npm run product:artifacts:kanji:all` before any cross-level kanji claim. Current expected posture is N5/N4/N3 passing and N2/N1 blocked on missing governed card-field source contracts, not silently skipped.
-- Run `npm run product:artifacts:kanji:release-qa` before any kanji release-ready claim. It must stay blocked until APKG approval, managed stroke-order/audio QA, manual Anki import review, mobile QA, screen-reader QA, and listening QA are recorded.
-- Run `npm run product:readiness:n5` for an N5 release. It combines the current automated N5 audits, tracked-source N5 word and kanji TSV gates, and Gold regression checks, but it does not replace the all-level kanji gate, APKG approval, or manual QA.
+- Run `npm run product:artifacts:kanji:release-qa` before production/GA. It must stay strict and blocked until manual APKG, mobile, screen-reader, listening, and visual media QA are actually recorded; an automation-reviewed preview documents that expected failure under `PROD-REL-001` instead of weakening the gate.
+- Run `npm run product:readiness:n5` for an N5 release. It combines current automated N5 audits, tracked-source N5 word and kanji TSV gates, and Gold regression checks, but it does not replace APKG inspection, packet validation, explicit preview limitations, or hosted release verification.
 - Run the deck readiness command for each shipped kanji or word surface.
 - Run `npm run deck:closeout -- --levels=<levels>` after count-moving deck work and before handoff; update every release-facing count line it exposes as stale before claiming the bucket is closed.
 - Confirm tracked-source coverage, provenance, and known limitations match the intended release.
 
-## Kanji deck manual spot review
+## Production/future kanji manual spot review
 
 - Import each kanji level being shipped into Anki. Current ready local kanji levels are N5, N4, N3, N2, and N1. Non-human governed native/fluent-quality Obsidian content certification is complete for N5/N4/N3/N2, with lower-lane prerequisites complete; N1 is only partially trusted at `328/1230` Sapphire and `328/1230` Platinum, with `902` rows still requiring fresh actual card-data review before any version-1 structural or proof lock. N1 deck readiness is mechanical/media readiness only until Sapphire, Platinum, and proof gates catch up.
 - Import additional unverified kanji decks separately from core decks only when `deck:kanji:additional:ready` reports selected physical additional cards. The current governed build selects `0` additional cards; in that state, confirm the empty generated surface and suppression report instead of looking for learner cards to review.
@@ -102,7 +106,7 @@ Packet version 2 must name the release candidate, exact repository commit, deck 
 - Review cards with stroke-order media. Automated gates audit approved source provenance, but stroke-sequence correctness requires human visual review.
 - Confirm there are no weak fronts, clipped fields, or broken media.
 
-## Word deck manual spot review
+## Production/future word manual spot review
 
 - Import each word level being shipped into Anki only after the fail-closed Obsidian certification gate and its lower-lane prerequisite gates pass. N5 word is current word Obsidian v2.5-certified at `588/588`; N4 word is current word Obsidian v2.5-certified at `0/1034`; the 1034 current N5/N4 word rows without current v2.5 proof (0 N5, 1034 N4) are not release-certifiable until lower lanes and Obsidian v2.5 proof catch up. N5/N4 still require release artifact QA, accessibility, and listening checks before release-ready product claims.
 - For Obsidian-certified word scopes, sample packaged cards for import, render, layout, media, and accessibility anomalies. Do not treat this pass as a replacement for the Obsidian native/fluent-quality content gate; any real content issue reopens Sapphire, Platinum, and Obsidian before release.
@@ -114,25 +118,26 @@ Packet version 2 must name the release candidate, exact repository commit, deck 
 - Confirm constituent badges are visible and understandable without repeating same-level kanji in kanji decks.
 - Confirm example sentences, notes, and breakdown panels remain readable.
 
-## Accessibility pass
+## Production/future interactive accessibility pass
 
 - Check zoomed text / resized text behavior.
 - Check keyboard-only usage in Anki where possible.
 - Check that meaning, reading, and example text are still understandable without relying on color.
 - Check that audio is a reinforcement channel, not the only teaching channel.
 
-## Platform sanity checks
+## Production/future platform sanity checks
 
 - Windows Anki desktop import.
 - macOS Anki desktop import when available.
 - One mobile sanity check on AnkiDroid or AnkiMobile when the release changes card layout or media behavior.
 
-## Audio release checks
+## Automated audio checks and future listening review
 
 - Run the relevant audio review command.
-- Listen to a representative sample.
-- Confirm no wrong readings, clipping, or unusable generated audio.
+- For every release class, verify managed audio identity, source, expected text/reading, file presence, checksums, and APKG references.
+- For production/GA, listen to a representative sample and confirm no wrong readings, clipping, unnatural delivery, or unusable audio.
+- For an automation-reviewed preview without a listener, record `listening-naturalness-not-performed` under `PROD-REL-001`; do not call integrity/identity checks listening QA.
 
 ## Exit rule
 
-Do not ship on automation alone. A release is ready only when automated gates pass, Obsidian-certified scopes have their fail-closed content gate evidence, and release artifact QA has no unresolved blocker.
+Production/GA is ready only when automated gates, Obsidian scope gates, and every human/device artifact-QA item pass. An automation-reviewed preview is publishable only when all available automated gates pass, the exact APKGs pass independent inspection, the version-3 packet has no hidden blockers, all unavailable checks are explicitly accepted under `PROD-REL-001`, and the hosted workflow publishes it with the required preview label, checksums, SBOM, provenance, and verified attestations.

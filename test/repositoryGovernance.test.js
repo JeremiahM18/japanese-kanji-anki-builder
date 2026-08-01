@@ -270,7 +270,7 @@ test("root AGENTS guidance preserves durable authority, safety, and verification
     assert.match(agents, /Platinum is current\s+card-surface inspection/);
     assert.match(agents, /Obsidian is\s+explicit non-mechanical/);
     assert.match(agents, /N5-only, N4-inclusive, and all-level scopes are not equivalent/);
-    assert.match(agents, /Do not tag while required pre-release gates or manual QA are unresolved/);
+    assert.match(agents, /Do not tag while required automated pre-release gates, packet evidence, or/);
     assert.doesNotMatch(agents, /\b\d+\/\d+\b/u, "AGENTS.md must not embed drift-prone live coverage counts.");
     assert.match(contributing, /\[AGENTS\.md\]\(AGENTS\.md\)/);
 

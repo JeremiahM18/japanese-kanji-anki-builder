@@ -163,7 +163,7 @@ Remaining limitation: visibility metrics expose current SDLC health and review c
 
 ### P2: Add Release QA Evidence Packet
 
-Release QA now has a versioned tracked template and fail-closed validator so automation success cannot be mistaken for APKG import, mobile, accessibility, listening, media, or source-governance evidence. Packet version 2 binds the candidate to current Git HEAD and binds exactly one APKG per shipped deck kind to that artifact's own canonical level list, matching isolated run-output path, byte size, and SHA-256.
+Release QA has a versioned tracked template and fail-closed validator so automation success cannot be mistaken for human/device QA. Packet version 3 binds package version, tag, current Git HEAD, release class, candidate run, and exactly one APKG per shipped deck kind to canonical levels, isolated path, release asset name, note/card/media counts, byte size, and SHA-256. All evidence is commit-bound. Production requires passed artifact QA; a semantic automation-reviewed prerelease may carry only explicit `PROD-REL-001` accepted-risk limitations and the exact warning label.
 
 Current artifacts:
 
@@ -171,9 +171,9 @@ Current artifacts:
 - [../scripts/validateReleaseQaEvidence.js](../scripts/validateReleaseQaEvidence.js)
 - [../src/services/releaseQaEvidenceService.js](../src/services/releaseQaEvidenceService.js)
 
-Current command: `npm run product:release-qa:evidence`.
+Current commands: `npm run product:release-qa:evidence` and `npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir>`.
 
-Remaining limitation: this command verifies the candidate commit and APKG file integrity and validates that release-specific evidence was recorded in the packet. It does not perform the APKG import, mobile review, screen-reader review, listening review, or source-access work by itself.
+Remaining limitation: the evidence validator proves metadata/file/evidence-policy binding, and the APKG inspector proves ZIP/media/SQLite/deck/note/card/field/reference structure. Neither performs native Anki rendering, mobile review, interactive screen-reader review, listening/naturalness review, stroke-sequence visual review, or source-access work. Those checks are either passed for production or explicitly disclosed as accepted preview limitations.
 
 ### P3: Add License Compliance Automation
 

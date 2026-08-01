@@ -172,7 +172,7 @@ Update this standard when README requirements, documentation authority boundarie
 
 ## No-Go Rules
 
-- Do not make release-ready claims without release gates and manual QA evidence.
+- Do not make production/GA release-ready claims without release gates and passed human/device QA evidence. An automation-reviewed prerelease may be described as publishable only when the live release contract permits it, every unavailable check is explicit accepted risk, and the required warning label accompanies the claim.
 - Do not collapse kanji and word status.
 - Do not collapse Sapphire, Platinum, and Obsidian status.
 - Do not use NLP as certification.

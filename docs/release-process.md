@@ -1,6 +1,6 @@
 # Release Process
 
-This document defines tagged release procedure.
+This document defines the tagged release procedure. A release claim is valid only for one exact version, tag, commit, release class, candidate run, deck-kind/level scope, and set of checksummed artifacts.
 
 ## Versioning rules
 
@@ -8,58 +8,95 @@ This document defines tagged release procedure.
 - Add a dated section to [CHANGELOG.md](../CHANGELOG.md) for every released version.
 - Keep `## [Unreleased]` at the top of the changelog while work is in flight.
 - Keep `## [Unreleased]` release-facing and concise. Detailed per-card and per-batch review history belongs in git commit messages, tracked review manifests, and gate output, not in the tagged release bundle.
-- Create Git tags as `v<package.json version>`, for example `v0.1.0`.
+- Create Git tags as `v<package.json version>`, for example `v0.3.0-beta.1`.
+- Never move or reuse a failed release tag. Correct through protected `main` and issue a new semantic prerelease version.
 
-## Release checklist
+## Release classes
 
-1. Confirm `npm test`, `npm run lint`, `npm run typecheck`, `npm run supply-chain:audit`, `npm run security:advisories`, `npm run security:branch-protection`, owner-authenticated `npm run security:github-settings:auth`, `npm run security:licenses`, `npm run security:requirements`, `npm run security:release-trust`, `npm run security:sdlc-metrics`, `npm run security:secrets`, `npm run security:sbom`, `npm run ci:smoke`, `npm run deck:kanji:review-status`, `npm run product:artifacts:n5` when N5 word ships, the matching `npm run product:artifacts:kanji:n<level>:preflight` and `npm run product:artifacts:kanji:n<level>` commands for every shipped N5/N4/N3 kanji level, `npm run product:artifacts:kanji:all` before cross-level kanji claims, `npm run product:artifacts:kanji:release-qa` before kanji release-ready claims, `npm run product:release-qa:evidence` after the release-specific QA evidence packet is complete, `npm run product:readiness:n5` when N5 ships, `npm run nlp:governance-gate` when assistive NLP manifests, runtimes, artifact contracts, or governance docs changed, and `npm run release:gate` are green on the release commit. If additional unverified kanji decks ship, also run `npm run deck:kanji:additional:ready`, all applicable `npm run deck:kanji:additional:review:n*` commands, and any applicable `npm run deck:kanji:additional:platinum:n*` commands. `supply-chain:audit` checks lockfile registry/integrity, reviewed install-script packages, pinned GitHub Actions, workflow permissions, and release-artifact boundaries. `security:advisories` checks live npm advisory data at the release moment. `security:branch-protection` checks the tracked main-branch protection policy, docs, and CI required-check names. `security:github-settings:auth` checks live hosted branch protection, GitHub security settings, open hosted alerts, and release attestation verification using `GH_TOKEN`, `GITHUB_TOKEN`, or authenticated GitHub CLI without printing the token; it fails until attestation verification is both configured in hosted workflow content and proven by a successful hosted release workflow run. `security:licenses` validates dependency license expressions against the tracked allowlist and current reviewed exceptions; tagged release bundles write and checksum `out/security/dependency-licenses.json`. `security:requirements` validates the tracked security requirements traceability matrix; it reports release blockers and external blockers but does not certify they are remediated. `security:release-trust` fails closed on any unresolved high/critical release-blocker risk or unimplemented release-blocker requirement. `security:release-trust:pre` is only for the tagged workflow before attestations exist; it defers the documented post-release attestation proof records and still fails on every other release blocker. `security:sdlc-metrics` validates the tracked SDLC metrics contract, reviewer training checklist coverage, current risk review posture, and security-requirements backlog visibility; it does not prove private training completion or manual QA. `security:secrets` scans tracked files for high-confidence token and private-key patterns. `security:sbom` validates deterministic CycloneDX SBOM generation from the lockfile; tagged release bundles write and checksum `out/security/sbom.cdx.json`. Protected-branch CodeQL checks must be green for JavaScript/TypeScript and GitHub Actions workflow scanning before tagging. `product:artifacts:n5` is currently scoped to tracked-source N5 word TSV generation. `product:artifacts:kanji:n5`, `product:artifacts:kanji:n4`, and `product:artifacts:kanji:n3` build source-derived kanji TSVs from tracked contracts only; `product:artifacts:kanji:all` fails closed for any selected level without a governed card-field source contract. `product:artifacts:kanji:release-qa` is intentionally blocked until APKG, managed-media, and human QA evidence is present. `product:release-qa:evidence` validates the completed release-specific evidence packet and fails while manual QA, accepted source-governance posture for incomplete source depth, or known blockers are incomplete. `product:readiness:n5` is an automated N5 checkpoint, not a manual QA substitute. `release:gate` validates smoke-fixture artifacts and packaging contracts; it does not certify public product deck readiness.
-2. Run the [release QA checklist](release-qa-checklist.md). Build each shipped deck kind from the release commit under the same isolated `--run-id` and that deck kind's exact shipped level scope, run accessibility review against each exact scope, and complete packet version 2 with the current full Git commit plus one verified APKG binding per deck kind that records its own canonical levels, path, byte size, and SHA-256. Mixed releases must not apply kanji-only levels to the word artifact or word-only levels to the kanji artifact. For certified deck releases, first confirm the fail-closed Obsidian native/fluent-quality content-certification gate and its lower-lane prerequisite gates; then complete APKG import, render, managed-media, accessibility, listening, and Anki spot-review artifact QA. Release QA does not replace Obsidian proof. Future human/native review is human-reviewed provenance for the same Obsidian standard, not a different content standard.
-3. Confirm the intended release still matches the [compatibility matrix](compatibility-matrix.md).
-4. Confirm [CHANGELOG.md](../CHANGELOG.md) includes the exact released version and date.
-5. Confirm [NOTICE.md](../NOTICE.md) reflects required shipped attribution.
-6. Push the release commit to `main` through the protected pull-request flow.
-7. Create and push the matching `v*` tag.
-8. Let [.github/workflows/release.yml](../.github/workflows/release.yml) produce the tagged release artifacts, CycloneDX SBOM, dependency-license summary, checksum manifest, provenance attestation, SBOM attestation, and workflow attestation verification.
-9. Verify downloaded release artifacts against `release-artifacts.sha256` and the GitHub artifact attestations before distributing release claims outside the repository.
+### Production
+
+A `production` packet requires every artifact QA entry to be `passed`, `releasePolicy.distribution: github-release`, and `releasePolicy.humanQa.status: passed`. Accepted-risk evidence is forbidden. The strict `npm run product:artifacts:kanji:release-qa` gate remains the product/GA boundary when kanji ships.
+
+### Automation-reviewed preview
+
+An `automation-reviewed-preview` packet must use a semantic prerelease version, `github-prerelease` distribution, the exact label `AUTOMATION-REVIEWED PREVIEW - HUMAN DEVICE QA NOT PERFORMED`, and owner-accepted `PROD-REL-001` evidence. It may defer only these named limitations:
+
+- desktop-anki-import-not-performed
+- mobile-qa-not-performed
+- screen-reader-interaction-not-performed
+- listening-naturalness-not-performed
+- stroke-sequence-visual-review-not-performed
+
+Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.1 N5 automation-reviewed preview](releases/v0.3.0-beta.1-n5-automation-preview.md).
+
+## Pre-merge release-process change
+
+1. Define exact inclusions and exclusions before building. N5-only, N4-inclusive, and all-level releases are different products and must not share readiness claims.
+2. Update code, tests, workflow, version, changelog, evidence template, risk decision, and release docs on a focused branch.
+3. Run the smallest complete affected tests, then the repository merge gates: `npm run lint`, `npm run typecheck`, `npm test`, `npm run docs:status-audit`, `npm run lane:authority:audit`, `npm run supply-chain:audit`, `npm run security:advisories`, `npm run security:branch-protection`, `npm run security:licenses`, `npm run security:requirements`, `npm run security:sdlc-metrics`, `npm run security:secrets`, `npm run security:sbom`, `npm run ci:smoke`, `npm run release:gate`, and `git diff --check`.
+4. For certified scopes, first confirm the fail-closed Obsidian native/fluent-quality content-certification gate and its lower-lane prerequisite gates. Then run every owning content/source/media command required by the exact scope. For N5 core kanji plus N5 core words, this includes `npm run product:readiness:n5`, N5 kanji/word Silver through Obsidian status/gates, source-access and strict source-governance audits, N5 tracked-source kanji preflight/artifact validation, and managed-media checks. `product:readiness:n5` is a coordinator, not a substitute for release artifact evidence.
+5. Rerun owner-authenticated `npm run security:github-settings:auth`. Before the first successful tag, `artifact_attestation_verification_unproven` remains the expected external blocker.
+6. Merge only through protected `main`; require hosted CI, CodeQL, required review, and resolved threads.
+
+## Final candidate and draft prerelease
+
+1. Refresh local `main` to the verified merge commit. Build every shipped deck kind from that exact commit under the same isolated `--run-id`, with each deck kind receiving only its exact shipped `--levels`.
+2. Run `npm run deck:review:accessibility` against the exact run ID and per-deck level scope.
+3. Complete packet version 3 at `out/release-qa/release-qa-evidence.json`. It must bind:
+   - `scope.releaseVersion`, `scope.releaseTag`, and `scope.releaseClass`
+   - the full lowercase `scope.repositoryCommit`, equal to Git HEAD
+   - one candidate run ID and unique canonical deck kinds
+   - exactly one APKG per shipped deck kind, with canonical levels, isolated local path, portable release asset name, note/card/media counts, positive byte size, and lowercase SHA-256
+   - automated, artifact-QA, and source-governance evidence bound to the same commit
+   - passed or class-permitted accepted-risk artifact QA evidence
+   - exact source-governance posture and an explicit empty `knownBlockers`
+4. Run `npm run product:release-qa:evidence` and `npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>`. The inspector independently validates ZIP safety/integrity, exact media membership, SQLite integrity/schema, Anki collection version, deck names, note/card/media counts, field cardinality, GUID/card references, and packaged media references.
+5. Confirm [compatibility-matrix.md](compatibility-matrix.md), [release-qa-checklist.md](release-qa-checklist.md), [CHANGELOG.md](../CHANGELOG.md), and [NOTICE.md](../NOTICE.md) match the exact release.
+6. Create a **draft** GitHub prerelease for the intended tag, targeting the exact protected-main commit. Upload only `release-qa-evidence.json` and the APKGs named by the packet. Do not publish it and do not add undeclared assets.
+7. Create the local tag at the same commit, then create the draft prerelease with `--target=<full-commit>`. GitHub CLI documents that a release whose tag does not exist may create the remote tag automatically. Resolve the actual remote state with `git ls-remote --tags origin refs/tags/<tag>`: if absent, push the local tag and let the tag-push event start [.github/workflows/release.yml](../.github/workflows/release.yml); if already present at the exact commit, run `gh workflow run release.yml --ref <tag>`. Never dispatch against a branch, and fail if the remote tag resolves to another commit.
+
+## Hosted tagged workflow
+
+Whether started by tag push or manual dispatch at the existing tag, the workflow must fail closed unless `GITHUB_REF_TYPE` is `tag`, the ref equals `v<package.json version>`, tag SHA equals checkout SHA, the draft exists as a prerelease, and the downloaded draft directory contains exactly the packet plus its declared APKG assets.
+
+Both jobs revalidate packet/asset bindings and APKG structures. The verification job runs the test, security, N5 readiness, and release gates. The bundle job stages only:
+
+- both exact N5 APKGs declared by the packet
+- `release-qa-evidence.json`
+- `.release-bundle/sbom.cdx.json`
+- `.release-bundle/dependency-licenses.json`
+- `.release-bundle/release-verification-materials.tar.gz`
+- `.release-bundle/release-artifacts.sha256`
+
+The bundle job checksums all staged files, verifies the checksum manifest, creates provenance and SBOM attestations for every staged asset, runs constrained `gh attestation verify` for every asset, uploads the immutable Actions artifact, uploads/clobbers those exact GitHub release assets, and only then publishes the draft as a prerelease. Top-level workflow permissions remain read-only; `contents: write`, OIDC, and attestation writes are scoped to this publishing job.
+
+The deterministic verification-material archive contains smoke/release-gate outputs and the tracked release documentation. Ignored local inputs such as `data/`, `downloads/`, `.env`, caches, and `node_modules` must never enter the release bundle.
+
+## Post-release verification and closure
+
+1. Download every published asset into an empty directory.
+2. Run `sha256sum -c .release-bundle/release-artifacts.sha256` from the directory layout recorded by the manifest, or the equivalent trusted checksum verifier.
+3. Verify GitHub attestations for every downloaded asset with repository, signer-workflow, source-ref, and source-digest constraints.
+4. Rerun:
+
+```bash
+npm run security:advisories
+npm run security:github-settings:auth
+npm run security:release-trust
+```
+
+5. Close `SEC-P0-004` and implement `SEC-REQ-007` only through a protected-main follow-up change that records the successful workflow URL, tag, commit, downloaded checksum result, SBOM, provenance, and attestation verification evidence.
 
 ## Gate boundaries
 
 | Gate | Proves | Does not prove |
 | --- | --- | --- |
-| `release:gate` | Smoke-fixture TSV headers, package directories, packaged media presence, governed audio policy, and optional smoke-fixture `.apkg` creation when packaging tools are required. | Public product readiness, level-specific Gold/Sapphire/Platinum completion, manual Anki import QA, learner UX, accessibility, or listening QA. |
-| `security:release-trust:pre` | Pre-release fail-closed posture for the tagged workflow before hosted attestations exist, deferring only configured post-release attestation-proof records. | Final release trust, hosted CodeQL closure, source-governance acceptance, manual QA, or post-release attestation proof. |
-| `security:release-trust` | Full fail-closed release-trust posture after all hosted, source-governance, product QA, and attestation-proof blockers are closed or formally accepted. | Private training completion, the human review judgment itself, or product deck readiness beyond the recorded gates. |
-| `product:readiness:n5` | The current automated N5 checkpoint: JLPT audits, audio policy, tracked-source N5 word artifact, tracked-source N5 kanji TSV artifact, word placement audit, and N5 Gold regression checks. | Platinum completion, all-level tracked-source kanji certification, fresh product `.apkg` approval, manual import QA, mobile QA, screen-reader QA, or listening QA. |
-| `product:artifacts:n5` | Fresh tracked-source N5 word TSV generation from tracked templates only, with deterministic output and canonical-row checks. | Kanji TSV certification, managed-media packaging, `.apkg` release approval, or manual card QA. |
-| `product:artifacts:kanji:n5:preflight` | Whether tracked templates are sufficient for N5 kanji TSV source availability without ignored local `data/` inputs, including level, starter meaning, component, reading-reference, and card-field source-provenance contracts. | Fresh kanji TSV generation, `.apkg` packaging, managed-media QA, manual import review, Obsidian certification, or deck readiness by itself. |
-| `product:artifacts:kanji:n5` | Fresh source-derived N5 kanji TSV generation from tracked contracts only, with schema, row count, required field, primary-reading reference, and deterministic-output checks. | `.apkg` packaging, managed media/listening QA, manual Anki import review, Obsidian certification, or release readiness by itself. |
-| `product:artifacts:kanji:n4:preflight` / `product:artifacts:kanji:n3:preflight` | Whether tracked templates are sufficient for N4 or N3 kanji TSV source availability without ignored local `data/` inputs, including level, starter meaning, component, reading-reference, and level-specific card-field source-provenance contracts. | Fresh kanji TSV generation, `.apkg` packaging, managed-media QA, manual import review, Obsidian certification, or deck readiness by itself. |
-| `product:artifacts:kanji:n4` / `product:artifacts:kanji:n3` | Fresh source-derived N4 or N3 kanji TSV generation from tracked contracts only, with schema, row count, required field, primary-reading reference, and deterministic-output checks. | `.apkg` packaging, managed media/listening QA, manual Anki import review, Obsidian certification, or release readiness by itself. |
-| `product:artifacts:kanji:all` | Runs the tracked-source kanji TSV artifact gate across N5 through N1 and fails closed where source contracts are incomplete. | Permission to skip blocked levels, bulk-copy restricted sources, or call unbuilt levels release-ready. |
-| `product:artifacts:kanji:release-qa` | Confirms tracked-source TSV prerequisite status and keeps APKG, managed-media, manual import, mobile, screen-reader, and listening QA blocked until evidence exists. | Automatic APKG import success, human review, accessibility approval, or listening approval. |
-| `product:release-qa:evidence` | Validates packet version 2, including current-HEAD candidate commit binding; one exact isolated-run APKG per scoped deck kind with its own canonical level list, path, byte size, and SHA-256; APKG import; managed-media provenance; manual Anki import; mobile QA; screen-reader/accessibility; listening QA; accepted source-governance posture for incomplete source depth; and empty known blockers. | Performing the human reviews, Obsidian native/fluent-quality content certification, hosted attestation proof, Platinum proof, source-taxonomy confidence, or human-reviewed provenance. |
-| `deck:kanji:review-status` | Generated, Gold, native Sapphire structural coverage, Platinum coverage, revalidation backlog, and duplicate-claim status for core and additional kanji decks. | Source-evidence confidence, Obsidian completion for missing rows, or manual Anki QA. |
-| `deck:kanji:additional:ready` | Additional-kanji source-claim diagnostic plus optional additional-unverified TSV/APKG generation. The current governed build selects `0` physical cards and reports duplicate-claim and already-core source-claim suppression. | Core contract movement, source-evidence proof, Platinum release quality, source-governance storage, or public product readiness. |
-| `deck:kanji:additional:platinum:n*` | Field-bound compatibility structural gate for generated additional-unverified kanji cards, or an empty-surface pass when `deck:kanji:additional:ready` proves the generated additional deck is empty by governed suppression. | Core contract movement, source-evidence confidence, source-governance storage, core kanji Sapphire coverage, core Platinum coverage, or manual Anki QA. |
+| `release:gate` | Smoke-fixture TSV/package/media contracts and optional smoke APKG creation. | Product APKG readiness, content-lane completion, human/device QA, or public release trust. |
+| `product:readiness:n5` | Current automated N5 source/artifact, placement, audio-policy, and Gold coordinator checks. | Exact APKG bytes, Platinum/Obsidian by itself, release assets, human/device QA, or hosted provenance. |
+| `product:artifacts:kanji:release-qa` | Strict production/GA manual product-QA boundary. | Permission to relabel missing human QA as passed. Its expected failure does not block a correctly governed automation-reviewed prerelease. |
+| `product:release-qa:evidence` | Packet-v3 version/tag/commit/class, exact APKG metadata and hashes, commit-bound automated/artifact evidence, source posture, preview-risk policy, and no hidden blockers. With `--artifact-dir` it also requires exact downloaded asset membership. | APKG internals, execution of named commands, human perception, device behavior, or hosted attestations. |
+| `product:release-qa:apkg-inspect` | APKG ZIP/media/SQLite/deck/note/card/field/reference structural integrity against packet counts. | Native Anki rendering, mobile behavior, screen-reader interaction, listening naturalness, or stroke-sequence visual correctness. |
+| `security:release-trust:pre` | All pre-tag release blockers except the explicitly deferred post-tag attestation records. | Successful hosted tag execution or final release trust. |
+| `security:release-trust` | No unresolved high/critical release-blocker risk and no unimplemented release-blocker requirement. | Product quality outside recorded evidence or private human-review activity. |
 
-## Release workflow outputs
-
-The tagged release workflow publishes these build outputs as GitHub Actions artifacts:
-
-- deterministic smoke artifacts from `.release-smoke/out`
-- release-gate verification artifacts from `.release-gate/out`
-- `out/security/sbom.cdx.json`
-- `out/security/dependency-licenses.json`
-- `CHANGELOG.md`
-- `NOTICE.md`
-- `docs/compatibility-matrix.md`
-- `docs/branch-protection.md`
-- `docs/release-process.md`
-- `docs/release-qa-checklist.md`
-- `release-artifacts.sha256`
-
-The dependency, workflow, script, and release-artifact trust boundaries are defined in [supply-chain-security.md](supply-chain-security.md). The tagged release bundle must not include ignored local inputs such as `data/`, `downloads/`, `.env`, or `node_modules`.
-
-## Operational expectation
-
-Do not create or move release tags around failed verification. If the tagged workflow fails, fix the branch through a pull request and cut a new tag from the corrected commit.
+The dependency, workflow, script, and artifact boundaries are defined in [supply-chain-security.md](supply-chain-security.md). If any final verification fails, keep or return the release to draft when possible, preserve evidence, correct through a new protected-main pull request, and cut a new tag; never move the failed tag.

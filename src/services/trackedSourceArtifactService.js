@@ -112,7 +112,7 @@ const TRACKED_SOURCE_KANJI_RELEASE_QA_SCOPE = Object.freeze({
         "VOICEVOX or Docker runtime status",
     ],
     sourceBoundary: "Reads tracked-source kanji artifact summaries and tracked contracts only; ignored local source data and media caches are not release truth.",
-    followUp: "Add governed APKG/media/manual QA evidence before any kanji level can be called release-ready.",
+    followUp: "Add governed APKG/media/human-device QA evidence before any kanji level can be called production-ready. Automation-reviewed prereleases use the separate packet-v3 accepted-risk contract.",
 });
 
 const N5_TRACKED_SOURCE_KANJI_PREFLIGHT_SCOPE = buildTrackedSourceKanjiPreflightScope(5);

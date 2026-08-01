@@ -6,20 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+No unreleased changes. Keep future entries release-facing and concise; detailed work belongs in git commit messages and tracked review manifests.
+
+## [0.3.0-beta.1] - 2026-08-01
+
+`0.3.0-beta.1` is an **automation-reviewed preview** for the N5 core kanji and N5 core word decks only. Human desktop/mobile/screen-reader/listening/stroke-sequence QA was not performed and is explicitly accepted under `PROD-REL-001`; this prerelease must not be represented as production/GA or human-approved.
+
 ### Added
 
+- Added a version-3 release evidence contract that binds the semantic version, tag, full commit, release class, candidate run, per-deck N5 scope, release asset names, APKG byte sizes/SHA-256 values, note/card/media counts, automated evidence, and explicit accepted-risk limitations.
+- Added independent APKG structural inspection for ZIP safety and integrity, media-map/archive membership, SQLite integrity/schema, Anki collection version, exact deck/note/card/media counts, note field cardinality, GUID/card references, and packaged media references.
+- Added durable tagged-release publication for the exact N5 APKGs, release evidence packet, SBOM, dependency-license inventory, checksums, provenance, and attestations.
 - Added `docs:status-audit`, a tracked documentation status guard that compares README, CHANGELOG, CLAUDE, workflow, command-reference, verification, architecture, and overview status language against current review counts, generated denominators, npm command routing, and Silver/Gold/Sapphire/Platinum/Obsidian boundaries.
 - Added `deck:words:coverage-uplift`, a read-only word coverage diagnostic that reports whether harder word decks backfill a selected target level's kanji-reading coverage across any valid same-or-harder N1-N5 range without changing readiness, deferrals, review lanes, data, media, or proof ledgers.
 - Added `deck:words:sapphire:promote`, a fail-closed reviewed-input merger for word Sapphire candidate JSON that validates live generated rows, matching Gold preconditions, and current-standard Sapphire evidence lanes before writing tracked word Sapphire manifests.
 
 ### Changed
 
-- Upgraded the release QA evidence contract to packet version 2: the validator now binds the candidate to current Git HEAD and verifies exactly one APKG per scoped deck kind through a single verified file descriptor against that artifact's own canonical level list, exact isolated output path, byte size, and SHA-256 before release evidence can pass; mixed releases can therefore bind different kanji and word level scopes without overclaiming either artifact.
+- Defined one exact N5-only release candidate and excluded N4/N3/N2/N1 plus additional-unverified kanji from `0.3.0-beta.1`.
+- Preserved the existing human/product QA gate for future production/GA releases while permitting only a conspicuously labeled GitHub prerelease to carry the owner-accepted `PROD-REL-001` limitations.
+- Upgraded the release QA evidence contract to packet version 3: the validator binds package version, tag, current Git HEAD, release class, candidate run, exact per-deck level scope, local path, release asset name, note/card/media counts, byte size, SHA-256, commit-bound evidence, production-versus-preview policy, source posture, and exact downloaded asset membership.
 - Extended `deck:review:accessibility` with fail-closed `--run-id`, `--levels`, and governed `--out-dir-base` selection plus descriptor-verified package-summary reads so release-candidate reviews audit the intended isolated package and reject summary, exports-directory, symbolic-link, or path-swap drift.
 - Advanced the N4 word Silver generated surface through governed common-pool review from `739` to `1001` rows, raising the all-level word denominator from `2525` to `2787` and the current N5/N4 word Obsidian v2.5 denominator from `1327` to `1589`; the new N4 rows remain lower-lane backlog until Gold, Sapphire, Platinum, and Obsidian catch up.
 - Updated word lane status after the full N5 routed move-candidate target-level sweep: active N3 Silver is now `1099/1099` canonical rows, N3 word Gold review from `8/1099` to `1081/1099` is partial, Gold now has `18` generated rows still missing Gold, and current-standard Sapphire remains `1038/1099` with `61` generated rows still missing Sapphire. Platinum remains `8/1099` current-standard with `1091` generated rows still missing Platinum; N2 and N1 Silver card fields are complete at `61/61` and `38/38`; reading readiness remains incomplete for N3/N2/N1; N3 word is not locked/released; and no N3 word Obsidian proof is recorded.
 
-Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. The scoped `0.2.0` lock covers N5/N4 words plus N5/N4/N3/N2 core kanji; N3/N2/N1 word lanes remain active work until separately locked.
+Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. This preview ships only N5 core kanji and N5 core words. The broader scoped `0.2.0` historical lock does not expand the `0.3.0-beta.1` artifact scope; every other level remains excluded.
 
 ## [0.2.0] - 2026-06-10
 
@@ -76,12 +87,12 @@ Release notes are intentionally release-facing. Per-card and per-batch review de
 - Added formal DevSecOps P1 security operations docs: threat model, risk and exception register, incident response runbook, and recovery/rollback runbook.
 - Added a tracked security requirements traceability matrix and `security:requirements` gate wired into CI and tagged release workflows.
 - Added a formal security training checklist plus tracked SDLC security metrics contract and `security:sdlc-metrics` gate wired into CI and tagged release workflows.
-- Added dependency-license compliance automation with `security:licenses`, a tracked dependency license policy, fail-closed reviewed exceptions, CI/release workflow gates, and tagged release dependency-license summaries at `out/security/dependency-licenses.json`.
+- Added dependency-license compliance automation with `security:licenses`, a tracked dependency license policy, fail-closed reviewed exceptions, CI/release workflow gates, and tagged `.release-bundle/dependency-licenses.json` publication.
 - Documented the recurring supply-chain maintenance snapshot for lifecycle-script package review, reviewed license exception cadence, and the current 2026-07-02 sharp/libvips license exception review date.
 - Added explicit hostile-input security regression tests for Anki HTML rendering, word candidate source parsing, managed media paths, generated-output cleanup guards, VOICEVOX Docker helper arguments, and supply-chain mutation abuse.
 - Hardened the governed VOICEVOX Docker helper beyond localhost binding: managed containers now require `no-new-privileges`, `cap-drop ALL` with only `SETUID`/`SETGID` restored for the image entrypoint, `--restart no`, Docker `--init`, and explicit memory, CPU, and process-count limits, with stale containers requiring intentional recreation.
 - Added tagged release artifact attestations: release bundles now generate provenance and SBOM attestations with a job-scoped GitHub OIDC permission exception.
-- Added deterministic CycloneDX SBOM generation from `package-lock.json`; CI validates the SBOM model, and tagged release bundles write, checksum, and upload `out/security/sbom.cdx.json`.
+- Added deterministic CycloneDX SBOM generation from `package-lock.json`; CI validates the SBOM model, and tagged release bundles write, checksum, attest, verify, and upload `.release-bundle/sbom.cdx.json`.
 - Added pinned CodeQL code scanning for JavaScript/TypeScript and GitHub Actions workflow analysis, with exact required branch-protection checks and a scoped `security-events: write` exception for code-scanning uploads.
 - Added `security:secrets`, a tracked-file secret audit for high-confidence token and private-key patterns, and wired it into CI/release before dependency installation.
 - Added tracked branch-protection policy-as-code with `security:branch-protection`, covering required main-branch protections, required CI checks, docs alignment, and release/CI governance.

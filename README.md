@@ -25,7 +25,13 @@ This repository is for controlled output, not casual scrape-and-export deck gene
 
 This README is an orientation and routing document. It does not certify release readiness, hosted GitHub settings, source-evidence completion, APKG import, mobile behavior, accessibility, listening quality, managed-media QA, or ignored local input quality.
 
-Tracked contracts, live commands, generated reports, hosted audits, and manual evidence packets are authoritative. Treat every count and status here as an orientation snapshot; rerun the named commands before merge, release, source-governance, or deck-quality decisions.
+Tracked contracts, live commands, generated reports, hosted audits, and release evidence packets are authoritative. Treat every count and status here as an orientation snapshot; rerun the named commands before merge, release, source-governance, or deck-quality decisions.
+
+## Current Release Target
+
+`v0.3.0-beta.1` is the first intentionally distributable target: an N5-only automation-reviewed preview containing the core N5 kanji and core N5 word APKGs. It excludes every other level and additional-unverified kanji. The required public label is `AUTOMATION-REVIEWED PREVIEW - HUMAN DEVICE QA NOT PERFORMED`.
+
+All available automated content, source, media, APKG-structure, security, checksum, SBOM, provenance, and attestation controls remain mandatory. Desktop/mobile native import, interactive screen-reader, listening/naturalness, and stroke-sequence visual review are not available for this preview and are explicitly accepted—not claimed as passed—under `PROD-REL-001`. See [the exact release scope](docs/releases/v0.3.0-beta.1-n5-automation-preview.md).
 
 ## Quick Start
 
@@ -211,7 +217,7 @@ Clean CI runs `security:licenses`, `security:requirements`, `security:sdlc-metri
 
 Benchmark budget commands are manual/local performance guardrails, not GitHub Actions CI gates. `data:benchmark:jlpt:sources:gate`, `bench:obsidian-proof-etl:gate`, `bench:build:gate`, and `bench:build:cold-apkg:gate` are manual/local performance guardrails. `bench:build:gate` runs a warmup before the measured hot-cache build. Both build gates require a ready local workspace and write benchmark output. Before changing timing budgets or claiming a close run is stable, run the benchmark standalone, append `-- --repeat=3`, and keep the same machine and input boundary. `perf:memory:matrix` is a CI-safe metadata audit, not a timing budget gate; memory thresholds remain trend-only until repeated samples justify a hard limit.
 
-Automated gates do not replace APKG import, mobile, accessibility, listening, visual media, or other manual release QA.
+Automated gates do not become human/device QA. Production/GA remains blocked without that evidence; an automation-reviewed prerelease may ship only with the exact accepted-risk disclosures and warning label defined by the release contract.
 
 ## Assistive NLP Review Engine
 

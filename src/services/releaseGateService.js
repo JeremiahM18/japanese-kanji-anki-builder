@@ -26,7 +26,7 @@ const RELEASE_GATE_SCOPE = Object.freeze({
         "word source-family independence posture",
         "manual Anki import or learner UX review",
     ],
-    followUp: "Run level-specific readiness, golden review, platinum review, rereview provenance, source posture, accessibility, and manual QA checks before public release.",
+    followUp: "Run exact level/lane, source, media, APKG packet/structure, and release-class checks. Production requires human/device QA; a governed automation-reviewed prerelease must disclose accepted limitations.",
 });
 
 function assertPathExists(filePath) {

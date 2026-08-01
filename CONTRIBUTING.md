@@ -12,7 +12,7 @@ It does not prove that a specific pull request is safe, that hosted GitHub setti
 
 ## Authority Boundary
 
-The authoritative signals are the actual diff, the required local commands, hosted CI, protected-branch policy, CODEOWNERS coverage, and the relevant product/security docs. This guide sets the process bar; it does not waive failing gates or replace release, source-governance, Platinum, Obsidian, or manual QA evidence.
+The authoritative signals are the actual diff, required local commands, hosted CI, protected-branch policy, CODEOWNERS coverage, and relevant product/security docs. This guide does not waive failing gates or replace release, source-governance, Platinum, Obsidian, or human/device QA evidence. A governed automation-reviewed prerelease may disclose unavailable human/device checks as accepted risk, but it must never mark them passed or inherit that exception into production/GA.
 
 ## Core Expectations
 

@@ -135,5 +135,6 @@ test("formatProductReadinessReport states scope and exclusions", () => {
     assert.match(text, /\.apkg product artifacts/);
     assert.match(text, /manual Anki import review/);
     assert.match(text, /mobile, screen-reader, or listening QA/);
-    assert.match(text, /Run the all-level tracked-source kanji gate/);
+    assert.match(text, /Keep the candidate explicitly N5-only/);
+    assert.match(text, /PROD-REL-001/);
 });

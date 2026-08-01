@@ -24,19 +24,15 @@ This document defines the supported compatibility surface for shipped deck artif
 
 | Client | Status | Notes |
 | --- | --- | --- |
-| Anki desktop (Windows) | Supported | Primary manual QA target |
-| Anki desktop (macOS) | Supported | Secondary manual QA target |
-| Anki desktop (Linux) | Supported | Artifact-compatible, less frequently spot-reviewed manually |
-| AnkiDroid | Sanity-check target | Needs periodic manual review, not yet a formal gate |
-| AnkiMobile | Sanity-check target | Needs periodic manual review, not yet a formal gate |
+| Anki desktop (Windows) | Intended; unverified for `v0.3.0-beta.1` | Native import/render QA was not performed for the automation-reviewed preview |
+| Anki desktop (macOS) | Intended; unverified for `v0.3.0-beta.1` | Native import/render QA was not performed for the automation-reviewed preview |
+| Anki desktop (Linux) | Intended; unverified for `v0.3.0-beta.1` | APKG structure is inspected, but native client behavior was not exercised |
+| AnkiDroid | Unverified preview target | Mobile QA was not performed |
+| AnkiMobile | Unverified preview target | Mobile QA was not performed |
 
 ## Required release verification
 
-- import succeeds on supported Anki desktop targets
-- card templates render without clipped core content
-- stroke-order media renders correctly
-- governed audio plays correctly where audio is shipped
-- word-card cross-level badges remain visible and understandable
+Production/GA requires native import, rendering, stroke-order, audio, badge, accessibility, and applicable mobile verification. An automation-reviewed preview instead requires exact APKG structural inspection and explicit `PROD-REL-001` disclosure for every interaction/perception check that was not performed.
 
 ## Non-goals
 
@@ -46,4 +42,4 @@ This document defines the supported compatibility surface for shipped deck artif
 
 ## How to use this matrix
 
-Use this matrix for release notes and QA scope. Add a platform here before claiming support for it.
+Use this matrix for release notes and QA scope. Do not turn intended compatibility into a verified-support claim without native client evidence.

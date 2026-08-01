@@ -30,9 +30,9 @@ The automated review currently checks:
 - non-empty alt text on exported image tags
 - contrast ratios for key text classes against the card background
 
-## Manual review
+## Human/device review boundary
 
-Automation is required but incomplete. Review the built decks in Anki and check:
+Automation is required but incomplete. Production/GA requires a reviewer to check the built decks in Anki:
 
 - Keyboard-only navigation works for card reveal, audio replay, and deck browsing.
 - Screen-reader users can understand the card without relying on color or image-only cues.
@@ -42,6 +42,8 @@ Automation is required but incomplete. Review the built decks in Anki and check:
 - Audio is never the only teaching channel for pronunciation.
 - Example sentences remain readable on desktop and mobile Anki clients.
 - Support words remain understandable for the intended learner level.
+
+When no such reviewer or device is available, do not mark this section passed. An automation-reviewed preview may instead record `screen-reader-interaction-not-performed` and `mobile-qa-not-performed` as accepted risk under `PROD-REL-001`, keep the exact public preview label, and cite the automated static accessibility output for what was actually checked. That exception never creates a WCAG, screen-reader, mobile, or production-readiness claim.
 
 ## Red flags
 
@@ -62,4 +64,4 @@ This checklist does not replace:
 - full AnkiDroid / AnkiMobile compatibility testing
 - a formal WCAG conformance review
 
-Add those gates when the release scope requires them.
+Add those gates before a production/GA claim. The `v0.3.0-beta.1` N5 preview explicitly excludes those claims.

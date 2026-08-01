@@ -8,7 +8,7 @@ authority, review-lane integrity, reproducibility, and release evidence.
 
 This file is durable operating guidance. It routes to the canonical contracts;
 it does not replace live schemas, validators, command implementations, tests,
-hosted GitHub evidence, or release-specific manual QA.
+hosted GitHub evidence, or release-specific artifact QA.
 
 ## Required Orientation
 
@@ -39,7 +39,7 @@ rerun the owning command for current evidence.
   proof, or readiness claims between them.
 - Keep Candidate discovery, Silver, Gold, Sapphire, Platinum, Obsidian,
   source governance, NLP support, media, Deck Ready, CI, release trust, and
-  manual release QA as distinct authorities.
+  human/device release QA as distinct authorities.
 - Candidate, source, migration, and triage rows are pre-trust workflow inputs.
   Silver begins only when a learner-facing generated row exists for the scoped
   product. Gold is generated-output regression. Sapphire is structural
@@ -82,8 +82,10 @@ rerun the owning command for current evidence.
   runtime data accidentally.
 - Preserve deterministic ordering, schema validation, source roles, evidence
   lanes, verification limitations, and post-write reconciliation.
-- A manual-review field may be marked passed only from actual review evidence.
-  Use `pending` or `blocked` when evidence does not exist.
+- A human/device-review field may be marked passed only from actual review
+  evidence. When a live release contract permits an accepted-risk preview,
+  record the exact governed limitation and risk ID; never translate automation
+  into human evidence or carry the exception into production/GA.
 
 ## Verification
 
@@ -144,11 +146,15 @@ the result proves, and what it does not prove.
   exclusions. N5-only, N4-inclusive, and all-level scopes are not equivalent.
 - Do not create a release-ready claim from unit tests, lane counts, or a tagged
   workflow alone.
-- Release-specific evidence must cover native APKG approval, managed-media
-  provenance, manual Anki import/rendering, mobile behavior, accessibility,
-  listening/naturalness QA, source-governance posture, checksums, SBOM,
-  provenance, and attestations as required by the live release contracts.
-- Do not tag while required pre-release gates or manual QA are unresolved.
+- Release-specific evidence must cover exact APKG bytes and structure,
+  managed-media provenance, source posture, checksums, SBOM, provenance, and
+  attestations. Production/GA also requires passed native import/rendering,
+  mobile, accessibility, listening/naturalness, and visual media evidence.
+- A semantic automation-reviewed prerelease may defer only the exact
+  human/device limitations allowed by the live packet schema, with owner-
+  accepted risk, conspicuous labeling, and no production/GA claim.
+- Do not tag while required automated pre-release gates, packet evidence, or
+  release-class policy requirements are unresolved.
 - Do not close post-tag security requirements until the hosted Release run and
   downloaded artifact verification actually prove them.
 
@@ -156,5 +162,5 @@ the result proves, and what it does not prove.
 
 Report the exact files changed, commands and outcomes, hosted PR/CI state,
 remaining backlog or blockers, and final Git state. Do not claim completion
-while a material scope is uninspected, a required check is missing, or a manual
-or hosted authority remains unverified.
+while a material scope is uninspected, a required check is missing, or a human,
+device, accepted-risk, or hosted authority is misrepresented.

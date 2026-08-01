@@ -22,7 +22,7 @@ const N5_PRODUCT_READINESS_SCOPE = Object.freeze({
         "mobile, screen-reader, or listening QA",
     ],
     sourceBoundary: "Uses existing review and audit commands. Some checks still read required workspace inputs such as local JLPT data and managed media.",
-    followUp: "Run the all-level tracked-source kanji gate, APKG/media/manual QA gate, and human release QA before calling an N5 public release fully certified.",
+    followUp: "Keep the candidate explicitly N5-only and run exact APKG packet/structural release evidence. Production/GA also requires passed human/device QA; an automation-reviewed prerelease must instead disclose every allowed limitation under PROD-REL-001.",
 });
 
 const N5_PRODUCT_READINESS_COMMANDS = Object.freeze([

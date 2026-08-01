@@ -22,7 +22,7 @@ Not covered:
 - employment or HR training records
 - private personnel files
 - proof that a hosted platform setting is enabled
-- proof that release manual QA has been completed
+- proof that release human/device QA passed for production, or that every unavailable check is explicitly accepted and labeled for an allowed automation-reviewed prerelease
 
 ## Authority Boundary
 
@@ -64,7 +64,7 @@ Before approving a sensitive pull request, the reviewer should confirm:
 - [ ] I can name the exact verification commands required by the changed files.
 - [ ] I checked whether `docs/risk-register.md` or `templates/security_requirements_traceability.json` needs an update.
 - [ ] I checked whether README, command reference, release docs, verification docs, and changelog claims changed.
-- [ ] I checked whether a hosted GitHub setting or manual QA claim remains unverified.
+- [ ] I checked whether a hosted GitHub setting or human/device QA claim remains unverified or is only an explicitly accepted preview limitation.
 - [ ] I checked whether the change adds or changes dependencies, workflow permissions, release artifacts, source inputs, parser behavior, subprocess execution, cleanup paths, or generated-output trust.
 - [ ] I checked whether any AI/NLP output is being treated as proof instead of support context.
 - [ ] I can explain the residual risk or blocker in plain language.

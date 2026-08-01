@@ -284,14 +284,19 @@ function buildWordExpansionDoctrinePhrases() {
     };
 }
 
-function extractChangelogUnreleased(changelogText = "") {
-    const start = changelogText.indexOf("## [Unreleased]");
+function extractChangelogSection(changelogText = "", heading = "[Unreleased]") {
+    const headingText = `## ${heading}`;
+    const start = changelogText.indexOf(headingText);
     if (start === -1) {
         return "";
     }
-    const rest = changelogText.slice(start + "## [Unreleased]".length);
+    const rest = changelogText.slice(start + headingText.length);
     const nextRelease = rest.search(/\n## \[/u);
     return nextRelease === -1 ? rest : rest.slice(0, nextRelease);
+}
+
+function extractChangelogUnreleased(changelogText = "") {
+    return extractChangelogSection(changelogText, "[Unreleased]");
 }
 
 function addFailure(failures, condition, message) {
@@ -457,16 +462,26 @@ function auditDocumentationText({
     const systemArchitecture = files?.["docs/system-architecture.md"] || "";
     const packageJson = files?.["package.json"] || "";
     const unreleased = extractChangelogUnreleased(changelog);
+    let currentPackageVersion = "";
+    try {
+        currentPackageVersion = JSON.parse(packageJson).version || "";
+    } catch {
+        // Package-manifest parsing is validated separately; leave the release section empty here.
+    }
+    const currentReleaseNotes = currentPackageVersion
+        ? extractChangelogSection(changelog, `[${currentPackageVersion}]`)
+        : "";
+    const activeChangelogStatus = `${unreleased}\n${currentReleaseNotes}`;
     const wordExpansionDoctrine = buildWordExpansionDoctrinePhrases();
 
     addFailure(failures, readme.includes(phrases.readmeGoldStatus), `README.md N3 word status must include: ${phrases.readmeGoldStatus}`);
     addFailure(failures, !/Gold is `315\/1081` current-standard/u.test(readme), "README.md still contains stale N3 word Gold ratio 315/1081.");
     addFailure(failures, !/`766` generated rows still missing Gold/u.test(readme), "README.md still contains stale N3 word Gold backlog 766.");
 
-    addFailure(failures, unreleased.includes(phrases.changelogGoldStatus), `CHANGELOG.md Unreleased must include: ${phrases.changelogGoldStatus}`);
-    addFailure(failures, unreleased.includes(phrases.changelogGoldBacklog), `CHANGELOG.md Unreleased must include: ${phrases.changelogGoldBacklog}`);
-    addFailure(failures, !/315\/1081/u.test(unreleased), "CHANGELOG.md Unreleased still contains stale N3 word Gold ratio 315/1081.");
-    addFailure(failures, !/`766` generated rows still missing/u.test(unreleased), "CHANGELOG.md Unreleased still contains stale N3 word Gold backlog 766.");
+    addFailure(failures, activeChangelogStatus.includes(phrases.changelogGoldStatus), `CHANGELOG.md Unreleased or current package release must include: ${phrases.changelogGoldStatus}`);
+    addFailure(failures, activeChangelogStatus.includes(phrases.changelogGoldBacklog), `CHANGELOG.md Unreleased or current package release must include: ${phrases.changelogGoldBacklog}`);
+    addFailure(failures, !/315\/1081/u.test(activeChangelogStatus), "CHANGELOG.md active status still contains stale N3 word Gold ratio 315/1081.");
+    addFailure(failures, !/`766` generated rows still missing/u.test(activeChangelogStatus), "CHANGELOG.md active status still contains stale N3 word Gold backlog 766.");
 
     addFailure(failures, claude.includes(phrases.claudeWordPosture), `CLAUDE.md current posture must include: ${phrases.claudeWordPosture}`);
     addFailure(failures, !/N3\/N2\/N1 word work has Silver generated surfaces only/u.test(claude), "CLAUDE.md still claims N3/N2/N1 word work is Silver-only.");
@@ -666,6 +681,7 @@ module.exports = {
     buildProductStatusPhrases,
     buildWordExpansionDoctrinePhrases,
     extractChangelogUnreleased,
+    extractChangelogSection,
     findUndocumentedPackageScripts,
     auditMarkdownLocalLinks,
     formatDocumentationStatusAuditReport,

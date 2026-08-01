@@ -1,16 +1,19 @@
 {
-  "version": 2,
+  "version": 3,
   "authority": {
     "sourceOfTruth": "tracked-release-qa-evidence-packet",
     "generatedArtifact": false,
     "boundary": [
-      "This packet records release-specific automated evidence, manual product QA evidence, and source-governance posture.",
-      "A completed packet is release evidence only for the named release candidate and the per-artifact deck-kind/JLPT-level scopes.",
-      "The candidate commit must equal repository HEAD, and every shipped deck kind must bind one APKG under the candidate run-output root to its actual byte size and SHA-256.",
-      "It does not replace Platinum, Obsidian, hosted security, source-access, release-trust, or attestation gates."
+      "This packet records release-specific automated evidence, artifact QA evidence, source-governance posture, and explicitly accepted preview limitations.",
+      "A completed packet is release evidence only for the named version, tag, commit, candidate, release class, deck kinds, JLPT levels, and exact APKG assets.",
+      "Production releases require all artifact QA evidence to pass. An automation-reviewed preview may use accepted-risk only under PROD-REL-001 and must remain a labeled GitHub prerelease.",
+      "It does not replace lane certification, hosted security settings, post-tag attestation verification, or any human/device QA that the packet identifies as not performed."
     ]
   },
   "scope": {
+    "releaseVersion": "0.0.0-preview.1",
+    "releaseTag": "v0.0.0-preview.1",
+    "releaseClass": "automation-reviewed-preview",
     "releaseCandidateId": "replace-with-run-id",
     "repositoryCommit": "replace-with-full-40-character-lowercase-git-sha",
     "deckKinds": [
@@ -23,19 +26,43 @@
           5
         ],
         "path": "out/run-outputs/replace-with-run-id/kanji-n5/package/replace-with-kanji-deck.apkg",
+        "releaseAssetName": "replace-with-kanji-deck.apkg",
+        "notes": 0,
+        "cards": 0,
+        "mediaEntries": 0,
         "bytes": 0,
         "sha256": ""
       }
     ],
-    "notes": "Copy this template to out/release-qa/release-qa-evidence.json. Replace the candidate binding and every pending entry with evidence from the same immutable release-candidate build."
+    "notes": "Copy this template to out/release-qa/release-qa-evidence.json. Replace every placeholder and pending entry with evidence from the same immutable release-candidate build."
+  },
+  "releasePolicy": {
+    "distribution": "github-prerelease",
+    "label": "AUTOMATION-REVIEWED PREVIEW - HUMAN DEVICE QA NOT PERFORMED",
+    "humanQa": {
+      "status": "owner-accepted-deferred",
+      "acceptedRiskRecord": "PROD-REL-001",
+      "owner": "",
+      "acceptedAt": "",
+      "nextReview": "",
+      "rationale": "",
+      "limitations": [
+        "desktop-anki-import-not-performed",
+        "mobile-qa-not-performed",
+        "screen-reader-interaction-not-performed",
+        "listening-naturalness-not-performed",
+        "stroke-sequence-visual-review-not-performed"
+      ]
+    }
   },
   "automatedEvidence": [
     {
-      "id": "release-trust",
-      "command": "npm run security:release-trust",
+      "id": "release-trust-pre",
+      "command": "npm run security:release-trust:pre",
       "status": "pending",
       "reviewer": "",
       "reviewedAt": "",
+      "repositoryCommit": "",
       "evidence": ""
     },
     {
@@ -44,71 +71,93 @@
       "status": "pending",
       "reviewer": "",
       "reviewedAt": "",
+      "repositoryCommit": "",
       "evidence": ""
     },
     {
-      "id": "product-release-qa-gate",
-      "command": "npm run product:artifacts:kanji:release-qa",
+      "id": "n5-readiness",
+      "command": "npm run product:readiness:n5",
       "status": "pending",
       "reviewer": "",
       "reviewedAt": "",
+      "repositoryCommit": "",
+      "evidence": ""
+    },
+    {
+      "id": "apkg-structural-inspection",
+      "command": "npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>",
+      "status": "pending",
+      "reviewer": "",
+      "reviewedAt": "",
+      "repositoryCommit": "",
       "evidence": ""
     }
   ],
-  "manualEvidence": [
+  "artifactQaEvidence": [
     {
       "id": "apkg-import",
-      "status": "pending",
+      "status": "accepted-risk",
       "reviewer": "",
       "reviewedAt": "",
-      "evidence": "",
-      "notes": "Record exact APKG path, checksum, Anki version, platform, import result, and sampled cards."
+      "repositoryCommit": "",
+      "acceptedRiskRecord": "PROD-REL-001",
+      "limitation": "desktop-anki-import-not-performed",
+      "evidence": "Record automated APKG structural inspection and explicitly state that native Anki import was not performed."
     },
     {
       "id": "managed-media-provenance",
       "status": "pending",
       "reviewer": "",
       "reviewedAt": "",
-      "evidence": "",
-      "notes": "Record managed stroke-order and audio provenance checks plus packaged media identity."
+      "repositoryCommit": "",
+      "evidence": "Record exact managed stroke-order/audio provenance commands, counts, and packaged media identity."
     },
     {
       "id": "manual-anki-import",
-      "status": "pending",
+      "status": "accepted-risk",
       "reviewer": "",
       "reviewedAt": "",
-      "evidence": "",
-      "notes": "Record desktop Anki rendering review, field layout, examples, notes, and media rendering."
+      "repositoryCommit": "",
+      "acceptedRiskRecord": "PROD-REL-001",
+      "limitation": "desktop-anki-import-not-performed",
+      "evidence": "State that desktop Anki rendering and interaction were not performed; do not convert automated inspection into a human-review claim."
     },
     {
       "id": "mobile-qa",
-      "status": "pending",
+      "status": "accepted-risk",
       "reviewer": "",
       "reviewedAt": "",
-      "evidence": "",
-      "notes": "Record AnkiDroid or AnkiMobile review when layout/media behavior is in scope."
+      "repositoryCommit": "",
+      "acceptedRiskRecord": "PROD-REL-001",
+      "limitation": "mobile-qa-not-performed",
+      "evidence": "State that AnkiDroid and AnkiMobile testing were not performed."
     },
     {
       "id": "screen-reader-accessibility",
-      "status": "pending",
+      "status": "accepted-risk",
       "reviewer": "",
       "reviewedAt": "",
-      "evidence": "",
-      "notes": "Record accessibility review command output and manual screen-reader or no-color/zoom findings."
+      "repositoryCommit": "",
+      "acceptedRiskRecord": "PROD-REL-001",
+      "limitation": "screen-reader-interaction-not-performed",
+      "evidence": "Record automated static accessibility checks and state that interactive screen-reader testing was not performed."
     },
     {
       "id": "listening-qa",
-      "status": "pending",
+      "status": "accepted-risk",
       "reviewer": "",
       "reviewedAt": "",
-      "evidence": "",
-      "notes": "Record sampled audio files, reading identity, clipping/noise findings, and any rejected media."
+      "repositoryCommit": "",
+      "acceptedRiskRecord": "PROD-REL-001",
+      "limitation": "listening-naturalness-not-performed",
+      "evidence": "Record automated audio identity/integrity checks and state that listening/naturalness review was not performed."
     }
   ],
   "sourceGovernance": {
     "status": "pending",
     "reviewer": "",
     "reviewedAt": "",
+    "repositoryCommit": "",
     "evidence": "",
     "sourceEvidenceDepthComplete": false,
     "freePublicSourceExpansionPaused": true,
@@ -118,12 +167,10 @@
     "manualCitationOnlyPromoted": false,
     "commands": [
       "npm run data:audit:jlpt:source-access",
-      "npm run data:audit:jlpt:sources -- --governance-strict --limit=25",
-      "npm run product:artifacts:kanji:all"
-    ],
-    "notes": "When source evidence depth is incomplete, release posture relies on accepted GOV-SRC-001 residual risk plus proof that free/public expansion is paused and source-access-gap, manual-citation-only, NLP, generated TSV, or Obsidian compatibility views were not promoted into source truth."
+      "npm run data:audit:jlpt:sources -- --governance-strict --limit=25"
+    ]
   },
   "knownBlockers": [
-    "Replace this template blocker with an empty array before release-ready claims."
+    "Remove this placeholder only when every in-scope automated gate passes and every unavailable human/device check is explicitly accepted under the preview policy."
   ]
 }

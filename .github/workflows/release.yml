@@ -219,7 +219,7 @@ jobs:
             .release-smoke/out .release-gate/out CHANGELOG.md NOTICE.md \
             docs/compatibility-matrix.md docs/branch-protection.md \
             docs/release-process.md docs/release-qa-checklist.md \
-            docs/releases/v0.3.0-beta.3-n5-automation-preview.md
+            docs/releases/v0.3.0-beta.4-n5-automation-preview.md
 
       - name: Generate and verify release asset checksums
         run: |

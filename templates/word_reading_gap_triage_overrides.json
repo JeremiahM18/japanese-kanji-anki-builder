@@ -60,10 +60,10 @@
       "priority": "low",
       "note": "Rare Sino-Japanese reading that does not deserve an N5 support card."
     },
-    "木|on|ぼく": {
+    "三|kun|みつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "木刀|ぼくとう is real but niche and built with N1 刀; defer 木 -> ぼく from the N5 word product instead of forcing a martial-arts support card."
+      "note": "The N5 product already teaches the practical whole counter 三つ|みっつ. The ungeminated source-form reading みつ has no exact curated or deck example, so it must not create a duplicate coverage-only card."
     },
     "気|on|け": {
       "suggestedAction": "defer_variant",
@@ -75,10 +75,10 @@
       "priority": "low",
       "note": "Name-specific/archaic reading; not productive for N5 study."
     },
-    "時|kun|どき": {
+    "四|kun|よつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "Visible in 時々 as iteration-mark rendaku, but not counted as a separate per-kanji support target."
+      "note": "The N5 product already teaches 四つ|よっつ, while 四つ角|よつかど is explicitly decomposed as 四 -> よ rather than a false whole-word split. Defer the source-form よつ variant instead of duplicating those cards."
     },
     "山|on|さん": {
       "suggestedAction": "defer_variant",
@@ -105,15 +105,15 @@
       "priority": "low",
       "note": "Specialized reading with little beginner value."
     },
-    "出|on|しゅつ": {
+    "出|kun|いだす": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "Useful in words like 出発, but that governed learner card belongs to the N4 word deck rather than forcing N5 card scope."
+      "note": "出す|だす already provides the practical N5 transitive verb. The literary/older いだす reading has no exact curated or deck example and is not suitable for an N5 coverage-only card."
     },
-    "火|kun|び": {
+    "出|kun|いでる": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "Useful in 花火, which is governed in the N4 word deck; not a blocker for the N5 word deck."
+      "note": "出る|でる already provides the practical N5 intransitive verb. The literary/older いでる reading has no exact curated or deck example and is not suitable for an N5 coverage-only card."
     },
     "上|on|しゃん": {
       "suggestedAction": "defer_variant",
@@ -130,10 +130,10 @@
       "priority": "low",
       "note": "出来上がり|できあがり is a common JLPT N2 completion/result noun, but it is too nominalized and advanced for N5; defer 上 -> あがり instead of keeping it only for coverage."
     },
-    "上|kun|かみ": {
+    "生|kun|うむ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "上座|かみざ is a real cultural/business etiquette word, but too situational and advanced for N5 learner value; defer 上 -> かみ instead of keeping a coverage-only card."
+      "note": "The N5 product already teaches the practical 生まれる|うまれる family. 生む|うむ has no exact governed N5 candidate in the current plan, so defer it to later-level review instead of adding it only for coverage."
     },
     "上|kun|たてまつる": {
       "suggestedAction": "defer_variant",
@@ -208,7 +208,7 @@
     "女|on|にょう": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "女房|にょうぼう is real and common but source-reviewed as JLPT N2 and old-fashioned spouse vocabulary; defer 女 -> にょう from N5 instead of forcing a misleading support card."
+      "note": "女房|にょうぼう is real and common but governed in the N1 word deck and is old-fashioned spouse vocabulary; defer 女 -> にょう from N5 instead of forcing a misleading support card."
     },
     "女|on|にょ": {
       "suggestedAction": "defer_variant",
@@ -255,10 +255,10 @@
       "priority": "low",
       "note": "Marginal reading outside the useful beginner support surface."
     },
-    "来|kun|き": {
+    "生|kun|おう": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "出来上がり|できあがり truthfully exposes 来 -> き, but source review places the word in JLPT N2; N5 should keep 来 focused on stronger learner words such as 来る, 来い, and 来年."
+      "note": "The uncommon/literary 生 -> おう reading has no exact curated example, deck example, or viable current candidate. Keep N5 focused on practical readings such as 生まれる, 生える, 生地, and 生もの."
     },
     "入|on|じゅ": {
       "suggestedAction": "defer_variant",
@@ -320,20 +320,20 @@
       "priority": "low",
       "note": "生きる|いきる is governed in the N4 word deck; do not keep it in N5 just to close 生 reading coverage."
     },
-    "生|on|しょう": {
+    "高|kun|たかまる": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "Useful 生 -> しょう coverage such as 一生 belongs to a later word deck level; do not fake this with an N5 card."
+      "note": "高まる|たかまる is a real later-level verb, but the governed source evidence does not place it in N5. N5 already teaches 高い|たかい and 高さ|たかさ, so do not add a coverage-only duplicate."
     },
     "下|kun|さげる": {
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "下げる|さげる is governed in the N4 word deck; do not keep it in N5 just to close 下 reading coverage."
     },
-    "友|on|ゆう": {
+    "高|kun|たかめる": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "友人|ゆうじん is common but source-reviewed as later-level and more formal than 友だち; N5 should not keep it only to close 友 -> ゆう coverage."
+      "note": "高める|たかめる is governed by the local Tanos N2 assignment, not N5. N5 already teaches 高い|たかい and 高さ|たかさ, so do not pull this later-level verb down only for coverage."
     },
     "下|kun|くだる": {
       "suggestedAction": "defer_variant",
@@ -360,15 +360,15 @@
       "priority": "low",
       "note": "半ば|なかば is useful, but source review places it in the N3 word deck; N5 should not keep it only to close 半 -> なかば coverage."
     },
-    "山|on|ざん": {
+    "大|kun|おおいに": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "火山|かざん is useful, but source review places it in the N2 word deck; N5 should not keep it only to close 山 -> ざん coverage."
+      "note": "大いに|おおいに is governed by the local Tanos N3 assignment and is an adverbial whole word, not an N5 reading-support need. Keep N5 focused on 大きい and other practical 大 readings."
     },
-    "見|on|けん": {
+    "天|kun|あまつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "見学|けんがく is useful, but source review places it in the N2 word deck; N5 should cover 見 through beginner verbs such as 見る, 見える, and 見せる."
+      "note": "The literary/classical 天つ|あまつ form has no exact curated or deck example and no viable current candidate. N5 already covers 天 through 天気 and 天の川, so no coverage-only card is justified."
     },
     "外|kun|はずれる": {
       "suggestedAction": "defer_variant",
@@ -405,25 +405,25 @@
       "priority": "low",
       "note": "長男|ちょうなん is useful later, but source review places it in JLPT N2; N5 should not keep it only to cover 男 -> なん."
     },
-    "父|on|ふ": {
+    "二|kun|ふたたび": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "父母|ふぼ is later-level/formal beside 父, 母, お父さん, and お母さん; defer 父 -> ふ from the N5 word product."
+      "note": "The standard learner word 再び|ふたたび is governed in N3 and does not prove 二 -> ふたたび. N5 already covers 二 through に, ふた, and ふたつ, so do not invent a misleading per-kanji support card."
     },
     "生|kun|いかす": {
       "suggestedAction": "defer_variant",
       "priority": "low",
       "note": "生かす|いかす is source-reviewed as JLPT N1 and abstract; defer this reading instead of forcing beginner coverage."
     },
-    "南|on|なん": {
+    "八|kun|やつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "南北|なんぼく is source-reviewed as JLPT N2; N5 already has practical direction words and should not force 南 -> なん."
+      "note": "The N5 product already teaches the practical whole counter 八つ|やっつ. The ungeminated source-form reading やつ has no exact curated or deck example, so it must not create a duplicate coverage-only card."
     },
-    "南|on|な": {
+    "来|kun|きたす": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "The practical N5 direction cards use 南 -> みなみ; defer the on-reading variant exposed by 南北|なんぼく instead of forcing a later-level support card."
+      "note": "来す|きたす is formal later-level vocabulary with no exact curated or deck example in N5. Keep the beginner product focused on 来る|くる, 来ます|きます, and 来い|こい."
     },
     "上|kun|のぼり": {
       "suggestedAction": "defer_variant",
@@ -435,15 +435,15 @@
       "priority": "low",
       "note": "分かつ|わかつ is real but more written/formal than 分ける; defer this reading instead of forcing it into the N5 word product."
     },
-    "雨|on|う": {
+    "来|kun|きたる": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "雨天|うてん is formal cancellation/weather vocabulary and source-reviewed as later-level; N5 should not force 雨 -> う coverage."
+      "note": "来る|きたる is a formal/literary reading with no exact curated or deck example in N5. Keep the beginner product focused on 来る|くる, 来ます|きます, and 来い|こい."
     },
-    "西|on|すい": {
+    "六|kun|むい": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "西瓜|すいか is usually written in kana, so the rare kanji-form 西 -> すい reading should not be forced into N5."
+      "note": "六日|むいか is already an N5 card with an explicitly governed whole-word reading that must not be split into false per-kanji readings. Defer the むい source form rather than relabeling that card or duplicating it."
     },
     "西|on|す": {
       "suggestedAction": "defer_variant",
@@ -475,10 +475,10 @@
       "priority": "low",
       "note": "断食|だんじき is common but topical and better saved for N3; N5 already has useful 食 coverage through 食べる, 食事, and 食堂."
     },
-    "雨|kun|あま": {
+    "六|kun|むつ": {
       "suggestedAction": "defer_variant",
       "priority": "low",
-      "note": "雨戸|あまど is a useful housing word but source-reviewed as later-level and too specific for N5; defer 雨 -> あま until a stronger beginner-fit word appears."
+      "note": "The N5 product already teaches the practical whole counter 六つ|むっつ. The ungeminated source-form reading むつ has no exact curated or deck example, so it must not create a duplicate coverage-only card."
     },
     "間|on|けん": {
       "suggestedAction": "defer_variant",

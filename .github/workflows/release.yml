@@ -13,11 +13,15 @@ concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
+env:
+  RELEASE_INPUT_DIR: .release-input
+  RELEASE_PACKET: .release-input/release-qa-evidence.json
+
 jobs:
   release_verify:
     name: Release Verify Ubuntu Node 22
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Check out repository
         # actions/checkout@v6.0.3 pinned from refs/tags/v6.0.3 on 2026-06-03.
@@ -35,6 +39,31 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: "3.x"
+
+      - name: Verify tag and draft prerelease boundary
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_TYPE}" = "tag"
+          test "$(node -p "'v' + require('./package.json').version")" = "${GITHUB_REF_NAME}"
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+          release_state="$(gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --json isDraft,isPrerelease --jq '[.isDraft,.isPrerelease] | @tsv')"
+          test "${release_state}" = $'true\ttrue'
+
+      - name: Download exact draft release inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "${RELEASE_INPUT_DIR}"
+          gh release download "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --dir "${RELEASE_INPUT_DIR}"
+
+      - name: Validate release evidence and asset integrity
+        run: npm run product:release-qa:evidence -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --expected-tag="${GITHUB_REF_NAME}"
+
+      - name: Inspect release APKG structures
+        run: npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}"
 
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
@@ -71,26 +100,31 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Run N5 readiness orchestrator
+        run: npm run product:readiness:n5
+
       - name: Run release gate
         run: npm run release:gate -- --root-dir=.release-gate --keep-temp-dir --require-apkg-tools
 
-      - name: Upload release gate verification artifacts
+      - name: Upload release verification diagnostics
         if: always()
         # actions/upload-artifact@v7.0.1 pinned from refs/tags/v7.0.1 on 2026-06-03.
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: release-gate-${{ github.ref_name }}
-          path: .release-gate/out
+          name: release-verification-${{ github.ref_name }}
+          path: |
+            .release-input
+            .release-gate/out
           if-no-files-found: error
 
   release_bundle:
     name: Release Bundle Ubuntu Node 22
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     needs:
       - release_verify
     permissions:
-      contents: read
+      contents: write
       id-token: write
       attestations: write
       artifact-metadata: write
@@ -111,6 +145,20 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: "3.x"
+
+      - name: Download exact draft release inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "${RELEASE_INPUT_DIR}"
+          gh release download "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --dir "${RELEASE_INPUT_DIR}"
+
+      - name: Revalidate release evidence and APKG structures
+        run: |
+          set -euo pipefail
+          npm run product:release-qa:evidence -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --expected-tag="${GITHUB_REF_NAME}"
+          npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}"
 
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
@@ -151,81 +199,71 @@ jobs:
         run: npm run release:gate -- --root-dir=.release-gate --keep-temp-dir --require-apkg-tools
 
       - name: Generate CycloneDX SBOM
-        run: npm run security:sbom:write
+        run: node scripts/generateCycloneDxSbom.js --out=.release-bundle/sbom.cdx.json
 
       - name: Generate dependency license summary
-        run: npm run security:licenses:write
+        run: node scripts/auditDependencyLicenses.js --out=.release-bundle/dependency-licenses.json
 
-      - name: Generate artifact checksums
+      - name: Stage exact release assets and deterministic verification material
         run: |
-          find .release-smoke/out .release-gate/out out/security/sbom.cdx.json out/security/dependency-licenses.json -type f -print0 \
+          set -euo pipefail
+          mkdir -p .release-bundle
+          cp "${RELEASE_PACKET}" .release-bundle/release-qa-evidence.json
+          cp "${RELEASE_INPUT_DIR}"/*.apkg .release-bundle/
+          tar --sort=name --mtime='UTC 2024-01-01' --owner=0 --group=0 --numeric-owner \
+            -czf .release-bundle/release-verification-materials.tar.gz \
+            .release-smoke/out .release-gate/out CHANGELOG.md NOTICE.md \
+            docs/compatibility-matrix.md docs/branch-protection.md \
+            docs/release-process.md docs/release-qa-checklist.md \
+            docs/releases/v0.3.0-beta.1-n5-automation-preview.md
+
+      - name: Generate and verify release asset checksums
+        run: |
+          set -euo pipefail
+          find .release-bundle -type f ! -name 'release-artifacts.sha256' -print0 \
             | sort -z \
-            | xargs -0 sha256sum > release-artifacts.sha256
+            | xargs -0 sha256sum > .release-bundle/release-artifacts.sha256
+          sha256sum -c .release-bundle/release-artifacts.sha256
 
       - name: Attest release bundle provenance
         # actions/attest@v4.1.0 pinned from refs/tags/v4 on 2026-06-02.
         uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26
         with:
-          subject-path: |
-            .release-smoke/out/**
-            .release-gate/out/**
-            CHANGELOG.md
-            NOTICE.md
-            docs/compatibility-matrix.md
-            docs/branch-protection.md
-            docs/release-process.md
-            docs/release-qa-checklist.md
-            out/security/sbom.cdx.json
-            out/security/dependency-licenses.json
-            release-artifacts.sha256
+          subject-path: .release-bundle/**
 
       - name: Attest release bundle SBOM
         # actions/attest@v4.1.0 pinned from refs/tags/v4 on 2026-06-02.
         uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26
         with:
-          subject-path: |
-            .release-smoke/out/**
-            .release-gate/out/**
-            CHANGELOG.md
-            NOTICE.md
-            docs/compatibility-matrix.md
-            docs/branch-protection.md
-            docs/release-process.md
-            docs/release-qa-checklist.md
-            out/security/sbom.cdx.json
-            out/security/dependency-licenses.json
-            release-artifacts.sha256
-          sbom-path: out/security/sbom.cdx.json
+          subject-path: .release-bundle/**
+          sbom-path: .release-bundle/sbom.cdx.json
 
-      - name: Verify release bundle attestations
+      - name: Verify release bundle attestations for every asset
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          signer_workflow="github.com/${{ github.repository }}/.github/workflows/release.yml"
-          for artifact in release-artifacts.sha256 out/security/sbom.cdx.json out/security/dependency-licenses.json; do
-            gh attestation verify "$artifact" \
-              --repo "${{ github.repository }}" \
-              --signer-workflow "$signer_workflow" \
-              --source-ref "${{ github.ref }}" \
-              --source-digest "${{ github.sha }}"
-          done
+          signer_workflow="github.com/${GITHUB_REPOSITORY}/.github/workflows/release.yml"
+          while IFS= read -r -d '' artifact; do
+            gh attestation verify "${artifact}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --signer-workflow "${signer_workflow}" \
+              --source-ref "${GITHUB_REF}" \
+              --source-digest "${GITHUB_SHA}"
+          done < <(find .release-bundle -maxdepth 1 -type f -print0 | sort -z)
 
-      - name: Upload tagged release bundle
+      - name: Upload immutable release bundle evidence
         # actions/upload-artifact@v7.0.1 pinned from refs/tags/v7.0.1 on 2026-06-03.
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: release-bundle-${{ github.ref_name }}
-          path: |
-            .release-smoke/out
-            .release-gate/out
-            CHANGELOG.md
-            NOTICE.md
-            docs/compatibility-matrix.md
-            docs/branch-protection.md
-            docs/release-process.md
-            docs/release-qa-checklist.md
-            out/security/sbom.cdx.json
-            out/security/dependency-licenses.json
-            release-artifacts.sha256
+          path: .release-bundle
           if-no-files-found: error
+
+      - name: Publish verified GitHub prerelease assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release upload "${GITHUB_REF_NAME}" .release-bundle/* --clobber --repo "${GITHUB_REPOSITORY}"
+          gh release edit "${GITHUB_REF_NAME}" --draft=false --prerelease --verify-tag --repo "${GITHUB_REPOSITORY}"

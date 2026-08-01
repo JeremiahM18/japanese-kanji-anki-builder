@@ -118,7 +118,7 @@ Add affected-area gates:
 | GitHub workflow or release path | `npm run security:branch-protection`, `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, release gate |
 | VOICEVOX/Docker | `npm run voicevox:status`, `npm run doctor:voicevox`, affected audio tests |
 | NLP governance | `npm run nlp:governance-gate` |
-| Product deck or media claim | product/readiness gates plus manual QA evidence |
+| Product deck or media claim | product/readiness gates plus passed production QA or exact accepted-risk preview evidence |
 
 If a gate fails for an expected open blocker, name the exact blocker and link to the risk-register record. Do not call it green.
 
@@ -150,7 +150,7 @@ Before public disclosure or release claims:
 2. Run the minimum verification bundle and affected-area gates.
 3. Update [../SECURITY.md](../SECURITY.md), [threat-model.md](threat-model.md), [recovery-and-rollback.md](recovery-and-rollback.md), or release docs if behavior changed.
 4. Update [../CHANGELOG.md](../CHANGELOG.md) with a release-facing security note when the change matters to users.
-5. If releasing, follow [release-process.md](release-process.md), verify checksums, verify artifact attestations, and keep manual QA separate from automated gates.
+5. If releasing, follow [release-process.md](release-process.md), verify checksums and every artifact attestation, and keep human/device QA or accepted-risk preview limitations separate from automated gates.
 
 ## Post-Incident Review
 

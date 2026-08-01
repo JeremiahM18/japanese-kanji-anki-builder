@@ -56,8 +56,8 @@ Authenticated owner audit was rerun on 2026-07-07 against hosted `main` at `e7c6
 | Dependency Review | Hosted `.github/workflows/ci.yml` contains `actions/dependency-review-action` on pull requests with `fail-on-severity: moderate` | Verified |
 | Vulnerability alerts / Dependency Graph | `GET /vulnerability-alerts` returned `204`; Dependency Graph SBOM endpoint returned `288` packages | Verified |
 | Dependabot security updates | `GET /automated-security-fixes` returned `enabled:true` and `paused:false` | Verified |
-| Release attestation creation | Hosted `.github/workflows/release.yml` contains provenance and SBOM attestation steps for the release bundle | Verified |
-| Artifact attestation verification configured | Hosted workflow content configures constrained `gh attestation verify` with `--repo`, `--signer-workflow`, `--source-ref`, and `--source-digest` | Verified |
+| Release attestation creation | Tracked `.github/workflows/release.yml` contains provenance and SBOM attestation steps for every staged release asset; hosted state must match after merge | Verified locally; recheck after merge |
+| Artifact attestation verification configured | Tracked workflow content configures constrained `gh attestation verify` for every staged asset with `--repo`, `--signer-workflow`, `--source-ref`, and `--source-digest`; hosted state must match after merge | Verified locally; recheck after merge |
 | Artifact attestation verification proven | No successful hosted release workflow run exists yet to prove the verification step after attestation creation | Failing until tagged release workflow succeeds |
 | Branch protection detail endpoint | Authenticated endpoint returned `200` and matched tracked policy | Verified |
 | Code scanning open alerts | Authenticated endpoint returned `0` open CodeQL alerts | Verified |
@@ -123,7 +123,7 @@ Completed on 2026-07-07:
 
 Remaining:
 
-1. Run a tagged Release workflow, then rerun `npm run security:github-settings:auth` until attestation verification is both configured in hosted workflow content and proven by a successful hosted Release run.
+1. Merge the release workflow through protected `main`, run the exact tagged draft-prerelease flow, then rerun `npm run security:github-settings:auth` until all-file attestation verification is both configured in hosted workflow content and proven by a successful hosted Release run.
 
 ## Failure Semantics
 

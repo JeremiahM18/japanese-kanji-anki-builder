@@ -51,14 +51,20 @@ test("release workflow is tag-driven and publishes release artifacts", () => {
 
     assert.equal(workflow.includes("tags:"), true);
     assert.equal(workflow.includes('- "v*"'), true);
+    assert.equal(workflow.includes("workflow_dispatch:"), true);
+    assert.equal(workflow.includes('test "${GITHUB_REF_TYPE}" = "tag"'), true);
     assert.equal(workflow.includes("Release Verify Ubuntu Node 22"), true);
     assert.equal(workflow.includes("Release Bundle Ubuntu Node 22"), true);
     assert.equal(workflow.includes("npm run security:licenses"), true);
     assert.equal(workflow.includes("npm run security:requirements"), true);
-    assert.equal(workflow.includes("out/security/dependency-licenses.json"), true);
+    assert.equal(workflow.includes(".release-bundle/dependency-licenses.json"), true);
     assert.equal(workflow.includes("release-artifacts.sha256"), true);
     assert.equal(workflow.includes("Verify release bundle attestations"), true);
     assert.equal(workflow.includes("gh attestation verify"), true);
+    assert.equal(workflow.includes("npm run product:release-qa:evidence"), true);
+    assert.equal(workflow.includes("npm run product:release-qa:apkg-inspect"), true);
+    assert.equal(workflow.includes("gh release upload"), true);
+    assert.equal(workflow.includes("--draft=false --prerelease --verify-tag"), true);
     assert.equal(workflow.includes("docs/release-process.md"), true);
 });
 
@@ -71,7 +77,7 @@ test("release process doc aligns tag naming with package version", () => {
     assert.equal(releaseProcess.includes("npm run supply-chain:audit"), true);
     assert.equal(releaseProcess.includes("npm run security:licenses"), true);
     assert.equal(releaseProcess.includes("npm run security:requirements"), true);
-    assert.equal(releaseProcess.includes("out/security/dependency-licenses.json"), true);
+    assert.equal(releaseProcess.includes(".release-bundle/dependency-licenses.json"), true);
     assert.equal(releaseProcess.includes("supply-chain-security.md"), true);
     assert.equal(releaseProcess.includes("CHANGELOG.md"), true);
     assert.equal(releaseProcess.includes("release-qa-checklist.md"), true);

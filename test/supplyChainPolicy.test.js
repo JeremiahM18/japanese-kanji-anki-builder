@@ -41,9 +41,9 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
             .every((step) => step.hasOnnxruntimeNodeInstallSkip),
         true
     );
-    assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("release-artifacts.sha256"));
-    assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("out/security/sbom.cdx.json"));
-    assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes("out/security/dependency-licenses.json"));
+    assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/release-artifacts.sha256"));
+    assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/sbom.cdx.json"));
+    assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/dependency-licenses.json"));
 });
 
 test("supply-chain audit pins GitHub Actions to reviewed commit SHAs", () => {

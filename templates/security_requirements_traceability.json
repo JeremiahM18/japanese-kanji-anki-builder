@@ -265,19 +265,26 @@
         "docs/github-repository-settings-checklist.md",
         "scripts/auditGithubRepositorySettingsWithGhAuth.js",
         "scripts/auditDependencyLicenses.js",
-        "scripts/auditSupplyChain.js"
+        "scripts/auditSupplyChain.js",
+        "scripts/inspectReleaseApkg.py",
+        "scripts/validateReleaseQaEvidence.js",
+        "src/services/releaseQaEvidenceService.js"
       ],
       "evidenceFiles": [
         "test/dependencyLicenseAudit.test.js",
         "test/supplyChainPolicy.test.js",
         "test/releasePolicy.test.js",
-        "test/githubRepositorySettingsAudit.test.js"
+        "test/githubRepositorySettingsAudit.test.js",
+        "test/releaseApkgInspection.test.js",
+        "test/releaseQaEvidenceService.test.js"
       ],
       "verificationCommands": [
         "npm run supply-chain:audit",
         "npm run security:licenses",
         "npm run security:licenses:write",
         "npm run security:sbom",
+        "npm run product:release-qa:evidence",
+        "npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir>",
         "npm run release:gate",
         "npm run security:github-settings",
         "npm run security:github-settings:auth"
@@ -370,7 +377,8 @@
       "manualQaRequired": true,
       "manualReview": [
         "Do not record Obsidian proof until current-standard actual card-data rereview is complete for the live card.",
-        "Complete a release QA evidence packet before claiming APKG, mobile, accessibility, listening, or media QA readiness."
+        "Complete a release QA evidence packet before claiming APKG, mobile, accessibility, listening, or media QA readiness.",
+        "A labeled automation-reviewed prerelease may record unavailable human/device checks only as accepted-risk under PROD-REL-001; production/GA requires passed evidence and must not inherit that exception."
       ],
       "releaseBlocker": true,
       "riskRecords": [

@@ -30,7 +30,7 @@ Not covered:
 
 ## Authority Boundary
 
-This document identifies expected risks and controls. It does not prove the live hosted GitHub settings are enabled, prove manual QA was performed, certify source truth, or make a release-ready claim.
+This document identifies expected risks and controls. It does not prove live hosted GitHub settings, human/device QA, source truth, or release readiness. A recorded preview-risk acceptance proves only that the owner accepted the stated limitation; it does not prove the missing QA.
 
 Authoritative checks are:
 
@@ -79,7 +79,8 @@ Authoritative checks are:
 | External text to Anki HTML | meanings, examples, notes, filenames, media refs | exporter escaping, allowed markup ownership, HTML regression tests |
 | Docker host to VOICEVOX container | local audio synthesis requests and generated files | localhost binding, `no-new-privileges`, capability drop, resource limits, status/doctor commands |
 | npm registry to local install | package tarballs and metadata | lockfile integrity, registry restriction, install-script allowlist, dependency-license policy, npm advisory audit |
-| GitHub Actions to release artifacts | smoke/gate outputs, SBOM, dependency-license summary, checksum manifest, docs | pinned actions, minimal permissions, release boundary audit, attestations |
+| Draft GitHub prerelease inputs to tagged workflow | exact packet plus packet-declared APKGs | version/tag/commit/hash/count binding, exact directory membership, independent APKG inspection |
+| GitHub Actions to published prerelease | exact APKGs, evidence packet, SBOM, dependency-license summary, verification archive, checksum manifest | pinned actions, top-level read-only permissions, bundle-job-only publishing/attestation permissions, all-file checksums and attestations |
 | Maintainer to public disclosure | vulnerability details and patch status | private reporting preference, incident runbook, disclosure decision record |
 | NLP artifacts to review workflows | tokenization, embeddings, draft suggestions, review packets | NLP governance gate, assistive-only docs, no certification authority |
 
@@ -92,8 +93,9 @@ Authoritative checks are:
 | Malformed XML, TSV, CSV, JSON, PDF, or OCR input corrupts source governance | Wrong source evidence, broken import, or unsafe parser behavior | source-input preflights, parser tests, entity expansion disabled where implemented, dry-run-first import scripts | P2 hostile-input corpus must expand coverage |
 | Local ignored `data/*` becomes hidden CI truth | CI passes while real local generated rows are unverified or stale | tracked CI source-boundary tests reject root `data/*` reads; local-data gates stay explicit | Prepared workstations can still contain stale data; reviewers must run current local gates |
 | Dependency update introduces vulnerable, malicious, or unreviewed-license code | Build/runtime compromise or unexpected redistribution obligations | lockfile integrity, registry-only policy, install-script allowlist, dependency-license audit, dependency review, `npm audit`, CodeQL | npm advisory data and dependency review are time-sensitive external services; license metadata still needs manual legal/NOTICE review for release claims |
-| GitHub workflow requests excessive permission | Token abuse, artifact tampering, or unwanted publishing | top-level read-only permissions; scoped CodeQL and attestation exceptions; action SHA pinning; supply-chain audit | Hosted branch protection is drift-prone and must be rechecked before release-trust claims |
-| Release bundle is tampered with or misunderstood | Users trust an unverified APKG, TSV, SBOM, or report | checksum manifest, SBOM, provenance/SBOM attestations, release process docs, tracked attestation verification step | P0 has tracked verification automation, but hosted tag-run evidence is not yet proven |
+| GitHub workflow requests excessive permission | Token abuse, artifact tampering, or unwanted publishing | top-level/read-only verification permissions; exact bundle-job-only `contents: write` plus attestation permissions; action SHA pinning; supply-chain audit | Hosted branch protection and permission behavior are drift-prone and must be rechecked before release-trust claims |
+| Release inputs or bundle are tampered with or misunderstood | Users trust an unverified APKG, SBOM, packet, or report | exact input membership, packet hashes/counts, APKG inspection, checksum manifest, SBOM, provenance/SBOM attestations, all-file constrained verification, explicit release-class label | P0 has tracked verification automation, but hosted tag-run evidence remains unproven until the first successful release |
+| Automation-reviewed preview is mistaken for human/device-approved production | Users rely on untested Anki/mobile/accessibility/audio behavior | semantic prerelease, exact warning label, GitHub prerelease state, packet-v3 accepted-risk schema, `PROD-REL-001`, compatibility matrix | Residual perception/device risk is accepted only for the preview; production/GA remains blocked without passed evidence |
 | VOICEVOX container runs with broad network or broad Linux capabilities | Local runtime escape or unexpected network exposure | managed helper enforces local bind and Docker runtime hardening; doctor/status commands | Docker itself and image supply chain remain external dependencies |
 | NLP output is treated as card proof | Bad suggestions become certified learner content | assistive-only docs, governance gate, review-packet validation, Platinum/Obsidian separation | The Obsidian lane must keep certification decisions separate from model context |
 | Private vulnerability details are disclosed publicly too early | Exploit details or private data leak | SECURITY.md reporting rules; incident response runbook; minimal public issue guidance | Private vulnerability reporting is currently disabled in hosted GitHub settings |

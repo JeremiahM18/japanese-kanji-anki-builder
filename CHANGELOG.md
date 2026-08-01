@@ -8,9 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 No unreleased changes. Keep future entries release-facing and concise; detailed work belongs in git commit messages and tracked review manifests.
 
-## [0.3.0-beta.1] - 2026-08-01
+## [0.3.0-beta.2] - 2026-08-01
 
-`0.3.0-beta.1` is an **automation-reviewed preview** for the N5 core kanji and N5 core word decks only. Human desktop/mobile/screen-reader/listening/stroke-sequence QA was not performed and is explicitly accepted under `PROD-REL-001`; this prerelease must not be represented as production/GA or human-approved.
+`0.3.0-beta.2` is an **automation-reviewed preview** for the N5 core kanji and N5 core word decks only. Human desktop/mobile/screen-reader/listening/stroke-sequence QA was not performed and is explicitly accepted under `PROD-REL-001`; this prerelease must not be represented as production/GA or human-approved. The immutable `v0.3.0-beta.1` tag failed closed before any release input was downloaded because the verification job could not access the private draft release; no beta.1 release was published or reused.
 
 ### Added
 
@@ -18,20 +18,21 @@ No unreleased changes. Keep future entries release-facing and concise; detailed 
 - Added independent APKG structural inspection for ZIP safety and integrity, media-map/archive membership, SQLite integrity/schema, Anki collection version, exact deck/note/card/media counts, note field cardinality, GUID/card references, and packaged media references.
 - Corrected word APKG note GUIDs to use exact `written|reading` identity, keeping same-written alternate readings distinct; earlier locally generated word decks should be removed or tested in a fresh Anki profile before importing this preview.
 - Added durable tagged-release publication for the exact N5 APKGs, release evidence packet, SBOM, dependency-license inventory, checksums, provenance, and attestations.
+- Scoped `contents: write` to the release verification job so GitHub can expose the private draft inputs to that job, while keeping publication and attestation permissions isolated to the bundle job; early boundary failures now preserve the primary error instead of failing a second time on empty diagnostics.
 - Added `docs:status-audit`, a tracked documentation status guard that compares README, CHANGELOG, CLAUDE, workflow, command-reference, verification, architecture, and overview status language against current review counts, generated denominators, npm command routing, and Silver/Gold/Sapphire/Platinum/Obsidian boundaries.
 - Added `deck:words:coverage-uplift`, a read-only word coverage diagnostic that reports whether harder word decks backfill a selected target level's kanji-reading coverage across any valid same-or-harder N1-N5 range without changing readiness, deferrals, review lanes, data, media, or proof ledgers.
 - Added `deck:words:sapphire:promote`, a fail-closed reviewed-input merger for word Sapphire candidate JSON that validates live generated rows, matching Gold preconditions, and current-standard Sapphire evidence lanes before writing tracked word Sapphire manifests.
 
 ### Changed
 
-- Defined one exact N5-only release candidate and excluded N4/N3/N2/N1 plus additional-unverified kanji from `0.3.0-beta.1`.
+- Defined one exact N5-only release candidate and excluded N4/N3/N2/N1 plus additional-unverified kanji from `0.3.0-beta.2`.
 - Preserved the existing human/product QA gate for future production/GA releases while permitting only a conspicuously labeled GitHub prerelease to carry the owner-accepted `PROD-REL-001` limitations.
 - Upgraded the release QA evidence contract to packet version 3: the validator binds package version, tag, current Git HEAD, release class, candidate run, exact per-deck level scope, local path, release asset name, note/card/media counts, byte size, SHA-256, commit-bound evidence, production-versus-preview policy, source posture, and exact downloaded asset membership.
 - Extended `deck:review:accessibility` with fail-closed `--run-id`, `--levels`, and governed `--out-dir-base` selection plus descriptor-verified package-summary reads so release-candidate reviews audit the intended isolated package and reject summary, exports-directory, symbolic-link, or path-swap drift.
 - Advanced the N4 word Silver generated surface through governed common-pool review from `739` to `1001` rows, raising the all-level word denominator from `2525` to `2787` and the current N5/N4 word Obsidian v2.5 denominator from `1327` to `1589`; the new N4 rows remain lower-lane backlog until Gold, Sapphire, Platinum, and Obsidian catch up.
 - Updated word lane status after the full N5 routed move-candidate target-level sweep: active N3 Silver is now `1099/1099` canonical rows, N3 word Gold review from `8/1099` to `1081/1099` is partial, Gold now has `18` generated rows still missing Gold, and current-standard Sapphire remains `1038/1099` with `61` generated rows still missing Sapphire. Platinum remains `8/1099` current-standard with `1091` generated rows still missing Platinum; N2 and N1 Silver card fields are complete at `61/61` and `38/38`; reading readiness remains incomplete for N3/N2/N1; N3 word is not locked/released; and no N3 word Obsidian proof is recorded.
 
-Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. This preview ships only N5 core kanji and N5 core words. The broader scoped `0.2.0` historical lock does not expand the `0.3.0-beta.1` artifact scope; every other level remains excluded.
+Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. This preview ships only N5 core kanji and N5 core words. The broader scoped `0.2.0` historical lock does not expand the `0.3.0-beta.2` artifact scope; every other level remains excluded.
 
 ## [0.2.0] - 2026-06-10
 

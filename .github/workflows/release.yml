@@ -22,6 +22,10 @@ jobs:
     name: Release Verify Ubuntu Node 22
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # GitHub hides draft releases from tokens without push-level contents access.
+    # This job reads and validates the draft but has no publication step.
+    permissions:
+      contents: write
     steps:
       - name: Check out repository
         # actions/checkout@v6.0.3 pinned from refs/tags/v6.0.3 on 2026-06-03.
@@ -115,7 +119,7 @@ jobs:
           path: |
             .release-input
             .release-gate/out
-          if-no-files-found: error
+          if-no-files-found: warn
 
   release_bundle:
     name: Release Bundle Ubuntu Node 22
@@ -215,7 +219,7 @@ jobs:
             .release-smoke/out .release-gate/out CHANGELOG.md NOTICE.md \
             docs/compatibility-matrix.md docs/branch-protection.md \
             docs/release-process.md docs/release-qa-checklist.md \
-            docs/releases/v0.3.0-beta.1-n5-automation-preview.md
+            docs/releases/v0.3.0-beta.2-n5-automation-preview.md
 
       - name: Generate and verify release asset checksums
         run: |

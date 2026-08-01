@@ -8,7 +8,7 @@ This document defines the tagged release procedure. A release claim is valid onl
 - Add a dated section to [CHANGELOG.md](../CHANGELOG.md) for every released version.
 - Keep `## [Unreleased]` at the top of the changelog while work is in flight.
 - Keep `## [Unreleased]` release-facing and concise. Detailed per-card and per-batch review history belongs in git commit messages, tracked review manifests, and gate output, not in the tagged release bundle.
-- Create Git tags as `v<package.json version>`, for example `v0.3.0-beta.1`.
+- Create Git tags as `v<package.json version>`, for example `v0.3.0-beta.2`.
 - Never move or reuse a failed release tag. Correct through protected `main` and issue a new semantic prerelease version.
 
 ## Release classes
@@ -27,7 +27,7 @@ An `automation-reviewed-preview` packet must use a semantic prerelease version, 
 - listening-naturalness-not-performed
 - stroke-sequence-visual-review-not-performed
 
-Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.1 N5 automation-reviewed preview](releases/v0.3.0-beta.1-n5-automation-preview.md).
+Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.2 N5 automation-reviewed preview](releases/v0.3.0-beta.2-n5-automation-preview.md). The immutable `v0.3.0-beta.1` tag is a failed, unpublished attempt retained as evidence and must never be moved or reused.
 
 ## Pre-merge release-process change
 
@@ -68,7 +68,7 @@ Both jobs revalidate packet/asset bindings and APKG structures. The verification
 - `.release-bundle/release-verification-materials.tar.gz`
 - `.release-bundle/release-artifacts.sha256`
 
-The bundle job checksums all staged files, verifies the checksum manifest, creates provenance and SBOM attestations for every staged asset, runs constrained `gh attestation verify` for every asset, uploads the immutable Actions artifact, uploads/clobbers those exact GitHub release assets, and only then publishes the draft as a prerelease. Top-level workflow permissions remain read-only; `contents: write`, OIDC, and attestation writes are scoped to this publishing job.
+The bundle job checksums all staged files, verifies the checksum manifest, creates provenance and SBOM attestations for every staged asset, runs constrained `gh attestation verify` for every asset, uploads the immutable Actions artifact, uploads/clobbers those exact GitHub release assets, and only then publishes the draft as a prerelease. Top-level workflow permissions remain read-only. The verification job receives only job-scoped `contents: write` because GitHub requires push-level access to query and download a private draft release; it has no publication step. The bundle job separately receives job-scoped `contents: write`, OIDC, and attestation permissions for publication.
 
 The deterministic verification-material archive contains smoke/release-gate outputs and the tracked release documentation. Ignored local inputs such as `data/`, `downloads/`, `.env`, caches, and `node_modules` must never enter the release bundle.
 

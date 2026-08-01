@@ -55,6 +55,8 @@ test("release workflow is tag-driven and publishes release artifacts", () => {
     assert.equal(workflow.includes('test "${GITHUB_REF_TYPE}" = "tag"'), true);
     assert.equal(workflow.includes("Release Verify Ubuntu Node 22"), true);
     assert.equal(workflow.includes("Release Bundle Ubuntu Node 22"), true);
+    assert.match(workflow, /release_verify:\s*\n(?: {4}.*\n)*? {4}permissions:\s*\n {6}contents: write/u);
+    assert.match(workflow, /name: release-verification-\$\{\{ github\.ref_name \}\}[\s\S]*?if-no-files-found: warn/u);
     assert.equal(workflow.includes("npm run security:licenses"), true);
     assert.equal(workflow.includes("npm run security:requirements"), true);
     assert.equal(workflow.includes(".release-bundle/dependency-licenses.json"), true);

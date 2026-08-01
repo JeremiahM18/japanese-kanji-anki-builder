@@ -34,7 +34,7 @@ The command is deterministic and uses only repository files. It checks:
 - every npm override has an exact tracked entry in [../templates/dependency_security_overrides.json](../templates/dependency_security_overrides.json), including parent/package/version binding, advisory, scope, rationale, validation commands, range compatibility, and a non-overdue next-review date.
 - dependency license expressions match the reviewed allowlist or current exception policy.
 - GitHub Actions are pinned to reviewed commit SHAs.
-- workflows keep permissions to `contents: read`.
+- workflows keep top-level permissions to `contents: read`; the tagged release verification and bundle jobs use separately reviewed job-scoped exceptions.
 - every workflow job audits supply-chain policy before `npm ci`.
 - every workflow `npm ci` step sets `ONNXRUNTIME_NODE_INSTALL=skip` so CI installs the reviewed ONNX CPU runtime package from npm without attempting the Linux CUDA NuGet side-download.
 - the release workflow publishes only the governed smoke/gate outputs, release docs, NOTICE, changelog, and checksum manifest.
@@ -113,7 +113,7 @@ permissions:
   contents: read
 ```
 
-Do not add broad write permissions or release-publishing permissions without a separate threat-model update. `contents: write`, `id-token: write`, `attestations: write`, and `artifact-metadata: write` are allowed exactly once and only in the tagged release bundle job: content write uploads the already verified assets and publishes the existing draft prerelease, while OIDC/attestation writes create Sigstore-backed provenance and SBOM attestations. Top-level and verification-job permissions remain read-only.
+Do not add broad write permissions or release-publishing permissions without a separate threat-model update. The tagged release verification job has one job-scoped `contents: write` grant because GitHub requires push-level repository access to query and download a private draft release; that job has no release-upload or publication step. The tagged release bundle job has a separate job-scoped `contents: write` grant plus the only `id-token: write`, `attestations: write`, and `artifact-metadata: write` grants: content write uploads the already verified assets and publishes the existing draft prerelease, while OIDC/attestation writes create Sigstore-backed provenance and SBOM attestations. Top-level permissions remain read-only.
 
 Branch protection policy is tracked in `.github/branch-protection.main.json`. `npm run security:branch-protection` verifies that the policy, docs, and CI job names stay aligned before install and release jobs continue.
 

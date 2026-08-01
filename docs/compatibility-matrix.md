@@ -24,9 +24,9 @@ This document defines the supported compatibility surface for shipped deck artif
 
 | Client | Status | Notes |
 | --- | --- | --- |
-| Anki desktop (Windows) | Intended; unverified for `v0.3.0-beta.1` | Native import/render QA was not performed for the automation-reviewed preview |
-| Anki desktop (macOS) | Intended; unverified for `v0.3.0-beta.1` | Native import/render QA was not performed for the automation-reviewed preview |
-| Anki desktop (Linux) | Intended; unverified for `v0.3.0-beta.1` | APKG structure is inspected, but native client behavior was not exercised |
+| Anki desktop (Windows) | Intended; unverified for `v0.3.0-beta.2` | Native import/render QA was not performed for the automation-reviewed preview |
+| Anki desktop (macOS) | Intended; unverified for `v0.3.0-beta.2` | Native import/render QA was not performed for the automation-reviewed preview |
+| Anki desktop (Linux) | Intended; unverified for `v0.3.0-beta.2` | APKG structure is inspected, but native client behavior was not exercised |
 | AnkiDroid | Unverified preview target | Mobile QA was not performed |
 | AnkiMobile | Unverified preview target | Mobile QA was not performed |
 
@@ -38,7 +38,7 @@ Production/GA requires native import, rendering, stroke-order, audio, badge, acc
 
 Kanji APKG notes use the governed kanji identity. Word APKG notes use the repository's exact `written|reading` identity, so same-written alternate readings remain distinct Anki notes with distinct deterministic GUIDs.
 
-Word APKGs generated before `v0.3.0-beta.1` may have used written-only GUIDs. When testing this preview after importing an earlier locally generated word deck, use a fresh Anki profile or remove that earlier test deck before import; do not assume an in-place upgrade will reconcile the changed note identity without duplicates. This is an explicit preview migration boundary, not a native-client compatibility claim.
+Word APKGs generated before `v0.3.0-beta.1` may have used written-only GUIDs. When testing `v0.3.0-beta.2` after importing an earlier locally generated word deck, use a fresh Anki profile or remove that earlier test deck before import; do not assume an in-place upgrade will reconcile the changed note identity without duplicates. This is an explicit preview migration boundary, not a native-client compatibility claim.
 
 ## Non-goals
 

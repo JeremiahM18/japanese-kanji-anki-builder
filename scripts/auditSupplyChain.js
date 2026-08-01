@@ -554,10 +554,14 @@ function auditWorkflowFile({ relativePath, text }) {
         );
     }
     for (const permissionException of permissionExceptions) {
+        const expectedOccurrences = relativePath === ".github/workflows/release.yml"
+            && permissionException === "contents: write"
+            ? 2
+            : 1;
         assertCondition(
-            countOccurrences(text, permissionException) === 1,
+            countOccurrences(text, permissionException) === expectedOccurrences,
             errors,
-            `${relativePath} may request ${permissionException} exactly once for its reviewed security workflow job.`
+            `${relativePath} may request ${permissionException} exactly ${expectedOccurrences} time(s) for its reviewed security workflow jobs.`
         );
     }
     if (permissionExceptions.has("security-events: write")) {
@@ -568,6 +572,11 @@ function auditWorkflowFile({ relativePath, text }) {
         );
     }
     if (permissionExceptions.has("id-token: write")) {
+        assertCondition(
+            /^  release_verify:\s*\r?\n(?: {4}.*\r?\n)*? {4}permissions:\s*\r?\n {6}contents:\s+write/mu.test(text),
+            errors,
+            `${relativePath} must scope one contents: write grant to the release verification job so it can read the private draft release.`
+        );
         assertCondition(
             /^\s{4}permissions:\s*\r?\n\s{6}contents:\s+write\r?\n\s{6}id-token:\s+write\r?\n\s{6}attestations:\s+write\r?\n\s{6}artifact-metadata:\s+write/mu.test(text),
             errors,

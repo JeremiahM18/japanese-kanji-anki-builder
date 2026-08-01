@@ -8,9 +8,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 No unreleased changes. Keep future entries release-facing and concise; detailed work belongs in git commit messages and tracked review manifests.
 
+## [0.3.0-beta.3] - 2026-08-01
+
+`0.3.0-beta.3` is the next N5-only **automation-reviewed preview** candidate. The immutable `v0.3.0-beta.2` workflow verified the draft boundary, exact assets, packet, APKG structure, supply-chain controls, advisories, and tests, then failed closed because the local-data N5 coordinator was incorrectly invoked from a clean checkout without ignored `data/kanji_jlpt_only.json`. No beta.2 bundle, attestation, or published release was created.
+
+### Added
+
+- Added an explicit `product:readiness:n5 -- --tracked-only` hosted mode that derives its runtime level map from the tracked JLPT contract, isolates every ignored data/cache/media/build path in a disposable workspace, runs only clean-checkout-compatible checks, and states the local evidence it does not prove.
+- Extended release APKG inspection with mandatory `--require-golden` release evidence: all 80 packaged N5 kanji notes and all 588 exact `written|reading` word notes must satisfy their tracked full-level Golden fields with no missing, duplicate, unmatched, or extra rows.
+- Added regressions for tracked-only scope forwarding and input isolation, cleanup of the generated workspace, exact packaged Golden coverage, and fail-closed Golden field mismatch behavior.
+
+### Changed
+
+- The tagged Release workflow now combines the six-check clean-hosted N5 coordinator with exact downloaded-APKG Golden inspection, while the packet remains bound to the full local-data N5 coordinator and managed-media evidence.
+- Advanced the immutable release candidate to `v0.3.0-beta.3`; `v0.3.0-beta.1` and `v0.3.0-beta.2` remain failed, unpublished evidence and must not be moved or reused.
+- Preserved the tracked downstream backlog outside this N5 release: N3 word Gold review from `8/1099` to `1081/1099`; Gold now has `18` generated rows still missing, current-standard Sapphire remains `1038/1099`, Platinum remains `8/1099`, and N3 word remains excluded from this candidate.
+
 ## [0.3.0-beta.2] - 2026-08-01
 
-`0.3.0-beta.2` is an **automation-reviewed preview** for the N5 core kanji and N5 core word decks only. Human desktop/mobile/screen-reader/listening/stroke-sequence QA was not performed and is explicitly accepted under `PROD-REL-001`; this prerelease must not be represented as production/GA or human-approved. The immutable `v0.3.0-beta.1` tag failed closed before any release input was downloaded because the verification job could not access the private draft release; no beta.1 release was published or reused.
+`0.3.0-beta.2` was an N5-only **automation-reviewed preview** attempt. Its immutable tagged workflow failed closed at the N5 readiness coordinator because a clean checkout does not contain ignored local JLPT runtime data. No bundle, attestation, or published beta.2 release was created. Human desktop/mobile/screen-reader/listening/stroke-sequence QA was not performed or claimed.
 
 ### Added
 
@@ -32,7 +48,7 @@ No unreleased changes. Keep future entries release-facing and concise; detailed 
 - Advanced the N4 word Silver generated surface through governed common-pool review from `739` to `1001` rows, raising the all-level word denominator from `2525` to `2787` and the current N5/N4 word Obsidian v2.5 denominator from `1327` to `1589`; the new N4 rows remain lower-lane backlog until Gold, Sapphire, Platinum, and Obsidian catch up.
 - Updated word lane status after the full N5 routed move-candidate target-level sweep: active N3 Silver is now `1099/1099` canonical rows, N3 word Gold review from `8/1099` to `1081/1099` is partial, Gold now has `18` generated rows still missing Gold, and current-standard Sapphire remains `1038/1099` with `61` generated rows still missing Sapphire. Platinum remains `8/1099` current-standard with `1091` generated rows still missing Platinum; N2 and N1 Silver card fields are complete at `61/61` and `38/38`; reading readiness remains incomplete for N3/N2/N1; N3 word is not locked/released; and no N3 word Obsidian proof is recorded.
 
-Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. This preview ships only N5 core kanji and N5 core words. The broader scoped `0.2.0` historical lock does not expand the `0.3.0-beta.2` artifact scope; every other level remains excluded.
+Release notes are intentionally release-facing. Per-card and per-batch review detail belongs in git commit messages, tracked review manifests, and gate output; use live commands for release decisions. This failed candidate covered only N5 core kanji and N5 core words. The broader scoped `0.2.0` historical lock did not expand the `0.3.0-beta.2` artifact scope.
 
 ## [0.2.0] - 2026-06-10
 

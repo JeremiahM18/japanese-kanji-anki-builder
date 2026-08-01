@@ -70,7 +70,7 @@ npm run security:licenses
 npm run security:secrets
 npm run security:sbom
 npm run product:release-qa:evidence -- --packet=<download-directory>/release-qa-evidence.json --artifact-dir=<download-directory> --expected-tag=<tag>
-npm run product:release-qa:apkg-inspect -- --packet=<download-directory>/release-qa-evidence.json --artifact-dir=<download-directory>
+npm run product:release-qa:apkg-inspect -- --packet=<download-directory>/release-qa-evidence.json --artifact-dir=<download-directory> --require-golden
 npm test
 npm run release:gate
 ```

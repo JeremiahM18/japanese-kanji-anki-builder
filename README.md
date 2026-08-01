@@ -29,9 +29,9 @@ Tracked contracts, live commands, generated reports, hosted audits, and release 
 
 ## Current Release Target
 
-`v0.3.0-beta.2` is the first intentionally distributable target: an N5-only automation-reviewed preview containing the core N5 kanji and core N5 word APKGs. It excludes every other level and additional-unverified kanji. The required public label is `AUTOMATION-REVIEWED PREVIEW - HUMAN DEVICE QA NOT PERFORMED`. The earlier `v0.3.0-beta.1` tag failed closed before release inputs were downloaded and was never published; it is retained only as immutable failure evidence.
+`v0.3.0-beta.3` is the first intentionally distributable target: an N5-only automation-reviewed preview containing the core N5 kanji and core N5 word APKGs. It excludes every other level and additional-unverified kanji. The required public label is `AUTOMATION-REVIEWED PREVIEW - HUMAN DEVICE QA NOT PERFORMED`. The earlier `v0.3.0-beta.1` and `v0.3.0-beta.2` tags both failed closed before publication and are retained only as immutable failure evidence.
 
-All available automated content, source, media, APKG-structure, security, checksum, SBOM, provenance, and attestation controls remain mandatory. Desktop/mobile native import, interactive screen-reader, listening/naturalness, and stroke-sequence visual review are not available for this preview and are explicitly accepted—not claimed as passed—under `PROD-REL-001`. See [the exact release scope](docs/releases/v0.3.0-beta.2-n5-automation-preview.md).
+All available automated content, source, media, APKG-structure, packaged full-level Golden regression, security, checksum, SBOM, provenance, and attestation controls remain mandatory. Desktop/mobile native import, interactive screen-reader, listening/naturalness, and stroke-sequence visual review are not available for this preview and are explicitly accepted—not claimed as passed—under `PROD-REL-001`. See [the exact release scope](docs/releases/v0.3.0-beta.3-n5-automation-preview.md).
 
 ## Quick Start
 

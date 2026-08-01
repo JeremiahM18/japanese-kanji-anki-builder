@@ -85,7 +85,7 @@
     },
     {
       "id": "apkg-structural-inspection",
-      "command": "npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>",
+      "command": "npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory> --require-golden",
       "status": "pending",
       "reviewer": "",
       "reviewedAt": "",

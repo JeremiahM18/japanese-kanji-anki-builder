@@ -284,7 +284,7 @@
         "npm run security:licenses:write",
         "npm run security:sbom",
         "npm run product:release-qa:evidence",
-        "npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir>",
+        "npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir> --require-golden",
         "npm run release:gate",
         "npm run security:github-settings",
         "npm run security:github-settings:auth"

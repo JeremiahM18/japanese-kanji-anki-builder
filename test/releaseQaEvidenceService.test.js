@@ -147,7 +147,7 @@ function passingPacket(fixture, { releaseClass = "automation-reviewed-preview" }
             }),
             reviewedEvidence(fixture.repositoryCommit, {
                 id: "apkg-structural-inspection",
-                command: "npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=out/run-outputs/n5-release-fixture",
+                command: "npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=out/run-outputs/n5-release-fixture --require-golden",
             }),
         ],
         artifactQaEvidence: REQUIRED_ARTIFACT_QA_EVIDENCE_IDS.map((id) => (

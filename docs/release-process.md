@@ -8,7 +8,7 @@ This document defines the tagged release procedure. A release claim is valid onl
 - Add a dated section to [CHANGELOG.md](../CHANGELOG.md) for every released version.
 - Keep `## [Unreleased]` at the top of the changelog while work is in flight.
 - Keep `## [Unreleased]` release-facing and concise. Detailed per-card and per-batch review history belongs in git commit messages, tracked review manifests, and gate output, not in the tagged release bundle.
-- Create Git tags as `v<package.json version>`, for example `v0.3.0-beta.2`.
+- Create Git tags as `v<package.json version>`, for example `v0.3.0-beta.3`.
 - Never move or reuse a failed release tag. Correct through protected `main` and issue a new semantic prerelease version.
 
 ## Release classes
@@ -27,7 +27,7 @@ An `automation-reviewed-preview` packet must use a semantic prerelease version, 
 - listening-naturalness-not-performed
 - stroke-sequence-visual-review-not-performed
 
-Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.2 N5 automation-reviewed preview](releases/v0.3.0-beta.2-n5-automation-preview.md). The immutable `v0.3.0-beta.1` tag is a failed, unpublished attempt retained as evidence and must never be moved or reused.
+Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.3 N5 automation-reviewed preview](releases/v0.3.0-beta.3-n5-automation-preview.md). The immutable `v0.3.0-beta.1` and `v0.3.0-beta.2` tags are failed, unpublished attempts retained as evidence and must never be moved or reused.
 
 ## Pre-merge release-process change
 
@@ -50,7 +50,7 @@ Every achievable automated gate remains mandatory. This release class is not pro
    - automated, artifact-QA, and source-governance evidence bound to the same commit
    - passed or class-permitted accepted-risk artifact QA evidence
    - exact source-governance posture and an explicit empty `knownBlockers`
-4. Run `npm run product:release-qa:evidence` and `npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory>`. The inspector independently validates ZIP safety/integrity, exact media membership, SQLite integrity/schema, Anki collection version, deck names, note/card/media counts, field cardinality, GUID/card references, and packaged media references.
+4. Run `npm run product:release-qa:evidence` and `npm run product:release-qa:apkg-inspect -- --packet=out/release-qa/release-qa-evidence.json --artifact-dir=<candidate-package-directory> --require-golden`. The inspector independently validates ZIP safety/integrity, exact media membership, SQLite integrity/schema, Anki collection version, deck names, note/card/media counts, field cardinality, GUID/card references, packaged media references, and every packaged learner-facing row against the tracked full-level Golden manifest.
 5. Confirm [compatibility-matrix.md](compatibility-matrix.md), [release-qa-checklist.md](release-qa-checklist.md), [CHANGELOG.md](../CHANGELOG.md), and [NOTICE.md](../NOTICE.md) match the exact release.
 6. Create a **draft** GitHub prerelease for the intended tag, targeting the exact protected-main commit. Upload only `release-qa-evidence.json` and the APKGs named by the packet. Do not publish it and do not add undeclared assets.
 7. Create the local tag at the same commit, then create the draft prerelease with `--target=<full-commit>`. GitHub CLI documents that a release whose tag does not exist may create the remote tag automatically. Resolve the actual remote state with `git ls-remote --tags origin refs/tags/<tag>`: if absent, push the local tag and let the tag-push event start [.github/workflows/release.yml](../.github/workflows/release.yml); if already present at the exact commit, run `gh workflow run release.yml --ref <tag>`. Never dispatch against a branch, and fail if the remote tag resolves to another commit.
@@ -92,10 +92,10 @@ npm run security:release-trust
 | Gate | Proves | Does not prove |
 | --- | --- | --- |
 | `release:gate` | Smoke-fixture TSV/package/media contracts and optional smoke APKG creation. | Product APKG readiness, content-lane completion, human/device QA, or public release trust. |
-| `product:readiness:n5` | Current automated N5 source/artifact, placement, audio-policy, and Gold coordinator checks. | Exact APKG bytes, Platinum/Obsidian by itself, release assets, human/device QA, or hosted provenance. |
+| `product:readiness:n5` | Full local-data N5 source/artifact, placement, managed-audio-policy, and generated Gold coordinator checks. Its explicit `--tracked-only` hosted mode runs the six clean-checkout-compatible checks in an isolated workspace. | Exact APKG bytes, Platinum/Obsidian by itself, release assets, human/device QA, or hosted provenance; tracked-only mode also excludes local media provenance and regenerated local Gold. |
 | `product:artifacts:kanji:release-qa` | Strict production/GA manual product-QA boundary. | Permission to relabel missing human QA as passed. Its expected failure does not block a correctly governed automation-reviewed prerelease. |
 | `product:release-qa:evidence` | Packet-v3 version/tag/commit/class, exact APKG metadata and hashes, commit-bound automated/artifact evidence, source posture, preview-risk policy, and no hidden blockers. With `--artifact-dir` it also requires exact downloaded asset membership. | APKG internals, execution of named commands, human perception, device behavior, or hosted attestations. |
-| `product:release-qa:apkg-inspect` | APKG ZIP/media/SQLite/deck/note/card/field/reference structural integrity against packet counts. | Native Anki rendering, mobile behavior, screen-reader interaction, listening naturalness, or stroke-sequence visual correctness. |
+| `product:release-qa:apkg-inspect -- --require-golden` | APKG ZIP/media/SQLite/deck/note/card/field/reference structural integrity against packet counts plus exact packaged-row coverage and learner-facing field regression against tracked full-level Golden manifests. | Native Anki rendering, mobile behavior, screen-reader interaction, listening naturalness, or stroke-sequence visual correctness. |
 | `security:release-trust:pre` | All pre-tag release blockers except the explicitly deferred post-tag attestation records. | Successful hosted tag execution or final release trust. |
 | `security:release-trust` | No unresolved high/critical release-blocker risk and no unimplemented release-blocker requirement. | Product quality outside recorded evidence or private human-review activity. |
 

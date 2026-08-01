@@ -171,7 +171,7 @@ Current artifacts:
 - [../scripts/validateReleaseQaEvidence.js](../scripts/validateReleaseQaEvidence.js)
 - [../src/services/releaseQaEvidenceService.js](../src/services/releaseQaEvidenceService.js)
 
-Current commands: `npm run product:release-qa:evidence` and `npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir>`.
+Current commands: `npm run product:release-qa:evidence` and `npm run product:release-qa:apkg-inspect -- --packet=<packet> --artifact-dir=<dir> --require-golden`.
 
 Remaining limitation: the evidence validator proves metadata/file/evidence-policy binding, and the APKG inspector proves ZIP/media/SQLite/deck/note/card/field/reference structure. Neither performs native Anki rendering, mobile review, interactive screen-reader review, listening/naturalness review, stroke-sequence visual review, or source-access work. Those checks are either passed for production or explicitly disclosed as accepted preview limitations.
 

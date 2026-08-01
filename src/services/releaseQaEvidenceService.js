@@ -38,7 +38,7 @@ const REQUIRED_AUTOMATED_EVIDENCE_COMMANDS = Object.freeze({
     "release-gate": "npm run release:gate",
     "n5-readiness": "npm run product:readiness:n5",
 });
-const APKG_INSPECTION_COMMAND_PATTERN = /^npm run product:release-qa:apkg-inspect -- --packet=out\/release-qa\/release-qa-evidence\.json --artifact-dir=\S+$/u;
+const APKG_INSPECTION_COMMAND_PATTERN = /^npm run product:release-qa:apkg-inspect -- --packet=out\/release-qa\/release-qa-evidence\.json --artifact-dir=\S+ --require-golden$/u;
 
 const REQUIRED_AUTOMATION_PREVIEW_LIMITATIONS = Object.freeze([
     "desktop-anki-import-not-performed",

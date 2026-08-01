@@ -65,6 +65,9 @@ test("release workflow is tag-driven and publishes release artifacts", () => {
     assert.equal(workflow.includes("gh attestation verify"), true);
     assert.equal(workflow.includes("npm run product:release-qa:evidence"), true);
     assert.equal(workflow.includes("npm run product:release-qa:apkg-inspect"), true);
+    assert.equal(workflow.includes("--artifact-dir=\"${RELEASE_INPUT_DIR}\" --require-golden"), true);
+    assert.equal(workflow.includes("npm run product:readiness:n5 -- --tracked-only"), true);
+    assert.equal(workflow.includes("npm run product:readiness:n5\n"), false);
     assert.equal(workflow.includes("gh release upload"), true);
     assert.equal(workflow.includes("--draft=false --prerelease --verify-tag"), true);
     assert.equal(workflow.includes("docs/release-process.md"), true);

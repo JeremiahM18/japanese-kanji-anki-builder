@@ -50,7 +50,11 @@ function buildFixture(python, tempRoot, deckKind = "kanji") {
     return JSON.parse(build.stdout);
 }
 
-function runInspector(python, packetPath, artifactDirectory, json = false) {
+function runInspector(python, packetPath, artifactDirectory, {
+    json = false,
+    requireGolden = false,
+    goldenDirectory = null,
+} = {}) {
     return spawnSync(
         python.command,
         [
@@ -58,6 +62,8 @@ function runInspector(python, packetPath, artifactDirectory, json = false) {
             path.join(process.cwd(), "scripts", "inspectReleaseApkg.py"),
             `--packet=${packetPath}`,
             `--artifact-dir=${artifactDirectory}`,
+            ...(requireGolden ? ["--require-golden"] : []),
+            ...(goldenDirectory ? [`--golden-dir=${goldenDirectory}`] : []),
             ...(json ? ["--json"] : []),
         ],
         { cwd: process.cwd(), encoding: "utf-8" }
@@ -77,6 +83,14 @@ test("release APKG inspector verifies archive, SQLite, decks, counts, fields, ca
     const releaseAssetName = "japanese-kanji-builder-n5.apkg";
     fs.copyFileSync(build.filePath, path.join(artifactDirectory, releaseAssetName));
     const packetPath = path.join(tempRoot, "packet.json");
+    const goldenDirectory = path.join(tempRoot, "golden");
+    writeFile(path.join(goldenDirectory, "golden_n5_review_set.json"), JSON.stringify([{
+        kanji: "日",
+        readingIncludes: ["ひ"],
+        meaningIncludes: ["day"],
+        notesIncludes: ["日本"],
+        exampleIncludes: ["今日はいい日です"],
+    }]));
     writeFile(packetPath, JSON.stringify({
         scope: {
             releaseCandidateId: "fixture",
@@ -91,7 +105,11 @@ test("release APKG inspector verifies archive, SQLite, decks, counts, fields, ca
         },
     }));
 
-    const result = runInspector(python, packetPath, artifactDirectory, true);
+    let result = runInspector(python, packetPath, artifactDirectory, {
+        json: true,
+        requireGolden: true,
+        goldenDirectory,
+    });
     assert.equal(result.status, 0, result.stderr || result.stdout);
     const report = JSON.parse(result.stdout);
     assert.equal(report.status, "pass");
@@ -99,7 +117,19 @@ test("release APKG inspector verifies archive, SQLite, decks, counts, fields, ca
     assert.equal(report.artifacts[0].notes, 1);
     assert.equal(report.artifacts[0].cards, 1);
     assert.equal(report.artifacts[0].mediaEntries, build.mediaFileCount);
+    assert.equal(report.artifacts[0].goldenExpectations, 1);
     assert.deepEqual(report.artifacts[0].decks, ["Japanese Kanji Builder::JLPT N5"]);
+
+    writeFile(path.join(goldenDirectory, "golden_n5_review_set.json"), JSON.stringify([{
+        kanji: "日",
+        readingIncludes: ["missing-reading"],
+    }]));
+    result = runInspector(python, packetPath, artifactDirectory, {
+        requireGolden: true,
+        goldenDirectory,
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /tracked Golden APKG field inspection failed/u);
 });
 
 test("release APKG inspector verifies the shipped word-deck contract", {
@@ -113,6 +143,19 @@ test("release APKG inspector verifies the shipped word-deck contract", {
     const releaseAssetName = "japanese-kanji-builder-words-n5.apkg";
     fs.copyFileSync(build.filePath, path.join(artifactDirectory, releaseAssetName));
     const packetPath = path.join(tempRoot, "packet.json");
+    const goldenDirectory = path.join(tempRoot, "golden");
+    writeFile(path.join(goldenDirectory, "golden_n5_word_review_set.json"), JSON.stringify([{
+        word: "春雨",
+        readingIncludes: ["はるさめ"],
+        meaningIncludes: ["glass noodles"],
+        jlptLevelIncludes: ["JLPT N5"],
+        coverageRoleIncludes: ["Reading coverage support"],
+        focusIncludes: ["雨"],
+        coversReadingIncludes: ["雨: さめ"],
+        breakdownIncludes: ["春 （はる） ／ spring", "雨 （さめ） ／ rain"],
+        exampleIncludes: ["春雨スープを食べます"],
+        notesIncludes: ["Common food and seasonal word"],
+    }]));
     writeFile(packetPath, JSON.stringify({
         scope: {
             releaseCandidateId: "fixture",
@@ -127,13 +170,37 @@ test("release APKG inspector verifies the shipped word-deck contract", {
         },
     }));
 
-    const result = runInspector(python, packetPath, artifactDirectory, true);
+    const result = runInspector(python, packetPath, artifactDirectory, {
+        json: true,
+        requireGolden: true,
+        goldenDirectory,
+    });
     assert.equal(result.status, 0, result.stderr || result.stdout);
     const report = JSON.parse(result.stdout);
     assert.equal(report.status, "pass");
     assert.deepEqual(report.artifacts[0].decks, ["Japanese Kanji Builder::Word Deck::JLPT N5"]);
     assert.equal(report.artifacts[0].notes, 1);
     assert.equal(report.artifacts[0].cards, 1);
+    assert.equal(report.artifacts[0].goldenExpectations, 1);
+
+    writeFile(path.join(goldenDirectory, "golden_n5_word_review_set.json"), JSON.stringify([{
+        word: "春雨",
+        readingIncludes: ["はる"],
+        meaningIncludes: ["glass noodles"],
+        jlptLevelIncludes: ["JLPT N5"],
+        coverageRoleIncludes: ["Reading coverage support"],
+        focusIncludes: ["雨"],
+        coversReadingIncludes: ["雨: さめ"],
+        breakdownIncludes: ["春 （はる） ／ spring", "雨 （さめ） ／ rain"],
+        exampleIncludes: ["春雨スープを食べます"],
+        notesIncludes: ["Common food and seasonal word"],
+    }]));
+    const inexactIdentity = runInspector(python, packetPath, artifactDirectory, {
+        requireGolden: true,
+        goldenDirectory,
+    });
+    assert.notEqual(inexactIdentity.status, 0);
+    assert.match(inexactIdentity.stderr, /expected one APKG note for Golden word/u);
 });
 
 test("release APKG inspector fails closed on declared-count mismatch and unsafe archive members", {

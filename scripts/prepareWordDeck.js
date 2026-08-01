@@ -180,7 +180,10 @@ function formatWordDeckReadyReport(summary, doctorReport) {
                     ]
                     : []),
                 ...(triage
-                    ? [`  triage backlog: ${triage.editorialReviewItems} review-needed before card work, ${triage.promoteCuratedExampleItems} actionable curated candidates, ${triage.deferVariantItems} deferred variants or low learner value`]
+                    ? [
+                        `  triage backlog: ${triage.editorialReviewItems} review-needed before card work, ${triage.promoteCuratedExampleItems} actionable curated candidates, ${triage.deferVariantItems} deferred variants or low learner value`,
+                        `  triage override alignment: ${triage.configuredOverrideItems || 0} tracked dispositions, ${triage.defaultDispositionItems || 0} unconfigured defaults, ${triage.staleOverrideItems || 0} stale tracked overrides`,
+                    ]
                     : []),
             ];
         })

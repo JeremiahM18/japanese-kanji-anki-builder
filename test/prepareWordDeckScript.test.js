@@ -108,6 +108,9 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
                     editorialReviewItems: 147,
                     promoteCuratedExampleItems: 0,
                     deferVariantItems: 16,
+                    configuredOverrideItems: 160,
+                    defaultDispositionItems: 2,
+                    staleOverrideItems: 1,
                 },
             },
             pitchAccentReviewByLevel: {
@@ -169,6 +172,7 @@ test("formatWordDeckReadyReport surfaces reading coverage health alongside vocab
     assert.match(text, /card back fields: reading 258\/258, furigana breakdown 258\/258, audio 258\/258/);
     assert.match(text, /pitch accent review: 0% \(0\/258\) annotated, 258 missing, 0 ungoverned, 0 source\/render mismatches, 0 invalid source patterns, 0 source identity issues, 0 generated labels missing, field present/);
     assert.match(text, /triage backlog: 147 review-needed before card work, 0 actionable curated candidates, 16 deferred variants or low learner value/);
+    assert.match(text, /triage override alignment: 160 tracked dispositions, 2 unconfigured defaults, 1 stale tracked overrides/);
     assert.match(text, /True looping animation coverage: 100% \(166\/166\)/);
     assert.match(text, /True looping animation assets: 165/);
     assert.match(text, /Canonical inventory counts: N5=258, N4=6/);

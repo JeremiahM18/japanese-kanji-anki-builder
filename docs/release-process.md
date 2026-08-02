@@ -27,7 +27,7 @@ An `automation-reviewed-preview` packet must use a semantic prerelease version, 
 - listening-naturalness-not-performed
 - stroke-sequence-visual-review-not-performed
 
-Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current exact decision is [v0.3.0-beta.5 N5 automation-reviewed preview](releases/v0.3.0-beta.5-n5-automation-preview.md). Published `v0.3.0-beta.4` remains immutable; `v0.3.0-beta.1`, `v0.3.0-beta.2`, and `v0.3.0-beta.3` are failed, unpublished attempts retained as evidence. No prior tag may be moved or reused.
+Every achievable automated gate remains mandatory. This release class is not production/GA, human-approved, device-approved, or an accessibility-conformance claim. The current published release is [v0.3.0-beta.5 N5 automation-reviewed preview](releases/v0.3.0-beta.5-n5-automation-preview.md). Published `v0.3.0-beta.4` remains its immutable predecessor; `v0.3.0-beta.1`, `v0.3.0-beta.2`, and `v0.3.0-beta.3` are failed, unpublished attempts retained as evidence. No prior tag may be moved or reused.
 
 ## Pre-merge release-process change
 

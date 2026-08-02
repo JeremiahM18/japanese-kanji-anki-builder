@@ -29,7 +29,7 @@ Tracked contracts, live commands, generated reports, hosted audits, and release 
 
 ## Current Release Target
 
-`v0.3.0-beta.5` is the current exact release candidate: an N5-only automation-reviewed preview containing the core N5 kanji and core N5 word APKGs. It excludes every other level and additional-unverified kanji. The required public label is `AUTOMATION-REVIEWED PREVIEW - HUMAN DEVICE QA NOT PERFORMED`. Published `v0.3.0-beta.4` remains the immutable predecessor; the earlier `v0.3.0-beta.1`, `v0.3.0-beta.2`, and `v0.3.0-beta.3` tags failed closed before publication and are retained only as immutable failure evidence.
+`v0.3.0-beta.5` is the current published N5-only automation-reviewed prerelease containing the core N5 kanji and core N5 word APKGs. It excludes every other level and additional-unverified kanji. The required public label is `AUTOMATION-REVIEWED PREVIEW - HUMAN DEVICE QA NOT PERFORMED`. Published `v0.3.0-beta.4` remains its immutable predecessor; the earlier `v0.3.0-beta.1`, `v0.3.0-beta.2`, and `v0.3.0-beta.3` tags failed closed before publication and are retained only as immutable failure evidence.
 
 All available automated content, source, media, APKG-structure, packaged full-level Golden regression, security, checksum, SBOM, provenance, and attestation controls remain mandatory. Desktop/mobile native import, interactive screen-reader, listening/naturalness, and stroke-sequence visual review are not available for this preview and are explicitly accepted—not claimed as passed—under `PROD-REL-001`. See [the exact release scope](docs/releases/v0.3.0-beta.5-n5-automation-preview.md).
 

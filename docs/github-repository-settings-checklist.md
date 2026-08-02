@@ -37,7 +37,7 @@ Do not commit, paste, or log a token.
 
 ## 2026-08-01 Live Result
 
-Authenticated owner audit was rerun on 2026-08-01 against hosted `main` at `f9b7c3f2423c5f26edc3c88857e3aedac44aeede`. The hosted `main` branch matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `276` packages, Dependabot security updates are enabled and not paused, open CodeQL alerts are `0`, open secret-scanning alerts are `0`, open Dependabot alerts are `0`, and the latest hosted CI, CodeQL, and tagged Release conclusions are `success`. Tagged workflow `30706783927` proved constrained all-file attestation verification and published the `v0.3.0-beta.4` prerelease.
+Authenticated owner audit was rerun on 2026-08-01 against hosted `main` at `b9a820630cec9d53ebec8e06969ee0d4f658fba1`. The hosted `main` branch matches the tracked branch-protection policy, GitHub secret scanning and push protection are enabled, private vulnerability reporting is enabled, Dependency Graph SBOM is readable with `276` packages, Dependabot security updates are enabled and not paused, open CodeQL alerts are `0`, open secret-scanning alerts are `0`, open Dependabot alerts are `0`, and the latest hosted CI, CodeQL, and tagged Release conclusions are `success`. Tagged workflow `30726889778` proved constrained all-file attestation verification and published the `v0.3.0-beta.5` prerelease.
 
 | Setting | Live result | Status |
 | --- | --- | --- |
@@ -56,17 +56,17 @@ Authenticated owner audit was rerun on 2026-08-01 against hosted `main` at `f9b7
 | Dependency Review | Hosted `.github/workflows/ci.yml` contains `actions/dependency-review-action` on pull requests with `fail-on-severity: moderate` | Verified |
 | Vulnerability alerts / Dependency Graph | `GET /vulnerability-alerts` returned `204`; Dependency Graph SBOM endpoint returned `276` packages | Verified |
 | Dependabot security updates | `GET /automated-security-fixes` returned `enabled:true` and `paused:false` | Verified |
-| Release attestation creation | Tagged workflow `30706783927` created provenance and SBOM attestations for every staged release asset | Verified |
+| Release attestation creation | Tagged workflow `30726889778` created provenance and SBOM attestations for every staged release asset | Verified |
 | Artifact attestation verification configured | Hosted workflow content configures constrained `gh attestation verify` for every staged asset with `--repo`, `--signer-workflow`, `--source-ref`, and `--source-digest` | Verified |
-| Artifact attestation verification proven | Tagged workflow `30706783927` passed constrained verification for every staged asset; independent fresh-download verification passed for all `7/7` published assets | Verified |
+| Artifact attestation verification proven | Tagged workflow `30726889778` passed constrained verification for every staged asset; independent fresh-download verification passed for all `7/7` published assets | Verified |
 | Branch protection detail endpoint | Authenticated endpoint returned `200` and matched tracked policy | Verified |
 | Code scanning open alerts | Authenticated endpoint returned `0` open CodeQL alerts | Verified |
 | Secret scanning alerts | Authenticated endpoint returned `0` open secret-scanning alerts | Verified |
 | Dependabot alerts | Authenticated endpoint returned `0` open alerts | Verified |
 | Private vulnerability reporting | `enabled:true` from `GET /repos/JeremiahM18/japanese-kanji-anki-builder/private-vulnerability-reporting` | Verified |
-| Latest release workflow conclusion | `success` for tagged workflow `30706783927` on `v0.3.0-beta.4` at `f9b7c3f2423c5f26edc3c88857e3aedac44aeede` | Verified |
+| Latest release workflow conclusion | `success` for tagged workflow `30726889778` on `v0.3.0-beta.5` at `b9a820630cec9d53ebec8e06969ee0d4f658fba1` | Verified |
 
-Hosted evidence boundary: hosted `main` was at `f9b7c3f2423c5f26edc3c88857e3aedac44aeede` when the authenticated audit ran. Do not treat local, pull-request-only, or unpushed workflow changes as hosted proof.
+Hosted evidence boundary: hosted `main` was at `b9a820630cec9d53ebec8e06969ee0d4f658fba1` when the authenticated audit ran. Do not treat local, pull-request-only, or unpushed workflow changes as hosted proof.
 
 ## Required Remediation
 
@@ -127,6 +127,13 @@ Completed on 2026-08-01:
 2. Verified the fresh download against exact checksum-manifest membership, the CycloneDX SBOM, and all `7/7` constrained attestations.
 3. Verified immutable Actions artifact `8820594202` retains the same seven release files byte-for-byte.
 4. Reran owner-authenticated `npm run security:github-settings:auth`; the audit passes with attestation verification proven and all hosted alert counts at `0`.
+
+Completed on 2026-08-01 for beta.5:
+
+1. Published the exact `v0.3.0-beta.5` N5 automation-reviewed prerelease through successful tagged workflow `30726889778` at commit `b9a820630cec9d53ebec8e06969ee0d4f658fba1`.
+2. Verified the fresh download has exactly seven assets, exact six-file checksum-manifest membership and hashes, CycloneDX SBOM `ff385e0f679c0fe782ad348505b5358faa8d8f5bd11a6f7255a2962ef4a77273`, and all `7/7` constrained attestations.
+3. Verified immutable Actions artifact `8826672122` retains the same seven release files byte-for-byte and the exact beta.5 release decision is present in the verification material.
+4. Reran owner-authenticated `npm run security:github-settings:auth`; the audit passes with attestation verification proven, latest main CI/CodeQL/Release conclusions `success`, and all hosted alert counts at `0`.
 
 Remaining:
 

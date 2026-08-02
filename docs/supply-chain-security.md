@@ -67,7 +67,7 @@ This command builds a deterministic CycloneDX `1.6` SBOM model from `package-loc
 
 ## Dependency Boundary
 
-`package-lock.json` is the install source of truth. New dependencies should be added intentionally, reviewed as product/runtime or dev-only dependencies, and committed with the lockfile change.
+`package-lock.json` is the install source of truth. New dependencies should be added intentionally, reviewed as product/runtime or dev-only dependencies, and committed with the lockfile change. Every reviewed license exception is bound to the exact package version; a version change fails closed instead of inheriting a prior review through a package-name prefix.
 
 Lifecycle scripts are high-signal supply-chain risk. The current reviewed allowlist is:
 
@@ -92,7 +92,7 @@ On 2026-08-01, `npm view @huggingface/transformers version dependencies.sharp --
 
 `onnxruntime-node` bundles the CPU runtime needed by the assistive Transformers.js embedding lane. On Linux x64 its postinstall script also attempts to download CUDA provider binaries from NuGet unless told to skip that optional GPU expansion. CI and release workflows set `ONNXRUNTIME_NODE_INSTALL=skip` while `npm ci --ignore-scripts` materializes the lockfile and while `npm rebuild` activates reviewed lifecycle scripts, so clean runners do not depend on the external CUDA binary host for ordinary verification. This does not remove the package, change the lockfile, bypass lifecycle-script review, or certify NLP output; it only keeps the CI install boundary to the reviewed npm package contents.
 
-Dependency license compliance is governed by [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). The current allowlist is permissive license expressions already present in the lockfile. The current reviewed exceptions are optional `sharp`/`libvips` binary packages with `LGPL-3.0-or-later` or mixed Apache/LGPL/MIT expressions; each exception has owner, reason, reviewed date, and next-review date. The license gate is not legal advice and does not replace manual NOTICE or attribution review before external release claims.
+Dependency license compliance is governed by [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). The current allowlist is permissive license expressions already present in the lockfile. The current reviewed exceptions are exact-version optional `sharp`/`libvips` binary packages with `LGPL-3.0-or-later` or mixed Apache/LGPL/MIT expressions; each exception has package version, owner, evidence-backed reason, reviewed date, and next-review date. The 2026-08-01 review checked the registry package/version/license/repository/integrity metadata and published tarball manifests/README license matrices for `@img/sharp-libvips-*@1.3.2`, `@img/sharp-win32-*@0.35.3`, and `@img/sharp-wasm32@0.35.3`. Product release assets exclude `node_modules`; the generated dependency-license inventory preserves the resolved package/version/license surface. The license gate is not legal advice and does not prove upstream license-text completeness or replace manual NOTICE/attribution review when the distribution boundary changes.
 
 ## Routine Maintenance Snapshot
 
@@ -100,7 +100,7 @@ As of 2026-08-01, the recurring supply-chain maintenance items are:
 
 - Keep the lifecycle-script package allowlist above exact by package and version; any package-lock change that adds, removes, or changes `fsevents`, `onnxruntime-node`, `protobufjs`, or another install-script package must be reviewed before trusting install output.
 - Reassess and either remove or revalidate every entry in [../templates/dependency_security_overrides.json](../templates/dependency_security_overrides.json) by its `nextReview` date. Do not update a date without rerunning every recorded validation command.
-- Keep reviewed license exceptions in [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) current by package, reason, owner, `reviewedAt`, and `nextReview`. The current sharp/libvips exception review is due on 2026-08-03.
+- Keep reviewed license exceptions in [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) current by exact package version, reason, owner, `reviewedAt`, and `nextReview`. The current sharp/libvips exception review is due on 2026-09-01.
 - Rerun `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, `npm run security:advisories`, and `npm run security:secrets` after dependency, workflow, release-artifact, NOTICE, or policy changes.
 - Treat green maintenance checks as supply-chain hygiene only. They do not close hosted alert regressions, source governance, release trust, attestation proof, product QA, or explicit preview limitations.
 

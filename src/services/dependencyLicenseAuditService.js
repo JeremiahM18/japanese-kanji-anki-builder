@@ -65,6 +65,9 @@ function matchesException(entry, exception) {
     if (entry.license !== exception.licenseExpression) {
         return false;
     }
+    if (entry.version !== exception.packageVersion) {
+        return false;
+    }
     if (exception.packageName && entry.packageName === exception.packageName) {
         return true;
     }
@@ -179,6 +182,9 @@ function collectPolicyFailures(policy) {
         }
         if (!exception.packageName && !exception.packageNamePrefix) {
             failures.push(`reviewed license exception for ${exception.licenseExpression || "(missing)"} must define packageName or packageNamePrefix.`);
+        }
+        if (!exception.packageVersion) {
+            failures.push(`reviewed license exception for ${exception.licenseExpression || "(missing)"} must define an exact packageVersion.`);
         }
         if (!exception.reason || !exception.owner || !parseIsoDate(exception.reviewedAt) || !parseIsoDate(exception.nextReview)) {
             failures.push(`reviewed license exception for ${exception.licenseExpression || "(missing)"} must define reason, owner, reviewedAt, and nextReview.`);

@@ -222,6 +222,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .release-bundle
+          release_decision="docs/releases/${GITHUB_REF_NAME}-n5-automation-preview.md"
+          test -f "${release_decision}"
           cp "${RELEASE_PACKET}" .release-bundle/release-qa-evidence.json
           cp "${RELEASE_INPUT_DIR}"/*.apkg .release-bundle/
           tar --sort=name --mtime='UTC 2024-01-01' --owner=0 --group=0 --numeric-owner \
@@ -229,7 +231,7 @@ jobs:
             .release-smoke/out .release-gate/out CHANGELOG.md NOTICE.md \
             docs/compatibility-matrix.md docs/branch-protection.md \
             docs/release-process.md docs/release-qa-checklist.md \
-            docs/releases/v0.3.0-beta.4-n5-automation-preview.md
+            "${release_decision}"
 
       - name: Generate and verify release asset checksums
         run: |

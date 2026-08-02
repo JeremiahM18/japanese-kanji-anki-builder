@@ -51,26 +51,29 @@
     {
       "licenseExpression": "LGPL-3.0-or-later",
       "packageNamePrefix": "@img/sharp-libvips-",
-      "reason": "Optional platform libvips binary packages pulled by sharp. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
+      "packageVersion": "1.3.2",
+      "reason": "Optional platform libvips 8.18.3 binary packages pulled by sharp 0.35.3. Registry metadata identifies LGPL-3.0-or-later, and the published package README carries the third-party license matrix. Product release assets exclude node_modules; the release dependency-license inventory preserves package/version/license metadata. Reassess on any sharp/libvips version, package-content, distribution-boundary, or license-expression change.",
       "owner": "Repository owner",
-      "reviewedAt": "2026-07-03",
-      "nextReview": "2026-08-03"
+      "reviewedAt": "2026-08-01",
+      "nextReview": "2026-09-01"
     },
     {
       "licenseExpression": "Apache-2.0 AND LGPL-3.0-or-later",
       "packageNamePrefix": "@img/sharp-win32-",
-      "reason": "Optional Windows sharp binary packages with libvips linkage. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
+      "packageVersion": "0.35.3",
+      "reason": "Optional Windows sharp 0.35.3 binaries linked to libvips 8.18.3. Registry metadata and the published package LICENSE/README identify the Apache-2.0 and LGPL-3.0-or-later terms. Product release assets exclude node_modules; the release dependency-license inventory preserves package/version/license metadata. Reassess on any sharp/libvips version, package-content, distribution-boundary, or license-expression change.",
       "owner": "Repository owner",
-      "reviewedAt": "2026-07-03",
-      "nextReview": "2026-08-03"
+      "reviewedAt": "2026-08-01",
+      "nextReview": "2026-09-01"
     },
     {
       "licenseExpression": "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
       "packageName": "@img/sharp-wasm32",
-      "reason": "Optional sharp WebAssembly binary package with mixed permissive/LGPL terms. Review obligation is to preserve package distribution metadata and reassess when sharp/libvips versions change.",
+      "packageVersion": "0.35.3",
+      "reason": "Optional sharp 0.35.3 WebAssembly binary package. Registry metadata and the published package LICENSE/README identify the Apache-2.0, LGPL-3.0-or-later, and MIT terms. Product release assets exclude node_modules; the release dependency-license inventory preserves package/version/license metadata. Reassess on any sharp/libvips version, package-content, distribution-boundary, or license-expression change.",
       "owner": "Repository owner",
-      "reviewedAt": "2026-07-03",
-      "nextReview": "2026-08-03"
+      "reviewedAt": "2026-08-01",
+      "nextReview": "2026-09-01"
     }
   ],
   "deniedLicensePatterns": [

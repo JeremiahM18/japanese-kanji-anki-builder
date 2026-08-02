@@ -24,6 +24,7 @@ function reviewedPolicy(overrides = {}) {
             {
                 licenseExpression: "LGPL-3.0-or-later",
                 packageNamePrefix: "@img/sharp-libvips-",
+                packageVersion: "1.2.3",
                 reason: "Reviewed native binary package exception.",
                 nextReview: "2026-07-02",
             },
@@ -79,6 +80,12 @@ test("dependency license classification fails closed for missing, denied, unrevi
         version: "1.2.3",
         license: "LGPL-3.0-or-later",
     }, reviewedPolicy()).status, "reviewed-exception");
+
+    assert.equal(classifyLicenseEntry({
+        packageName: "@img/sharp-libvips-linux-x64",
+        version: "1.2.4",
+        license: "LGPL-3.0-or-later",
+    }, reviewedPolicy()).status, "denied-license");
 
     assert.equal(classifyLicenseEntry({
         packageName: "@img/sharp-libvips-linux-x64",

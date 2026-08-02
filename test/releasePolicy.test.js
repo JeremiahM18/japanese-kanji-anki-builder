@@ -48,6 +48,12 @@ test("changelog unreleased section stays release-facing", () => {
 
 test("release workflow is tag-driven and publishes release artifacts", () => {
     const workflow = readRepoFile(path.join(".github", "workflows", "release.yml"));
+    const packageJson = JSON.parse(readRepoFile("package.json"));
+    const expectedReleaseDecision = path.join(
+        "docs",
+        "releases",
+        `v${packageJson.version}-n5-automation-preview.md`
+    );
 
     assert.equal(workflow.includes("tags:"), true);
     assert.equal(workflow.includes('- "v*"'), true);
@@ -75,6 +81,10 @@ test("release workflow is tag-driven and publishes release artifacts", () => {
     assert.equal(workflow.includes("gh release upload"), true);
     assert.equal(workflow.includes("--draft=false --prerelease --verify-tag"), true);
     assert.equal(workflow.includes("docs/release-process.md"), true);
+    assert.equal(fs.existsSync(path.join(repoRoot, expectedReleaseDecision)), true);
+    assert.equal(workflow.includes('release_decision="docs/releases/${GITHUB_REF_NAME}-n5-automation-preview.md"'), true);
+    assert.equal(workflow.includes('test -f "${release_decision}"'), true);
+    assert.match(workflow, /tar --sort=name[\s\S]*?"\$\{release_decision\}"/u);
 });
 
 test("release process doc aligns tag naming with package version", () => {

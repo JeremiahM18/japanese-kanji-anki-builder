@@ -73,12 +73,10 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
     );
     assert.equal(report.workflows.length, 3);
     assert.equal(report.workflows.some((workflow) => workflow.relativePath === ".github/workflows/codeql.yml"), true);
-    assert.equal(
-        report.workflows
-            .flatMap((workflow) => workflow.installSteps)
-            .every((step) => step.hasOnnxruntimeNodeInstallSkip),
-        true
-    );
+    const installSteps = report.workflows.flatMap((workflow) => workflow.installSteps);
+    assert.equal(installSteps.every((step) => step.hasOnnxruntimeNodeInstallSkip), true);
+    assert.equal(installSteps.filter((step) => step.kind === "no-script-bootstrap").length, 6);
+    assert.equal(installSteps.filter((step) => step.kind === "reviewed-lifecycle-activation").length, 6);
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/release-artifacts.sha256"));
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/sbom.cdx.json"));
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/dependency-licenses.json"));
@@ -108,6 +106,7 @@ test("supply-chain audit report is readable for local verification", () => {
     assert.match(text, /upstream 4\.2\.0 declares \^0\.34\.5/);
     assert.match(text, /GitHub Actions pins:/);
     assert.match(text, /Install policy:/);
+    assert.match(text, /no-script bootstrap=4; reviewed lifecycle activation=4/);
     assert.match(text, /Release artifact boundary:/);
 });
 

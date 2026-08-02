@@ -882,47 +882,84 @@ function collectWorkflowStepBlocks(workflowText) {
     }));
 }
 
-function collectNpmCiInstallSteps(workflowText) {
+function collectDependencyInstallSteps(workflowText) {
     return collectWorkflowStepBlocks(workflowText)
-        .filter((step) => /^\s*run:\s*npm ci(?:\s|$)/mu.test(step.text))
+        .filter((step) => /^\s*run:\s*npm (?:ci|rebuild)(?:\s|$)/mu.test(step.text))
         .map((step) => ({
             name: step.name,
             hasOnnxruntimeNodeInstallSkip: /^\s*ONNXRUNTIME_NODE_INSTALL:\s*skip\s*$/mu.test(step.text),
+            kind: /^\s*run:\s*npm ci --ignore-scripts\s*$/mu.test(step.text)
+                ? "no-script-bootstrap"
+                : /^\s*run:\s*npm rebuild\s*$/mu.test(step.text)
+                    ? "reviewed-lifecycle-activation"
+                    : "unreviewed-install-command",
         }));
 }
 
-function assertSupplyChainAuditBeforeEveryInstall(workflowText, relativePath, errors) {
+function assertAuditedDependencyInstallSequence(workflowText, relativePath, errors) {
+    const installSteps = collectDependencyInstallSteps(workflowText);
+    assertCondition(
+        installSteps.every((step) => step.kind !== "unreviewed-install-command"),
+        errors,
+        `${relativePath} dependency installs must use exact npm ci --ignore-scripts bootstrap and npm rebuild lifecycle-activation steps.`
+    );
+
     const auditRe = /run:\s*npm run supply-chain:audit/gu;
-    const installRe = /run:\s*npm ci(?:\s|$)/gu;
+    const bootstrapRe = /run:\s*npm ci --ignore-scripts\s*$/gmu;
+    const activationRe = /run:\s*npm rebuild\s*$/gmu;
     const auditIndices = [];
+    const bootstrapIndices = [];
+    const activationIndices = [];
     let auditMatch = auditRe.exec(workflowText);
     while (auditMatch !== null) {
         auditIndices.push(auditMatch.index);
         auditMatch = auditRe.exec(workflowText);
     }
+    let bootstrapMatch = bootstrapRe.exec(workflowText);
+    while (bootstrapMatch !== null) {
+        bootstrapIndices.push(bootstrapMatch.index);
+        bootstrapMatch = bootstrapRe.exec(workflowText);
+    }
+    let activationMatch = activationRe.exec(workflowText);
+    while (activationMatch !== null) {
+        activationIndices.push(activationMatch.index);
+        activationMatch = activationRe.exec(workflowText);
+    }
+    assertCondition(
+        bootstrapIndices.length === activationIndices.length,
+        errors,
+        `${relativePath} must pair every no-script dependency bootstrap with one reviewed lifecycle activation.`
+    );
 
-    let previousInstallIndex = -1;
-    let installMatch = installRe.exec(workflowText);
-    while (installMatch !== null) {
-        const installIndex = installMatch.index;
-        const hasAuditInThisJobBlock = auditIndices.some((auditIndex) => auditIndex > previousInstallIndex && auditIndex < installIndex);
+    let previousActivationIndex = -1;
+    for (const activationIndex of activationIndices) {
+        const bootstrapIndex = bootstrapIndices.find((index) => (
+            index > previousActivationIndex && index < activationIndex
+        ));
+        assertCondition(
+            bootstrapIndex !== undefined,
+            errors,
+            `${relativePath} must run npm ci --ignore-scripts before each npm rebuild lifecycle activation.`
+        );
+        const hasAuditInThisJobBlock = bootstrapIndex !== undefined && auditIndices.some((auditIndex) => (
+            auditIndex > bootstrapIndex && auditIndex < activationIndex
+        ));
         assertCondition(
             hasAuditInThisJobBlock,
             errors,
-            `${relativePath} must run npm run supply-chain:audit before each npm ci install step.`
+            `${relativePath} must run npm run supply-chain:audit after the no-script bootstrap and before each npm rebuild lifecycle activation.`
         );
-        previousInstallIndex = installIndex;
-        installMatch = installRe.exec(workflowText);
+        previousActivationIndex = activationIndex;
     }
 }
 
 function assertOnnxruntimeNodeCudaInstallSkipForEveryInstall(workflowText, relativePath, errors) {
-    const installSteps = collectNpmCiInstallSteps(workflowText);
+    const installSteps = collectDependencyInstallSteps(workflowText);
     for (const step of installSteps) {
         assertCondition(
             step.hasOnnxruntimeNodeInstallSkip,
             errors,
-            `${relativePath} npm ci step "${step.name}" must set ONNXRUNTIME_NODE_INSTALL: skip so CI installs the reviewed CPU runtime without external CUDA NuGet side-downloads.`
+            `${relativePath} dependency install step "${step.name}" must set ONNXRUNTIME_NODE_INSTALL: skip so CI activates the reviewed CPU runtime without external CUDA NuGet side-downloads.`
         );
     }
 }
@@ -989,7 +1026,7 @@ function auditWorkflowFile({ relativePath, text }) {
             `${relativePath} must scope contents, id-token, and attestation write permissions to the release bundle job.`
         );
     }
-    assertSupplyChainAuditBeforeEveryInstall(text, relativePath, errors);
+    assertAuditedDependencyInstallSequence(text, relativePath, errors);
     assertOnnxruntimeNodeCudaInstallSkipForEveryInstall(text, relativePath, errors);
 
     for (const useValue of uses) {
@@ -1019,7 +1056,7 @@ function auditWorkflowFile({ relativePath, text }) {
         warnings,
         summary: {
             actionUses: uses,
-            installSteps: collectNpmCiInstallSteps(text),
+            installSteps: collectDependencyInstallSteps(text),
         },
     };
 }
@@ -1223,9 +1260,10 @@ function formatSupplyChainAuditReport(report) {
     }
     lines.push("Install policy:");
     for (const workflow of report.workflows) {
-        const installCount = workflow.installSteps.length;
+        const bootstrapCount = workflow.installSteps.filter((step) => step.kind === "no-script-bootstrap").length;
+        const activationCount = workflow.installSteps.filter((step) => step.kind === "reviewed-lifecycle-activation").length;
         const skipCount = workflow.installSteps.filter((step) => step.hasOnnxruntimeNodeInstallSkip).length;
-        lines.push(`- ${workflow.relativePath}: ${skipCount}/${installCount} npm ci steps set ONNXRUNTIME_NODE_INSTALL=skip`);
+        lines.push(`- ${workflow.relativePath}: no-script bootstrap=${bootstrapCount}; reviewed lifecycle activation=${activationCount}; ONNXRUNTIME_NODE_INSTALL=skip ${skipCount}/${workflow.installSteps.length}`);
     }
 
     lines.push("Release artifact boundary:");

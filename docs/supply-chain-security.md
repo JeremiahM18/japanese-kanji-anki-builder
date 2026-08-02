@@ -24,7 +24,7 @@ Run:
 npm run supply-chain:audit
 ```
 
-The command is deterministic and uses only repository files. It checks:
+The command is deterministic and reads only repository files through the lock-pinned TypeScript parser. It checks:
 
 - `package-lock.json` is lockfile version 3 and matches `package.json` name/version.
 - all locked packages resolve from `https://registry.npmjs.org/`
@@ -35,8 +35,8 @@ The command is deterministic and uses only repository files. It checks:
 - dependency license expressions match the reviewed allowlist or current exception policy.
 - GitHub Actions are pinned to reviewed commit SHAs.
 - workflows keep top-level permissions to `contents: read`; the tagged release verification and bundle jobs use separately reviewed job-scoped exceptions.
-- every workflow job audits supply-chain policy before `npm ci`.
-- every workflow `npm ci` step sets `ONNXRUNTIME_NODE_INSTALL=skip` so CI installs the reviewed ONNX CPU runtime package from npm without attempting the Linux CUDA NuGet side-download.
+- every workflow job first materializes exact lockfile dependencies with `npm ci --ignore-scripts`, audits supply-chain policy while dependency lifecycle code is still disabled, and only then activates reviewed lifecycle scripts with `npm rebuild`.
+- every dependency-bootstrap and lifecycle-activation step sets `ONNXRUNTIME_NODE_INSTALL=skip` so CI installs the reviewed ONNX CPU runtime package from npm without attempting the Linux CUDA NuGet side-download.
 - the release workflow publishes only the governed smoke/gate outputs, release docs, NOTICE, changelog, and checksum manifest.
 
 Run `npm audit --json` separately when an internet-backed advisory check is needed. Advisory data changes over time, so it is not the deterministic repository policy gate.
@@ -47,7 +47,7 @@ Run:
 npm run security:advisories
 ```
 
-This command is the internet-backed advisory gate. CI and tagged release workflows run it after `npm ci`, and the protected-branch baseline requires the advisory job before merge. Pull requests also run GitHub dependency review at `moderate` severity or higher so vulnerable package changes are rejected before they enter `main`.
+This command is the internet-backed advisory gate. CI and tagged release workflows run it after the no-script bootstrap, policy audit, and reviewed lifecycle activation, and the protected-branch baseline requires the advisory job before merge. Pull requests also run GitHub dependency review at `moderate` severity or higher so vulnerable package changes are rejected before they enter `main`.
 
 Run:
 
@@ -90,7 +90,7 @@ An unregistered override, version mismatch, parent mismatch, stale lock resoluti
 
 On 2026-08-01, `npm view @huggingface/transformers version dependencies.sharp --json` reported latest Transformers.js `4.2.0` still declaring `sharp ^0.34.5`, which excludes the forced `sharp 0.35.3`; simply upgrading the parent does not yet remove the exception. The current `npm run nlp:embeddings:evaluate` benchmark passes against the installed override with remote model downloads disabled. That result proves the pinned text-embedding runtime path works; it does not prove image/vision compatibility or grant card-certification authority.
 
-`onnxruntime-node` bundles the CPU runtime needed by the assistive Transformers.js embedding lane. On Linux x64 its postinstall script also attempts to download CUDA provider binaries from NuGet unless told to skip that optional GPU expansion. CI and release workflows set `ONNXRUNTIME_NODE_INSTALL=skip` on `npm ci` so clean runners do not depend on the external CUDA binary host for ordinary verification. This does not remove the package, change the lockfile, bypass lifecycle-script review, or certify NLP output; it only keeps the CI install boundary to the reviewed npm package contents.
+`onnxruntime-node` bundles the CPU runtime needed by the assistive Transformers.js embedding lane. On Linux x64 its postinstall script also attempts to download CUDA provider binaries from NuGet unless told to skip that optional GPU expansion. CI and release workflows set `ONNXRUNTIME_NODE_INSTALL=skip` while `npm ci --ignore-scripts` materializes the lockfile and while `npm rebuild` activates reviewed lifecycle scripts, so clean runners do not depend on the external CUDA binary host for ordinary verification. This does not remove the package, change the lockfile, bypass lifecycle-script review, or certify NLP output; it only keeps the CI install boundary to the reviewed npm package contents.
 
 Dependency license compliance is governed by [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json). The current allowlist is permissive license expressions already present in the lockfile. The current reviewed exceptions are optional `sharp`/`libvips` binary packages with `LGPL-3.0-or-later` or mixed Apache/LGPL/MIT expressions; each exception has owner, reason, reviewed date, and next-review date. The license gate is not legal advice and does not replace manual NOTICE or attribution review before external release claims.
 

@@ -69,6 +69,11 @@ jobs:
       - name: Inspect release APKG structures
         run: npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --require-golden
 
+      - name: Materialize dependencies without lifecycle scripts
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
+        run: npm ci --ignore-scripts
+
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
@@ -93,10 +98,10 @@ jobs:
       - name: Validate CycloneDX SBOM generation
         run: npm run security:sbom
 
-      - name: Install dependencies
+      - name: Activate reviewed dependency lifecycle scripts
         env:
           ONNXRUNTIME_NODE_INSTALL: skip
-        run: npm ci
+        run: npm rebuild
 
       - name: Run npm advisory audit
         run: npm run security:advisories
@@ -164,6 +169,11 @@ jobs:
           npm run product:release-qa:evidence -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --expected-tag="${GITHUB_REF_NAME}"
           npm run product:release-qa:apkg-inspect -- --packet="${RELEASE_PACKET}" --artifact-dir="${RELEASE_INPUT_DIR}" --require-golden
 
+      - name: Materialize dependencies without lifecycle scripts
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
+        run: npm ci --ignore-scripts
+
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
@@ -188,10 +198,10 @@ jobs:
       - name: Validate CycloneDX SBOM generation
         run: npm run security:sbom
 
-      - name: Install dependencies
+      - name: Activate reviewed dependency lifecycle scripts
         env:
           ONNXRUNTIME_NODE_INSTALL: skip
-        run: npm ci
+        run: npm rebuild
 
       - name: Run npm advisory audit
         run: npm run security:advisories

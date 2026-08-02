@@ -52,6 +52,11 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Materialize dependencies without lifecycle scripts
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
+        run: npm ci --ignore-scripts
+
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
@@ -73,10 +78,10 @@ jobs:
       - name: Validate CycloneDX SBOM generation
         run: npm run security:sbom
 
-      - name: Install dependencies
+      - name: Activate reviewed dependency lifecycle scripts
         env:
           ONNXRUNTIME_NODE_INSTALL: skip
-        run: npm ci
+        run: npm rebuild
 
       - name: Run npm advisory audit
         run: npm run security:advisories
@@ -104,16 +109,21 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
 
+      - name: Materialize dependencies without lifecycle scripts
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
+        run: npm ci --ignore-scripts
+
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
       - name: Audit dependency licenses
         run: npm run security:licenses
 
-      - name: Install dependencies
+      - name: Activate reviewed dependency lifecycle scripts
         env:
           ONNXRUNTIME_NODE_INSTALL: skip
-        run: npm ci
+        run: npm rebuild
 
       - name: Run lint
         run: npm run lint
@@ -208,16 +218,21 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
 
+      - name: Materialize dependencies without lifecycle scripts
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
+        run: npm ci --ignore-scripts
+
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
       - name: Audit dependency licenses
         run: npm run security:licenses
 
-      - name: Install dependencies
+      - name: Activate reviewed dependency lifecycle scripts
         env:
           ONNXRUNTIME_NODE_INSTALL: skip
-        run: npm ci
+        run: npm rebuild
 
       - name: Run release smoke verification
         run: npm run ci:smoke -- --root-dir=.ci-smoke --keep-temp-dir
@@ -255,16 +270,21 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Materialize dependencies without lifecycle scripts
+        env:
+          ONNXRUNTIME_NODE_INSTALL: skip
+        run: npm ci --ignore-scripts
+
       - name: Audit supply-chain policy
         run: npm run supply-chain:audit
 
       - name: Audit dependency licenses
         run: npm run security:licenses
 
-      - name: Install dependencies
+      - name: Activate reviewed dependency lifecycle scripts
         env:
           ONNXRUNTIME_NODE_INSTALL: skip
-        run: npm ci
+        run: npm rebuild
 
       - name: Run release gate
         run: npm run release:gate -- --root-dir=.release-gate --keep-temp-dir --require-apkg-tools

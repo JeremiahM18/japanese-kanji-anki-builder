@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const ts = require("typescript");
 
 const ACTION_ALLOWLIST = Object.freeze({
     "actions/checkout": {
@@ -76,6 +77,9 @@ const WORKFLOW_PERMISSION_EXCEPTIONS = Object.freeze({
 
 const FORBIDDEN_SCRIPT_SPEC_RE = /^(?:git\+|git:|github:|file:|link:|workspace:|http:|https:|npm:)/iu;
 const PINNED_SHA_RE = /^[a-f0-9]{40}$/u;
+const COMPUTED_REQUIRE_ALLOWLIST = Object.freeze({
+    "src/datasets/wordReadingGapTriageOverrides.js": Object.freeze(["contractPath"]),
+});
 
 function readText(cwd, relativePath) {
     return fs.readFileSync(path.join(cwd, relativePath), "utf-8");
@@ -87,6 +91,140 @@ function readJson(cwd, relativePath) {
 
 function normalizePath(filePath) {
     return filePath.split(path.sep).join("/");
+}
+
+function listProductionSourceFiles(cwd) {
+    const files = [];
+    const extensions = new Set([".cjs", ".cts", ".js", ".jsx", ".mjs", ".mts", ".ts", ".tsx"]);
+    const visit = (absolutePath) => {
+        for (const entry of fs.readdirSync(absolutePath, { withFileTypes: true })) {
+            const childPath = path.join(absolutePath, entry.name);
+            if (entry.isDirectory()) {
+                visit(childPath);
+            } else if (entry.isFile() && extensions.has(path.extname(entry.name))) {
+                files.push(normalizePath(path.relative(cwd, childPath)));
+            }
+        }
+    };
+
+    for (const root of ["src", "scripts"]) {
+        const absoluteRoot = path.join(cwd, root);
+        if (fs.existsSync(absoluteRoot)) {
+            visit(absoluteRoot);
+        }
+    }
+    return files.sort();
+}
+
+function isLiteralModuleSpecifier(node) {
+    return Boolean(node && (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)));
+}
+
+function resolveScriptKind(relativePath) {
+    if (relativePath.endsWith(".tsx")) {
+        return ts.ScriptKind.TSX;
+    }
+    if (relativePath.endsWith(".jsx")) {
+        return ts.ScriptKind.JSX;
+    }
+    return /\.[cm]?ts$/u.test(relativePath) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
+}
+
+function analyzeProductionModuleUsage({ relativePath, text }) {
+    const sourceFile = ts.createSourceFile(
+        relativePath,
+        text,
+        ts.ScriptTarget.Latest,
+        true,
+        resolveScriptKind(relativePath)
+    );
+    const moduleReferences = [];
+    const computedModuleLoads = [];
+    const pipelineCalls = [];
+    const unsupportedPipelineReferences = [];
+
+    const recordModuleCall = (node, kind) => {
+        const moduleSpecifier = node.arguments[0];
+        if (!isLiteralModuleSpecifier(moduleSpecifier)) {
+            computedModuleLoads.push({
+                expression: moduleSpecifier?.getText(sourceFile) || "(missing)",
+                kind,
+                line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+            });
+            return;
+        }
+        moduleReferences.push({
+            kind,
+            node,
+            specifier: moduleSpecifier.text,
+        });
+    };
+
+    const visit = (node) => {
+        if (ts.isImportDeclaration(node) && isLiteralModuleSpecifier(node.moduleSpecifier)) {
+            moduleReferences.push({ kind: "static-import", node, specifier: node.moduleSpecifier.text });
+        } else if (ts.isExportDeclaration(node) && isLiteralModuleSpecifier(node.moduleSpecifier)) {
+            moduleReferences.push({ kind: "static-export", node, specifier: node.moduleSpecifier.text });
+        } else if (ts.isCallExpression(node)) {
+            if (node.expression.kind === ts.SyntaxKind.ImportKeyword) {
+                recordModuleCall(node, "dynamic-import");
+            } else if (ts.isIdentifier(node.expression) && node.expression.text === "require") {
+                recordModuleCall(node, "require");
+            }
+            if (ts.isIdentifier(node.expression) && node.expression.text === "pipeline") {
+                const taskNode = node.arguments[0];
+                pipelineCalls.push({
+                    task: isLiteralModuleSpecifier(taskNode) ? taskNode.text : null,
+                });
+            }
+        }
+
+        if (ts.isIdentifier(node) && node.text === "pipeline") {
+            const isBindingName = ts.isBindingElement(node.parent) && node.parent.name === node;
+            const isDirectCall = ts.isCallExpression(node.parent) && node.parent.expression === node;
+            if (!isBindingName && !isDirectCall) {
+                unsupportedPipelineReferences.push({
+                    line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+                    text: node.parent.getText(sourceFile),
+                });
+            }
+        }
+        ts.forEachChild(node, visit);
+    };
+    visit(sourceFile);
+
+    return {
+        computedModuleLoads,
+        moduleReferences,
+        parseDiagnostics: sourceFile.parseDiagnostics,
+        pipelineCalls,
+        unsupportedPipelineReferences,
+    };
+}
+
+function hasReviewedTransformersBinding(reference) {
+    if (reference.kind !== "dynamic-import") {
+        return false;
+    }
+    const awaitExpression = reference.node.parent;
+    if (!ts.isAwaitExpression(awaitExpression) || awaitExpression.expression !== reference.node) {
+        return false;
+    }
+    const declaration = awaitExpression.parent;
+    if (!ts.isVariableDeclaration(declaration) || declaration.initializer !== awaitExpression) {
+        return false;
+    }
+    if (!ts.isObjectBindingPattern(declaration.name)) {
+        return false;
+    }
+    const bindingNames = declaration.name.elements.map((element) => (
+        !element.dotDotDotToken
+        && !element.propertyName
+        && ts.isIdentifier(element.name)
+            ? element.name.text
+            : null
+    )).sort();
+    return bindingNames.length === 2 && bindingNames[0] === "env" && bindingNames[1] === "pipeline";
 }
 
 function dependencyNameFromPackagePath(packagePath) {
@@ -158,6 +296,261 @@ function isCanonicalDate(value) {
     }
     const parsed = new Date(`${value}T00:00:00.000Z`);
     return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
+function auditOutOfRangeOverrideCompatibility({ cwd, entry, policyCheckedAt }) {
+    const errors = [];
+    const key = `${entry.parentPackage || "(missing)"}>${entry.packageName || "(missing)"}`;
+    const boundary = entry.compatibilityBoundary;
+    const expectedBoundaryFields = ["liveValidationCommands", "sourceBoundary", "upstreamEvidence"].sort();
+    const actualBoundaryFields = Object.keys(boundary || {}).sort();
+    assertCondition(
+        actualBoundaryFields.length === expectedBoundaryFields.length
+            && actualBoundaryFields.every((field, index) => field === expectedBoundaryFields[index]),
+        errors,
+        `${key} outside-range compatibilityBoundary must use the exact governed fields.`
+    );
+
+    const liveValidationCommands = Array.isArray(boundary?.liveValidationCommands)
+        ? boundary.liveValidationCommands
+        : [];
+    assertCondition(
+        liveValidationCommands.length > 0,
+        errors,
+        `${key} outside-range compatibilityBoundary must declare at least one live validation command.`
+    );
+    for (const command of liveValidationCommands) {
+        assertCondition(
+            entry.validationCommands?.includes(command),
+            errors,
+            `${key} compatibility live validation is missing from validationCommands: ${command}`
+        );
+    }
+
+    const upstream = boundary?.upstreamEvidence;
+    const expectedUpstreamFields = [
+        "checkedAt",
+        "latestDeclaredRange",
+        "latestParentVersion",
+        "resolutionStatus",
+        "verificationCommand",
+    ].sort();
+    const actualUpstreamFields = Object.keys(upstream || {}).sort();
+    assertCondition(
+        actualUpstreamFields.length === expectedUpstreamFields.length
+            && actualUpstreamFields.every((field, index) => field === expectedUpstreamFields[index]),
+        errors,
+        `${key} upstreamEvidence must use the exact governed fields.`
+    );
+    assertCondition(isCanonicalDate(upstream?.checkedAt), errors, `${key} upstreamEvidence.checkedAt must be YYYY-MM-DD.`);
+    assertCondition(
+        upstream?.checkedAt === policyCheckedAt,
+        errors,
+        `${key} upstreamEvidence.checkedAt must equal the policy checkedAt date.`
+    );
+    assertCondition(
+        parseSimpleSemver(upstream?.latestParentVersion) !== null,
+        errors,
+        `${key} upstreamEvidence.latestParentVersion must be an exact semantic version.`
+    );
+    assertCondition(
+        upstream?.resolutionStatus === "parent_range_still_excludes_forced_version",
+        errors,
+        `${key} upstreamEvidence.resolutionStatus must remain parent_range_still_excludes_forced_version while the override is active.`
+    );
+    assertCondition(
+        upstream?.verificationCommand === `npm view ${entry.parentPackage} version dependencies.${entry.packageName} --json`,
+        errors,
+        `${key} upstreamEvidence.verificationCommand must query the governed parent and child dependency.`
+    );
+    if (entry.forcedVersion && upstream?.latestDeclaredRange) {
+        try {
+            assertCondition(
+                !satisfiesReviewedSimpleRange(entry.forcedVersion, upstream.latestDeclaredRange),
+                errors,
+                `${key} latest upstream range ${upstream.latestDeclaredRange} now accepts ${entry.forcedVersion}; remove or re-review the override instead of retaining the compatibility exception.`
+            );
+        } catch (error) {
+            errors.push(error.message);
+        }
+    }
+
+    const sourceBoundary = boundary?.sourceBoundary;
+    const expectedSourceBoundaryFields = [
+        "activeModelTasks",
+        "productionImports",
+        "runtimeId",
+        "runtimeManifestPath",
+    ].sort();
+    const actualSourceBoundaryFields = Object.keys(sourceBoundary || {}).sort();
+    assertCondition(
+        actualSourceBoundaryFields.length === expectedSourceBoundaryFields.length
+            && actualSourceBoundaryFields.every((field, index) => field === expectedSourceBoundaryFields[index]),
+        errors,
+        `${key} sourceBoundary must use the exact governed fields.`
+    );
+
+    const productionImports = Array.isArray(sourceBoundary?.productionImports)
+        ? sourceBoundary.productionImports
+        : [];
+    assertCondition(productionImports.length > 0, errors, `${key} sourceBoundary must declare productionImports.`);
+    const declaredImportPaths = new Set();
+    for (const governedImport of productionImports) {
+        const expectedImportFields = ["path", "pipelineCallCount", "pipelineTasks"].sort();
+        const actualImportFields = Object.keys(governedImport || {}).sort();
+        assertCondition(
+            actualImportFields.length === expectedImportFields.length
+                && actualImportFields.every((field, index) => field === expectedImportFields[index]),
+            errors,
+            `${key} production import must use the exact governed fields.`
+        );
+        const relativePath = normalizePath(String(governedImport?.path || ""));
+        assertCondition(
+            relativePath.startsWith("src/") || relativePath.startsWith("scripts/"),
+            errors,
+            `${key} production import path must be under src/ or scripts/: ${relativePath || "(missing)"}`
+        );
+        assertCondition(!declaredImportPaths.has(relativePath), errors, `${key} contains duplicate production import ${relativePath}.`);
+        declaredImportPaths.add(relativePath);
+        assertCondition(
+            Number.isInteger(governedImport?.pipelineCallCount) && governedImport.pipelineCallCount > 0,
+            errors,
+            `${key} production import ${relativePath || "(missing)"} must declare a positive pipelineCallCount.`
+        );
+        assertCondition(
+            Array.isArray(governedImport?.pipelineTasks) && governedImport.pipelineTasks.length > 0,
+            errors,
+            `${key} production import ${relativePath || "(missing)"} must declare pipelineTasks.`
+        );
+    }
+
+    if (!cwd) {
+        errors.push(`${key} outside-range compatibility audit requires a repository cwd.`);
+        return { errors, summary: { productionImportPaths: [], activeModelTasks: [] } };
+    }
+
+    const actualImportPaths = [];
+    const sourceAnalysisByPath = new Map();
+    for (const relativePath of listProductionSourceFiles(cwd)) {
+        const text = readText(cwd, relativePath);
+        const sourceAnalysis = analyzeProductionModuleUsage({ relativePath, text });
+        sourceAnalysisByPath.set(relativePath, sourceAnalysis);
+        for (const diagnostic of sourceAnalysis.parseDiagnostics) {
+            errors.push(
+                `${key} cannot parse production source ${relativePath}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, " ")}`
+            );
+        }
+        for (const load of sourceAnalysis.computedModuleLoads) {
+            const isReviewedComputedRequire = load.kind === "require"
+                && COMPUTED_REQUIRE_ALLOWLIST[relativePath]?.includes(load.expression);
+            assertCondition(
+                isReviewedComputedRequire,
+                errors,
+                `${key} cannot prove computed ${load.kind} target in ${relativePath}:${load.line}: ${load.expression}.`
+            );
+        }
+        if (sourceAnalysis.moduleReferences.some((reference) => reference.specifier === entry.parentPackage)) {
+            actualImportPaths.push(relativePath);
+        }
+    }
+    assertCondition(
+        actualImportPaths.length === declaredImportPaths.size
+            && actualImportPaths.every((relativePath) => declaredImportPaths.has(relativePath)),
+        errors,
+        `${key} production import paths drifted; declared=${[...declaredImportPaths].sort().join(",") || "none"}; actual=${actualImportPaths.join(",") || "none"}.`
+    );
+
+    for (const governedImport of productionImports) {
+        const relativePath = normalizePath(String(governedImport?.path || ""));
+        const absolutePath = path.join(cwd, relativePath);
+        if (!relativePath || !fs.existsSync(absolutePath)) {
+            errors.push(`${key} governed production import is missing: ${relativePath || "(missing)"}.`);
+            continue;
+        }
+        const sourceAnalysis = sourceAnalysisByPath.get(relativePath);
+        const packageReferences = sourceAnalysis?.moduleReferences.filter(
+            (reference) => reference.specifier === entry.parentPackage
+        ) || [];
+        assertCondition(
+            packageReferences.length === 1,
+            errors,
+            `${key} governed production import ${relativePath} must contain exactly one executable ${entry.parentPackage} import; found ${packageReferences.length}.`
+        );
+        assertCondition(
+            packageReferences.length === 1 && hasReviewedTransformersBinding(packageReferences[0]),
+            errors,
+            `${key} governed production import ${relativePath} must retain the reviewed dynamic { pipeline, env } import boundary.`
+        );
+        const pipelineCalls = sourceAnalysis?.pipelineCalls || [];
+        const literalPipelineTasks = pipelineCalls.map((call) => call.task).filter(Boolean);
+        assertCondition(
+            pipelineCalls.length === governedImport.pipelineCallCount,
+            errors,
+            `${key} governed production import ${relativePath} pipeline call count drifted; expected ${governedImport.pipelineCallCount}, found ${pipelineCalls.length}.`
+        );
+        assertCondition(
+            literalPipelineTasks.length === pipelineCalls.length,
+            errors,
+            `${key} governed production import ${relativePath} must use a literal task for every Transformers pipeline call.`
+        );
+        assertCondition(
+            sourceAnalysis?.unsupportedPipelineReferences.length === 0,
+            errors,
+            `${key} governed production import ${relativePath} contains unsupported pipeline references at lines ${sourceAnalysis?.unsupportedPipelineReferences.map((reference) => reference.line).join(",") || "unknown"}; aliases and indirect calls require re-review.`
+        );
+        const expectedTasks = [...new Set(governedImport.pipelineTasks || [])].sort();
+        const actualTasks = [...new Set(literalPipelineTasks)].sort();
+        assertCondition(
+            actualTasks.length === expectedTasks.length
+                && actualTasks.every((task, index) => task === expectedTasks[index]),
+            errors,
+            `${key} governed production import ${relativePath} pipeline tasks drifted; expected=${expectedTasks.join(",") || "none"}; actual=${actualTasks.join(",") || "none"}.`
+        );
+    }
+
+    const manifestPath = normalizePath(String(sourceBoundary?.runtimeManifestPath || ""));
+    assertCondition(!!manifestPath, errors, `${key} sourceBoundary must declare runtimeManifestPath.`);
+    let manifest = null;
+    if (manifestPath && fs.existsSync(path.join(cwd, manifestPath))) {
+        try {
+            manifest = readJson(cwd, manifestPath);
+        } catch (error) {
+            errors.push(`${key} cannot parse runtime manifest ${manifestPath}: ${error.message}`);
+        }
+    } else {
+        errors.push(`${key} runtime manifest is missing: ${manifestPath || "(missing)"}.`);
+    }
+    const runtimeId = sourceBoundary?.runtimeId;
+    const runtime = manifest?.runtimes?.[runtimeId];
+    assertCondition(!!runtimeId, errors, `${key} sourceBoundary must declare runtimeId.`);
+    assertCondition(!!runtime, errors, `${key} runtime manifest does not contain ${runtimeId || "(missing)"}.`);
+    assertCondition(runtime?.status === "active", errors, `${key} governed runtime ${runtimeId || "(missing)"} must remain active.`);
+    assertCondition(
+        runtime?.packageName === entry.parentPackage,
+        errors,
+        `${key} governed runtime ${runtimeId || "(missing)"} must bind package ${entry.parentPackage}.`
+    );
+    const actualModelTasks = [...new Set(Object.values(manifest?.models || {})
+        .filter((model) => model?.status === "active" && model?.runtimeId === runtimeId)
+        .map((model) => model.task))].sort();
+    const expectedModelTasks = [...new Set(Array.isArray(sourceBoundary?.activeModelTasks)
+        ? sourceBoundary.activeModelTasks
+        : [])].sort();
+    assertCondition(expectedModelTasks.length > 0, errors, `${key} sourceBoundary must declare activeModelTasks.`);
+    assertCondition(
+        actualModelTasks.length === expectedModelTasks.length
+            && actualModelTasks.every((task, index) => task === expectedModelTasks[index]),
+        errors,
+        `${key} active model tasks drifted; expected=${expectedModelTasks.join(",") || "none"}; actual=${actualModelTasks.join(",") || "none"}.`
+    );
+
+    return {
+        errors,
+        summary: {
+            productionImportPaths: actualImportPaths,
+            activeModelTasks: actualModelTasks,
+        },
+    };
 }
 
 function collectDependencySpecs(lockPackage) {
@@ -301,6 +694,7 @@ function auditPackageManifest({ packageJson, lock }) {
 }
 
 function auditDependencySecurityOverrides({
+    cwd,
     packageJson,
     lock,
     policy,
@@ -308,7 +702,7 @@ function auditDependencySecurityOverrides({
 }) {
     const errors = [];
     const entries = Array.isArray(policy?.overrides) ? policy.overrides : [];
-    assertCondition(policy?.version === 1, errors, "Dependency security override policy must use version 1.");
+    assertCondition(policy?.version === 2, errors, "Dependency security override policy must use version 2.");
     assertCondition(
         isCanonicalDate(policy?.checkedAt),
         errors,
@@ -318,7 +712,7 @@ function auditDependencySecurityOverrides({
 
     const governedKeys = new Set();
     const registeredScripts = new Set(Object.keys(packageJson.scripts || {}));
-    const expectedEntryFields = [
+    const baseEntryFields = [
         "parentPackage",
         "packageName",
         "forcedVersion",
@@ -334,6 +728,10 @@ function auditDependencySecurityOverrides({
         const key = `${entry.parentPackage || "(missing)"}>${entry.packageName || "(missing)"}`;
         assertCondition(!governedKeys.has(key), errors, `Dependency security override policy contains duplicate ${key}.`);
         governedKeys.add(key);
+        const expectedEntryFields = [
+            ...baseEntryFields,
+            ...(entry.rangeCompatibility === "outside_declared_range" ? ["compatibilityBoundary"] : []),
+        ].sort();
         const actualEntryFields = Object.keys(entry || {}).sort();
         assertCondition(
             actualEntryFields.length === expectedEntryFields.length
@@ -411,6 +809,14 @@ function auditDependencySecurityOverrides({
                 `${key} validation command is not a registered npm script: ${command}`
             );
         }
+        if (entry.rangeCompatibility === "outside_declared_range") {
+            const compatibilityAudit = auditOutOfRangeOverrideCompatibility({
+                cwd,
+                entry,
+                policyCheckedAt: policy?.checkedAt,
+            });
+            errors.push(...compatibilityAudit.errors);
+        }
     }
 
     for (const [parentPackage, childOverrides] of Object.entries(packageJson.overrides || {})) {
@@ -476,47 +882,84 @@ function collectWorkflowStepBlocks(workflowText) {
     }));
 }
 
-function collectNpmCiInstallSteps(workflowText) {
+function collectDependencyInstallSteps(workflowText) {
     return collectWorkflowStepBlocks(workflowText)
-        .filter((step) => /^\s*run:\s*npm ci(?:\s|$)/mu.test(step.text))
+        .filter((step) => /^\s*run:\s*npm (?:ci|rebuild)(?:\s|$)/mu.test(step.text))
         .map((step) => ({
             name: step.name,
             hasOnnxruntimeNodeInstallSkip: /^\s*ONNXRUNTIME_NODE_INSTALL:\s*skip\s*$/mu.test(step.text),
+            kind: /^\s*run:\s*npm ci --ignore-scripts\s*$/mu.test(step.text)
+                ? "no-script-bootstrap"
+                : /^\s*run:\s*npm rebuild\s*$/mu.test(step.text)
+                    ? "reviewed-lifecycle-activation"
+                    : "unreviewed-install-command",
         }));
 }
 
-function assertSupplyChainAuditBeforeEveryInstall(workflowText, relativePath, errors) {
+function assertAuditedDependencyInstallSequence(workflowText, relativePath, errors) {
+    const installSteps = collectDependencyInstallSteps(workflowText);
+    assertCondition(
+        installSteps.every((step) => step.kind !== "unreviewed-install-command"),
+        errors,
+        `${relativePath} dependency installs must use exact npm ci --ignore-scripts bootstrap and npm rebuild lifecycle-activation steps.`
+    );
+
     const auditRe = /run:\s*npm run supply-chain:audit/gu;
-    const installRe = /run:\s*npm ci(?:\s|$)/gu;
+    const bootstrapRe = /run:\s*npm ci --ignore-scripts\s*$/gmu;
+    const activationRe = /run:\s*npm rebuild\s*$/gmu;
     const auditIndices = [];
+    const bootstrapIndices = [];
+    const activationIndices = [];
     let auditMatch = auditRe.exec(workflowText);
     while (auditMatch !== null) {
         auditIndices.push(auditMatch.index);
         auditMatch = auditRe.exec(workflowText);
     }
+    let bootstrapMatch = bootstrapRe.exec(workflowText);
+    while (bootstrapMatch !== null) {
+        bootstrapIndices.push(bootstrapMatch.index);
+        bootstrapMatch = bootstrapRe.exec(workflowText);
+    }
+    let activationMatch = activationRe.exec(workflowText);
+    while (activationMatch !== null) {
+        activationIndices.push(activationMatch.index);
+        activationMatch = activationRe.exec(workflowText);
+    }
+    assertCondition(
+        bootstrapIndices.length === activationIndices.length,
+        errors,
+        `${relativePath} must pair every no-script dependency bootstrap with one reviewed lifecycle activation.`
+    );
 
-    let previousInstallIndex = -1;
-    let installMatch = installRe.exec(workflowText);
-    while (installMatch !== null) {
-        const installIndex = installMatch.index;
-        const hasAuditInThisJobBlock = auditIndices.some((auditIndex) => auditIndex > previousInstallIndex && auditIndex < installIndex);
+    let previousActivationIndex = -1;
+    for (const activationIndex of activationIndices) {
+        const bootstrapIndex = bootstrapIndices.find((index) => (
+            index > previousActivationIndex && index < activationIndex
+        ));
+        assertCondition(
+            bootstrapIndex !== undefined,
+            errors,
+            `${relativePath} must run npm ci --ignore-scripts before each npm rebuild lifecycle activation.`
+        );
+        const hasAuditInThisJobBlock = bootstrapIndex !== undefined && auditIndices.some((auditIndex) => (
+            auditIndex > bootstrapIndex && auditIndex < activationIndex
+        ));
         assertCondition(
             hasAuditInThisJobBlock,
             errors,
-            `${relativePath} must run npm run supply-chain:audit before each npm ci install step.`
+            `${relativePath} must run npm run supply-chain:audit after the no-script bootstrap and before each npm rebuild lifecycle activation.`
         );
-        previousInstallIndex = installIndex;
-        installMatch = installRe.exec(workflowText);
+        previousActivationIndex = activationIndex;
     }
 }
 
 function assertOnnxruntimeNodeCudaInstallSkipForEveryInstall(workflowText, relativePath, errors) {
-    const installSteps = collectNpmCiInstallSteps(workflowText);
+    const installSteps = collectDependencyInstallSteps(workflowText);
     for (const step of installSteps) {
         assertCondition(
             step.hasOnnxruntimeNodeInstallSkip,
             errors,
-            `${relativePath} npm ci step "${step.name}" must set ONNXRUNTIME_NODE_INSTALL: skip so CI installs the reviewed CPU runtime without external CUDA NuGet side-downloads.`
+            `${relativePath} dependency install step "${step.name}" must set ONNXRUNTIME_NODE_INSTALL: skip so CI activates the reviewed CPU runtime without external CUDA NuGet side-downloads.`
         );
     }
 }
@@ -583,7 +1026,7 @@ function auditWorkflowFile({ relativePath, text }) {
             `${relativePath} must scope contents, id-token, and attestation write permissions to the release bundle job.`
         );
     }
-    assertSupplyChainAuditBeforeEveryInstall(text, relativePath, errors);
+    assertAuditedDependencyInstallSequence(text, relativePath, errors);
     assertOnnxruntimeNodeCudaInstallSkipForEveryInstall(text, relativePath, errors);
 
     for (const useValue of uses) {
@@ -613,7 +1056,7 @@ function auditWorkflowFile({ relativePath, text }) {
         warnings,
         summary: {
             actionUses: uses,
-            installSteps: collectNpmCiInstallSteps(text),
+            installSteps: collectDependencyInstallSteps(text),
         },
     };
 }
@@ -733,6 +1176,7 @@ function buildSupplyChainAuditReport({
     const packageAudit = auditPackageManifest({ packageJson, lock });
     const dependencyOverridePolicy = readJson(cwd, "templates/dependency_security_overrides.json");
     const dependencyOverrideAudit = auditDependencySecurityOverrides({
+        cwd,
         packageJson,
         lock,
         policy: dependencyOverridePolicy,
@@ -795,6 +1239,19 @@ function formatSupplyChainAuditReport(report) {
         lines.push(
             `- ${entry.parentPackage} > ${entry.packageName}@${entry.forcedVersion}; ${entry.rangeCompatibility}; ${entry.securityAdvisory}; next review ${entry.nextReview}`
         );
+        if (entry.compatibilityBoundary) {
+            const sourceBoundary = entry.compatibilityBoundary.sourceBoundary;
+            const upstream = entry.compatibilityBoundary.upstreamEvidence;
+            const productionImports = Array.isArray(sourceBoundary?.productionImports)
+                ? sourceBoundary.productionImports
+                : [];
+            const activeModelTasks = Array.isArray(sourceBoundary?.activeModelTasks)
+                ? sourceBoundary.activeModelTasks
+                : [];
+            lines.push(
+                `  compatibility boundary: imports=${productionImports.map((item) => item.path).join(",") || "unavailable"}; pipeline tasks=${productionImports.flatMap((item) => item.pipelineTasks || []).join(",") || "unavailable"}; active model tasks=${activeModelTasks.join(",") || "unavailable"}; upstream ${upstream?.latestParentVersion || "unavailable"} declares ${upstream?.latestDeclaredRange || "unavailable"}`
+            );
+        }
     }
 
     lines.push("GitHub Actions pins:");
@@ -803,9 +1260,10 @@ function formatSupplyChainAuditReport(report) {
     }
     lines.push("Install policy:");
     for (const workflow of report.workflows) {
-        const installCount = workflow.installSteps.length;
+        const bootstrapCount = workflow.installSteps.filter((step) => step.kind === "no-script-bootstrap").length;
+        const activationCount = workflow.installSteps.filter((step) => step.kind === "reviewed-lifecycle-activation").length;
         const skipCount = workflow.installSteps.filter((step) => step.hasOnnxruntimeNodeInstallSkip).length;
-        lines.push(`- ${workflow.relativePath}: ${skipCount}/${installCount} npm ci steps set ONNXRUNTIME_NODE_INSTALL=skip`);
+        lines.push(`- ${workflow.relativePath}: no-script bootstrap=${bootstrapCount}; reviewed lifecycle activation=${activationCount}; ONNXRUNTIME_NODE_INSTALL=skip ${skipCount}/${workflow.installSteps.length}`);
     }
 
     lines.push("Release artifact boundary:");
@@ -844,6 +1302,7 @@ module.exports = {
     ACTION_ALLOWLIST,
     LIFECYCLE_SCRIPT_ALLOWLIST,
     auditDependencySecurityOverrides,
+    auditOutOfRangeOverrideCompatibility,
     buildSupplyChainAuditReport,
     formatSupplyChainAuditReport,
     satisfiesReviewedSimpleRange,

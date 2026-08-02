@@ -36,6 +36,8 @@ function makeTempRepo(prefix = "hostile-supply-chain-") {
         "package.json",
         "package-lock.json",
         path.join("templates", "dependency_security_overrides.json"),
+        path.join("templates", "nlp_model_manifest.json"),
+        path.join("src", "services", "nlpEmbeddingModelEvaluationService.js"),
         path.join(".github", "workflows", "codeql.yml"),
         path.join(".github", "workflows", "ci.yml"),
         path.join(".github", "workflows", "release.yml"),
@@ -207,6 +209,7 @@ test("supply-chain audit catches dependency and workflow mutation abuse", () => 
         const ciWorkflowPath = path.join(tempRepo, ".github", "workflows", "ci.yml");
         const ciWorkflowText = fs.readFileSync(ciWorkflowPath, "utf-8")
             .replace(/actions\/checkout@[a-f0-9]{40}/u, "actions/checkout@v4")
+            .replace("run: npm ci --ignore-scripts", "run: npm ci")
             .replace(/\r?\n\s+env:\r?\n\s+ONNXRUNTIME_NODE_INSTALL:\s+skip/u, "");
         fs.writeFileSync(ciWorkflowPath, ciWorkflowText, "utf-8");
 
@@ -216,6 +219,7 @@ test("supply-chain audit catches dependency and workflow mutation abuse", () => 
         assert.equal(report.ok, false);
         assert.match(errors, /Direct dependency express must come from the npm registry/);
         assert.match(errors, /must pin actions\/checkout@v6\.0\.3 to the reviewed SHA/);
+        assert.match(errors, /must use exact npm ci --ignore-scripts bootstrap and npm rebuild lifecycle-activation steps/);
         assert.match(errors, /must set ONNXRUNTIME_NODE_INSTALL: skip/);
     } finally {
         fs.rmSync(tempRepo, { recursive: true, force: true });

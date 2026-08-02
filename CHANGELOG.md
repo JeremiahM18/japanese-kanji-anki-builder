@@ -10,10 +10,11 @@ No additional release-facing changes are currently recorded. Detailed work belon
 
 ## [0.3.0-beta.5] - 2026-08-01
 
-`0.3.0-beta.5` is the exact N5-only **automation-reviewed preview** candidate after the published beta.4 baseline. It contains only the core N5 kanji and core N5 word APKGs; N4 through N1, additional-unverified kanji, production/GA, and human/device approval remain excluded.
+`0.3.0-beta.5` is the current published N5-only **automation-reviewed preview**. Tagged workflow `30726889778` succeeded at commit `b9a820630cec9d53ebec8e06969ee0d4f658fba1`, published seven checksummed assets, retained the immutable Actions bundle, and proved all-file constrained attestations. It contains only the core N5 kanji and core N5 word APKGs; N4 through N1, additional-unverified kanji, production/GA, and human/device approval remain excluded.
 
 ### Changed
 
+- Published the exact beta.5 candidate through the tag-bound Release workflow, independently verified all `6/6` checksum-manifest members and `7/7` constrained attestations from a fresh download, and proved immutable Actions artifact `8826672122` matches the seven published assets byte-for-byte.
 - Recorded the successful beta.4 hosted and downloaded verification, mitigated `SEC-P0-004`, implemented `SEC-REQ-007`, and removed their obsolete pre-release deferrals only after checksum, SBOM, immutable Actions evidence, `7/7` constrained attestation, and owner-authenticated hosted-setting proof passed.
 - Reconciled the N5 reading-gap plan into `99` exact governed dispositions covering `83` missing reading targets and `16` variant gaps without adding unsupported cards; the dispositions are workflow evidence, not a claim of `99` new deck rows.
 - Made N5 word readiness fail closed on reading-override drift and added a regression proving the coordinator forwards the required scope argument.

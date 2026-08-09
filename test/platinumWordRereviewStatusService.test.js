@@ -398,6 +398,7 @@ test("word rereview status separates Platinum pass from substantive rereview pro
     assert.equal(report.counts.needs_substantive_rereview, 1);
     assert.equal(report.counts.blocked_or_failing, 0);
     assert.equal(report.cards.find((card) => card.identity === "今日|きょう").status, "needs_substantive_rereview");
+    assert.equal(report.cards.find((card) => card.identity === "今日|きょう").currentObsidianProofObserved, false);
     assert.match(report.cards.find((card) => card.identity === "今日|きょう").reasons.join("\n"), new RegExp(MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER));
     assert.equal(report.cards.find((card) => card.identity === "日本|にほん").status, "substantive_current_standard_review_proven");
 });
@@ -437,7 +438,26 @@ test("word rereview status does not count base provenance without full word evid
     assert.equal(entryHasSubstantiveCurrentStandardRereviewProof(entry), false);
     assert.equal(report.counts.substantive_current_standard_review_proven, 0);
     assert.equal(report.cards[0].status, "needs_substantive_rereview");
+    assert.equal(report.cards[0].currentObsidianProofObserved, true);
     assert.match(report.cards[0].reasons.join("\n"), /full word-card evidence checklist/);
+});
+
+test("word rereview status keeps legacy proof history in current-version backlog", () => {
+    const legacyProof = buildRereviewProvenance();
+    delete legacyProof.obsidianStandardVersion;
+    const report = buildReport({
+        rows: [buildRow()],
+        entries: [buildEntry({
+            entryOverrides: {
+                rereviewProvenance: legacyProof,
+            },
+        })],
+        level: 5,
+    });
+
+    assert.equal(report.cards[0].status, "needs_substantive_rereview");
+    assert.equal(report.cards[0].currentObsidianProofObserved, false);
+    assert.match(report.cards[0].reasons.join("\n"), /legacy or missing Obsidian standard version/);
 });
 
 test("word rereview status accepts structured sentence-quality evidence bound to the exact word card", () => {

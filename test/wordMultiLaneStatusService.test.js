@@ -242,6 +242,9 @@ test("multi-lane parsing requires explicit scope and rejects ambiguous output mo
     });
     assert.deepEqual(normalizeSelectedLanes(["obsidian", "gold"]), ["gold", "obsidian"]);
     assert.throws(() => parseArgs([]), /requires --level/);
+    assert.throws(() => parseArgs(["--level=6"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--level=typo"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--levels=4,invalid"]), /unsupported JLPT level/);
     assert.throws(() => parseArgs(["--level=4", "--json", "--summary"]), /exactly one/);
     assert.throws(() => normalizeSelectedLanes(["diamond"]), /Unsupported/);
 });
@@ -267,4 +270,25 @@ test("multi-lane classifications never hide denominator drift or reviewed author
             actual: "false",
         }],
     }), FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE);
+
+    const malformedProof = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 1,
+        failures: [{
+            card: "今日|きょう",
+            category: "needs_substantive_rereview",
+            field: "rereviewProvenance",
+            currentObsidianProofObserved: true,
+            actual: "observed proof without full word-card evidence checklist",
+        }],
+        totals: {
+            generatedRows: 1,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 1,
+            blocked_or_failing: 0,
+        },
+    });
+    assert.equal(malformedProof.classification, FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE);
+    assert.equal(malformedProof.expectedBacklog, 0);
+    assert.equal(malformedProof.laneFailureCount, 1);
 });

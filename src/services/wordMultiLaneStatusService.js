@@ -72,19 +72,37 @@ function classifyManifestLaneReport(report = {}) {
 
 function isExpectedObsidianBacklogFailure(failure = {}) {
     if (failure.category === "needs_substantive_rereview") {
-        return true;
+        return failure.currentObsidianProofObserved !== true;
     }
     return failure.category === "blocked_or_failing"
         && failure.field === "platinumManifestEntry"
         && /missing|no platinum manifest entry/i.test(String(failure.actual || ""));
 }
 
+function countDistinctFailureRows(failures = []) {
+    return new Set((Array.isArray(failures) ? failures : []).map((failure, index) => {
+        const card = String(failure?.card || "").trim();
+        return card ? `card:${card}` : `failure:${index}`;
+    })).size;
+}
+
+function summarizeObsidianFailures(report = {}) {
+    const failures = Array.isArray(report.failures) ? report.failures : [];
+    const expectedFailures = failures.filter(isExpectedObsidianBacklogFailure);
+    const laneFailures = failures.filter((failure) => !isExpectedObsidianBacklogFailure(failure));
+    return {
+        failureCount: failures.length,
+        expectedBacklog: countDistinctFailureRows(expectedFailures),
+        laneFailureCount: countDistinctFailureRows(laneFailures),
+    };
+}
+
 function classifyObsidianReport(report = {}) {
     if (report.passed) {
         return FAILURE_CLASSIFICATIONS.PASS;
     }
-    const failures = Array.isArray(report.failures) ? report.failures : [];
-    return failures.length > 0 && failures.every(isExpectedObsidianBacklogFailure)
+    const summary = summarizeObsidianFailures(report);
+    return summary.failureCount > 0 && summary.laneFailureCount === 0
         ? FAILURE_CLASSIFICATIONS.EXPECTED_INCOMPLETE_BACKLOG
         : FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE;
 }
@@ -136,16 +154,15 @@ function summarizeLaneReport(lane, report = {}) {
     }
 
     const totals = report.totals || {};
+    const failureSummary = summarizeObsidianFailures(report);
     return {
         lane,
         passed: Boolean(report.passed),
         classification: classifyObsidianReport(report),
         generatedRows: totals.generatedRows || 0,
         coveredRows: totals.substantive_current_standard_review_proven || 0,
-        expectedBacklog: (totals.needs_substantive_rereview || 0) + (totals.blocked_or_failing || 0),
-        laneFailureCount: classifyObsidianReport(report) === FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE
-            ? report.failureCount || 0
-            : 0,
+        expectedBacklog: failureSummary.expectedBacklog,
+        laneFailureCount: failureSummary.laneFailureCount,
     };
 }
 

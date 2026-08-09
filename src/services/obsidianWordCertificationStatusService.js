@@ -48,6 +48,7 @@ function buildNeedsRereviewFailure({ card = {}, level = null } = {}) {
         field: "rereviewProvenance",
         expected: NEEDS_REREVIEW_EXPECTED,
         actual: normalizeText((card.reasons || []).join("; ")) || `${MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER}: missing proof`,
+        currentObsidianProofObserved: Boolean(card.currentObsidianProofObserved),
         evidenceLane: "reviewEvidence.current-standard-review + rereviewProvenance",
         reviewerAction: NEEDS_REREVIEW_ACTION,
     };

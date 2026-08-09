@@ -3,7 +3,6 @@
 const { performance } = require("node:perf_hooks");
 
 const { loadConfig } = require("../src/config");
-const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const {
     buildCompactWordMultiLaneStatus,
     buildWordMultiLaneStatus,
@@ -12,6 +11,7 @@ const {
     assertNoUnknownArgs,
     collectUnknownArg,
     invokeCliMain,
+    parseExplicitJlptLevels,
     parseStringOption,
 } = require("../src/utils/cliArgs");
 
@@ -34,9 +34,9 @@ function parseArgs(argv) {
         if (arg === "--summary") {
             options.summary = true;
         } else if (arg.startsWith("--level=")) {
-            options.levels = parseLevelsArgument(parseStringOption(arg, "level"));
+            options.levels = parseExplicitJlptLevels(parseStringOption(arg, "level"), "level");
         } else if (arg.startsWith("--levels=")) {
-            options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
+            options.levels = parseExplicitJlptLevels(parseStringOption(arg, "levels"), "levels");
         } else if (arg.startsWith("--repeat=")) {
             options.repeat = parsePositiveInteger(parseStringOption(arg, "repeat"), "repeat");
         } else {

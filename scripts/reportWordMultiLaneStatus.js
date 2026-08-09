@@ -1,7 +1,6 @@
 "use strict";
 
 const { loadConfig } = require("../src/config");
-const { parseLevelsArgument } = require("../src/services/buildPipeline");
 const {
     OBSIDIAN_PROOF_PROVIDER_MODES,
     normalizeObsidianProofProviderMode,
@@ -15,6 +14,7 @@ const {
     assertNoUnknownArgs,
     collectUnknownArg,
     invokeCliMain,
+    parseExplicitJlptLevels,
     parseStringOption,
 } = require("../src/utils/cliArgs");
 
@@ -34,9 +34,9 @@ function parseArgs(argv) {
         } else if (arg === "--summary") {
             options.summary = true;
         } else if (arg.startsWith("--level=")) {
-            options.levels = parseLevelsArgument(parseStringOption(arg, "level"));
+            options.levels = parseExplicitJlptLevels(parseStringOption(arg, "level"), "level");
         } else if (arg.startsWith("--levels=")) {
-            options.levels = parseLevelsArgument(parseStringOption(arg, "levels"));
+            options.levels = parseExplicitJlptLevels(parseStringOption(arg, "levels"), "levels");
         } else if (arg.startsWith("--lanes=")) {
             options.lanes = parseStringOption(arg, "lanes").split(",");
         } else if (arg.startsWith("--proof-provider=")) {

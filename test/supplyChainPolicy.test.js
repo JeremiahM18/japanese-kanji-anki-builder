@@ -6,6 +6,7 @@ const {
     ACTION_ALLOWLIST,
     LIFECYCLE_SCRIPT_ALLOWLIST,
     auditDependencySecurityOverrides,
+    auditPackageManifest,
     auditOutOfRangeOverrideCompatibility,
     buildSupplyChainAuditReport,
     formatSupplyChainAuditReport,
@@ -71,6 +72,11 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
         report.package.lifecycleScripts.map((entry) => entry.key).sort(),
         Object.keys(LIFECYCLE_SCRIPT_ALLOWLIST).sort()
     );
+    assert.deepEqual(report.package.allowScripts, [
+        "fsevents@2.3.3",
+        "onnxruntime-node@1.21.0",
+        "protobufjs@7.6.5",
+    ]);
     assert.equal(report.workflows.length, 3);
     assert.equal(report.workflows.some((workflow) => workflow.relativePath === ".github/workflows/codeql.yml"), true);
     const installSteps = report.workflows.flatMap((workflow) => workflow.installSteps);
@@ -80,6 +86,38 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/release-artifacts.sha256"));
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/sbom.cdx.json"));
     assert.ok(report.releaseArtifacts.requiredReleaseBundlePaths.includes(".release-bundle/dependency-licenses.json"));
+});
+
+test("supply-chain audit requires exact-version npm allowScripts parity", () => {
+    const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
+    const lock = JSON.parse(fs.readFileSync(path.join(repoRoot, "package-lock.json"), "utf8"));
+
+    const missing = structuredClone(packageJson);
+    delete missing.allowScripts["onnxruntime-node@1.21.0"];
+    assert.equal(
+        auditPackageManifest({ packageJson: missing, lock }).errors.some((error) => (
+            /must explicitly approve reviewed lifecycle package onnxruntime-node@1\.21\.0/u.test(error)
+        )),
+        true
+    );
+
+    const broad = structuredClone(packageJson);
+    broad.allowScripts.protobufjs = true;
+    assert.equal(
+        auditPackageManifest({ packageJson: broad, lock }).errors.some((error) => (
+            /unreviewed, broad, stale, or unexpected entry protobufjs/u.test(error)
+        )),
+        true
+    );
+
+    const denied = structuredClone(packageJson);
+    denied.allowScripts["protobufjs@7.6.5"] = false;
+    assert.equal(
+        auditPackageManifest({ packageJson: denied, lock }).errors.some((error) => (
+            /allowScripts entry protobufjs@7\.6\.5 must be exactly true/u.test(error)
+        )),
+        true
+    );
 });
 
 test("supply-chain audit pins GitHub Actions to reviewed commit SHAs", () => {
@@ -99,6 +137,8 @@ test("supply-chain audit report is readable for local verification", () => {
     assert.match(text, /Supply chain audit/);
     assert.match(text, /Status: pass/);
     assert.match(text, /Lifecycle script packages:/);
+    assert.match(text, /npm allowScripts approvals:/);
+    assert.match(text, /fsevents@2\.3\.3/);
     assert.match(text, /Dependency security overrides:/);
     assert.match(text, /GHSA-f88m-g3jw-g9cj/);
     assert.match(text, /compatibility boundary: imports=src\/services\/nlpEmbeddingModelEvaluationService\.js/);

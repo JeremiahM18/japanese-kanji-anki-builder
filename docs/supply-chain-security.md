@@ -30,7 +30,7 @@ The command is deterministic and reads only repository files through the lock-pi
 - all locked packages resolve from `https://registry.npmjs.org/`
 - all resolved tarballs carry integrity hashes.
 - direct dependencies are lockfile-backed registry dependencies, not git, file, workspace, URL, or npm-alias specs.
-- dependency lifecycle scripts match the reviewed allowlist.
+- dependency lifecycle scripts match the reviewed allowlist, and `package.json` mirrors that allowlist as exact `package@version` npm `allowScripts` approvals.
 - every npm override has an exact tracked entry in [../templates/dependency_security_overrides.json](../templates/dependency_security_overrides.json), including parent/package/version binding, advisory, scope, rationale, validation commands, range compatibility, and a non-overdue next-review date.
 - dependency license expressions match the reviewed allowlist or current exception policy.
 - GitHub Actions are pinned to reviewed commit SHAs.
@@ -79,6 +79,8 @@ Lifecycle scripts are high-signal supply-chain risk. The current reviewed allowl
 
 Any new or changed lifecycle-script package must be reviewed before the install step is trusted. The audit gate fails until the allowlist is updated with a specific reason.
 
+npm 11.19 introduces an advisory project-level `allowScripts` policy and warns when a dependency install script is not covered. The repository records the same three reviewed lifecycle packages as exact-version approvals in `package.json`: `fsevents@2.3.3`, `onnxruntime-node@1.21.0`, and `protobufjs@7.6.5`. `npm run supply-chain:audit` rejects missing approvals, name-only or otherwise broad approvals, stale/extra entries, changed versions, and non-`true` values. This keeps the repository fail-closed through its deterministic policy even while npm's current native enforcement remains advisory and prepares the project for npm's stated future blocking behavior.
+
 The current dependency-security overrides are governed in [../templates/dependency_security_overrides.json](../templates/dependency_security_overrides.json):
 
 | Parent | Forced package | Range posture | Security reason | Review |
@@ -98,7 +100,7 @@ Dependency license compliance is governed by [../templates/dependency_license_po
 
 As of 2026-08-01, the recurring supply-chain maintenance items are:
 
-- Keep the lifecycle-script package allowlist above exact by package and version; any package-lock change that adds, removes, or changes `fsevents`, `onnxruntime-node`, `protobufjs`, or another install-script package must be reviewed before trusting install output.
+- Keep both the lifecycle-script package allowlist above and `package.json` `allowScripts` exact by package and version; any package-lock change that adds, removes, or changes `fsevents`, `onnxruntime-node`, `protobufjs`, or another install-script package must be reviewed before trusting install output.
 - Reassess and either remove or revalidate every entry in [../templates/dependency_security_overrides.json](../templates/dependency_security_overrides.json) by its `nextReview` date. Do not update a date without rerunning every recorded validation command.
 - Keep reviewed license exceptions in [../templates/dependency_license_policy.json](../templates/dependency_license_policy.json) current by exact package version, reason, owner, `reviewedAt`, and `nextReview`. The current sharp/libvips exception review is due on 2026-09-01.
 - Rerun `npm run supply-chain:audit`, `npm run security:licenses`, `npm run security:sbom`, `npm run security:advisories`, and `npm run security:secrets` after dependency, workflow, release-artifact, NOTICE, or policy changes.

@@ -317,5 +317,10 @@
     "onnxruntime-node": {
       "tar": "7.5.22"
     }
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true,
+    "onnxruntime-node@1.21.0": true,
+    "protobufjs@7.6.5": true
   }
 }

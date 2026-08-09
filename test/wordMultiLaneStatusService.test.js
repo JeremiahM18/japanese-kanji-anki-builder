@@ -294,4 +294,59 @@ test("multi-lane classifications never hide denominator drift or reviewed author
     assert.equal(malformedProof.classification, FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE);
     assert.equal(malformedProof.expectedBacklog, 0);
     assert.equal(malformedProof.laneFailureCount, 1);
+
+    const mixedFailureOnOneCard = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 2,
+        failures: [
+            {
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+            {
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumStructuralGate",
+                actual: "reviewStandard must be word-platinum-v3-evidence-lanes",
+            },
+        ],
+        totals: {
+            generatedRows: 1,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 0,
+            blocked_or_failing: 1,
+        },
+    });
+    assert.equal(mixedFailureOnOneCard.classification, FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE);
+    assert.equal(mixedFailureOnOneCard.expectedBacklog, 0);
+    assert.equal(mixedFailureOnOneCard.laneFailureCount, 1);
+
+    const separateFailureRows = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 2,
+        failures: [
+            {
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+            {
+                card: "日本|にほん",
+                category: "blocked_or_failing",
+                field: "platinumStructuralGate",
+                actual: "reviewStandard must be word-platinum-v3-evidence-lanes",
+            },
+        ],
+        totals: {
+            generatedRows: 2,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 0,
+            blocked_or_failing: 2,
+        },
+    });
+    assert.equal(separateFailureRows.expectedBacklog, 1);
+    assert.equal(separateFailureRows.laneFailureCount, 1);
 });

@@ -79,21 +79,21 @@ function isExpectedObsidianBacklogFailure(failure = {}) {
         && /missing|no platinum manifest entry/i.test(String(failure.actual || ""));
 }
 
-function countDistinctFailureRows(failures = []) {
-    return new Set((Array.isArray(failures) ? failures : []).map((failure, index) => {
-        const card = String(failure?.card || "").trim();
-        return card ? `card:${card}` : `failure:${index}`;
-    })).size;
-}
-
 function summarizeObsidianFailures(report = {}) {
     const failures = Array.isArray(report.failures) ? report.failures : [];
-    const expectedFailures = failures.filter(isExpectedObsidianBacklogFailure);
-    const laneFailures = failures.filter((failure) => !isExpectedObsidianBacklogFailure(failure));
+    const rows = new Map();
+    failures.forEach((failure, index) => {
+        const card = String(failure?.card || "").trim();
+        const key = card ? `card:${card}` : `failure:${index}`;
+        const row = rows.get(key) || { expectedOnly: true };
+        row.expectedOnly = row.expectedOnly && isExpectedObsidianBacklogFailure(failure);
+        rows.set(key, row);
+    });
+    const rowSummaries = [...rows.values()];
     return {
         failureCount: failures.length,
-        expectedBacklog: countDistinctFailureRows(expectedFailures),
-        laneFailureCount: countDistinctFailureRows(laneFailures),
+        expectedBacklog: rowSummaries.filter((row) => row.expectedOnly).length,
+        laneFailureCount: rowSummaries.filter((row) => !row.expectedOnly).length,
     };
 }
 

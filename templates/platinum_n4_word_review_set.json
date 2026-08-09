@@ -91161,5 +91161,1034 @@
       "reason": "N4 word v2 vocabulary-level placement: media, article, and topic vocabulary from the DICTIONARY COMMON POOL extra-source selector; 特 and 集 provide clean reading reinforcement while the Source level claim unverified label remains active."
     },
     "fixSummary": "Replaced the stale Silver pipeline note with learner-facing media and topic-feature guidance."
+  },
+  {
+    "word": "試飲",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "しいん"
+    ],
+    "meaningIncludes": [
+      "sampling a drink",
+      "tasting a beverage"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "試、飲"
+    ],
+    "coversReadingIncludes": [
+      "試: し ／ 飲: いん"
+    ],
+    "breakdownIncludes": [
+      "試 し 試 （し） ／ test / try Stroke order On: シ Kun: こころ.みる、 ため.す 飲 いん 飲 （いん） ／ drink Stroke order On: イン、 オン Kun: -の.み、 の.む"
+    ],
+    "exampleIncludes": [
+      "店で新しいお茶を試飲しました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 試飲|しいん as useful shopping, food-service, and tasting vocabulary. The store-and-tea example is natural and selects the literal beverage-sampling sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 試飲|しいん as useful shopping, food-service, and tasting vocabulary. The store-and-tea example is natural and selects the literal beverage-sampling sense.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 試飲|しいん.",
+    "notesIncludes": [
+      "試飲 means sampling or tasting a drink, often in a shop or tasting setting. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kotobank / Progressive Japanese-English Dictionary https://kotobank.jp/jeword/%E8%A9%A6%E9%A3%B2",
+        "detail": "Manual registered Japanese-source word-field verification checked 試飲|しいん: written form 試飲, reading しいん, meaning sampling a drink / tasting a beverage, and example sentence 店で新しいお茶を試飲しました。 for natural use of the source-supported sense. Registered lexical source checked for 試飲|しいん. It gives the reading しいん and the sense sample/taste a drink; it supports the card fields written form, reading, and learner meaning sampling a drink / tasting a beverage, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 試飲|しいん: word 試飲, reading しいん, meaning sampling a drink / tasting a beverage, example 店で新しいお茶を試飲しました。 ／ みせであたらしいおちゃをしいんしました。 ／ I sampled a new tea at the store., notes 試飲 means sampling or tasting a drink, often in a shop or tasting setting. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 8A66_試-word-reading-試飲-しいん, reading breakdown 試 し飲 いん, kanji breakdown 試 し 試 （し） ／ test / try Stroke order On: シ Kun: こころ.みる、 ため.す 飲 いん 飲 （いん） ／ drink Stroke order On: イン、 オン Kun: -の.み、 の.む, labels JLPT N4; Reading coverage support; focus 試、飲; covers 試: し ／ 飲: いん."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 試飲|しいん: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 試飲|しいん for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 試飲|しいん with managed media artifact 8A66_試-word-reading-試飲-しいん, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 試飲|しいん uses exact word-reading asset 8A66_試-word-reading-試飲-しいん, expected reading しいん, generated reading しいん, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 試飲|しいん source kanjium-cc-by-sa-4.0 pattern 0 [heiban], expected accents 0, rendered accents 0, protected labels Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 試飲|しいん: JLPT N4; Reading coverage support; focus 試、飲; covers 試: し ／ 飲: いん; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 試飲|しいん separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 試飲|しいん, reading しいん, example sentence 店で新しいお茶を試飲しました。, sentence reading みせであたらしいおちゃをしいんしました。, translation I sampled a new tea at the store., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 試飲|しいん is common or useful and learner-friendly. Platinum card-surface review approved 試飲|しいん as useful shopping, food-service, and tasting vocabulary. The store-and-tea example is natural and selects the literal beverage-sampling sense. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 試飲|しいん checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence 店で新しいお茶を試飲しました。 ／ みせであたらしいおちゃをしいんしました。 ／ I sampled a new tea at the store. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 試飲 means sampling or tasting a drink, often in a shop or tasting setting. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 試 し飲 いん; kanji breakdown 試 し 試 （し） ／ test / try Stroke order On: シ Kun: こころ.みる、 ため.す 飲 いん 飲 （いん） ／ drink Stroke order On: イン、 オン Kun: -の.み、 の.む; meaning sampling a drink / tasting a beverage; labels JLPT N4, Reading coverage support, focus 試、飲, covers 試: し ／ 飲: いん; exact audio 8A66_試-word-reading-試飲-しいん; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: shopping and drink-sampling vocabulary from the DICTIONARY COMMON POOL extra-source selector; 試 and 飲 provide clean reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing guidance for the drink-sampling sense."
+  },
+  {
+    "word": "朝晩",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "あさばん"
+    ],
+    "meaningIncludes": [
+      "morning and evening"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "朝、晩"
+    ],
+    "coversReadingIncludes": [
+      "朝: あさ ／ 晩: ばん"
+    ],
+    "breakdownIncludes": [
+      "朝 あさ 朝 （あさ） ／ morning Stroke order On: チョウ Kun: あさ 晩 ばん 晩 （ばん） ／ evening Stroke order On: バン"
+    ],
+    "exampleIncludes": [
+      "朝晩は少し寒いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 朝晩|あさばん as independently useful everyday time and routine vocabulary. The weather example is natural and clearly expresses both ends of the day.",
+    "levelPlacementReason": "Platinum card-surface review approved 朝晩|あさばん as independently useful everyday time and routine vocabulary. The weather example is natural and clearly expresses both ends of the day.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 朝晩|あさばん.",
+    "notesIncludes": [
+      "朝晩 means both morning and evening and often describes a repeated daily routine. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%9D%E6%99%A9",
+        "detail": "Manual registered Japanese-source word-field verification checked 朝晩|あさばん: written form 朝晩, reading あさばん, meaning morning and evening, and example sentence 朝晩は少し寒いです。 for natural use of the source-supported sense. Registered lexical source checked for 朝晩|あさばん. It gives the exact reading and the sense morning and evening with corresponding examples; it supports the card fields, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 朝晩|あさばん: word 朝晩, reading あさばん, meaning morning and evening, example 朝晩は少し寒いです。 ／ あさばんはすこしさむいです。 ／ It is a little cold in the mornings and evenings., notes 朝晩 means both morning and evening and often describes a repeated daily routine. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 671D_朝-word-reading-朝晩-あさばん, reading breakdown 朝 あさ晩 ばん, kanji breakdown 朝 あさ 朝 （あさ） ／ morning Stroke order On: チョウ Kun: あさ 晩 ばん 晩 （ばん） ／ evening Stroke order On: バン, labels JLPT N4; Reading coverage support; focus 朝、晩; covers 朝: あさ ／ 晩: ばん."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 朝晩|あさばん: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 朝晩|あさばん for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 朝晩|あさばん with managed media artifact 671D_朝-word-reading-朝晩-あさばん, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 朝晩|あさばん uses exact word-reading asset 671D_朝-word-reading-朝晩-あさばん, expected reading あさばん, generated reading あさばん, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 朝晩|あさばん source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], expected accents 1, rendered accents 1, protected labels Pitch 1: 1, Pitch accent contour 1, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 朝晩|あさばん: JLPT N4; Reading coverage support; focus 朝、晩; covers 朝: あさ ／ 晩: ばん; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 朝晩|あさばん separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 朝晩|あさばん, reading あさばん, example sentence 朝晩は少し寒いです。, sentence reading あさばんはすこしさむいです。, translation It is a little cold in the mornings and evenings., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 朝晩|あさばん is common or useful and learner-friendly. Platinum card-surface review approved 朝晩|あさばん as independently useful everyday time and routine vocabulary. The weather example is natural and clearly expresses both ends of the day. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 朝晩|あさばん checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence 朝晩は少し寒いです。 ／ あさばんはすこしさむいです。 ／ It is a little cold in the mornings and evenings. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 朝晩 means both morning and evening and often describes a repeated daily routine. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 朝 あさ晩 ばん; kanji breakdown 朝 あさ 朝 （あさ） ／ morning Stroke order On: チョウ Kun: あさ 晩 ばん 晩 （ばん） ／ evening Stroke order On: バン; meaning morning and evening; labels JLPT N4, Reading coverage support, focus 朝、晩, covers 朝: あさ ／ 晩: ばん; exact audio 671D_朝-word-reading-朝晩-あさばん; pitch accent source kanjium-cc-by-sa-4.0 1 [atamadaka] rendered Pitch 1: 1, Pitch accent contour 1; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: daily-time, routine, weather, and habit vocabulary from the DICTIONARY COMMON POOL extra-source selector; 朝 and 晩 provide clean reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing guidance for the morning-and-evening expression."
+  },
+  {
+    "word": "有料",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ゆうりょう"
+    ],
+    "meaningIncludes": [
+      "paid",
+      "fee-charging"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "有、料"
+    ],
+    "coversReadingIncludes": [
+      "有: ゆう ／ 料: りょう"
+    ],
+    "breakdownIncludes": [
+      "有 ゆう 有 （ゆう） ／ have / exist Stroke order On: ウ、 ユウ Kun: あ.る 料 りょう 料 （りょう） ／ fee / materials Stroke order On: リョウ"
+    ],
+    "exampleIncludes": [
+      "この駐車場は有料です。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 有料|ゆうりょう as highly practical sign, parking, transport, and service vocabulary. The parking-lot example is natural and communicates the fee requirement directly.",
+    "levelPlacementReason": "Platinum card-surface review approved 有料|ゆうりょう as highly practical sign, parking, transport, and service vocabulary. The parking-lot example is natural and communicates the fee requirement directly.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 有料|ゆうりょう.",
+    "notesIncludes": [
+      "有料 means that a fee is required; it is common on signs for parking, services, and facilities. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E6%9C%89%E6%96%99",
+        "detail": "Manual registered Japanese-source word-field verification checked 有料|ゆうりょう: written form 有料, reading ゆうりょう, meaning paid / fee-charging, and example sentence この駐車場は有料です。 for natural use of the source-supported sense. Registered lexical source checked for 有料|ゆうりょう. It gives the exact reading and fee-charging/paid/not free sense with usage examples; it supports the card fields, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 有料|ゆうりょう: word 有料, reading ゆうりょう, meaning paid / fee-charging, example この駐車場は有料です。 ／ このちゅうしゃじょうはゆうりょうです。 ／ This parking lot charges a fee., notes 有料 means that a fee is required; it is common on signs for parking, services, and facilities. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 6709_有-word-reading-有料-ゆうりょう, reading breakdown 有 ゆう料 りょう, kanji breakdown 有 ゆう 有 （ゆう） ／ have / exist Stroke order On: ウ、 ユウ Kun: あ.る 料 りょう 料 （りょう） ／ fee / materials Stroke order On: リョウ, labels JLPT N4; Reading coverage support; focus 有、料; covers 有: ゆう ／ 料: りょう."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 有料|ゆうりょう: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 有料|ゆうりょう for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 有料|ゆうりょう with managed media artifact 6709_有-word-reading-有料-ゆうりょう, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 有料|ゆうりょう uses exact word-reading asset 6709_有-word-reading-有料-ゆうりょう, expected reading ゆうりょう, generated reading ゆうりょう, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 有料|ゆうりょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban], expected accents 0, rendered accents 0, protected labels Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 有料|ゆうりょう: JLPT N4; Reading coverage support; focus 有、料; covers 有: ゆう ／ 料: りょう; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 有料|ゆうりょう separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 有料|ゆうりょう, reading ゆうりょう, example sentence この駐車場は有料です。, sentence reading このちゅうしゃじょうはゆうりょうです。, translation This parking lot charges a fee., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 有料|ゆうりょう is common or useful and learner-friendly. Platinum card-surface review approved 有料|ゆうりょう as highly practical sign, parking, transport, and service vocabulary. The parking-lot example is natural and communicates the fee requirement directly. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 有料|ゆうりょう checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence この駐車場は有料です。 ／ このちゅうしゃじょうはゆうりょうです。 ／ This parking lot charges a fee. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 有料 means that a fee is required; it is common on signs for parking, services, and facilities. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 有 ゆう料 りょう; kanji breakdown 有 ゆう 有 （ゆう） ／ have / exist Stroke order On: ウ、 ユウ Kun: あ.る 料 りょう 料 （りょう） ／ fee / materials Stroke order On: リョウ; meaning paid / fee-charging; labels JLPT N4, Reading coverage support, focus 有、料, covers 有: ゆう ／ 料: りょう; exact audio 6709_有-word-reading-有料-ゆうりょう; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: practical sign, service, and transport vocabulary from the DICTIONARY COMMON POOL extra-source selector; 有 and 料 are clean N4 anchors while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing guidance for fee-required signs and services."
+  },
+  {
+    "word": "自室",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "じしつ"
+    ],
+    "meaningIncludes": [
+      "one's own room"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "自、室"
+    ],
+    "coversReadingIncludes": [
+      "自: じ ／ 室: しつ"
+    ],
+    "breakdownIncludes": [
+      "自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 室 しつ 室 （しつ） ／ room Stroke order On: シツ Kun: むろ"
+    ],
+    "exampleIncludes": [
+      "自室で宿題をしました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 自室|じしつ as concrete home, dormitory, and study vocabulary. The homework example is natural and distinguishes one's personal room from other spaces.",
+    "levelPlacementReason": "Platinum card-surface review approved 自室|じしつ as concrete home, dormitory, and study vocabulary. The homework example is natural and distinguishes one's personal room from other spaces.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 自室|じしつ.",
+    "notesIncludes": [
+      "自室 means one&#39;s own room and is useful when distinguishing a personal room from a shared space. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kotobank / Digital Daijisen https://kotobank.jp/word/%E8%87%AA%E5%AE%A4-519095",
+        "detail": "Manual registered Japanese-source word-field verification checked 自室|じしつ: written form 自室, reading じしつ, meaning one's own room, and example sentence 自室で宿題をしました。 for natural use of the source-supported sense. Registered lexical source checked for 自室|じしつ. It gives the exact reading and definition one’s own room; it supports the card fields, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 自室|じしつ: word 自室, reading じしつ, meaning one's own room, example 自室で宿題をしました。 ／ じしつでしゅくだいをしました。 ／ I did my homework in my own room., notes 自室 means one&#39;s own room and is useful when distinguishing a personal room from a shared space. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 81EA_自-word-reading-自室-じしつ, reading breakdown 自 じ室 しつ, kanji breakdown 自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 室 しつ 室 （しつ） ／ room Stroke order On: シツ Kun: むろ, labels JLPT N4; Reading coverage support; focus 自、室; covers 自: じ ／ 室: しつ."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 自室|じしつ: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 自室|じしつ for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 自室|じしつ with managed media artifact 81EA_自-word-reading-自室-じしつ, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 自室|じしつ uses exact word-reading asset 81EA_自-word-reading-自室-じしつ, expected reading じしつ, generated reading じしつ, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 自室|じしつ source kanjium-cc-by-sa-4.0 pattern 0 [heiban], expected accents 0, rendered accents 0, protected labels Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 自室|じしつ: JLPT N4; Reading coverage support; focus 自、室; covers 自: じ ／ 室: しつ; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 自室|じしつ separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 自室|じしつ, reading じしつ, example sentence 自室で宿題をしました。, sentence reading じしつでしゅくだいをしました。, translation I did my homework in my own room., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 自室|じしつ is common or useful and learner-friendly. Platinum card-surface review approved 自室|じしつ as concrete home, dormitory, and study vocabulary. The homework example is natural and distinguishes one's personal room from other spaces. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 自室|じしつ checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence 自室で宿題をしました。 ／ じしつでしゅくだいをしました。 ／ I did my homework in my own room. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 自室 means one&#39;s own room and is useful when distinguishing a personal room from a shared space. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 自 じ室 しつ; kanji breakdown 自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 室 しつ 室 （しつ） ／ room Stroke order On: シツ Kun: むろ; meaning one's own room; labels JLPT N4, Reading coverage support, focus 自、室, covers 自: じ ／ 室: しつ; exact audio 81EA_自-word-reading-自室-じしつ; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: concise home and study vocabulary from the DICTIONARY COMMON POOL extra-source selector; 自 and 室 are clean N4 anchors while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing guidance that distinguishes one's own room from shared space."
+  },
+  {
+    "word": "仕度",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "したく"
+    ],
+    "meaningIncludes": [
+      "preparation",
+      "getting ready"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "仕、度"
+    ],
+    "coversReadingIncludes": [
+      "仕: し ／ 度: たく"
+    ],
+    "breakdownIncludes": [
+      "仕 し 仕 （し） ／ service / work Stroke order On: シ、 ジ Kun: つか.える 度 たく 度 （たく） ／ degree / time / occurrence Stroke order On: タク、 ト、 ド Kun: -た.い、 たび"
+    ],
+    "exampleIncludes": [
+      "出かける仕度をします。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 仕度|したく as a source-supported recognition variant of the common 支度 spelling, not as a separate sense or as metric-filling duplication. The note now makes the spelling relationship explicit.",
+    "levelPlacementReason": "Platinum card-surface review approved 仕度|したく as a source-supported recognition variant of the common 支度 spelling, not as a separate sense or as metric-filling duplication. The note now makes the spelling relationship explicit.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 仕度|したく.",
+    "notesIncludes": [
+      "仕度 is a recognized variant spelling of 支度; both are read したく and mean preparation or getting ready. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kotobank / Digital Daijisen https://kotobank.jp/word/%E6%94%AF%E5%BA%A6-520417",
+        "detail": "Manual registered Japanese-source word-field verification checked 仕度|したく: written form 仕度, reading したく, meaning preparation / getting ready, and example sentence 出かける仕度をします。 for natural use of the source-supported sense. Registered lexical source checked 支度／仕度|したく. It explicitly lists 仕度 as an orthography and gives preparation and getting-ready senses; it supports the shipped card fields, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 仕度|したく: word 仕度, reading したく, meaning preparation / getting ready, example 出かける仕度をします。 ／ でかけるしたくをします。 ／ I get ready to go out., notes 仕度 is a recognized variant spelling of 支度; both are read したく and mean preparation or getting ready. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 4ED5_仕-word-reading-仕度-したく, reading breakdown 仕 し度 たく, kanji breakdown 仕 し 仕 （し） ／ service / work Stroke order On: シ、 ジ Kun: つか.える 度 たく 度 （たく） ／ degree / time / occurrence Stroke order On: タク、 ト、 ド Kun: -た.い、 たび, labels JLPT N4; Reading coverage support; focus 仕、度; covers 仕: し ／ 度: たく."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 仕度|したく: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 仕度|したく for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 仕度|したく with managed media artifact 4ED5_仕-word-reading-仕度-したく, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 仕度|したく uses exact word-reading asset 4ED5_仕-word-reading-仕度-したく, expected reading したく, generated reading したく, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 仕度|したく source kanjium-cc-by-sa-4.0 pattern 0 [heiban], expected accents 0, rendered accents 0, protected labels Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 仕度|したく: JLPT N4; Reading coverage support; focus 仕、度; covers 仕: し ／ 度: たく; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 仕度|したく separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 仕度|したく, reading したく, example sentence 出かける仕度をします。, sentence reading でかけるしたくをします。, translation I get ready to go out., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 仕度|したく is common or useful and learner-friendly. Platinum card-surface review approved 仕度|したく as a source-supported recognition variant of the common 支度 spelling, not as a separate sense or as metric-filling duplication. The note now makes the spelling relationship explicit. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 仕度|したく checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence 出かける仕度をします。 ／ でかけるしたくをします。 ／ I get ready to go out. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 仕度 is a recognized variant spelling of 支度; both are read したく and mean preparation or getting ready. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 仕 し度 たく; kanji breakdown 仕 し 仕 （し） ／ service / work Stroke order On: シ、 ジ Kun: つか.える 度 たく 度 （たく） ／ degree / time / occurrence Stroke order On: タク、 ト、 ド Kun: -た.い、 たび; meaning preparation / getting ready; labels JLPT N4, Reading coverage support, focus 仕、度, covers 仕: し ／ 度: たく; exact audio 4ED5_仕-word-reading-仕度-したく; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: daily routine and preparation vocabulary from the DICTIONARY COMMON POOL extra-source selector; 仕 and 度 provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with explicit learner-facing guidance that 仕度 is a recognized variant spelling of 支度."
+  },
+  {
+    "word": "自動",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "じどう"
+    ],
+    "meaningIncludes": [
+      "automatic"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "自、動"
+    ],
+    "coversReadingIncludes": [
+      "自: じ ／ 動: どう"
+    ],
+    "breakdownIncludes": [
+      "自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 動 どう 動 （どう） ／ move Stroke order On: ドウ Kun: うご.かす、 うご.く"
+    ],
+    "exampleIncludes": [
+      "このドアは自動で開きます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 自動|じどう as highly useful public-space, machine, and device vocabulary. The automatic-door example is natural, concrete, and matches the lexical source's core usage.",
+    "levelPlacementReason": "Platinum card-surface review approved 自動|じどう as highly useful public-space, machine, and device vocabulary. The automatic-door example is natural, concrete, and matches the lexical source's core usage.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 自動|じどう.",
+    "notesIncludes": [
+      "自動 means that a machine or process operates automatically; 自動ドア is a common example. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E8%87%AA%E5%8B%95",
+        "detail": "Manual registered Japanese-source word-field verification checked 自動|じどう: written form 自動, reading じどう, meaning automatic, and example sentence このドアは自動で開きます。 for natural use of the source-supported sense. Registered lexical source checked for 自動|じどう. It gives the exact reading and automatic sense with automatic-door examples; it supports the card fields, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 自動|じどう: word 自動, reading じどう, meaning automatic, example このドアは自動で開きます。 ／ このドアはじどうであきます。 ／ This door opens automatically., notes 自動 means that a machine or process operates automatically; 自動ドア is a common example. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 81EA_自-word-reading-自動-じどう, reading breakdown 自 じ動 どう, kanji breakdown 自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 動 どう 動 （どう） ／ move Stroke order On: ドウ Kun: うご.かす、 うご.く, labels JLPT N4; Reading coverage support; focus 自、動; covers 自: じ ／ 動: どう."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 自動|じどう: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 自動|じどう for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 自動|じどう with managed media artifact 81EA_自-word-reading-自動-じどう, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 自動|じどう uses exact word-reading asset 81EA_自-word-reading-自動-じどう, expected reading じどう, generated reading じどう, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 自動|じどう source kanjium-cc-by-sa-4.0 pattern 0 [heiban], expected accents 0, rendered accents 0, protected labels Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 自動|じどう: JLPT N4; Reading coverage support; focus 自、動; covers 自: じ ／ 動: どう; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 自動|じどう separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 自動|じどう, reading じどう, example sentence このドアは自動で開きます。, sentence reading このドアはじどうであきます。, translation This door opens automatically., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 自動|じどう is common or useful and learner-friendly. Platinum card-surface review approved 自動|じどう as highly useful public-space, machine, and device vocabulary. The automatic-door example is natural, concrete, and matches the lexical source's core usage. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 自動|じどう checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence このドアは自動で開きます。 ／ このドアはじどうであきます。 ／ This door opens automatically. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 自動 means that a machine or process operates automatically; 自動ドア is a common example. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 自 じ動 どう; kanji breakdown 自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 動 どう 動 （どう） ／ move Stroke order On: ドウ Kun: うご.かす、 うご.く; meaning automatic; labels JLPT N4, Reading coverage support, focus 自、動, covers 自: じ ／ 動: どう; exact audio 81EA_自-word-reading-自動-じどう; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: machine, sign, and device vocabulary from the DICTIONARY COMMON POOL extra-source selector; 自 and 動 provide clean reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing guidance for automatic machines and processes."
+  },
+  {
+    "word": "品質",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ひんしつ"
+    ],
+    "meaningIncludes": [
+      "quality",
+      "product quality"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "品、質"
+    ],
+    "coversReadingIncludes": [
+      "品: ひん ／ 質: しつ"
+    ],
+    "breakdownIncludes": [
+      "品 ひん 品 （ひん） ／ goods / quality Stroke order On: ヒン、 ホン Kun: しな 質 しつ 質 （しつ） ／ quality / question Stroke order On: シチ、 シツ、 チ Kun: ただ.す、 たち、 もと、 わりふ"
+    ],
+    "exampleIncludes": [
+      "この商品は品質が高いです。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 品質|ひんしつ as practical shopping, product, service, and work vocabulary. The high-quality product example is natural and directly selects the protected meaning.",
+    "levelPlacementReason": "Platinum card-surface review approved 品質|ひんしつ as practical shopping, product, service, and work vocabulary. The high-quality product example is natural and directly selects the protected meaning.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 品質|ひんしつ.",
+    "notesIncludes": [
+      "品質 is the quality of a product or service, as in 品質が高い for high quality. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E5%93%81%E8%B3%AA",
+        "detail": "Manual registered Japanese-source word-field verification checked 品質|ひんしつ: written form 品質, reading ひんしつ, meaning quality / product quality, and example sentence この商品は品質が高いです。 for natural use of the source-supported sense. Registered lexical source checked for 品質|ひんしつ. It gives the exact reading and quality of a product or service sense with product examples; it supports the card fields, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 品質|ひんしつ: word 品質, reading ひんしつ, meaning quality / product quality, example この商品は品質が高いです。 ／ このしょうひんはひんしつがたかいです。 ／ This product is high quality., notes 品質 is the quality of a product or service, as in 品質が高い for high quality. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 54C1_品-word-reading-品質-ひんしつ, reading breakdown 品 ひん質 しつ, kanji breakdown 品 ひん 品 （ひん） ／ goods / quality Stroke order On: ヒン、 ホン Kun: しな 質 しつ 質 （しつ） ／ quality / question Stroke order On: シチ、 シツ、 チ Kun: ただ.す、 たち、 もと、 わりふ, labels JLPT N4; Reading coverage support; focus 品、質; covers 品: ひん ／ 質: しつ."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 品質|ひんしつ: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 品質|ひんしつ for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 品質|ひんしつ with managed media artifact 54C1_品-word-reading-品質-ひんしつ, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 品質|ひんしつ uses exact word-reading asset 54C1_品-word-reading-品質-ひんしつ, expected reading ひんしつ, generated reading ひんしつ, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 品質|ひんしつ source kanjium-cc-by-sa-4.0 pattern 0 [heiban], expected accents 0, rendered accents 0, protected labels Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 品質|ひんしつ: JLPT N4; Reading coverage support; focus 品、質; covers 品: ひん ／ 質: しつ; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 品質|ひんしつ separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 品質|ひんしつ, reading ひんしつ, example sentence この商品は品質が高いです。, sentence reading このしょうひんはひんしつがたかいです。, translation This product is high quality., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 品質|ひんしつ is common or useful and learner-friendly. Platinum card-surface review approved 品質|ひんしつ as practical shopping, product, service, and work vocabulary. The high-quality product example is natural and directly selects the protected meaning. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 品質|ひんしつ checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence この商品は品質が高いです。 ／ このしょうひんはひんしつがたかいです。 ／ This product is high quality. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 品質 is the quality of a product or service, as in 品質が高い for high quality. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 品 ひん質 しつ; kanji breakdown 品 ひん 品 （ひん） ／ goods / quality Stroke order On: ヒン、 ホン Kun: しな 質 しつ 質 （しつ） ／ quality / question Stroke order On: シチ、 シツ、 チ Kun: ただ.す、 たち、 もと、 わりふ; meaning quality / product quality; labels JLPT N4, Reading coverage support, focus 品、質, covers 品: ひん ／ 質: しつ; exact audio 54C1_品-word-reading-品質-ひんしつ; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: shopping, product, service, and work vocabulary from the DICTIONARY COMMON POOL extra-source selector; 品 and 質 provide clean reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing product-and-service quality guidance."
+  },
+  {
+    "word": "旅立つ",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "たびだつ"
+    ],
+    "meaningIncludes": [
+      "depart",
+      "set out on a journey"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "旅、立"
+    ],
+    "coversReadingIncludes": [
+      "旅: たび ／ 立: だ"
+    ],
+    "breakdownIncludes": [
+      "旅 たび 旅 （たび） ／ trip / travel Stroke order On: リョ Kun: たび 立 だ 立 （だ） ／ stand Stroke order On: リットル、 リツ、 リュウ Kun: -た.つ、 -た.て、 -た.てる、 -だ.て、 -だ.てる、 た.ち-"
+    ],
+    "exampleIncludes": [
+      "明日、新しい町へ旅立ちます。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 3",
+      "Pitch accent contour 3"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 旅立つ|たびだつ as useful travel and departure vocabulary. The new-town example is natural and deliberately selects the literal journey sense instead of a figurative or euphemistic sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 旅立つ|たびだつ as useful travel and departure vocabulary. The new-town example is natural and deliberately selects the literal journey sense instead of a figurative or euphemistic sense.",
+    "reviewedAt": "2026-08-06",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-06",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 旅立つ|たびだつ.",
+    "notesIncludes": [
+      "旅立つ means to set out or depart; this card uses the literal travel sense. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E6%97%85%E7%AB%8B%E3%81%A4",
+        "detail": "Manual registered Japanese-source word-field verification checked 旅立つ|たびだつ: written form 旅立つ, reading たびだつ, meaning depart / set out on a journey, and example sentence 明日、新しい町へ旅立ちます。 for natural use of the source-supported sense. Registered lexical source checked for 旅立つ|たびだつ. It gives the exact reading and to begin a trip/depart/embark sense with journey examples; it supports the shipped travel sense, not JLPT placement or source truth. The source is used for word-field-verification and not as JLPT-level truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 旅立つ|たびだつ: word 旅立つ, reading たびだつ, meaning depart / set out on a journey, example 明日、新しい町へ旅立ちます。 ／ あした、あたらしいまちへたびだちます。 ／ Tomorrow I will set out for a new town., notes 旅立つ means to set out or depart; this card uses the literal travel sense. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 65C5_旅-word-reading-旅立つ-たびだつ, reading breakdown 旅 たび立 だつ, kanji breakdown 旅 たび 旅 （たび） ／ trip / travel Stroke order On: リョ Kun: たび 立 だ 立 （だ） ／ stand Stroke order On: リットル、 リツ、 リュウ Kun: -た.つ、 -た.て、 -た.てる、 -だ.て、 -だ.てる、 た.ち-, labels JLPT N4; Reading coverage support; focus 旅、立; covers 旅: たび ／ 立: だ."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 旅立つ|たびだつ: JLPT N4 word level placement is tracked in templates/jlpt_word_level_contract.json. Platinum card-surface review approved 旅立つ|たびだつ for N4 after manual product judgment; the tracked N4 contract remains internal placement authority and external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and npm run media:review:word-audio",
+        "detail": "Media audit checked 旅立つ|たびだつ with managed media artifact 65C5_旅-word-reading-旅立つ-たびだつ, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio -- --level=4 --word=試飲,朝晩,有料,自室,仕度,自動,品質,旅立つ --limit=8",
+        "detail": "Audio identity review verified 旅立つ|たびだつ uses exact word-reading asset 65C5_旅-word-reading-旅立つ-たびだつ, expected reading たびだつ, generated reading たびだつ, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 旅立つ|たびだつ source kanjium-cc-by-sa-4.0 pattern 3 [nakadaka], expected accents 3, rendered accents 3, protected labels Pitch 1: 3, Pitch accent contour 3, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live generated N4 word surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 旅立つ|たびだつ: JLPT N4; Reading coverage support; focus 旅、立; covers 旅: たび ／ 立: だ; Notes preserve the source-level boundary. Queue risks were reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 旅立つ|たびだつ separately protects exported reading, meaning, labels, breakdown, example, pitch, and notes expectations after Platinum review; it is separate regression coverage, not Japanese-source truth or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 旅立つ|たびだつ, reading たびだつ, example sentence 明日、新しい町へ旅立ちます。, sentence reading あした、あたらしいまちへたびだちます。, translation Tomorrow I will set out for a new town., exact written-form/reading evidence, and judged it natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review made the final word-card product judgment that 旅立つ|たびだつ is common or useful and learner-friendly. Platinum card-surface review approved 旅立つ|たびだつ as useful travel and departure vocabulary. The new-town example is natural and deliberately selects the literal journey sense instead of a figurative or euphemistic sense. Risk checks resolved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active verification limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 旅立つ|たびだつ checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence 明日、新しい町へ旅立ちます。 ／ あした、あたらしいまちへたびだちます。 ／ Tomorrow I will set out for a new town. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 旅立つ means to set out or depart; this card uses the literal travel sense. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 旅 たび立 だつ; kanji breakdown 旅 たび 旅 （たび） ／ trip / travel Stroke order On: リョ Kun: たび 立 だ 立 （だ） ／ stand Stroke order On: リットル、 リツ、 リュウ Kun: -た.つ、 -た.て、 -た.てる、 -だ.て、 -だ.てる、 た.ち-; meaning depart / set out on a journey; labels JLPT N4, Reading coverage support, focus 旅、立, covers 旅: たび ／ 立: だ; exact audio 65C5_旅-word-reading-旅立つ-たびだつ; pitch accent source kanjium-cc-by-sa-4.0 3 [nakadaka] rendered Pitch 1: 3, Pitch accent contour 3; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations. Manual release judgment: common or useful, learner-friendly, level-appropriate, natural, and release-quality."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: travel, departure, and life-transition vocabulary from the DICTIONARY COMMON POOL extra-source selector; 旅 and 立 provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing guidance that fixes the card to the literal travel sense."
   }
 ]

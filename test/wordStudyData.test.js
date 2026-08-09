@@ -308,6 +308,14 @@ const PLATINUM_FIXED_COMMON_POOL_WORDS = new Set([
     "親元|おやもと",
     "肉屋|にくや",
     "特集|とくしゅう",
+    "試飲|しいん",
+    "朝晩|あさばん",
+    "有料|ゆうりょう",
+    "自室|じしつ",
+    "仕度|したく",
+    "自動|じどう",
+    "品質|ひんしつ",
+    "旅立つ|たびだつ",
 ]);
 
 function loadTrackedStarterWordEntries() {
@@ -8785,6 +8793,26 @@ test("tracked starter word data protects the fifth current-standard N4 Platinum 
     assert.match(starterEntries["特集|とくしゅう"].notes, /magazine, newspaper, or program/);
 
     for (const key of ["次週|じしゅう", "別室|べっしつ", "体重|たいじゅう", "赤字|あかじ", "作者|さくしゃ", "親元|おやもと", "肉屋|にくや", "特集|とくしゅう"]) {
+        assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+        assert.match(starterEntries[key].notes, /DICTIONARY COMMON POOL/, key);
+        assert.match(starterEntries[key].notes, /Source level claim unverified/, key);
+    }
+});
+
+test("tracked starter word data protects the sixth current-standard N4 Platinum batch fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.match(starterEntries["試飲|しいん"].notes, /sampling or tasting a drink/);
+    assert.match(starterEntries["朝晩|あさばん"].notes, /both morning and evening/);
+    assert.match(starterEntries["有料|ゆうりょう"].notes, /a fee is required/);
+    assert.match(starterEntries["自室|じしつ"].notes, /one's own room/);
+    assert.match(starterEntries["仕度|したく"].notes, /recognized variant spelling of 支度/);
+    assert.match(starterEntries["仕度|したく"].notes, /both are read したく/);
+    assert.match(starterEntries["自動|じどう"].notes, /自動ドア/);
+    assert.match(starterEntries["品質|ひんしつ"].notes, /品質が高い/);
+    assert.match(starterEntries["旅立つ|たびだつ"].notes, /literal travel sense/);
+
+    for (const key of ["試飲|しいん", "朝晩|あさばん", "有料|ゆうりょう", "自室|じしつ", "仕度|したく", "自動|じどう", "品質|ひんしつ", "旅立つ|たびだつ"]) {
         assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
         assert.match(starterEntries[key].notes, /DICTIONARY COMMON POOL/, key);
         assert.match(starterEntries[key].notes, /Source level claim unverified/, key);

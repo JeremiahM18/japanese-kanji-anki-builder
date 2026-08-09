@@ -12,6 +12,11 @@ const REQUIRED_FRONTMATTER_FIELDS = Object.freeze([
     "repository_commit",
 ]);
 
+const INSTRUCTION_CONTRACT_BASENAMES = new Set([
+    "agents.md",
+    "claude.md",
+]);
+
 const SECRET_PATTERNS = Object.freeze([
     ["private-key", /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/u],
     ["github-token", /\bgh[pousr]_[A-Za-z0-9]{20,}\b/u],
@@ -37,7 +42,11 @@ function listMarkdownFiles(rootDir) {
             }
             if (entry.isDirectory()) {
                 pending.push(filePath);
-            } else if (entry.isFile() && entry.name.toLowerCase().endsWith(".md")) {
+            } else if (
+                entry.isFile()
+                && entry.name.toLowerCase().endsWith(".md")
+                && !INSTRUCTION_CONTRACT_BASENAMES.has(entry.name.toLowerCase())
+            ) {
                 files.push(filePath);
             }
         }
@@ -218,6 +227,7 @@ function buildKanjiBuilderVaultValidationReport({
                 message: "frontmatter project must be Kanji Builder.",
             });
         }
+        const noteStatus = String(frontmatter.status || "");
         const verifiedDate = String(frontmatter.verified_date || "");
         if (!isCanonicalIsoDate(verifiedDate)) {
             failures.push({
@@ -233,7 +243,7 @@ function buildKanjiBuilderVaultValidationReport({
                     path: relativePath,
                     message: `verified_date is ${Math.abs(ageDays)} days in the future.`,
                 });
-            } else if (ageDays > maxAgeDays) {
+            } else if (noteStatus.startsWith("current") && ageDays > maxAgeDays) {
                 warnings.push({
                     code: "stale-verification",
                     path: relativePath,
@@ -248,7 +258,7 @@ function buildKanjiBuilderVaultValidationReport({
                 path: relativePath,
                 message: "repository_commit must be a full 40-character Git SHA.",
             });
-        } else if (String(frontmatter.status || "").startsWith("current") && noteCommit !== repositoryCommit) {
+        } else if (noteStatus.startsWith("current") && noteCommit !== repositoryCommit) {
             failures.push({
                 code: "current-commit-drift",
                 path: relativePath,

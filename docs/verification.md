@@ -115,7 +115,7 @@ Validate the external Kanji Builder vault project read-only with:
 npm run vault:validate -- --vault="<absolute Kanji Builder vault project path>" --max-age-days=14
 ```
 
-This checks YAML/frontmatter shape, current-note commit binding, real calendar dates, Markdown structure, duplicate titles/basenames, wikilinks, registered npm command references, contained repository-path references, and high-confidence secret shapes. It does not certify lane content or make vault notes repository authority.
+This checks YAML/frontmatter shape, current-note commit binding and freshness, real calendar dates, Markdown structure, duplicate titles/basenames, wikilinks, registered npm command references, contained repository-path references, and high-confidence secret shapes. Historical snapshots retain their original verification dates without stale-current warnings. Scoped `AGENTS.md` and `CLAUDE.md` AI instruction contracts are excluded from note/frontmatter and duplicate-basename validation, matching the vault-wide validator's explicit contract-file boundary; ordinary Markdown notes are never exempted. This does not certify lane content or make vault notes repository authority.
 
 ## Product artifact gates
 

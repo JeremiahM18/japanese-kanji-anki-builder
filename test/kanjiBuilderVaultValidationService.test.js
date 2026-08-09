@@ -72,6 +72,60 @@ test("vault validation parses YAML and validates links, commands, paths, titles,
     });
 });
 
+test("vault validation excludes scoped AI instruction contracts from note validation", () => {
+    const fixture = buildFixture();
+    fs.writeFileSync(path.join(fixture.vaultRoot, "AGENTS.md"), "# Vault instructions\n");
+    fs.writeFileSync(path.join(fixture.vaultRoot, "CLAUDE.md"), "# Vault instructions\n");
+    fs.writeFileSync(path.join(fixture.vaultRoot, "Audit", "AGENTS.md"), "# Scoped audit instructions\n");
+    fs.writeFileSync(path.join(fixture.vaultRoot, "Audit", "CLAUDE.md"), "# Scoped audit instructions\n");
+
+    const report = buildKanjiBuilderVaultValidationReport({
+        ...fixture,
+        now: () => new Date("2026-07-26T12:00:00.000Z"),
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(report.counts.notes, 2);
+    assert.equal(report.counts.validatedNotes, 2);
+    assert.equal(report.failures.some((entry) => entry.code === "frontmatter"), false);
+    assert.equal(report.failures.some((entry) => entry.code === "duplicate-basename"), false);
+});
+
+test("vault validation still rejects ordinary Markdown notes without frontmatter", () => {
+    const fixture = buildFixture();
+    fs.writeFileSync(path.join(fixture.vaultRoot, "Missing Frontmatter.md"), "# Missing Frontmatter\n");
+
+    const report = buildKanjiBuilderVaultValidationReport({
+        ...fixture,
+        now: () => new Date("2026-07-26T12:00:00.000Z"),
+    });
+
+    assert.equal(report.passed, false);
+    assert.equal(report.failures.some((entry) => (
+        entry.code === "frontmatter" && entry.path === "Missing Frontmatter.md"
+    )), true);
+});
+
+test("vault validation warns on stale current notes but preserves dated historical snapshots", () => {
+    const fixture = buildFixture();
+    const historicalPath = path.join(fixture.vaultRoot, "Audit", "Status.md");
+    fs.writeFileSync(historicalPath, fs.readFileSync(historicalPath, "utf8")
+        .replace("status: current", "status: historical"));
+
+    const report = buildKanjiBuilderVaultValidationReport({
+        ...fixture,
+        now: () => new Date("2026-08-20T12:00:00.000Z"),
+        maxAgeDays: 7,
+    });
+
+    assert.equal(report.passed, true);
+    assert.deepEqual(report.warnings.filter((entry) => entry.code === "stale-verification"), [{
+        code: "stale-verification",
+        path: "Home.md",
+        message: "verified_date is 25 days old; policy threshold is 7.",
+    }]);
+});
+
 test("vault validation rejects impossible dates and ignores headings inside code fences", () => {
     assert.equal(isCanonicalIsoDate("2026-02-29"), false);
     assert.equal(isCanonicalIsoDate("2026-02-28"), true);

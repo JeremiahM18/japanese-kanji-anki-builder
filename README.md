@@ -46,6 +46,8 @@ npm run deck:ready -- --levels=5
 npm run deck:words:ready -- --levels=5
 ```
 
+Windows PowerShell note: scoped npm arguments use the standard `npm run <script> -- --flag=value` contract. If `(Get-Command npm).Source` resolves to `npm.ps1` and the installed shim warns that `--flag` is unknown or silently drops the scope, invoke `npm.cmd run <script> -- --flag=value` for that session. Do not accept a fallback to default/all-level scope; confirm the child command line printed by npm contains the requested flag.
+
 Use `data/README.md` for local-data setup. Native `.apkg` packaging also requires the supported Python packaging toolchain.
 
 ## Security Posture
@@ -193,12 +195,15 @@ Use [docs/workflows.md](docs/workflows.md) for complete workflow details.
 
 ```bash
 npm run deck:ops -- --deck=word --lane=sapphire --level=4
+npm run deck:words:multi-lane-status -- --level=4
 npm run verify:focused -- --deck=word --lane=sapphire --level=4
 npm run deck:words:sapphire:batch -- --level=4 --limit=8 --queue=missing-current-standard
 npm run deck:words:sapphire:n4
 ```
 
 Sapphire work is structural only. Do not infer Platinum or Obsidian from it. Obsidian v2.5 word work follows [docs/word-obsidian-v2.5-workflow.md](docs/word-obsidian-v2.5-workflow.md).
+
+`deck:words:multi-lane-status` is a read-only fail-closed status path for an explicit word level. It loads and deep-freezes generated rows and tracked lane inputs once, shares only read-only lookup indexes, and then invokes independent Silver, Gold, Sapphire, Platinum, and Obsidian evaluators in certification order. It does not share lane results or approval, replace an owning lane command, promote cards, write proof, shrink a denominator, or make a release claim.
 
 ## Verification And Release
 

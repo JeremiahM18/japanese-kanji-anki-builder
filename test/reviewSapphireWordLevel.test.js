@@ -13,6 +13,12 @@ const {
     evaluateSapphireWordReviewSet,
     formatSapphireWordReviewReport,
 } = require("../src/services/sapphireWordReviewService");
+const {
+    createImmutableReviewIndex,
+} = require("../src/services/immutableReviewIndexService");
+const {
+    buildWordEntryIdentity,
+} = require("../src/services/reviewLanePreconditionService");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 
@@ -137,4 +143,32 @@ test("reviewSapphireWordLevel reviewed N3 Sapphire rows pass without requiring f
     assert.equal(report.failedCount, 0, formatSapphireWordReviewReport(report));
     assert.deepEqual(report.coverageFailures, []);
     assert.equal(report.passed, true, formatSapphireWordReviewReport(report));
+});
+
+test("Sapphire word evaluation preserves results with shared immutable input indexes", () => {
+    const allEntries = readSapphireReviewSet(3, { cwd: ROOT_DIR });
+    const allGoldenExpectations = readGoldenReviewSet(3, { cwd: ROOT_DIR });
+    const entries = activeEntries(allEntries).slice(0, 1);
+    const goldenExpectations = entries.map((entry) => findGoldenExpectation(entry, allGoldenExpectations));
+    const rows = buildSyntheticRows(entries, goldenExpectations);
+    const baseline = evaluateSapphireWordReviewSet({
+        rows,
+        entries,
+        goldenExpectations,
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+        requireAllRows: true,
+    });
+    const indexed = evaluateSapphireWordReviewSet({
+        rows,
+        rowsByWritten: createImmutableReviewIndex(rows, { getKeys: (row) => row.word }),
+        entries,
+        goldenExpectations,
+        goldenExpectationsByIdentity: createImmutableReviewIndex(goldenExpectations, { getKeys: buildWordEntryIdentity }),
+        requireGoldPrecondition: true,
+        requireCurrentReviewStandard: true,
+        requireAllRows: true,
+    });
+
+    assert.deepEqual(indexed, baseline);
 });

@@ -252,9 +252,12 @@ function summarizeCards(cards = []) {
 
 function buildPlatinumWordRereviewStatusReport({
     rows = [],
+    rowsByWritten = null,
     entries = [],
     goldenExpectations,
+    goldenExpectationsByIdentity = null,
     sapphireEntries,
+    currentStandardSapphireEntriesByIdentity = null,
     sapphireResults = [],
     requireLanePreconditions = false,
     level = null,
@@ -265,10 +268,13 @@ function buildPlatinumWordRereviewStatusReport({
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const reviewReport = evaluatePlatinumWordReviewSet({
         rows: generatedRows,
+        rowsByWritten,
         entries: reviewEntries,
         goldenExpectations,
+        goldenExpectationsByIdentity,
         requireGoldPrecondition: requireLanePreconditions,
         sapphireEntries,
+        currentStandardSapphireEntriesByIdentity,
         sapphireResults,
         requireSapphirePrecondition: requireLanePreconditions,
         wordPitchAccentData,

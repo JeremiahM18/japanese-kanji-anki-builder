@@ -215,8 +215,11 @@ function wordRowMatchesExpectation(row = {}, expectation = {}) {
     return includesAll(row.reading, expectation.readingIncludes);
 }
 
-function findWordRowForExpectation(rows = [], expectation = {}) {
-    const candidates = rows.filter((row) => wordRowMatchesExpectation(row, expectation));
+function findWordRowForExpectation(rows = [], expectation = {}, rowsByWritten = null) {
+    const candidateRows = rowsByWritten
+        ? rowsByWritten.get(expectation.word)
+        : rows;
+    const candidates = candidateRows.filter((row) => wordRowMatchesExpectation(row, expectation));
     if (candidates.length === 1) {
         return candidates[0];
     }
@@ -247,11 +250,17 @@ function evaluateGoldenReviewSet({ cards = [], expectations = [] } = {}) {
     };
 }
 
-function evaluateGoldenWordReviewSet({ rows = [], expectations = [], requireAllRows = false } = {}) {
+function evaluateGoldenWordReviewSet({
+    rows = [],
+    expectations = [],
+    requireAllRows = false,
+    rowsByWritten = null,
+    expectationsByWritten = null,
+} = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
     const reviewExpectations = Array.isArray(expectations) ? expectations : [];
     const results = reviewExpectations.map((expectation) => {
-        const row = findWordRowForExpectation(generatedRows, expectation);
+        const row = findWordRowForExpectation(generatedRows, expectation, rowsByWritten);
         const result = evaluateWordExpectation(row, expectation);
         if (row?.error) {
             result.failures.push(row.error);
@@ -275,12 +284,18 @@ function evaluateGoldenWordReviewSet({ rows = [], expectations = [], requireAllR
         .map((key) => expectationLabelsByKey.get(key) || key);
     const missingExpectationWords = requireAllRows
         ? generatedRows
-            .filter((row) => !reviewExpectations.some((expectation) => expectationMatchesWordRow(expectation, row)))
+            .filter((row) => !(expectationsByWritten
+                ? expectationsByWritten.get(row.word)
+                : reviewExpectations
+            ).some((expectation) => expectationMatchesWordRow(expectation, row)))
             .map((row) => formatWordReviewLabel(row.word, row.reading))
             .sort()
         : [];
     const extraExpectationWords = reviewExpectations
-        .filter((expectation) => !generatedRows.some((row) => expectationMatchesWordRow(expectation, row)))
+        .filter((expectation) => !(rowsByWritten
+            ? rowsByWritten.get(expectation.word)
+            : generatedRows
+        ).some((row) => expectationMatchesWordRow(expectation, row)))
         .map((expectation) => {
             const readingText = buildExpectedReadingText(expectation);
             return formatWordReviewLabel(expectation.word, readingText);
@@ -299,6 +314,7 @@ function evaluateGoldenWordReviewSet({ rows = [], expectations = [], requireAllR
     }
 
     return {
+        generatedRowCount: generatedRows.length,
         totalCards: results.length,
         passedCount,
         failedCount: results.length - passedCount,

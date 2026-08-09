@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { buildReviewMeaningText, buildReviewReadingText, evaluateGoldenReviewSet, evaluateGoldenWordReviewSet, formatGoldenReviewReport } = require("../src/services/goldenReviewService");
+const { createImmutableReviewIndex } = require("../src/services/immutableReviewIndexService");
 
 test("evaluateGoldenReviewSet passes when cards meet expectations", () => {
     const report = evaluateGoldenReviewSet({
@@ -225,6 +226,21 @@ test("evaluateGoldenWordReviewSet validates word cards and breakdown content", (
     assert.equal(report.passedCount, 1);
 });
 
+test("evaluateGoldenWordReviewSet preserves results with shared immutable indexes", () => {
+    const rows = [{ word: "今日", reading: "きょう", meaning: "today" }];
+    const expectations = [{ word: "今日", readingIncludes: ["きょう"], meaningIncludes: ["today"] }];
+    const baseline = evaluateGoldenWordReviewSet({ rows, expectations, requireAllRows: true });
+    const indexed = evaluateGoldenWordReviewSet({
+        rows,
+        expectations,
+        requireAllRows: true,
+        rowsByWritten: createImmutableReviewIndex(rows, { getKeys: (row) => row.word }),
+        expectationsByWritten: createImmutableReviewIndex(expectations, { getKeys: (entry) => entry.word }),
+    });
+
+    assert.deepEqual(indexed, baseline);
+});
+
 test("evaluateGoldenWordReviewSet compares HTML-escaped word fields by visible surface text", () => {
     const report = evaluateGoldenWordReviewSet({
         rows: [
@@ -295,6 +311,8 @@ test("evaluateGoldenWordReviewSet can require every generated word to have a gol
 
     assert.equal(report.passed, false);
     assert.deepEqual(report.missingExpectationWords, ["明日 (あした)"]);
+    assert.equal(report.generatedRowCount, 2);
+    assert.equal(report.totalCards, 1);
     assert.match(formatGoldenReviewReport(report), /missing expectations for generated words: 明日 \(あした\)/);
 });
 

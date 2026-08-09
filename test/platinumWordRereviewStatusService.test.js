@@ -21,6 +21,9 @@ const {
     hasWordSentenceQualityReviewProof,
     wordRereviewEvidenceChecklistPasses,
 } = require("../src/services/platinumWordRereviewStatusService");
+const {
+    hasBaseStructuredRereviewProvenance,
+} = require("../src/services/platinumWordObsidianProofService");
 
 function buildQualityGates(overrides = {}) {
     return Object.fromEntries(REQUIRED_WORD_QUALITY_GATES.map((gate) => [gate, overrides[gate] ?? true]));
@@ -458,6 +461,26 @@ test("word rereview status keeps legacy proof history in current-version backlog
     assert.equal(report.cards[0].status, "needs_substantive_rereview");
     assert.equal(report.cards[0].currentObsidianProofObserved, false);
     assert.match(report.cards[0].reasons.join("\n"), /legacy or missing Obsidian standard version/);
+});
+
+test("word rereview status exposes malformed base metadata when current-version proof is observed", () => {
+    const malformedCurrentProof = buildRereviewProvenance();
+    malformedCurrentProof.type = "invalid current proof type";
+    const entry = buildEntry({
+        entryOverrides: {
+            rereviewProvenance: malformedCurrentProof,
+        },
+    });
+    const report = buildReport({
+        rows: [buildRow()],
+        entries: [entry],
+        level: 5,
+    });
+
+    assert.equal(hasBaseStructuredRereviewProvenance(entry), false);
+    assert.equal(report.cards[0].status, "needs_substantive_rereview");
+    assert.equal(report.cards[0].currentObsidianProofObserved, true);
+    assert.match(report.cards[0].reasons.join("\n"), /requires explicit non-mechanical/);
 });
 
 test("word rereview status accepts structured sentence-quality evidence bound to the exact word card", () => {

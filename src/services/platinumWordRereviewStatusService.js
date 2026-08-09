@@ -229,8 +229,7 @@ function classifyGeneratedWordRereviewStatus({
         ],
         platinumPassed: true,
         substantiveRereviewProven: false,
-        currentObsidianProofObserved: hasBaseStructuredRereviewProvenance(platinumPassingEntry)
-            && hasCurrentWordObsidianStandardVersion(platinumPassingEntry),
+        currentObsidianProofObserved: hasCurrentWordObsidianStandardVersion(platinumPassingEntry),
         needsSubstantiveRereview: true,
         blockedOrFailing: false,
         status: REREVIEW_STATUS_CATEGORIES.NEEDS_SUBSTANTIVE_REREVIEW,

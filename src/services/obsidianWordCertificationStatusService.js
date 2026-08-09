@@ -44,6 +44,7 @@ function buildNeedsRereviewFailure({ card = {}, level = null } = {}) {
     return {
         level,
         card: normalizeCardLabel(card),
+        ...(Number.isInteger(card.generatedRowIndex) ? { generatedRowIndex: card.generatedRowIndex } : {}),
         category: REREVIEW_STATUS_CATEGORIES.NEEDS_SUBSTANTIVE_REREVIEW,
         field: "rereviewProvenance",
         expected: NEEDS_REREVIEW_EXPECTED,
@@ -59,6 +60,7 @@ function mapBlockedReasonToFailure({ card = {}, level = null, reason = "" } = {}
     const base = {
         level,
         card: normalizeCardLabel(card),
+        ...(Number.isInteger(card.generatedRowIndex) ? { generatedRowIndex: card.generatedRowIndex } : {}),
         category: REREVIEW_STATUS_CATEGORIES.BLOCKED_OR_FAILING,
         actual: normalizedReason || "blocked or failing Platinum",
     };

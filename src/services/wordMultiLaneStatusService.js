@@ -84,7 +84,15 @@ function summarizeObsidianFailures(report = {}) {
     const rows = new Map();
     failures.forEach((failure, index) => {
         const card = String(failure?.card || "").trim();
-        const key = card ? `card:${card}` : `failure:${index}`;
+        const level = String(failure?.level ?? "").trim();
+        const generatedRowIndex = Number.isInteger(failure?.generatedRowIndex)
+            ? failure.generatedRowIndex
+            : null;
+        const key = card && generatedRowIndex !== null
+            ? `level:${level}:row:${generatedRowIndex}:card:${card}`
+            : card
+                ? `level:${level}:card:${card}`
+                : `failure:${index}`;
         const row = rows.get(key) || { expectedOnly: true };
         row.expectedOnly = row.expectedOnly && isExpectedObsidianBacklogFailure(failure);
         rows.set(key, row);

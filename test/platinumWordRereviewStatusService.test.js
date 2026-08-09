@@ -402,8 +402,10 @@ test("word rereview status separates Platinum pass from substantive rereview pro
     assert.equal(report.counts.blocked_or_failing, 0);
     assert.equal(report.cards.find((card) => card.identity === "今日|きょう").status, "needs_substantive_rereview");
     assert.equal(report.cards.find((card) => card.identity === "今日|きょう").currentObsidianProofObserved, false);
+    assert.equal(report.cards.find((card) => card.identity === "今日|きょう").generatedRowIndex, 0);
     assert.match(report.cards.find((card) => card.identity === "今日|きょう").reasons.join("\n"), new RegExp(MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER));
     assert.equal(report.cards.find((card) => card.identity === "日本|にほん").status, "substantive_current_standard_review_proven");
+    assert.equal(report.cards.find((card) => card.identity === "日本|にほん").generatedRowIndex, 1);
 });
 
 test("word rereview status does not infer substantive proof from revalidatedAt or v3 lane text", () => {

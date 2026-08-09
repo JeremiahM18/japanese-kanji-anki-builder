@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Added a fail-closed word multi-lane status process and repeatable diagnostic benchmark. The status process deep-freezes and shares only loaded inputs/read-only indexes while keeping Silver, Gold, Sapphire, Platinum, and Obsidian evaluator results and authority independent; no review counts, proof, denominators, or release posture are changed.
-- Hardened the word multi-lane status and benchmark so invalid explicit JLPT level tokens fail closed, missing or legacy Obsidian proof remains current-version backlog, and observed-but-invalid current-version Obsidian proof is reported as a reviewed evidence failure.
+- Hardened the word multi-lane status and benchmark so invalid explicit JLPT level tokens fail closed, missing or legacy Obsidian proof remains current-version backlog, observed-but-invalid current-version Obsidian proof is reported as a reviewed evidence failure, and duplicate generated-row occurrences remain distinct while multiple failure reasons for one occurrence are classified once.
 - Keep this section release-facing; batch history remains in git commit messages and tracked review manifests.
 
 ## [0.3.0-beta.5] - 2026-08-01

@@ -349,4 +349,43 @@ test("multi-lane classifications never hide denominator drift or reviewed author
     });
     assert.equal(separateFailureRows.expectedBacklog, 1);
     assert.equal(separateFailureRows.laneFailureCount, 1);
+
+    const duplicateGeneratedRows = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 3,
+        failures: [
+            {
+                level: 4,
+                generatedRowIndex: 0,
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+            {
+                level: 4,
+                generatedRowIndex: 0,
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumStructuralGate",
+                actual: "reviewStandard must be word-platinum-v3-evidence-lanes",
+            },
+            {
+                level: 4,
+                generatedRowIndex: 1,
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+        ],
+        totals: {
+            generatedRows: 2,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 0,
+            blocked_or_failing: 2,
+        },
+    });
+    assert.equal(duplicateGeneratedRows.expectedBacklog, 1);
+    assert.equal(duplicateGeneratedRows.laneFailureCount, 1);
 });

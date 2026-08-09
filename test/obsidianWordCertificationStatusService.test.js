@@ -104,6 +104,28 @@ test("word certification failure preserves observed malformed Obsidian proof sta
     assert.equal(summary.failures[0].currentObsidianProofObserved, true);
 });
 
+test("word certification failures preserve duplicate generated-row occurrences", () => {
+    const duplicateCard = {
+        identity: "日本|にほん",
+        word: "日本",
+        reading: "にほん",
+        platinumPassed: false,
+        substantiveRereviewProven: false,
+        needsSubstantiveRereview: false,
+        blockedOrFailing: true,
+        status: "blocked_or_failing",
+        reasons: ["missing current-standard Platinum entry"],
+    };
+    const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
+        cards: [
+            { ...duplicateCard, generatedRowIndex: 0 },
+            { ...duplicateCard, generatedRowIndex: 1 },
+        ],
+    })]);
+
+    assert.deepEqual(summary.failures.map((failure) => failure.generatedRowIndex), [0, 1]);
+});
+
 test("word certification gate turns Platinum blockers into loud actionable failure objects", () => {
     const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
         cards: [{

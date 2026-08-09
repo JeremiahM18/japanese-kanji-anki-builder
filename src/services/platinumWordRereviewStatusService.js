@@ -229,6 +229,7 @@ function classifyGeneratedWordRereviewStatus({
         ],
         platinumPassed: true,
         substantiveRereviewProven: false,
+        currentObsidianProofObserved: hasCurrentWordObsidianStandardVersion(platinumPassingEntry),
         needsSubstantiveRereview: true,
         blockedOrFailing: false,
         status: REREVIEW_STATUS_CATEGORIES.NEEDS_SUBSTANTIVE_REREVIEW,
@@ -288,14 +289,17 @@ function buildPlatinumWordRereviewStatusReport({
         results: reviewReport.results,
     });
     const cards = generatedRows
-        .map((row) => {
+        .map((row, generatedRowIndex) => {
             const identity = buildRowIdentity(row);
-            return classifyGeneratedWordRereviewStatus({
-                row,
-                matchingEntries: entriesByIdentity.get(identity) || [],
-                matchingResults: resultsByIdentity.get(identity) || [],
-                reviewReport,
-            });
+            return {
+                ...classifyGeneratedWordRereviewStatus({
+                    row,
+                    matchingEntries: entriesByIdentity.get(identity) || [],
+                    matchingResults: resultsByIdentity.get(identity) || [],
+                    reviewReport,
+                }),
+                generatedRowIndex,
+            };
         })
         .sort((left, right) => left.identity.localeCompare(right.identity, "ja"));
     const counts = summarizeCards(cards);

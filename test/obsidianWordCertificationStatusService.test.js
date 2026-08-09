@@ -55,6 +55,7 @@ test("word certification gate fails Platinum rows that still need Obsidian proof
             reading: "にほん",
             platinumPassed: true,
             substantiveRereviewProven: false,
+            currentObsidianProofObserved: false,
             needsSubstantiveRereview: true,
             blockedOrFailing: false,
             status: "needs_substantive_rereview",
@@ -72,14 +73,57 @@ test("word certification gate fails Platinum rows that still need Obsidian proof
         "expected",
         "field",
         "level",
+        "currentObsidianProofObserved",
         "reviewerAction",
     ].sort());
     assert.equal(summary.failures[0].card, "日本|にほん");
     assert.equal(summary.failures[0].field, "rereviewProvenance");
+    assert.equal(summary.failures[0].currentObsidianProofObserved, false);
     assert.equal(summary.failures[0].evidenceLane, "reviewEvidence.current-standard-review + rereviewProvenance");
     assert.match(summary.failures[0].expected, /full word-card evidence checklist/);
     assert.match(summary.failures[0].reviewerAction, /written form, reading, meaning, example sentence/);
     assert.match(summary.failures[0].reviewerAction, /natural Japanese/);
+});
+
+test("word certification failure preserves observed malformed Obsidian proof state", () => {
+    const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
+        cards: [{
+            identity: "日本|にほん",
+            word: "日本",
+            reading: "にほん",
+            platinumPassed: true,
+            substantiveRereviewProven: false,
+            currentObsidianProofObserved: true,
+            needsSubstantiveRereview: true,
+            blockedOrFailing: false,
+            status: "needs_substantive_rereview",
+            reasons: ["observed rereviewProvenance without full word-card evidence checklist"],
+        }],
+    })]);
+
+    assert.equal(summary.failures[0].currentObsidianProofObserved, true);
+});
+
+test("word certification failures preserve duplicate generated-row occurrences", () => {
+    const duplicateCard = {
+        identity: "日本|にほん",
+        word: "日本",
+        reading: "にほん",
+        platinumPassed: false,
+        substantiveRereviewProven: false,
+        needsSubstantiveRereview: false,
+        blockedOrFailing: true,
+        status: "blocked_or_failing",
+        reasons: ["missing current-standard Platinum entry"],
+    };
+    const summary = buildObsidianWordCertificationStatusSummary([buildLevelReport({
+        cards: [
+            { ...duplicateCard, generatedRowIndex: 0 },
+            { ...duplicateCard, generatedRowIndex: 1 },
+        ],
+    })]);
+
+    assert.deepEqual(summary.failures.map((failure) => failure.generatedRowIndex), [0, 1]);
 });
 
 test("word certification gate turns Platinum blockers into loud actionable failure objects", () => {

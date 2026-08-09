@@ -17,6 +17,9 @@ test("word multi-lane benchmark requires explicit scope and positive repeats", (
         unknownArgs: [],
     });
     assert.throws(() => parseArgs([]), /requires --level/);
+    assert.throws(() => parseArgs(["--level=6"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--levels=4,typo"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--levels=4,"]), /<empty>/);
     assert.throws(() => parseArgs(["--level=4", "--repeat=0"]), /positive integer/);
 });
 

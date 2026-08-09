@@ -242,6 +242,12 @@ test("multi-lane parsing requires explicit scope and rejects ambiguous output mo
     });
     assert.deepEqual(normalizeSelectedLanes(["obsidian", "gold"]), ["gold", "obsidian"]);
     assert.throws(() => parseArgs([]), /requires --level/);
+    assert.throws(() => parseArgs(["--level=6"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--level=typo"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--levels=4,invalid"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--levels=4,"]), /<empty>/);
+    assert.throws(() => parseArgs(["--levels=,4"]), /<empty>/);
+    assert.throws(() => parseArgs(["--levels=4,,3"]), /<empty>/);
     assert.throws(() => parseArgs(["--level=4", "--json", "--summary"]), /exactly one/);
     assert.throws(() => normalizeSelectedLanes(["diamond"]), /Unsupported/);
 });
@@ -267,4 +273,119 @@ test("multi-lane classifications never hide denominator drift or reviewed author
             actual: "false",
         }],
     }), FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE);
+
+    const malformedProof = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 1,
+        failures: [{
+            card: "今日|きょう",
+            category: "needs_substantive_rereview",
+            field: "rereviewProvenance",
+            currentObsidianProofObserved: true,
+            actual: "observed proof without full word-card evidence checklist",
+        }],
+        totals: {
+            generatedRows: 1,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 1,
+            blocked_or_failing: 0,
+        },
+    });
+    assert.equal(malformedProof.classification, FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE);
+    assert.equal(malformedProof.expectedBacklog, 0);
+    assert.equal(malformedProof.laneFailureCount, 1);
+
+    const mixedFailureOnOneCard = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 2,
+        failures: [
+            {
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+            {
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumStructuralGate",
+                actual: "reviewStandard must be word-platinum-v3-evidence-lanes",
+            },
+        ],
+        totals: {
+            generatedRows: 1,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 0,
+            blocked_or_failing: 1,
+        },
+    });
+    assert.equal(mixedFailureOnOneCard.classification, FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE);
+    assert.equal(mixedFailureOnOneCard.expectedBacklog, 0);
+    assert.equal(mixedFailureOnOneCard.laneFailureCount, 1);
+
+    const separateFailureRows = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 2,
+        failures: [
+            {
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+            {
+                card: "日本|にほん",
+                category: "blocked_or_failing",
+                field: "platinumStructuralGate",
+                actual: "reviewStandard must be word-platinum-v3-evidence-lanes",
+            },
+        ],
+        totals: {
+            generatedRows: 2,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 0,
+            blocked_or_failing: 2,
+        },
+    });
+    assert.equal(separateFailureRows.expectedBacklog, 1);
+    assert.equal(separateFailureRows.laneFailureCount, 1);
+
+    const duplicateGeneratedRows = summarizeLaneReport("obsidian", {
+        passed: false,
+        failureCount: 3,
+        failures: [
+            {
+                level: 4,
+                generatedRowIndex: 0,
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+            {
+                level: 4,
+                generatedRowIndex: 0,
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumStructuralGate",
+                actual: "reviewStandard must be word-platinum-v3-evidence-lanes",
+            },
+            {
+                level: 4,
+                generatedRowIndex: 1,
+                card: "今日|きょう",
+                category: "blocked_or_failing",
+                field: "platinumManifestEntry",
+                actual: "missing current-standard Platinum entry",
+            },
+        ],
+        totals: {
+            generatedRows: 2,
+            substantive_current_standard_review_proven: 0,
+            needs_substantive_rereview: 0,
+            blocked_or_failing: 2,
+        },
+    });
+    assert.equal(duplicateGeneratedRows.expectedBacklog, 1);
+    assert.equal(duplicateGeneratedRows.laneFailureCount, 1);
 });

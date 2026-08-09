@@ -72,19 +72,45 @@ function classifyManifestLaneReport(report = {}) {
 
 function isExpectedObsidianBacklogFailure(failure = {}) {
     if (failure.category === "needs_substantive_rereview") {
-        return true;
+        return failure.currentObsidianProofObserved !== true;
     }
     return failure.category === "blocked_or_failing"
         && failure.field === "platinumManifestEntry"
         && /missing|no platinum manifest entry/i.test(String(failure.actual || ""));
 }
 
+function summarizeObsidianFailures(report = {}) {
+    const failures = Array.isArray(report.failures) ? report.failures : [];
+    const rows = new Map();
+    failures.forEach((failure, index) => {
+        const card = String(failure?.card || "").trim();
+        const level = String(failure?.level ?? "").trim();
+        const generatedRowIndex = Number.isInteger(failure?.generatedRowIndex)
+            ? failure.generatedRowIndex
+            : null;
+        const key = card && generatedRowIndex !== null
+            ? `level:${level}:row:${generatedRowIndex}:card:${card}`
+            : card
+                ? `level:${level}:card:${card}`
+                : `failure:${index}`;
+        const row = rows.get(key) || { expectedOnly: true };
+        row.expectedOnly = row.expectedOnly && isExpectedObsidianBacklogFailure(failure);
+        rows.set(key, row);
+    });
+    const rowSummaries = [...rows.values()];
+    return {
+        failureCount: failures.length,
+        expectedBacklog: rowSummaries.filter((row) => row.expectedOnly).length,
+        laneFailureCount: rowSummaries.filter((row) => !row.expectedOnly).length,
+    };
+}
+
 function classifyObsidianReport(report = {}) {
     if (report.passed) {
         return FAILURE_CLASSIFICATIONS.PASS;
     }
-    const failures = Array.isArray(report.failures) ? report.failures : [];
-    return failures.length > 0 && failures.every(isExpectedObsidianBacklogFailure)
+    const summary = summarizeObsidianFailures(report);
+    return summary.failureCount > 0 && summary.laneFailureCount === 0
         ? FAILURE_CLASSIFICATIONS.EXPECTED_INCOMPLETE_BACKLOG
         : FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE;
 }
@@ -136,16 +162,15 @@ function summarizeLaneReport(lane, report = {}) {
     }
 
     const totals = report.totals || {};
+    const failureSummary = summarizeObsidianFailures(report);
     return {
         lane,
         passed: Boolean(report.passed),
         classification: classifyObsidianReport(report),
         generatedRows: totals.generatedRows || 0,
         coveredRows: totals.substantive_current_standard_review_proven || 0,
-        expectedBacklog: (totals.needs_substantive_rereview || 0) + (totals.blocked_or_failing || 0),
-        laneFailureCount: classifyObsidianReport(report) === FAILURE_CLASSIFICATIONS.REVIEWED_ROW_OR_AUTHORITY_FAILURE
-            ? report.failureCount || 0
-            : 0,
+        expectedBacklog: failureSummary.expectedBacklog,
+        laneFailureCount: failureSummary.laneFailureCount,
     };
 }
 

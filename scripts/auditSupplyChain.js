@@ -664,6 +664,41 @@ function auditPackageManifest({ packageJson, lock }) {
         );
     }
 
+    const expectedAllowScripts = Object.fromEntries(
+        lifecycleScripts.map((entry) => [`${entry.packageName}@${entry.version}`, true])
+    );
+    const configuredAllowScripts = packageJson.allowScripts;
+    assertCondition(
+        !!configuredAllowScripts
+            && typeof configuredAllowScripts === "object"
+            && !Array.isArray(configuredAllowScripts),
+        errors,
+        "package.json allowScripts must be an object with exact reviewed package@version approvals."
+    );
+    const actualAllowScripts = configuredAllowScripts && typeof configuredAllowScripts === "object"
+        && !Array.isArray(configuredAllowScripts)
+        ? configuredAllowScripts
+        : {};
+    for (const key of Object.keys(expectedAllowScripts)) {
+        assertCondition(
+            actualAllowScripts[key] === true,
+            errors,
+            `package.json allowScripts must explicitly approve reviewed lifecycle package ${key}.`
+        );
+    }
+    for (const [key, value] of Object.entries(actualAllowScripts)) {
+        assertCondition(
+            Object.hasOwn(expectedAllowScripts, key),
+            errors,
+            `package.json allowScripts contains unreviewed, broad, stale, or unexpected entry ${key}.`
+        );
+        assertCondition(
+            value === true,
+            errors,
+            `package.json allowScripts entry ${key} must be exactly true.`
+        );
+    }
+
     const packageScripts = Object.entries(packageJson.scripts || {});
     const directShellFragments = [
         "curl ",
@@ -689,6 +724,7 @@ function auditPackageManifest({ packageJson, lock }) {
             packageCount: packageEntries.length,
             registryHosts: Object.fromEntries(registryHosts),
             lifecycleScripts,
+            allowScripts: Object.keys(actualAllowScripts).sort(),
         },
     };
 }
@@ -1234,6 +1270,11 @@ function formatSupplyChainAuditReport(report) {
         lines.push(`- ${entry.packageName}@${entry.version} (${entry.packagePath}) - ${entry.reason || "unreviewed"}`);
     }
 
+    lines.push("npm allowScripts approvals:");
+    for (const key of report.package.allowScripts) {
+        lines.push(`- ${key}`);
+    }
+
     lines.push("Dependency security overrides:");
     for (const entry of report.dependencySecurityOverrides.entries) {
         lines.push(
@@ -1301,6 +1342,7 @@ if (require.main === module) {
 module.exports = {
     ACTION_ALLOWLIST,
     LIFECYCLE_SCRIPT_ALLOWLIST,
+    auditPackageManifest,
     auditDependencySecurityOverrides,
     auditOutOfRangeOverrideCompatibility,
     buildSupplyChainAuditReport,

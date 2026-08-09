@@ -186,6 +186,7 @@ const TEST_SCOPES = Object.freeze({
     performance: Object.freeze([
         "benchmarkBuild.test.js",
         "benchmarkExport.test.js",
+        "benchmarkWordMultiLaneStatus.test.js",
         "jlptKanjiSourceEvidenceCostReport.test.js",
         "memoryUsage.test.js",
         "obsidianProofEtlBenchmark.test.js",
@@ -248,6 +249,7 @@ const TEST_SCOPES = Object.freeze({
         "wordInventoryExpansionCandidateService.test.js",
         "wordLevelInventoryStatusService.test.js",
         "wordLevelAnchorAuditService.test.js",
+        "wordMultiLaneStatusService.test.js",
         "wordReadingCoverageService.test.js",
         "wordReadingGapPlanService.test.js",
         "wordSourceManifest.test.js",

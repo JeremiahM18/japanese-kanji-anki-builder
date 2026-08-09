@@ -127,6 +127,12 @@ Rules:
 - NLP support can surface risks, prioritize review, and generate packets; it cannot certify cards or write tracked templates.
 - Package readiness proves artifact mechanics, not content trust.
 
+### Shared word status context
+
+`deck:words:multi-lane-status` reduces repeated status-process cost without merging lane authority. For each explicit word level, it loads the generated rows, Gold manifest, Sapphire manifest, Platinum/proof-provider view, pitch data, kanji-level data, and local-overlay staleness evidence once. Those inputs are deep-frozen, and lookup indexes expose read-only `get`/`has` access without mutation methods.
+
+Silver, Gold, Sapphire, Platinum, and Obsidian then run independent evaluators in certification order. Platinum independently evaluates its Sapphire precondition, and Obsidian independently evaluates its own Sapphire and Platinum prerequisites; neither consumes the result object produced for the earlier status row. Shared loading/indexing is infrastructure only and cannot approve a card, copy proof, shrink a denominator, change a failure classification, or replace an owning lane command.
+
 ## Scale Snapshot
 
 The architecture is product- and level-agnostic. The current repo snapshot proves the same machinery across completed release scope and unfinished visible backlog:

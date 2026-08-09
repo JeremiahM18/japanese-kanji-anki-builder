@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-No additional release-facing changes are currently recorded. Detailed work belongs in git commit messages, tracked review manifests, and gate output.
+### Added
+
+- Added a fail-closed word multi-lane status process and repeatable diagnostic benchmark. The status process deep-freezes and shares only loaded inputs/read-only indexes while keeping Silver, Gold, Sapphire, Platinum, and Obsidian evaluator results and authority independent; no review counts, proof, denominators, or release posture are changed.
+- Keep this section release-facing; batch history remains in git commit messages and tracked review manifests.
 
 ## [0.3.0-beta.5] - 2026-08-01
 

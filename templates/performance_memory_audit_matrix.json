@@ -241,6 +241,60 @@
       ]
     },
     {
+      "id": "word-multi-lane-status",
+      "productArea": "word-review-lane-status",
+      "benchmarkClass": "diagnostic",
+      "command": "npm run bench:word-multi-lane-status -- --level=4 --repeat=3",
+      "packageScript": "bench:word-multi-lane-status",
+      "ciPolicy": "manual-local",
+      "workflowCommand": null,
+      "inputBoundary": [
+        "explicit word levels",
+        "current generated word rows",
+        "tracked Gold, Sapphire, Platinum, and canonical Obsidian proof inputs",
+        "current local data and cache state"
+      ],
+      "outputBoundary": [
+        "read-only status and benchmark report"
+      ],
+      "cacheMode": "current local cache state held constant across compared runs",
+      "timingBudget": {
+        "status": "planned",
+        "profile": null,
+        "metrics": [
+          "minimumMs",
+          "medianMs",
+          "maximumMs",
+          "meanMs"
+        ],
+        "gateCommand": null
+      },
+      "memorySampling": {
+        "status": "present",
+        "source": "scripts/benchmarkWordMultiLaneStatus.js",
+        "scope": [
+          "whole multi-lane status run",
+          "shared immutable word review context",
+          "independent Silver, Gold, Sapphire, Platinum, and Obsidian evaluator calls"
+        ],
+        "metrics": [
+          "rss",
+          "heapTotal",
+          "heapUsed",
+          "external",
+          "arrayBuffers"
+        ],
+        "notes": "Process snapshots are trend diagnostics. Lane results remain independent and fail-closed; this benchmark has no certification or timing-budget authority."
+      },
+      "releaseBoundary": "Read-only performance diagnostic only; it does not replace owning lane commands, approve cards, certify Obsidian proof, or claim release readiness.",
+      "nextReviewTrigger": [
+        "word generated-row loading changes",
+        "review manifest indexing changes",
+        "word lane evaluator changes",
+        "proof-provider changes"
+      ]
+    },
+    {
       "id": "export-service-fixture",
       "productArea": "export-service",
       "benchmarkClass": "diagnostic",

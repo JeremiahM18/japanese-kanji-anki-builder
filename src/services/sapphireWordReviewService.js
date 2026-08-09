@@ -596,15 +596,17 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 
 function evaluateSapphireWordReviewSet({
     rows = [],
+    rowsByWritten = null,
     entries = [],
     goldenExpectations,
+    goldenExpectationsByIdentity = null,
     requireGoldPrecondition = false,
     requireCurrentReviewStandard = false,
     requireAllRows = false,
     allowEmpty = false,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
-    const generatedRowsByWritten = buildWordRowsByWritten(generatedRows);
+    const generatedRowsByWritten = rowsByWritten || buildWordRowsByWritten(generatedRows);
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const activeStatusEntries = reviewEntries.filter(hasActiveWordSapphireStatus);
     const activeEntries = reviewEntries.filter(isCurrentStandardWordSapphireEntry);
@@ -620,11 +622,11 @@ function evaluateSapphireWordReviewSet({
             laneName: "Sapphire",
         })
         : new Map();
-    const goldenExpectationsByIdentity = Array.isArray(goldenExpectations)
+    const resolvedGoldenExpectationsByIdentity = goldenExpectationsByIdentity || (Array.isArray(goldenExpectations)
         ? buildEntriesByIdentity(goldenExpectations, {
             getIdentity: buildWordEntryIdentity,
         })
-        : null;
+        : null);
     const results = reviewEntries.map((entry) => mergeFailuresIntoResult(
         evaluateSapphireWordEntry({
             rows: generatedRows,
@@ -633,7 +635,7 @@ function evaluateSapphireWordReviewSet({
             goldExpectation: resolveWordGoldExpectation({
                 entry,
                 goldenExpectations,
-                goldenExpectationsByIdentity,
+                goldenExpectationsByIdentity: resolvedGoldenExpectationsByIdentity,
             }).entry,
             requireCurrentReviewStandard,
         }),

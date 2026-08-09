@@ -10,6 +10,12 @@ const {
     evaluatePlatinumWordReviewSet,
     formatPlatinumWordReviewReport,
 } = require("../src/services/platinumReviewService");
+const {
+    createImmutableReviewIndex,
+} = require("../src/services/immutableReviewIndexService");
+const {
+    buildWordEntryIdentity,
+} = require("../src/services/reviewLanePreconditionService");
 
 function buildQualityGates(overrides = {}) {
     return Object.fromEntries(REQUIRED_WORD_QUALITY_GATES.map((gate) => [gate, overrides[gate] ?? true]));
@@ -198,6 +204,30 @@ test("evaluatePlatinumWordReviewSet passes active platinum entries with release 
     assert.equal(report.passed, true);
     assert.equal(report.activePlatinumCount, 1);
     assert.equal(report.failedCount, 0);
+});
+
+test("evaluatePlatinumWordReviewSet preserves results with shared immutable input indexes", () => {
+    const rows = [buildRow()];
+    const entries = [buildCurrentStandardEntry()];
+    const goldenExpectations = entries.map(buildGoldExpectationFromEntry);
+    const baseline = evaluateWordPlatinum({
+        rows,
+        entries,
+        goldenExpectations,
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+    const indexed = evaluateWordPlatinum({
+        rows,
+        rowsByWritten: createImmutableReviewIndex(rows, { getKeys: (row) => row.word }),
+        entries,
+        goldenExpectations,
+        goldenExpectationsByIdentity: createImmutableReviewIndex(goldenExpectations, { getKeys: buildWordEntryIdentity }),
+        requireAllRows: true,
+        requireCurrentReviewStandard: true,
+    });
+
+    assert.deepEqual(indexed, baseline);
 });
 
 test("evaluatePlatinumWordReviewSet does not require Obsidian proof for current-standard Platinum", () => {

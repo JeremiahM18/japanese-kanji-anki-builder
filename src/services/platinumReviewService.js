@@ -925,10 +925,13 @@ function buildDuplicateActiveEntryLabels(activeEntries = []) {
 
 function evaluatePlatinumWordReviewSet({
     rows = [],
+    rowsByWritten = null,
     entries = [],
     goldenExpectations,
+    goldenExpectationsByIdentity = null,
     requireGoldPrecondition = false,
     sapphireEntries,
+    currentStandardSapphireEntriesByIdentity = null,
     sapphireResults = [],
     requireSapphirePrecondition = false,
     wordPitchAccentData = {},
@@ -938,7 +941,7 @@ function evaluatePlatinumWordReviewSet({
     allowEmpty = false,
 } = {}) {
     const generatedRows = Array.isArray(rows) ? rows : [];
-    const generatedRowsByWritten = buildWordRowsByWritten(generatedRows);
+    const generatedRowsByWritten = rowsByWritten || buildWordRowsByWritten(generatedRows);
     const reviewEntries = Array.isArray(entries) ? entries : [];
     const activeEntries = reviewEntries.filter((entry) => ACTIVE_PLATINUM_STATUSES.includes(normalizeText(entry.status)));
     const reviewStandardSummary = buildWordReviewStandardSummary(activeEntries);
@@ -969,17 +972,17 @@ function evaluatePlatinumWordReviewSet({
             ),
         })
         : new Map();
-    const goldenExpectationsByIdentity = Array.isArray(goldenExpectations)
+    const resolvedGoldenExpectationsByIdentity = goldenExpectationsByIdentity || (Array.isArray(goldenExpectations)
         ? buildEntriesByIdentity(goldenExpectations, {
             getIdentity: buildWordEntryIdentity,
         })
-        : null;
-    const currentStandardSapphireEntriesByIdentity = Array.isArray(sapphireEntries)
+        : null);
+    const resolvedCurrentStandardSapphireEntriesByIdentity = currentStandardSapphireEntriesByIdentity || (Array.isArray(sapphireEntries)
         ? buildEntriesByIdentity(sapphireEntries, {
             getIdentity: buildWordEntryIdentity,
             includeEntry: hasCurrentStandardWordSapphireStatus,
         })
-        : null;
+        : null);
     const sapphireResultsByIdentity = Array.isArray(sapphireResults)
         ? buildEntriesByIdentity(sapphireResults, {
             getIdentity: (result) => result.identity || buildWordEntryIdentity(result),
@@ -990,9 +993,9 @@ function evaluatePlatinumWordReviewSet({
         const laneContext = resolveWordLaneContext({
             entry,
             goldenExpectations,
-            goldenExpectationsByIdentity,
+            goldenExpectationsByIdentity: resolvedGoldenExpectationsByIdentity,
             sapphireEntries,
-            currentStandardSapphireEntriesByIdentity,
+            currentStandardSapphireEntriesByIdentity: resolvedCurrentStandardSapphireEntriesByIdentity,
             sapphireResults,
             sapphireResultsByIdentity,
         });

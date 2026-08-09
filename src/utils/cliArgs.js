@@ -15,10 +15,11 @@ function parseExplicitJlptLevels(value, label = "level") {
         return [5, 4, 3, 2, 1];
     }
 
-    const tokens = raw.split(",").map((entry) => entry.trim()).filter(Boolean);
+    const tokens = raw.split(",").map((entry) => entry.trim());
     const invalid = tokens.filter((entry) => !/^N?[1-5]$/i.test(entry));
     if (tokens.length === 0 || invalid.length > 0) {
-        throw new Error(`${label} contains unsupported JLPT level values: ${invalid.join(", ") || raw}.`);
+        const invalidLabels = invalid.map((entry) => entry || "<empty>");
+        throw new Error(`${label} contains unsupported JLPT level values: ${invalidLabels.join(", ") || raw}.`);
     }
 
     return [...new Set(tokens.map((entry) => Number(entry.toUpperCase().replace(/^N/, ""))))]

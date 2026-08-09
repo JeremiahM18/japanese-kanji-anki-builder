@@ -245,6 +245,9 @@ test("multi-lane parsing requires explicit scope and rejects ambiguous output mo
     assert.throws(() => parseArgs(["--level=6"]), /unsupported JLPT level/);
     assert.throws(() => parseArgs(["--level=typo"]), /unsupported JLPT level/);
     assert.throws(() => parseArgs(["--levels=4,invalid"]), /unsupported JLPT level/);
+    assert.throws(() => parseArgs(["--levels=4,"]), /<empty>/);
+    assert.throws(() => parseArgs(["--levels=,4"]), /<empty>/);
+    assert.throws(() => parseArgs(["--levels=4,,3"]), /<empty>/);
     assert.throws(() => parseArgs(["--level=4", "--json", "--summary"]), /exactly one/);
     assert.throws(() => normalizeSelectedLanes(["diamond"]), /Unsupported/);
 });

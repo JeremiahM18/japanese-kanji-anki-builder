@@ -97,6 +97,26 @@ Scoped `npm test` runs are available for focused feedback only:
 
 Every discovered `test/*.test.js` file must belong to at least one focused scope; [../test/runNodeTestsScript.test.js](../test/runNodeTestsScript.test.js) fails if a test is omitted. The full `npm test` command remains part of the full merge gate because focused scopes intentionally overlap and do not replace full-suite execution.
 
+### Runner integrity and child-process failures
+
+The full suite intentionally exercises real Node, Git, Python, APKG packaging,
+and other child-process boundaries. A restricted Windows runner can deny those
+processes with errors such as `spawnSync EPERM` or prevent package construction
+even when the implementation is correct. Treat every such result as nonzero
+evidence, not as a pass and not automatically as an engineering regression.
+
+The required resolution is to preserve the exact first command, exit status,
+and failing tests, then rerun the complete, unmodified `npm test` command on a
+supported host that permits the required child processes. Report both results.
+A passing supported-host rerun qualifies the first result as an environment
+limitation; it does not erase it. Focused retries may help classify the failure,
+but they do not replace the complete suite.
+
+Never add skips, mocks, silent fallbacks, weaker assertions, smaller scopes, or
+reduced denominators merely to make an incapable runner appear green. A runner
+that cannot execute the declared test contract must be changed or bypassed in
+favor of a capable host; the product and verification standards remain intact.
+
 ## Workspace side-effect and vault validation
 
 Use the two-phase ignored/local side-effect audit around commands whose generated-output behavior matters:

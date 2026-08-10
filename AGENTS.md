@@ -109,6 +109,15 @@ Run the applicable declared test scope during iteration:
 npm test -- --scope=<scope>
 ```
 
+The full suite intentionally exercises real Node, Git, Python, APKG, and other
+child-process boundaries. If a restricted Windows runner denies those
+processes (for example, `spawnSync EPERM`) or prevents package construction,
+preserve the exact nonzero result and rerun the complete, unmodified
+`npm test` command on a supported host. Do not add skips, mocks, fallbacks,
+weaker assertions, or smaller scopes to make an incapable runner appear green.
+The supported-host rerun qualifies the environment failure; it does not erase
+the first result, and focused retries never replace the full-suite merge gate.
+
 Dependency, workflow, security, or release-boundary changes also require the
 applicable gates from the canonical docs, including:
 

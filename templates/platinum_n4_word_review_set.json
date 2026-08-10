@@ -86933,10 +86933,10 @@
     "reviewedAt": "2026-07-19",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-07-19",
-    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 噛む|かむ.",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation independently checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface including explicit JLPTStudy source-boundary learner guidance, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations after removing internal Silver workflow prose for 噛む|かむ.",
     "notesIncludes": [
-      "N4 word v2 Silver common-word expansion from the JLPTStudy N4 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict/commonness verification supports 噛む|かむ as bite/chew vocabulary. 噛 is outside the current JLPT kanji contract, but the verb is common and learner-friendly enough to keep as labeled vocabulary-level N4 expansion."
+      "Source: JLPTStudy N4 candidate lane. Source level claim unverified; the source level is only a discovery hint, not JLPT truth. Exact governed JMdict/commonness verification supports 噛む|かむ as bite/chew vocabulary. 噛 is outside the current JLPT kanji contract, but the verb is common and learner-friendly enough to keep as labeled vocabulary-level N4 expansion."
     ],
     "sourceEvidence": [
       {
@@ -86969,7 +86969,7 @@
       {
         "type": "generated-surface",
         "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 噛む|かむ: meaning to bite / chew; example よく噛んで食べてください。 ／ よくかんでたべてください。 ／ Please chew well before eating.; notes N4 word v2 Silver common-word expansion from the JLPTStudy N4 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict/commonness verification supports 噛む|かむ as bite/chew vocabulary. 噛 is outside the current JLPT kanji contract, but the verb is common and learner-friendly enough to keep as labeled vocabulary-level N4 expansion.; audio 565B_噛-word-reading-噛む-かむ; reading breakdown 噛 かむ; kanji breakdown 噛 Outside JLPT contract か 噛 （か） ／ bite Stroke order On: コウ、 ゴウ Kun: か.じる、 か.む; labels JLPT N4; Reading coverage support; focus 噛; covers 噛: かむ."
+        "detail": "Generated word-card surface inspected for 噛む|かむ: meaning to bite / chew; example よく噛んで食べてください。 ／ よくかんでたべてください。 ／ Please chew well before eating.; notes Source: JLPTStudy N4 candidate lane. Source level claim unverified; the source level is only a discovery hint, not JLPT truth. Exact governed JMdict/commonness verification supports 噛む|かむ as bite/chew vocabulary. 噛 is outside the current JLPT kanji contract, but the verb is common and learner-friendly enough to keep as labeled vocabulary-level N4 expansion.; audio 565B_噛-word-reading-噛む-かむ; reading breakdown 噛 かむ; kanji breakdown 噛 Outside JLPT contract か 噛 （か） ／ bite Stroke order On: コウ、 ゴウ Kun: か.じる、 か.む; labels JLPT N4; Reading coverage support; focus 噛; covers 噛: かむ."
       },
       {
         "type": "level-contract",
@@ -87016,13 +87016,14 @@
       {
         "type": "current-standard-review",
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
-        "detail": "Current-standard whole-card revalidation for 噛む|かむ checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence よく噛んで食べてください。 ／ よくかんでたべてください。 ／ Please chew well before eating. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface N4 word v2 Silver common-word expansion from the JLPTStudy N4 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict/commonness verification supports 噛む|かむ as bite/chew vocabulary. 噛 is outside the current JLPT kanji contract, but the verb is common and learner-friendly enough to keep as labeled vocabulary-level N4 expansion.; reading breakdown 噛 かむ; kanji breakdown 噛 Outside JLPT contract か 噛 （か） ／ bite Stroke order On: コウ、 ゴウ Kun: か.じる、 か.む; meaning to bite / chew; labels JLPT N4, Reading coverage support, focus 噛, covers 噛: かむ; exact audio 565B_噛-word-reading-噛む-かむ; pitch source kanjium-cc-by-sa-4.0 1 [atamadaka] rendered Pitch 1: 1, Pitch accent contour 1; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation for 噛む|かむ checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence よく噛んで食べてください。 ／ よくかんでたべてください。 ／ Please chew well before eating. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface Source: JLPTStudy N4 candidate lane. Source level claim unverified; the source level is only a discovery hint, not JLPT truth. Exact governed JMdict/commonness verification supports 噛む|かむ as bite/chew vocabulary. 噛 is outside the current JLPT kanji contract, but the verb is common and learner-friendly enough to keep as labeled vocabulary-level N4 expansion.; reading breakdown 噛 かむ; kanji breakdown 噛 Outside JLPT contract か 噛 （か） ／ bite Stroke order On: コウ、 ゴウ Kun: か.じる、 か.む; meaning to bite / chew; labels JLPT N4, Reading coverage support, focus 噛, covers 噛: かむ; exact audio 565B_噛-word-reading-噛む-かむ; pitch source kanjium-cc-by-sa-4.0 1 [atamadaka] rendered Pitch 1: 1, Pitch accent contour 1; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; and verification limitations no active limitations."
       }
     ],
     "levelPlacement": {
       "mode": "vocabulary-level",
       "reason": "N4 word v2 vocabulary-level placement: common, independently useful bite/chew vocabulary with 噛 visibly labeled outside the current JLPT kanji contract; the source-level hint remains unverified and is not treated as JLPT truth."
-    }
+    },
+    "fixSummary": "Replaced internal Silver workflow prose with explicit JLPTStudy source-boundary learner guidance for 噛む|かむ; exact governed lexical support and all existing Platinum judgments remain independently bound to this card."
   },
   {
     "word": "教え",
@@ -87190,10 +87191,10 @@
     "reviewedAt": "2026-07-19",
     "reviewer": "codex-platinum-review",
     "reviewStandard": "word-platinum-v3-evidence-lanes",
-    "revalidatedAt": "2026-07-19",
-    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 子|こ.",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation independently checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface including explicit JLPTStudy source-boundary learner guidance, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations after removing internal Silver workflow prose for 子|こ.",
     "notesIncludes": [
-      "N4 word v2 Silver common-word expansion from the JLPTStudy N4 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict/commonness verification supports 子|こ as child/kid vocabulary. The row is kept as a common exact word identity, not as a duplicate of 子ども|こども or as generic kanji-gloss padding."
+      "Source: JLPTStudy N4 candidate lane. Source level claim unverified; the source level is only a discovery hint, not JLPT truth. Exact governed JMdict/commonness verification supports 子|こ as child/kid vocabulary. The row is kept as a common exact word identity, not as a duplicate of 子ども|こども or as generic kanji-gloss padding."
     ],
     "sourceEvidence": [
       {
@@ -87226,7 +87227,7 @@
       {
         "type": "generated-surface",
         "source": "live generated N4 word TSV surface inspected through scripts/platinumWordBatchReport.js",
-        "detail": "Generated word-card surface inspected for 子|こ: word 子, reading こ, meaning child / kid, example あの子は元気です。 ／ あのこはげんきです。 ／ That child is energetic., notes N4 word v2 Silver common-word expansion from the JLPTStudy N4 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict/commonness verification supports 子|こ as child/kid vocabulary. The row is kept as a common exact word identity, not as a duplicate of 子ども|こども or as generic kanji-gloss padding., audio 5B50_子-word-reading-子-こ, reading breakdown 子 こ, kanji breakdown 子 JLPT N5 kanji こ 子 （こ） ／ child / kid Stroke order On: シ、 ス、 ツ Kun: -こ、 ね, labels JLPT N4; Reading coverage support; focus 子; covers 子: こ."
+        "detail": "Generated word-card surface inspected for 子|こ: word 子, reading こ, meaning child / kid, example あの子は元気です。 ／ あのこはげんきです。 ／ That child is energetic., notes Source: JLPTStudy N4 candidate lane. Source level claim unverified; the source level is only a discovery hint, not JLPT truth. Exact governed JMdict/commonness verification supports 子|こ as child/kid vocabulary. The row is kept as a common exact word identity, not as a duplicate of 子ども|こども or as generic kanji-gloss padding., audio 5B50_子-word-reading-子-こ, reading breakdown 子 こ, kanji breakdown 子 JLPT N5 kanji こ 子 （こ） ／ child / kid Stroke order On: シ、 ス、 ツ Kun: -こ、 ね, labels JLPT N4; Reading coverage support; focus 子; covers 子: こ."
       },
       {
         "type": "level-contract",
@@ -87273,13 +87274,14 @@
       {
         "type": "current-standard-review",
         "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
-        "detail": "Current-standard whole-card revalidation for 子|こ checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence あの子は元気です。 ／ あのこはげんきです。 ／ That child is energetic. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface N4 word v2 Silver common-word expansion from the JLPTStudy N4 candidate lane; source level claim is unverified and treated only as a discovery hint. Exact governed JMdict/commonness verification supports 子|こ as child/kid vocabulary. The row is kept as a common exact word identity, not as a duplicate of 子ども|こども or as generic kanji-gloss padding.; reading breakdown 子 こ; kanji breakdown 子 JLPT N5 kanji こ 子 （こ） ／ child / kid Stroke order On: シ、 ス、 ツ Kun: -こ、 ね; meaning child / kid; labels JLPT N4, Reading coverage support, focus 子, covers 子: こ; exact audio 5B50_子-word-reading-子-こ; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; single-kanji word row; confirm governed word-level placement and avoid kanji-deck mixing; and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation for 子|こ checked generated surface; registered Japanese-source written form, reading, meaning, and example use; example sentence あの子は元気です。 ／ あのこはげんきです。 ／ That child is energetic. as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface Source: JLPTStudy N4 candidate lane. Source level claim unverified; the source level is only a discovery hint, not JLPT truth. Exact governed JMdict/commonness verification supports 子|こ as child/kid vocabulary. The row is kept as a common exact word identity, not as a duplicate of 子ども|こども or as generic kanji-gloss padding.; reading breakdown 子 こ; kanji breakdown 子 JLPT N5 kanji こ 子 （こ） ／ child / kid Stroke order On: シ、 ス、 ツ Kun: -こ、 ね; meaning child / kid; labels JLPT N4, Reading coverage support, focus 子, covers 子: こ; exact audio 5B50_子-word-reading-子-こ; pitch accent source kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; risk resolution reading-coverage support row; verify learner usefulness instead of approving for coverage alone; single-kanji word row; confirm governed word-level placement and avoid kanji-deck mixing; and verification limitations no active limitations."
       }
     ],
     "levelPlacement": {
       "mode": "vocabulary-level",
       "reason": "N4 word v2 vocabulary-level placement: common standalone child word from the reviewed JLPTStudy N4 common-word selector; standalone one-kanji words are eligible when reviewed for learner value."
-    }
+    },
+    "fixSummary": "Replaced internal Silver workflow prose with explicit JLPTStudy source-boundary learner guidance for 子|こ; exact governed lexical support and all existing Platinum judgments remain independently bound to this card."
   },
   {
     "word": "英字",
@@ -92190,5 +92192,1040 @@
       "reason": "N4 word v2 vocabulary-level placement: travel, departure, and life-transition vocabulary from the DICTIONARY COMMON POOL extra-source selector; 旅 and 立 provide useful reading reinforcement while the Source level claim unverified label remains active."
     },
     "fixSummary": "Replaced the stale Silver pipeline note with learner-facing guidance that fixes the card to the literal travel sense."
+  },
+  {
+    "word": "始業",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "しぎょう"
+    ],
+    "meaningIncludes": [
+      "start of work",
+      "start of school"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "始、業"
+    ],
+    "coversReadingIncludes": [
+      "始: し ／ 業: ぎょう"
+    ],
+    "breakdownIncludes": [
+      "始 し 始 （し） ／ begin Stroke order On: シ Kun: -はじ.める、 はじ.まる 業 ぎょう 業 （ぎょう） ／ business / work / study Stroke order On: ギョウ、 ゴウ Kun: わざ"
+    ],
+    "exampleIncludes": [
+      "学校は八時半に始業します。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 始業|しぎょう as useful school and workplace scheduling vocabulary. The eight-thirty school example is natural and directly selects the start-of-school sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 始業|しぎょう as useful school and workplace scheduling vocabulary. The eight-thirty school example is natural and directly selects the start-of-school sense.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 始業|しぎょう.",
+    "notesIncludes": [
+      "始業 means the start of work or school and is useful for stating when work or classes begin. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kotobank / Digital Daijisen https://kotobank.jp/word/%E5%A7%8B%E6%A5%AD-518010",
+        "detail": "Manual registered Japanese-source word-field verification checked 始業|しぎょう: written form 始業, reading しぎょう, meanings start of work and start of school, and example sentence 学校は八時半に始業します。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 始業|しぎょう: word 始業, reading しぎょう, meaning start of work / start of school, example 学校は八時半に始業します。 ／ がっこうははちじはんにしぎょうします。 ／ School starts at eight thirty., notes 始業 means the start of work or school and is useful for stating when work or classes begin. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 59CB_始-word-reading-始業-しぎょう.wav, reading breakdown and complete kanji breakdown 始 し 始 （し） ／ begin Stroke order On: シ Kun: -はじ.める、 はじ.まる 業 ぎょう 業 （ぎょう） ／ business / work / study Stroke order On: ギョウ、 ゴウ Kun: わざ, labels JLPT N4; Reading coverage support; focus 始、業; covers 始: し ／ 業: ぎょう."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 始業|しぎょう at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 始業|しぎょう with exact artifact 59CB_始-word-reading-始業-しぎょう.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 始業|しぎょう uses exact word-reading asset 59CB_始-word-reading-始業-しぎょう, expected and generated reading しぎょう, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 始業|しぎょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 始業|しぎょう: JLPT N4; Reading coverage support; focus 始、業; covers 始: し ／ 業: ぎょう. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 始業|しぎょう separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 始業|しぎょう, reading しぎょう, and example sentence 学校は八時半に始業します。 ／ がっこうははちじはんにしぎょうします。 ／ School starts at eight thirty.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 始業|しぎょう common or useful and learner-friendly school and workplace scheduling vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 始業|しぎょう checked the generated surface; registered Japanese-source evidence; example sentence 学校は八時半に始業します。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 始業 means the start of work or school and is useful for stating when work or classes begin. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 始 し 始 （し） ／ begin Stroke order On: シ Kun: -はじ.める、 はじ.まる 業 ぎょう 業 （ぎょう） ／ business / work / study Stroke order On: ギョウ、 ゴウ Kun: わざ; meaning start of work and start of school; labels JLPT N4, Reading coverage support, focus 始、業, covers 始: し ／ 業: ぎょう; exact audio word-reading-始業-しぎょう; pitch accent kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: school and workplace scheduling vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing start-of-work and start-of-school guidance."
+  },
+  {
+    "word": "自立",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "じりつ"
+    ],
+    "meaningIncludes": [
+      "independence",
+      "self-reliance"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "自、立"
+    ],
+    "coversReadingIncludes": [
+      "自: じ ／ 立: りつ"
+    ],
+    "breakdownIncludes": [
+      "自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 立 りつ 立 （りつ） ／ stand Stroke order On: リットル、 リツ、 リュウ Kun: -た.つ、 -た.て、 -た.てる、 -だ.て、 -だ.てる、 た.ち-"
+    ],
+    "exampleIncludes": [
+      "彼は一人で生活して自立しました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 自立|じりつ as useful life-transition and self-reliance vocabulary. The living-on-one's-own example is natural and directly selects the independence sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 自立|じりつ as useful life-transition and self-reliance vocabulary. The living-on-one's-own example is natural and directly selects the independence sense.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 自立|じりつ.",
+    "notesIncludes": [
+      "自立 means independence or self-reliance, especially becoming able to live or manage on one's own. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E8%87%AA%E7%AB%8B",
+        "detail": "Manual registered Japanese-source word-field verification checked 自立|じりつ: written form 自立, reading じりつ, meanings independence and self-reliance, and example sentence 彼は一人で生活して自立しました。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 自立|じりつ: word 自立, reading じりつ, meaning independence / self-reliance, example 彼は一人で生活して自立しました。 ／ かれはひとりでせいかつしてじりつしました。 ／ He became independent by living on his own., notes 自立 means independence or self-reliance, especially becoming able to live or manage on one's own. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 81EA_自-word-reading-自立-じりつ.wav, reading breakdown and complete kanji breakdown 自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 立 りつ 立 （りつ） ／ stand Stroke order On: リットル、 リツ、 リュウ Kun: -た.つ、 -た.て、 -た.てる、 -だ.て、 -だ.てる、 た.ち-, labels JLPT N4; Reading coverage support; focus 自、立; covers 自: じ ／ 立: りつ."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 自立|じりつ at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 自立|じりつ with exact artifact 81EA_自-word-reading-自立-じりつ.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 自立|じりつ uses exact word-reading asset 81EA_自-word-reading-自立-じりつ, expected and generated reading じりつ, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 自立|じりつ source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 自立|じりつ: JLPT N4; Reading coverage support; focus 自、立; covers 自: じ ／ 立: りつ. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 自立|じりつ separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 自立|じりつ, reading じりつ, and example sentence 彼は一人で生活して自立しました。 ／ かれはひとりでせいかつしてじりつしました。 ／ He became independent by living on his own.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 自立|じりつ common or useful and learner-friendly life-transition and self-reliance vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 自立|じりつ checked the generated surface; registered Japanese-source evidence; example sentence 彼は一人で生活して自立しました。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 自立 means independence or self-reliance, especially becoming able to live or manage on one's own. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 自 じ 自 （じ） ／ self / own Stroke order On: シ、 ジ Kun: おの.ずから、 おの.ずと、 みずか.ら 立 りつ 立 （りつ） ／ stand Stroke order On: リットル、 リツ、 リュウ Kun: -た.つ、 -た.て、 -た.てる、 -だ.て、 -だ.てる、 た.ち-; meaning independence and self-reliance; labels JLPT N4, Reading coverage support, focus 自、立, covers 自: じ ／ 立: りつ; exact audio word-reading-自立-じりつ; pitch accent kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: independence and life-transition vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing independence and self-reliance guidance."
+  },
+  {
+    "word": "野鳥",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "やちょう"
+    ],
+    "meaningIncludes": [
+      "wild bird"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "野、鳥"
+    ],
+    "coversReadingIncludes": [
+      "野: や ／ 鳥: ちょう"
+    ],
+    "breakdownIncludes": [
+      "野 や 野 （や） ／ field / plain Stroke order On: ショ、 ヤ Kun: の 鳥 ちょう 鳥 （ちょう） ／ bird Stroke order On: チョウ Kun: とり"
+    ],
+    "exampleIncludes": [
+      "公園で野鳥を見ました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 野鳥|やちょう as useful nature and observation vocabulary. The park example is concrete, natural, and directly selects the wild-bird sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 野鳥|やちょう as useful nature and observation vocabulary. The park example is concrete, natural, and directly selects the wild-bird sense.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 野鳥|やちょう.",
+    "notesIncludes": [
+      "野鳥 means a wild bird and is useful for birds observed living in nature. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kotobank / Digital Daijisen https://kotobank.jp/word/%E9%87%8E%E9%B3%A5-143783",
+        "detail": "Manual registered Japanese-source word-field verification checked 野鳥|やちょう: written form 野鳥, reading やちょう, meaning wild bird, and example sentence 公園で野鳥を見ました。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 野鳥|やちょう: word 野鳥, reading やちょう, meaning wild bird, example 公園で野鳥を見ました。 ／ こうえんでやちょうをみました。 ／ I saw wild birds in the park., notes 野鳥 means a wild bird and is useful for birds observed living in nature. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 91CE_野-word-reading-野鳥-やちょう.wav, reading breakdown and complete kanji breakdown 野 や 野 （や） ／ field / plain Stroke order On: ショ、 ヤ Kun: の 鳥 ちょう 鳥 （ちょう） ／ bird Stroke order On: チョウ Kun: とり, labels JLPT N4; Reading coverage support; focus 野、鳥; covers 野: や ／ 鳥: ちょう."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 野鳥|やちょう at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 野鳥|やちょう with exact artifact 91CE_野-word-reading-野鳥-やちょう.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 野鳥|やちょう uses exact word-reading asset 91CE_野-word-reading-野鳥-やちょう, expected and generated reading やちょう, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 野鳥|やちょう source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 野鳥|やちょう: JLPT N4; Reading coverage support; focus 野、鳥; covers 野: や ／ 鳥: ちょう. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 野鳥|やちょう separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 野鳥|やちょう, reading やちょう, and example sentence 公園で野鳥を見ました。 ／ こうえんでやちょうをみました。 ／ I saw wild birds in the park.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 野鳥|やちょう common or useful and learner-friendly nature and observation vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 野鳥|やちょう checked the generated surface; registered Japanese-source evidence; example sentence 公園で野鳥を見ました。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 野鳥 means a wild bird and is useful for birds observed living in nature. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 野 や 野 （や） ／ field / plain Stroke order On: ショ、 ヤ Kun: の 鳥 ちょう 鳥 （ちょう） ／ bird Stroke order On: チョウ Kun: とり; meaning wild bird; labels JLPT N4, Reading coverage support, focus 野、鳥, covers 野: や ／ 鳥: ちょう; exact audio word-reading-野鳥-やちょう; pitch accent kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: nature and observation vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing wild-bird and nature-observation guidance."
+  },
+  {
+    "word": "働き口",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "はたらきぐち"
+    ],
+    "meaningIncludes": [
+      "job opening",
+      "position"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "働、口"
+    ],
+    "coversReadingIncludes": [
+      "働: はたら ／ 口: ぐち"
+    ],
+    "breakdownIncludes": [
+      "働 はたら 働 （はたら） ／ work / labor Stroke order On: ドウ Kun: はたら.く 口 ぐち 口 （ぐち） ／ mouth / opening Stroke order On: ク、 コウ Kun: くち"
+    ],
+    "exampleIncludes": [
+      "新しい働き口を探しています。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0",
+      "Pitch 2: 4",
+      "Pitch accent contour 4"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 働き口|はたらきぐち as useful employment and job-search vocabulary. The search-for-a-new-job example is natural and directly selects the available-position sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 働き口|はたらきぐち as useful employment and job-search vocabulary. The search-for-a-new-job example is natural and directly selects the available-position sense.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 働き口|はたらきぐち.",
+    "notesIncludes": [
+      "働き口 means a job or position available as work; 働き口を探す means to look for employment. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kotobank / Progressive Japanese-English Dictionary https://kotobank.jp/jeword/%E5%83%8D%E3%81%8D%E5%8F%A3",
+        "detail": "Manual registered Japanese-source word-field verification checked 働き口|はたらきぐち: written form 働き口, reading はたらきぐち, meanings job opening and position, and example sentence 新しい働き口を探しています。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 働き口|はたらきぐち: word 働き口, reading はたらきぐち, meaning job opening / position, example 新しい働き口を探しています。 ／ あたらしいはたらきぐちをさがしています。 ／ I am looking for a new job., notes 働き口 means a job or position available as work; 働き口を探す means to look for employment. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 50CD_働-word-reading-働き口-はたらきぐち.wav, reading breakdown and complete kanji breakdown 働 はたら 働 （はたら） ／ work / labor Stroke order On: ドウ Kun: はたら.く 口 ぐち 口 （ぐち） ／ mouth / opening Stroke order On: ク、 コウ Kun: くち, labels JLPT N4; Reading coverage support; focus 働、口; covers 働: はたら ／ 口: ぐち."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 働き口|はたらきぐち at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 働き口|はたらきぐち with exact artifact 50CD_働-word-reading-働き口-はたらきぐち.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 働き口|はたらきぐち uses exact word-reading asset 50CD_働-word-reading-働き口-はたらきぐち, expected and generated reading はたらきぐち, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 働き口|はたらきぐち source kanjium-cc-by-sa-4.0 pattern 0 [heiban] / 4 [nakadaka], rendered Pitch 1: 0, Pitch accent contour 0, Pitch 2: 4, Pitch accent contour 4, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 働き口|はたらきぐち: JLPT N4; Reading coverage support; focus 働、口; covers 働: はたら ／ 口: ぐち. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 働き口|はたらきぐち separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 働き口|はたらきぐち, reading はたらきぐち, and example sentence 新しい働き口を探しています。 ／ あたらしいはたらきぐちをさがしています。 ／ I am looking for a new job.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 働き口|はたらきぐち common or useful and learner-friendly employment and job-search vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 働き口|はたらきぐち checked the generated surface; registered Japanese-source evidence; example sentence 新しい働き口を探しています。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 働き口 means a job or position available as work; 働き口を探す means to look for employment. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 働 はたら 働 （はたら） ／ work / labor Stroke order On: ドウ Kun: はたら.く 口 ぐち 口 （ぐち） ／ mouth / opening Stroke order On: ク、 コウ Kun: くち; meaning job opening and position; labels JLPT N4, Reading coverage support, focus 働、口, covers 働: はたら ／ 口: ぐち; exact audio word-reading-働き口-はたらきぐち; pitch accent kanjium-cc-by-sa-4.0 0 [heiban] / 4 [nakadaka] rendered Pitch 1: 0, Pitch accent contour 0, Pitch 2: 4, Pitch accent contour 4; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: employment and job-search vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing job-opening and employment guidance."
+  },
+  {
+    "word": "図工",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ずこう"
+    ],
+    "meaningIncludes": [
+      "arts and crafts",
+      "drawing and crafts"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "図、工"
+    ],
+    "coversReadingIncludes": [
+      "図: ず ／ 工: こう"
+    ],
+    "breakdownIncludes": [
+      "図 ず 図 （ず） ／ diagram / map Stroke order On: ズ、 ト Kun: え、 はか.る 工 こう 工 （こう） ／ craft / construction Stroke order On: ク、 グ、 コウ"
+    ],
+    "exampleIncludes": [
+      "図工の時間に絵を描きました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 図工|ずこう as useful school-subject and classroom vocabulary. The classroom drawing example is natural and directly selects the school-subject sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 図工|ずこう as useful school-subject and classroom vocabulary. The classroom drawing example is natural and directly selects the school-subject sense.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 図工|ずこう.",
+    "notesIncludes": [
+      "図工 is the school subject for drawing and manual arts, commonly described as arts and crafts. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E5%9B%B3%E5%B7%A5",
+        "detail": "Manual registered Japanese-source word-field verification checked 図工|ずこう: written form 図工, reading ずこう, meanings arts and crafts and drawing and crafts, and example sentence 図工の時間に絵を描きました。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 図工|ずこう: word 図工, reading ずこう, meaning arts and crafts / drawing and crafts, example 図工の時間に絵を描きました。 ／ ずこうのじかんにえをかきました。 ／ I drew a picture during arts and crafts class., notes 図工 is the school subject for drawing and manual arts, commonly described as arts and crafts. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 56F3_図-word-reading-図工-ずこう.wav, reading breakdown and complete kanji breakdown 図 ず 図 （ず） ／ diagram / map Stroke order On: ズ、 ト Kun: え、 はか.る 工 こう 工 （こう） ／ craft / construction Stroke order On: ク、 グ、 コウ, labels JLPT N4; Reading coverage support; focus 図、工; covers 図: ず ／ 工: こう."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 図工|ずこう at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 図工|ずこう with exact artifact 56F3_図-word-reading-図工-ずこう.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 図工|ずこう uses exact word-reading asset 56F3_図-word-reading-図工-ずこう, expected and generated reading ずこう, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 図工|ずこう source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 図工|ずこう: JLPT N4; Reading coverage support; focus 図、工; covers 図: ず ／ 工: こう. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 図工|ずこう separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 図工|ずこう, reading ずこう, and example sentence 図工の時間に絵を描きました。 ／ ずこうのじかんにえをかきました。 ／ I drew a picture during arts and crafts class.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 図工|ずこう common or useful and learner-friendly school-subject and classroom vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 図工|ずこう checked the generated surface; registered Japanese-source evidence; example sentence 図工の時間に絵を描きました。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 図工 is the school subject for drawing and manual arts, commonly described as arts and crafts. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 図 ず 図 （ず） ／ diagram / map Stroke order On: ズ、 ト Kun: え、 はか.る 工 こう 工 （こう） ／ craft / construction Stroke order On: ク、 グ、 コウ; meaning arts and crafts and drawing and crafts; labels JLPT N4, Reading coverage support, focus 図、工, covers 図: ず ／ 工: こう; exact audio word-reading-図工-ずこう; pitch accent kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: school-subject and classroom vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing drawing-and-manual-arts guidance."
+  },
+  {
+    "word": "屋台",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "やたい"
+    ],
+    "meaningIncludes": [
+      "food stall",
+      "street stall"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "屋、台"
+    ],
+    "coversReadingIncludes": [
+      "屋: や ／ 台: たい"
+    ],
+    "breakdownIncludes": [
+      "屋 や 屋 （や） ／ shop / place Stroke order On: オク Kun: や 台 たい 台 （たい） ／ stand / platform Stroke order On: タイ、 ダイ Kun: うてな、 つかさ、 われ"
+    ],
+    "exampleIncludes": [
+      "祭りで屋台のラーメンを食べました。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 屋台|やたい as useful festival, food, and culture vocabulary. The festival ramen example is natural and directly selects the roofed street-stall sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 屋台|やたい as useful festival, food, and culture vocabulary. The festival ramen example is natural and directly selects the roofed street-stall sense.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 屋台|やたい.",
+    "notesIncludes": [
+      "屋台 means a street or food stall and is especially useful for festival and street-food settings. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "Kotobank / Digital Daijisen https://kotobank.jp/word/%E5%B1%8B%E5%8F%B0-648499",
+        "detail": "Manual registered Japanese-source word-field verification checked 屋台|やたい: written form 屋台, reading やたい, meanings food stall and street stall, and example sentence 祭りで屋台のラーメンを食べました。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 屋台|やたい: word 屋台, reading やたい, meaning food stall / street stall, example 祭りで屋台のラーメンを食べました。 ／ まつりでやたいのラーメンをたべました。 ／ I ate ramen from a food stall at the festival., notes 屋台 means a street or food stall and is especially useful for festival and street-food settings. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 5C4B_屋-word-reading-屋台-やたい.wav, reading breakdown and complete kanji breakdown 屋 や 屋 （や） ／ shop / place Stroke order On: オク Kun: や 台 たい 台 （たい） ／ stand / platform Stroke order On: タイ、 ダイ Kun: うてな、 つかさ、 われ, labels JLPT N4; Reading coverage support; focus 屋、台; covers 屋: や ／ 台: たい."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 屋台|やたい at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 屋台|やたい with exact artifact 5C4B_屋-word-reading-屋台-やたい.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 屋台|やたい uses exact word-reading asset 5C4B_屋-word-reading-屋台-やたい, expected and generated reading やたい, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 屋台|やたい source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka], rendered Pitch 1: 1, Pitch accent contour 1, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 屋台|やたい: JLPT N4; Reading coverage support; focus 屋、台; covers 屋: や ／ 台: たい. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 屋台|やたい separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 屋台|やたい, reading やたい, and example sentence 祭りで屋台のラーメンを食べました。 ／ まつりでやたいのラーメンをたべました。 ／ I ate ramen from a food stall at the festival.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 屋台|やたい common or useful and learner-friendly festival, food, and culture vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 屋台|やたい checked the generated surface; registered Japanese-source evidence; example sentence 祭りで屋台のラーメンを食べました。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 屋台 means a street or food stall and is especially useful for festival and street-food settings. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 屋 や 屋 （や） ／ shop / place Stroke order On: オク Kun: や 台 たい 台 （たい） ／ stand / platform Stroke order On: タイ、 ダイ Kun: うてな、 つかさ、 われ; meaning food stall and street stall; labels JLPT N4, Reading coverage support, focus 屋、台, covers 屋: や ／ 台: たい; exact audio word-reading-屋台-やたい; pitch accent kanjium-cc-by-sa-4.0 1 [atamadaka] rendered Pitch 1: 1, Pitch accent contour 1; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: festival, food, and culture vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing street-stall and festival guidance."
+  },
+  {
+    "word": "口頭",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "こうとう"
+    ],
+    "meaningIncludes": [
+      "oral",
+      "verbal"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "口、頭"
+    ],
+    "coversReadingIncludes": [
+      "口: こう ／ 頭: とう"
+    ],
+    "breakdownIncludes": [
+      "口 こう 口 （こう） ／ mouth / opening Stroke order On: ク、 コウ Kun: くち 頭 とう 頭 （とう） ／ head / beginning / leader Stroke order On: ズ、 ト、 トウ Kun: -がしら、 あたま、 かしら、 かぶり"
+    ],
+    "exampleIncludes": [
+      "口頭で答えてください。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 口頭|こうとう as useful classroom and workplace instruction vocabulary. The spoken-answer instruction is natural and directly contrasts oral response with writing.",
+    "levelPlacementReason": "Platinum card-surface review approved 口頭|こうとう as useful classroom and workplace instruction vocabulary. The spoken-answer instruction is natural and directly contrasts oral response with writing.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 口頭|こうとう.",
+    "notesIncludes": [
+      "口頭 means oral or verbal rather than written; 口頭で is useful for spoken answers, reports, and instructions. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E5%8F%A3%E9%A0%AD",
+        "detail": "Manual registered Japanese-source word-field verification checked 口頭|こうとう: written form 口頭, reading こうとう, meanings oral and verbal, and example sentence 口頭で答えてください。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 口頭|こうとう: word 口頭, reading こうとう, meaning oral / verbal, example 口頭で答えてください。 ／ こうとうでこたえてください。 ／ Please answer orally., notes 口頭 means oral or verbal rather than written; 口頭で is useful for spoken answers, reports, and instructions. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 53E3_口-word-reading-口頭-こうとう.wav, reading breakdown and complete kanji breakdown 口 こう 口 （こう） ／ mouth / opening Stroke order On: ク、 コウ Kun: くち 頭 とう 頭 （とう） ／ head / beginning / leader Stroke order On: ズ、 ト、 トウ Kun: -がしら、 あたま、 かしら、 かぶり, labels JLPT N4; Reading coverage support; focus 口、頭; covers 口: こう ／ 頭: とう."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 口頭|こうとう at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 口頭|こうとう with exact artifact 53E3_口-word-reading-口頭-こうとう.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 口頭|こうとう uses exact word-reading asset 53E3_口-word-reading-口頭-こうとう, expected and generated reading こうとう, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 口頭|こうとう source kanjium-cc-by-sa-4.0 pattern 0 [heiban], rendered Pitch 1: 0, Pitch accent contour 0, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 口頭|こうとう: JLPT N4; Reading coverage support; focus 口、頭; covers 口: こう ／ 頭: とう. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 口頭|こうとう separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 口頭|こうとう, reading こうとう, and example sentence 口頭で答えてください。 ／ こうとうでこたえてください。 ／ Please answer orally.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 口頭|こうとう common or useful and learner-friendly classroom and workplace instruction vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 口頭|こうとう checked the generated surface; registered Japanese-source evidence; example sentence 口頭で答えてください。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 口頭 means oral or verbal rather than written; 口頭で is useful for spoken answers, reports, and instructions. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 口 こう 口 （こう） ／ mouth / opening Stroke order On: ク、 コウ Kun: くち 頭 とう 頭 （とう） ／ head / beginning / leader Stroke order On: ズ、 ト、 トウ Kun: -がしら、 あたま、 かしら、 かぶり; meaning oral and verbal; labels JLPT N4, Reading coverage support, focus 口、頭, covers 口: こう ／ 頭: とう; exact audio word-reading-口頭-こうとう; pitch accent kanjium-cc-by-sa-4.0 0 [heiban] rendered Pitch 1: 0, Pitch accent contour 0; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: classroom and workplace instruction vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing spoken-answer and verbal-instruction guidance."
+  },
+  {
+    "word": "部員",
+    "status": "fixed_then_platinum",
+    "readingIncludes": [
+      "ぶいん"
+    ],
+    "meaningIncludes": [
+      "club member",
+      "staff member"
+    ],
+    "jlptLevelIncludes": [
+      "JLPT N4"
+    ],
+    "coverageRoleIncludes": [
+      "Reading coverage support"
+    ],
+    "focusIncludes": [
+      "部、員"
+    ],
+    "coversReadingIncludes": [
+      "部: ぶ ／ 員: いん"
+    ],
+    "breakdownIncludes": [
+      "部 ぶ 部 （ぶ） ／ section / part Stroke order On: ブ Kun: -べ 員 いん 員 （いん） ／ member / employee Stroke order On: イン"
+    ],
+    "exampleIncludes": [
+      "部員は十人います。"
+    ],
+    "pitchAccentIncludes": [
+      "Pitch 1: 0",
+      "Pitch accent contour 0",
+      "Pitch 2: 1",
+      "Pitch accent contour 1"
+    ],
+    "selectionRationale": "Platinum card-surface review approved 部員|ぶいん as useful school clubs and organizations vocabulary. The ten-member example is natural and directly selects the club-member sense.",
+    "levelPlacementReason": "Platinum card-surface review approved 部員|ぶいん as useful school clubs and organizations vocabulary. The ten-member example is natural and directly selects the club-member sense.",
+    "reviewedAt": "2026-08-09",
+    "reviewer": "codex-platinum-review",
+    "reviewStandard": "word-platinum-v3-evidence-lanes",
+    "revalidatedAt": "2026-08-09",
+    "revalidationSummary": "Current-standard Platinum revalidation checked separated evidence lanes, the generated surface, registered Japanese-source evidence, the exact example sentence, the notes/support surface, reading breakdown, labels, exact audio identity, pitch accent source and rendering, media provenance, N4 product fit, and verification limitations with no active limitations for 部員|ぶいん.",
+    "notesIncludes": [
+      "部員 means a member of a club or department; this card's example counts club members. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth."
+    ],
+    "sourceEvidence": [
+      {
+        "type": "japanese-source",
+        "source": "JLearn Japanese Dictionary https://jlearn.net/dictionary/%E9%83%A8%E5%93%A1",
+        "detail": "Manual registered Japanese-source word-field verification checked 部員|ぶいん: written form 部員, reading ぶいん, meanings club member and staff member, and example sentence 部員は十人います。 for natural use of the source-supported sense. The source supports these card fields, not JLPT placement or source truth."
+      }
+    ],
+    "qualityGates": {
+      "belongsInWordDeck": true,
+      "commonOrUseful": true,
+      "learnerFriendly": true,
+      "writtenFormVerified": true,
+      "readingVerified": true,
+      "japaneseVerified": true,
+      "meaningReleaseQuality": true,
+      "exampleReleaseQuality": true,
+      "exampleReadingVerified": true,
+      "breakdownVerified": true,
+      "levelPlacementVerified": true,
+      "labelsVerified": true,
+      "audioExactWordReading": true,
+      "audioArtifactVerified": true,
+      "pitchAccentVerified": true,
+      "pitchAccentSourceVerified": true,
+      "mediaProvenanceVerified": true,
+      "noSilentFallback": true
+    },
+    "internalChecks": [
+      {
+        "type": "generated-surface",
+        "source": "live corrected N4 generated TSV surface inspected through scripts/platinumWordBatchReport.js",
+        "detail": "Generated word-card surface inspected for 部員|ぶいん: word 部員, reading ぶいん, meaning club member / staff member, example 部員は十人います。 ／ ぶいんはじゅうにんいます。 ／ There are ten club members., notes 部員 means a member of a club or department; this card's example counts club members. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth., audio 90E8_部-word-reading-部員-ぶいん.wav, reading breakdown and complete kanji breakdown 部 ぶ 部 （ぶ） ／ section / part Stroke order On: ブ Kun: -べ 員 いん 員 （いん） ／ member / employee Stroke order On: イン, labels JLPT N4; Reading coverage support; focus 部、員; covers 部: ぶ ／ 員: いん."
+      },
+      {
+        "type": "level-contract",
+        "source": "templates/jlpt_word_level_contract.json and manual N4 product review",
+        "detail": "Level contract checked 部員|ぶいん at JLPT N4. The tracked contract remains internal placement authority; external source level tags were not treated as JLPT truth."
+      },
+      {
+        "type": "media-audit",
+        "source": "managed word media manifest and scoped corrected-surface audio review",
+        "detail": "Managed media audit checked 部員|ぶいん with exact artifact 90E8_部-word-reading-部員-ぶいん.wav, source voicevox-nemo, locale ja-JP, status ready_to_review, and no missing asset, reading mismatch, or policy mismatch."
+      },
+      {
+        "type": "audio-review",
+        "source": "npm run media:review:word-audio scoped to batch 007 and the corrected fresh N4 TSV",
+        "detail": "Audio identity review verified 部員|ぶいん uses exact word-reading asset 90E8_部-word-reading-部員-ぶいん, expected and generated reading ぶいん, source voicevox-nemo, locale ja-JP, and status ready_to_review."
+      },
+      {
+        "type": "pitch-accent-review",
+        "source": "templates/word_pitch_accent_data.json and live generated pitch renderer",
+        "detail": "Pitch review checked 部員|ぶいん source kanjium-cc-by-sa-4.0 pattern 0 [heiban] / 1 [atamadaka], rendered Pitch 1: 0, Pitch accent contour 0, Pitch 2: 1, Pitch accent contour 1, exact source identity, and source-to-render match."
+      },
+      {
+        "type": "label-review",
+        "source": "live corrected N4 generated surface and templates/jlpt_word_level_contract.json",
+        "detail": "Label review checked 部員|ぶいん: JLPT N4; Reading coverage support; focus 部、員; covers 部: ぶ ／ 員: いん. Queue risk reviewed rather than auto-approved: reading-coverage support row; verify learner usefulness instead of approving for coverage alone."
+      },
+      {
+        "type": "golden-regression",
+        "source": "templates/golden_n4_word_review_set.json via npm run deck:words:review:n4",
+        "detail": "Gold regression for 部員|ぶいん separately protects exported fields; it is a separate regression gate, not Japanese source evidence or Platinum approval."
+      }
+    ],
+    "reviewEvidence": [
+      {
+        "type": "example-review",
+        "source": "manual current-standard Platinum word-card review",
+        "detail": "Example review checked 部員|ぶいん, reading ぶいん, and example sentence 部員は十人います。 ／ ぶいんはじゅうにんいます。 ／ There are ten club members.; it is natural, useful, learner-friendly, level-appropriate, and release-quality."
+      },
+      {
+        "type": "manual-review",
+        "source": "codex-platinum-review product judgment",
+        "detail": "Manual Platinum review judged 部員|ぶいん common or useful and learner-friendly school clubs and organizations vocabulary after resolving the queue risk reading-coverage support row; verify learner usefulness instead of approving for coverage alone. No active limitations remain."
+      },
+      {
+        "type": "current-standard-review",
+        "source": "word-platinum-v3-evidence-lanes whole-card revalidation",
+        "detail": "Current-standard whole-card revalidation for 部員|ぶいん checked the generated surface; registered Japanese-source evidence; example sentence 部員は十人います。 as natural, useful, learner-friendly, level-appropriate, and release-quality; notes/support surface 部員 means a member of a club or department; this card's example counts club members. Source: DICTIONARY COMMON POOL. Source level claim unverified; the source level is only a discovery and usefulness hint, not JLPT truth.; reading breakdown 部 ぶ 部 （ぶ） ／ section / part Stroke order On: ブ Kun: -べ 員 いん 員 （いん） ／ member / employee Stroke order On: イン; meaning club member and staff member; labels JLPT N4, Reading coverage support, focus 部、員, covers 部: ぶ ／ 員: いん; exact audio word-reading-部員-ぶいん; pitch accent kanjium-cc-by-sa-4.0 0 [heiban] / 1 [atamadaka] rendered Pitch 1: 0, Pitch accent contour 0, Pitch 2: 1, Pitch accent contour 1; media provenance; verification limitations no active limitations; and final release judgment that the card is common or useful, learner-friendly, level-appropriate, and natural."
+      }
+    ],
+    "levelPlacement": {
+      "mode": "vocabulary-level",
+      "reason": "N4 word v2 vocabulary-level placement: school-club and organization vocabulary from the DICTIONARY COMMON POOL; the selected kanji provide useful reading reinforcement while the Source level claim unverified label remains active."
+    },
+    "fixSummary": "Replaced the stale Silver pipeline note with learner-facing club-member and department-member guidance."
   }
 ]

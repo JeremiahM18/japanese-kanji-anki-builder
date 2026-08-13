@@ -899,3 +899,56 @@ test("tracked N4 word Platinum entries preserve governed Sapphire limitations", 
 
     assert.ok(limitedOverlapCount > 0, "tracked N4 word manifests must exercise the limitation-preservation guard");
 });
+
+test("N4 Platinum closeout preserves repaired examples and visible generated-pitch disclosures", () => {
+    const starter = loadJson("templates/starter_word_study_data_n4.json");
+    const golden = loadJson("templates/golden_n4_word_review_set.json");
+    const sapphire = loadJson("templates/sapphire_n4_word_review_set.json");
+    const platinum = loadJson("templates/platinum_n4_word_review_set.json");
+    const byIdentity = (entries, written, reading) => entries.find((entry) => (
+        entry.word === written && normalizeList(entry.readingIncludes).includes(reading)
+    ));
+
+    assert.equal(starter["直近|ちょっきん"].exampleSentence.english, "Please tell me your immediate plans.");
+    assert.equal(starter["農家|のうか"].exampleSentence.english, "He works on a farm.");
+    assert.equal(starter["真夏日|まなつび"].exampleSentence.english, "The temperature rose above 30°C today.");
+
+    for (const identity of [
+        ["お医者さん", "おいしゃさん"],
+        ["海外旅行", "かいがいりょこう"],
+        ["口座番号", "こうざばんごう"],
+        ["担当者", "たんとうしゃ"],
+    ]) {
+        const [written, reading] = identity;
+        assert.match(starter[`${written}|${reading}`].notes, /Generated pitch \(unverified\)/);
+        assert.ok(
+            normalizeList(byIdentity(golden, written, reading)?.notesIncludes)
+                .includes("Generated pitch (unverified)"),
+            `${written}|${reading} Gold must protect learner-visible pitch disclosure`
+        );
+        assert.deepEqual(
+            byIdentity(platinum, written, reading)?.verificationLimitations,
+            byIdentity(sapphire, written, reading)?.verificationLimitations,
+            `${written}|${reading} Platinum must preserve the exact Sapphire limitation`
+        );
+    }
+
+    for (const [written, reading, correctedEnglish] of [
+        ["直近", "ちょっきん", "Please tell me your immediate plans."],
+        ["農家", "のうか", "He works on a farm."],
+        ["真夏日", "まなつび", "The temperature rose above 30°C today."],
+    ]) {
+        const sapphireEntry = byIdentity(sapphire, written, reading);
+        const platinumEntry = byIdentity(platinum, written, reading);
+        assert.equal(sapphireEntry?.status, "fixed_then_sapphire");
+        assert.equal(platinumEntry?.status, "fixed_then_platinum");
+        assert.match(
+            sapphireEntry.internalChecks.find((check) => check.type === "generated-surface").detail,
+            new RegExp(correctedEnglish.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+        );
+        assert.match(
+            platinumEntry.internalChecks.find((check) => check.type === "generated-surface").detail,
+            new RegExp(correctedEnglish.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+        );
+    }
+});

@@ -94,6 +94,7 @@ test("tracked platinum card source manifest loads with field and non-field sourc
         "single-kanji-word-field-verification",
     ]);
     assert.equal(manifest.sources.jlearn.allowedUse.includes("word-field-verification"), true);
+    assert.equal(manifest.sources.jmdict.matchers.includes("edrdg.org"), true);
     assert.equal(manifest.sources.jlptstudy_net.disallowedUse.includes("word-field-verification"), true);
     assert.equal(manifest.sources.source_governance_manifest.disallowedUse.includes("kanji-field-verification"), true);
     assert.equal(manifest.sources.kanjidic2_legacy.allowedUse.includes("placement-claim-origin"), true);

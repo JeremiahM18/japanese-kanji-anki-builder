@@ -61,7 +61,7 @@ Live certification commands confirm:
 | Scope | Generated rows | Current Obsidian certified | Needs Obsidian | Blocked/failing |
 | --- | ---: | ---: | ---: | ---: |
 | Kanji N5-N2 | 982 | 982 | 0 | 0 |
-| Word N5-N4 | 1622 | 588 | 756 | 278 |
+| Word N5-N4 | 1622 | 588 | 796 | 238 |
 
 This is a scoped content/package release lock, not a blanket claim that every product surface is finished.
 

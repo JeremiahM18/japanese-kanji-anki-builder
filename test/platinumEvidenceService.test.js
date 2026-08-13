@@ -39,6 +39,15 @@ test("validateJapaneseSourceEvidence requires governed field-verification source
         requiredUse: "word-field-verification",
     });
     assert.deepEqual(dictionaryFailures, []);
+
+    const jmdictFailures = validateJapaneseSourceEvidence(japaneseEvidence({
+        source: "JMdict https://www.edrdg.org/jmdict/j_jmdict.html",
+        detail: "JMdict verifies 不利|ふり, reading ふり, and meaning disadvantage.",
+    }), {
+        context: "word card accuracy",
+        requiredUse: "word-field-verification",
+    });
+    assert.deepEqual(jmdictFailures, []);
 });
 
 test("normalizeForEvidence compares escaped generated snippets by visible text", () => {

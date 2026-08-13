@@ -7555,6 +7555,21 @@ test("tracked starter word data protects fourth N4 platinum surface fixes", () =
     ]);
 });
 
+test("tracked starter word data protects fifth N4 platinum surface fixes", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.equal(starterEntries["不利|ふり"].exampleSentence.japanese, "雨で私たちのチームは不利になりました。");
+    assert.equal(starterEntries["不利|ふり"].exampleSentence.reading, "あめでわたしたちのチームはふりになりました。");
+    assert.equal(starterEntries["不利|ふり"].exampleSentence.english, "The rain put our team at a disadvantage.");
+    assert.equal(starterEntries["番地|ばんち"].meaning, "house number / address");
+    assert.equal(starterEntries["番地|ばんち"].exampleSentence.english, "Please write the house number.");
+    assert.equal(starterEntries["強風|きょうふう"].exampleSentence.english, "I cannot use an umbrella today because of the strong wind.");
+    assert.equal(starterEntries["立体|りったい"].exampleSentence.japanese, "紙で立体を作りました。");
+    assert.equal(starterEntries["立体|りったい"].exampleSentence.reading, "かみでりったいをつくりました。");
+    assert.equal(starterEntries["立体|りったい"].exampleSentence.english, "We made a three-dimensional object out of paper.");
+    assert.equal(starterEntries["全身|ぜんしん"].exampleSentence.english, "My whole body felt tired after exercising.");
+});
+
 test("tracked starter word data includes the first N5 enhancement batch without duplicate junk", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 
@@ -7950,6 +7965,8 @@ test("tracked starter word data includes the second N4 word v2 common expansion 
     assert.match(starterEntries["凄い|すごい"].notes, /outside the JLPT kanji contract/);
     assert.match(starterEntries["味噌|みそ"].notes, /outside the JLPT kanji contract/);
     assert.match(starterEntries["無理|むり"].notes, /outside the JLPT kanji contract/);
+    assert.equal(starterEntries["無理|むり"].meaning, "impossible / unreasonable / overdoing it");
+    assert.match(starterEntries["無理|むり"].notes, /無理をする means to overdo it or push oneself too hard/);
 });
 
 test("tracked starter word data includes the first N4 common-pool Silver batch", () => {

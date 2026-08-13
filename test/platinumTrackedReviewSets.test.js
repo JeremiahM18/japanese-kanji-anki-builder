@@ -865,3 +865,37 @@ test("tracked populated word platinum manifests bind evidence to protected field
         assert.equal(report.passed, true, `${fileName}\n${formatPlatinumWordReviewReport(report)}`);
     }
 });
+
+test("tracked N4 word Platinum entries preserve governed Sapphire limitations", () => {
+    const platinumEntries = activeEntries(
+        loadJson(path.join("templates", "platinum_n4_word_review_set.json")),
+        ACTIVE_WORD_PLATINUM_STATUSES
+    );
+    const sapphireByKey = new Map(
+        loadJson(path.join("templates", "sapphire_n4_word_review_set.json"))
+            .map((entry) => [buildWordStudyEntryKey({
+                written: entry.word,
+                reading: normalizeList(entry.readingIncludes)[0],
+            }), entry])
+    );
+    let limitedOverlapCount = 0;
+
+    for (const entry of platinumEntries) {
+        const key = buildWordStudyEntryKey({
+            written: entry.word,
+            reading: normalizeList(entry.readingIncludes)[0],
+        });
+        const sapphireLimitations = normalizeList(sapphireByKey.get(key)?.verificationLimitations);
+        if (sapphireLimitations.length === 0) {
+            continue;
+        }
+        limitedOverlapCount += 1;
+        assert.deepEqual(
+            entry.verificationLimitations,
+            sapphireLimitations,
+            `${key} Platinum must preserve governed Sapphire verification limitations`
+        );
+    }
+
+    assert.ok(limitedOverlapCount > 0, "tracked N4 word manifests must exercise the limitation-preservation guard");
+});

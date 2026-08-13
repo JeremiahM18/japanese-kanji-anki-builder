@@ -3,6 +3,10 @@ const { z } = require("zod");
 
 const sourceUseSchema = z.string().min(1);
 const sourceStatusSchema = z.enum(["active", "registered", "blocked"]);
+const sourceUrlHostSchema = z.string().regex(
+    /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/iu,
+    "Expected a bare URL hostname without a scheme, port, path, query, or fragment."
+);
 const sourceTypeSchema = z.enum([
     "generated_artifact",
     "kanji_assignment_origin",
@@ -32,6 +36,7 @@ const platinumCardSourceSchema = z.object({
     status: sourceStatusSchema,
     sourceType: sourceTypeSchema,
     matchers: z.array(z.string().min(1)).default([]),
+    urlHosts: z.array(sourceUrlHostSchema).default([]),
     sourceFamily: z.string().min(1),
     independenceGroup: z.string().min(1),
     licenseUse: sourceLicenseUseSchema,

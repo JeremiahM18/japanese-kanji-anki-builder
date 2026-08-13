@@ -83,7 +83,8 @@
       "name": "JMdict",
       "status": "active",
       "sourceType": "lexical_dictionary",
-      "matchers": ["edrdg.org", "jmdict", "JMdict"],
+      "matchers": ["jmdict"],
+      "urlHosts": ["edrdg.org"],
       "sourceFamily": "jmdict",
       "independenceGroup": "edrdg_dictionary",
       "licenseUse": {

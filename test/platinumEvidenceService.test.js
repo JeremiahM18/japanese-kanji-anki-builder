@@ -48,6 +48,16 @@ test("validateJapaneseSourceEvidence requires governed field-verification source
         requiredUse: "word-field-verification",
     });
     assert.deepEqual(jmdictFailures, []);
+
+    const kanjidic2WordFailures = validateJapaneseSourceEvidence(japaneseEvidence({
+        source: "KANJIDIC2 https://www.edrdg.org/kanjidic/kanjidic2.xml.gz",
+        detail: "KANJIDIC2 verifies 不利|ふり, reading ふり, and meaning disadvantage.",
+    }), {
+        context: "word card accuracy",
+        requiredUse: "word-field-verification",
+    });
+    assert.match(kanjidic2WordFailures.join("\n"), /governed source allowed for word-field-verification/);
+    assert.doesNotMatch(kanjidic2WordFailures.join("\n"), /unregistered URL host/);
 });
 
 test("normalizeForEvidence compares escaped generated snippets by visible text", () => {

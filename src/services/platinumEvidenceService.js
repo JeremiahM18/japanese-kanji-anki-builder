@@ -81,6 +81,9 @@ function buildKnownUrlHosts(manifest = getDefaultPlatinumCardSourceManifest()) {
     const hosts = new Set();
 
     for (const source of Object.values(manifest.sources || {})) {
+        for (const urlHost of source.urlHosts || []) {
+            hosts.add(normalizeText(urlHost).toLowerCase().replace(/^www\./iu, ""));
+        }
         for (const matcher of source.matchers || []) {
             const normalizedMatcher = normalizeText(matcher).toLowerCase().replace(/^www\./iu, "");
             if (/^[a-z0-9.-]+\.[a-z]{2,}$/iu.test(normalizedMatcher)) {

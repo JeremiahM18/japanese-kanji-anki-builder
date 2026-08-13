@@ -145,7 +145,7 @@ The architecture is product- and level-agnostic. The current repo snapshot prove
 Obsidian counts for completed scopes are verified by fail-closed certification gates:
 
 - Kanji locked scope: `982/982` Obsidian certified.
-- Word locked scope: `588/1622` current word Obsidian v2.5-certified for current N5/N4 generated rows; `892` Platinum-passing N4 rows need separate Obsidian v2.5 proof and `142` N4 rows are blocked only on Platinum before downstream proof. N4 Gold and current-standard Sapphire are complete at `1034/1034`. Legacy word proof history remains audit-visible at `1118` N5/N4 targets and `1706` raw ledger events, with `418` older same-target proof events superseded by current v2.5 proof.
+- Word locked scope: `588/1622` current word Obsidian v2.5-certified for current N5/N4 generated rows; `988` Platinum-passing N4 rows need separate Obsidian v2.5 proof and `46` N4 rows are blocked only on Platinum before downstream proof. N4 Gold and current-standard Sapphire are complete at `1034/1034`. Legacy word proof history remains audit-visible at `1118` N5/N4 targets and `1706` raw ledger events, with `418` older same-target proof events superseded by current v2.5 proof.
 - Proof ledger validation: `2688` events across 6 JSONL files.
 
 ## Expansion Workflow Pattern

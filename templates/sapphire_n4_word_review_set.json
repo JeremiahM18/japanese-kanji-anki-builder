@@ -78429,7 +78429,7 @@
   },
   {
     "word": "直近",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
     "readingIncludes": [
       "ちょっきん"
     ],
@@ -78441,8 +78441,8 @@
     "reviewedAt": "2026-07-18",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-18",
-    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Current-standard Sapphire structural review rechecked separated source, generated-surface, and manual evidence after correcting the learner-facing English for 直近の予定. This is not a Platinum, Obsidian, source-truth, or release certification.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
@@ -78454,7 +78454,7 @@
       {
         "type": "generated-surface",
         "source": "live Sapphire batch packet",
-        "detail": "Hard checks passed for 直近|ちょっきん: meaning most recent / nearest; example 直近の予定を教えてください。／ちょっきんのよていをおしえてください。／Please tell me your most recent schedule.; breakdown 直 ちょっ近 きん; exact audio word-reading-直近-ちょっきん; rendered pitch 0."
+        "detail": "Hard checks passed for 直近|ちょっきん: meaning most recent / nearest; example 直近の予定を教えてください。／ちょっきんのよていをおしえてください。／Please tell me your immediate plans.; breakdown 直 ちょっ近 きん; exact audio word-reading-直近-ちょっきん; rendered pitch 0."
       },
       {
         "type": "golden-regression",
@@ -78491,7 +78491,7 @@
       {
         "type": "example-review",
         "source": "manual current-standard review",
-        "detail": "The work-report sentence is natural and clearly demonstrates most recent."
+        "detail": "The immediate-plans sentence is natural and clearly demonstrates the nearest-in-time sense of 直近 rather than an unnatural most-recent-schedule phrasing."
       },
       {
         "type": "manual-review",
@@ -78511,7 +78511,8 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
-    }
+    },
+    "fixSummary": "Corrected the learner-facing English from the unnatural and temporally misleading 'most recent schedule' to 'immediate plans,' then rechecked the exact Japanese, reading, source-supported nearest-in-time sense, and Sapphire evidence lanes."
   },
   {
     "word": "重要",
@@ -80877,7 +80878,7 @@
   },
   {
     "word": "農家",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
     "readingIncludes": [
       "のうか"
     ],
@@ -80889,8 +80890,8 @@
     "reviewedAt": "2026-07-18",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-18",
-    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Current-standard Sapphire structural review rechecked separated source, generated-surface, and manual evidence after correcting the English translation for 彼は農家で働いています. This is not a Platinum, Obsidian, source-truth, or release certification.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
@@ -80902,7 +80903,7 @@
       {
         "type": "generated-surface",
         "source": "live Sapphire batch packet",
-        "detail": "Hard checks passed for 農家|のうか: meaning farmer / farm family; example 彼は農家で働いています。／かれはのうかではたらいています。／He works as a farmer.; breakdown 農 のう家 か; exact audio word-reading-農家-のうか; rendered pitch 1."
+        "detail": "Hard checks passed for 農家|のうか: meaning farmer / farm family; example 彼は農家で働いています。／かれはのうかではたらいています。／He works on a farm.; breakdown 農 のう家 か; exact audio word-reading-農家-のうか; rendered pitch 1."
       },
       {
         "type": "golden-regression",
@@ -80939,7 +80940,7 @@
       {
         "type": "example-review",
         "source": "manual current-standard review",
-        "detail": "The local-vegetable sentence is natural and clearly demonstrates farmer."
+        "detail": "The farm-work sentence is natural and demonstrates the farm or farming-household context of 農家; it does not mistranslate 農家で働く as the occupational construction 'work as a farmer.'"
       },
       {
         "type": "manual-review",
@@ -80959,7 +80960,8 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
-    }
+    },
+    "fixSummary": "Corrected the learner-facing English from 'He works as a farmer' to the construction-matched 'He works on a farm,' then rechecked the exact Japanese, reading, JMdict senses, and Sapphire evidence lanes."
   },
   {
     "word": "新車",
@@ -82447,7 +82449,7 @@
   },
   {
     "word": "真夏日",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
     "readingIncludes": [
       "まなつび"
     ],
@@ -82459,8 +82461,8 @@
     "reviewedAt": "2026-07-18",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-18",
-    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Current-standard Sapphire structural review rechecked separated source, generated-surface, and manual evidence after replacing an unnatural English rendering with the exact source-supported above-30°C sense. This is not a Platinum, Obsidian, source-truth, or release certification.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
@@ -82472,7 +82474,7 @@
       {
         "type": "generated-surface",
         "source": "live Sapphire batch packet",
-        "detail": "Hard checks passed for 真夏日|まなつび: meaning hot midsummer day / day over 30 C; example 今日は真夏日になりました。／きょうはまなつびになりました。／Today became a hot midsummer day.; breakdown 真 ま夏 なつ日 び; exact audio word-reading-真夏日-まなつび; rendered pitch 3."
+        "detail": "Hard checks passed for 真夏日|まなつび: meaning hot midsummer day / day over 30 C; example 今日は真夏日になりました。／きょうはまなつびになりました。／The temperature rose above 30°C today.; breakdown 真 ま夏 なつ日 び; exact audio word-reading-真夏日-まなつび; rendered pitch 3."
       },
       {
         "type": "golden-regression",
@@ -82509,7 +82511,7 @@
       {
         "type": "example-review",
         "source": "manual current-standard review",
-        "detail": "The weather-report sentence is natural and directly demonstrates a very hot summer day."
+        "detail": "The weather-report sentence is natural, and the English now directly conveys the governed JMdict definition of 真夏日 as a day when the temperature rises above 30°C."
       },
       {
         "type": "manual-review",
@@ -82529,7 +82531,8 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
-    }
+    },
+    "fixSummary": "Replaced the unnatural 'Today became a hot midsummer day' translation with 'The temperature rose above 30°C today,' then rechecked the exact Japanese, reading, JMdict definition, and Sapphire evidence lanes."
   },
   {
     "word": "問い合わせ",

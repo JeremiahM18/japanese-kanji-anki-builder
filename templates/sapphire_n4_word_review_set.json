@@ -85413,7 +85413,7 @@
   },
   {
     "word": "語学力",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
     "readingIncludes": [
       "ごがくりょく"
     ],
@@ -85425,8 +85425,8 @@
     "reviewedAt": "2026-07-18",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-18",
-    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. Generated pitch is visibly labeled and remains unverified. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Current-standard Sapphire structural review rechecked separated source, generated-surface, and manual evidence after adding the required learner-visible generated-pitch disclosure to Notes and correcting the copied example-review description for 語学力|ごがくりょく. The pitch remains externally unverified. This is not Platinum, Obsidian, source-truth, or release certification.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
@@ -85475,7 +85475,7 @@
       {
         "type": "example-review",
         "source": "manual current-standard review",
-        "detail": "The job-application sentence is natural and directly demonstrates language skills."
+        "detail": "The language-skills sentence 語学力を上げたいです。 is natural, learner-friendly, and directly demonstrates improving language ability; it is not a job-application sentence."
       },
       {
         "type": "manual-review",
@@ -85503,7 +85503,8 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
-    }
+    },
+    "fixSummary": "Added the exact Generated pitch (unverified) disclosure to learner Notes and Gold expectations, and replaced the inaccurate copied job-application example-review description with evidence bound to the live language-skills sentence. The governed pitch limitation remains externally_unverified."
   },
   {
     "word": "閉店",
@@ -88547,7 +88548,7 @@
   },
   {
     "word": "食料品店",
-    "status": "sapphire",
+    "status": "fixed_then_sapphire",
     "readingIncludes": [
       "しょくりょうひんてん"
     ],
@@ -88559,8 +88560,8 @@
     "reviewedAt": "2026-07-18",
     "reviewer": "n4-word-sapphire-reviewer",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-07-18",
-    "revalidationSummary": "Current-standard Sapphire structural review separated source, generated-surface, and manual evidence for the shipped card. Generated pitch is visibly labeled and remains unverified. This is not a Platinum, Obsidian, source-truth, or release certification.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Current-standard Sapphire structural review rechecked separated source, generated-surface, and manual evidence after adding the required learner-visible generated-pitch disclosure to Notes for 食料品店|しょくりょうひんてん. The pitch remains externally unverified. This is not Platinum, Obsidian, source-truth, or release certification.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
@@ -88637,7 +88638,8 @@
       "newStatus": "sapphire",
       "newReviewStandard": "word-sapphire-v1-evidence-lanes",
       "authority": "Native Sapphire structural review entry. This is not Platinum card-surface inspection or Obsidian proof."
-    }
+    },
+    "fixSummary": "Added the exact Generated pitch (unverified) disclosure to learner Notes and Gold expectations for 食料品店|しょくりょうひんてん. The governed pitch limitation remains externally_unverified and was not converted into passed dictionary-backed evidence."
   },
   {
     "word": "帰国",

@@ -916,7 +916,9 @@ test("N4 Platinum closeout preserves repaired examples and visible generated-pit
     for (const identity of [
         ["お医者さん", "おいしゃさん"],
         ["海外旅行", "かいがいりょこう"],
+        ["語学力", "ごがくりょく"],
         ["口座番号", "こうざばんごう"],
+        ["食料品店", "しょくりょうひんてん"],
         ["担当者", "たんとうしゃ"],
     ]) {
         const [written, reading] = identity;
@@ -932,6 +934,13 @@ test("N4 Platinum closeout preserves repaired examples and visible generated-pit
             `${written}|${reading} Platinum must preserve the exact Sapphire limitation`
         );
     }
+
+    assert.equal(platinum.length, 1034, "N4 Platinum closeout must cover the full generated denominator");
+    assert.match(
+        byIdentity(sapphire, "語学力", "ごがくりょく")?.reviewEvidence
+            .find((check) => check.type === "example-review")?.detail || "",
+        /語学力を上げたいです。/
+    );
 
     for (const [written, reading, correctedEnglish] of [
         ["直近", "ちょっきん", "Please tell me your immediate plans."],

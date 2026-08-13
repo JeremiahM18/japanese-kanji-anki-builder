@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "checkedAt": "2026-05-12",
+  "checkedAt": "2026-08-12",
   "sourcePurposeRules": {
     "kanji_reference": {
       "description": "Japanese kanji reference source that may verify kanji-card readings and meanings when the platinum evidence binds the exact card fields.",
@@ -83,7 +83,8 @@
       "name": "JMdict",
       "status": "active",
       "sourceType": "lexical_dictionary",
-      "matchers": ["jmdict", "JMdict"],
+      "matchers": ["jmdict"],
+      "urlHosts": ["edrdg.org"],
       "sourceFamily": "jmdict",
       "independenceGroup": "edrdg_dictionary",
       "licenseUse": {
@@ -91,7 +92,7 @@
         "license": "CC BY-SA 4.0",
         "notes": "Use governed local source data or manual citation for exact word-reading field verification."
       },
-      "checkedAt": "2026-05-12",
+      "checkedAt": "2026-08-12",
       "allowedUse": ["word-field-verification"],
       "disallowedUse": ["placement-claim-origin", "level-truth"]
     },

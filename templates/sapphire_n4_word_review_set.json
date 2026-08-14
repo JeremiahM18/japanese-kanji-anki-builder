@@ -6652,23 +6652,23 @@
       "Pitch 1: 0"
     ],
     "selectionRationale": "Common/useful N4 word with current-level 止 anchor; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
-    "reviewedAt": "2026-05-14",
-    "reviewer": "codex-platinum-review",
+    "reviewedAt": "2026-08-13",
+    "reviewer": "word-obsidian-rereview-owner",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-05-21",
-    "revalidationSummary": "Substantive Sapphire structural review refreshed evidence lanes for 止まる|とまる: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Focused prerequisite repair replaced the unnatural 雨が止まる example with the fluent target usage バスが駅の前で止まりました。; current Sapphire structural review then rechecked generated surface, Japanese source evidence, example sentence and reading/translation, notes/support surface, breakdowns, labels, exact word audio, pitch source/rendering, media provenance, Gold binding, product fit, and limitations. NLP tokenization remained support only and did not certify the card.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 止まる|とまる, reading とまる, learner meaning to stop, protected meaning to stop, and product review checked example 雨が急に止まりました。 for the shipped word-card surface; row meaning support: to stop (moving); to come to a stop; to stop (doing, working, being supplied); to come to a halt; to cease; to be stopped; to be suspended; to alight; to perch on; source row: jmdict written=止まる; reading=とまる; frequencyRank=100; source=jmdict; entrySeq=1310620; jmdictPriority=ichi1,news1,nf13,spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 止まる|とまる, reading とまる, learner meaning to stop, protected meaning to stop, and product review checked example バスが駅の前で止まりました。 for the shipped word-card surface; row meaning support: to stop (moving); to come to a stop; to stop (doing, working, being supplied); to come to a halt; to cease; to be stopped; to be suspended; to alight; to perch on; source row: jmdict written=止まる; reading=とまる; frequencyRank=100; source=jmdict; entrySeq=1310620; jmdictPriority=ichi1,news1,nf13,spec1; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 止まる|とまる: word 止まる, reading とまる, meaning to stop, example 雨が急に止まりました。, audio word-reading-止まる-とまる, breakdown 止 （と） ／ stop, labels JLPT N4 JLPT core + reading coverage, notes/support surface Core N4 study word that also covers the 止 -> とまる reading.."
+        "detail": "Generated word-card surface inspected for 止まる|とまる: word 止まる, reading とまる, meaning to stop, example バスが駅の前で止まりました。, audio word-reading-止まる-とまる, breakdown 止 （と） ／ stop, labels JLPT N4 JLPT core + reading coverage, notes/support surface Core N4 study word that also covers the 止 -> とまる reading.."
       },
       {
         "type": "level-contract",
@@ -6705,17 +6705,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example sentence review for 止まる|とまる: 雨が急に止まりました。 ／ あめがきゅうにとまりました。 ／ The rain stopped suddenly.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading とまる."
+        "detail": "Example sentence review for 止まる|とまる: バスが駅の前で止まりました。 ／ バスがえきのまえでとまりました。 ／ The bus stopped in front of the station.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading とまる."
       },
       {
         "type": "manual-review",
         "source": "codex product/pedagogy review",
-        "detail": "Manual review judged 止まる|とまる common and learner-friendly for the N4 word deck, with accurate reading とまる, meaning to stop, example 雨が急に止まりました。, notes/support surface Core N4 study word that also covers the 止 -> とまる reading., and no active verification limitations."
+        "detail": "Manual review judged 止まる|とまる common and learner-friendly for the N4 word deck, with accurate reading とまる, meaning to stop, example バスが駅の前で止まりました。, notes/support surface Core N4 study word that also covers the 止 -> とまる reading., and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "word-sapphire-v1-evidence-lanes whole-card revalidation",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 止まる|とまる checked generated surface, Japanese-source evidence, example sentence 雨が急に止まりました。, notes/support surface Core N4 study word that also covers the 止 -> とまる reading., reading breakdown 止 とまる and kanji breakdown 止 （と） ／ stop, meaning to stop (to stop), labels JLPT N4; JLPT core + reading coverage; focus 止; covers 止: とまる, audio word-reading-止まる-とまる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 止まる|とまる checked generated surface, Japanese-source evidence, example sentence バスが駅の前で止まりました。, notes/support surface Core N4 study word that also covers the 止 -> とまる reading., reading breakdown 止 とまる and kanji breakdown 止 （と） ／ stop, meaning to stop (to stop), labels JLPT N4; JLPT core + reading coverage; focus 止; covers 止: とまる, audio word-reading-止まる-とまる, pitch accent source kanjium-cc-by-sa-4.0 pattern 0 [heiban] rendered Pitch 1: 0, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "migrationProvenance": {
@@ -7614,23 +7614,23 @@
       "Pitch 1: 2"
     ],
     "selectionRationale": "Common/useful N4 word with current-level 走 anchor; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
-    "reviewedAt": "2026-05-14",
-    "reviewer": "codex-platinum-review",
+    "reviewedAt": "2026-08-13",
+    "reviewer": "word-obsidian-rereview-owner",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-05-21",
-    "revalidationSummary": "Substantive Sapphire structural review refreshed evidence lanes for 走る|はしる: generated surface, Japanese source evidence, example sentence, notes/support surface, reading breakdown and kanji breakdown, labels, exact audio, pitch accent source/rendering, media provenance, golden regression as internal-only support, product fit, and verification limitations. Clean NLP tokenization audit context was used as support only and did not certify the card.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Focused prerequisite repair changed 急いでいる to past-progressive 急いでいた so the reason clause coheres with 走りました and the English past narrative; current Sapphire structural review then rechecked separated evidence lanes for generated surface, Japanese source evidence, example sentence and reading/translation, notes/support surface, breakdowns, labels, exact word audio, pitch accent source/rendering, media provenance, Gold binding, product fit, and verification limitations. The NLP attention signal remained support only and did not certify the card.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 走る|はしる, reading はしる, learner meaning to run, protected meaning to run, and product review checked example 急いでいるので駅まで走りました。 for the shipped word-card surface; row meaning support: to run; to run (of a vehicle); to drive; to travel; to move; to sail; to rush (to); to dash; to race; to retreat; to flee; to defect (to); source row: jmdict written=走る; reading=はしる; frequencyRank=100; source=jmdict; entrySeq=1402540; jmdictPriority=ichi1,news1,nf10; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 走る|はしる, reading はしる, learner meaning to run, protected meaning to run, and product review checked example 急いでいたので駅まで走りました。 for the shipped word-card surface; row meaning support: to run; to run (of a vehicle); to drive; to travel; to move; to sail; to rush (to); to dash; to race; to retreat; to flee; to defect (to); source row: jmdict written=走る; reading=はしる; frequencyRank=100; source=jmdict; entrySeq=1402540; jmdictPriority=ichi1,news1,nf10; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 走る|はしる: word 走る, reading はしる, meaning to run, example 急いでいるので駅まで走りました。, audio word-reading-走る-はしる, breakdown 走 （はし） ／ run, labels JLPT N4 JLPT core + reading coverage, notes/support surface Core N4 study word that also covers the 走 -> はしる reading.."
+        "detail": "Generated word-card surface inspected for 走る|はしる: word 走る, reading はしる, meaning to run, example 急いでいたので駅まで走りました。, audio word-reading-走る-はしる, breakdown 走 （はし） ／ run, labels JLPT N4 JLPT core + reading coverage, notes/support surface Core N4 study word that also covers the 走 -> はしる reading.."
       },
       {
         "type": "level-contract",
@@ -7667,17 +7667,17 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example sentence review for 走る|はしる: 急いでいるので駅まで走りました。 ／ いそいでいるのでえきまではしりました。 ／ I was in a hurry, so I ran to the station.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading はしる."
+        "detail": "Example sentence review for 走る|はしる: 急いでいたので駅まで走りました。 ／ いそいでいたのでえきまではしりました。 ／ I was in a hurry, so I ran to the station.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading はしる."
       },
       {
         "type": "manual-review",
         "source": "codex product/pedagogy review",
-        "detail": "Manual review judged 走る|はしる common and learner-friendly for the N4 word deck, with accurate reading はしる, meaning to run, example 急いでいるので駅まで走りました。, notes/support surface Core N4 study word that also covers the 走 -> はしる reading., and no active verification limitations."
+        "detail": "Manual review judged 走る|はしる common and learner-friendly for the N4 word deck, with accurate reading はしる, meaning to run, example 急いでいたので駅まで走りました。, notes/support surface Core N4 study word that also covers the 走 -> はしる reading., and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "word-sapphire-v1-evidence-lanes whole-card revalidation",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 走る|はしる checked generated surface, Japanese-source evidence, example sentence 急いでいるので駅まで走りました。, notes/support surface Core N4 study word that also covers the 走 -> はしる reading., reading breakdown 走 はしる and kanji breakdown 走 （はし） ／ run, meaning to run (to run), labels JLPT N4; JLPT core + reading coverage; focus 走; covers 走: はしる, audio word-reading-走る-はしる, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 走る|はしる checked generated surface, Japanese-source evidence, example sentence 急いでいたので駅まで走りました。, notes/support surface Core N4 study word that also covers the 走 -> はしる reading., reading breakdown 走 はしる and kanji breakdown 走 （はし） ／ run, meaning to run (to run), labels JLPT N4; JLPT core + reading coverage; focus 走; covers 走: はしる, audio word-reading-走る-はしる, pitch accent source kanjium-cc-by-sa-4.0 pattern 2 [nakadaka] rendered Pitch 1: 2, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
     "migrationProvenance": {
@@ -8314,23 +8314,23 @@
       "Pitch 1: 1"
     ],
     "selectionRationale": "Common/useful N4 word with current-level 待 anchor; reviewed as learner-friendly JLPT core + reading coverage vocabulary in the word deck, separate from kanji-deck decisions.",
-    "reviewedAt": "2026-05-14",
-    "reviewer": "codex-platinum-review",
+    "reviewedAt": "2026-08-13",
+    "reviewer": "word-obsidian-rereview-owner",
     "reviewStandard": "word-sapphire-v1-evidence-lanes",
-    "revalidatedAt": "2026-05-14",
-    "revalidationSummary": "Revalidated evidence lanes for generated surface, Japanese-source evidence, example sentence, notes/support surface, reading breakdown, labels, audio, pitch accent, media provenance, and verification limitations under the current word Sapphire standard.",
+    "revalidatedAt": "2026-08-13",
+    "revalidationSummary": "Focused prerequisite repair replaced an awkward event-as-temperature sentence with the fluent ongoing action 駅で友だちを待っています。; current Sapphire structural review then rechecked separated evidence lanes for generated surface, Japanese source evidence, example sentence and reading/translation, notes/support surface, breakdowns, labels, exact word audio, pitch accent source/rendering, media provenance, Gold binding, product fit, and verification limitations. Routine NLP tokenization remained support only and did not certify the card.",
     "sourceEvidence": [
       {
         "type": "japanese-source",
         "source": "JMdict governed local row in downloads/jmdict-word-verification.tsv",
-        "detail": "JMdict governed local row verified 待つ|まつ, reading まつ, learner meaning wait, protected meaning wait, and product review checked example 駅で友だちを待つのは少し寒いです。 for the shipped word-card surface; row meaning support: to wait; to await; to look forward to; to anticipate; to depend on; to need; source row: jmdict written=待つ; reading=まつ; frequencyRank=100; source=jmdict; entrySeq=1410590; jmdictPriority=ichi1,news1,nf18; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
+        "detail": "JMdict governed local row verified 待つ|まつ, reading まつ, learner meaning wait, protected meaning wait, and product review checked example 駅で友だちを待っています。 for the shipped word-card surface; row meaning support: to wait; to await; to look forward to; to anticipate; to depend on; to need; source row: jmdict written=待つ; reading=まつ; frequencyRank=100; source=jmdict; entrySeq=1410590; jmdictPriority=ichi1,news1,nf18; EDRDG JMdict English; CC BY-SA 4.0.; use=dictionary-verification and priority/commonness support only; use=word-field-verification and priority/commonness support only."
       }
     ],
     "internalChecks": [
       {
         "type": "generated-surface",
         "source": "generated N4 word TSV surface built by scripts/reviewPlatinumWordLevel.js",
-        "detail": "Generated word-card surface inspected for 待つ|まつ: word 待つ, reading まつ, meaning wait, example 駅で友だちを待つのは少し寒いです。, audio word-reading-待つ-まつ, breakdown 待 （ま） ／ wait, labels JLPT N4 JLPT core + reading coverage, notes/support surface Core N4 study word that also covers the 待 -> まつ reading.."
+        "detail": "Generated word-card surface inspected for 待つ|まつ: word 待つ, reading まつ, meaning wait, example 駅で友だちを待っています。, audio word-reading-待つ-まつ, breakdown 待 （ま） ／ wait, labels JLPT N4 JLPT core + reading coverage, notes/support surface Core N4 study word that also covers the 待 -> まつ reading.."
       },
       {
         "type": "level-contract",
@@ -8367,20 +8367,20 @@
       {
         "type": "example-review",
         "source": "product Japanese example review",
-        "detail": "Example sentence review for 待つ|まつ: 駅で友だちを待つのは少し寒いです。 ／ えきでともだちをまつのはすこしさむいです。 ／ Waiting for my friend at the station is a little cold.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading まつ."
+        "detail": "Example sentence review for 待つ|まつ: 駅で友だちを待っています。 ／ えきでともだちをまっています。 ／ I am waiting for my friend at the station.; judged natural, useful, learner-friendly, level-appropriate, release-quality, and aligned to reading まつ."
       },
       {
         "type": "manual-review",
         "source": "codex product/pedagogy review",
-        "detail": "Manual review judged 待つ|まつ common and learner-friendly for the N4 word deck, with accurate reading まつ, meaning wait, example 駅で友だちを待つのは少し寒いです。, notes/support surface Core N4 study word that also covers the 待 -> まつ reading., and no active verification limitations."
+        "detail": "Manual review judged 待つ|まつ common and learner-friendly for the N4 word deck, with accurate reading まつ, meaning wait, example 駅で友だちを待っています。, notes/support surface Core N4 study word that also covers the 待 -> まつ reading., and no active verification limitations."
       },
       {
         "type": "current-standard-review",
         "source": "word-sapphire-v1-evidence-lanes whole-card revalidation",
-        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 待つ|まつ checked generated surface, Japanese-source evidence, example sentence 駅で友だちを待つのは少し寒いです。, notes/support surface Core N4 study word that also covers the 待 -> まつ reading., reading breakdown 待 まつ and kanji breakdown 待 （ま） ／ wait, meaning wait (wait), labels JLPT N4; JLPT core + reading coverage; focus 待; covers 待: まつ, audio word-reading-待つ-まつ, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
+        "detail": "Current-standard whole-card revalidation with separated evidence lanes for 待つ|まつ checked generated surface, Japanese-source evidence, example sentence 駅で友だちを待っています。, notes/support surface Core N4 study word that also covers the 待 -> まつ reading., reading breakdown 待 まつ and kanji breakdown 待 （ま） ／ wait, meaning wait (wait), labels JLPT N4; JLPT core + reading coverage; focus 待; covers 待: まつ, audio word-reading-待つ-まつ, pitch accent source kanjium-cc-by-sa-4.0 pattern 1 [atamadaka] rendered Pitch 1: 1, media provenance, release judgment common useful learner-friendly level-appropriate natural, and verification limitations no active limitations."
       }
     ],
-    "fixSummary": "Replaced an inflected-only example with a learner-friendly exact-form 待つ sentence.",
+    "fixSummary": "Replaced an awkward event-as-temperature example with the fluent ongoing-action sentence 駅で友だちを待っています。 before current Sapphire revalidation.",
     "migrationProvenance": {
       "migratedAt": "2026-06-05",
       "migratedFrom": "templates/platinum_n4_word_review_set.json",

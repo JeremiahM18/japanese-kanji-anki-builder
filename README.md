@@ -96,12 +96,12 @@ The governed review sequence is **Silver → Gold → Sapphire → Platinum → 
 | Surface | Current state | Main gates |
 | --- | --- | --- |
 | N5 word | `588/588` current word Obsidian v2.5-certified under the strict sentence-audio standard. Gold, Sapphire, and current-standard Platinum are complete. | `deck:words:obsidian:certify-status -- --levels=5`, `deck:words:ready -- --levels=5` |
-| N4 word | `0/1034` current word Obsidian v2.5-certified. Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`; all `1034` rows still require separate substantive Obsidian v2.5 proof. Platinum approval is not Obsidian proof. | `deck:words:completion:n4`, `deck:words:review:n4`, `deck:words:sapphire:n4`, `deck:words:platinum:n4`, `deck:words:obsidian:rereview-status -- --level=4` |
+| N4 word | `96/1034` current word Obsidian v2.5-certified. Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`; `938` rows still require separate substantive Obsidian v2.5 proof. Platinum approval is not Obsidian proof. | `deck:words:completion:n4`, `deck:words:review:n4`, `deck:words:sapphire:n4`, `deck:words:platinum:n4`, `deck:words:obsidian:rereview-status -- --level=4` |
 | N3 word | `1099` canonical Silver rows build/package at `1099/1099`. Gold is `1081/1099` current-standard with `18` generated rows still missing Gold; Sapphire is `1038/1099` current-standard with `61` generated rows still missing Sapphire; Platinum remains `8/1099` current-standard with `1091` generated rows still missing Platinum. Obsidian proof is not recorded for N3 words. | `deck:words:ready -- --levels=3`, `deck:words:review:n3`, `deck:words:sapphire:n3`, `deck:words:platinum:n3` |
 | N2 word | `61` canonical Silver rows build at `61/61`; Gold, Sapphire, Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=2`, `deck:words:completion:n2` |
 | N1 word | `38` canonical Silver rows build at `38/38`; Gold, Sapphire, Platinum, and Obsidian are not started. | `deck:words:ready -- --levels=1`, `deck:words:completion:n1` |
 
-Current word Obsidian v2.5 proof covers `588/1622` current N5/N4 generated word rows. Legacy word Obsidian proof history remains audit-visible at `1118` N5/N4 targets and `1706` raw ledger events; `418` legacy events are superseded by current v2.5 proof. Legacy history does not count as current certification.
+Current word Obsidian v2.5 proof covers `684/1622` current N5/N4 generated word rows. Legacy word Obsidian proof history remains audit-visible at `1118` N5/N4 targets and `1802` raw ledger events; `514` legacy events are superseded by current v2.5 proof. Legacy history does not count as current certification.
 
 ## Pipeline At A Glance
 

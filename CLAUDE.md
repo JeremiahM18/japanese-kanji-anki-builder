@@ -101,7 +101,7 @@ Do not widen scope just because higher levels exist.
 Current posture:
 
 - N5 word work has strict current word Obsidian v2.5 certification for `588/588` current generated rows. Gold, Sapphire, and current-standard Platinum are complete at `588/588`; no N5 rows remain in the current v2.5 Obsidian backlog. Legacy N5 Obsidian history remains audit-visible, but it is not current v2.5 certification.
-- N4 word work has `0/1034` current word Obsidian v2.5 certification. Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`. The `700` older N4 Obsidian proof targets remain legacy history, not current v2.5 certification; all `1034` Platinum-passing rows still need separate substantive Obsidian v2.5 proof.
+- N4 word work has `96/1034` current word Obsidian v2.5 certification. Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`. The `700` older N4 Obsidian proof targets remain legacy history, not current v2.5 certification; `938` Platinum-passing rows still need separate substantive Obsidian v2.5 proof.
 - N3 word work has a complete Silver generated surface plus partial Gold (`1081/1099`), current-standard Sapphire structural review in progress (`1038/1099`), and Platinum (`8/1099`); N3 word Obsidian proof is not recorded. N2/N1 word work has Silver generated surfaces only until their Gold, Sapphire, Platinum, and Obsidian lanes are populated
 
 For word-deck expansion:
@@ -131,7 +131,7 @@ Keep the review layers separate.
 
 ## N5/N4 Word Freeze
 
-Current word Obsidian v2.5 certification covers `588/1622` across current N5/N4 generated rows, with N5 at `588/588` and N4 at `0/1034`; older word Obsidian proof is legacy history, not current v2.5 certification. N4 Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`; all `1034` N4 rows need separate substantive Obsidian v2.5 proof. No lower-lane or Platinum count is itself a downstream certification claim.
+Current word Obsidian v2.5 certification covers `684/1622` across current N5/N4 generated rows, with N5 at `588/588` and N4 at `96/1034`; older word Obsidian proof is legacy history, not current v2.5 certification. N4 Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`; `938` N4 rows need separate substantive Obsidian v2.5 proof. No lower-lane or Platinum count is itself a downstream certification claim.
 
 That means:
 

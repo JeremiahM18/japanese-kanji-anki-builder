@@ -167,11 +167,16 @@ Use this when source evidence, source worksheets, source access, OCR, or generat
 npm run data:audit:jlpt:source-inputs -- --source=<source-id> --strict
 npm run data:import:jlpt:source-input -- --source=<source-id>
 npm run data:audit:jlpt:sources -- --governance-strict --limit=25
+npm run data:audit:jlpt:word-source-inputs -- --source=<source-id> --strict
+npm run data:import:jlpt:word-source-input -- --source=<source-id>
+npm run data:audit:jlpt:word-sources -- --levels=<level> --governance-strict --limit=25
 ```
 
 4. Correct tracked pins, source-input config, assignment evidence, or reviewer status only with permitted minimal evidence.
 5. Do not copy restricted source lists or passages into tracked files.
 6. Re-run source audits and affected deck gates before resuming review.
+
+Word source imports commit the source assignment file and evidence manifest as one governed transaction. If an import reports a transaction lock or recovery-required journal, stop and inspect it with the repository transaction-recovery command before retrying; do not hand-edit one target or delete the lock.
 
 ## Local Runtime Recovery
 

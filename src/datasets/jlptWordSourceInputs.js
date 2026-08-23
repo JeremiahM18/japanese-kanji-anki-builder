@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const { z } = require("zod");
+const { wordSourceSupportClaimSchema } = require("./jlptWordSourceEvidence");
 
 const wordSourceInputReviewStatusSchema = z.enum([
     "reviewed",
@@ -35,6 +36,8 @@ const wordSourceInputConfigSchema = z.object({
     defaultCitation: z.string().min(1).optional(),
     defaultEvidenceRef: z.string().min(1).optional(),
     defaultNotes: z.string().min(1).optional(),
+    defaultSupportClaims: z.array(wordSourceSupportClaimSchema).default([]),
+    requireLevel: z.boolean().default(true),
     requireCitation: z.boolean().default(true),
     requireEvidenceRef: z.boolean().default(true),
     supportedLevels: z.array(z.number().int().min(1).max(5)).min(1).optional(),

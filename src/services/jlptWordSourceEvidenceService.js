@@ -30,6 +30,8 @@ function createIssueCounts() {
         insufficientIndependentSources: 0,
         insufficientIndependentEvidenceLineages: 0,
         missingJapanesePublishedOrPermissionedLearnerSource: 0,
+        missingDictionaryIdentitySupport: 0,
+        missingCommonnessSupport: 0,
         disputedLevelClaims: 0,
         contractConsensusMismatch: 0,
         unapprovedVotingSources: 0,
@@ -37,6 +39,10 @@ function createIssueCounts() {
         disallowedStoredAssignments: 0,
         missingSourceUseProfile: 0,
         missingLicenseEvidence: 0,
+        reviewedAssignmentsMissingEvidence: 0,
+        reviewedVotingAssignmentsMissingLevel: 0,
+        reviewedAssignmentsOutsideSourceLevels: 0,
+        invalidSupportClaims: 0,
     };
 }
 
@@ -93,6 +99,40 @@ function buildComparableAssignmentsByIdentity(evidence = {}, comparableSources =
                 assignment,
                 sourceMeta,
             });
+        }
+    }
+
+    return byIdentity;
+}
+
+function sourceAllowsSupportUse(source = {}, allowedUse) {
+    return source.status === "active"
+        && source.canStoreWordAssignments === true
+        && ["approved", "restricted"].includes(source.licenseStatus)
+        && (source.allowedUse || []).includes(allowedUse);
+}
+
+function buildReviewedSupportAssignmentsByIdentity(evidence = {}, allowedUse, supportClaim) {
+    const supportingSourceIds = new Set(
+        Object.entries(evidence.sources || {})
+            .filter(([, source]) => sourceAllowsSupportUse(source, allowedUse))
+            .map(([sourceId]) => sourceId)
+    );
+    const byIdentity = new Map();
+
+    for (const [sourceId, assignments] of Object.entries(evidence.assignments || {})) {
+        if (!supportingSourceIds.has(sourceId)) {
+            continue;
+        }
+        for (const [identity, assignment] of Object.entries(assignments || {})) {
+            if (assignment.reviewStatus !== "reviewed"
+                || !(assignment.supportClaims || []).includes(supportClaim)) {
+                continue;
+            }
+            if (!byIdentity.has(identity)) {
+                byIdentity.set(identity, []);
+            }
+            byIdentity.get(identity).push({ sourceId, assignment });
         }
     }
 
@@ -168,6 +208,8 @@ function choosePosture({
     disputed,
     policy,
     contractMatchesConsensus,
+    dictionaryIdentitySupported,
+    commonnessSupported,
 } = {}) {
     if (assignmentCount === 0) {
         return "source_origin_not_evaluated";
@@ -178,6 +220,8 @@ function choosePosture({
     if (independentSourceCount >= policy.minimumIndependentSources
         && independentEvidenceLineageCount >= policy.minimumIndependentEvidenceLineages
         && learnerSourceCount >= policy.minimumJapanesePublishedOrPermissionedLearnerSources
+        && (!policy.requireDictionaryIdentitySupport || dictionaryIdentitySupported)
+        && (!policy.requireCommonnessSupport || commonnessSupported)
         && contractMatchesConsensus !== false) {
         return "level_universe_standard";
     }
@@ -190,7 +234,14 @@ function choosePosture({
     return "candidate_discovery_governed";
 }
 
-function buildWordEvidenceResult({ identity, contractEntry = null, assignments = [], policy = {} } = {}) {
+function buildWordEvidenceResult({
+    identity,
+    contractEntry = null,
+    assignments = [],
+    dictionaryIdentityAssignments = [],
+    commonnessAssignments = [],
+    policy = {},
+} = {}) {
     const reviewedAssignments = assignments.filter((entry) => entry.assignment.reviewStatus === "reviewed");
     const consensus = computeConsensusLevel(reviewedAssignments);
     const independentSourceGroups = new Set(reviewedAssignments.map((entry) => entry.sourceMeta.independenceGroup));
@@ -200,6 +251,14 @@ function buildWordEvidenceResult({ identity, contractEntry = null, assignments =
             .filter((entry) => entry.sourceMeta.learnerSource)
             .map((entry) => entry.sourceId)
     );
+    const dictionaryIdentitySourceIds = [
+        ...new Set(dictionaryIdentityAssignments.map((entry) => entry.sourceId)),
+    ].sort();
+    const commonnessSourceIds = [
+        ...new Set(commonnessAssignments.map((entry) => entry.sourceId)),
+    ].sort();
+    const dictionaryIdentitySupported = dictionaryIdentitySourceIds.length > 0;
+    const commonnessSupported = commonnessSourceIds.length > 0;
     const sourceIds = reviewedAssignments.map((entry) => entry.sourceId);
     const contractLevel = Number.isInteger(contractEntry?.jlpt) ? contractEntry.jlpt : null;
     const contractMatchesConsensus = Number.isInteger(consensus.consensusLevel) && Number.isInteger(contractLevel)
@@ -213,6 +272,8 @@ function buildWordEvidenceResult({ identity, contractEntry = null, assignments =
         disputed: consensus.disputed,
         policy,
         contractMatchesConsensus,
+        dictionaryIdentitySupported,
+        commonnessSupported,
     });
 
     return {
@@ -226,6 +287,10 @@ function buildWordEvidenceResult({ identity, contractEntry = null, assignments =
         independentSourceCount: independentSourceGroups.size,
         independentEvidenceLineageCount: independentEvidenceLineages.size,
         japanesePublishedOrPermissionedLearnerSourceCount: learnerSources.size,
+        dictionaryIdentitySourceIds,
+        commonnessSourceIds,
+        dictionaryIdentitySupported,
+        commonnessSupported,
         voteWeights: consensus.voteWeights,
         disputedLevelClaims: consensus.disputed,
         currentContractMatchesConsensus: contractMatchesConsensus,
@@ -240,6 +305,10 @@ function buildGovernanceIssues(evidence = {}) {
         disallowedStoredAssignments: [],
         missingSourceUseProfiles: [],
         missingLicenseEvidence: [],
+        reviewedAssignmentsMissingEvidence: [],
+        reviewedVotingAssignmentsMissingLevel: [],
+        reviewedAssignmentsOutsideSourceLevels: [],
+        invalidSupportClaims: [],
     };
 
     for (const [sourceId, source] of Object.entries(evidence.sources || {})) {
@@ -268,12 +337,56 @@ function buildGovernanceIssues(evidence = {}) {
                 assignmentCount: Object.keys(evidence.assignments?.[sourceId] || {}).length,
             });
         }
+        for (const [identity, assignment] of Object.entries(evidence.assignments?.[sourceId] || {})) {
+            if (assignment.reviewStatus !== "reviewed") {
+                continue;
+            }
+            const missingFields = [
+                source.requiresCitation !== false && !assignment.citation ? "citation" : null,
+                !assignment.evidenceRef ? "evidenceRef" : null,
+            ].filter(Boolean);
+            if (missingFields.length > 0) {
+                issues.reviewedAssignmentsMissingEvidence.push({
+                    sourceId,
+                    identity,
+                    missingFields,
+                });
+            }
+            const normalizedLevel = normalizeJlptWordLevel(assignment.level);
+            if (source.countsForConsensus && !Number.isInteger(normalizedLevel)) {
+                issues.reviewedVotingAssignmentsMissingLevel.push({ sourceId, identity });
+            }
+            if (Number.isInteger(normalizedLevel)
+                && Array.isArray(source.levels)
+                && source.levels.length > 0
+                && !source.levels.includes(normalizedLevel)) {
+                issues.reviewedAssignmentsOutsideSourceLevels.push({
+                    sourceId,
+                    identity,
+                    level: normalizedLevel,
+                    sourceLevels: source.levels,
+                });
+            }
+            for (const supportClaim of assignment.supportClaims || []) {
+                const requiredUse = supportClaim === "dictionary-identity"
+                    ? "dictionary-verification"
+                    : "commonness-support";
+                if (!(source.allowedUse || []).includes(requiredUse)) {
+                    issues.invalidSupportClaims.push({
+                        sourceId,
+                        identity,
+                        supportClaim,
+                        requiredUse,
+                    });
+                }
+            }
+        }
     }
 
     return issues;
 }
 
-function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 } = {}) {
+function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, levels = null, limit = 25 } = {}) {
     const policy = {
         minimumIndependentSources: 3,
         minimumIndependentEvidenceLineages: 2,
@@ -284,11 +397,32 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
     };
     const comparableSources = collectComparableSources(evidence);
     const comparableAssignmentsByIdentity = buildComparableAssignmentsByIdentity(evidence, comparableSources);
-    const contractEntries = getContractEntries(contract);
-    const identitySet = new Set([
-        ...contractEntries.map((entry) => entry.key),
-        ...comparableAssignmentsByIdentity.keys(),
-    ]);
+    const dictionaryIdentityAssignmentsByIdentity = buildReviewedSupportAssignmentsByIdentity(
+        evidence,
+        "dictionary-verification",
+        "dictionary-identity"
+    );
+    const commonnessAssignmentsByIdentity = buildReviewedSupportAssignmentsByIdentity(
+        evidence,
+        "commonness-support",
+        "commonness"
+    );
+    const requestedLevels = Array.isArray(levels)
+        ? new Set(levels.map((level) => Number(level)).filter((level) => Number.isInteger(level)))
+        : null;
+    const allContractEntries = getContractEntries(contract);
+    const contractEntries = allContractEntries.filter((entry) => (
+        !requestedLevels || requestedLevels.has(entry.jlpt)
+    ));
+    const allContractIdentitySet = new Set(allContractEntries.map((entry) => entry.key));
+    const selectedContractIdentitySet = new Set(contractEntries.map((entry) => entry.key));
+    const comparableIdentitySet = new Set(comparableAssignmentsByIdentity.keys());
+    const identitySet = requestedLevels
+        ? new Set(contractEntries.map((entry) => entry.key))
+        : new Set([
+            ...contractEntries.map((entry) => entry.key),
+            ...comparableAssignmentsByIdentity.keys(),
+        ]);
     const contractByIdentity = new Map(contractEntries.map((entry) => [entry.key, entry]));
     const issueCounts = createIssueCounts();
     const postureCounts = createPostureCounts();
@@ -299,6 +433,8 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
         multi_source_supported: 0,
         level_universe_standard: 0,
         disputed_level_claim: 0,
+        missingDictionaryIdentitySupport: 0,
+        missingCommonnessSupport: 0,
         sourceDepthComplete: false,
     }]));
     const wordSourcePosture = [];
@@ -308,6 +444,8 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
             identity,
             contractEntry: contractByIdentity.get(identity) || null,
             assignments: comparableAssignmentsByIdentity.get(identity) || [],
+            dictionaryIdentityAssignments: dictionaryIdentityAssignmentsByIdentity.get(identity) || [],
+            commonnessAssignments: commonnessAssignmentsByIdentity.get(identity) || [],
             policy,
         });
         postureCounts[result.posture] = (postureCounts[result.posture] || 0) + 1;
@@ -317,6 +455,12 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
             const levelSummary = byLevel[result.contractLevel];
             levelSummary.checked += 1;
             levelSummary[result.posture] = (levelSummary[result.posture] || 0) + 1;
+            if (!result.dictionaryIdentitySupported) {
+                levelSummary.missingDictionaryIdentitySupport += 1;
+            }
+            if (!result.commonnessSupported) {
+                levelSummary.missingCommonnessSupport += 1;
+            }
         }
 
         if (result.assignmentCount === 0) {
@@ -330,6 +474,12 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
         }
         if (result.assignmentCount > 0 && result.japanesePublishedOrPermissionedLearnerSourceCount < policy.minimumJapanesePublishedOrPermissionedLearnerSources) {
             issueCounts.missingJapanesePublishedOrPermissionedLearnerSource += 1;
+        }
+        if (policy.requireDictionaryIdentitySupport && !result.dictionaryIdentitySupported) {
+            issueCounts.missingDictionaryIdentitySupport += 1;
+        }
+        if (policy.requireCommonnessSupport && !result.commonnessSupported) {
+            issueCounts.missingCommonnessSupport += 1;
         }
         if (result.disputedLevelClaims) {
             issueCounts.disputedLevelClaims += 1;
@@ -351,11 +501,20 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
     issueCounts.disallowedStoredAssignments = governanceIssues.disallowedStoredAssignments.length;
     issueCounts.missingSourceUseProfile = governanceIssues.missingSourceUseProfiles.length;
     issueCounts.missingLicenseEvidence = governanceIssues.missingLicenseEvidence.length;
+    issueCounts.reviewedAssignmentsMissingEvidence = governanceIssues.reviewedAssignmentsMissingEvidence.length;
+    issueCounts.reviewedVotingAssignmentsMissingLevel = governanceIssues.reviewedVotingAssignmentsMissingLevel.length;
+    issueCounts.reviewedAssignmentsOutsideSourceLevels = governanceIssues.reviewedAssignmentsOutsideSourceLevels.length;
+    issueCounts.invalidSupportClaims = governanceIssues.invalidSupportClaims.length;
 
     const governanceValid = issueCounts.unapprovedVotingSources === 0
         && issueCounts.illegalConsensusSourceUse === 0
         && issueCounts.disallowedStoredAssignments === 0
-        && issueCounts.missingSourceUseProfile === 0;
+        && issueCounts.missingSourceUseProfile === 0
+        && issueCounts.missingLicenseEvidence === 0
+        && issueCounts.reviewedAssignmentsMissingEvidence === 0
+        && issueCounts.reviewedVotingAssignmentsMissingLevel === 0
+        && issueCounts.reviewedAssignmentsOutsideSourceLevels === 0
+        && issueCounts.invalidSupportClaims === 0;
     const evidenceDepthValid = wordSourcePosture.length > 0
         && wordSourcePosture.every((entry) => entry.posture === "level_universe_standard");
 
@@ -364,6 +523,16 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
         governanceValid,
         evidenceDepthValid,
         checked: wordSourcePosture.length,
+        levels: requestedLevels ? [...requestedLevels].sort((left, right) => right - left) : null,
+        selectedContractIdentityCount: contractEntries.length,
+        outOfScopeContractIdentityCount: requestedLevels
+            ? allContractEntries.filter((entry) => !selectedContractIdentitySet.has(entry.key)).length
+            : 0,
+        outOfScopeComparableIdentityCount: requestedLevels
+            ? [...comparableIdentitySet].filter((identity) => !selectedContractIdentitySet.has(identity)).length
+            : 0,
+        comparableSourceOnlyIdentityCount: [...comparableIdentitySet]
+            .filter((identity) => !allContractIdentitySet.has(identity)).length,
         limit,
         policy,
         configuredSourceOnly: true,
@@ -378,6 +547,10 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, limit = 25 
             ...governanceIssues,
             missingEvidence: wordSourcePosture.filter((entry) => entry.assignmentCount === 0).slice(0, limit),
             insufficientIndependentSources: wordSourcePosture.filter((entry) => entry.assignmentCount > 0 && entry.independentSourceCount < policy.minimumIndependentSources).slice(0, limit),
+            insufficientIndependentEvidenceLineages: wordSourcePosture.filter((entry) => entry.assignmentCount > 0 && entry.independentEvidenceLineageCount < policy.minimumIndependentEvidenceLineages).slice(0, limit),
+            missingJapanesePublishedOrPermissionedLearnerSources: wordSourcePosture.filter((entry) => entry.assignmentCount > 0 && entry.japanesePublishedOrPermissionedLearnerSourceCount < policy.minimumJapanesePublishedOrPermissionedLearnerSources).slice(0, limit),
+            missingDictionaryIdentitySupport: wordSourcePosture.filter((entry) => policy.requireDictionaryIdentitySupport && !entry.dictionaryIdentitySupported).slice(0, limit),
+            missingCommonnessSupport: wordSourcePosture.filter((entry) => policy.requireCommonnessSupport && !entry.commonnessSupported).slice(0, limit),
             disputedLevelClaims: wordSourcePosture.filter((entry) => entry.disputedLevelClaims).slice(0, limit),
             contractConsensusMismatches: wordSourcePosture.filter((entry) => entry.currentContractMatchesConsensus === false).slice(0, limit),
         },
@@ -395,6 +568,8 @@ function buildSourceAdequacyByLevel(report = {}) {
             singleSourceFamilyRows: summary.single_source_family || 0,
             multiSourceSupportedRows: summary.multi_source_supported || 0,
             disputedLevelClaimRows: summary.disputed_level_claim || 0,
+            missingDictionaryIdentitySupportRows: summary.missingDictionaryIdentitySupport || 0,
+            missingCommonnessSupportRows: summary.missingCommonnessSupport || 0,
         };
     }
     return byLevel;
@@ -424,6 +599,10 @@ function buildMaterializedWordEvidenceEntries({ evidence = {}, contract = {} } =
             independentSourceCount: entry.independentSourceCount,
             independentEvidenceLineageCount: entry.independentEvidenceLineageCount,
             japanesePublishedOrPermissionedLearnerSourceCount: entry.japanesePublishedOrPermissionedLearnerSourceCount,
+            dictionaryIdentitySourceIds: entry.dictionaryIdentitySourceIds,
+            commonnessSourceIds: entry.commonnessSourceIds,
+            dictionaryIdentitySupported: entry.dictionaryIdentitySupported,
+            commonnessSupported: entry.commonnessSupported,
             posture: entry.posture,
         };
     }

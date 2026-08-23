@@ -173,6 +173,8 @@ Frequency, background, occurrence, methodology, operational, derived, blocked, a
 
 Use `--governance-strict` when CI should fail only on source-use, license, reference-integrity, illegal consensus-use, declared-mismatch, or storage-governance regressions while evidence-depth work is incomplete. Full `--strict` still fails until missing independent/Japanese-published evidence, disputes, and contract/consensus mismatches are resolved.
 
+For `data:audit:jlpt:word-sources`, an explicit `--level` or `--levels` also scopes the top-level denominator and strict result to every exact identity in the selected operational word contract. Dictionary identity and positive commonness are separate mandatory policy gates when enabled. They require explicit reviewed support claims and do not count as JLPT-placement sources or lineages. `--governance-strict` may therefore exit zero while the report still says overall and evidence-depth failing; preserve all three results.
+
 The report includes per-contract-level confidence counts, missing/disagreement work-queue counts, missing Japanese-published source counts, publisher-independence groups, and disputed vote-weight samples. It does not change the active contract or any decks.
 
 `data:audit:jlpt:source-levels` is a read-only companion audit for source-claimed level deltas. It reports current contract counts, active source-candidate counts, source-consensus counts, per-source claim counts, missing source candidates, missing source-consensus rows, disputed missing candidates, current-level rows whose source consensus points elsewhere, and current-level rows without same-level source support.

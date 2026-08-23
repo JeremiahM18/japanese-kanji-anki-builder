@@ -143,6 +143,30 @@ function buildSourceMetadataBlockers({ sourceId, sourceConfig = {}, evidence = {
     if (source?.countsForConsensus && source.status !== "active") {
         blockers.push(`voting source ${sourceId} is ${source.status}; activate it only after source provenance and extraction review`);
     }
+    if (source && source.canStoreWordAssignments !== true) {
+        blockers.push(`source ${sourceId} does not allow stored word assignments`);
+    }
+    if (source?.requiresCitation !== false && sourceConfig.requireCitation === false) {
+        blockers.push(`source ${sourceId} requires citation; input config cannot disable it`);
+    }
+    if (source?.countsForConsensus && sourceConfig.requireLevel === false) {
+        blockers.push(`voting source ${sourceId} requires an exact JLPT level on every reviewed assignment`);
+    }
+    if (sourceConfig.requireLevel === false
+        && (sourceConfig.defaultSupportClaims || []).length === 0) {
+        blockers.push(`support-only input ${sourceId} requires at least one explicit support claim`);
+    }
+    if (sourceConfig.requireEvidenceRef === false) {
+        blockers.push(`source ${sourceId} evidenceRef validation cannot be disabled`);
+    }
+    for (const supportClaim of sourceConfig.defaultSupportClaims || []) {
+        const requiredUse = supportClaim === "dictionary-identity"
+            ? "dictionary-verification"
+            : "commonness-support";
+        if (!(source?.allowedUse || []).includes(requiredUse)) {
+            blockers.push(`source ${sourceId} cannot assert ${supportClaim}; allowedUse is missing ${requiredUse}`);
+        }
+    }
 
     return blockers;
 }
@@ -199,7 +223,8 @@ function buildAssignmentFromRow({ row, sourceConfig } = {}) {
     const notes = getRowField(row, sourceConfig.notesColumn) || sourceConfig.defaultNotes;
     const identity = buildWordIdentity(written, reading);
     const shouldValidateEvidenceFields = reviewStatus === "reviewed";
-    const shouldValidateLevel = shouldValidateEvidenceFields || levelValue.length > 0;
+    const shouldValidateLevel = (shouldValidateEvidenceFields && sourceConfig.requireLevel !== false)
+        || levelValue.length > 0;
     const level = shouldValidateLevel ? normalizeJlptWordLevel(levelValue) : null;
 
     if (shouldValidateEvidenceFields && !written) {
@@ -242,6 +267,7 @@ function buildAssignmentFromRow({ row, sourceConfig } = {}) {
             ...(citation ? { citation } : {}),
             ...(evidenceRef ? { evidenceRef } : {}),
             ...(notes ? { notes } : {}),
+            supportClaims: sourceConfig.defaultSupportClaims || [],
         },
         issues,
         rowNumber: row.__rowNumber,

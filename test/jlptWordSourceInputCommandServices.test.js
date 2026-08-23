@@ -1,5 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 
 const {
     buildReports,
@@ -84,4 +85,13 @@ test("word source input import parseArgs and report keep write mode explicit", (
         blockers: ["fixture blocker"],
         summary: {},
     }), /Mode: dry-run/);
+});
+
+test("word source input imports use the governed multi-file transaction", () => {
+    const servicePath = require.resolve("../src/services/jlptWordSourceInputImportCommandService");
+    const source = fs.readFileSync(servicePath, "utf8");
+
+    assert.match(source, /runGovernedFileTransactionSync/);
+    assert.doesNotMatch(source, /fs\.writeFileSync\(assignmentPath/);
+    assert.doesNotMatch(source, /fs\.writeFileSync\(evidencePath/);
 });

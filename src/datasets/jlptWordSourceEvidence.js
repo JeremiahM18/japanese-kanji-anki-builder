@@ -10,6 +10,11 @@ const wordSourceReviewStatusSchema = z.enum([
     "license_blocked",
 ]);
 
+const wordSourceSupportClaimSchema = z.enum([
+    "dictionary-identity",
+    "commonness",
+]);
+
 const jlptWordSourceAllowedUseSchema = z.enum([
     "candidate-discovery",
     "level-hint",
@@ -146,6 +151,7 @@ const wordAssignmentSchema = z.object({
     evidenceRef: z.string().min(1).optional(),
     notes: z.string().optional(),
     evidenceRecordId: z.string().min(1).optional(),
+    supportClaims: z.array(wordSourceSupportClaimSchema).default([]),
 }).strict();
 
 const assignmentEvidenceRecordSchema = z.object({
@@ -169,6 +175,10 @@ const wordEvidenceEntrySchema = z.object({
     independentSourceCount: z.number().int().nonnegative().optional(),
     independentEvidenceLineageCount: z.number().int().nonnegative().optional(),
     japanesePublishedOrPermissionedLearnerSourceCount: z.number().int().nonnegative().optional(),
+    dictionaryIdentitySourceIds: z.array(z.string().min(1)).default([]),
+    commonnessSourceIds: z.array(z.string().min(1)).default([]),
+    dictionaryIdentitySupported: z.boolean().default(false),
+    commonnessSupported: z.boolean().default(false),
     posture: z.string().min(1).optional(),
     notes: z.string().optional(),
 }).strict();
@@ -351,4 +361,5 @@ module.exports = {
     readJlptWordSourceEvidenceManifest,
     wordAssignmentSchema,
     wordSourceReviewStatusSchema,
+    wordSourceSupportClaimSchema,
 };

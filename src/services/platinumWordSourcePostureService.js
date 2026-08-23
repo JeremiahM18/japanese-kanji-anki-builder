@@ -29,7 +29,7 @@ const wordSourceOriginPolicySchema = z.object({
     limitationMarker: z.literal(WORD_SOURCE_ORIGIN_LIMITATION_MARKER),
     platinumCardFieldReportMayProveOriginIndependence: z.literal(false),
     originEvidenceAuthority: z.object({
-        manifest: z.literal("templates/word_source_manifest.json"),
+        manifest: z.literal("templates/jlpt_word_source_evidence.json"),
         auditCommand: z.literal("npm run data:audit:jlpt:word-sources -- --governance-strict"),
         identity: z.literal("exact written|reading"),
     }).strict(),
@@ -301,7 +301,7 @@ function formatPlatinumWordSourcePostureReport(summary = {}) {
         "- This report is scoped to structurally current-standard word entries only. It does not count generated rows that still lack structural review.",
         `- ${summary.markers?.sourceIndependenceNotProven || WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER}: a structurally governed single-source entry must not be described as independently corroborated.`,
         `- ${summary.markers?.sourceOriginIndependenceNotEvaluated || WORD_SOURCE_ORIGIN_LIMITATION_MARKER}: ${summary.originPolicy?.rule || "word source-claim origin independence is governed separately and is not evaluated by this report."}`,
-        `- Origin authority: ${summary.originPolicy?.originEvidenceAuthority?.manifest || "templates/word_source_manifest.json"}; ${summary.originPolicy?.originEvidenceAuthority?.auditCommand || "npm run data:audit:jlpt:word-sources -- --governance-strict"}.`,
+        `- Origin authority: ${summary.originPolicy?.originEvidenceAuthority?.manifest || "templates/jlpt_word_source_evidence.json"}; ${summary.originPolicy?.originEvidenceAuthority?.auditCommand || "npm run data:audit:jlpt:word-sources -- --governance-strict"}.`,
         "- This report is read-only. It does not promote, defer, reject, or edit cards."
     );
 

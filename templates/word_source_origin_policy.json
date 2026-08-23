@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "checkedAt": "2026-07-26",
+  "checkedAt": "2026-08-23",
   "mode": "limitation_only",
   "limitationMarker": "word_source_claim_origin_independence_not_evaluated",
   "platinumCardFieldReportMayProveOriginIndependence": false,
   "originEvidenceAuthority": {
-    "manifest": "templates/word_source_manifest.json",
+    "manifest": "templates/jlpt_word_source_evidence.json",
     "auditCommand": "npm run data:audit:jlpt:word-sources -- --governance-strict",
     "identity": "exact written|reading"
   },

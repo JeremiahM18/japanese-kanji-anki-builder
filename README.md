@@ -136,6 +136,8 @@ Tracked contracts define release behavior:
 | Kanji reading reference | [templates/kanji_reading_reference_contract.json](templates/kanji_reading_reference_contract.json) |
 | Kanji card field source contracts | [templates/kanji_card_field_source_contract.json](templates/kanji_card_field_source_contract.json), [templates/kanji_card_field_source_contracts](templates/kanji_card_field_source_contracts) |
 | JLPT word taxonomy | [templates/jlpt_word_level_contract.json](templates/jlpt_word_level_contract.json) |
+| JLPT word source evidence | [templates/jlpt_word_source_evidence.json](templates/jlpt_word_source_evidence.json), [templates/jlpt_word_source_evidence/assignments](templates/jlpt_word_source_evidence/assignments) |
+| JLPT word source acquisition | [docs/word-source-acquisition-register.md](docs/word-source-acquisition-register.md) |
 | Audio source policy | [templates/audio_source_policy.json](templates/audio_source_policy.json) |
 | Kanji note schema | [src/config/ankiNoteSchema.json](src/config/ankiNoteSchema.json) |
 | Word note schema | [src/config/ankiWordNoteSchema.json](src/config/ankiWordNoteSchema.json) |

@@ -25,6 +25,7 @@ function parseArgs(argv) {
         governanceStrict: false,
         json: false,
         levels: [5, 4, 3, 2, 1],
+        scopeLevels: null,
         limit: 25,
         strict: false,
         unknownArgs: [],
@@ -39,8 +40,10 @@ function parseArgs(argv) {
             options.governanceStrict = true;
         } else if (arg.startsWith("--level=")) {
             options.levels = [parseNumericOption(arg, "level")];
+            options.scopeLevels = options.levels;
         } else if (arg.startsWith("--levels=")) {
             options.levels = parseCsvOption(arg, "levels").map((level) => Number(level));
+            options.scopeLevels = options.levels;
         } else if (arg.startsWith("--contract=")) {
             options.contract = arg.slice("--contract=".length);
         } else if (arg.startsWith("--evidence=")) {
@@ -70,7 +73,9 @@ function formatPostureRows(rows = [], limit = 25) {
             `- ${entry.identity}: contract ${entry.contractLevel ? `N${entry.contractLevel}` : "none"}; `
             + `source consensus ${entry.sourceConsensusLevel ? `N${entry.sourceConsensusLevel}` : "none"}; `
             + `assignments ${entry.assignmentCount}; families ${entry.independentSourceCount}; lineages ${entry.independentEvidenceLineageCount}; `
-            + `learner sources ${entry.japanesePublishedOrPermissionedLearnerSourceCount}; posture ${entry.posture}`
+            + `learner sources ${entry.japanesePublishedOrPermissionedLearnerSourceCount}; `
+            + `dictionary identity ${entry.dictionaryIdentitySupported ? "yes" : "no"}; `
+            + `commonness ${entry.commonnessSupported ? "yes" : "no"}; posture ${entry.posture}`
         ));
 }
 
@@ -82,6 +87,8 @@ function formatLevelSummary(byLevel = {}, levels = [5, 4, 3, 2, 1]) {
             `- N${level}: checked ${summary.checked}; universe standard ${summary.level_universe_standard || 0}; `
             + `not evaluated ${summary.source_origin_not_evaluated || 0}; single-family ${summary.single_source_family || 0}; `
             + `multi-source ${summary.multi_source_supported || 0}; disputed ${summary.disputed_level_claim || 0}; `
+            + `missing dictionary identity ${summary.missingDictionaryIdentitySupport || 0}; `
+            + `missing commonness ${summary.missingCommonnessSupport || 0}; `
             + `source-depth ${summary.sourceDepthComplete ? "complete" : "incomplete"}`
         ));
 }
@@ -99,6 +106,10 @@ function formatJlptWordSourceEvidenceReport({ contractPath, evidencePath, report
         "This is a read-only source-origin and vocabulary-universe audit. It does not add words, move words, change denominators, certify Silver/Gold/Sapphire/Platinum/Obsidian, or touch kanji lanes.",
         "",
         `Checked word identities: ${report.checked}`,
+        `Selected contract identities: ${report.selectedContractIdentityCount}`,
+        `Out-of-scope contract identities: ${report.outOfScopeContractIdentityCount}`,
+        `Out-of-scope comparable identities: ${report.outOfScopeComparableIdentityCount}`,
+        `Comparable source-only identities: ${report.comparableSourceOnlyIdentityCount}`,
         `Comparable voting sources: ${report.comparableSourceCount}`,
         `Configured source only: ${report.configuredSourceOnly ? "yes" : "no"}`,
         `Warning: ${report.warning}`,
@@ -141,13 +152,14 @@ function buildReport(options = {}) {
     const report = auditJlptWordSourceEvidence({
         contract: loadJlptWordLevelContract(contractPath),
         evidence: loadJlptWordSourceEvidence(evidencePath),
+        levels: options.scopeLevels,
         limit: options.limit,
     });
     return {
         contractPath,
         evidencePath,
-        levels: options.levels,
         ...report,
+        levels: options.levels,
         sourceAdequacyByLevel: buildSourceAdequacyByLevel(report),
     };
 }

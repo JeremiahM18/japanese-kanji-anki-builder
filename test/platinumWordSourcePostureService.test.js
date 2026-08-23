@@ -114,7 +114,7 @@ test("formatted word source posture report is explicit about source independence
     assert.match(formatted, /not the rereview selection pool or substantive platinum proof/);
     assert.match(formatted, new RegExp(WORD_SOURCE_INDEPENDENCE_LIMITATION_MARKER));
     assert.match(formatted, new RegExp(WORD_SOURCE_ORIGIN_LIMITATION_MARKER));
-    assert.match(formatted, /templates\/word_source_manifest\.json/);
+    assert.match(formatted, /templates\/jlpt_word_source_evidence\.json/);
     assert.match(formatted, /data:audit:jlpt:word-sources/);
     assert.match(formatted, /This report is read-only/);
 });
@@ -125,6 +125,7 @@ test("word source-origin policy keeps card-field posture from claiming origin in
     assert.equal(policy.mode, "limitation_only");
     assert.equal(policy.platinumCardFieldReportMayProveOriginIndependence, false);
     assert.equal(policy.limitationMarker, WORD_SOURCE_ORIGIN_LIMITATION_MARKER);
+    assert.equal(policy.originEvidenceAuthority.manifest, "templates/jlpt_word_source_evidence.json");
     assert.equal(policy.originEvidenceAuthority.identity, "exact written|reading");
     assert.match(policy.removalGate, /implemented, schema-validated, tested, documented/);
 });

@@ -480,9 +480,15 @@ npm run data:import:jlpt:word-source-input -- --source=<source-id>
 
 Word source adequacy is a separate source-governance lane, parallel to kanji source evidence. It tracks exact `written|reading` identities, source tiers, source lineages, independent source families, reviewed source-access surfaces, and source-origin posture. It does not add Silver rows, edit starter data, move denominators, certify review tiers, or touch kanji lanes.
 
+When `--level` or `--levels` is present, the top-level audit denominator is the complete selected operational-contract level, not the global source union. Cross-level claims for those exact identities remain visible; other contract identities, other comparable identities, and source-only identities are reported separately. Scoping must never remove an N4 mismatch or unevaluated identity.
+
+The declared dictionary-identity and commonness policy flags are enforced. They require separate exact reviewed positive `supportClaims` from an active, licence-reviewed, storage-permitted source with the matching allowed use. Source membership or a source-level allowed-use declaration alone is not support. Dictionary/commonness sources never increase JLPT-placement family, lineage, consensus, or learner-source counts. Support-only worksheets may set `requireLevel=false`; placement worksheets may not. The import command writes the assignment file and evidence manifest through one governed transaction and reloads both before commit.
+
 The current word source posture is expected to be source-depth incomplete. Existing JLPTStudy and Tanos source files are configured and pinned discovery inputs, not broad common-vocabulary universe proof. A level may say "configured source evaluated" when its pinned source list has been exhausted; it may not say "all common JLPT words covered" until the word source-evidence audit reaches `level_universe_standard` for that level.
 
 Reviewed word source-input rows require exact source-level evidence: an exact word-list table, exact dictionary entry, official correction row, exact textbook/index assignment page, target-entry page, or permitted machine-readable source. Marketing pages, grammar/can-do-only surfaces, example-only pages, copied unlicensed raw lists, and vague common-vocabulary summaries must be rejected or marked `source_access_gap` / `license_blocked`.
+
+The current source decisions, rejected substitutions, exact N4 queue, and resume gate are recorded in [word-source-acquisition-register.md](word-source-acquisition-register.md).
 
 ## Check word expansion signals
 

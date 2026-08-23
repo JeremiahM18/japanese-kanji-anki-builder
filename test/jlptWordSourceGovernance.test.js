@@ -35,6 +35,18 @@ function buildEvidence(overrides = {}) {
                 role: "primary-discovery",
                 description: "Test discovery source.",
             },
+            identity_support: {
+                label: "Identity support",
+                rank: 2,
+                role: "identity-support",
+                description: "Test dictionary identity source.",
+            },
+            commonness_support: {
+                label: "Commonness support",
+                rank: 3,
+                role: "commonness-support",
+                description: "Test commonness source.",
+            },
         },
         sourceLineages: {
             lineage_a: {
@@ -52,6 +64,16 @@ function buildEvidence(overrides = {}) {
                 role: "textbook",
                 description: "Test lineage.",
             },
+            dictionary_lineage: {
+                label: "Dictionary lineage",
+                role: "dictionary",
+                description: "Test dictionary lineage.",
+            },
+            commonness_lineage: {
+                label: "Commonness lineage",
+                role: "dictionary-priority",
+                description: "Test commonness lineage.",
+            },
         },
         independenceGroups: {
             family_a: {
@@ -65,6 +87,14 @@ function buildEvidence(overrides = {}) {
             family_c: {
                 label: "Family C",
                 description: "Test family.",
+            },
+            dictionary_family: {
+                label: "Dictionary family",
+                description: "Test dictionary family.",
+            },
+            commonness_family: {
+                label: "Commonness family",
+                description: "Test commonness family.",
             },
         },
         sources: {
@@ -108,6 +138,32 @@ function buildEvidence(overrides = {}) {
                 allowedUse: ["candidate-discovery", "level-hint"],
                 canStoreWordAssignments: true,
                 licenseEvidenceUrl: "https://example.com/license-c",
+            },
+            dictionary_source: {
+                name: "Dictionary source",
+                tier: "identity_support",
+                evidenceLineage: "dictionary_lineage",
+                independenceGroup: "dictionary_family",
+                status: "active",
+                sourceKind: "dictionary",
+                countsForConsensus: false,
+                licenseStatus: "approved",
+                allowedUse: ["dictionary-verification"],
+                canStoreWordAssignments: true,
+                licenseEvidenceUrl: "https://example.com/dictionary-license",
+            },
+            commonness_source: {
+                name: "Commonness source",
+                tier: "commonness_support",
+                evidenceLineage: "commonness_lineage",
+                independenceGroup: "commonness_family",
+                status: "active",
+                sourceKind: "dictionary-priority",
+                countsForConsensus: false,
+                licenseStatus: "approved",
+                allowedUse: ["commonness-support"],
+                canStoreWordAssignments: true,
+                licenseEvidenceUrl: "https://example.com/commonness-license",
             },
         },
         assignments: {},
@@ -228,6 +284,107 @@ test("reviewed word source rows require exact citation and evidence reference", 
     assert.equal(report.valid, false);
     assert.match(report.rejectedRows[0].issues.join("; "), /missing citation/);
     assert.match(report.rejectedRows[0].issues.join("; "), /missing evidenceRef/);
+});
+
+test("reviewed support inputs may omit JLPT placement but retain an explicit support claim", () => {
+    const inputs = normalizeJlptWordSourceInputs({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: false,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            dictionary_source: {
+                sourceId: "dictionary_source",
+                sourcePath: "ignored.tsv",
+                sourceLabel: "Dictionary source",
+                requireLevel: false,
+                defaultReviewStatus: "reviewed",
+                defaultCitation: "Dictionary",
+                defaultEvidenceRef: "pinned exact entry",
+                defaultSupportClaims: ["dictionary-identity"],
+            },
+        },
+    });
+    const report = buildJlptWordSourceInputReport({
+        sourceId: "dictionary_source",
+        sourceConfig: inputs.inputs.dictionary_source,
+        sourceBuffer: Buffer.from("written\treading\n食べる\tたべる\n", "utf8"),
+        evidence: buildEvidence(),
+        policy: inputs.policy,
+    });
+
+    assert.equal(report.valid, true);
+    assert.deepEqual(report.assignments["食べる|たべる"].supportClaims, ["dictionary-identity"]);
+    assert.equal(Object.hasOwn(report.assignments["食べる|たべる"], "level"), false);
+});
+
+test("word source input preflight rejects assignment storage not authorized by the source registry", () => {
+    const evidence = buildEvidence();
+    evidence.sources.dictionary_source.canStoreWordAssignments = false;
+    const report = buildJlptWordSourceInputReport({
+        sourceId: "dictionary_source",
+        sourceConfig: {
+            sourceId: "dictionary_source",
+            sourcePath: "ignored.tsv",
+            sourceLabel: "Dictionary source",
+            requireLevel: false,
+            defaultReviewStatus: "reviewed",
+            defaultCitation: "Dictionary",
+            defaultEvidenceRef: "pinned exact entry",
+            defaultSupportClaims: ["dictionary-identity"],
+        },
+        sourceBuffer: Buffer.from("written\treading\n食べる\tたべる\n", "utf8"),
+        evidence,
+        policy: { requirePinnedIntegrity: false, requireKnownEvidenceSource: true },
+    });
+
+    assert.equal(report.valid, false);
+    assert.match(report.blockers.join("; "), /does not allow stored word assignments/);
+});
+
+test("word source input preflight rejects support-only rows without an explicit support claim", () => {
+    const report = buildJlptWordSourceInputReport({
+        sourceId: "dictionary_source",
+        sourceConfig: {
+            sourceId: "dictionary_source",
+            sourcePath: "ignored.tsv",
+            sourceLabel: "Dictionary source",
+            requireLevel: false,
+            defaultReviewStatus: "reviewed",
+            defaultCitation: "Dictionary",
+            defaultEvidenceRef: "pinned exact entry",
+        },
+        sourceBuffer: Buffer.from("written\treading\n食べる\tたべる\n", "utf8"),
+        evidence: buildEvidence(),
+        policy: { requirePinnedIntegrity: false, requireKnownEvidenceSource: true },
+    });
+
+    assert.equal(report.valid, false);
+    assert.match(report.blockers.join("; "), /support-only input.*explicit support claim/);
+});
+
+test("word source input preflight never permits evidence references to be disabled", () => {
+    const report = buildJlptWordSourceInputReport({
+        sourceId: "dictionary_source",
+        sourceConfig: {
+            sourceId: "dictionary_source",
+            sourcePath: "ignored.tsv",
+            sourceLabel: "Dictionary source",
+            requireLevel: false,
+            requireEvidenceRef: false,
+            defaultReviewStatus: "reviewed",
+            defaultCitation: "Dictionary",
+            defaultSupportClaims: ["dictionary-identity"],
+        },
+        sourceBuffer: Buffer.from("written\treading\n食べる\tたべる\n", "utf8"),
+        evidence: buildEvidence(),
+        policy: { requirePinnedIntegrity: false, requireKnownEvidenceSource: true },
+    });
+
+    assert.equal(report.valid, false);
+    assert.match(report.blockers.join("; "), /evidenceRef.*cannot be disabled/);
 });
 
 test("word source access packet blocks vague or incomplete source-access evidence", () => {
@@ -379,6 +536,26 @@ test("word source adequacy separates governance validity from incomplete evidenc
                     evidenceRef: "row 1",
                 },
             },
+            dictionary_source: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    reviewStatus: "reviewed",
+                    citation: "Dictionary",
+                    evidenceRef: "entry 1",
+                    supportClaims: ["dictionary-identity"],
+                },
+            },
+            commonness_source: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    reviewStatus: "reviewed",
+                    citation: "Commonness source",
+                    evidenceRef: "entry 1",
+                    supportClaims: ["commonness"],
+                },
+            },
         },
     });
     const report = auditJlptWordSourceEvidence({ contract, evidence });
@@ -387,6 +564,265 @@ test("word source adequacy separates governance validity from incomplete evidenc
     assert.equal(report.evidenceDepthValid, false);
     assert.equal(report.postureCounts.level_universe_standard, 1);
     assert.equal(report.postureCounts.source_origin_not_evaluated, 1);
+});
+
+test("word source adequacy enforces declared dictionary identity and commonness support", () => {
+    const contract = {
+        wordLevels: {
+            "食べる|たべる": {
+                written: "食べる",
+                reading: "たべる",
+                jlpt: 5,
+            },
+        },
+    };
+    const evidence = buildEvidence({
+        assignments: {
+            source_a: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    level: 5,
+                    reviewStatus: "reviewed",
+                    citation: "A",
+                    evidenceRef: "row 1",
+                },
+            },
+            source_b: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    level: 5,
+                    reviewStatus: "reviewed",
+                    citation: "B",
+                    evidenceRef: "row 1",
+                },
+            },
+            source_c: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    level: 5,
+                    reviewStatus: "reviewed",
+                    citation: "C",
+                    evidenceRef: "row 1",
+                },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({ contract, evidence });
+    const result = report.wordSourcePosture[0];
+
+    assert.equal(result.dictionaryIdentitySupported, false);
+    assert.equal(result.commonnessSupported, false);
+    assert.equal(result.posture, "multi_source_supported");
+    assert.equal(report.issueCounts.missingDictionaryIdentitySupport, 1);
+    assert.equal(report.issueCounts.missingCommonnessSupport, 1);
+    assert.equal(report.evidenceDepthValid, false);
+});
+
+test("commonness-capable source membership is not positive commonness evidence", () => {
+    const evidence = buildEvidence({
+        assignments: {
+            commonness_source: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    reviewStatus: "reviewed",
+                    citation: "Commonness source",
+                    evidenceRef: "entry without a positive priority or frequency signal",
+                },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({
+        contract: {
+            wordLevels: {
+                "食べる|たべる": { written: "食べる", reading: "たべる", jlpt: 5 },
+            },
+        },
+        evidence,
+    });
+
+    assert.equal(report.wordSourcePosture[0].commonnessSupported, false);
+    assert.deepEqual(report.wordSourcePosture[0].commonnessSourceIds, []);
+});
+
+test("word source policy toggles remain explicit and testable", () => {
+    const contract = {
+        wordLevels: {
+            "食べる|たべる": { written: "食べる", reading: "たべる", jlpt: 5 },
+        },
+    };
+    const evidence = buildEvidence({
+        policy: {
+            minimumIndependentSources: 3,
+            minimumIndependentEvidenceLineages: 2,
+            minimumJapanesePublishedOrPermissionedLearnerSources: 1,
+            requireDictionaryIdentitySupport: false,
+            requireCommonnessSupport: false,
+        },
+        assignments: {
+            source_a: {
+                "食べる|たべる": { written: "食べる", reading: "たべる", level: 5, reviewStatus: "reviewed", citation: "A", evidenceRef: "1" },
+            },
+            source_b: {
+                "食べる|たべる": { written: "食べる", reading: "たべる", level: 5, reviewStatus: "reviewed", citation: "B", evidenceRef: "1" },
+            },
+            source_c: {
+                "食べる|たべる": { written: "食べる", reading: "たべる", level: 5, reviewStatus: "reviewed", citation: "C", evidenceRef: "1" },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({ contract, evidence });
+
+    assert.equal(report.wordSourcePosture[0].posture, "level_universe_standard");
+    assert.equal(report.issueCounts.missingDictionaryIdentitySupport, 0);
+    assert.equal(report.issueCounts.missingCommonnessSupport, 0);
+});
+
+test("explicit word source audit level scope uses the exact contract denominator", () => {
+    const contract = {
+        wordLevels: {
+            "食べる|たべる": {
+                written: "食べる",
+                reading: "たべる",
+                jlpt: 5,
+            },
+            "水|みず": {
+                written: "水",
+                reading: "みず",
+                jlpt: 4,
+            },
+        },
+    };
+    const evidence = buildEvidence({
+        assignments: {
+            source_a: {
+                "源|みなもと": {
+                    written: "源",
+                    reading: "みなもと",
+                    level: 3,
+                    reviewStatus: "reviewed",
+                    citation: "A",
+                    evidenceRef: "row 2",
+                },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({
+        contract,
+        evidence,
+        levels: [4],
+    });
+
+    assert.equal(report.checked, 1);
+    assert.equal(report.byLevel[4].checked, 1);
+    assert.equal(report.byLevel[5].checked, 0);
+    assert.equal(report.outOfScopeContractIdentityCount, 1);
+    assert.equal(report.outOfScopeComparableIdentityCount, 1);
+    assert.equal(report.comparableSourceOnlyIdentityCount, 1);
+    assert.deepEqual(report.wordSourcePosture.map((entry) => entry.identity), ["水|みず"]);
+});
+
+test("word source governance fails approved sources without license evidence", () => {
+    const evidence = buildEvidence({
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "discovery",
+                evidenceLineage: "lineage_a",
+                independenceGroup: "family_a",
+                status: "active",
+                sourceKind: "candidate-discovery",
+                countsForConsensus: true,
+                licenseStatus: "approved",
+                allowedUse: ["candidate-discovery", "level-hint"],
+                canStoreWordAssignments: true,
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({ contract: { wordLevels: {} }, evidence });
+
+    assert.equal(report.issueCounts.missingLicenseEvidence, 1);
+    assert.equal(report.governanceValid, false);
+});
+
+test("word source governance rejects reviewed assignments without exact citation evidence", () => {
+    const evidence = buildEvidence({
+        assignments: {
+            source_a: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    level: 5,
+                    reviewStatus: "reviewed",
+                },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({ contract: { wordLevels: {} }, evidence });
+
+    assert.equal(report.issueCounts.reviewedAssignmentsMissingEvidence, 1);
+    assert.equal(report.governanceValid, false);
+});
+
+test("word source governance honors an explicit citation exemption while retaining evidenceRef", () => {
+    const evidence = buildEvidence({
+        sources: {
+            source_a: {
+                name: "Source A",
+                tier: "discovery",
+                evidenceLineage: "lineage_a",
+                independenceGroup: "family_a",
+                status: "active",
+                sourceKind: "candidate-discovery",
+                countsForConsensus: true,
+                licenseStatus: "approved",
+                allowedUse: ["candidate-discovery", "level-hint"],
+                canStoreWordAssignments: true,
+                requiresCitation: false,
+                licenseEvidenceUrl: "https://example.com/license-a",
+            },
+        },
+        assignments: {
+            source_a: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    level: 5,
+                    reviewStatus: "reviewed",
+                    evidenceRef: "exact row 1",
+                },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({ contract: { wordLevels: {} }, evidence });
+
+    assert.equal(report.issueCounts.reviewedAssignmentsMissingEvidence, 0);
+    assert.equal(report.governanceValid, true);
+});
+
+test("word source governance rejects support claims outside a source allowed-use profile", () => {
+    const evidence = buildEvidence({
+        assignments: {
+            source_a: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    level: 5,
+                    reviewStatus: "reviewed",
+                    citation: "A",
+                    evidenceRef: "row 1",
+                    supportClaims: ["commonness"],
+                },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({ contract: { wordLevels: {} }, evidence });
+
+    assert.equal(report.issueCounts.invalidSupportClaims, 1);
+    assert.equal(report.governanceValid, false);
 });
 
 test("word source access report keeps registered future lanes out of review loops", () => {

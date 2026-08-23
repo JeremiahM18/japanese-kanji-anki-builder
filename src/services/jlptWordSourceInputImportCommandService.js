@@ -1,4 +1,3 @@
-const fs = require("node:fs");
 const path = require("node:path");
 
 const { loadJlptWordLevelContract } = require("../datasets/jlptWordLevelContract");
@@ -15,6 +14,8 @@ const {
     summarizeMaterializedWordEvidenceShifts,
 } = require("./jlptWordSourceImportService");
 const { buildReports } = require("./jlptWordSourceInputReportService");
+const { auditJlptWordSourceEvidence } = require("./jlptWordSourceEvidenceService");
+const { runGovernedFileTransactionSync } = require("../utils/governedFileTransaction");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
@@ -121,12 +122,41 @@ function run(options = {}) {
             [options.source]: assignmentFile,
         };
         const assignmentPath = resolveManifestRelativePath(path.dirname(evidencePath), assignmentFile);
-        fs.mkdirSync(path.dirname(assignmentPath), { recursive: true });
-        fs.writeFileSync(assignmentPath, formatWordSourceAssignmentFileJson({
+        const assignmentData = formatWordSourceAssignmentFileJson({
             sourceId: options.source,
             assignments: manifest.assignments?.[options.source] || {},
-        }), "utf8");
-        fs.writeFileSync(evidencePath, formatWordSourceEvidenceJson(buildStorageManifest(manifest)), "utf8");
+        });
+        const evidenceData = formatWordSourceEvidenceJson(buildStorageManifest(manifest));
+        runGovernedFileTransactionSync({
+            transactionName: `jlpt-word-source-import-${options.source}`,
+            workspaceRoot: process.cwd(),
+            changes: [
+                { filePath: assignmentPath, data: assignmentData },
+                { filePath: evidencePath, data: evidenceData },
+            ],
+            validateAfterWrite: () => {
+                const reloadedManifest = readJlptWordSourceEvidenceManifest(evidencePath);
+                const reloadedEvidence = normalizeJlptWordSourceEvidence(reloadedManifest, {
+                    manifestPath: evidencePath,
+                });
+                const expectedAssignments = manifest.assignments?.[options.source] || {};
+                const actualAssignments = reloadedEvidence.assignments?.[options.source] || {};
+                if (JSON.stringify(actualAssignments) !== JSON.stringify(expectedAssignments)) {
+                    throw new Error(`Post-write word source assignment reconciliation failed for ${options.source}.`);
+                }
+                const governanceReport = auditJlptWordSourceEvidence({
+                    contract,
+                    evidence: reloadedEvidence,
+                    limit: 1,
+                });
+                if (!governanceReport.governanceValid) {
+                    throw new Error(
+                        `Post-write word source governance validation failed for ${options.source}: `
+                        + `${JSON.stringify(governanceReport.issueCounts)}`
+                    );
+                }
+            },
+        });
     }
     return {
         sourceId: options.source,

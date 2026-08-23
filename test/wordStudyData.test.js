@@ -8098,9 +8098,9 @@ test("tracked starter word data includes the second N4 common-pool Silver batch"
         assert.equal(entry?.tags?.includes("common"), true, key);
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
-        assertCommonPoolLearnerNote(entry, key);
-        assert.match(entry?.notes || "", /Source level claim unverified/, key);
         if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assertCommonPoolLearnerNote(entry, key);
+            assert.match(entry?.notes || "", /Source level claim unverified/, key);
             assert.match(entry?.notes || "", /JMdict\/commonness verification/, key);
         }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8350,9 +8350,9 @@ test("tracked starter word data includes the third through seventh N4 common-poo
         assert.equal(entry?.tags?.includes("common"), true, key);
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
-        assertCommonPoolLearnerNote(entry, key);
-        assert.match(entry?.notes || "", /Source level claim unverified/, key);
         if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assertCommonPoolLearnerNote(entry, key);
+            assert.match(entry?.notes || "", /Source level claim unverified/, key);
             assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support|dictionary\/commonness\/frequency verification|JMdict\/commonness verification/, key);
         }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8517,9 +8517,9 @@ test("tracked starter word data includes the eighth through twelfth N4 common-po
         assert.equal(entry?.tags?.includes("common"), true, key);
         assert.equal(entry?.levelPlacement?.mode, "vocabulary-level", key);
         assert.match(entry?.levelPlacement?.reason || "", /DICTIONARY COMMON POOL extra-source selector/, key);
-        assertCommonPoolLearnerNote(entry, key);
-        assert.match(entry?.notes || "", /Source level claim unverified/, key);
         if (!PLATINUM_FIXED_COMMON_POOL_WORDS.has(key)) {
+            assertCommonPoolLearnerNote(entry, key);
+            assert.match(entry?.notes || "", /Source level claim unverified/, key);
             assert.match(entry?.notes || "", /dictionary\/commonness\/frequency support|dictionary\/commonness\/frequency verification|JMdict\/commonness verification/, key);
         }
         assert.match(entry?.readingBreakdown || "", /<ruby>/, key);
@@ -8765,17 +8765,33 @@ test("tracked starter word data includes the thirteenth and final N4 common-pool
 test("tracked starter word data protects the first current-standard N4 Platinum batch fixes", () => {
     const starterEntries = loadTrackedStarterWordEntries();
 
-    assert.match(starterEntries["洋室|ようしつ"].notes, /useful housing, hotel, and room-type vocabulary/);
+    assert.match(starterEntries["洋室|ようしつ"].notes, /Useful housing and hotel word for a Western-style room, often contrasted with 和室/);
     assert.match(starterEntries["新薬|しんやく"].notes, /useful health and news vocabulary/);
     assert.match(starterEntries["空き家|あきや"].notes, /useful housing and neighborhood vocabulary/);
-    assert.match(starterEntries["重力|じゅうりょく"].notes, /learner-friendly school and science term/);
+    assert.match(starterEntries["重力|じゅうりょく"].notes, /learner-friendly school and science term meaning gravity/);
     assert.equal(starterEntries["店頭|てんとう"].meaning, "storefront / shop entrance");
-    assert.match(starterEntries["店頭|てんとう"].notes, /storefront, shop entrance, or physical-store context/);
-    assert.match(starterEntries["ひと晩|ひとばん"].notes, /attested mixed-kana form of 一晩/);
+    assert.match(starterEntries["店頭|てんとう"].notes, /storefront or shop entrance; 店頭に並ぶ/);
+    assert.match(starterEntries["ひと晩|ひとばん"].notes, /Mixed-kana form of 一晩/);
     assert.match(starterEntries["所有|しょゆう"].notes, /often used as 所有する or 所有している/);
 
     for (const key of ["洋室|ようしつ", "新薬|しんやく", "空き家|あきや", "重力|じゅうりょく", "店頭|てんとう", "ひと晩|ひとばん", "所有|しょゆう"]) {
         assert.doesNotMatch(starterEntries[key].notes, /Silver-only|still needs normal Gold\/Sapphire\/Platinum\/Obsidian catch-up/, key);
+    }
+});
+
+test("tracked starter word data protects N4 Obsidian batch 036 learner-note repairs", () => {
+    const starterEntries = loadTrackedStarterWordEntries();
+
+    assert.match(starterEntries["歩む|あゆむ"].notes, /more literary or formal than everyday 歩く/);
+    assert.match(starterEntries["ひと晩|ひとばん"].notes, /Mixed-kana form of 一晩/);
+    assert.match(starterEntries["ひと晩|ひとばん"].notes, /ひと晩泊まる/);
+    assert.match(starterEntries["公|おおやけ"].notes, /Formal noun for the public or public knowledge/);
+    assert.match(starterEntries["授業|じゅぎょう"].notes, /授業を受ける/);
+    assert.match(starterEntries["授業|じゅぎょう"].notes, /授業が始まる/);
+    assert.match(starterEntries["止める|とめる"].notes, /compare intransitive 止まる and やめる/);
+
+    for (const key of ["歩む|あゆむ", "ひと晩|ひとばん", "公|おおやけ", "授業|じゅぎょう", "止める|とめる"]) {
+        assert.doesNotMatch(starterEntries[key].notes, /support word that covers|DICTIONARY COMMON POOL route|source level is a discovery\/usefulness hint/, key);
     }
 });
 

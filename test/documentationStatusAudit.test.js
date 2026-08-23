@@ -45,15 +45,15 @@ test("documentation status snapshots match tracked N3 word lane counts", () => {
     assert.equal(report.snapshot.product.wordDenominator, 2820);
     assert.equal(report.snapshot.product.kanjiObsidianProof, 982);
     assert.equal(report.snapshot.product.wordLockedDenominator, 1622);
-    assert.equal(report.snapshot.product.wordObsidianProof, 780);
+    assert.equal(report.snapshot.product.wordObsidianProof, 876);
     assert.equal(report.snapshot.product.wordLegacyObsidianProofTargets, 1118);
-    assert.equal(report.snapshot.product.wordLegacyOnlyObsidianProofTargets, 508);
-    assert.equal(report.snapshot.product.wordRawObsidianProofEvents, 1898);
-    assert.equal(report.snapshot.product.wordSupersededLegacyProofEvents, 610);
+    assert.equal(report.snapshot.product.wordLegacyOnlyObsidianProofTargets, 418);
+    assert.equal(report.snapshot.product.wordRawObsidianProofEvents, 1994);
+    assert.equal(report.snapshot.product.wordSupersededLegacyProofEvents, 700);
     assert.equal(report.snapshot.product.wordN5Denominator, 588);
     assert.equal(report.snapshot.product.wordN4Denominator, 1034);
     assert.equal(report.snapshot.product.wordN5ObsidianProof, 588);
-    assert.equal(report.snapshot.product.wordN4ObsidianProof, 192);
+    assert.equal(report.snapshot.product.wordN4ObsidianProof, 288);
 });
 
 test("documentation status audit catches stale N3 word Gold counts", () => {
@@ -156,9 +156,9 @@ test("documentation status audit catches stale generated denominator docs", () =
     const files = readDocumentationFiles();
     files["docs/employer-overview.md"] = files["docs/employer-overview.md"]
         .replace("`2820` word rows", "`1470` word rows")
-        .replace("`2820/2820` across N5-N1 | `780/2820` current v2.5", "`1470/1470` across N5-N1 | `987/1470`");
+        .replace("`2820/2820` across N5-N1 | `876/2820` current v2.5", "`1470/1470` across N5-N1 | `987/1470`");
     files["docs/system-architecture.md"] = files["docs/system-architecture.md"]
-        .replace("| Words | 2820 | 780 |", "| Words | 1470 | 987 |");
+        .replace("| Words | 2820 | 876 |", "| Words | 1470 | 987 |");
 
     const report = auditDocumentationText({
         files,

@@ -140,13 +140,13 @@ The architecture is product- and level-agnostic. The current repo snapshot prove
 | Product surface | Generated denominator | Obsidian-certified denominator | Boundary |
 | --- | ---: | ---: | --- |
 | Core kanji | 2212 | 982 | The scoped release lock covers the completed N5-N2 denominator. Remaining generated rows are not Obsidian-certified. |
-| Words | 2820 | 780 | Current word Obsidian v2.5 covers all current N5 rows plus 192 current N4 rows. Legacy N5/N4 word proof history remains audit-visible, but it is not current v2.5 certification. |
+| Words | 2820 | 876 | Current word Obsidian v2.5 covers all current N5 rows plus 288 current N4 rows. Legacy N5/N4 word proof history remains audit-visible, but it is not current v2.5 certification. |
 
 Obsidian counts for completed scopes are verified by fail-closed certification gates:
 
 - Kanji locked scope: `982/982` Obsidian certified.
-- Word locked scope: `780/1622` current word Obsidian v2.5-certified for current N5/N4 generated rows; `842` Platinum-passing N4 rows need separate substantive Obsidian v2.5 proof and `0` N4 rows are blocked on Platinum. N4 Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`. Legacy word proof history remains audit-visible at `1118` N5/N4 targets and `1898` raw ledger events, with `610` older same-target proof events superseded by current v2.5 proof.
-- Proof ledger validation: `2880` events across 6 JSONL files.
+- Word locked scope: `876/1622` current word Obsidian v2.5-certified for current N5/N4 generated rows; `746` Platinum-passing N4 rows need separate substantive Obsidian v2.5 proof and `0` N4 rows are blocked on Platinum. N4 Gold, current-standard Sapphire, and current-standard Platinum are complete at `1034/1034`. Legacy word proof history remains audit-visible at `1118` N5/N4 targets and `1994` raw ledger events, with `700` older same-target proof events superseded by current v2.5 proof.
+- Proof ledger validation: `2976` events across 6 JSONL files.
 
 ## Expansion Workflow Pattern
 

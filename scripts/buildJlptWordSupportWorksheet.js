@@ -81,8 +81,7 @@ function resolveGovernedOutputPath(outputPath, { cwd = process.cwd() } = {}) {
 }
 
 function normalizePathForComparison(filePath) {
-    const resolved = path.resolve(filePath);
-    return process.platform === "win32" ? resolved.toLowerCase() : resolved;
+    return path.resolve(filePath).toLowerCase();
 }
 
 function resolveGovernedOutputPaths({ cwd = process.cwd(), outPath, batchOutPath, sourcePath } = {}) {

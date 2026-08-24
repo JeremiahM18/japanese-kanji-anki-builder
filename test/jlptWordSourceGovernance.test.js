@@ -727,7 +727,8 @@ test("word source batch merge rejects a governed-parent junction swap before the
 
     const originalCloseSync = fs.closeSync;
     const originalReadFileSync = fs.readFileSync;
-    const sentinelStats = fs.statSync(sentinelPath, { bigint: true });
+    const sentinelHandle = fs.openSync(sentinelPath, "r");
+    const sentinelStats = fs.fstatSync(sentinelHandle, { bigint: true });
     let verifiedCloseCount = 0;
     let externalSentinelConsumed = false;
     let commandError = null;
@@ -772,11 +773,12 @@ test("word source batch merge rejects a governed-parent junction swap before the
             rejected: Boolean(commandError),
             governedPathRejection: Boolean(commandError && /direct child|symbolic link|junction|redirected directory|changed while/i.test(commandError.message)),
             externalSentinelConsumed,
-            externalSentinelPreserved: fs.readFileSync(sentinelPath, "utf8") === externalSentinel,
+            externalSentinelPreserved: originalReadFileSync.call(fs, sentinelHandle, "utf8") === externalSentinel,
         };
     } finally {
         fs.closeSync = originalCloseSync;
         fs.readFileSync = originalReadFileSync;
+        originalCloseSync(sentinelHandle);
         process.chdir(previousCwd);
         if (fs.existsSync(supportDirectory)) {
             fs.rmSync(supportDirectory, { recursive: true, force: true });

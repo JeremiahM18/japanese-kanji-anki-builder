@@ -4,6 +4,7 @@ const {
     buildWordIdentity,
     normalizeJlptWordLevel,
 } = require("../datasets/jlptWordSourceEvidence");
+const { supportRecordMatchesSource } = require("./jlptWordSourceEvidenceService");
 
 const WORD_SOURCE_INPUT_REVIEW_STATUSES = Object.freeze([
     "reviewed",
@@ -259,7 +260,13 @@ function supportColumn(sourceConfig, name, fallback) {
     return sourceConfig[`${name}Column`] || fallback;
 }
 
-function buildSupportRecordFromRow({ row, sourceConfig = {}, source = {}, contractIdentitySet = new Set() } = {}) {
+function buildSupportRecordFromRow({
+    row,
+    sourceConfig = {},
+    source = {},
+    contractIdentitySet = new Set(),
+    evidenceCheckedAt = "",
+} = {}) {
     const issues = [];
     const written = getRowField(row, sourceConfig.writtenColumn || "written");
     const reading = getRowField(row, sourceConfig.readingColumn || "reading");
@@ -344,17 +351,22 @@ function buildSupportRecordFromRow({ row, sourceConfig = {}, source = {}, contra
         ...(matchStatus ? { matchStatus } : {}),
         ...(frequencyBand ? { frequencyBand } : {}),
     };
+    const record = {
+        written,
+        reading,
+        reviewStatus,
+        ...(citation ? { citation } : {}),
+        ...(evidenceRef ? { evidenceRef } : {}),
+        supportClaims: claim ? [claim] : [],
+        evidence,
+    };
+    if (reviewStatus === "reviewed"
+        && !supportRecordMatchesSource({ source, identity, record, evidenceCheckedAt })) {
+        issues.push("support fact provenance must match the registered source citation, local path, normalized sha256, and positive row reference");
+    }
     return {
         identity,
-        record: {
-            written,
-            reading,
-            reviewStatus,
-            ...(citation ? { citation } : {}),
-            ...(evidenceRef ? { evidenceRef } : {}),
-            supportClaims: claim ? [claim] : [],
-            evidence,
-        },
+        record,
         issues,
         rowNumber: row.__rowNumber,
     };
@@ -485,6 +497,7 @@ function buildJlptWordSourceInputReport({
 
     const assignments = {};
     const supportRecords = {};
+    const supportEvidenceRefOwners = new Map();
     const seenIdentities = new Set();
     const rejectedRows = [];
     const reviewStatusCounts = {};
@@ -501,7 +514,13 @@ function buildJlptWordSourceInputReport({
 
     for (const row of sourceRows) {
         const resolved = supportMode
-            ? buildSupportRecordFromRow({ row, sourceConfig, source: evidence.sources?.[sourceId], contractIdentitySet })
+            ? buildSupportRecordFromRow({
+                row,
+                sourceConfig,
+                source: evidence.sources?.[sourceId],
+                contractIdentitySet,
+                evidenceCheckedAt: asOfDate,
+            })
             : buildAssignmentFromRow({ row, sourceConfig });
         const resolvedValue = supportMode ? resolved.record : resolved.assignment;
         const reviewStatus = resolvedValue.reviewStatus || "needs_review";
@@ -513,6 +532,14 @@ function buildJlptWordSourceInputReport({
                 resolved.issues.push(`duplicate identity in source input: ${resolved.identity}`);
             }
             seenIdentities.add(resolved.identity);
+        }
+        if (supportMode && reviewStatus === "reviewed" && resolved.record.evidenceRef) {
+            const existingIdentity = supportEvidenceRefOwners.get(resolved.record.evidenceRef);
+            if (existingIdentity && existingIdentity !== resolved.identity) {
+                resolved.issues.push(`support evidenceRef is already bound to ${existingIdentity}`);
+            } else {
+                supportEvidenceRefOwners.set(resolved.record.evidenceRef, resolved.identity);
+            }
         }
 
         if (resolved.issues.length > 0) {

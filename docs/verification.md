@@ -181,10 +181,15 @@ in separate files and authorities. An active support source must declare
 evidence kind, an immutable upstream snapshot, and normalized local SHA-256,
 byte-size, and row-count pins. Dictionary sources also declare freshness;
 overdue or mismatched snapshots are governance failures. Each stored support
-record binds one exact `written|reading`, one support claim, row-specific
-citation/evidence reference, snapshot version, normalized-source SHA-256, and a
-typed positive fact. A source declaration without an imported record proves
-nothing for that identity.
+record binds one exact `written|reading`, one support claim, the source's exact
+canonical citation, and an evidence reference containing the configured local
+path, lowercase normalized-source SHA-256, physical source row, and encoded
+identity. Delimited worksheets reserve physical row 1 for the header, so their
+evidence rows are `2..rowCount+1`; JSON data rows are `1..rowCount`. Records
+also bind the snapshot version and a typed positive fact. A duplicate reference,
+out-of-contract identity, swapped identity suffix, impossible row, arbitrary
+path, or source declaration without an imported record proves nothing for that
+identity and fails governance.
 
 For the current N4 support workflow, verify the generated surface and governed
 input/import path in this order:
@@ -212,7 +217,11 @@ JSON must use exact source-keyed direct-child paths under
 `templates/jlpt_word_source_evidence/{assignments|support}`. Support worksheets
 must remain direct-child lowercase `.tsv` files under
 `downloads/word-source-support`; placement worksheets remain direct-child
-lowercase `.tsv` files under `downloads`; source-access packets use the exact
+lowercase `.tsv` files under `downloads`; merge batches are confined to the
+same canonical direct-child root as their worksheet. Governed reads revalidate
+the parent and exact path around a stable file-descriptor read, and writes fail
+closed if another process changes the worksheet before the transaction.
+Source-access packets use the exact
 source-keyed lowercase `.json` filename under
 `downloads/word-source-access-packets`. Traversal, absolute/drive/UNC/device,
 alternate-data-stream, reserved-name, nested, mismatched-source, and

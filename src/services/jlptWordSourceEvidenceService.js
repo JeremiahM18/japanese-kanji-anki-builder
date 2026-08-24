@@ -236,6 +236,19 @@ function sourceAllowsSupportUse(source = {}, allowedUse, evidenceKind, evidenceC
         && metadata.freshness.valid;
 }
 
+function buildCanonicalSupportCitation(source = {}) {
+    return `${source.name}; ${source.upstreamSnapshot?.url}; snapshot ${source.upstreamSnapshot?.version}`;
+}
+
+function buildCanonicalSupportEvidenceRef({ source = {}, identity = "", rowNumber } = {}) {
+    return `${source.local?.path}; sha256=${String(source.local?.sha256 || "").toLowerCase()}; `
+        + `row=${rowNumber}; identity=${encodeURIComponent(identity)}`;
+}
+
+function supportEvidenceRefMatchesIdentity(evidenceRef = "", identity = "") {
+    return String(evidenceRef).endsWith(`; identity=${encodeURIComponent(identity)}`);
+}
+
 function supportRecordMatchesSource({ source = {}, identity = "", record = {}, evidenceCheckedAt = "" } = {}) {
     const parsed = wordSupportRecordSchema.safeParse(record);
     if (!parsed.success) {
@@ -247,19 +260,43 @@ function supportRecordMatchesSource({ source = {}, identity = "", record = {}, e
     }
     const expectedClaim = supportClaimForEvidenceKind(normalized.evidence.kind);
     const allowedUse = requiredUseForSupportClaim(expectedClaim);
+    const expectedCitation = buildCanonicalSupportCitation(source);
+    const evidenceRefMatch = /^(.*); sha256=([a-f0-9]{64}); row=([1-9]\d*); identity=([^;\s]+)$/iu.exec(normalized.evidenceRef);
+    const evidenceRowNumber = Number(evidenceRefMatch?.[3]);
+    const delimitedSource = ["csv", "tsv"].includes(source.local?.format);
+    const minimumEvidenceRow = delimitedSource ? 2 : 1;
+    const maximumEvidenceRow = Number.isInteger(source.local?.rowCount)
+        ? source.local.rowCount + (delimitedSource ? 1 : 0)
+        : 0;
+    const provenanceMatches = normalized.citation === expectedCitation
+        && Number.isSafeInteger(evidenceRowNumber)
+        && evidenceRowNumber >= minimumEvidenceRow
+        && evidenceRowNumber <= maximumEvidenceRow
+        && normalized.evidenceRef === buildCanonicalSupportEvidenceRef({
+            source,
+            identity,
+            rowNumber: evidenceRowNumber,
+        });
     return sourceAllowsSupportUse(source, allowedUse, normalized.evidence.kind, evidenceCheckedAt)
+        && provenanceMatches
         && normalized.supportClaims[0] === expectedClaim
         && normalized.evidence.snapshotVersion === source.upstreamSnapshot?.version
         && normalized.evidence.normalizedSourceSha256.toLowerCase() === String(source.local?.sha256 || "").toLowerCase();
 }
 
-function buildReviewedSupportRecordsByIdentity(evidence = {}, supportClaim, asOfDate = "") {
+function buildReviewedSupportRecordsByIdentity(
+    evidence = {},
+    supportClaim,
+    asOfDate = "",
+    contractIdentitySet = null
+) {
     const byIdentity = new Map();
 
     for (const [sourceId, records] of Object.entries(evidence.supportRecords || {})) {
         const source = evidence.sources?.[sourceId] || {};
         for (const [identity, record] of Object.entries(records || {})) {
-            if (record.supportClaims?.[0] !== supportClaim
+            if ((contractIdentitySet && !contractIdentitySet.has(identity))
+                || record.supportClaims?.[0] !== supportClaim
                 || !supportRecordMatchesSource({ source, identity, record, evidenceCheckedAt: asOfDate || evidence.checkedAt })) {
                 continue;
             }
@@ -434,7 +471,7 @@ function buildWordEvidenceResult({
     };
 }
 
-function buildGovernanceIssues(evidence = {}, asOfDate = "") {
+function buildGovernanceIssues(evidence = {}, asOfDate = "", contractIdentitySet = new Set()) {
     const issues = {
         unapprovedVotingSources: [],
         illegalConsensusSourceUses: [],
@@ -543,7 +580,26 @@ function buildGovernanceIssues(evidence = {}, asOfDate = "") {
                 });
             }
         }
+        const evidenceRefOwners = new Map();
         for (const [identity, record] of Object.entries(sourceSupportRecords)) {
+            if (!contractIdentitySet.has(identity)) {
+                issues.invalidSupportFacts.push({
+                    sourceId,
+                    identity,
+                    evidenceKind: record.evidence?.kind || null,
+                    reason: "support fact identity is outside the operational word contract",
+                });
+                continue;
+            }
+            if (!supportEvidenceRefMatchesIdentity(record.evidenceRef, identity)) {
+                issues.invalidSupportFacts.push({
+                    sourceId,
+                    identity,
+                    evidenceKind: record.evidence?.kind || null,
+                    reason: "support evidence reference is not bound to the exact written|reading identity",
+                });
+                continue;
+            }
             if (!supportRecordMatchesSource({ source, identity, record, evidenceCheckedAt: asOfDate || evidence.checkedAt })) {
                 issues.invalidSupportFacts.push({
                     sourceId,
@@ -551,7 +607,19 @@ function buildGovernanceIssues(evidence = {}, asOfDate = "") {
                     evidenceKind: record.evidence?.kind || null,
                     reason: "support fact does not satisfy schema, source-use, snapshot, or positive-evidence policy",
                 });
+                continue;
             }
+            const existingIdentity = evidenceRefOwners.get(record.evidenceRef);
+            if (existingIdentity) {
+                issues.invalidSupportFacts.push({
+                    sourceId,
+                    identity,
+                    evidenceKind: record.evidence?.kind || null,
+                    reason: `support fact reuses evidence reference from ${existingIdentity}`,
+                });
+                continue;
+            }
+            evidenceRefOwners.set(record.evidenceRef, identity);
         }
     }
 
@@ -590,24 +658,26 @@ function auditJlptWordSourceEvidence({
     const comparableSources = collectComparableSources(evidence);
     const comparableAssignmentsByIdentity = buildComparableAssignmentsByIdentity(evidence, comparableSources);
     const supportEvaluationDate = asOfDate || new Date().toISOString().slice(0, 10);
+    const allContractEntries = getContractEntries(contract);
+    const allContractIdentitySet = new Set(allContractEntries.map((entry) => entry.key));
     const dictionaryIdentityAssignmentsByIdentity = buildReviewedSupportRecordsByIdentity(
         evidence,
         "dictionary-identity",
-        supportEvaluationDate
+        supportEvaluationDate,
+        allContractIdentitySet
     );
     const commonnessAssignmentsByIdentity = buildReviewedSupportRecordsByIdentity(
         evidence,
         "commonness",
-        supportEvaluationDate
+        supportEvaluationDate,
+        allContractIdentitySet
     );
     const requestedLevels = Array.isArray(levels)
         ? new Set(levels.map((level) => Number(level)).filter((level) => Number.isInteger(level)))
         : null;
-    const allContractEntries = getContractEntries(contract);
     const contractEntries = allContractEntries.filter((entry) => (
         !requestedLevels || requestedLevels.has(entry.jlpt)
     ));
-    const allContractIdentitySet = new Set(allContractEntries.map((entry) => entry.key));
     const selectedContractIdentitySet = new Set(contractEntries.map((entry) => entry.key));
     const comparableIdentitySet = new Set(comparableAssignmentsByIdentity.keys());
     const identitySet = requestedLevels
@@ -688,7 +758,7 @@ function auditJlptWordSourceEvidence({
             && levelSummary.level_universe_standard === levelSummary.checked;
     }
 
-    const governanceIssues = buildGovernanceIssues(evidence, supportEvaluationDate);
+    const governanceIssues = buildGovernanceIssues(evidence, supportEvaluationDate, allContractIdentitySet);
     issueCounts.unapprovedVotingSources = governanceIssues.unapprovedVotingSources.length;
     issueCounts.illegalConsensusSourceUse = governanceIssues.illegalConsensusSourceUses.length;
     issueCounts.disallowedStoredAssignments = governanceIssues.disallowedStoredAssignments.length;
@@ -865,10 +935,13 @@ function buildSourceAccessReport({ evidence = {} } = {}) {
 
 module.exports = {
     auditJlptWordSourceEvidence,
+    buildCanonicalSupportCitation,
+    buildCanonicalSupportEvidenceRef,
     buildMaterializedWordEvidenceEntries,
     buildSourceAccessReport,
     buildSourceAdequacyByLevel,
     buildWordEvidenceResult,
     createPostureCounts,
     sourceAllowsConsensusUse,
+    supportRecordMatchesSource,
 };

@@ -15,8 +15,8 @@ const {
 const {
     openVerifiedRegularFileSync,
     resolveGovernedDirectChildPath,
-    writeFileAtomicSync,
 } = require("../src/utils/fs");
+const { runGovernedFileTransactionSync } = require("../src/utils/governedFileTransaction");
 
 const DEFAULT_CONFIG = "templates/jlpt_word_source_inputs.json";
 
@@ -38,10 +38,27 @@ function resolveGovernedWordSourceInputPath({
     });
 }
 
-function readVerifiedTextFile(filePath, label) {
+function readGovernedWordSourceText({ sourcePath, evidenceMode = "placement", label }) {
+    const filePath = resolveGovernedWordSourceInputPath({ sourcePath, evidenceMode });
+    const pathStatsBeforeOpen = fs.lstatSync(filePath, { bigint: true });
     const fileHandle = openVerifiedRegularFileSync(filePath, { label });
     try {
-        return fs.readFileSync(fileHandle, "utf8");
+        const descriptorStatsBeforeRead = fs.fstatSync(fileHandle, { bigint: true });
+        if (descriptorStatsBeforeRead.dev !== pathStatsBeforeOpen.dev
+            || descriptorStatsBeforeRead.ino !== pathStatsBeforeOpen.ino) {
+            throw new Error(`${label} changed after its governed path was resolved: ${filePath}`);
+        }
+        resolveGovernedWordSourceInputPath({ sourcePath, evidenceMode });
+        const text = fs.readFileSync(fileHandle, "utf8");
+        const descriptorStatsAfterRead = fs.fstatSync(fileHandle, { bigint: true });
+        if (descriptorStatsBeforeRead.dev !== descriptorStatsAfterRead.dev
+            || descriptorStatsBeforeRead.ino !== descriptorStatsAfterRead.ino
+            || descriptorStatsBeforeRead.size !== descriptorStatsAfterRead.size
+            || descriptorStatsBeforeRead.mtimeNs !== descriptorStatsAfterRead.mtimeNs
+            || descriptorStatsBeforeRead.ctimeNs !== descriptorStatsAfterRead.ctimeNs) {
+            throw new Error(`${label} changed while it was being read: ${filePath}`);
+        }
+        return { filePath, text };
     } finally {
         fs.closeSync(fileHandle);
     }
@@ -100,13 +117,18 @@ function run(options = {}) {
     if (!sourceConfig) {
         throw new Error(`Unknown word source input: ${options.source}`);
     }
-    const sourcePath = resolveGovernedWordSourceInputPath({
+    const sourceRead = readGovernedWordSourceText({
         sourcePath: sourceConfig.sourcePath,
         evidenceMode: sourceConfig.evidenceMode || "placement",
+        label: "JLPT word source worksheet",
     });
-    const batchPath = path.resolve(process.cwd(), options.batch);
-    const sourceText = readVerifiedTextFile(sourcePath, "JLPT word source worksheet");
-    const batchText = fs.readFileSync(batchPath, "utf8");
+    const batchRead = readGovernedWordSourceText({
+        sourcePath: options.batch,
+        evidenceMode: sourceConfig.evidenceMode || "placement",
+        label: "JLPT word source review batch",
+    });
+    const { filePath: sourcePath, text: sourceText } = sourceRead;
+    const { filePath: batchPath, text: batchText } = batchRead;
     const sourceAccessValidation = requiresWordSourceAccessPacket(batchText.split(/\r?\n/).filter((line) => line.trim()).length - 1)
         ? validateWordSourceAccessPacketFile({
             packetPath: options.sourceAccessPacket,
@@ -142,11 +164,33 @@ function run(options = {}) {
         noDeckMutation: true,
     };
     if (result.valid && options.write) {
-        const verifiedSourcePath = resolveGovernedWordSourceInputPath({
-            sourcePath: path.relative(process.cwd(), sourcePath),
-            evidenceMode: sourceConfig.evidenceMode || "placement",
+        runGovernedFileTransactionSync({
+            transactionName: `jlpt-word-source-batch-${options.source}`,
+            workspaceRoot: process.cwd(),
+            prepareChanges: () => {
+                const currentSource = readGovernedWordSourceText({
+                    sourcePath: sourceConfig.sourcePath,
+                    evidenceMode: sourceConfig.evidenceMode || "placement",
+                    label: "JLPT word source worksheet",
+                });
+                if (currentSource.text !== sourceText) {
+                    throw new Error(`JLPT word source worksheet changed concurrently before write: ${sourcePath}`);
+                }
+                return {
+                    changes: [{ filePath: currentSource.filePath, data: merge.tsv }],
+                };
+            },
+            validateAfterWrite: () => {
+                const writtenSource = readGovernedWordSourceText({
+                    sourcePath: sourceConfig.sourcePath,
+                    evidenceMode: sourceConfig.evidenceMode || "placement",
+                    label: "JLPT word source worksheet",
+                });
+                if (writtenSource.text !== merge.tsv) {
+                    throw new Error(`Post-write JLPT word source worksheet reconciliation failed: ${sourcePath}`);
+                }
+            },
         });
-        writeFileAtomicSync(verifiedSourcePath, merge.tsv, "utf8");
     }
     return result;
 }
@@ -203,6 +247,7 @@ module.exports = {
     formatReport,
     main,
     parseArgs,
+    readGovernedWordSourceText,
     resolveGovernedWordSourceInputPath,
     run,
 };

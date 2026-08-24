@@ -6,6 +6,10 @@ const {
 const {
     parseWordSourceAssignmentRows,
 } = require("./jlptWordSourceInputService");
+const {
+    buildCanonicalSupportCitation,
+    buildCanonicalSupportEvidenceRef,
+} = require("./jlptWordSourceEvidenceService");
 
 const SUPPORT_PROFILES = Object.freeze({
     jmdict: Object.freeze({
@@ -256,8 +260,12 @@ function buildJlptWordSupportSurface({
             written: contractEntry.written,
             reading: contractEntry.reading,
             reviewStatus: "reviewed",
-            citation: `${source.name}; ${source.upstreamSnapshot.url}; snapshot ${source.upstreamSnapshot.version}`,
-            evidenceRef: `${source.local.path}; sha256=${integrity.sha256}; row=${row.__rowNumber}`,
+            citation: buildCanonicalSupportCitation(source),
+            evidenceRef: buildCanonicalSupportEvidenceRef({
+                source,
+                identity,
+                rowNumber: row.__rowNumber,
+            }),
             supportClaims: [profile.claim],
             evidence,
         };

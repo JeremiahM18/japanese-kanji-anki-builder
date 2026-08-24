@@ -15,7 +15,7 @@ function fixture({ withLevel = false } = {}) {
         "priorityTags", "frequencyRank", "occurrenceCount", "documentCount", "channelCount", "matchStatus", "frequencyBand",
     ];
     const row = [
-        "学校", "がっこう", ...(withLevel ? ["4"] : []), "reviewed", "EDRDG JMdict; CC BY-SA 4.0", "downloads/jmdict.tsv; row=10",
+        "学校", "がっこう", ...(withLevel ? ["4"] : []), "reviewed", "JMdict test; https://example.test/jmdict.xml.gz; snapshot 2026-08-23", `downloads/jmdict.tsv; sha256=${"a".repeat(64)}; row=2; identity=${encodeURIComponent("学校|がっこう")}`,
         "dictionary-identity", "exact-dictionary-entry", "2026-08-23", "a".repeat(64), "123",
         "", "", "", "", "", "", "",
     ];
@@ -42,17 +42,29 @@ function fixture({ withLevel = false } = {}) {
         evidence: {
             sources: {
                 jmdict: {
+                    name: "JMdict test",
                     status: "active",
+                    sourceKind: "dictionary",
                     licenseStatus: "approved",
                     countsForConsensus: false,
                     canStoreWordAssignments: false,
                     canStoreSupportFacts: true,
+                    positiveEvidenceOnly: true,
                     allowedUse: ["dictionary-verification"],
                     supportEvidenceKinds: ["exact-dictionary-entry"],
-                    local: { sha256: "a".repeat(64) },
+                    local: {
+                        path: "downloads/jmdict.tsv",
+                        format: "tsv",
+                        sha256: "a".repeat(64),
+                        byteSize: 100,
+                        rowCount: 1,
+                    },
                     upstreamSnapshot: {
+                        url: "https://example.test/jmdict.xml.gz",
                         version: "2026-08-23",
                         sha256: "b".repeat(64),
+                        byteSize: 100,
+                        retrievedAt: "2026-08-23",
                     },
                     freshness: {
                         checkedAt: "2026-08-23",
@@ -72,7 +84,7 @@ function corpusFixtureWithoutDistributionCounts() {
         "priorityTags", "frequencyRank", "occurrenceCount", "documentCount", "channelCount", "matchStatus", "frequencyBand",
     ];
     const row = [
-        "学校", "がっこう", "reviewed", "TubeLex aggregate frequency; BSD-3-Clause", "downloads/tubelex.tsv; row=10",
+        "学校", "がっこう", "reviewed", "TubeLex test; https://example.test/tubelex.tsv.xz; snapshot tubelex-test-commit", `downloads/tubelex.tsv; sha256=${"a".repeat(64)}; row=2; identity=${encodeURIComponent("学校|がっこう")}`,
         "commonness", "corpus-frequency", "tubelex-test-commit", "a".repeat(64), "",
         "", "100", "50", "", "", "exact_written", "good",
     ];
@@ -99,17 +111,29 @@ function corpusFixtureWithoutDistributionCounts() {
         evidence: {
             sources: {
                 "tubelex-ja-frequency": {
+                    name: "TubeLex test",
                     status: "active",
+                    sourceKind: "frequency",
                     licenseStatus: "approved",
                     countsForConsensus: false,
                     canStoreWordAssignments: false,
                     canStoreSupportFacts: true,
+                    positiveEvidenceOnly: true,
                     allowedUse: ["commonness-support"],
                     supportEvidenceKinds: ["corpus-frequency"],
-                    local: { sha256: "a".repeat(64) },
+                    local: {
+                        path: "downloads/tubelex.tsv",
+                        format: "tsv",
+                        sha256: "a".repeat(64),
+                        byteSize: 100,
+                        rowCount: 1,
+                    },
                     upstreamSnapshot: {
+                        url: "https://example.test/tubelex.tsv.xz",
                         version: "tubelex-test-commit",
                         sha256: "b".repeat(64),
+                        byteSize: 100,
+                        retrievedAt: "2026-08-23",
                     },
                 },
             },
@@ -149,6 +173,25 @@ test("support input preflight rejects any embedded JLPT level", () => {
     assert.equal(result.valid, false);
     assert.match(result.blockers.join("; "), /failed word source-input validation/);
     assert.match(result.rejectedRows[0].issues.join("; "), /must not carry a JLPT level/);
+});
+
+test("support input preflight rejects a nonempty evidence reference that is not bound to the registered source row", () => {
+    const value = fixture();
+    value.text = value.text.replace(/downloads\/jmdict\.tsv; sha256=[a-f0-9]{64}; row=2; identity=[^\t]+/u, "unknown");
+    value.sourceConfig.sha256 = sha256(value.text);
+    value.sourceConfig.byteSize = Buffer.byteLength(value.text);
+    const result = buildJlptWordSourceInputReport({
+        sourceId: "jmdict",
+        sourceConfig: value.sourceConfig,
+        sourceBuffer: Buffer.from(value.text),
+        evidence: value.evidence,
+        policy: { requirePinnedIntegrity: true, requireKnownEvidenceSource: true },
+        contractEntries: [{ key: "学校|がっこう", written: "学校", reading: "がっこう", jlpt: 4 }],
+    });
+
+    assert.equal(result.valid, false);
+    assert.equal(result.reviewedSupportFactCount, 0);
+    assert.match(result.rejectedRows[0].issues.join("; "), /provenance.*registered source.*row reference/iu);
 });
 
 test("corpus support preflight rejects missing positive document and channel counts", () => {

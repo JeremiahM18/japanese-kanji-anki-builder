@@ -523,6 +523,16 @@ dictionary/commonness support backlog only for facts genuinely imported; it
 cannot change JLPT consensus, placement families/lineages, learner-source
 counts, the operational contract, review tiers, or release readiness.
 
+Each accepted support record must reproduce the registered source's canonical
+citation and bind its evidence reference to the configured local path,
+lowercase normalized SHA-256, physical source row, and URL-encoded exact
+`written|reading` identity. TSV/CSV row 1 is the header and cannot prove a data
+record. Duplicate references, identity swaps, out-of-contract support rows,
+and references with arbitrary paths, hashes, or row numbers fail governance.
+The governed batch merge confines both inputs to canonical direct-child paths,
+reads through stable revalidated file descriptors, and aborts instead of
+overwriting a worksheet changed concurrently.
+
 `deck:words:source-access` distinguishes actionable review work from registered future placeholders. `registered_no_current_source_access` means the family is tracked for future use, but current free/public access has no governed work to spend time on. Do not repeat source discovery just to get the same answer; reopen broad source-depth research only with a specific newly permitted source surface, publisher permission, or a completed source-access packet for an exact surface. Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion.
 
 Word source adequacy is a separate source-governance lane, parallel to kanji source evidence. It tracks exact `written|reading` identities, source tiers, source lineages, independent source families, reviewed source-access surfaces, and source-origin posture. It does not add Silver rows, edit starter data, move denominators, certify review tiers, or touch kanji lanes.

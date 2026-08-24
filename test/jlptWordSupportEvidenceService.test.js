@@ -11,7 +11,9 @@ const {
 } = require("../src/datasets/jlptWordSourceEvidence");
 const {
     auditJlptWordSourceEvidence: auditJlptWordSourceEvidenceRaw,
+    buildCanonicalSupportEvidenceRef,
     buildMaterializedWordEvidenceEntries,
+    supportRecordMatchesSource,
 } = require("../src/services/jlptWordSourceEvidenceService");
 const {
     buildJlptWordSupportSurface,
@@ -133,8 +135,8 @@ function dictionaryRecord() {
         written: "学校",
         reading: "がっこう",
         reviewStatus: "reviewed",
-        citation: "Exact dictionary entry 123",
-        evidenceRef: "dictionary-2026-08-23:entry-123",
+        citation: "Exact dictionary source; https://example.test/dictionary.xml.gz; snapshot dictionary-2026-08-23",
+        evidenceRef: buildCanonicalSupportEvidenceRef({ source: dictionarySource(), identity: IDENTITY, rowNumber: 1 }),
         supportClaims: ["dictionary-identity"],
         evidence: {
             kind: "exact-dictionary-entry",
@@ -150,8 +152,8 @@ function frequencyRecord() {
         written: "学校",
         reading: "がっこう",
         reviewStatus: "reviewed",
-        citation: "Exact corpus frequency row",
-        evidenceRef: "frequency-2026-08-23:rank-50",
+        citation: "Exact frequency source; https://example.test/frequency.tsv; snapshot frequency-2026-08-23",
+        evidenceRef: buildCanonicalSupportEvidenceRef({ source: frequencySource(), identity: IDENTITY, rowNumber: 2 }),
         supportClaims: ["commonness"],
         evidence: {
             kind: "corpus-frequency",
@@ -449,6 +451,274 @@ test("support-fact governance fails closed on storage, metadata, freshness, and 
         assert.equal(report.issueCounts.invalidSupportFacts, 1);
         assert.equal(report.wordSourcePosture[0].dictionaryIdentitySupported, false);
     });
+});
+
+test("typed support facts require the exact generated citation and row-bound evidence reference", async (t) => {
+    const invalidProvenanceCases = [
+        {
+            label: "citation source name",
+            mutate(record) {
+                record.citation = "Wrong source; https://example.test/dictionary.xml.gz; snapshot dictionary-2026-08-23";
+            },
+        },
+        {
+            label: "citation upstream URL",
+            mutate(record) {
+                record.citation = "Exact dictionary source; https://example.test/wrong.xml.gz; snapshot dictionary-2026-08-23";
+            },
+        },
+        {
+            label: "citation snapshot version",
+            mutate(record) {
+                record.citation = "Exact dictionary source; https://example.test/dictionary.xml.gz; snapshot wrong-version";
+            },
+        },
+        {
+            label: "evidence reference local path",
+            mutate(record) {
+                record.evidenceRef = `downloads/wrong.json; sha256=${DICTIONARY_LOCAL_SHA256}; row=1`;
+            },
+        },
+        {
+            label: "evidence reference normalized SHA-256",
+            mutate(record) {
+                record.evidenceRef = `downloads/dictionary.json; sha256=${"f".repeat(64)}; row=1`;
+            },
+        },
+        {
+            label: "evidence reference positive row number",
+            mutate(record) {
+                record.evidenceRef = `downloads/dictionary.json; sha256=${DICTIONARY_LOCAL_SHA256}; row=0`;
+            },
+        },
+        {
+            label: "evidence reference row does not exceed the pinned source row count",
+            mutate(record) {
+                record.evidenceRef = `downloads/dictionary.json; sha256=${DICTIONARY_LOCAL_SHA256}; row=2`;
+            },
+        },
+    ];
+
+    for (const invalidCase of invalidProvenanceCases) {
+        await t.test(invalidCase.label, () => {
+            const evidence = normalizeJlptWordSourceEvidence(rawEvidence());
+            invalidCase.mutate(evidence.supportRecords.dictionary[IDENTITY]);
+            const report = auditJlptWordSourceEvidence({ contract: contract(), evidence });
+
+            assert.equal(report.governanceValid, false);
+            assert.equal(report.issueCounts.invalidSupportFacts, 1);
+            assert.equal(report.wordSourcePosture[0].dictionaryIdentitySupported, false);
+        });
+    }
+});
+
+test("typed support records outside the full operational contract fail governance", () => {
+    const outsideIdentity = "校外|こうがい";
+    const raw = rawEvidence();
+    raw.sources.dictionary.local.rowCount = 2;
+    raw.supportRecords.dictionary[outsideIdentity] = {
+        ...dictionaryRecord(),
+        written: "校外",
+        reading: "こうがい",
+        evidenceRef: buildCanonicalSupportEvidenceRef({
+            source: raw.sources.dictionary,
+            identity: outsideIdentity,
+            rowNumber: 2,
+        }),
+    };
+    const evidence = normalizeJlptWordSourceEvidence(raw);
+    const report = auditJlptWordSourceEvidence({ contract: contract(), evidence });
+    const outsideIssue = report.issues.invalidSupportFacts.find((issue) => issue.identity === outsideIdentity);
+
+    assert.equal(report.governanceValid, false);
+    assert.equal(report.issueCounts.invalidSupportFacts, 1);
+    assert.match(outsideIssue.reason, /outside.*operational.*contract/iu);
+});
+
+test("out-of-contract support cannot contribute support flags or materialized support sources", () => {
+    const outsideIdentity = "校外|こうがい";
+    const raw = rawEvidence();
+    raw.assignments.placement_a[outsideIdentity] = {
+        written: "校外",
+        reading: "こうがい",
+        level: 4,
+        reviewStatus: "reviewed",
+        citation: "placement_a",
+        evidenceRef: "placement_a:row-2",
+    };
+    raw.supportRecords.dictionary = {
+        [outsideIdentity]: {
+            ...dictionaryRecord(),
+            written: "校外",
+            reading: "こうがい",
+        },
+    };
+    raw.supportRecords.frequency = {};
+    const evidence = normalizeJlptWordSourceEvidence(raw);
+    const report = auditJlptWordSourceEvidence({ contract: contract(), evidence });
+    const outsideRow = report.wordSourcePosture.find((entry) => entry.identity === outsideIdentity);
+    const materialized = buildMaterializedWordEvidenceEntries({ contract: contract(), evidence });
+    const materializedOutsideRow = materialized.words[outsideIdentity];
+
+    assert.equal(report.governanceValid, false);
+    assert.equal(report.issueCounts.invalidSupportFacts, 1);
+    assert.equal(outsideRow.dictionaryIdentitySupported, false);
+    assert.deepEqual(outsideRow.dictionaryIdentitySourceIds, []);
+    assert.equal(outsideRow.commonnessSupported, false);
+    assert.deepEqual(outsideRow.commonnessSourceIds, []);
+    assert.ok(materializedOutsideRow, "placement evidence may keep the source-only candidate materialized");
+    assert.equal(materializedOutsideRow.dictionaryIdentitySupported, false);
+    assert.deepEqual(materializedOutsideRow.dictionaryIdentitySourceIds, []);
+    assert.equal(materializedOutsideRow.commonnessSupported, false);
+    assert.deepEqual(materializedOutsideRow.commonnessSourceIds, []);
+    assert.deepEqual(materializedOutsideRow.supportSources, {});
+});
+
+test("generated support rows use format-aware physical row bounds", () => {
+    function sourceForText({ text, format, path: localPath }) {
+        const source = dictionarySource();
+        source.local = {
+            path: localPath,
+            format,
+            sha256: crypto.createHash("sha256").update(text).digest("hex"),
+            byteSize: Buffer.byteLength(text),
+            rowCount: 1,
+        };
+        return source;
+    }
+
+    function withRow(record, rowNumber) {
+        return {
+            ...record,
+            evidenceRef: record.evidenceRef.replace(/row=\d+(?=; identity=)/u, `row=${rowNumber}`),
+        };
+    }
+
+    const contractEntries = [{ key: IDENTITY, written: "学校", reading: "がっこう", jlpt: 4 }];
+    const tsvText = Buffer.from(
+        "written\treading\tmeaning\tfrequencyRank\tsource\tnotes\n"
+        + "学校\tがっこう\tschool\t100\tjmdict\tentrySeq=123\n",
+        "utf8"
+    );
+    const tsvSource = sourceForText({ text: tsvText, format: "tsv", path: "downloads/dictionary.tsv" });
+    const tsvRecord = buildJlptWordSupportSurface({
+        sourceId: "jmdict",
+        source: tsvSource,
+        sourceText: tsvText,
+        contractEntries,
+        level: 4,
+        asOfDate: "2026-08-23",
+    }).supportRecords[IDENTITY];
+
+    const jsonText = Buffer.from(JSON.stringify([{
+        written: "学校",
+        reading: "がっこう",
+        meaning: "school",
+        frequencyRank: 100,
+        source: "jmdict",
+        notes: "entrySeq=123",
+    }]), "utf8");
+    const jsonSource = sourceForText({ text: jsonText, format: "json", path: "downloads/dictionary.json" });
+    const jsonRecord = buildJlptWordSupportSurface({
+        sourceId: "jmdict",
+        source: jsonSource,
+        sourceText: jsonText,
+        contractEntries,
+        level: 4,
+        asOfDate: "2026-08-23",
+    }).supportRecords[IDENTITY];
+    const matches = (source, record) => supportRecordMatchesSource({
+        source,
+        identity: IDENTITY,
+        record,
+        evidenceCheckedAt: "2026-08-23",
+    });
+
+    assert.equal(tsvRecord.evidenceRef.includes("; row=2; identity="), true);
+    assert.deepEqual({
+        tsvGeneratedDataRow: matches(tsvSource, tsvRecord),
+        tsvHeaderRow: matches(tsvSource, withRow(tsvRecord, 1)),
+        tsvPastLastDataRow: matches(tsvSource, withRow(tsvRecord, 3)),
+        jsonGeneratedDataRow: matches(jsonSource, jsonRecord),
+        jsonZeroRow: matches(jsonSource, withRow(jsonRecord, 0)),
+        jsonPastLastDataRow: matches(jsonSource, withRow(jsonRecord, 2)),
+    }, {
+        tsvGeneratedDataRow: true,
+        tsvHeaderRow: false,
+        tsvPastLastDataRow: false,
+        jsonGeneratedDataRow: true,
+        jsonZeroRow: false,
+        jsonPastLastDataRow: false,
+    });
+});
+
+test("governance rejects one canonical source row reused by a later in-contract identity", () => {
+    const secondIdentity = "校外|こうがい";
+    const raw = rawEvidence();
+    raw.supportRecords.frequency = {};
+    raw.supportRecords.dictionary[secondIdentity] = {
+        ...dictionaryRecord(),
+        written: "校外",
+        reading: "こうがい",
+    };
+    const evidence = normalizeJlptWordSourceEvidence(raw);
+    const scopedContract = contract();
+    scopedContract.wordLevels[secondIdentity] = { written: "校外", reading: "こうがい", jlpt: 4 };
+    const report = auditJlptWordSourceEvidence({ contract: scopedContract, evidence });
+
+    assert.equal(report.governanceValid, false);
+    assert.equal(report.issueCounts.invalidSupportFacts, 1);
+    assert.equal(report.issues.invalidSupportFacts[0].identity, secondIdentity);
+    assert.match(report.issues.invalidSupportFacts[0].reason, /duplicate|reused.*row|evidence reference/iu);
+});
+
+test("canonical support row references remain bound to their exact in-contract identities", () => {
+    const secondIdentity = "校外|こうがい";
+    const firstRecord = dictionaryRecord();
+    const secondRecord = {
+        ...dictionaryRecord(),
+        written: "校外",
+        reading: "こうがい",
+        evidenceRef: buildCanonicalSupportEvidenceRef({
+            source: rawEvidence().sources.dictionary,
+            identity: secondIdentity,
+            rowNumber: 2,
+        }),
+        evidence: {
+            ...dictionaryRecord().evidence,
+            entryIds: ["456"],
+        },
+    };
+    const raw = rawEvidence();
+    raw.sources.dictionary.local.rowCount = 2;
+    raw.supportRecords.frequency = {};
+    raw.supportRecords.dictionary = {
+        [IDENTITY]: {
+            ...firstRecord,
+            evidenceRef: secondRecord.evidenceRef,
+        },
+        [secondIdentity]: {
+            ...secondRecord,
+            evidenceRef: firstRecord.evidenceRef,
+        },
+    };
+    const scopedContract = contract();
+    scopedContract.wordLevels[secondIdentity] = { written: "校外", reading: "こうがい", jlpt: 4 };
+    const evidence = normalizeJlptWordSourceEvidence(raw);
+    const report = auditJlptWordSourceEvidence({ contract: scopedContract, evidence });
+    const rowsByIdentity = new Map(report.wordSourcePosture.map((entry) => [entry.identity, entry]));
+    const materialized = buildMaterializedWordEvidenceEntries({ contract: scopedContract, evidence });
+
+    assert.equal(report.governanceValid, false);
+    assert.equal(report.issueCounts.invalidSupportFacts, 2);
+    for (const identity of [IDENTITY, secondIdentity]) {
+        assert.equal(rowsByIdentity.get(identity).dictionaryIdentitySupported, false);
+        assert.deepEqual(rowsByIdentity.get(identity).dictionaryIdentitySourceIds, []);
+    }
+    assert.equal(materialized.words[IDENTITY].dictionaryIdentitySupported, false);
+    assert.deepEqual(materialized.words[IDENTITY].dictionaryIdentitySourceIds, []);
+    assert.deepEqual(materialized.words[IDENTITY].supportSources, {});
+    assert.equal(materialized.words[secondIdentity], undefined);
 });
 
 test("support freshness is evaluated at audit time rather than frozen manifest time", () => {

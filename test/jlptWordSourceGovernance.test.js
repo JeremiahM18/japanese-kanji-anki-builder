@@ -26,6 +26,7 @@ const {
 } = require("../scripts/createJlptWordSourceAccessPacket");
 const {
     resolveGovernedWordSourceInputPath,
+    run: runWordSourceBatchMergeCommand,
 } = require("../scripts/mergeJlptWordSourceBatch");
 
 function auditJlptWordSourceEvidence(options = {}) {
@@ -33,6 +34,35 @@ function auditJlptWordSourceEvidence(options = {}) {
         asOfDate: "2026-06-21",
         ...options,
     });
+}
+
+function writeSupportMergeConfig(configPath) {
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            support_source: {
+                sourceId: "support_source",
+                sourcePath: "downloads/word-source-support/support-source.tsv",
+                sourceLabel: "Support source",
+                format: "tsv",
+                evidenceMode: "support",
+                supportProfile: "jmdict-exact-identity",
+                importMode: "replace-contract-scope",
+                contractLevels: [4],
+                writtenColumn: "written",
+                readingColumn: "reading",
+                reviewStatusColumn: "reviewStatus",
+                citationColumn: "citation",
+                evidenceRefColumn: "evidenceRef",
+                requireLevel: false,
+            },
+        },
+    }), "utf8");
 }
 
 function buildEvidence(overrides = {}) {
@@ -367,7 +397,7 @@ test("reviewed support inputs may omit JLPT placement but retain an explicit sup
         sourceConfig: inputs.inputs.dictionary_source,
         sourceBuffer: Buffer.from(
             "written\treading\treviewStatus\tcitation\tevidenceRef\tsupportClaim\tevidenceKind\tsnapshotVersion\tnormalizedSourceSha256\tentryIds\n"
-            + `食べる\tたべる\treviewed\tDictionary\tpinned exact entry\tdictionary-identity\texact-dictionary-entry\tdictionary-v1\t${"b".repeat(64)}\t1\n`,
+            + `食べる\tたべる\treviewed\tDictionary source; https://example.com/dictionary.xml.gz; snapshot dictionary-v1\tignored/dictionary.json; sha256=${"b".repeat(64)}; row=1; identity=${encodeURIComponent("食べる|たべる")}\tdictionary-identity\texact-dictionary-entry\tdictionary-v1\t${"b".repeat(64)}\t1\n`,
             "utf8"
         ),
         evidence: buildEvidence(),
@@ -540,6 +570,298 @@ test("word source access packet and merge outputs stay on their ignored governed
     }), /canonical relative path|noncanonical path segment|direct child/i);
 });
 
+test("word source batch merge confines support-mode batch reads to a governed direct child", (t) => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-batch-path-"));
+    const supportDirectory = path.join(temporaryDirectory, "downloads", "word-source-support");
+    const nestedDirectory = path.join(supportDirectory, "nested");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const canonicalBatchPath = path.join(supportDirectory, "canonical-batch.tsv");
+    const outsideBatchPath = path.join(temporaryDirectory, "outside-batch.tsv");
+    const nestedBatchPath = path.join(nestedDirectory, "nested-batch.tsv");
+    const worksheet = "written\treading\n";
+
+    fs.mkdirSync(nestedDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, worksheet, "utf8");
+    fs.writeFileSync(canonicalBatchPath, worksheet, "utf8");
+    fs.writeFileSync(outsideBatchPath, worksheet, "utf8");
+    fs.writeFileSync(nestedBatchPath, worksheet, "utf8");
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            support_source: {
+                sourceId: "support_source",
+                sourcePath: "downloads/word-source-support/support-source.tsv",
+                sourceLabel: "Support source",
+                format: "tsv",
+                evidenceMode: "support",
+                supportProfile: "jmdict-exact-identity",
+                importMode: "replace-contract-scope",
+                contractLevels: [4],
+                requireLevel: false,
+            },
+        },
+    }), "utf8");
+
+    process.chdir(temporaryDirectory);
+    t.after(() => {
+        process.chdir(previousCwd);
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    });
+
+    const baseOptions = {
+        config: configPath,
+        source: "support_source",
+        write: false,
+    };
+    const canonical = runWordSourceBatchMergeCommand({
+        ...baseOptions,
+        batch: "downloads/word-source-support/canonical-batch.tsv",
+    });
+    assert.equal(canonical.valid, true);
+
+    const acceptedEscapes = [];
+    const unexpectedErrors = [];
+    for (const [label, batch] of [
+        ["traversal", "downloads/word-source-support/../../outside-batch.tsv"],
+        ["absolute", outsideBatchPath],
+        ["nested", "downloads/word-source-support/nested/nested-batch.tsv"],
+    ]) {
+        try {
+            runWordSourceBatchMergeCommand({ ...baseOptions, batch });
+            acceptedEscapes.push(label);
+        } catch (error) {
+            if (!/canonical relative path|noncanonical path segment|direct child|outside governed/i.test(error.message)) {
+                unexpectedErrors.push(`${label}: ${error.message}`);
+            }
+        }
+    }
+
+    assert.deepEqual(unexpectedErrors, []);
+    assert.deepEqual(acceptedEscapes, []);
+});
+
+test("word source batch merge rejects a support-mode batch junction without consuming its sentinel", (t) => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-batch-junction-"));
+    const supportDirectory = path.join(temporaryDirectory, "downloads", "word-source-support");
+    const outsideDirectory = path.join(temporaryDirectory, "outside");
+    const linkedDirectory = path.join(supportDirectory, "linked");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const sentinelPath = path.join(outsideDirectory, "sentinel.tsv");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const sentinel = "written\treading\n";
+
+    fs.mkdirSync(supportDirectory, { recursive: true });
+    fs.mkdirSync(outsideDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, "written\treading\n", "utf8");
+    fs.writeFileSync(sentinelPath, sentinel, "utf8");
+    fs.symlinkSync(outsideDirectory, linkedDirectory, process.platform === "win32" ? "junction" : "dir");
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            support_source: {
+                sourceId: "support_source",
+                sourcePath: "downloads/word-source-support/support-source.tsv",
+                sourceLabel: "Support source",
+                format: "tsv",
+                evidenceMode: "support",
+                supportProfile: "jmdict-exact-identity",
+                importMode: "replace-contract-scope",
+                contractLevels: [4],
+                requireLevel: false,
+            },
+        },
+    }), "utf8");
+
+    process.chdir(temporaryDirectory);
+    t.after(() => {
+        process.chdir(previousCwd);
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    });
+
+    try {
+        assert.throws(() => runWordSourceBatchMergeCommand({
+            config: configPath,
+            source: "support_source",
+            batch: "downloads/word-source-support/linked/sentinel.tsv",
+            write: false,
+        }), /direct child|symbolic link|junction|redirected directory/i);
+    } finally {
+        assert.equal(fs.readFileSync(sentinelPath, "utf8"), sentinel);
+    }
+});
+
+test("word source batch merge rejects a governed-parent junction swap before the verified batch open", () => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-parent-race-"));
+    const downloadsDirectory = path.join(temporaryDirectory, "downloads");
+    const supportDirectory = path.join(downloadsDirectory, "word-source-support");
+    const originalSupportDirectory = path.join(downloadsDirectory, "word-source-support-original");
+    const outsideDirectory = path.join(temporaryDirectory, "outside");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const governedBatchPath = path.join(supportDirectory, "batch.tsv");
+    const sentinelPath = path.join(outsideDirectory, "batch.tsv");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const sourceWorksheet = "written\treading\n";
+    const governedBatch = "written\treading\n";
+    const externalSentinel = "written\treading\n外\tそと\n";
+
+    fs.mkdirSync(supportDirectory, { recursive: true });
+    fs.mkdirSync(outsideDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, sourceWorksheet, "utf8");
+    fs.writeFileSync(governedBatchPath, governedBatch, "utf8");
+    fs.writeFileSync(sentinelPath, externalSentinel, "utf8");
+    writeSupportMergeConfig(configPath);
+
+    const originalCloseSync = fs.closeSync;
+    const originalReadFileSync = fs.readFileSync;
+    const sentinelStats = fs.statSync(sentinelPath, { bigint: true });
+    let verifiedCloseCount = 0;
+    let externalSentinelConsumed = false;
+    let commandError = null;
+    let observed = null;
+
+    try {
+        process.chdir(temporaryDirectory);
+        fs.readFileSync = function readFileSyncWithSentinelProbe(file, ...args) {
+            if (Number.isInteger(file)) {
+                const descriptorStats = fs.fstatSync(file, { bigint: true });
+                if (descriptorStats.dev === sentinelStats.dev && descriptorStats.ino === sentinelStats.ino) {
+                    externalSentinelConsumed = true;
+                }
+            }
+            return originalReadFileSync.call(fs, file, ...args);
+        };
+        fs.closeSync = function closeSyncWithGovernedParentSwap(fileHandle) {
+            originalCloseSync(fileHandle);
+            verifiedCloseCount += 1;
+            if (verifiedCloseCount === 1) {
+                fs.renameSync(supportDirectory, originalSupportDirectory);
+                fs.symlinkSync(
+                    outsideDirectory,
+                    supportDirectory,
+                    process.platform === "win32" ? "junction" : "dir"
+                );
+            }
+        };
+
+        try {
+            runWordSourceBatchMergeCommand({
+                config: configPath,
+                source: "support_source",
+                batch: "downloads/word-source-support/batch.tsv",
+                allowAdditions: true,
+                write: false,
+            });
+        } catch (error) {
+            commandError = error;
+        }
+        observed = {
+            rejected: Boolean(commandError),
+            governedPathRejection: Boolean(commandError && /direct child|symbolic link|junction|redirected directory|changed while/i.test(commandError.message)),
+            externalSentinelConsumed,
+            externalSentinelPreserved: fs.readFileSync(sentinelPath, "utf8") === externalSentinel,
+        };
+    } finally {
+        fs.closeSync = originalCloseSync;
+        fs.readFileSync = originalReadFileSync;
+        process.chdir(previousCwd);
+        if (fs.existsSync(supportDirectory)) {
+            fs.rmSync(supportDirectory, { recursive: true, force: true });
+        }
+        if (fs.existsSync(originalSupportDirectory)) {
+            fs.renameSync(originalSupportDirectory, supportDirectory);
+        }
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    }
+
+    assert.deepEqual(observed, {
+        rejected: true,
+        governedPathRejection: true,
+        externalSentinelConsumed: false,
+        externalSentinelPreserved: true,
+    });
+});
+
+test("word source batch merge rejects a concurrent source change before write and preserves it", () => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-source-race-"));
+    const supportDirectory = path.join(temporaryDirectory, "downloads", "word-source-support");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const batchPath = path.join(supportDirectory, "batch.tsv");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const header = "written\treading\treviewStatus\tcitation\tevidenceRef\n";
+    const originalSource = header
+        + "食べる\tたべる\tneeds_review\tSource row 1\trow 1\n";
+    const concurrentSource = originalSource
+        + "学校\tがっこう\tneeds_review\tConcurrent source row\trow 2\n";
+    const reviewedBatch = header
+        + "食べる\tたべる\treviewed\tSource row 1\trow 1\n";
+
+    fs.mkdirSync(supportDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, originalSource, "utf8");
+    fs.writeFileSync(batchPath, reviewedBatch, "utf8");
+    writeSupportMergeConfig(configPath);
+
+    const originalCloseSync = fs.closeSync;
+    let verifiedCloseCount = 0;
+    let sourceMutationInjected = false;
+    let commandError = null;
+    let observed = null;
+
+    try {
+        process.chdir(temporaryDirectory);
+        fs.closeSync = function closeSyncWithConcurrentSourceChange(fileHandle) {
+            originalCloseSync(fileHandle);
+            verifiedCloseCount += 1;
+            if (verifiedCloseCount === 1) {
+                fs.writeFileSync(sourcePath, concurrentSource, "utf8");
+                sourceMutationInjected = true;
+            }
+        };
+
+        try {
+            runWordSourceBatchMergeCommand({
+                config: configPath,
+                source: "support_source",
+                batch: "downloads/word-source-support/batch.tsv",
+                write: true,
+            });
+        } catch (error) {
+            commandError = error;
+        }
+        observed = {
+            sourceMutationInjected,
+            rejected: Boolean(commandError),
+            concurrentChangeRejection: Boolean(commandError && /changed|concurrent|stale|integrity/i.test(commandError.message)),
+            concurrentSourcePreserved: fs.readFileSync(sourcePath, "utf8") === concurrentSource,
+        };
+    } finally {
+        fs.closeSync = originalCloseSync;
+        process.chdir(previousCwd);
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    }
+
+    assert.deepEqual(observed, {
+        sourceMutationInjected: true,
+        rejected: true,
+        concurrentChangeRejection: true,
+        concurrentSourcePreserved: true,
+    });
+});
+
 test("word source access packets keep support-only evidence separate from JLPT placement", () => {
     const packet = buildWordSourceAccessPacket({
         sourceId: "jmdict",
@@ -700,8 +1022,8 @@ test("word source adequacy separates governance validity from incomplete evidenc
                     written: "食べる",
                     reading: "たべる",
                     reviewStatus: "reviewed",
-                    citation: "Dictionary",
-                    evidenceRef: "entry 1",
+                    citation: "Dictionary source; https://example.com/dictionary.xml.gz; snapshot dictionary-v1",
+                    evidenceRef: `ignored/dictionary.json; sha256=${"b".repeat(64)}; row=1; identity=${encodeURIComponent("食べる|たべる")}`,
                     supportClaims: ["dictionary-identity"],
                     evidence: {
                         kind: "exact-dictionary-entry",
@@ -716,8 +1038,8 @@ test("word source adequacy separates governance validity from incomplete evidenc
                     written: "食べる",
                     reading: "たべる",
                     reviewStatus: "reviewed",
-                    citation: "Commonness source",
-                    evidenceRef: "entry 1",
+                    citation: "Commonness source; https://example.com/commonness.xml.gz; snapshot commonness-v1",
+                    evidenceRef: `ignored/commonness.json; sha256=${"d".repeat(64)}; row=1; identity=${encodeURIComponent("食べる|たべる")}`,
                     supportClaims: ["commonness"],
                     evidence: {
                         kind: "dictionary-priority",

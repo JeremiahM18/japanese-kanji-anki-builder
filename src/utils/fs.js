@@ -105,6 +105,119 @@ function isPathInside(childPath, parentPath) {
     return relative.length > 0 && !relative.startsWith("..") && !path.isAbsolute(relative);
 }
 
+function sameResolvedPath(leftPath, rightPath) {
+    return normalizeForPathComparison(leftPath) === normalizeForPathComparison(rightPath);
+}
+
+/**
+ * @param {{
+ *   baseDirectory: string,
+ *   directoryPath: string,
+ *   fsImpl?: typeof fs,
+ *   label?: string,
+ * }} options
+ */
+function assertUnredirectedDirectoryPath({ baseDirectory, directoryPath, fsImpl = fs, label = "directory" }) {
+    const resolvedBase = path.resolve(baseDirectory);
+    const resolvedDirectory = path.resolve(directoryPath);
+    if (!sameResolvedPath(resolvedBase, resolvedDirectory) && !isPathInside(resolvedDirectory, resolvedBase)) {
+        throw new Error(`${label} is outside its governed base directory: ${resolvedDirectory}`);
+    }
+    const realBase = fsImpl.realpathSync(resolvedBase);
+    let current = resolvedBase;
+    const relativeSegments = path.relative(resolvedBase, resolvedDirectory)
+        .split(path.sep)
+        .filter(Boolean);
+    for (const segment of relativeSegments) {
+        current = path.join(current, segment);
+        if (!fsImpl.existsSync(current)) {
+            break;
+        }
+        const stats = fsImpl.lstatSync(current);
+        if (stats.isSymbolicLink()) {
+            throw new Error(`${label} must not traverse a symbolic link or junction: ${current}`);
+        }
+        if (!stats.isDirectory()) {
+            throw new Error(`${label} ancestor is not a directory: ${current}`);
+        }
+        const expectedRealPath = path.resolve(realBase, path.relative(resolvedBase, current));
+        const actualRealPath = fsImpl.realpathSync(current);
+        if (!sameResolvedPath(actualRealPath, expectedRealPath)) {
+            throw new Error(`${label} resolves through a redirected directory: ${current} -> ${actualRealPath}`);
+        }
+    }
+}
+
+/**
+ * @param {{
+ *   baseDirectory: string,
+ *   governedDirectory: string,
+ *   declaredPath: string,
+ *   extension: string,
+ *   expectedBaseName?: string,
+ *   label?: string,
+ *   rejectWindowsReservedName?: boolean,
+ *   fsImpl?: typeof fs,
+ * }} options
+ */
+function resolveGovernedDirectChildPath({
+    baseDirectory,
+    governedDirectory,
+    declaredPath,
+    extension,
+    expectedBaseName = "",
+    label = "governed file",
+    rejectWindowsReservedName = false,
+    fsImpl = fs,
+}) {
+    const rawPath = String(declaredPath || "");
+    if (!rawPath || rawPath !== rawPath.trim() || rawPath.includes("\0")) {
+        throw new Error(`${label} requires a nonempty canonical relative path.`);
+    }
+    if (
+        path.posix.parse(rawPath).root
+        || path.win32.parse(rawPath).root
+        || rawPath.includes(":")
+    ) {
+        throw new Error(`${label} requires a canonical relative path without roots, drives, devices, or alternate data streams.`);
+    }
+    const segments = rawPath.split(/[\\/]/u);
+    if (segments.some((segment) => !segment || segment === "." || segment === ".." || segment !== segment.trimEnd())) {
+        throw new Error(`${label} contains a noncanonical path segment.`);
+    }
+
+    const resolvedBase = path.resolve(baseDirectory);
+    const resolvedGovernedDirectory = path.resolve(governedDirectory);
+    const resolvedPath = path.resolve(resolvedBase, ...segments);
+    if (!sameResolvedPath(path.dirname(resolvedPath), resolvedGovernedDirectory)) {
+        throw new Error(`${label} must be a direct child of ${resolvedGovernedDirectory}.`);
+    }
+    const baseName = path.basename(resolvedPath);
+    if (expectedBaseName && baseName !== expectedBaseName) {
+        throw new Error(`${label} must use canonical data path basename ${expectedBaseName}.`);
+    }
+    if (!extension || path.extname(baseName) !== extension) {
+        throw new Error(`${label} requires a lowercase ${extension || "file"} extension.`);
+    }
+    if (rejectWindowsReservedName && /^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/iu.test(baseName)) {
+        throw new Error(`${label} uses a reserved Windows filename: ${baseName}.`);
+    }
+
+    assertUnredirectedDirectoryPath({
+        baseDirectory: resolvedBase,
+        directoryPath: resolvedGovernedDirectory,
+        fsImpl,
+        label: `${label} directory`,
+    });
+    if (fsImpl.existsSync(resolvedPath)) {
+        const stats = fsImpl.lstatSync(resolvedPath);
+        if (stats.isSymbolicLink() || !stats.isFile()) {
+            throw new Error(`${label} target must be a regular non-symbolic-link file: ${resolvedPath}`);
+        }
+    }
+    return resolvedPath;
+}
+
 function getDefaultGeneratedPathRoots({ cwd = process.cwd(), tempDir = os.tmpdir() } = {}) {
     return [
         path.join(cwd, "out"),
@@ -168,6 +281,7 @@ module.exports = {
     readFileIfExistsSync,
     removeGeneratedPath,
     removeGeneratedPathSync,
+    resolveGovernedDirectChildPath,
     writeFileIfMissingSync,
     writeFileAtomicSync,
 };

@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
+const path = require("node:path");
 
 const {
     buildReports,
@@ -11,6 +12,7 @@ const {
     buildDefaultAssignmentFile,
     formatReport,
     parseArgs: parseImportArgs,
+    resolveGovernedEvidenceDataPath,
 } = require("../src/services/jlptWordSourceInputImportCommandService");
 
 test("word source input report parseArgs keeps audit controls explicit", () => {
@@ -59,6 +61,7 @@ test("word source input import parseArgs and report keep write mode explicit", (
         "--contract=custom-contract.json",
         "--evidence=custom-evidence.json",
         "--source=tanos-n4-vocab",
+        "--source-access-packet=packet.json",
         "--write",
         "--json",
         "--oops",
@@ -69,6 +72,7 @@ test("word source input import parseArgs and report keep write mode explicit", (
         contract: "custom-contract.json",
         evidence: "custom-evidence.json",
         source: "tanos-n4-vocab",
+        sourceAccessPacket: "packet.json",
         write: true,
         json: true,
         unknownArgs: ["--oops"],
@@ -94,4 +98,58 @@ test("word source input imports use the governed multi-file transaction", () => 
     assert.match(source, /runGovernedFileTransactionSync/);
     assert.doesNotMatch(source, /fs\.writeFileSync\(assignmentPath/);
     assert.doesNotMatch(source, /fs\.writeFileSync\(evidencePath/);
+});
+
+test("word source input import preflight uses the exact selected contract", () => {
+    const servicePath = require.resolve("../src/services/jlptWordSourceInputImportCommandService");
+    const source = fs.readFileSync(servicePath, "utf8");
+
+    assert.match(
+        source,
+        /const contract = loadJlptWordLevelContract[\s\S]+?buildReports\(\{[\s\S]+?contractData: contract,/u
+    );
+});
+
+test("word source input imports confine canonical data files to their governed evidence directory", () => {
+    const evidencePath = path.join(process.cwd(), "templates", "jlpt_word_source_evidence.json");
+    const governed = resolveGovernedEvidenceDataPath({
+        evidencePath,
+        relativeDataFile: "jlpt_word_source_evidence/support/dictionary.json",
+        evidenceMode: "support",
+        sourceId: "dictionary",
+    });
+
+    assert.equal(
+        governed,
+        path.join(process.cwd(), "templates", "jlpt_word_source_evidence", "support", "dictionary.json")
+    );
+    assert.throws(() => resolveGovernedEvidenceDataPath({
+        evidencePath,
+        relativeDataFile: "../package.json",
+        evidenceMode: "support",
+        sourceId: "dictionary",
+    }), /canonical relative path|noncanonical path segment|direct child/i);
+    assert.throws(() => resolveGovernedEvidenceDataPath({
+        evidencePath,
+        relativeDataFile: "C:\\outside\\dictionary.json",
+        evidenceMode: "support",
+        sourceId: "dictionary",
+    }), /canonical relative path|noncanonical path segment|direct child/i);
+
+    for (const relativeDataFile of [
+        "jlpt_word_source_evidence/support/nested/dictionary.json",
+        "jlpt_word_source_evidence/support/other-source.json",
+        "jlpt_word_source_evidence/support/dictionary.JSON",
+        "C:outside\\dictionary.json",
+        "\\\\server\\share\\dictionary.json",
+        "\\\\?\\C:\\outside\\dictionary.json",
+        "jlpt_word_source_evidence/support/dictionary.json:ads",
+    ]) {
+        assert.throws(() => resolveGovernedEvidenceDataPath({
+            evidencePath,
+            relativeDataFile,
+            evidenceMode: "support",
+            sourceId: "dictionary",
+        }), /canonical relative path|noncanonical path segment|canonical data path|direct child|lowercase \.json extension/i, relativeDataFile);
+    }
 });

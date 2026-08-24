@@ -18,6 +18,10 @@ const {
 const DEFAULT_CONTRACT = "templates/jlpt_word_level_contract.json";
 const DEFAULT_EVIDENCE = "templates/jlpt_word_source_evidence.json";
 
+function todayIsoDate() {
+    return new Date().toISOString().slice(0, 10);
+}
+
 function parseArgs(argv) {
     const options = {
         contract: DEFAULT_CONTRACT,
@@ -28,6 +32,7 @@ function parseArgs(argv) {
         scopeLevels: null,
         limit: 25,
         strict: false,
+        asOfDate: todayIsoDate(),
         unknownArgs: [],
     };
 
@@ -48,6 +53,8 @@ function parseArgs(argv) {
             options.contract = arg.slice("--contract=".length);
         } else if (arg.startsWith("--evidence=")) {
             options.evidence = arg.slice("--evidence=".length);
+        } else if (arg.startsWith("--as-of=")) {
+            options.asOfDate = arg.slice("--as-of=".length);
         } else if (arg.startsWith("--limit=")) {
             options.limit = parseNumericOption(arg, "limit");
         } else {
@@ -62,7 +69,8 @@ function formatSourceCoverage(sourceCoverage = {}) {
         .sort((left, right) => String(left.sourceId).localeCompare(String(right.sourceId)))
         .map((source) => (
             `- ${source.sourceId}: status ${source.status}; license ${source.licenseStatus}; consensus ${source.countsForConsensus ? "yes" : "no"}; `
-            + `assignments ${source.reviewedAssignmentCount}/${source.assignmentCount}; family ${source.independenceGroup}; lineage ${source.evidenceLineage}; action data source`
+            + `assignments ${source.reviewedAssignmentCount}/${source.assignmentCount}; support facts ${source.supportFactCount || 0}; `
+            + `family ${source.independenceGroup}; lineage ${source.evidenceLineage}; action data source`
         ));
 }
 
@@ -105,6 +113,7 @@ function formatJlptWordSourceEvidenceReport({ contractPath, evidencePath, report
         "",
         "This is a read-only source-origin and vocabulary-universe audit. It does not add words, move words, change denominators, certify Silver/Gold/Sapphire/Platinum/Obsidian, or touch kanji lanes.",
         "",
+        `Support freshness evaluated as of: ${report.asOfDate}`,
         `Checked word identities: ${report.checked}`,
         `Selected contract identities: ${report.selectedContractIdentityCount}`,
         `Out-of-scope contract identities: ${report.outOfScopeContractIdentityCount}`,
@@ -154,6 +163,7 @@ function buildReport(options = {}) {
         evidence: loadJlptWordSourceEvidence(evidencePath),
         levels: options.scopeLevels,
         limit: options.limit,
+        asOfDate: options.asOfDate || todayIsoDate(),
     });
     return {
         contractPath,

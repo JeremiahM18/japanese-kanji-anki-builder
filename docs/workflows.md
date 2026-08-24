@@ -476,13 +476,60 @@ npm run data:merge:jlpt:word-source-batch -- --source=<source-id> --batch=<ignor
 npm run data:import:jlpt:word-source-input -- --source=<source-id>
 ```
 
+The current governed N4 dictionary/commonness support path is separate from
+JLPT placement. Run it one source at a time and preserve the dry-run before each
+write. The exact claim mapping is `jmdict` to `dictionary-identity`, and both
+`jmdict-priority-commonness` and `tubelex-ja-frequency` to `commonness`.
+
+```bash
+npm run data:build:jlpt:word-support-input -- --source=jmdict --level=4
+npm run data:build:jlpt:word-support-input -- --source=jmdict --level=4 --write
+npm run data:packet:jlpt:word-source-access -- --source=jmdict --evidence-role=support-only --allowed-support-claims=dictionary-identity --surface-type=permitted-machine-readable-source --title="EDRDG JMdict English snapshot 2026-08-23" --citation="EDRDG JMdict; CC BY-SA 4.0" --evidence-ref="https://www.edrdg.org/pub/Nihongo/JMdict_e.gz; JMdict created: 2026-08-23" --strict
+npm run data:merge:jlpt:word-source-batch -- --source=jmdict --batch=downloads/word-source-support/jmdict-n4-reviewed-batch.tsv --source-access-packet=downloads/word-source-access-packets/jmdict-word-source-access-packet.json
+npm run data:merge:jlpt:word-source-batch -- --source=jmdict --batch=downloads/word-source-support/jmdict-n4-reviewed-batch.tsv --source-access-packet=downloads/word-source-access-packets/jmdict-word-source-access-packet.json --write
+npm run data:audit:jlpt:word-source-inputs -- --source=jmdict --strict
+npm run data:import:jlpt:word-source-input -- --source=jmdict --source-access-packet=downloads/word-source-access-packets/jmdict-word-source-access-packet.json
+npm run data:import:jlpt:word-source-input -- --source=jmdict --source-access-packet=downloads/word-source-access-packets/jmdict-word-source-access-packet.json --write
+npm run data:audit:jlpt:word-sources -- --levels=4 --governance-strict
+```
+
+Use the same sequence for `jmdict-priority-commonness` or
+`tubelex-ja-frequency`, changing the packet claim to `commonness` and using the
+source-specific ignored paths. The builder checks the pinned local SHA-256,
+byte size, row count, exact contract scope, allowed evidence kind, upstream
+snapshot, and positive-only rules. Its `*-reviewed-batch.tsv` is a mechanically
+prefilled deterministic candidate. `reviewStatus=reviewed` means governed
+support-fact validation against pinned exact source rows; it is not human,
+native, card-content, or review-tier proof. The candidate becomes admissible
+only after the matching support-only packet, reviewed diff and identity/exclusion
+boundary inspection, governed merge, typed preflight, transactional write, and
+post-write audit.
+
+Keep the generated worksheet, reviewed batch, source-access packet, and split
+evidence JSON at their command-owned canonical paths. These commands reject
+path traversal, absolute/drive/UNC/device paths, alternate data streams,
+noncanonical extensions, nested files, reserved names, and symlink/junction
+redirection. Review and reviewed-batch outputs must be distinct and cannot
+overwrite the normalized source. Access-packet `checkedAt` must be a valid date
+no later than the live evaluation date.
+
+Support-mode preflight requires row-specific typed evidence rather than
+source-wide defaults. The import replaces only the configured contract levels
+for the selected support source, preserves other levels, other sources, and all
+placement assignments, and writes the selected support file plus manifest in
+one governed transaction. Post-write reload, exact-record reconciliation,
+materialization, and governance validation must pass. This can reduce the
+dictionary/commonness support backlog only for facts genuinely imported; it
+cannot change JLPT consensus, placement families/lineages, learner-source
+counts, the operational contract, review tiers, or release readiness.
+
 `deck:words:source-access` distinguishes actionable review work from registered future placeholders. `registered_no_current_source_access` means the family is tracked for future use, but current free/public access has no governed work to spend time on. Do not repeat source discovery just to get the same answer; reopen broad source-depth research only with a specific newly permitted source surface, publisher permission, or a completed source-access packet for an exact surface. Paid/private sources are optional future improvements, not a prerequisite for free labeled word expansion.
 
 Word source adequacy is a separate source-governance lane, parallel to kanji source evidence. It tracks exact `written|reading` identities, source tiers, source lineages, independent source families, reviewed source-access surfaces, and source-origin posture. It does not add Silver rows, edit starter data, move denominators, certify review tiers, or touch kanji lanes.
 
 When `--level` or `--levels` is present, the top-level audit denominator is the complete selected operational-contract level, not the global source union. Cross-level claims for those exact identities remain visible; other contract identities, other comparable identities, and source-only identities are reported separately. Scoping must never remove an N4 mismatch or unevaluated identity.
 
-The declared dictionary-identity and commonness policy flags are enforced. They require separate exact reviewed positive `supportClaims` from an active, licence-reviewed, storage-permitted source with the matching allowed use. Source membership or a source-level allowed-use declaration alone is not support. Dictionary/commonness sources never increase JLPT-placement family, lineage, consensus, or learner-source counts. Support-only worksheets may set `requireLevel=false`; placement worksheets may not. The import command writes the assignment file and evidence manifest through one governed transaction and reloads both before commit.
+The declared dictionary-identity and commonness policy flags are enforced. They require separate exact reviewed positive typed support records from an active, licence-reviewed source with `canStoreSupportFacts=true`, the matching `supportEvidenceKinds` and allowed use, pinned upstream and normalized integrity, and current freshness where required. `canStoreWordAssignments=false` remains the placement boundary for support-only sources. Source membership or a source-level allowed-use declaration alone is not support. Dictionary/commonness sources never increase JLPT-placement family, lineage, consensus, or learner-source counts. Support-only inputs set `evidenceMode=support`, `importMode=replace-contract-scope`, an exact `contractLevels` scope, and `requireLevel=false`; placement worksheets may not use that shape. The import command writes either the selected assignment file or the selected support file with the evidence manifest through one governed transaction and reloads both before commit.
 
 The current word source posture is expected to be source-depth incomplete. Existing JLPTStudy and Tanos source files are configured and pinned discovery inputs, not broad common-vocabulary universe proof. A level may say "configured source evaluated" when its pinned source list has been exhausted; it may not say "all common JLPT words covered" until the word source-evidence audit reaches `level_universe_standard` for that level.
 

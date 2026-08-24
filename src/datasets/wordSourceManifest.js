@@ -2,6 +2,16 @@ const fs = require("node:fs");
 const { z } = require("zod");
 
 const sourceUseSchema = z.string().min(1);
+const supportEvidenceKindSchema = z.enum([
+    "exact-dictionary-entry",
+    "dictionary-priority",
+    "corpus-frequency",
+]);
+const isoDateStringSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/u).refine((value) => {
+    const timestamp = Date.parse(`${value}T00:00:00.000Z`);
+    return Number.isFinite(timestamp)
+        && new Date(timestamp).toISOString().slice(0, 10) === value;
+}, "Expected a valid YYYY-MM-DD calendar date");
 const sourceStatusSchema = z.enum(["active", "registered", "needs_review", "blocked"]);
 const sourceTypeSchema = z.enum([
     "community_web_list",
@@ -40,6 +50,20 @@ const sourceLocalSchema = z.object({
     columns: z.array(z.string().min(1)).default([]),
 }).strict();
 
+const upstreamSnapshotSchema = z.object({
+    url: z.string().url(),
+    version: z.string().min(1),
+    retrievedAt: isoDateStringSchema,
+    sha256: z.string().regex(/^[a-f0-9]{64}$/iu),
+    byteSize: z.number().int().nonnegative(),
+}).strict();
+
+const sourceFreshnessSchema = z.object({
+    checkedAt: isoDateStringSchema,
+    maximumAgeDays: z.number().int().positive(),
+    updateProcedure: z.string().min(1),
+}).strict();
+
 const sourceCandidatePolicySchema = z.object({
     levels: z.array(z.number().int().min(1).max(5)).optional(),
     kanjiScope: z.enum(["any", "at-or-below", "known-jlpt", "target-level"]).default("known-jlpt"),
@@ -59,6 +83,10 @@ const wordSourceSchema = z.object({
     intendedUse: z.array(sourceUseSchema).default([]),
     allowedUse: z.array(sourceUseSchema).default([]),
     disallowedUse: z.array(sourceUseSchema).default([]),
+    canStoreSupportFacts: z.boolean().default(false),
+    supportEvidenceKinds: z.array(supportEvidenceKindSchema).default([]),
+    upstreamSnapshot: upstreamSnapshotSchema.optional(),
+    freshness: sourceFreshnessSchema.optional(),
     candidatePolicy: sourceCandidatePolicySchema.optional(),
 }).strict();
 
@@ -171,6 +199,45 @@ function parseWordSourceManifest(value) {
             }
             if (!Array.isArray(source.candidatePolicy.levels) || source.candidatePolicy.levels.length === 0) {
                 throw new Error(`Active candidate-discovery word source ${sourceId} must declare candidatePolicy.levels.`);
+            }
+        }
+        if (source.canStoreSupportFacts) {
+            const missingSupportFields = [
+                source.supportEvidenceKinds.length === 0 ? "supportEvidenceKinds" : null,
+                !source.upstreamSnapshot ? "upstreamSnapshot" : null,
+                !source.local?.sha256 ? "local.sha256" : null,
+            ].filter(Boolean);
+            if (missingSupportFields.length > 0) {
+                throw new Error(`Support-fact word source ${sourceId} is missing required field(s): ${missingSupportFields.join(", ")}.`);
+            }
+            const kindRequirements = {
+                "exact-dictionary-entry": {
+                    sourceType: "dictionary",
+                    allowedUses: ["dictionary-verification"],
+                },
+                "dictionary-priority": {
+                    sourceType: "dictionary_priority",
+                    allowedUses: ["frequency-sanity", "usefulness-support"],
+                },
+                "corpus-frequency": {
+                    sourceType: "corpus_frequency",
+                    allowedUses: ["frequency-sanity", "usefulness-support"],
+                },
+            };
+            for (const kind of source.supportEvidenceKinds) {
+                const requirement = kindRequirements[kind];
+                if (source.sourceType !== requirement.sourceType) {
+                    throw new Error(`Support-fact word source ${sourceId} cannot declare ${kind} for ${source.sourceType}.`);
+                }
+                if (!requirement.allowedUses.some((use) => source.allowedUse.includes(use))) {
+                    throw new Error(`Support-fact word source ${sourceId} declares ${kind} without its required allowed use.`);
+                }
+            }
+            const requiresFreshness = source.supportEvidenceKinds.some((kind) => (
+                kind === "exact-dictionary-entry" || kind === "dictionary-priority"
+            ));
+            if (requiresFreshness && !source.freshness) {
+                throw new Error(`Support-fact word source ${sourceId} must declare freshness for dictionary evidence.`);
             }
         }
         if (sourceNeedsLocalIntegrity(source)) {

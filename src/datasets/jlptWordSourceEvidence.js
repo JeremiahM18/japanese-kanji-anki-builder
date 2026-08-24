@@ -1,6 +1,10 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { z } = require("zod");
+const {
+    openVerifiedRegularFileSync,
+    resolveGovernedDirectChildPath,
+} = require("../utils/fs");
 
 const wordSourceReviewStatusSchema = z.enum([
     "reviewed",
@@ -13,6 +17,60 @@ const wordSourceReviewStatusSchema = z.enum([
 const wordSourceSupportClaimSchema = z.enum([
     "dictionary-identity",
     "commonness",
+]);
+
+const wordSupportEvidenceKindSchema = z.enum([
+    "exact-dictionary-entry",
+    "dictionary-priority",
+    "corpus-frequency",
+]);
+
+const isoDateStringSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/u).refine((value) => {
+    const timestamp = Date.parse(`${value}T00:00:00.000Z`);
+    return Number.isFinite(timestamp)
+        && new Date(timestamp).toISOString().slice(0, 10) === value;
+}, "Expected a valid YYYY-MM-DD calendar date");
+
+const upstreamSnapshotSchema = z.object({
+    url: z.string().url(),
+    version: z.string().min(1),
+    retrievedAt: isoDateStringSchema,
+    sha256: z.string().regex(/^[a-f0-9]{64}$/iu),
+    byteSize: z.number().int().nonnegative(),
+}).strict();
+
+const sourceFreshnessSchema = z.object({
+    checkedAt: isoDateStringSchema,
+    maximumAgeDays: z.number().int().positive(),
+    updateProcedure: z.string().min(1),
+}).strict();
+
+const wordSupportEvidenceSchema = z.discriminatedUnion("kind", [
+    z.object({
+        kind: z.literal("exact-dictionary-entry"),
+        snapshotVersion: z.string().min(1),
+        normalizedSourceSha256: z.string().regex(/^[a-f0-9]{64}$/iu),
+        entryIds: z.array(z.string().min(1)).min(1),
+    }).strict(),
+    z.object({
+        kind: z.literal("dictionary-priority"),
+        snapshotVersion: z.string().min(1),
+        normalizedSourceSha256: z.string().regex(/^[a-f0-9]{64}$/iu),
+        entryIds: z.array(z.string().min(1)).min(1).optional(),
+        priorityTags: z.array(z.string().min(1)).min(1),
+        frequencyRank: z.number().int().positive(),
+    }).strict(),
+    z.object({
+        kind: z.literal("corpus-frequency"),
+        snapshotVersion: z.string().min(1),
+        normalizedSourceSha256: z.string().regex(/^[a-f0-9]{64}$/iu),
+        frequencyRank: z.number().int().positive(),
+        occurrenceCount: z.number().int().positive(),
+        documentCount: z.number().int().positive(),
+        channelCount: z.number().int().positive(),
+        matchStatus: z.literal("exact_written"),
+        frequencyBand: z.enum(["strong", "good", "borderline"]),
+    }).strict(),
 ]);
 
 const jlptWordSourceAllowedUseSchema = z.enum([
@@ -120,10 +178,14 @@ const wordEvidenceSourceSchema = z.object({
     allowedUse: z.array(jlptWordSourceAllowedUseSchema).default([]),
     disallowedUse: z.array(jlptWordSourceAllowedUseSchema).default([]),
     canStoreWordAssignments: z.boolean().default(false),
+    canStoreSupportFacts: z.boolean().default(false),
     canStoreRawList: z.boolean().default(false),
     canStoreExcerpts: z.boolean().default(false),
     requiresCitation: z.boolean().default(true),
     positiveEvidenceOnly: z.boolean().default(false),
+    supportEvidenceKinds: z.array(wordSupportEvidenceKindSchema).default([]),
+    upstreamSnapshot: upstreamSnapshotSchema.optional(),
+    freshness: sourceFreshnessSchema.optional(),
     licenseEvidenceUrl: z.string().min(1).optional(),
     licenseReviewedAt: z.string().min(1).optional(),
     checkedAt: z.string().min(1).optional(),
@@ -154,6 +216,28 @@ const wordAssignmentSchema = z.object({
     supportClaims: z.array(wordSourceSupportClaimSchema).default([]),
 }).strict();
 
+const wordSupportRecordSchema = z.object({
+    written: z.string().min(1),
+    reading: z.string().min(1),
+    reviewStatus: z.literal("reviewed"),
+    citation: z.string().min(1),
+    evidenceRef: z.string().min(1),
+    supportClaims: z.array(wordSourceSupportClaimSchema).length(1),
+    evidence: wordSupportEvidenceSchema,
+    notes: z.string().optional(),
+}).strict().superRefine((record, context) => {
+    const expectedClaim = record.evidence.kind === "exact-dictionary-entry"
+        ? "dictionary-identity"
+        : "commonness";
+    if (record.supportClaims[0] !== expectedClaim) {
+        context.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["supportClaims"],
+            message: `${record.evidence.kind} evidence requires ${expectedClaim}`,
+        });
+    }
+});
+
 const assignmentEvidenceRecordSchema = z.object({
     citation: z.string().min(1).optional(),
     evidenceRef: z.string().min(1).optional(),
@@ -168,8 +252,14 @@ const assignmentFileSchema = z.object({
     assignments: z.record(z.string().min(1), wordAssignmentSchema).default({}),
 }).strict();
 
+const supportFileSchema = z.object({
+    sourceId: z.string().min(1),
+    supportRecords: z.record(z.string().min(1), wordSupportRecordSchema).default({}),
+}).strict();
+
 const wordEvidenceEntrySchema = z.object({
     sources: z.record(z.string().min(1), wordAssignmentSchema).default({}),
+    supportSources: z.record(z.string().min(1), wordSupportRecordSchema).default({}),
     sourceConsensusLevel: z.number().int().min(1).max(5).nullable().optional(),
     sourceAgreementCount: z.number().int().nonnegative().optional(),
     independentSourceCount: z.number().int().nonnegative().optional(),
@@ -183,6 +273,21 @@ const wordEvidenceEntrySchema = z.object({
     notes: z.string().optional(),
 }).strict();
 
+function sourceFileMapSchema(directoryName) {
+    return z.record(z.string().min(1), z.string().min(1)).superRefine((files, context) => {
+        for (const [sourceId, relativePath] of Object.entries(files || {})) {
+            const expectedPath = `jlpt_word_source_evidence/${directoryName}/${sourceId}.json`;
+            if (relativePath !== expectedPath) {
+                context.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: [sourceId],
+                    message: `must use canonical data path ${expectedPath}`,
+                });
+            }
+        }
+    });
+}
+
 const jlptWordSourceEvidenceSchema = z.object({
     version: z.number().int().min(1).default(1),
     checkedAt: z.string().min(1),
@@ -192,10 +297,15 @@ const jlptWordSourceEvidenceSchema = z.object({
     independenceGroups: z.record(z.string().min(1), independenceGroupSchema).default({}),
     postureLabels: z.record(z.string().min(1), postureLabelSchema).default({}),
     sources: z.record(z.string().min(1), wordEvidenceSourceSchema).default({}),
-    assignmentFiles: z.record(z.string().min(1), z.string().min(1)).default({}),
+    assignmentFiles: sourceFileMapSchema("assignments").default({}),
+    supportFiles: sourceFileMapSchema("support").default({}),
     assignments: z.record(
         z.string().min(1),
         z.record(z.string().min(1), wordAssignmentSchema)
+    ).default({}),
+    supportRecords: z.record(
+        z.string().min(1),
+        z.record(z.string().min(1), wordSupportRecordSchema)
     ).default({}),
     words: z.record(z.string().min(1), wordEvidenceEntrySchema).default({}),
 }).strict();
@@ -246,6 +356,23 @@ function normalizeWordAssignment(identity, assignment = {}) {
     return parsed;
 }
 
+function normalizeWordSupportRecord(identity, record = {}) {
+    const written = normalizeText(record.written || identity.split("|")[0]);
+    const reading = normalizeText(record.reading || identity.split("|")[1]);
+    const key = buildWordIdentity(written, reading);
+    if (!key) {
+        throw new Error(`Invalid word support-record identity: ${identity || "(blank)"}`);
+    }
+    if (key !== identity) {
+        throw new Error(`Word support record ${identity} declares mismatched identity ${key}.`);
+    }
+    return wordSupportRecordSchema.parse({
+        ...record,
+        written,
+        reading,
+    });
+}
+
 function validateSourceUse(sourceId, source = {}) {
     const overlap = (source.allowedUse || []).filter((use) => (source.disallowedUse || []).includes(use));
     if (overlap.length > 0) {
@@ -260,33 +387,109 @@ function validateSourceUse(sourceId, source = {}) {
     if (source.countsForConsensus && source.licenseStatus !== "approved" && source.licenseStatus !== "restricted") {
         throw new Error(`Voting word source ${sourceId} must have approved or restricted license status.`);
     }
+    if (source.canStoreSupportFacts) {
+        if (source.countsForConsensus || source.canStoreWordAssignments) {
+            throw new Error(`Support-fact source ${sourceId} must not also hold JLPT placement authority.`);
+        }
+        const missingFields = [
+            (source.supportEvidenceKinds || []).length === 0 ? "supportEvidenceKinds" : null,
+            !source.upstreamSnapshot ? "upstreamSnapshot" : null,
+            !source.local?.sha256 ? "local.sha256" : null,
+            !Number.isInteger(source.local?.byteSize) ? "local.byteSize" : null,
+            !Number.isInteger(source.local?.rowCount) ? "local.rowCount" : null,
+            source.positiveEvidenceOnly !== true ? "positiveEvidenceOnly" : null,
+        ].filter(Boolean);
+        if (missingFields.length > 0) {
+            throw new Error(`Support-fact word source ${sourceId} is missing required field(s): ${missingFields.join(", ")}.`);
+        }
+        const freshnessRequired = (source.supportEvidenceKinds || []).some((kind) => (
+            kind === "exact-dictionary-entry" || kind === "dictionary-priority"
+        ));
+        if (freshnessRequired && !source.freshness) {
+            throw new Error(`Support-fact word source ${sourceId} must declare freshness for dictionary evidence.`);
+        }
+    }
 }
 
-function resolveManifestRelativePath(manifestPath, relativePath) {
-    return path.resolve(path.dirname(manifestPath), ...String(relativePath || "").split(/[\\/]/u));
+function resolveGovernedWordSourceDataPath({ manifestPath, relativePath, evidenceMode, sourceId } = {}) {
+    const directoryName = evidenceMode === "support"
+        ? "support"
+        : evidenceMode === "placement"
+            ? "assignments"
+            : null;
+    if (!directoryName) {
+        throw new Error(`Unknown JLPT word source evidence mode: ${evidenceMode || "(blank)"}.`);
+    }
+    const manifestDirectory = path.dirname(path.resolve(manifestPath));
+    return resolveGovernedDirectChildPath({
+        baseDirectory: manifestDirectory,
+        governedDirectory: path.join(manifestDirectory, "jlpt_word_source_evidence", directoryName),
+        declaredPath: relativePath,
+        extension: ".json",
+        expectedBaseName: `${sourceId}.json`,
+        label: `JLPT word ${evidenceMode} evidence data path`,
+    });
 }
 
-function readAssignmentFile({ manifestPath, relativePath }) {
-    const assignmentPath = resolveManifestRelativePath(manifestPath, relativePath);
+function readVerifiedJsonFile(filePath, label) {
+    const fileHandle = openVerifiedRegularFileSync(filePath, { label });
+    try {
+        return JSON.parse(fs.readFileSync(fileHandle, "utf8"));
+    } finally {
+        fs.closeSync(fileHandle);
+    }
+}
+
+function readAssignmentFile({ manifestPath, relativePath, sourceId }) {
+    const assignmentPath = resolveGovernedWordSourceDataPath({
+        manifestPath,
+        relativePath,
+        evidenceMode: "placement",
+        sourceId,
+    });
     if (!fs.existsSync(assignmentPath)) {
         throw new Error(`Missing word source assignment file: ${assignmentPath}`);
     }
-    return assignmentFileSchema.parse(JSON.parse(fs.readFileSync(assignmentPath, "utf8")));
+    return assignmentFileSchema.parse(readVerifiedJsonFile(assignmentPath, "Word source assignment file"));
+}
+
+function readSupportFile({ manifestPath, relativePath, sourceId }) {
+    const supportPath = resolveGovernedWordSourceDataPath({
+        manifestPath,
+        relativePath,
+        evidenceMode: "support",
+        sourceId,
+    });
+    if (!fs.existsSync(supportPath)) {
+        throw new Error(`Missing word source support file: ${supportPath}`);
+    }
+    return supportFileSchema.parse(readVerifiedJsonFile(supportPath, "Word source support file"));
 }
 
 function normalizeJlptWordSourceEvidence(value = {}, { manifestPath = "" } = {}) {
     const parsed = jlptWordSourceEvidenceSchema.parse(value);
     const assignments = { ...(parsed.assignments || {}) };
+    const supportRecords = { ...(parsed.supportRecords || {}) };
 
     if (manifestPath) {
         for (const [sourceId, relativePath] of Object.entries(parsed.assignmentFiles || {})) {
-            const assignmentFile = readAssignmentFile({ manifestPath, relativePath });
+            const assignmentFile = readAssignmentFile({ manifestPath, relativePath, sourceId });
             if (assignmentFile.sourceId !== sourceId) {
                 throw new Error(`Word source assignment file ${relativePath} declares ${assignmentFile.sourceId}, not ${sourceId}.`);
             }
             assignments[sourceId] = {
                 ...(assignments[sourceId] || {}),
                 ...(assignmentFile.assignments || {}),
+            };
+        }
+        for (const [sourceId, relativePath] of Object.entries(parsed.supportFiles || {})) {
+            const supportFile = readSupportFile({ manifestPath, relativePath, sourceId });
+            if (supportFile.sourceId !== sourceId) {
+                throw new Error(`Word source support file ${relativePath} declares ${supportFile.sourceId}, not ${sourceId}.`);
+            }
+            supportRecords[sourceId] = {
+                ...(supportRecords[sourceId] || {}),
+                ...(supportFile.supportRecords || {}),
             };
         }
     }
@@ -320,9 +523,21 @@ function normalizeJlptWordSourceEvidence(value = {}, { manifestPath = "" } = {})
         }
     }
 
+    const normalizedSupportRecords = {};
+    for (const [sourceId, sourceSupportRecords] of Object.entries(supportRecords || {})) {
+        if (!parsed.sources[sourceId]) {
+            throw new Error(`Word support records reference unknown source ${sourceId}.`);
+        }
+        normalizedSupportRecords[sourceId] = {};
+        for (const [identity, record] of Object.entries(sourceSupportRecords || {})) {
+            normalizedSupportRecords[sourceId][identity] = normalizeWordSupportRecord(identity, record);
+        }
+    }
+
     return {
         ...parsed,
         assignments: normalizedAssignments,
+        supportRecords: normalizedSupportRecords,
     };
 }
 
@@ -348,18 +563,32 @@ function formatWordSourceAssignmentFileJson({ sourceId, assignments = {} } = {})
     });
 }
 
+function formatWordSourceSupportFileJson({ sourceId, supportRecords = {} } = {}) {
+    return formatWordSourceEvidenceJson({
+        sourceId,
+        supportRecords,
+    });
+}
+
 module.exports = {
     DEFAULT_WORD_EVIDENCE_POLICY,
     assignmentFileSchema,
+    supportFileSchema,
     buildWordIdentity,
     formatWordSourceAssignmentFileJson,
     formatWordSourceEvidenceJson,
+    formatWordSourceSupportFileJson,
     jlptWordSourceEvidenceSchema,
     loadJlptWordSourceEvidence,
     normalizeJlptWordLevel,
     normalizeJlptWordSourceEvidence,
+    normalizeWordSupportRecord,
     readJlptWordSourceEvidenceManifest,
+    resolveGovernedWordSourceDataPath,
     wordAssignmentSchema,
     wordSourceReviewStatusSchema,
     wordSourceSupportClaimSchema,
+    wordSupportEvidenceKindSchema,
+    wordSupportEvidenceSchema,
+    wordSupportRecordSchema,
 };

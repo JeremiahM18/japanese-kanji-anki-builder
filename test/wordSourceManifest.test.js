@@ -1,5 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const {
     loadWordSourceManifest,
@@ -171,12 +173,28 @@ test("tracked word source manifest loads", () => {
     assert.equal(manifest.sources["tubelex-ja-frequency"].sourceType, "corpus_frequency");
     assert.equal(manifest.sources["tubelex-ja-frequency"].licenseUse.status, "approved");
     assert.equal(manifest.sources["tubelex-ja-frequency"].licenseUse.license, "BSD-3-Clause");
-    assert.equal(manifest.sources["tubelex-ja-frequency"].local.rowCount, 65319);
-    assert.equal(manifest.sources["tubelex-ja-frequency"].local.sha256, "6211ef80c94a06b67f5762f05ba239f3195d1ce2085adb76994e1156940f1cf1");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].local.rowCount, 65663);
+    assert.equal(manifest.sources["tubelex-ja-frequency"].local.byteSize, 24661425);
+    assert.equal(manifest.sources["tubelex-ja-frequency"].local.sha256, "94e2a07b3ada7eab306e8e3823730a38d0ab5572eb80ff809c4daaa2f3f2f2e7");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].canStoreSupportFacts, true);
+    assert.deepEqual(manifest.sources["tubelex-ja-frequency"].supportEvidenceKinds, ["corpus-frequency"]);
+    assert.equal(manifest.sources["tubelex-ja-frequency"].upstreamSnapshot.version, "7cb5fb36add76b83a266d1967536e1a1d3faa513");
+    assert.equal(manifest.sources["tubelex-ja-frequency"].upstreamSnapshot.sha256, "39d4edb2ccac4405b47d0f93e9ec7b11678b3b305d1a37c877dd76588817c8e9");
     assert.deepEqual(manifest.sources["tubelex-ja-frequency"].allowedUse, ["frequency-sanity", "usefulness-support"]);
     assert.equal(manifest.sources["tubelex-ja-frequency"].disallowedUse.includes("candidate-discovery"), true);
     assert.equal(manifest.sources.jmdict.status, "active");
+    assert.equal(manifest.sources.jmdict.local.rowCount, 258874);
+    assert.equal(manifest.sources.jmdict.local.byteSize, 58452932);
+    assert.equal(manifest.sources.jmdict.local.sha256, "814197ad14b2b52236b5e007b6d15ad18ad82e7aff40329346bdaf94ec2e3606");
+    assert.equal(manifest.sources.jmdict.canStoreSupportFacts, true);
+    assert.deepEqual(manifest.sources.jmdict.supportEvidenceKinds, ["exact-dictionary-entry"]);
+    assert.equal(manifest.sources.jmdict.upstreamSnapshot.version, "JMdict created: 2026-08-23");
+    assert.equal(manifest.sources.jmdict.upstreamSnapshot.sha256, "11c3fb43a82ae775269e6832d117c4f52152f4d8cf49f44c16a0ed619aa98a6a");
+    assert.equal(manifest.sources.jmdict.freshness.maximumAgeDays, 31);
     assert.equal(manifest.sources["jmdict-priority-commonness"].status, "active");
+    assert.equal(manifest.sources["jmdict-priority-commonness"].local.sha256, "814197ad14b2b52236b5e007b6d15ad18ad82e7aff40329346bdaf94ec2e3606");
+    assert.equal(manifest.sources["jmdict-priority-commonness"].canStoreSupportFacts, true);
+    assert.deepEqual(manifest.sources["jmdict-priority-commonness"].supportEvidenceKinds, ["dictionary-priority"]);
     assert.deepEqual(manifest.sourcePurposeRules.dictionary.allowedUse, [
         "dictionary-verification",
         "reading-verification",
@@ -186,4 +204,16 @@ test("tracked word source manifest loads", () => {
         "frequency-sanity",
         "usefulness-support",
     ]);
+});
+
+test("support sources require normalized local byte-size and row-count pins", () => {
+    const manifestPath = path.resolve(__dirname, "../templates/word_source_manifest.json");
+    for (const missingField of ["byteSize", "rowCount"]) {
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+        delete manifest.sources.jmdict.local[missingField];
+        assert.throws(
+            () => parseWordSourceManifest(manifest),
+            new RegExp(missingField, "u")
+        );
+    }
 });

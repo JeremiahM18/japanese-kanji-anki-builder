@@ -12,8 +12,40 @@ const {
     collectUnknownArg,
     parseStringOption,
 } = require("../src/utils/cliArgs");
+const {
+    openVerifiedRegularFileSync,
+    resolveGovernedDirectChildPath,
+    writeFileAtomicSync,
+} = require("../src/utils/fs");
 
 const DEFAULT_CONFIG = "templates/jlpt_word_source_inputs.json";
+
+function resolveGovernedWordSourceInputPath({
+    cwd = process.cwd(),
+    sourcePath,
+    evidenceMode = "placement",
+} = {}) {
+    const governedDirectory = evidenceMode === "support"
+        ? path.join(cwd, "downloads", "word-source-support")
+        : path.join(cwd, "downloads");
+    return resolveGovernedDirectChildPath({
+        baseDirectory: cwd,
+        governedDirectory,
+        declaredPath: sourcePath,
+        extension: ".tsv",
+        label: "JLPT word source worksheet path",
+        rejectWindowsReservedName: true,
+    });
+}
+
+function readVerifiedTextFile(filePath, label) {
+    const fileHandle = openVerifiedRegularFileSync(filePath, { label });
+    try {
+        return fs.readFileSync(fileHandle, "utf8");
+    } finally {
+        fs.closeSync(fileHandle);
+    }
+}
 
 function parseArgs(argv) {
     const options = {
@@ -68,14 +100,21 @@ function run(options = {}) {
     if (!sourceConfig) {
         throw new Error(`Unknown word source input: ${options.source}`);
     }
-    const sourcePath = path.resolve(process.cwd(), sourceConfig.sourcePath);
+    const sourcePath = resolveGovernedWordSourceInputPath({
+        sourcePath: sourceConfig.sourcePath,
+        evidenceMode: sourceConfig.evidenceMode || "placement",
+    });
     const batchPath = path.resolve(process.cwd(), options.batch);
-    const sourceText = fs.readFileSync(sourcePath, "utf8");
+    const sourceText = readVerifiedTextFile(sourcePath, "JLPT word source worksheet");
     const batchText = fs.readFileSync(batchPath, "utf8");
     const sourceAccessValidation = requiresWordSourceAccessPacket(batchText.split(/\r?\n/).filter((line) => line.trim()).length - 1)
         ? validateWordSourceAccessPacketFile({
             packetPath: options.sourceAccessPacket,
             expectedSourceId: options.source,
+            expectedEvidenceRole: sourceConfig.evidenceMode === "support" ? "support-only" : "jlpt-placement",
+            expectedSupportClaims: sourceConfig.evidenceMode === "support"
+                ? [sourceConfig.supportProfile === "jmdict-exact-identity" ? "dictionary-identity" : "commonness"]
+                : [],
         })
         : { valid: true, blockers: [] };
     const merge = buildJlptWordSourceBatchMerge({
@@ -103,7 +142,11 @@ function run(options = {}) {
         noDeckMutation: true,
     };
     if (result.valid && options.write) {
-        fs.writeFileSync(sourcePath, merge.tsv, "utf8");
+        const verifiedSourcePath = resolveGovernedWordSourceInputPath({
+            sourcePath: path.relative(process.cwd(), sourcePath),
+            evidenceMode: sourceConfig.evidenceMode || "placement",
+        });
+        writeFileAtomicSync(verifiedSourcePath, merge.tsv, "utf8");
     }
     return result;
 }
@@ -160,5 +203,6 @@ module.exports = {
     formatReport,
     main,
     parseArgs,
+    resolveGovernedWordSourceInputPath,
     run,
 };

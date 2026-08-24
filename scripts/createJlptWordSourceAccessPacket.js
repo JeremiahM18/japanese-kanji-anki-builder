@@ -4,8 +4,10 @@ const path = require("node:path");
 const {
     buildWordSourceAccessPacket,
     formatWordSourceAccessPacketJson,
+    resolveGovernedWordSourceAccessPacketPath,
     validateWordSourceAccessPacket,
 } = require("../src/services/jlptWordSourceAccessPacketService");
+const { writeFileAtomicSync } = require("../src/utils/fs");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
@@ -20,6 +22,8 @@ function todayIsoDate() {
 function parseArgs(argv) {
     const options = {
         source: "",
+        evidenceRole: "jlpt-placement",
+        allowedSupportClaims: [],
         surfaceType: "",
         title: "",
         citation: "",
@@ -38,6 +42,13 @@ function parseArgs(argv) {
             options.strict = true;
         } else if (arg.startsWith("--source=")) {
             options.source = parseStringOption(arg, "source");
+        } else if (arg.startsWith("--evidence-role=")) {
+            options.evidenceRole = parseStringOption(arg, "evidence-role");
+        } else if (arg.startsWith("--allowed-support-claims=")) {
+            options.allowedSupportClaims = parseStringOption(arg, "allowed-support-claims")
+                .split(",")
+                .map((value) => value.trim())
+                .filter(Boolean);
         } else if (arg.startsWith("--surface-type=")) {
             options.surfaceType = parseStringOption(arg, "surface-type");
         } else if (arg.startsWith("--title=")) {
@@ -63,10 +74,20 @@ function resolveDefaultOutPath(sourceId) {
     return path.join("downloads", "word-source-access-packets", `${sourceId || "unknown-source"}-word-source-access-packet.json`);
 }
 
+function resolveGovernedOutPath({ cwd = process.cwd(), sourceId, outPath } = {}) {
+    return resolveGovernedWordSourceAccessPacketPath({
+        cwd,
+        sourceId,
+        packetPath: outPath || resolveDefaultOutPath(sourceId),
+    });
+}
+
 function buildPacketFromOptions(options = {}) {
     return buildWordSourceAccessPacket({
         sourceId: options.source,
         checkedAt: options.checkedAt,
+        evidenceRole: options.evidenceRole,
+        allowedSupportClaims: options.allowedSupportClaims,
         sourceSurface: {
             type: options.surfaceType,
             title: options.title,
@@ -80,12 +101,19 @@ function buildPacketFromOptions(options = {}) {
 function run(options = {}) {
     const packet = buildPacketFromOptions(options);
     const validation = validateWordSourceAccessPacket({ packet, expectedSourceId: options.source });
-    const outPath = path.resolve(process.cwd(), options.out || resolveDefaultOutPath(options.source));
+    const outPath = resolveGovernedOutPath({
+        sourceId: options.source,
+        outPath: options.out,
+    });
     const templateOnly = !validation.valid && !options.strict;
     const shouldWrite = validation.valid || (templateOnly && Boolean(options.source || options.out));
     if (shouldWrite) {
         fs.mkdirSync(path.dirname(outPath), { recursive: true });
-        fs.writeFileSync(outPath, formatWordSourceAccessPacketJson(packet), "utf8");
+        const verifiedOutPath = resolveGovernedOutPath({
+            sourceId: options.source,
+            outPath: path.relative(process.cwd(), outPath),
+        });
+        writeFileAtomicSync(verifiedOutPath, formatWordSourceAccessPacketJson(packet), "utf8");
     }
     return {
         valid: options.strict ? validation.valid : true,
@@ -106,6 +134,8 @@ function formatPacketReport(result = {}) {
         `Output: ${result.outPath}`,
         `Source: ${result.packet?.sourceId || ""}`,
         `Checked at: ${result.packet?.checkedAt || ""}`,
+        `Evidence role: ${result.packet?.evidenceRole || "jlpt-placement"}`,
+        `Allowed support claims: ${(result.packet?.allowedSupportClaims || []).join(", ") || "none"}`,
         `Surface type: ${result.packet?.sourceSurface?.type || ""}`,
         `Surface title: ${result.packet?.sourceSurface?.title || ""}`,
         `Evidence ref: ${result.packet?.sourceSurface?.evidenceRef || ""}`,
@@ -152,5 +182,6 @@ module.exports = {
     formatPacketReport,
     main,
     parseArgs,
+    resolveGovernedOutPath,
     run,
 };

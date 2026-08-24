@@ -3,6 +3,7 @@ const path = require("node:path");
 
 const { loadJlptWordSourceEvidence } = require("../datasets/jlptWordSourceEvidence");
 const { loadJlptWordSourceInputs } = require("../datasets/jlptWordSourceInputs");
+const { loadJlptWordLevelContract } = require("../datasets/jlptWordLevelContract");
 const { buildJlptWordSourceInputReport } = require("./jlptWordSourceInputService");
 const {
     assertNoUnknownArgs,
@@ -12,6 +13,7 @@ const {
 
 const DEFAULT_CONFIG = "templates/jlpt_word_source_inputs.json";
 const DEFAULT_EVIDENCE = "templates/jlpt_word_source_evidence.json";
+const DEFAULT_CONTRACT = "templates/jlpt_word_level_contract.json";
 
 function parseArgs(argv) {
     const options = {
@@ -52,6 +54,9 @@ function buildReports(options = {}) {
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
     const inputManifest = options.inputManifest || loadJlptWordSourceInputs(configPath);
     const evidence = options.evidenceData || loadJlptWordSourceEvidence(evidencePath);
+    const contract = options.contractData || loadJlptWordLevelContract(options.contract || DEFAULT_CONTRACT);
+    const contractEntries = Object.entries(contract.wordLevels || {})
+        .map(([key, entry]) => ({ key, ...entry }));
     const sourceIds = options.source ? [options.source] : Object.keys(inputManifest.inputs || {});
     const reports = sourceIds.map((sourceId) => {
         const sourceConfig = inputManifest.inputs?.[sourceId];
@@ -76,6 +81,7 @@ function buildReports(options = {}) {
             sourceBuffer: readOptionalBuffer(sourcePath),
             evidence,
             policy: inputManifest.policy,
+            contractEntries,
         });
     });
 
@@ -96,6 +102,7 @@ function formatSourceInputReport(report = {}, limit = 25) {
         `- rows parsed: ${report.rowCount || 0}`,
         `- resolved rows: ${report.resolvedRowCount || 0}`,
         `- reviewed assignments ready: ${report.reviewedAssignmentCount || 0}`,
+        `- reviewed typed support facts ready: ${report.reviewedSupportFactCount || 0}`,
         `- pending rows: ${report.pendingRowCount || 0}`,
         `- blocked rows: ${report.blockedRowCount || 0}`,
         `- source access gap rows: ${report.sourceAccessGapRowCount || 0}`,
@@ -159,6 +166,7 @@ function main(argv = process.argv.slice(2)) {
 module.exports = {
     DEFAULT_CONFIG,
     DEFAULT_EVIDENCE,
+    DEFAULT_CONTRACT,
     buildReports,
     formatJlptWordSourceInputsReport,
     formatSourceInputReport,

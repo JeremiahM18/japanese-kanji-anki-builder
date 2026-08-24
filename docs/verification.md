@@ -173,7 +173,67 @@ Frequency, background, occurrence, methodology, operational, derived, blocked, a
 
 Use `--governance-strict` when CI should fail only on source-use, license, reference-integrity, illegal consensus-use, declared-mismatch, or storage-governance regressions while evidence-depth work is incomplete. Full `--strict` still fails until missing independent/Japanese-published evidence, disputes, and contract/consensus mismatches are resolved.
 
-For `data:audit:jlpt:word-sources`, an explicit `--level` or `--levels` also scopes the top-level denominator and strict result to every exact identity in the selected operational word contract. Dictionary identity and positive commonness are separate mandatory policy gates when enabled. They require explicit reviewed support claims and do not count as JLPT-placement sources or lineages. `--governance-strict` may therefore exit zero while the report still says overall and evidence-depth failing; preserve all three results.
+For `data:audit:jlpt:word-sources`, an explicit `--level` or `--levels` also scopes the top-level denominator and strict result to every exact identity in the selected operational word contract. Dictionary identity and positive commonness are separate mandatory policy gates when enabled. They require explicit reviewed support claims and do not count as JLPT-placement sources or lineages. Support-source freshness is evaluated against the current UTC date by default; pass `--as-of=YYYY-MM-DD` for a reproducible historical or boundary audit. `--governance-strict` may therefore exit zero while the report still says overall and evidence-depth failing; preserve all three results.
+
+Typed word support verification keeps placement assignments and support records
+in separate files and authorities. An active support source must declare
+`canStoreSupportFacts=true`, `canStoreWordAssignments=false`, an exact supported
+evidence kind, an immutable upstream snapshot, and normalized local SHA-256,
+byte-size, and row-count pins. Dictionary sources also declare freshness;
+overdue or mismatched snapshots are governance failures. Each stored support
+record binds one exact `written|reading`, one support claim, the source's exact
+canonical citation, and an evidence reference containing the configured local
+path, lowercase normalized-source SHA-256, physical source row, and encoded
+identity. Delimited worksheets reserve physical row 1 for the header, so their
+evidence rows are `2..rowCount+1`; JSON data rows are `1..rowCount`. Records
+also bind the snapshot version and a typed positive fact. A duplicate reference,
+out-of-contract identity, swapped identity suffix, impossible row, arbitrary
+path, or source declaration without an imported record proves nothing for that
+identity and fails governance.
+
+For the current N4 support workflow, verify the generated surface and governed
+input/import path in this order:
+
+```bash
+npm run data:build:jlpt:word-support-input -- --source=<jmdict|jmdict-priority-commonness|tubelex-ja-frequency> --level=4 --json
+npm run data:audit:jlpt:word-source-inputs -- --source=<source-id> --strict
+npm run data:import:jlpt:word-source-input -- --source=<source-id> --source-access-packet=<ignored-support-packet.json> --json
+npm run data:audit:jlpt:word-sources -- --levels=4 --governance-strict --limit=5
+```
+
+The first command is no-write unless `--write` is explicit. Its mechanically
+prefilled reviewed-batch output records deterministic support-fact validation
+against pinned exact source rows, not human/native/card review or review-tier
+proof. It becomes admissible only after the matching support-only packet,
+reviewed diff and boundary inspection, governed merge, typed preflight,
+transactional write, and audit. The import command is also dry-run unless
+`--write` is explicit. Support-mode writes replace only the configured
+contract-level scope for that selected support source, preserve all placement
+assignments and other support scopes, and must reload and reconcile the support
+file plus manifest before commit.
+
+All word-source path authorities are fail-closed. Split assignment and support
+JSON must use exact source-keyed direct-child paths under
+`templates/jlpt_word_source_evidence/{assignments|support}`. Support worksheets
+must remain direct-child lowercase `.tsv` files under
+`downloads/word-source-support`; placement worksheets remain direct-child
+lowercase `.tsv` files under `downloads`; merge batches are confined to the
+same canonical direct-child root as their worksheet. Governed reads revalidate
+the parent and exact path around a stable file-descriptor read, and writes fail
+closed if another process changes the worksheet before the transaction.
+Source-access packets use the exact
+source-keyed lowercase `.json` filename under
+`downloads/word-source-access-packets`. Traversal, absolute/drive/UNC/device,
+alternate-data-stream, reserved-name, nested, mismatched-source, and
+symlink/junction targets are rejected. Packet `checkedAt` must be a real
+non-future calendar date.
+
+After an authorized write, reconcile imported, added, changed, removed,
+unchanged, out-of-scope, and preserved-out-of-scope counts before trusting the
+audit delta. A passing governance result proves only source-use, storage,
+integrity, freshness, and evidence-shape validity. It does not prove independent
+JLPT placement corroboration, learner-source coverage, full N4 source depth,
+review-tier completion, or release readiness.
 
 The report includes per-contract-level confidence counts, missing/disagreement work-queue counts, missing Japanese-published source counts, publisher-independence groups, and disputed vote-weight samples. It does not change the active contract or any decks.
 

@@ -17,12 +17,53 @@ const {
 } = require("../src/services/jlptWordSourceAccessPacketService");
 const { buildJlptWordSourceBatchMerge } = require("../src/services/jlptWordSourceBatchService");
 const {
-    auditJlptWordSourceEvidence,
+    auditJlptWordSourceEvidence: auditJlptWordSourceEvidenceRaw,
     buildSourceAccessReport,
 } = require("../src/services/jlptWordSourceEvidenceService");
 const {
+    resolveGovernedOutPath: resolveGovernedAccessPacketOutPath,
     run: runWordSourceAccessPacketCommand,
 } = require("../scripts/createJlptWordSourceAccessPacket");
+const {
+    resolveGovernedWordSourceInputPath,
+    run: runWordSourceBatchMergeCommand,
+} = require("../scripts/mergeJlptWordSourceBatch");
+
+function auditJlptWordSourceEvidence(options = {}) {
+    return auditJlptWordSourceEvidenceRaw({
+        asOfDate: "2026-06-21",
+        ...options,
+    });
+}
+
+function writeSupportMergeConfig(configPath) {
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            support_source: {
+                sourceId: "support_source",
+                sourcePath: "downloads/word-source-support/support-source.tsv",
+                sourceLabel: "Support source",
+                format: "tsv",
+                evidenceMode: "support",
+                supportProfile: "jmdict-exact-identity",
+                importMode: "replace-contract-scope",
+                contractLevels: [4],
+                writtenColumn: "written",
+                readingColumn: "reading",
+                reviewStatusColumn: "reviewStatus",
+                citationColumn: "citation",
+                evidenceRefColumn: "evidenceRef",
+                requireLevel: false,
+            },
+        },
+    }), "utf8");
+}
 
 function buildEvidence(overrides = {}) {
     return normalizeJlptWordSourceEvidence({
@@ -149,7 +190,29 @@ function buildEvidence(overrides = {}) {
                 countsForConsensus: false,
                 licenseStatus: "approved",
                 allowedUse: ["dictionary-verification"],
-                canStoreWordAssignments: true,
+                canStoreWordAssignments: false,
+                canStoreSupportFacts: true,
+                positiveEvidenceOnly: true,
+                supportEvidenceKinds: ["exact-dictionary-entry"],
+                upstreamSnapshot: {
+                    url: "https://example.com/dictionary.xml.gz",
+                    version: "dictionary-v1",
+                    retrievedAt: "2026-06-21",
+                    sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    byteSize: 100,
+                },
+                freshness: {
+                    checkedAt: "2026-06-21",
+                    maximumAgeDays: 31,
+                    updateProcedure: "Refresh and reconcile the pinned dictionary snapshot.",
+                },
+                local: {
+                    path: "ignored/dictionary.json",
+                    format: "json",
+                    sha256: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    byteSize: 100,
+                    rowCount: 1,
+                },
                 licenseEvidenceUrl: "https://example.com/dictionary-license",
             },
             commonness_source: {
@@ -162,7 +225,29 @@ function buildEvidence(overrides = {}) {
                 countsForConsensus: false,
                 licenseStatus: "approved",
                 allowedUse: ["commonness-support"],
-                canStoreWordAssignments: true,
+                canStoreWordAssignments: false,
+                canStoreSupportFacts: true,
+                positiveEvidenceOnly: true,
+                supportEvidenceKinds: ["dictionary-priority"],
+                upstreamSnapshot: {
+                    url: "https://example.com/commonness.xml.gz",
+                    version: "commonness-v1",
+                    retrievedAt: "2026-06-21",
+                    sha256: "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                    byteSize: 100,
+                },
+                freshness: {
+                    checkedAt: "2026-06-21",
+                    maximumAgeDays: 31,
+                    updateProcedure: "Refresh and reconcile the pinned commonness snapshot.",
+                },
+                local: {
+                    path: "ignored/commonness.json",
+                    format: "json",
+                    sha256: "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                    byteSize: 100,
+                    rowCount: 1,
+                },
                 licenseEvidenceUrl: "https://example.com/commonness-license",
             },
         },
@@ -299,25 +384,32 @@ test("reviewed support inputs may omit JLPT placement but retain an explicit sup
                 sourceId: "dictionary_source",
                 sourcePath: "ignored.tsv",
                 sourceLabel: "Dictionary source",
+                evidenceMode: "support",
+                supportProfile: "jmdict-exact-identity",
+                importMode: "replace-contract-scope",
+                contractLevels: [5],
                 requireLevel: false,
-                defaultReviewStatus: "reviewed",
-                defaultCitation: "Dictionary",
-                defaultEvidenceRef: "pinned exact entry",
-                defaultSupportClaims: ["dictionary-identity"],
             },
         },
     });
     const report = buildJlptWordSourceInputReport({
         sourceId: "dictionary_source",
         sourceConfig: inputs.inputs.dictionary_source,
-        sourceBuffer: Buffer.from("written\treading\n食べる\tたべる\n", "utf8"),
+        sourceBuffer: Buffer.from(
+            "written\treading\treviewStatus\tcitation\tevidenceRef\tsupportClaim\tevidenceKind\tsnapshotVersion\tnormalizedSourceSha256\tentryIds\n"
+            + `食べる\tたべる\treviewed\tDictionary source; https://example.com/dictionary.xml.gz; snapshot dictionary-v1\tignored/dictionary.json; sha256=${"b".repeat(64)}; row=1; identity=${encodeURIComponent("食べる|たべる")}\tdictionary-identity\texact-dictionary-entry\tdictionary-v1\t${"b".repeat(64)}\t1\n`,
+            "utf8"
+        ),
         evidence: buildEvidence(),
         policy: inputs.policy,
+        contractEntries: [{ key: "食べる|たべる", written: "食べる", reading: "たべる", jlpt: 5 }],
+        asOfDate: "2026-06-21",
     });
 
     assert.equal(report.valid, true);
-    assert.deepEqual(report.assignments["食べる|たべる"].supportClaims, ["dictionary-identity"]);
-    assert.equal(Object.hasOwn(report.assignments["食べる|たべる"], "level"), false);
+    assert.deepEqual(report.assignments, {});
+    assert.deepEqual(report.supportRecords["食べる|たべる"].supportClaims, ["dictionary-identity"]);
+    assert.equal(Object.hasOwn(report.supportRecords["食べる|たべる"], "level"), false);
 });
 
 test("word source input preflight rejects assignment storage not authorized by the source registry", () => {
@@ -415,6 +507,395 @@ test("word source access packet blocks vague or incomplete source-access evidenc
     });
     assert.equal(invalid.valid, false);
     assert.match(invalid.blockers.join("; "), /sourceSurface.type/);
+});
+
+test("word source access packets reject invalid and future review dates", () => {
+    const packet = buildWordSourceAccessPacket({
+        sourceId: "source_a",
+        checkedAt: "not-a-date",
+        sourceSurface: {
+            type: "exact-word-list-table",
+            title: "Exact list",
+            citation: "Source A p. 1",
+            evidenceRef: "row 1",
+        },
+    });
+    assert.equal(validateWordSourceAccessPacket({ packet, asOfDate: "2026-08-23" }).valid, false);
+    packet.checkedAt = "2026-08-24";
+    const future = validateWordSourceAccessPacket({ packet, asOfDate: "2026-08-23" });
+    assert.equal(future.valid, false);
+    assert.match(future.blockers.join("; "), /future/i);
+
+    const invalidEvaluationDate = validateWordSourceAccessPacket({
+        packet,
+        asOfDate: "invalid",
+    });
+    assert.equal(invalidEvaluationDate.valid, false);
+    assert.match(invalidEvaluationDate.blockers.join("; "), /evaluation date/i);
+});
+
+test("word source access packet and merge outputs stay on their ignored governed surfaces", () => {
+    const cwd = process.cwd();
+    assert.equal(
+        resolveGovernedAccessPacketOutPath({
+            cwd,
+            sourceId: "jmdict",
+            outPath: "downloads/word-source-access-packets/jmdict-word-source-access-packet.json",
+        }),
+        path.join(cwd, "downloads", "word-source-access-packets", "jmdict-word-source-access-packet.json")
+    );
+    assert.throws(() => resolveGovernedAccessPacketOutPath({
+        cwd,
+        sourceId: "jmdict",
+        outPath: "../package.json",
+    }), /canonical relative path|noncanonical path segment|direct child/i);
+    assert.throws(() => resolveGovernedAccessPacketOutPath({
+        cwd,
+        sourceId: "../escape",
+        outPath: "",
+    }), /canonical relative path|noncanonical path segment|direct child|canonical data path/i);
+
+    assert.equal(
+        resolveGovernedWordSourceInputPath({
+            cwd,
+            sourcePath: "downloads/word-source-support/jmdict-n4-review.tsv",
+            evidenceMode: "support",
+        }),
+        path.join(cwd, "downloads", "word-source-support", "jmdict-n4-review.tsv")
+    );
+    assert.throws(() => resolveGovernedWordSourceInputPath({
+        cwd,
+        sourcePath: "../outside.tsv",
+        evidenceMode: "support",
+    }), /canonical relative path|noncanonical path segment|direct child/i);
+});
+
+test("word source batch merge confines support-mode batch reads to a governed direct child", (t) => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-batch-path-"));
+    const supportDirectory = path.join(temporaryDirectory, "downloads", "word-source-support");
+    const nestedDirectory = path.join(supportDirectory, "nested");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const canonicalBatchPath = path.join(supportDirectory, "canonical-batch.tsv");
+    const outsideBatchPath = path.join(temporaryDirectory, "outside-batch.tsv");
+    const nestedBatchPath = path.join(nestedDirectory, "nested-batch.tsv");
+    const worksheet = "written\treading\n";
+
+    fs.mkdirSync(nestedDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, worksheet, "utf8");
+    fs.writeFileSync(canonicalBatchPath, worksheet, "utf8");
+    fs.writeFileSync(outsideBatchPath, worksheet, "utf8");
+    fs.writeFileSync(nestedBatchPath, worksheet, "utf8");
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            support_source: {
+                sourceId: "support_source",
+                sourcePath: "downloads/word-source-support/support-source.tsv",
+                sourceLabel: "Support source",
+                format: "tsv",
+                evidenceMode: "support",
+                supportProfile: "jmdict-exact-identity",
+                importMode: "replace-contract-scope",
+                contractLevels: [4],
+                requireLevel: false,
+            },
+        },
+    }), "utf8");
+
+    process.chdir(temporaryDirectory);
+    t.after(() => {
+        process.chdir(previousCwd);
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    });
+
+    const baseOptions = {
+        config: configPath,
+        source: "support_source",
+        write: false,
+    };
+    const canonical = runWordSourceBatchMergeCommand({
+        ...baseOptions,
+        batch: "downloads/word-source-support/canonical-batch.tsv",
+    });
+    assert.equal(canonical.valid, true);
+
+    const acceptedEscapes = [];
+    const unexpectedErrors = [];
+    for (const [label, batch] of [
+        ["traversal", "downloads/word-source-support/../../outside-batch.tsv"],
+        ["absolute", outsideBatchPath],
+        ["nested", "downloads/word-source-support/nested/nested-batch.tsv"],
+    ]) {
+        try {
+            runWordSourceBatchMergeCommand({ ...baseOptions, batch });
+            acceptedEscapes.push(label);
+        } catch (error) {
+            if (!/canonical relative path|noncanonical path segment|direct child|outside governed/i.test(error.message)) {
+                unexpectedErrors.push(`${label}: ${error.message}`);
+            }
+        }
+    }
+
+    assert.deepEqual(unexpectedErrors, []);
+    assert.deepEqual(acceptedEscapes, []);
+});
+
+test("word source batch merge rejects a support-mode batch junction without consuming its sentinel", (t) => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-batch-junction-"));
+    const supportDirectory = path.join(temporaryDirectory, "downloads", "word-source-support");
+    const outsideDirectory = path.join(temporaryDirectory, "outside");
+    const linkedDirectory = path.join(supportDirectory, "linked");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const sentinelPath = path.join(outsideDirectory, "sentinel.tsv");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const sentinel = "written\treading\n";
+
+    fs.mkdirSync(supportDirectory, { recursive: true });
+    fs.mkdirSync(outsideDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, "written\treading\n", "utf8");
+    fs.writeFileSync(sentinelPath, sentinel, "utf8");
+    fs.symlinkSync(outsideDirectory, linkedDirectory, process.platform === "win32" ? "junction" : "dir");
+    fs.writeFileSync(configPath, JSON.stringify({
+        version: 1,
+        policy: {
+            noDeckMutation: true,
+            requirePinnedIntegrity: true,
+            requireKnownEvidenceSource: true,
+        },
+        inputs: {
+            support_source: {
+                sourceId: "support_source",
+                sourcePath: "downloads/word-source-support/support-source.tsv",
+                sourceLabel: "Support source",
+                format: "tsv",
+                evidenceMode: "support",
+                supportProfile: "jmdict-exact-identity",
+                importMode: "replace-contract-scope",
+                contractLevels: [4],
+                requireLevel: false,
+            },
+        },
+    }), "utf8");
+
+    process.chdir(temporaryDirectory);
+    t.after(() => {
+        process.chdir(previousCwd);
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    });
+
+    try {
+        assert.throws(() => runWordSourceBatchMergeCommand({
+            config: configPath,
+            source: "support_source",
+            batch: "downloads/word-source-support/linked/sentinel.tsv",
+            write: false,
+        }), /direct child|symbolic link|junction|redirected directory/i);
+    } finally {
+        assert.equal(fs.readFileSync(sentinelPath, "utf8"), sentinel);
+    }
+});
+
+test("word source batch merge rejects a governed-parent junction swap before the verified batch open", () => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-parent-race-"));
+    const downloadsDirectory = path.join(temporaryDirectory, "downloads");
+    const supportDirectory = path.join(downloadsDirectory, "word-source-support");
+    const originalSupportDirectory = path.join(downloadsDirectory, "word-source-support-original");
+    const outsideDirectory = path.join(temporaryDirectory, "outside");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const governedBatchPath = path.join(supportDirectory, "batch.tsv");
+    const sentinelPath = path.join(outsideDirectory, "batch.tsv");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const sourceWorksheet = "written\treading\n";
+    const governedBatch = "written\treading\n";
+    const externalSentinel = "written\treading\n外\tそと\n";
+
+    fs.mkdirSync(supportDirectory, { recursive: true });
+    fs.mkdirSync(outsideDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, sourceWorksheet, "utf8");
+    fs.writeFileSync(governedBatchPath, governedBatch, "utf8");
+    fs.writeFileSync(sentinelPath, externalSentinel, "utf8");
+    writeSupportMergeConfig(configPath);
+
+    const originalCloseSync = fs.closeSync;
+    const originalReadFileSync = fs.readFileSync;
+    const sentinelHandle = fs.openSync(sentinelPath, "r");
+    const sentinelStats = fs.fstatSync(sentinelHandle, { bigint: true });
+    let verifiedCloseCount = 0;
+    let externalSentinelConsumed = false;
+    let commandError = null;
+    let observed = null;
+
+    try {
+        process.chdir(temporaryDirectory);
+        fs.readFileSync = function readFileSyncWithSentinelProbe(file, ...args) {
+            if (Number.isInteger(file)) {
+                const descriptorStats = fs.fstatSync(file, { bigint: true });
+                if (descriptorStats.dev === sentinelStats.dev && descriptorStats.ino === sentinelStats.ino) {
+                    externalSentinelConsumed = true;
+                }
+            }
+            return originalReadFileSync.call(fs, file, ...args);
+        };
+        fs.closeSync = function closeSyncWithGovernedParentSwap(fileHandle) {
+            originalCloseSync(fileHandle);
+            verifiedCloseCount += 1;
+            if (verifiedCloseCount === 1) {
+                fs.renameSync(supportDirectory, originalSupportDirectory);
+                fs.symlinkSync(
+                    outsideDirectory,
+                    supportDirectory,
+                    process.platform === "win32" ? "junction" : "dir"
+                );
+            }
+        };
+
+        try {
+            runWordSourceBatchMergeCommand({
+                config: configPath,
+                source: "support_source",
+                batch: "downloads/word-source-support/batch.tsv",
+                allowAdditions: true,
+                write: false,
+            });
+        } catch (error) {
+            commandError = error;
+        }
+        observed = {
+            rejected: Boolean(commandError),
+            governedPathRejection: Boolean(commandError && /direct child|symbolic link|junction|redirected directory|changed while/i.test(commandError.message)),
+            externalSentinelConsumed,
+            externalSentinelPreserved: originalReadFileSync.call(fs, sentinelHandle, "utf8") === externalSentinel,
+        };
+    } finally {
+        fs.closeSync = originalCloseSync;
+        fs.readFileSync = originalReadFileSync;
+        originalCloseSync(sentinelHandle);
+        process.chdir(previousCwd);
+        if (fs.existsSync(supportDirectory)) {
+            fs.rmSync(supportDirectory, { recursive: true, force: true });
+        }
+        if (fs.existsSync(originalSupportDirectory)) {
+            fs.renameSync(originalSupportDirectory, supportDirectory);
+        }
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    }
+
+    assert.deepEqual(observed, {
+        rejected: true,
+        governedPathRejection: true,
+        externalSentinelConsumed: false,
+        externalSentinelPreserved: true,
+    });
+});
+
+test("word source batch merge rejects a concurrent source change before write and preserves it", () => {
+    const previousCwd = process.cwd();
+    const temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "jlpt-word-merge-source-race-"));
+    const supportDirectory = path.join(temporaryDirectory, "downloads", "word-source-support");
+    const sourcePath = path.join(supportDirectory, "support-source.tsv");
+    const batchPath = path.join(supportDirectory, "batch.tsv");
+    const configPath = path.join(temporaryDirectory, "word-source-inputs.json");
+    const header = "written\treading\treviewStatus\tcitation\tevidenceRef\n";
+    const originalSource = header
+        + "食べる\tたべる\tneeds_review\tSource row 1\trow 1\n";
+    const concurrentSource = originalSource
+        + "学校\tがっこう\tneeds_review\tConcurrent source row\trow 2\n";
+    const reviewedBatch = header
+        + "食べる\tたべる\treviewed\tSource row 1\trow 1\n";
+
+    fs.mkdirSync(supportDirectory, { recursive: true });
+    fs.writeFileSync(sourcePath, originalSource, "utf8");
+    fs.writeFileSync(batchPath, reviewedBatch, "utf8");
+    writeSupportMergeConfig(configPath);
+
+    const originalCloseSync = fs.closeSync;
+    let verifiedCloseCount = 0;
+    let sourceMutationInjected = false;
+    let commandError = null;
+    let observed = null;
+
+    try {
+        process.chdir(temporaryDirectory);
+        fs.closeSync = function closeSyncWithConcurrentSourceChange(fileHandle) {
+            originalCloseSync(fileHandle);
+            verifiedCloseCount += 1;
+            if (verifiedCloseCount === 1) {
+                fs.writeFileSync(sourcePath, concurrentSource, "utf8");
+                sourceMutationInjected = true;
+            }
+        };
+
+        try {
+            runWordSourceBatchMergeCommand({
+                config: configPath,
+                source: "support_source",
+                batch: "downloads/word-source-support/batch.tsv",
+                write: true,
+            });
+        } catch (error) {
+            commandError = error;
+        }
+        observed = {
+            sourceMutationInjected,
+            rejected: Boolean(commandError),
+            concurrentChangeRejection: Boolean(commandError && /changed|concurrent|stale|integrity/i.test(commandError.message)),
+            concurrentSourcePreserved: fs.readFileSync(sourcePath, "utf8") === concurrentSource,
+        };
+    } finally {
+        fs.closeSync = originalCloseSync;
+        process.chdir(previousCwd);
+        fs.rmSync(temporaryDirectory, { recursive: true, force: true });
+    }
+
+    assert.deepEqual(observed, {
+        sourceMutationInjected: true,
+        rejected: true,
+        concurrentChangeRejection: true,
+        concurrentSourcePreserved: true,
+    });
+});
+
+test("word source access packets keep support-only evidence separate from JLPT placement", () => {
+    const packet = buildWordSourceAccessPacket({
+        sourceId: "jmdict",
+        checkedAt: "2026-08-23",
+        evidenceRole: "support-only",
+        allowedSupportClaims: ["dictionary-identity"],
+        sourceSurface: {
+            type: "permitted-machine-readable-source",
+            title: "JMdict normalized exact-identity snapshot",
+            citation: "EDRDG JMdict; CC BY-SA 4.0",
+            evidenceRef: "JMdict 2026-08-23; pinned SHA-256",
+        },
+    });
+
+    assert.equal(validateWordSourceAccessPacket({
+        packet,
+        expectedSourceId: "jmdict",
+        expectedEvidenceRole: "support-only",
+    }).valid, true);
+    assert.equal(validateWordSourceAccessPacket({
+        packet,
+        expectedSourceId: "jmdict",
+        expectedEvidenceRole: "jlpt-placement",
+    }).valid, false);
+
+    const claimless = buildWordSourceAccessPacket({
+        sourceId: "jmdict",
+        checkedAt: "2026-08-23",
+        evidenceRole: "support-only",
+        sourceSurface: packet.sourceSurface,
+    });
+    assert.match(validateWordSourceAccessPacket({ packet: claimless }).blockers.join("; "), /allowedSupportClaims/);
 });
 
 test("word source access packet command scaffolds incomplete packets without weakening strict validation", () => {
@@ -536,14 +1017,22 @@ test("word source adequacy separates governance validity from incomplete evidenc
                     evidenceRef: "row 1",
                 },
             },
+        },
+        supportRecords: {
             dictionary_source: {
                 "食べる|たべる": {
                     written: "食べる",
                     reading: "たべる",
                     reviewStatus: "reviewed",
-                    citation: "Dictionary",
-                    evidenceRef: "entry 1",
+                    citation: "Dictionary source; https://example.com/dictionary.xml.gz; snapshot dictionary-v1",
+                    evidenceRef: `ignored/dictionary.json; sha256=${"b".repeat(64)}; row=1; identity=${encodeURIComponent("食べる|たべる")}`,
                     supportClaims: ["dictionary-identity"],
+                    evidence: {
+                        kind: "exact-dictionary-entry",
+                        snapshotVersion: "dictionary-v1",
+                        normalizedSourceSha256: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                        entryIds: ["1"],
+                    },
                 },
             },
             commonness_source: {
@@ -551,9 +1040,16 @@ test("word source adequacy separates governance validity from incomplete evidenc
                     written: "食べる",
                     reading: "たべる",
                     reviewStatus: "reviewed",
-                    citation: "Commonness source",
-                    evidenceRef: "entry 1",
+                    citation: "Commonness source; https://example.com/commonness.xml.gz; snapshot commonness-v1",
+                    evidenceRef: `ignored/commonness.json; sha256=${"d".repeat(64)}; row=1; identity=${encodeURIComponent("食べる|たべる")}`,
                     supportClaims: ["commonness"],
+                    evidence: {
+                        kind: "dictionary-priority",
+                        snapshotVersion: "commonness-v1",
+                        normalizedSourceSha256: "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                        priorityTags: ["news1"],
+                        frequencyRank: 1,
+                    },
                 },
             },
         },
@@ -679,6 +1175,39 @@ test("word source policy toggles remain explicit and testable", () => {
     assert.equal(report.wordSourcePosture[0].posture, "level_universe_standard");
     assert.equal(report.issueCounts.missingDictionaryIdentitySupport, 0);
     assert.equal(report.issueCounts.missingCommonnessSupport, 0);
+});
+
+test("source consensus cannot promote an identity absent from the operational contract", () => {
+    const identity = "外|そと";
+    const evidence = buildEvidence({
+        policy: {
+            minimumIndependentSources: 3,
+            minimumIndependentEvidenceLineages: 2,
+            minimumJapanesePublishedOrPermissionedLearnerSources: 1,
+            requireDictionaryIdentitySupport: false,
+            requireCommonnessSupport: false,
+        },
+        assignments: {
+            source_a: {
+                [identity]: { written: "外", reading: "そと", level: 4, reviewStatus: "reviewed", citation: "A", evidenceRef: "1" },
+            },
+            source_b: {
+                [identity]: { written: "外", reading: "そと", level: 4, reviewStatus: "reviewed", citation: "B", evidenceRef: "1" },
+            },
+            source_c: {
+                [identity]: { written: "外", reading: "そと", level: 4, reviewStatus: "reviewed", citation: "C", evidenceRef: "1" },
+            },
+        },
+    });
+    const report = auditJlptWordSourceEvidence({
+        contract: { wordLevels: {} },
+        evidence,
+    });
+    const row = report.wordSourcePosture.find((entry) => entry.identity === identity);
+
+    assert.equal(row.contractLevel, null);
+    assert.notEqual(row.posture, "level_universe_standard");
+    assert.equal(report.evidenceDepthValid, false);
 });
 
 test("explicit word source audit level scope uses the exact contract denominator", () => {
@@ -864,9 +1393,9 @@ test("word source access report keeps registered future lanes out of review loop
     assert.equal(report.actionCounts.review_source_access_and_pin_input, 1);
 });
 
-test("word source assignment files resolve manifest-relative slash styles", () => {
+test("word source assignment files load only from the canonical source-keyed path", () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "word-source-evidence-"));
-    const assignmentDir = path.join(tempDir, "assignments");
+    const assignmentDir = path.join(tempDir, "jlpt_word_source_evidence", "assignments");
     fs.mkdirSync(assignmentDir, { recursive: true });
     fs.writeFileSync(path.join(assignmentDir, "source_a.json"), JSON.stringify({
         sourceId: "source_a",
@@ -922,12 +1451,19 @@ test("word source assignment files resolve manifest-relative slash styles", () =
             },
         },
         assignmentFiles: {
-            source_a: "assignments\\source_a.json",
+            source_a: "jlpt_word_source_evidence/assignments/source_a.json",
         },
     }), "utf8");
 
     const evidence = loadJlptWordSourceEvidence(manifestPath);
     assert.equal(evidence.assignments.source_a["食べる|たべる"].level, 5);
+
+    const redirectedManifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    redirectedManifest.assignmentFiles.source_a = "outside.json";
+    assert.throws(
+        () => normalizeJlptWordSourceEvidence(redirectedManifest, { manifestPath }),
+        /canonical data path/i
+    );
 });
 
 test("tracked word source evidence registers TubeLex as non-consensus frequency support", () => {
@@ -945,5 +1481,9 @@ test("tracked word source evidence registers TubeLex as non-consensus frequency 
     assert.equal(source.canStoreRawList, false);
     assert.deepEqual(source.allowedUse, ["commonness-support", "frequency-sanity"]);
     assert.equal(source.disallowedUse.includes("candidate-discovery"), true);
-    assert.equal(source.local.rowCount, 65319);
+    assert.equal(source.local.rowCount, 65663);
+    assert.equal(source.local.byteSize, 24661425);
+    assert.equal(source.local.sha256, "94e2a07b3ada7eab306e8e3823730a38d0ab5572eb80ff809c4daaa2f3f2f2e7");
+    assert.equal(source.upstreamSnapshot.version, "7cb5fb36add76b83a266d1967536e1a1d3faa513");
+    assert.equal(source.upstreamSnapshot.sha256, "39d4edb2ccac4405b47d0f93e9ec7b11678b3b305d1a37c877dd76588817c8e9");
 });

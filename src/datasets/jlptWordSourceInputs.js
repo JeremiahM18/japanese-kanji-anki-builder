@@ -24,6 +24,14 @@ const wordSourceInputConfigSchema = z.object({
     sourceLabel: z.string().min(1),
     sourceUrl: z.string().min(1).optional(),
     format: z.enum(["tsv", "csv", "json"]).default("tsv"),
+    evidenceMode: z.enum(["placement", "support"]).default("placement"),
+    supportProfile: z.enum([
+        "jmdict-exact-identity",
+        "jmdict-priority-commonness",
+        "tubelex-exact-frequency",
+    ]).optional(),
+    importMode: z.enum(["overlay", "replace-contract-scope"]).default("overlay"),
+    contractLevels: z.array(z.number().int().min(1).max(5)).min(1).optional(),
     writtenColumn: z.string().min(1).default("written"),
     readingColumn: z.string().min(1).default("reading"),
     levelColumn: z.string().min(1).default("jlpt"),
@@ -32,6 +40,18 @@ const wordSourceInputConfigSchema = z.object({
     citationColumn: z.string().min(1).optional(),
     evidenceRefColumn: z.string().min(1).optional(),
     notesColumn: z.string().min(1).optional(),
+    supportClaimColumn: z.string().min(1).optional(),
+    evidenceKindColumn: z.string().min(1).optional(),
+    snapshotVersionColumn: z.string().min(1).optional(),
+    normalizedSourceSha256Column: z.string().min(1).optional(),
+    entryIdsColumn: z.string().min(1).optional(),
+    priorityTagsColumn: z.string().min(1).optional(),
+    frequencyRankColumn: z.string().min(1).optional(),
+    occurrenceCountColumn: z.string().min(1).optional(),
+    documentCountColumn: z.string().min(1).optional(),
+    channelCountColumn: z.string().min(1).optional(),
+    matchStatusColumn: z.string().min(1).optional(),
+    frequencyBandColumn: z.string().min(1).optional(),
     defaultReviewStatus: wordSourceInputReviewStatusSchema.default("needs_review"),
     defaultCitation: z.string().min(1).optional(),
     defaultEvidenceRef: z.string().min(1).optional(),
@@ -72,6 +92,23 @@ function normalizeJlptWordSourceInputs(value = {}) {
                     .reduce((total, count) => total + count, 0);
                 if (expectedRows !== input.rowCount) {
                     throw new Error(`JLPT word source input ${inputId} expected review status counts sum to ${expectedRows}, not rowCount ${input.rowCount}`);
+                }
+            }
+            if (input.evidenceMode === "support") {
+                if (!input.supportProfile) {
+                    throw new Error(`JLPT word support input ${inputId} requires supportProfile`);
+                }
+                if (input.importMode !== "replace-contract-scope") {
+                    throw new Error(`JLPT word support input ${inputId} requires importMode replace-contract-scope`);
+                }
+                if (!Array.isArray(input.contractLevels) || input.contractLevels.length === 0) {
+                    throw new Error(`JLPT word support input ${inputId} requires contractLevels`);
+                }
+                if (input.requireLevel !== false) {
+                    throw new Error(`JLPT word support input ${inputId} must set requireLevel false`);
+                }
+                if ((input.defaultSupportClaims || []).length > 0 || input.defaultEvidenceRef) {
+                    throw new Error(`JLPT word support input ${inputId} must use row-specific typed support facts, not source-wide defaults`);
                 }
             }
             return [inputId, input];

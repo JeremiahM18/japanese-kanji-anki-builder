@@ -1,4 +1,8 @@
-const { normalizeJlptWordLevel } = require("../datasets/jlptWordSourceEvidence");
+const {
+    buildWordIdentity,
+    normalizeJlptWordLevel,
+    wordSupportRecordSchema,
+} = require("../datasets/jlptWordSourceEvidence");
 
 function createLevelCounts() {
     return {
@@ -43,6 +47,12 @@ function createIssueCounts() {
         reviewedVotingAssignmentsMissingLevel: 0,
         reviewedAssignmentsOutsideSourceLevels: 0,
         invalidSupportClaims: 0,
+        dualAuthoritySupportSources: 0,
+        legacyAssignmentSupportClaims: 0,
+        disallowedStoredSupportFacts: 0,
+        missingSupportSourceMetadata: 0,
+        staleSupportSources: 0,
+        invalidSupportFacts: 0,
     };
 }
 
@@ -105,34 +115,195 @@ function buildComparableAssignmentsByIdentity(evidence = {}, comparableSources =
     return byIdentity;
 }
 
-function sourceAllowsSupportUse(source = {}, allowedUse) {
-    return source.status === "active"
-        && source.canStoreWordAssignments === true
-        && ["approved", "restricted"].includes(source.licenseStatus)
-        && (source.allowedUse || []).includes(allowedUse);
+function supportClaimForEvidenceKind(evidenceKind) {
+    return evidenceKind === "exact-dictionary-entry"
+        ? "dictionary-identity"
+        : "commonness";
 }
 
-function buildReviewedSupportAssignmentsByIdentity(evidence = {}, allowedUse, supportClaim) {
-    const supportingSourceIds = new Set(
-        Object.entries(evidence.sources || {})
-            .filter(([, source]) => sourceAllowsSupportUse(source, allowedUse))
-            .map(([sourceId]) => sourceId)
-    );
+function requiredUseForSupportClaim(supportClaim) {
+    return supportClaim === "dictionary-identity"
+        ? "dictionary-verification"
+        : "commonness-support";
+}
+
+function requiredSourceKindForEvidenceKind(evidenceKind) {
+    return {
+        "exact-dictionary-entry": "dictionary",
+        "dictionary-priority": "dictionary-priority",
+        "corpus-frequency": "frequency",
+    }[evidenceKind] || null;
+}
+
+function parseIsoDate(value) {
+    const normalized = String(value || "").trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/u.test(normalized)) {
+        return null;
+    }
+    const timestamp = Date.parse(`${normalized}T00:00:00.000Z`);
+    if (!Number.isFinite(timestamp)
+        || new Date(timestamp).toISOString().slice(0, 10) !== normalized) {
+        return null;
+    }
+    return timestamp;
+}
+
+function evaluateSupportSourceFreshness(source = {}, evidenceCheckedAt = "") {
+    const kinds = new Set(source.supportEvidenceKinds || []);
+    const requiresFreshness = kinds.has("exact-dictionary-entry") || kinds.has("dictionary-priority");
+    if (!source.freshness) {
+        return {
+            required: requiresFreshness,
+            valid: !requiresFreshness,
+            reason: requiresFreshness ? "missing freshness policy" : null,
+        };
+    }
+    const checkedAt = parseIsoDate(source.freshness.checkedAt);
+    const auditAt = parseIsoDate(evidenceCheckedAt);
+    if (!Number.isFinite(checkedAt) || !Number.isFinite(auditAt)) {
+        return { required: requiresFreshness, valid: false, reason: "invalid freshness date" };
+    }
+    if (checkedAt > auditAt) {
+        return { required: requiresFreshness, valid: false, reason: "freshness check is after evidence checkedAt" };
+    }
+    const ageDays = Math.floor((auditAt - checkedAt) / 86400000);
+    const valid = ageDays <= source.freshness.maximumAgeDays;
+    return {
+        required: requiresFreshness,
+        valid,
+        ageDays,
+        maximumAgeDays: source.freshness.maximumAgeDays,
+        reason: valid ? null : `snapshot freshness age ${ageDays} exceeds ${source.freshness.maximumAgeDays} days`,
+    };
+}
+
+function buildSupportSourceMetadataIssues(source = {}, evidenceCheckedAt = "") {
+    const issues = [];
+    if (source.countsForConsensus === true || source.canStoreWordAssignments === true) {
+        issues.push("dualPlacementAuthority");
+    }
+    if (!Array.isArray(source.supportEvidenceKinds) || source.supportEvidenceKinds.length === 0) {
+        issues.push("supportEvidenceKinds");
+    }
+    if (!source.upstreamSnapshot) {
+        issues.push("upstreamSnapshot");
+    } else {
+        if (!source.upstreamSnapshot.url) {
+            issues.push("upstreamSnapshot.url");
+        }
+        if (!source.upstreamSnapshot.version) {
+            issues.push("upstreamSnapshot.version");
+        }
+        if (!/^[a-f0-9]{64}$/iu.test(String(source.upstreamSnapshot.sha256 || ""))) {
+            issues.push("upstreamSnapshot.sha256");
+        }
+        if (!Number.isInteger(source.upstreamSnapshot.byteSize) || source.upstreamSnapshot.byteSize < 0) {
+            issues.push("upstreamSnapshot.byteSize");
+        }
+        const retrievedAt = parseIsoDate(source.upstreamSnapshot.retrievedAt);
+        const auditAt = parseIsoDate(evidenceCheckedAt);
+        if (!Number.isFinite(retrievedAt)
+            || !Number.isFinite(auditAt)
+            || retrievedAt > auditAt) {
+            issues.push("upstreamSnapshot.retrievedAt");
+        }
+    }
+    if (!/^[a-f0-9]{64}$/iu.test(String(source.local?.sha256 || ""))) {
+        issues.push("local.sha256");
+    }
+    if (!Number.isInteger(source.local?.byteSize) || source.local.byteSize < 0) {
+        issues.push("local.byteSize");
+    }
+    if (!Number.isInteger(source.local?.rowCount) || source.local.rowCount < 0) {
+        issues.push("local.rowCount");
+    }
+    if (source.positiveEvidenceOnly !== true) {
+        issues.push("positiveEvidenceOnly");
+    }
+    const freshness = evaluateSupportSourceFreshness(source, evidenceCheckedAt);
+    return { issues, freshness };
+}
+
+function sourceAllowsSupportUse(source = {}, allowedUse, evidenceKind, evidenceCheckedAt = "") {
+    const metadata = buildSupportSourceMetadataIssues(source, evidenceCheckedAt);
+    return source.status === "active"
+        && source.canStoreSupportFacts === true
+        && ["approved", "restricted"].includes(source.licenseStatus)
+        && (source.allowedUse || []).includes(allowedUse)
+        && (source.supportEvidenceKinds || []).includes(evidenceKind)
+        && source.sourceKind === requiredSourceKindForEvidenceKind(evidenceKind)
+        && metadata.issues.length === 0
+        && metadata.freshness.valid;
+}
+
+function buildCanonicalSupportCitation(source = {}) {
+    return `${source.name}; ${source.upstreamSnapshot?.url}; snapshot ${source.upstreamSnapshot?.version}`;
+}
+
+function buildCanonicalSupportEvidenceRef({ source = {}, identity = "", rowNumber } = {}) {
+    return `${source.local?.path}; sha256=${String(source.local?.sha256 || "").toLowerCase()}; `
+        + `row=${rowNumber}; identity=${encodeURIComponent(identity)}`;
+}
+
+function supportEvidenceRefMatchesIdentity(evidenceRef = "", identity = "") {
+    return String(evidenceRef).endsWith(`; identity=${encodeURIComponent(identity)}`);
+}
+
+function supportRecordMatchesSource({ source = {}, identity = "", record = {}, evidenceCheckedAt = "" } = {}) {
+    const parsed = wordSupportRecordSchema.safeParse(record);
+    if (!parsed.success) {
+        return false;
+    }
+    const normalized = parsed.data;
+    if (buildWordIdentity(normalized.written, normalized.reading) !== identity) {
+        return false;
+    }
+    const expectedClaim = supportClaimForEvidenceKind(normalized.evidence.kind);
+    const allowedUse = requiredUseForSupportClaim(expectedClaim);
+    const expectedCitation = buildCanonicalSupportCitation(source);
+    const evidenceRefMatch = /^(.*); sha256=([a-f0-9]{64}); row=([1-9]\d*); identity=([^;\s]+)$/iu.exec(normalized.evidenceRef);
+    const evidenceRowNumber = Number(evidenceRefMatch?.[3]);
+    const delimitedSource = ["csv", "tsv"].includes(source.local?.format);
+    const minimumEvidenceRow = delimitedSource ? 2 : 1;
+    const maximumEvidenceRow = Number.isInteger(source.local?.rowCount)
+        ? source.local.rowCount + (delimitedSource ? 1 : 0)
+        : 0;
+    const provenanceMatches = normalized.citation === expectedCitation
+        && Number.isSafeInteger(evidenceRowNumber)
+        && evidenceRowNumber >= minimumEvidenceRow
+        && evidenceRowNumber <= maximumEvidenceRow
+        && normalized.evidenceRef === buildCanonicalSupportEvidenceRef({
+            source,
+            identity,
+            rowNumber: evidenceRowNumber,
+        });
+    return sourceAllowsSupportUse(source, allowedUse, normalized.evidence.kind, evidenceCheckedAt)
+        && provenanceMatches
+        && normalized.supportClaims[0] === expectedClaim
+        && normalized.evidence.snapshotVersion === source.upstreamSnapshot?.version
+        && normalized.evidence.normalizedSourceSha256.toLowerCase() === String(source.local?.sha256 || "").toLowerCase();
+}
+
+function buildReviewedSupportRecordsByIdentity(
+    evidence = {},
+    supportClaim,
+    asOfDate = "",
+    contractIdentitySet = null
+) {
     const byIdentity = new Map();
 
-    for (const [sourceId, assignments] of Object.entries(evidence.assignments || {})) {
-        if (!supportingSourceIds.has(sourceId)) {
-            continue;
-        }
-        for (const [identity, assignment] of Object.entries(assignments || {})) {
-            if (assignment.reviewStatus !== "reviewed"
-                || !(assignment.supportClaims || []).includes(supportClaim)) {
+    for (const [sourceId, records] of Object.entries(evidence.supportRecords || {})) {
+        const source = evidence.sources?.[sourceId] || {};
+        for (const [identity, record] of Object.entries(records || {})) {
+            if ((contractIdentitySet && !contractIdentitySet.has(identity))
+                || record.supportClaims?.[0] !== supportClaim
+                || !supportRecordMatchesSource({ source, identity, record, evidenceCheckedAt: asOfDate || evidence.checkedAt })) {
                 continue;
             }
             if (!byIdentity.has(identity)) {
                 byIdentity.set(identity, []);
             }
-            byIdentity.get(identity).push({ sourceId, assignment });
+            byIdentity.get(identity).push({ sourceId, record });
         }
     }
 
@@ -156,6 +327,7 @@ function buildSourceCoverage(evidence = {}) {
             allowedUse: source.allowedUse || [],
             countsForConsensus: source.countsForConsensus === true,
             canStoreWordAssignments: source.canStoreWordAssignments === true,
+            canStoreSupportFacts: source.canStoreSupportFacts === true,
             canStoreRawList: source.canStoreRawList === true,
             licenseStatus: source.licenseStatus,
             local: source.local || null,
@@ -168,6 +340,7 @@ function buildSourceCoverage(evidence = {}) {
             pendingAssignmentCount: assignments.filter((assignment) => assignment.reviewStatus === "needs_review").length,
             sourceAccessGapAssignmentCount: assignments.filter((assignment) => assignment.reviewStatus === "source_access_gap").length,
             licenseBlockedAssignmentCount: assignments.filter((assignment) => assignment.reviewStatus === "license_blocked").length,
+            supportFactCount: Object.keys(evidence.supportRecords?.[sourceId] || {}).length,
         };
     }
     return coverage;
@@ -222,7 +395,7 @@ function choosePosture({
         && learnerSourceCount >= policy.minimumJapanesePublishedOrPermissionedLearnerSources
         && (!policy.requireDictionaryIdentitySupport || dictionaryIdentitySupported)
         && (!policy.requireCommonnessSupport || commonnessSupported)
-        && contractMatchesConsensus !== false) {
+        && contractMatchesConsensus === true) {
         return "level_universe_standard";
     }
     if (independentSourceCount >= 2 || independentEvidenceLineageCount >= 2) {
@@ -298,7 +471,7 @@ function buildWordEvidenceResult({
     };
 }
 
-function buildGovernanceIssues(evidence = {}) {
+function buildGovernanceIssues(evidence = {}, asOfDate = "", contractIdentitySet = new Set()) {
     const issues = {
         unapprovedVotingSources: [],
         illegalConsensusSourceUses: [],
@@ -309,6 +482,12 @@ function buildGovernanceIssues(evidence = {}) {
         reviewedVotingAssignmentsMissingLevel: [],
         reviewedAssignmentsOutsideSourceLevels: [],
         invalidSupportClaims: [],
+        dualAuthoritySupportSources: [],
+        legacyAssignmentSupportClaims: [],
+        disallowedStoredSupportFacts: [],
+        missingSupportSourceMetadata: [],
+        staleSupportSources: [],
+        invalidSupportFacts: [],
     };
 
     for (const [sourceId, source] of Object.entries(evidence.sources || {})) {
@@ -337,7 +516,40 @@ function buildGovernanceIssues(evidence = {}) {
                 assignmentCount: Object.keys(evidence.assignments?.[sourceId] || {}).length,
             });
         }
+        const sourceSupportRecords = evidence.supportRecords?.[sourceId] || {};
+        if (source.canStoreSupportFacts
+            && (source.countsForConsensus || source.canStoreWordAssignments)) {
+            issues.dualAuthoritySupportSources.push({ sourceId });
+        }
+        if (Object.keys(sourceSupportRecords).length > 0 && !source.canStoreSupportFacts) {
+            issues.disallowedStoredSupportFacts.push({
+                sourceId,
+                supportFactCount: Object.keys(sourceSupportRecords).length,
+            });
+        }
+        if (Object.keys(sourceSupportRecords).length > 0) {
+            const metadata = buildSupportSourceMetadataIssues(source, asOfDate || evidence.checkedAt);
+            if (metadata.issues.length > 0) {
+                issues.missingSupportSourceMetadata.push({ sourceId, missingFields: metadata.issues });
+            }
+            if (!metadata.freshness.valid) {
+                issues.staleSupportSources.push({ sourceId, ...metadata.freshness });
+            }
+        }
         for (const [identity, assignment] of Object.entries(evidence.assignments?.[sourceId] || {})) {
+            if ((assignment.supportClaims || []).length > 0) {
+                issues.legacyAssignmentSupportClaims.push({
+                    sourceId,
+                    identity,
+                    supportClaims: assignment.supportClaims,
+                });
+                issues.invalidSupportClaims.push({
+                    sourceId,
+                    identity,
+                    supportClaims: assignment.supportClaims,
+                    reason: "support claims must use typed supportRecords, not placement assignments",
+                });
+            }
             if (assignment.reviewStatus !== "reviewed") {
                 continue;
             }
@@ -367,26 +579,74 @@ function buildGovernanceIssues(evidence = {}) {
                     sourceLevels: source.levels,
                 });
             }
-            for (const supportClaim of assignment.supportClaims || []) {
-                const requiredUse = supportClaim === "dictionary-identity"
-                    ? "dictionary-verification"
-                    : "commonness-support";
-                if (!(source.allowedUse || []).includes(requiredUse)) {
-                    issues.invalidSupportClaims.push({
-                        sourceId,
-                        identity,
-                        supportClaim,
-                        requiredUse,
-                    });
-                }
+        }
+        const evidenceRefOwners = new Map();
+        for (const [identity, record] of Object.entries(sourceSupportRecords)) {
+            if (!contractIdentitySet.has(identity)) {
+                issues.invalidSupportFacts.push({
+                    sourceId,
+                    identity,
+                    evidenceKind: record.evidence?.kind || null,
+                    reason: "support fact identity is outside the operational word contract",
+                });
+                continue;
             }
+            if (!supportEvidenceRefMatchesIdentity(record.evidenceRef, identity)) {
+                issues.invalidSupportFacts.push({
+                    sourceId,
+                    identity,
+                    evidenceKind: record.evidence?.kind || null,
+                    reason: "support evidence reference is not bound to the exact written|reading identity",
+                });
+                continue;
+            }
+            if (!supportRecordMatchesSource({ source, identity, record, evidenceCheckedAt: asOfDate || evidence.checkedAt })) {
+                issues.invalidSupportFacts.push({
+                    sourceId,
+                    identity,
+                    evidenceKind: record.evidence?.kind || null,
+                    reason: "support fact does not satisfy schema, source-use, snapshot, or positive-evidence policy",
+                });
+                continue;
+            }
+            const existingIdentity = evidenceRefOwners.get(record.evidenceRef);
+            if (existingIdentity) {
+                issues.invalidSupportFacts.push({
+                    sourceId,
+                    identity,
+                    evidenceKind: record.evidence?.kind || null,
+                    reason: `support fact reuses evidence reference from ${existingIdentity}`,
+                });
+                continue;
+            }
+            evidenceRefOwners.set(record.evidenceRef, identity);
+        }
+    }
+
+    for (const [sourceId, sourceSupportRecords] of Object.entries(evidence.supportRecords || {})) {
+        if (evidence.sources?.[sourceId]) {
+            continue;
+        }
+        for (const [identity, record] of Object.entries(sourceSupportRecords || {})) {
+            issues.invalidSupportFacts.push({
+                sourceId,
+                identity,
+                evidenceKind: record.evidence?.kind || null,
+                reason: "support fact references an unknown source",
+            });
         }
     }
 
     return issues;
 }
 
-function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, levels = null, limit = 25 } = {}) {
+function auditJlptWordSourceEvidence({
+    contract = {},
+    evidence = {},
+    levels = null,
+    limit = 25,
+    asOfDate = "",
+} = {}) {
     const policy = {
         minimumIndependentSources: 3,
         minimumIndependentEvidenceLineages: 2,
@@ -397,24 +657,27 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, levels = nu
     };
     const comparableSources = collectComparableSources(evidence);
     const comparableAssignmentsByIdentity = buildComparableAssignmentsByIdentity(evidence, comparableSources);
-    const dictionaryIdentityAssignmentsByIdentity = buildReviewedSupportAssignmentsByIdentity(
+    const supportEvaluationDate = asOfDate || new Date().toISOString().slice(0, 10);
+    const allContractEntries = getContractEntries(contract);
+    const allContractIdentitySet = new Set(allContractEntries.map((entry) => entry.key));
+    const dictionaryIdentityAssignmentsByIdentity = buildReviewedSupportRecordsByIdentity(
         evidence,
-        "dictionary-verification",
-        "dictionary-identity"
+        "dictionary-identity",
+        supportEvaluationDate,
+        allContractIdentitySet
     );
-    const commonnessAssignmentsByIdentity = buildReviewedSupportAssignmentsByIdentity(
+    const commonnessAssignmentsByIdentity = buildReviewedSupportRecordsByIdentity(
         evidence,
-        "commonness-support",
-        "commonness"
+        "commonness",
+        supportEvaluationDate,
+        allContractIdentitySet
     );
     const requestedLevels = Array.isArray(levels)
         ? new Set(levels.map((level) => Number(level)).filter((level) => Number.isInteger(level)))
         : null;
-    const allContractEntries = getContractEntries(contract);
     const contractEntries = allContractEntries.filter((entry) => (
         !requestedLevels || requestedLevels.has(entry.jlpt)
     ));
-    const allContractIdentitySet = new Set(allContractEntries.map((entry) => entry.key));
     const selectedContractIdentitySet = new Set(contractEntries.map((entry) => entry.key));
     const comparableIdentitySet = new Set(comparableAssignmentsByIdentity.keys());
     const identitySet = requestedLevels
@@ -495,7 +758,7 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, levels = nu
             && levelSummary.level_universe_standard === levelSummary.checked;
     }
 
-    const governanceIssues = buildGovernanceIssues(evidence);
+    const governanceIssues = buildGovernanceIssues(evidence, supportEvaluationDate, allContractIdentitySet);
     issueCounts.unapprovedVotingSources = governanceIssues.unapprovedVotingSources.length;
     issueCounts.illegalConsensusSourceUse = governanceIssues.illegalConsensusSourceUses.length;
     issueCounts.disallowedStoredAssignments = governanceIssues.disallowedStoredAssignments.length;
@@ -505,6 +768,12 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, levels = nu
     issueCounts.reviewedVotingAssignmentsMissingLevel = governanceIssues.reviewedVotingAssignmentsMissingLevel.length;
     issueCounts.reviewedAssignmentsOutsideSourceLevels = governanceIssues.reviewedAssignmentsOutsideSourceLevels.length;
     issueCounts.invalidSupportClaims = governanceIssues.invalidSupportClaims.length;
+    issueCounts.dualAuthoritySupportSources = governanceIssues.dualAuthoritySupportSources.length;
+    issueCounts.legacyAssignmentSupportClaims = governanceIssues.legacyAssignmentSupportClaims.length;
+    issueCounts.disallowedStoredSupportFacts = governanceIssues.disallowedStoredSupportFacts.length;
+    issueCounts.missingSupportSourceMetadata = governanceIssues.missingSupportSourceMetadata.length;
+    issueCounts.staleSupportSources = governanceIssues.staleSupportSources.length;
+    issueCounts.invalidSupportFacts = governanceIssues.invalidSupportFacts.length;
 
     const governanceValid = issueCounts.unapprovedVotingSources === 0
         && issueCounts.illegalConsensusSourceUse === 0
@@ -514,7 +783,13 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, levels = nu
         && issueCounts.reviewedAssignmentsMissingEvidence === 0
         && issueCounts.reviewedVotingAssignmentsMissingLevel === 0
         && issueCounts.reviewedAssignmentsOutsideSourceLevels === 0
-        && issueCounts.invalidSupportClaims === 0;
+        && issueCounts.invalidSupportClaims === 0
+        && issueCounts.dualAuthoritySupportSources === 0
+        && issueCounts.legacyAssignmentSupportClaims === 0
+        && issueCounts.disallowedStoredSupportFacts === 0
+        && issueCounts.missingSupportSourceMetadata === 0
+        && issueCounts.staleSupportSources === 0
+        && issueCounts.invalidSupportFacts === 0;
     const evidenceDepthValid = wordSourcePosture.length > 0
         && wordSourcePosture.every((entry) => entry.posture === "level_universe_standard");
 
@@ -523,6 +798,7 @@ function auditJlptWordSourceEvidence({ contract = {}, evidence = {}, levels = nu
         governanceValid,
         evidenceDepthValid,
         checked: wordSourcePosture.length,
+        asOfDate: supportEvaluationDate,
         levels: requestedLevels ? [...requestedLevels].sort((left, right) => right - left) : null,
         selectedContractIdentityCount: contractEntries.length,
         outOfScopeContractIdentityCount: requestedLevels
@@ -583,17 +859,30 @@ function buildMaterializedWordEvidenceEntries({ evidence = {}, contract = {} } =
     });
     const words = {};
     for (const entry of report.wordSourcePosture || []) {
-        if (entry.assignmentCount === 0) {
+        if (entry.assignmentCount === 0
+            && !entry.dictionaryIdentitySupported
+            && !entry.commonnessSupported) {
             continue;
         }
         const sources = {};
+        const supportSources = {};
         for (const [sourceId, assignments] of Object.entries(evidence.assignments || {})) {
             if (assignments[entry.identity]?.reviewStatus === "reviewed") {
                 sources[sourceId] = assignments[entry.identity];
             }
         }
+        const validSupportSourceIds = new Set([
+            ...(entry.dictionaryIdentitySourceIds || []),
+            ...(entry.commonnessSourceIds || []),
+        ]);
+        for (const [sourceId, records] of Object.entries(evidence.supportRecords || {})) {
+            if (validSupportSourceIds.has(sourceId) && records[entry.identity]) {
+                supportSources[sourceId] = records[entry.identity];
+            }
+        }
         words[entry.identity] = {
             sources,
+            supportSources,
             sourceConsensusLevel: entry.sourceConsensusLevel,
             sourceAgreementCount: entry.assignmentCount,
             independentSourceCount: entry.independentSourceCount,
@@ -646,10 +935,13 @@ function buildSourceAccessReport({ evidence = {} } = {}) {
 
 module.exports = {
     auditJlptWordSourceEvidence,
+    buildCanonicalSupportCitation,
+    buildCanonicalSupportEvidenceRef,
     buildMaterializedWordEvidenceEntries,
     buildSourceAccessReport,
     buildSourceAdequacyByLevel,
     buildWordEvidenceResult,
     createPostureCounts,
     sourceAllowsConsensusUse,
+    supportRecordMatchesSource,
 };

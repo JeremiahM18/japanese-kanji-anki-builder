@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "checkedAt": "2026-05-11",
+  "checkedAt": "2026-08-23",
   "sourcePurposeRules": {
     "jlpt_level_list": {
       "description": "JLPT-oriented word lists can propose candidate words and weak level hints, but cannot approve cards by themselves.",
@@ -431,20 +431,20 @@
       "origin": {
         "url": "https://www.edrdg.org/jmdict/j_jmdict.html",
         "localPath": "downloads/jmdict-word-verification.tsv",
-        "notes": "Official JMdict English data normalized into an ignored exact written-reading TSV. Raw and normalized source files stay out of git."
+        "notes": "Official JMdict English data normalized into an ignored exact written-reading TSV. Raw and normalized source files stay out of git; the upstream gzip creation header and integrity are pinned separately."
       },
       "licenseUse": {
         "status": "approved",
         "license": "CC BY-SA 4.0",
-        "notes": "Dictionary verification only with attribution to EDRDG/JMdict. Do not copy raw dictionary rows into tracked product files."
+        "notes": "Exact dictionary support only with attribution to EDRDG/JMdict. Derived support facts remain CC BY-SA 4.0 data; the repository software licence does not relicense them. Do not copy raw dictionary rows into tracked product files or use them as JLPT placement evidence."
       },
-      "checkedAt": "2026-05-11",
+      "checkedAt": "2026-08-23",
       "local": {
         "path": "downloads/jmdict-word-verification.tsv",
         "format": "tsv",
-        "sha256": "a540658623d32afdc1315091db494a4c9dcaf5c4cfe1add95ec65965e5228fe2",
-        "byteSize": 57660320,
-        "rowCount": 255738,
+        "sha256": "814197ad14b2b52236b5e007b6d15ad18ad82e7aff40329346bdaf94ec2e3606",
+        "byteSize": 58452932,
+        "rowCount": 258874,
         "columns": [
           "written",
           "reading",
@@ -469,7 +469,23 @@
         "level-truth",
         "frequency-sanity",
         "pitch-verification"
-      ]
+      ],
+      "canStoreSupportFacts": true,
+      "supportEvidenceKinds": [
+        "exact-dictionary-entry"
+      ],
+      "upstreamSnapshot": {
+        "url": "https://www.edrdg.org/pub/Nihongo/JMdict_e.gz",
+        "version": "JMdict created: 2026-08-23",
+        "retrievedAt": "2026-08-23",
+        "sha256": "11c3fb43a82ae775269e6832d117c4f52152f4d8cf49f44c16a0ed619aa98a6a",
+        "byteSize": 10556309
+      },
+      "freshness": {
+        "checkedAt": "2026-08-23",
+        "maximumAgeDays": 31,
+        "updateProcedure": "Refresh from the official current JMdict_e.gz before use when this snapshot is older than 31 days; verify gzip SHA-256, byte size, and creation header, regenerate the ignored normalized TSV, reconcile its SHA-256, byte size, row count, and columns, update both manifests together, and rerun source validators."
+      }
     },
     "jmdict-priority-commonness": {
       "name": "JMdict priority/commonness signal",
@@ -484,15 +500,15 @@
       "licenseUse": {
         "status": "approved",
         "license": "CC BY-SA 4.0",
-        "notes": "Commonness sanity only with attribution to EDRDG/JMdict; priority markers are not JLPT level truth."
+        "notes": "Positive commonness support only with attribution to EDRDG/JMdict; priority markers are not JLPT level truth and absence of priority is not negative or positive commonness evidence."
       },
-      "checkedAt": "2026-05-11",
+      "checkedAt": "2026-08-23",
       "local": {
         "path": "downloads/jmdict-word-verification.tsv",
         "format": "tsv",
-        "sha256": "a540658623d32afdc1315091db494a4c9dcaf5c4cfe1add95ec65965e5228fe2",
-        "byteSize": 57660320,
-        "rowCount": 255738,
+        "sha256": "814197ad14b2b52236b5e007b6d15ad18ad82e7aff40329346bdaf94ec2e3606",
+        "byteSize": 58452932,
+        "rowCount": 258874,
         "columns": [
           "written",
           "reading",
@@ -517,7 +533,23 @@
         "reading-verification",
         "meaning-verification",
         "pitch-verification"
-      ]
+      ],
+      "canStoreSupportFacts": true,
+      "supportEvidenceKinds": [
+        "dictionary-priority"
+      ],
+      "upstreamSnapshot": {
+        "url": "https://www.edrdg.org/pub/Nihongo/JMdict_e.gz",
+        "version": "JMdict created: 2026-08-23",
+        "retrievedAt": "2026-08-23",
+        "sha256": "11c3fb43a82ae775269e6832d117c4f52152f4d8cf49f44c16a0ed619aa98a6a",
+        "byteSize": 10556309
+      },
+      "freshness": {
+        "checkedAt": "2026-08-23",
+        "maximumAgeDays": 31,
+        "updateProcedure": "Refresh from the official current JMdict_e.gz before use when this snapshot is older than 31 days; verify gzip SHA-256, byte size, and creation header, regenerate the ignored normalized TSV, reconcile its SHA-256, byte size, row count, and columns, update both manifests together, and rerun source validators."
+      }
     },
     "tubelex-ja-frequency": {
       "name": "TubeLex Japanese everyday-language frequency support",
@@ -525,22 +557,22 @@
       "status": "active",
       "sourceType": "corpus_frequency",
       "origin": {
-        "url": "https://github.com/naist-nlp/tubelex/blob/main/frequencies/tubelex-ja-310-lemma-pos.tsv.xz",
+        "url": "https://github.com/naist-nlp/tubelex/blob/7cb5fb36add76b83a266d1967536e1a1d3faa513/frequencies/tubelex-ja-310-lemma-pos.tsv.xz",
         "localPath": "downloads/tubelex-ja-frequency.tsv",
         "notes": "Derived exact written-reading support TSV generated from ignored TubeLex Japanese lemma frequency data joined through the pinned JMdict exact identity TSV. Raw TubeLex frequency files stay ignored; no raw subtitle text is stored."
       },
       "licenseUse": {
         "status": "approved",
         "license": "BSD-3-Clause",
-        "notes": "Frequency and usefulness support only. TubeLex frequency does not prove JLPT level, dictionary identity, reading, meaning, pitch, or card approval."
+        "notes": "Positive frequency and usefulness support from the published aggregate list only. Retain the BSD 3-Clause notice, conditions, disclaimer, and non-endorsement boundary. TubeLex does not prove JLPT level, dictionary identity, reading, meaning, learner-source coverage, pitch, or card approval; raw subtitle text must not be scraped, reconstructed, stored, or redistributed."
       },
-      "checkedAt": "2026-06-24",
+      "checkedAt": "2026-08-23",
       "local": {
         "path": "downloads/tubelex-ja-frequency.tsv",
         "format": "tsv",
-        "sha256": "6211ef80c94a06b67f5762f05ba239f3195d1ce2085adb76994e1156940f1cf1",
-        "byteSize": 24510589,
-        "rowCount": 65319,
+        "sha256": "94e2a07b3ada7eab306e8e3823730a38d0ab5572eb80ff809c4daaa2f3f2f2e7",
+        "byteSize": 24661425,
+        "rowCount": 65663,
         "columns": [
           "written",
           "reading",
@@ -574,7 +606,18 @@
         "reading-verification",
         "meaning-verification",
         "pitch-verification"
-      ]
+      ],
+      "canStoreSupportFacts": true,
+      "supportEvidenceKinds": [
+        "corpus-frequency"
+      ],
+      "upstreamSnapshot": {
+        "url": "https://raw.githubusercontent.com/naist-nlp/tubelex/7cb5fb36add76b83a266d1967536e1a1d3faa513/frequencies/tubelex-ja-310-lemma-pos.tsv.xz",
+        "version": "7cb5fb36add76b83a266d1967536e1a1d3faa513",
+        "retrievedAt": "2026-08-23",
+        "sha256": "39d4edb2ccac4405b47d0f93e9ec7b11678b3b305d1a37c877dd76588817c8e9",
+        "byteSize": 3658276
+      }
     },
     "jpdb-frequency": {
       "name": "jpdb frequency signal",

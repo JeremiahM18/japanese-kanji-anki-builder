@@ -40,6 +40,38 @@ test("governed file transaction commits all targets together", () => {
     assert.equal(fs.readFileSync(secondPath, "utf8"), "after-two\n");
 });
 
+test("governed file transaction prepares the snapshot under its lock and preserves plan metadata", () => {
+    const rootDir = makeWorkspace();
+    const transactionRoot = path.join(rootDir, "out", "file-transactions");
+    const lockPath = path.join(transactionRoot, "prepare-snapshot-fixture.lock");
+    const targetPath = path.join(rootDir, "templates", "target.json");
+    const metadata = { snapshot: "locked-state" };
+    let validationMetadata = null;
+    fs.writeFileSync(targetPath, "before\n");
+
+    const result = runGovernedFileTransactionSync({
+        workspaceRoot: rootDir,
+        transactionRoot,
+        lockPath,
+        transactionName: "prepare-snapshot-fixture",
+        prepareChanges() {
+            assert.equal(fs.existsSync(lockPath), true);
+            return {
+                changes: [{ filePath: targetPath, data: "after\n" }],
+                metadata,
+            };
+        },
+        validateAfterWrite({ metadata: receivedMetadata }) {
+            validationMetadata = receivedMetadata;
+        },
+    });
+
+    assert.equal(result.metadata, metadata);
+    assert.equal(validationMetadata, metadata);
+    assert.equal(fs.readFileSync(targetPath, "utf8"), "after\n");
+    assert.equal(fs.existsSync(lockPath), false);
+});
+
 test("governed file transaction preserves concurrent bytes when validation used an older hash", () => {
     const rootDir = makeWorkspace();
     const transactionRoot = path.join(rootDir, "out", "file-transactions");

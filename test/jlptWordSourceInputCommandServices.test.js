@@ -141,13 +141,13 @@ test("word source input imports use the governed multi-file transaction", () => 
 test("word source input imports bind every written target to its validated before-state", () => {
     const servicePath = require.resolve("../src/services/jlptWordSourceInputImportCommandService");
     const source = fs.readFileSync(servicePath, "utf8");
-    const atomicImport = source.match(/function runAtomicSupportBatch[\s\S]+?\nfunction run\(/u)?.[0] || "";
-    const singleImport = source.match(/function run\([\s\S]+?\nfunction formatReport/u)?.[0] || "";
+    const atomicPlan = source.match(/function buildAtomicSupportBatchPlan[\s\S]+?\nfunction runAtomicSupportBatch/u)?.[0] || "";
+    const singlePlan = source.match(/function buildSingleSourceImportPlan[\s\S]+?\nfunction run\(/u)?.[0] || "";
 
-    for (const importSource of [atomicImport, singleImport]) {
-        assert.equal((importSource.match(/expectedBeforeSha256:/gu) || []).length, 2);
-        assert.match(importSource, /expectedBeforeSha256: before\.state\.sha256/u);
-        assert.match(importSource, /expectedBeforeSha256: evidenceBeforeState\.sha256/u);
+    for (const planSource of [atomicPlan, singlePlan]) {
+        assert.equal((planSource.match(/expectedBeforeSha256:/gu) || []).length, 2);
+        assert.match(planSource, /expectedBeforeSha256: before\.state\.sha256/u);
+        assert.match(planSource, /expectedBeforeSha256: evidenceBeforeState\.sha256/u);
     }
 });
 
@@ -157,6 +157,24 @@ test("atomic and single-source imports serialize on one shared evidence lock", (
     const sharedLockUses = source.match(/lockPath: resolveWordSourceImportLockPath\(\)/gu) || [];
 
     assert.equal(sharedLockUses.length, 2);
+});
+
+test("word source input writes build their validated snapshots only after acquiring the shared lock", () => {
+    const servicePath = require.resolve("../src/services/jlptWordSourceInputImportCommandService");
+    const source = fs.readFileSync(servicePath, "utf8");
+    const atomicImport = source.match(/function runAtomicSupportBatch[\s\S]+?\nfunction buildSingleSourceImportPlan/u)?.[0] || "";
+    const singleImport = source.match(/function run\([\s\S]+?\nfunction formatReport/u)?.[0] || "";
+    const directSnapshotOperations = /readFileState|readJlptWordSourceEvidenceManifest|loadJlptWord|buildReports|validateWordSourceAccessPacketFile|materializeWordEvidenceEntries|captureGovernedEvidenceDataBeforeStates/u;
+
+    assert.match(atomicImport, /if \(!options\.write\) \{[\s\S]+?buildAtomicSupportBatchPlan/u);
+    assert.match(atomicImport, /prepareChanges: \(\) => \{[\s\S]+?buildAtomicSupportBatchPlan/u);
+    assert.match(singleImport, /if \(!options\.write\) \{[\s\S]+?buildSingleSourceImportPlan/u);
+    assert.match(singleImport, /prepareChanges: \(\) => \{[\s\S]+?buildSingleSourceImportPlan/u);
+    assert.equal((atomicImport.match(/buildAtomicSupportBatchPlan\(/gu) || []).length, 2);
+    assert.equal((singleImport.match(/buildSingleSourceImportPlan\(/gu) || []).length, 2);
+    assert.doesNotMatch(atomicImport, directSnapshotOperations);
+    assert.doesNotMatch(singleImport, directSnapshotOperations);
+    assert.equal((source.match(/prepareChanges: \(\) => \{/gu) || []).length, 2);
 });
 
 test("word source input import preflight uses the exact selected contract", () => {

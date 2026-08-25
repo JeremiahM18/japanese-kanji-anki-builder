@@ -12,6 +12,8 @@ const {
     buildDefaultAssignmentFile,
     formatReport,
     parseArgs: parseImportArgs,
+    resolveAtomicSourceAccessPacketPath,
+    resolveAtomicSourceIds,
     resolveGovernedEvidenceDataPath,
 } = require("../src/services/jlptWordSourceInputImportCommandService");
 
@@ -72,7 +74,9 @@ test("word source input import parseArgs and report keep write mode explicit", (
         contract: "custom-contract.json",
         evidence: "custom-evidence.json",
         source: "tanos-n4-vocab",
+        sources: [],
         sourceAccessPacket: "packet.json",
+        sourceAccessPacketDir: "",
         write: true,
         json: true,
         unknownArgs: ["--oops"],
@@ -89,6 +93,40 @@ test("word source input import parseArgs and report keep write mode explicit", (
         blockers: ["fixture blocker"],
         summary: {},
     }), /Mode: dry-run/);
+});
+
+test("word source input import accepts an explicit atomic multi-source scope", () => {
+    const options = parseImportArgs([
+        "--sources=jmdict,jmdict-priority-commonness,tubelex-ja-frequency",
+        "--source-access-packet-dir=downloads/word-source-access-packets",
+        "--write",
+    ]);
+
+    assert.deepEqual(options.sources, [
+        "jmdict",
+        "jmdict-priority-commonness",
+        "tubelex-ja-frequency",
+    ]);
+    assert.equal(options.source, null);
+    assert.equal(options.sourceAccessPacket, "");
+    assert.equal(options.sourceAccessPacketDir, "downloads/word-source-access-packets");
+    assert.equal(options.write, true);
+    assert.deepEqual(options.unknownArgs, []);
+});
+
+test("atomic word source import rejects ambiguous or duplicate scopes", () => {
+    assert.throws(() => resolveAtomicSourceIds({
+        source: "jmdict",
+        sources: ["tubelex-ja-frequency"],
+    }), /exactly one/);
+    assert.throws(() => resolveAtomicSourceIds({
+        sources: ["jmdict", "jmdict"],
+    }), /duplicate source ids/);
+    assert.throws(() => resolveAtomicSourceAccessPacketPath({}, "jmdict"), /source-access-packet-dir/);
+    assert.equal(
+        resolveAtomicSourceAccessPacketPath({ sourceAccessPacketDir: "downloads/word-source-access-packets" }, "jmdict"),
+        path.join("downloads", "word-source-access-packets", "jmdict-word-source-access-packet.json")
+    );
 });
 
 test("word source input imports use the governed multi-file transaction", () => {

@@ -26,6 +26,7 @@ const { runGovernedFileTransactionSync } = require("../utils/governedFileTransac
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
+    parseCsvOption,
 } = require("../utils/cliArgs");
 
 const DEFAULT_CONFIG = "templates/jlpt_word_source_inputs.json";
@@ -63,7 +64,9 @@ function parseArgs(argv) {
         contract: DEFAULT_CONTRACT,
         evidence: DEFAULT_EVIDENCE,
         source: null,
+        sources: [],
         sourceAccessPacket: "",
+        sourceAccessPacketDir: "",
         write: false,
         json: false,
         unknownArgs: [],
@@ -81,8 +84,12 @@ function parseArgs(argv) {
             options.evidence = arg.slice("--evidence=".length);
         } else if (arg.startsWith("--source=")) {
             options.source = arg.slice("--source=".length);
+        } else if (arg.startsWith("--sources=")) {
+            options.sources = parseCsvOption(arg, "sources");
         } else if (arg.startsWith("--source-access-packet=")) {
             options.sourceAccessPacket = arg.slice("--source-access-packet=".length);
+        } else if (arg.startsWith("--source-access-packet-dir=")) {
+            options.sourceAccessPacketDir = arg.slice("--source-access-packet-dir=".length);
         } else {
             collectUnknownArg(options, arg);
         }
@@ -90,9 +97,206 @@ function parseArgs(argv) {
     return options;
 }
 
-function run(options = {}) {
+function resolveAtomicSourceIds(options = {}) {
+    const batchSources = [...new Set((options.sources || []).map((sourceId) => String(sourceId || "").trim()).filter(Boolean))];
+    if (options.source && batchSources.length > 0) {
+        throw new Error("Use exactly one of --source=<source-id> or --sources=<source-id,...>.");
+    }
+    if (batchSources.length > 0) {
+        if (batchSources.length !== (options.sources || []).length) {
+            throw new Error("Atomic word source import does not allow duplicate source ids.");
+        }
+        return batchSources;
+    }
     if (!options.source) {
-        throw new Error("Missing required --source=<source-id>.");
+        throw new Error("Missing required --source=<source-id> or --sources=<source-id,...>.");
+    }
+    return [options.source];
+}
+
+function resolveAtomicSourceAccessPacketPath(options = {}, sourceId) {
+    if (!options.sourceAccessPacketDir) {
+        throw new Error("Atomic word source import requires --source-access-packet-dir=<directory>.");
+    }
+    return path.join(options.sourceAccessPacketDir, `${sourceId}-word-source-access-packet.json`);
+}
+
+function runAtomicSupportBatch(options = {}, sourceIds = []) {
+    if (options.sourceAccessPacket) {
+        throw new Error("Atomic word source import uses --source-access-packet-dir, not --source-access-packet.");
+    }
+    const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
+    const evidenceManifest = readJlptWordSourceEvidenceManifest(evidencePath);
+    const normalizedEvidence = normalizeJlptWordSourceEvidence(evidenceManifest, { manifestPath: evidencePath });
+    const contract = loadJlptWordLevelContract(options.contract || DEFAULT_CONTRACT);
+    const inputManifest = loadJlptWordSourceInputs(path.resolve(process.cwd(), options.config || DEFAULT_CONFIG));
+    let nextManifest = normalizedEvidence;
+    const sourceSummaries = [];
+    const materializationCandidateWords = new Set();
+
+    for (const sourceId of sourceIds) {
+        const sourceConfig = inputManifest.inputs?.[sourceId];
+        if (sourceConfig?.evidenceMode !== "support") {
+            return {
+                sourceIds,
+                sourceId: sourceIds.join(","),
+                evidenceMode: "support",
+                write: options.write === true,
+                evidencePath,
+                preflightValid: false,
+                blockers: [`Atomic word source import currently requires support-only sources; ${sourceId} is not support-only.`],
+                summary: {},
+                sourceSummaries,
+            };
+        }
+        const preflight = buildReports({
+            config: options.config || DEFAULT_CONFIG,
+            evidence: options.evidence || DEFAULT_EVIDENCE,
+            source: sourceId,
+            evidenceData: nextManifest,
+            contractData: contract,
+        });
+        const [sourceReport] = preflight.reports || [];
+        const expectedSupportClaims = [sourceConfig.supportProfile === "jmdict-exact-identity"
+            ? "dictionary-identity"
+            : "commonness"];
+        const accessPacketValidation = validateWordSourceAccessPacketFile({
+            packetPath: resolveAtomicSourceAccessPacketPath(options, sourceId),
+            expectedSourceId: sourceId,
+            expectedEvidenceRole: "support-only",
+            expectedSupportClaims,
+        });
+        if (!preflight.valid || !sourceReport?.valid || !accessPacketValidation.valid) {
+            return {
+                sourceIds,
+                sourceId: sourceIds.join(","),
+                evidenceMode: "support",
+                write: options.write === true,
+                evidencePath,
+                preflightValid: false,
+                blockers: [
+                    ...(sourceReport?.blockers || (!preflight.valid ? ["word source input preflight failed"] : [])),
+                    ...(accessPacketValidation.blockers || []),
+                ].map((blocker) => `${sourceId}: ${blocker}`),
+                summary: {},
+                sourceSummaries,
+            };
+        }
+        const imported = buildJlptWordSupportEvidenceImport({
+            evidenceManifest: nextManifest,
+            sourceId,
+            contract,
+            levels: sourceConfig.contractLevels,
+            supportRecords: sourceReport.supportRecords,
+        });
+        nextManifest = imported.manifest;
+        sourceSummaries.push(imported.summary);
+        for (const identity of imported.summary.materializationCandidateWords || []) {
+            materializationCandidateWords.add(identity);
+        }
+    }
+
+    nextManifest = materializeWordEvidenceEntries({
+        evidenceManifest: nextManifest,
+        contract,
+    });
+    const materializedShifts = summarizeMaterializedWordEvidenceShifts({
+        previousManifest: normalizedEvidence,
+        nextManifest,
+        changedWords: [...materializationCandidateWords],
+    });
+    const summary = {
+        importedSupportRecordCount: sourceSummaries.reduce((total, item) => total + (item.importedSupportRecordCount || 0), 0),
+        previousScopedSupportRecordCount: sourceSummaries.reduce((total, item) => total + (item.previousScopedSupportRecordCount || 0), 0),
+        addedSupportRecordCount: sourceSummaries.reduce((total, item) => total + (item.addedSupportRecordCount || 0), 0),
+        changedSupportRecordCount: sourceSummaries.reduce((total, item) => total + (item.changedSupportRecordCount || 0), 0),
+        removedSupportRecordCount: sourceSummaries.reduce((total, item) => total + (item.removedSupportRecordCount || 0), 0),
+        unchangedSupportRecordCount: sourceSummaries.reduce((total, item) => total + (item.unchangedSupportRecordCount || 0), 0),
+        materializedShiftCount: materializedShifts.length,
+        materializedShifts,
+    };
+
+    if (options.write) {
+        const changes = [];
+        for (const sourceId of sourceIds) {
+            const relativeDataFile = nextManifest.supportFiles?.[sourceId] || buildDefaultSupportFile(sourceId);
+            nextManifest.supportFiles = {
+                ...(nextManifest.supportFiles || {}),
+                [sourceId]: relativeDataFile,
+            };
+            const dataPath = resolveGovernedEvidenceDataPath({
+                evidencePath,
+                relativeDataFile,
+                evidenceMode: "support",
+                sourceId,
+            });
+            changes.push({
+                filePath: dataPath,
+                data: formatWordSourceSupportFileJson({
+                    sourceId,
+                    supportRecords: nextManifest.supportRecords?.[sourceId] || {},
+                }),
+            });
+        }
+        changes.push({
+            filePath: evidencePath,
+            data: formatWordSourceEvidenceJson(buildStorageManifest(nextManifest)),
+        });
+        runGovernedFileTransactionSync({
+            transactionName: "jlpt-word-source-import-atomic-support-batch",
+            workspaceRoot: process.cwd(),
+            changes,
+            validateAfterWrite: () => {
+                const reloadedManifest = readJlptWordSourceEvidenceManifest(evidencePath);
+                const reloadedEvidence = normalizeJlptWordSourceEvidence(reloadedManifest, {
+                    manifestPath: evidencePath,
+                });
+                for (const sourceId of sourceIds) {
+                    const expectedRecords = nextManifest.supportRecords?.[sourceId] || {};
+                    const actualRecords = reloadedEvidence.supportRecords?.[sourceId] || {};
+                    if (JSON.stringify(actualRecords) !== JSON.stringify(expectedRecords)) {
+                        throw new Error(`Post-write word source support reconciliation failed for ${sourceId}.`);
+                    }
+                }
+                const rematerialized = materializeWordEvidenceEntries({
+                    evidenceManifest: reloadedEvidence,
+                    contract,
+                });
+                if (JSON.stringify(rematerialized.words || {}) !== JSON.stringify(nextManifest.words || {})) {
+                    throw new Error("Post-write atomic word source materialization reconciliation failed.");
+                }
+                const governanceReport = auditJlptWordSourceEvidence({
+                    contract,
+                    evidence: reloadedEvidence,
+                    limit: 1,
+                    asOfDate: todayIsoDate(),
+                });
+                if (!governanceReport.governanceValid) {
+                    throw new Error(
+                        "Post-write atomic word source governance validation failed: "
+                        + `${JSON.stringify(governanceReport.issueCounts)}`
+                    );
+                }
+            },
+        });
+    }
+
+    return {
+        sourceIds,
+        sourceId: sourceIds.join(","),
+        evidenceMode: "support",
+        write: options.write === true,
+        evidencePath,
+        preflightValid: true,
+        summary,
+        sourceSummaries,
+    };
+}
+
+function run(options = {}) {
+    const sourceIds = resolveAtomicSourceIds(options);
+    if ((options.sources || []).length > 0) {
+        return runAtomicSupportBatch(options, sourceIds);
     }
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
     const evidenceManifest = readJlptWordSourceEvidenceManifest(evidencePath);
@@ -257,10 +461,11 @@ function run(options = {}) {
 function formatReport(result = {}) {
     const supportMode = result.evidenceMode === "support"
         || (result.summary?.importedSupportRecordCount || 0) > 0;
+    const sourceIds = result.sourceIds?.length > 0 ? result.sourceIds : [result.sourceId];
     const lines = [
         "JLPT Word Source Evidence Import",
         "",
-        `Source: ${result.sourceId}`,
+        `${sourceIds.length > 1 ? "Sources" : "Source"}: ${sourceIds.join(", ")}`,
         `Mode: ${result.write ? "write" : "dry-run"}`,
         `Evidence: ${result.evidencePath}`,
         `Preflight result: ${result.preflightValid ? "passing" : "blocked"}`,
@@ -282,6 +487,12 @@ function formatReport(result = {}) {
             ? "This imports typed support facts only. It does not grant JLPT placement authority, add words, move words, update decks, certify queues, or touch kanji lanes."
             : "This imports word source-origin evidence only. It does not add words, move words, update decks, certify queues, or touch kanji lanes.",
     ];
+    if (result.sourceSummaries?.length > 0) {
+        lines.push("", "Per-source imported support records:");
+        for (const sourceSummary of result.sourceSummaries) {
+            lines.push(`- ${sourceSummary.sourceId}: ${sourceSummary.importedSupportRecordCount || 0}`);
+        }
+    }
     if (result.blockers?.length > 0) {
         lines.push("", "Blockers:");
         for (const blocker of result.blockers) {
@@ -316,5 +527,8 @@ module.exports = {
     parseArgs,
     resolveGovernedEvidenceDataPath,
     resolveManifestRelativePath,
+    resolveAtomicSourceAccessPacketPath,
+    resolveAtomicSourceIds,
     run,
+    runAtomicSupportBatch,
 };

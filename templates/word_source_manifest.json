@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "checkedAt": "2026-08-23",
+  "checkedAt": "2026-08-24",
   "sourcePurposeRules": {
     "jlpt_level_list": {
       "description": "JLPT-oriented word lists can propose candidate words and weak level hints, but cannot approve cards by themselves.",
@@ -438,13 +438,13 @@
         "license": "CC BY-SA 4.0",
         "notes": "Exact dictionary support only with attribution to EDRDG/JMdict. Derived support facts remain CC BY-SA 4.0 data; the repository software licence does not relicense them. Do not copy raw dictionary rows into tracked product files or use them as JLPT placement evidence."
       },
-      "checkedAt": "2026-08-23",
+      "checkedAt": "2026-08-24",
       "local": {
         "path": "downloads/jmdict-word-verification.tsv",
         "format": "tsv",
-        "sha256": "814197ad14b2b52236b5e007b6d15ad18ad82e7aff40329346bdaf94ec2e3606",
-        "byteSize": 58452932,
-        "rowCount": 258874,
+        "sha256": "fd43dc3a0c970f7a79d8028ec33eaf566a5bc4fcbf776eb11d30e3f8e396f22a",
+        "byteSize": 58461464,
+        "rowCount": 258909,
         "columns": [
           "written",
           "reading",
@@ -476,13 +476,13 @@
       ],
       "upstreamSnapshot": {
         "url": "https://www.edrdg.org/pub/Nihongo/JMdict_e.gz",
-        "version": "JMdict created: 2026-08-23",
-        "retrievedAt": "2026-08-23",
-        "sha256": "11c3fb43a82ae775269e6832d117c4f52152f4d8cf49f44c16a0ed619aa98a6a",
-        "byteSize": 10556309
+        "version": "JMdict created: 2026-08-24",
+        "retrievedAt": "2026-08-24",
+        "sha256": "fed341a919a537f74c769bc5c69a18c8f5b7fcf372c25b0bef07e69dc35a15d0",
+        "byteSize": 10557859
       },
       "freshness": {
-        "checkedAt": "2026-08-23",
+        "checkedAt": "2026-08-24",
         "maximumAgeDays": 31,
         "updateProcedure": "Refresh from the official current JMdict_e.gz before use when this snapshot is older than 31 days; verify gzip SHA-256, byte size, and creation header, regenerate the ignored normalized TSV, reconcile its SHA-256, byte size, row count, and columns, update both manifests together, and rerun source validators."
       }
@@ -502,13 +502,13 @@
         "license": "CC BY-SA 4.0",
         "notes": "Positive commonness support only with attribution to EDRDG/JMdict; priority markers are not JLPT level truth and absence of priority is not negative or positive commonness evidence."
       },
-      "checkedAt": "2026-08-23",
+      "checkedAt": "2026-08-24",
       "local": {
         "path": "downloads/jmdict-word-verification.tsv",
         "format": "tsv",
-        "sha256": "814197ad14b2b52236b5e007b6d15ad18ad82e7aff40329346bdaf94ec2e3606",
-        "byteSize": 58452932,
-        "rowCount": 258874,
+        "sha256": "fd43dc3a0c970f7a79d8028ec33eaf566a5bc4fcbf776eb11d30e3f8e396f22a",
+        "byteSize": 58461464,
+        "rowCount": 258909,
         "columns": [
           "written",
           "reading",
@@ -540,13 +540,13 @@
       ],
       "upstreamSnapshot": {
         "url": "https://www.edrdg.org/pub/Nihongo/JMdict_e.gz",
-        "version": "JMdict created: 2026-08-23",
-        "retrievedAt": "2026-08-23",
-        "sha256": "11c3fb43a82ae775269e6832d117c4f52152f4d8cf49f44c16a0ed619aa98a6a",
-        "byteSize": 10556309
+        "version": "JMdict created: 2026-08-24",
+        "retrievedAt": "2026-08-24",
+        "sha256": "fed341a919a537f74c769bc5c69a18c8f5b7fcf372c25b0bef07e69dc35a15d0",
+        "byteSize": 10557859
       },
       "freshness": {
-        "checkedAt": "2026-08-23",
+        "checkedAt": "2026-08-24",
         "maximumAgeDays": 31,
         "updateProcedure": "Refresh from the official current JMdict_e.gz before use when this snapshot is older than 31 days; verify gzip SHA-256, byte size, and creation header, regenerate the ignored normalized TSV, reconcile its SHA-256, byte size, row count, and columns, update both manifests together, and rerun source validators."
       }
@@ -566,13 +566,13 @@
         "license": "BSD-3-Clause",
         "notes": "Positive frequency and usefulness support from the published aggregate list only. Retain the BSD 3-Clause notice, conditions, disclaimer, and non-endorsement boundary. TubeLex does not prove JLPT level, dictionary identity, reading, meaning, learner-source coverage, pitch, or card approval; raw subtitle text must not be scraped, reconstructed, stored, or redistributed."
       },
-      "checkedAt": "2026-08-23",
+      "checkedAt": "2026-08-24",
       "local": {
         "path": "downloads/tubelex-ja-frequency.tsv",
         "format": "tsv",
-        "sha256": "94e2a07b3ada7eab306e8e3823730a38d0ab5572eb80ff809c4daaa2f3f2f2e7",
-        "byteSize": 24661425,
-        "rowCount": 65663,
+        "sha256": "6be7933b8c527c8c36d1d9eabe2b492ce06fe5085c6aeb207e550465ae17d4d2",
+        "byteSize": 24662220,
+        "rowCount": 65664,
         "columns": [
           "written",
           "reading",

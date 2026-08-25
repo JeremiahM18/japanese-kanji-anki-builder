@@ -646,6 +646,7 @@ function auditJlptWordSourceEvidence({
     levels = null,
     limit = 25,
     asOfDate = "",
+    includeComparableSourceOnly = false,
 } = {}) {
     const policy = {
         minimumIndependentSources: 3,
@@ -680,12 +681,10 @@ function auditJlptWordSourceEvidence({
     ));
     const selectedContractIdentitySet = new Set(contractEntries.map((entry) => entry.key));
     const comparableIdentitySet = new Set(comparableAssignmentsByIdentity.keys());
-    const identitySet = requestedLevels
-        ? new Set(contractEntries.map((entry) => entry.key))
-        : new Set([
-            ...contractEntries.map((entry) => entry.key),
-            ...comparableAssignmentsByIdentity.keys(),
-        ]);
+    const identitySet = new Set([
+        ...contractEntries.map((entry) => entry.key),
+        ...(includeComparableSourceOnly ? comparableAssignmentsByIdentity.keys() : []),
+    ]);
     const contractByIdentity = new Map(contractEntries.map((entry) => [entry.key, entry]));
     const issueCounts = createIssueCounts();
     const postureCounts = createPostureCounts();
@@ -798,6 +797,7 @@ function auditJlptWordSourceEvidence({
         governanceValid,
         evidenceDepthValid,
         checked: wordSourcePosture.length,
+        includeComparableSourceOnly,
         asOfDate: supportEvaluationDate,
         levels: requestedLevels ? [...requestedLevels].sort((left, right) => right - left) : null,
         selectedContractIdentityCount: contractEntries.length,
@@ -856,6 +856,7 @@ function buildMaterializedWordEvidenceEntries({ evidence = {}, contract = {} } =
         contract,
         evidence,
         limit: Number.MAX_SAFE_INTEGER,
+        includeComparableSourceOnly: true,
     });
     const words = {};
     for (const entry of report.wordSourcePosture || []) {

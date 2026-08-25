@@ -138,6 +138,27 @@ test("word source input imports use the governed multi-file transaction", () => 
     assert.doesNotMatch(source, /fs\.writeFileSync\(evidencePath/);
 });
 
+test("word source input imports bind every written target to its validated before-state", () => {
+    const servicePath = require.resolve("../src/services/jlptWordSourceInputImportCommandService");
+    const source = fs.readFileSync(servicePath, "utf8");
+    const atomicImport = source.match(/function runAtomicSupportBatch[\s\S]+?\nfunction run\(/u)?.[0] || "";
+    const singleImport = source.match(/function run\([\s\S]+?\nfunction formatReport/u)?.[0] || "";
+
+    for (const importSource of [atomicImport, singleImport]) {
+        assert.equal((importSource.match(/expectedBeforeSha256:/gu) || []).length, 2);
+        assert.match(importSource, /expectedBeforeSha256: before\.state\.sha256/u);
+        assert.match(importSource, /expectedBeforeSha256: evidenceBeforeState\.sha256/u);
+    }
+});
+
+test("atomic and single-source imports serialize on one shared evidence lock", () => {
+    const servicePath = require.resolve("../src/services/jlptWordSourceInputImportCommandService");
+    const source = fs.readFileSync(servicePath, "utf8");
+    const sharedLockUses = source.match(/lockPath: resolveWordSourceImportLockPath\(\)/gu) || [];
+
+    assert.equal(sharedLockUses.length, 2);
+});
+
 test("word source input import preflight uses the exact selected contract", () => {
     const servicePath = require.resolve("../src/services/jlptWordSourceInputImportCommandService");
     const source = fs.readFileSync(servicePath, "utf8");

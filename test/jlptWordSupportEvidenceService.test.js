@@ -555,7 +555,11 @@ test("out-of-contract support cannot contribute support flags or materialized su
     };
     raw.supportRecords.frequency = {};
     const evidence = normalizeJlptWordSourceEvidence(raw);
-    const report = auditJlptWordSourceEvidence({ contract: contract(), evidence });
+    const report = auditJlptWordSourceEvidence({
+        contract: contract(),
+        evidence,
+        includeComparableSourceOnly: true,
+    });
     const outsideRow = report.wordSourcePosture.find((entry) => entry.identity === outsideIdentity);
     const materialized = buildMaterializedWordEvidenceEntries({ contract: contract(), evidence });
     const materializedOutsideRow = materialized.words[outsideIdentity];

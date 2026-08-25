@@ -31,25 +31,28 @@ consumes cross-level claims for those identities, while reporting other contract
 and comparable identities separately. It never removes mismatches, unevaluated
 rows, or difficult identities to obtain a passing result.
 
-## N4 Investigation Snapshot — 2026-08-23
+## Program-Wide Investigation Snapshot — 2026-08-24
 
-The live selected-contract audit checked `1,034` duplicate-free N4 identities:
+The live default audit now keeps the exact operational N5-N1 contract as its
+denominator. Comparable source-only candidates are still measured and available
+to candidate materialization, but are not silently unioned into the adequacy
+denominator. The duplicate-free contract contains `2,820` exact identities:
 
-| N4 bucket | Count |
-| --- | ---: |
-| Sole Tanos claim is N4 | 191 |
-| Sole Tanos claim is N5 | 183 |
-| Sole Tanos claim is N3 | 139 |
-| Sole Tanos claim is N2 | 89 |
-| Sole Tanos claim is N1 | 97 |
-| No reviewed comparable placement claim | 335 |
-| Total | 1,034 |
+| Level | Contract | Sole Tanos family | No placement evidence | Contract/Tanos mismatch | Disputed |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| N5 | 588 | 333 | 255 | 160 | 0 |
+| N4 | 1,034 | 699 | 335 | 508 | 0 |
+| N3 | 1,099 | 784 | 315 | 357 | 0 |
+| N2 | 61 | 57 | 4 | 37 | 0 |
+| N1 | 38 | 33 | 5 | 14 | 0 |
+| Total | 2,820 | 1,906 | 914 | 1,076 | 0 |
 
 All five Tanos level files share `independenceGroup=tanos` and
-`evidenceLineage=tanos-vocab-list`. They are one family and one lineage. The N4
-posture is therefore `699` single-source-family and `335` source-origin-not-
-evaluated, with `508` current-contract/sole-source mismatches and no N4 disputes.
-Rerun the owning audit before using these snapshot counts.
+`evidenceLineage=tanos-vocab-list`. They are one family and one lineage, not five
+independent sources. Within N4, the sole claim distribution remains N4 `191`,
+N5 `183`, N3 `139`, N2 `89`, N1 `97`, with `335` identities having no reviewed
+placement claim. The same source-family rule is enforced across every level.
+Rerun the owning audit before using these dated counts.
 
 ## Current Source Decisions
 
@@ -64,12 +67,17 @@ Rerun the owning audit before using these snapshot counts.
 | jpdb | Blocked under current posture | None | No automated extraction, storage, or placement voting |
 | Kanjium | Active, approved, pitch-only | Pitch-accent support | Not placement, dictionary identity, or commonness evidence |
 | Core-deck and textbook placeholders | Registered; no current exact permitted surface | None until access is reviewed | Do not manufacture assignments from placeholders |
-| Official JLPT samples | Copyright-controlled positive occurrence for the exact sampled item only | Sample-specific verification after terms review | The [official FAQ](https://www.jlpt.jp/e/faq/) says vocabulary/kanji/grammar specifications are not published after 2010; samples are not a complete N4 list |
+| Official JLPT samples | Copyright-controlled positive occurrence for the exact sampled item only | Sample-specific verification after terms review | The [official FAQ](https://www.jlpt.jp/e/faq/) says vocabulary/kanji/grammar specifications are not published after 2010; samples are not a complete level list |
+| Open Anki JLPT / downstream Waller datasets | Licence and attribution may permit reuse, but the repositories explicitly identify Tanos/Waller as their placement origin | Candidate discovery or corrected Tanos-lineage maintenance only | Same `tanos-vocab-list` evidence lineage; an open-source wrapper cannot create independent placement evidence |
+| Wiktionary JLPT appendices | Page text is CC BY-SA, but the appendix does not establish an independently researched placement origin | Candidate discovery pending an origin-lineage audit | Permissioned storage alone does not prove independent origin; do not count it as a new family or lineage |
+| Tomoshi `vocab_jlpt` | CC BY-SA open-data surface labels the table as community estimates, but does not establish the estimate lineage | Candidate discovery pending a pinned release and origin-lineage audit | JMdict identity and open-data licensing do not make the JLPT estimates independent placement truth |
+| 3A JLPT vocabulary and word-book series | Japanese-published, level-specific, professionally authored learner surfaces | High-value future exact placement review after authorized access and storage/use review | Public catalogue metadata proves the books exist, not permission to bulk store their headword assignments; purchases, account access, copying, or publisher contact require repository-owner authorization |
 
-Publisher pages such as [ASK TRY! N4](https://ask-books.com/jlpt-try/),
-[3A N4 Vocabulary](https://www.3anet.co.jp/np/books/3636/), and
-[3A N4 Important 1000](https://www.3anet.co.jp/np/books/3666/) may identify
-future bounded learner-source surfaces. Public availability is not storage,
+Publisher pages such as [ASK TRY!](https://ask-books.com/jlpt-try/),
+[3A's catalogue](https://www.3anet.co.jp/en/catalogue.html), and the
+[3A N4 Important 1000](https://www.3anet.co.jp/np/books/3666/) page identify
+future bounded learner-source surfaces across multiple levels. Public
+availability is not storage,
 derivation, or redistribution permission. The [3A copyright policy](https://www.3anet.co.jp/en/copyright.html)
 must be honored. Do not purchase material, accept terms, contact publishers, or
 import these sources without repository-owner authorization and a completed
@@ -90,16 +98,16 @@ snapshot, matching normalized local integrity, and an exact reviewed
 The reviewed upstream snapshot is the official English JMdict gzip at
 `https://www.edrdg.org/pub/Nihongo/JMdict_e.gz`:
 
-- header/version: `JMdict created: 2026-08-23`;
-- retrieved and checked: `2026-08-23`;
-- SHA-256: `11c3fb43a82ae775269e6832d117c4f52152f4d8cf49f44c16a0ed619aa98a6a`;
-- byte size: `10,556,309`.
+- header/version: `JMdict created: 2026-08-24`;
+- retrieved and checked: `2026-08-24`;
+- SHA-256: `fed341a919a537f74c769bc5c69a18c8f5b7fcf372c25b0bef07e69dc35a15d0`;
+- byte size: `10,557,859`.
 
 The ignored normalized exact-identity TSV is pinned independently:
 
-- SHA-256: `814197ad14b2b52236b5e007b6d15ad18ad82e7aff40329346bdaf94ec2e3606`;
-- byte size: `58,452,932`;
-- data rows: `258,874`.
+- SHA-256: `fd43dc3a0c970f7a79d8028ec33eaf566a5bc4fcbf776eb11d30e3f8e396f22a`;
+- byte size: `58,461,464`;
+- data rows: `258,909`.
 
 EDRDG states that JMdict and data files derived from it are CC BY-SA 4.0,
 permits commercial use when the licence conditions are met, requires source
@@ -133,9 +141,10 @@ The reviewed upstream snapshot is the published aggregate Japanese UniDic
 
 The ignored derived exact-identity TSV is pinned independently:
 
-- SHA-256: `94e2a07b3ada7eab306e8e3823730a38d0ab5572eb80ff809c4daaa2f3f2f2e7`;
-- byte size: `24,661,425`;
-- data rows: `65,663`.
+- rebuilt and checked against the current JMdict identity surface: `2026-08-24`;
+- SHA-256: `6be7933b8c527c8c36d1d9eabe2b492ce06fe5085c6aeb207e550465ae17d4d2`;
+- byte size: `24,662,220`;
+- data rows: `65,664`.
 
 TubeLex places its published repository and aggregate frequency lists under BSD
 3-Clause. Preserve the copyright notice, conditions, disclaimer, and
@@ -175,48 +184,80 @@ Before any new placement assignment or support fact is written:
 5. Run strict preflight, dry-run merge, write the worksheet only through the
    governed merge command, dry-run import, then use the transactional import
    write. The selected assignment or support-record file and evidence manifest
-   commit atomically and are reloaded for post-write reconciliation.
+   commit atomically and are reloaded for post-write reconciliation. When one
+   refreshed upstream snapshot changes multiple support-source provenance
+   contracts, import those sources with the explicit atomic `--sources` and
+   `--source-access-packet-dir` scope so no partially migrated manifest can pass
+   or remain behind.
 6. Rerun the selected-level audit and reconcile every bucket. Never promote
    dictionary, commonness, or learner-fit support into an independent placement
    vote.
 
-## Remaining N4 Queue And Resume Gate
+## Remaining Program-Wide Queue And Resume Gate
 
-Before any governed support-fact import, the 2026-08-23 baseline remaining
-selected-contract queue was:
+Before the 2026-08-24 program-wide support import, exact dictionary/commonness
+gaps were N5 `588/588`, N4 `0/7`, N3 `1,099/1,099`, N2 `61/61`, and N1 `38/38`,
+for totals of `1,786` missing dictionary identities and `1,793` missing positive
+commonness facts. The governed all-level refresh imported `2,814` exact JMdict
+identity facts, `2,682` positive JMdict-priority facts, and `1,708` positive
+TubeLex facts. The support gaps are now:
 
-- `335` identities with no reviewed comparable placement evidence;
-- `699` identities with only one placement family and one lineage;
-- `508` identities whose sole Tanos claim points to another level;
-- `1,034` identities without tracked explicit dictionary-identity support claims;
-- `1,034` identities without tracked explicit positive commonness support claims;
-- `0` current N4 disputed rows.
+| Level | Missing dictionary identity | Missing positive commonness |
+| --- | ---: | ---: |
+| N5 | 6 | 23 |
+| N4 | 0 | 7 |
+| N3 | 0 | 67 |
+| N2 | 0 | 1 |
+| N1 | 0 | 0 |
+| Total | 6 | 98 |
 
-Resume source acquisition only when there is a specific newly permitted exact
-source surface, explicit publisher permission, or a completed access packet for
-an already registered surface. Even then, import only exact covered rows and
-leave the audit failing until the full selected denominator genuinely satisfies
-the policy.
+The six exact dictionary-identity gaps are `一時半|いちじはん`,
+`何ですか|なんですか`, `来ます|きます`, `生ビール|なまびーる`,
+`行きます|いきます`, and `読みます|よみます`. They remain gaps because the
+current exact JMdict written-reading surface does not bind those inflected,
+phrase, or product-style contract identities. No looser lemma, spelling, or
+reading join was used.
 
-After the governed 2026-08-23 typed support imports, the exact current queue is:
+The placement queue did not move, because support evidence has no placement
+authority:
 
-- `335` identities still have no reviewed comparable JLPT-placement evidence;
-- `699` identities still have only the single Tanos family and lineage;
-- `508` identities still disagree with their sole Tanos level claim;
-- `0` identities lack exact typed JMdict dictionary identity support;
-- `7` identities lack an explicit positive commonness fact:
-  `映え|ばえ`, `屋|や`, `会わせる|あわせる`, `究める|きわめる`,
-  `魚料理|さかなりょうり`, `肉料理|にくりょうり`, and
-  `病み付き|やみつき`;
-- `0` identities meet `level_universe_standard`, and `0` are disputed.
+- `914` identities have no reviewed comparable placement evidence;
+- `1,906` identities have only the one Tanos family and one Tanos lineage;
+- `1,076` identities disagree with their sole Tanos level claim;
+- `0` identities meet `level_universe_standard`;
+- `0` identities are disputed;
+- all `2,820` operational identities remain source-depth incomplete.
 
-The access blocker is external evidence, not engineering: there is no currently
-permitted, attributable exact N4 placement surface that supplies the missing
-independent families, independent lineages, and Japanese-published or
-permissioned learner-source coverage across the full `1,034`-identity contract.
-JMdict and TubeLex cannot substitute for placement. Official JLPT does not
-publish a complete post-2010 vocabulary specification, blocked/restricted
-websites cannot be copied, and registered textbook/publisher surfaces require
-explicit authorized access and a completed licence/source-access review. Do not
-spend money, accept terms, contact publishers, scrape, infer levels from
-frequency, or relabel the contract to advance this queue.
+The exact live queue is reproducible with
+`npm.cmd run data:audit:jlpt:word-sources -- --governance-strict --json --limit=10000 --as-of=2026-08-24`.
+The complete identities are in the report's `issues` arrays. As a compact
+reconciliation guard, SHA-256 is calculated over each sorted identity list
+joined by LF:
+
+| Queue | Count | SHA-256 |
+| --- | ---: | --- |
+| `missingEvidence` | 914 | `c94b65f432e6c69fa28b89d5d4407791631398f8652621d23101b2f7a8945cf2` |
+| `insufficientIndependentSources` | 1,906 | `13d044f97588e4f990e7cc52b52f756a3293b67e8fb50b57477227c2f59778ce` |
+| `insufficientIndependentEvidenceLineages` | 1,906 | `13d044f97588e4f990e7cc52b52f756a3293b67e8fb50b57477227c2f59778ce` |
+| `contractConsensusMismatches` | 1,076 | `ce9281259160b5f00b9ef0d74e7437d1d5ab1c114b1108af410a586e63c69048` |
+| `missingDictionaryIdentitySupport` | 6 | `0a716adc45dc2b8579dabfe1fb8ab6f2e11aba28c3d5d835206f075ac11e5461` |
+| `missingCommonnessSupport` | 98 | `30cef7acd829e5a546600d5740d471b12b8e31ef35239df2753407d4d99408d7` |
+| `disputedLevelClaims` | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+
+The source-access sweep rejected duplicate or unproven lineage substitutions.
+Open Anki and other Waller derivatives are Tanos-lineage data. Wiktionary is
+permissioned but does not establish an independent origin for its JLPT appendix.
+Tomoshi labels its table as community estimates without establishing their
+placement lineage. None may be relabelled as independent corroboration. The
+official JLPT does not publish a complete post-2010 vocabulary specification.
+
+The highest-quality external opportunity is a Japanese-published, level-specific
+learner vocabulary series such as the 3A materials, but catalogue availability
+does not grant bulk storage or derivative-list permission. Access therefore
+requires explicit repository-owner authority for the acquisition method and a
+completed licence/source-access review. Do not spend money, create an account,
+accept new terms, contact a publisher, scrape, bulk-copy, infer levels from
+frequency, or relabel the operational contract to advance this queue. When a
+permitted exact surface becomes available, import only its exact covered rows
+and leave strict evidence depth failing until the complete denominator actually
+meets every configured requirement.

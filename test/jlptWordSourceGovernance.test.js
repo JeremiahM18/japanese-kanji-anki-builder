@@ -1062,6 +1062,47 @@ test("word source adequacy separates governance validity from incomplete evidenc
     assert.equal(report.postureCounts.source_origin_not_evaluated, 1);
 });
 
+test("program-wide source audit keeps the exact operational contract as its denominator", () => {
+    const contract = {
+        wordLevels: {
+            "食べる|たべる": {
+                written: "食べる",
+                reading: "たべる",
+                jlpt: 5,
+            },
+        },
+    };
+    const evidence = buildEvidence({
+        assignments: {
+            source_a: {
+                "食べる|たべる": {
+                    written: "食べる",
+                    reading: "たべる",
+                    level: 5,
+                    reviewStatus: "reviewed",
+                    citation: "A",
+                    evidenceRef: "row 1",
+                },
+                "契約外|けいやくがい": {
+                    written: "契約外",
+                    reading: "けいやくがい",
+                    level: 1,
+                    reviewStatus: "reviewed",
+                    citation: "A",
+                    evidenceRef: "row 2",
+                },
+            },
+        },
+    });
+
+    const report = auditJlptWordSourceEvidence({ contract, evidence });
+
+    assert.equal(report.selectedContractIdentityCount, 1);
+    assert.equal(report.comparableSourceOnlyIdentityCount, 1);
+    assert.equal(report.checked, 1);
+    assert.deepEqual(report.wordSourcePosture.map((entry) => entry.identity), ["食べる|たべる"]);
+});
+
 test("word source adequacy enforces declared dictionary identity and commonness support", () => {
     const contract = {
         wordLevels: {
@@ -1202,6 +1243,7 @@ test("source consensus cannot promote an identity absent from the operational co
     const report = auditJlptWordSourceEvidence({
         contract: { wordLevels: {} },
         evidence,
+        includeComparableSourceOnly: true,
     });
     const row = report.wordSourcePosture.find((entry) => entry.identity === identity);
 
@@ -1481,9 +1523,9 @@ test("tracked word source evidence registers TubeLex as non-consensus frequency 
     assert.equal(source.canStoreRawList, false);
     assert.deepEqual(source.allowedUse, ["commonness-support", "frequency-sanity"]);
     assert.equal(source.disallowedUse.includes("candidate-discovery"), true);
-    assert.equal(source.local.rowCount, 65663);
-    assert.equal(source.local.byteSize, 24661425);
-    assert.equal(source.local.sha256, "94e2a07b3ada7eab306e8e3823730a38d0ab5572eb80ff809c4daaa2f3f2f2e7");
+    assert.equal(source.local.rowCount, 65664);
+    assert.equal(source.local.byteSize, 24662220);
+    assert.equal(source.local.sha256, "6be7933b8c527c8c36d1d9eabe2b492ce06fe5085c6aeb207e550465ae17d4d2");
     assert.equal(source.upstreamSnapshot.version, "7cb5fb36add76b83a266d1967536e1a1d3faa513");
     assert.equal(source.upstreamSnapshot.sha256, "39d4edb2ccac4405b47d0f93e9ec7b11678b3b305d1a37c877dd76588817c8e9");
 });

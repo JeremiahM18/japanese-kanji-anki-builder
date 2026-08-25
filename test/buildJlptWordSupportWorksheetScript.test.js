@@ -25,6 +25,7 @@ test("typed support worksheet CLI keeps source, level, outputs, and write author
         evidence: "templates/jlpt_word_source_evidence.json",
         source: "jmdict",
         level: 4,
+        levels: null,
         out: "downloads/review.tsv",
         batchOut: "downloads/batch.tsv",
         write: true,
@@ -37,6 +38,30 @@ test("typed support worksheet default paths remain level-aware", () => {
     assert.equal(
         resolveDefaultPath("fixture", 3, "review"),
         path.join("downloads", "word-source-support", "fixture-n3-review.tsv")
+    );
+});
+
+test("typed support worksheet CLI accepts one explicit multi-level operational scope", () => {
+    assert.deepEqual(parseArgs([
+        "--source=jmdict",
+        "--levels=5,4,3,2,1",
+        "--dry-run",
+        "--json",
+    ]), {
+        contract: "templates/jlpt_word_level_contract.json",
+        evidence: "templates/jlpt_word_source_evidence.json",
+        source: "jmdict",
+        level: null,
+        levels: [5, 4, 3, 2, 1],
+        out: "",
+        batchOut: "",
+        write: false,
+        json: true,
+        unknownArgs: [],
+    });
+    assert.equal(
+        resolveDefaultPath("fixture", [5, 4, 3, 2, 1], "review"),
+        path.join("downloads", "word-source-support", "fixture-all-review.tsv")
     );
 });
 

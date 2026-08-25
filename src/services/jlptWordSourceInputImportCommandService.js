@@ -22,7 +22,10 @@ const {
 } = require("./jlptWordSourceAccessPacketService");
 const { buildReports } = require("./jlptWordSourceInputReportService");
 const { auditJlptWordSourceEvidence } = require("./jlptWordSourceEvidenceService");
-const { runGovernedFileTransactionSync } = require("../utils/governedFileTransaction");
+const {
+    readFileState,
+    runGovernedFileTransactionSync,
+} = require("../utils/governedFileTransaction");
 const {
     assertNoUnknownArgs,
     collectUnknownArg,
@@ -56,6 +59,36 @@ function resolveGovernedEvidenceDataPath({ evidencePath, relativeDataFile, evide
         evidenceMode,
         sourceId,
     });
+}
+
+function resolveWordSourceImportLockPath() {
+    return path.resolve(process.cwd(), "out", "file-transactions", "jlpt-word-source-import.lock");
+}
+
+function captureGovernedEvidenceDataBeforeStates({
+    evidencePath,
+    evidenceManifest,
+    sourceIds,
+    evidenceMode,
+} = {}) {
+    const beforeStates = new Map();
+    for (const sourceId of sourceIds) {
+        const relativeDataFile = evidenceMode === "support"
+            ? (evidenceManifest.supportFiles?.[sourceId] || buildDefaultSupportFile(sourceId))
+            : (evidenceManifest.assignmentFiles?.[sourceId] || buildDefaultAssignmentFile(sourceId));
+        const dataPath = resolveGovernedEvidenceDataPath({
+            evidencePath,
+            relativeDataFile,
+            evidenceMode,
+            sourceId,
+        });
+        beforeStates.set(sourceId, {
+            dataPath,
+            relativeDataFile,
+            state: readFileState(dataPath),
+        });
+    }
+    return beforeStates;
 }
 
 function parseArgs(argv) {
@@ -126,7 +159,14 @@ function runAtomicSupportBatch(options = {}, sourceIds = []) {
         throw new Error("Atomic word source import uses --source-access-packet-dir, not --source-access-packet.");
     }
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
+    const evidenceBeforeState = readFileState(evidencePath);
     const evidenceManifest = readJlptWordSourceEvidenceManifest(evidencePath);
+    const dataBeforeStates = captureGovernedEvidenceDataBeforeStates({
+        evidencePath,
+        evidenceManifest,
+        sourceIds,
+        evidenceMode: "support",
+    });
     const normalizedEvidence = normalizeJlptWordSourceEvidence(evidenceManifest, { manifestPath: evidencePath });
     const contract = loadJlptWordLevelContract(options.contract || DEFAULT_CONTRACT);
     const inputManifest = loadJlptWordSourceInputs(path.resolve(process.cwd(), options.config || DEFAULT_CONFIG));
@@ -219,31 +259,29 @@ function runAtomicSupportBatch(options = {}, sourceIds = []) {
     if (options.write) {
         const changes = [];
         for (const sourceId of sourceIds) {
-            const relativeDataFile = nextManifest.supportFiles?.[sourceId] || buildDefaultSupportFile(sourceId);
+            const before = dataBeforeStates.get(sourceId);
+            const relativeDataFile = before.relativeDataFile;
             nextManifest.supportFiles = {
                 ...(nextManifest.supportFiles || {}),
                 [sourceId]: relativeDataFile,
             };
-            const dataPath = resolveGovernedEvidenceDataPath({
-                evidencePath,
-                relativeDataFile,
-                evidenceMode: "support",
-                sourceId,
-            });
             changes.push({
-                filePath: dataPath,
+                filePath: before.dataPath,
                 data: formatWordSourceSupportFileJson({
                     sourceId,
                     supportRecords: nextManifest.supportRecords?.[sourceId] || {},
                 }),
+                expectedBeforeSha256: before.state.sha256,
             });
         }
         changes.push({
             filePath: evidencePath,
             data: formatWordSourceEvidenceJson(buildStorageManifest(nextManifest)),
+            expectedBeforeSha256: evidenceBeforeState.sha256,
         });
         runGovernedFileTransactionSync({
             transactionName: "jlpt-word-source-import-atomic-support-batch",
+            lockPath: resolveWordSourceImportLockPath(),
             workspaceRoot: process.cwd(),
             changes,
             validateAfterWrite: () => {
@@ -299,11 +337,19 @@ function run(options = {}) {
         return runAtomicSupportBatch(options, sourceIds);
     }
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
-    const evidenceManifest = readJlptWordSourceEvidenceManifest(evidencePath);
-    const normalizedEvidence = normalizeJlptWordSourceEvidence(evidenceManifest, { manifestPath: evidencePath });
     const contract = loadJlptWordLevelContract(options.contract || DEFAULT_CONTRACT);
     const inputManifest = loadJlptWordSourceInputs(path.resolve(process.cwd(), options.config || DEFAULT_CONFIG));
     const sourceConfig = inputManifest.inputs?.[options.source];
+    const supportMode = sourceConfig?.evidenceMode === "support";
+    const evidenceBeforeState = readFileState(evidencePath);
+    const evidenceManifest = readJlptWordSourceEvidenceManifest(evidencePath);
+    const dataBeforeStates = captureGovernedEvidenceDataBeforeStates({
+        evidencePath,
+        evidenceManifest,
+        sourceIds: [options.source],
+        evidenceMode: supportMode ? "support" : "placement",
+    });
+    const normalizedEvidence = normalizeJlptWordSourceEvidence(evidenceManifest, { manifestPath: evidencePath });
     const preflight = buildReports({
         config: options.config || DEFAULT_CONFIG,
         evidence: options.evidence || DEFAULT_EVIDENCE,
@@ -312,7 +358,6 @@ function run(options = {}) {
         contractData: contract,
     });
     const [sourceReport] = preflight.reports || [];
-    const supportMode = sourceConfig?.evidenceMode === "support";
     const expectedSupportClaims = supportMode
         ? [sourceConfig.supportProfile === "jmdict-exact-identity" ? "dictionary-identity" : "commonness"]
         : [];
@@ -389,12 +434,11 @@ function run(options = {}) {
                 [options.source]: relativeDataFile,
             };
         }
-        const dataPath = resolveGovernedEvidenceDataPath({
-            evidencePath,
-            relativeDataFile,
-            evidenceMode: supportMode ? "support" : "placement",
-            sourceId: options.source,
-        });
+        const before = dataBeforeStates.get(options.source);
+        if (before.relativeDataFile !== relativeDataFile) {
+            throw new Error(`Word source data path changed after validation for ${options.source}.`);
+        }
+        const dataPath = before.dataPath;
         const sourceData = supportMode
             ? formatWordSourceSupportFileJson({
                 sourceId: options.source,
@@ -407,10 +451,19 @@ function run(options = {}) {
         const evidenceData = formatWordSourceEvidenceJson(buildStorageManifest(manifest));
         runGovernedFileTransactionSync({
             transactionName: `jlpt-word-source-import-${options.source}`,
+            lockPath: resolveWordSourceImportLockPath(),
             workspaceRoot: process.cwd(),
             changes: [
-                { filePath: dataPath, data: sourceData },
-                { filePath: evidencePath, data: evidenceData },
+                {
+                    filePath: dataPath,
+                    data: sourceData,
+                    expectedBeforeSha256: before.state.sha256,
+                },
+                {
+                    filePath: evidencePath,
+                    data: evidenceData,
+                    expectedBeforeSha256: evidenceBeforeState.sha256,
+                },
             ],
             validateAfterWrite: () => {
                 const reloadedManifest = readJlptWordSourceEvidenceManifest(evidencePath);

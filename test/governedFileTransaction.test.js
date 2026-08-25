@@ -5,6 +5,7 @@ const path = require("node:path");
 const test = require("node:test");
 
 const {
+    readFileState,
     recoverGovernedFileTransactionSync,
     runGovernedFileTransactionSync,
 } = require("../src/utils/governedFileTransaction");
@@ -37,6 +38,31 @@ test("governed file transaction commits all targets together", () => {
     assert.equal(result.targetCount, 2);
     assert.equal(fs.readFileSync(firstPath, "utf8"), "after-one\n");
     assert.equal(fs.readFileSync(secondPath, "utf8"), "after-two\n");
+});
+
+test("governed file transaction preserves concurrent bytes when validation used an older hash", () => {
+    const rootDir = makeWorkspace();
+    const transactionRoot = path.join(rootDir, "out", "file-transactions");
+    const lockPath = path.join(transactionRoot, "optimistic-lock-fixture.lock");
+    const targetPath = path.join(rootDir, "templates", "target.json");
+    fs.writeFileSync(targetPath, "validated\n");
+    const validatedState = readFileState(targetPath);
+    fs.writeFileSync(targetPath, "concurrent-writer\n");
+
+    assert.throws(() => runGovernedFileTransactionSync({
+        workspaceRoot: rootDir,
+        transactionRoot,
+        lockPath,
+        transactionName: "optimistic-lock-fixture",
+        changes: [{
+            filePath: targetPath,
+            data: "stale-transaction\n",
+            expectedBeforeSha256: validatedState.sha256,
+        }],
+    }), /target changed after validation/);
+
+    assert.equal(fs.readFileSync(targetPath, "utf8"), "concurrent-writer\n");
+    assert.equal(fs.existsSync(lockPath), false);
 });
 
 test("governed file transaction rolls every target back after a partial commit failure", () => {

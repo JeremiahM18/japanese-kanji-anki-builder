@@ -154,7 +154,15 @@ function resolveAtomicSourceAccessPacketPath(options = {}, sourceId) {
     return path.join(options.sourceAccessPacketDir, `${sourceId}-word-source-access-packet.json`);
 }
 
-function runAtomicSupportBatch(options = {}, sourceIds = []) {
+class WordSourceImportPreflightError extends Error {
+    constructor(result) {
+        super("Word source import preflight failed while holding the governed import lock.");
+        this.name = "WordSourceImportPreflightError";
+        this.result = result;
+    }
+}
+
+function buildAtomicSupportBatchPlan(options = {}, sourceIds = []) {
     if (options.sourceAccessPacket) {
         throw new Error("Atomic word source import uses --source-access-packet-dir, not --source-access-packet.");
     }
@@ -178,15 +186,18 @@ function runAtomicSupportBatch(options = {}, sourceIds = []) {
         const sourceConfig = inputManifest.inputs?.[sourceId];
         if (sourceConfig?.evidenceMode !== "support") {
             return {
-                sourceIds,
-                sourceId: sourceIds.join(","),
-                evidenceMode: "support",
-                write: options.write === true,
-                evidencePath,
-                preflightValid: false,
-                blockers: [`Atomic word source import currently requires support-only sources; ${sourceId} is not support-only.`],
-                summary: {},
-                sourceSummaries,
+                changes: [],
+                result: {
+                    sourceIds,
+                    sourceId: sourceIds.join(","),
+                    evidenceMode: "support",
+                    write: options.write === true,
+                    evidencePath,
+                    preflightValid: false,
+                    blockers: [`Atomic word source import currently requires support-only sources; ${sourceId} is not support-only.`],
+                    summary: {},
+                    sourceSummaries,
+                },
             };
         }
         const preflight = buildReports({
@@ -208,18 +219,21 @@ function runAtomicSupportBatch(options = {}, sourceIds = []) {
         });
         if (!preflight.valid || !sourceReport?.valid || !accessPacketValidation.valid) {
             return {
-                sourceIds,
-                sourceId: sourceIds.join(","),
-                evidenceMode: "support",
-                write: options.write === true,
-                evidencePath,
-                preflightValid: false,
-                blockers: [
-                    ...(sourceReport?.blockers || (!preflight.valid ? ["word source input preflight failed"] : [])),
-                    ...(accessPacketValidation.blockers || []),
-                ].map((blocker) => `${sourceId}: ${blocker}`),
-                summary: {},
-                sourceSummaries,
+                changes: [],
+                result: {
+                    sourceIds,
+                    sourceId: sourceIds.join(","),
+                    evidenceMode: "support",
+                    write: options.write === true,
+                    evidencePath,
+                    preflightValid: false,
+                    blockers: [
+                        ...(sourceReport?.blockers || (!preflight.valid ? ["word source input preflight failed"] : [])),
+                        ...(accessPacketValidation.blockers || []),
+                    ].map((blocker) => `${sourceId}: ${blocker}`),
+                    summary: {},
+                    sourceSummaries,
+                },
             };
         }
         const imported = buildJlptWordSupportEvidenceImport({
@@ -256,86 +270,109 @@ function runAtomicSupportBatch(options = {}, sourceIds = []) {
         materializedShifts,
     };
 
-    if (options.write) {
-        const changes = [];
-        for (const sourceId of sourceIds) {
-            const before = dataBeforeStates.get(sourceId);
-            const relativeDataFile = before.relativeDataFile;
-            nextManifest.supportFiles = {
-                ...(nextManifest.supportFiles || {}),
-                [sourceId]: relativeDataFile,
-            };
-            changes.push({
-                filePath: before.dataPath,
-                data: formatWordSourceSupportFileJson({
-                    sourceId,
-                    supportRecords: nextManifest.supportRecords?.[sourceId] || {},
-                }),
-                expectedBeforeSha256: before.state.sha256,
-            });
-        }
+    const changes = [];
+    for (const sourceId of sourceIds) {
+        const before = dataBeforeStates.get(sourceId);
+        const relativeDataFile = before.relativeDataFile;
+        nextManifest.supportFiles = {
+            ...(nextManifest.supportFiles || {}),
+            [sourceId]: relativeDataFile,
+        };
         changes.push({
-            filePath: evidencePath,
-            data: formatWordSourceEvidenceJson(buildStorageManifest(nextManifest)),
-            expectedBeforeSha256: evidenceBeforeState.sha256,
-        });
-        runGovernedFileTransactionSync({
-            transactionName: "jlpt-word-source-import-atomic-support-batch",
-            lockPath: resolveWordSourceImportLockPath(),
-            workspaceRoot: process.cwd(),
-            changes,
-            validateAfterWrite: () => {
-                const reloadedManifest = readJlptWordSourceEvidenceManifest(evidencePath);
-                const reloadedEvidence = normalizeJlptWordSourceEvidence(reloadedManifest, {
-                    manifestPath: evidencePath,
-                });
-                for (const sourceId of sourceIds) {
-                    const expectedRecords = nextManifest.supportRecords?.[sourceId] || {};
-                    const actualRecords = reloadedEvidence.supportRecords?.[sourceId] || {};
-                    if (JSON.stringify(actualRecords) !== JSON.stringify(expectedRecords)) {
-                        throw new Error(`Post-write word source support reconciliation failed for ${sourceId}.`);
-                    }
-                }
-                const rematerialized = materializeWordEvidenceEntries({
-                    evidenceManifest: reloadedEvidence,
-                    contract,
-                });
-                if (JSON.stringify(rematerialized.words || {}) !== JSON.stringify(nextManifest.words || {})) {
-                    throw new Error("Post-write atomic word source materialization reconciliation failed.");
-                }
-                const governanceReport = auditJlptWordSourceEvidence({
-                    contract,
-                    evidence: reloadedEvidence,
-                    limit: 1,
-                    asOfDate: todayIsoDate(),
-                });
-                if (!governanceReport.governanceValid) {
-                    throw new Error(
-                        "Post-write atomic word source governance validation failed: "
-                        + `${JSON.stringify(governanceReport.issueCounts)}`
-                    );
-                }
-            },
+            filePath: before.dataPath,
+            data: formatWordSourceSupportFileJson({
+                sourceId,
+                supportRecords: nextManifest.supportRecords?.[sourceId] || {},
+            }),
+            expectedBeforeSha256: before.state.sha256,
         });
     }
+    changes.push({
+        filePath: evidencePath,
+        data: formatWordSourceEvidenceJson(buildStorageManifest(nextManifest)),
+        expectedBeforeSha256: evidenceBeforeState.sha256,
+    });
 
     return {
-        sourceIds,
-        sourceId: sourceIds.join(","),
-        evidenceMode: "support",
-        write: options.write === true,
-        evidencePath,
-        preflightValid: true,
-        summary,
-        sourceSummaries,
+        changes,
+        result: {
+            sourceIds,
+            sourceId: sourceIds.join(","),
+            evidenceMode: "support",
+            write: options.write === true,
+            evidencePath,
+            preflightValid: true,
+            summary,
+            sourceSummaries,
+        },
+        validateAfterWrite: () => {
+            const reloadedManifest = readJlptWordSourceEvidenceManifest(evidencePath);
+            const reloadedEvidence = normalizeJlptWordSourceEvidence(reloadedManifest, {
+                manifestPath: evidencePath,
+            });
+            for (const sourceId of sourceIds) {
+                const expectedRecords = nextManifest.supportRecords?.[sourceId] || {};
+                const actualRecords = reloadedEvidence.supportRecords?.[sourceId] || {};
+                if (JSON.stringify(actualRecords) !== JSON.stringify(expectedRecords)) {
+                    throw new Error(`Post-write word source support reconciliation failed for ${sourceId}.`);
+                }
+            }
+            const rematerialized = materializeWordEvidenceEntries({
+                evidenceManifest: reloadedEvidence,
+                contract,
+            });
+            if (JSON.stringify(rematerialized.words || {}) !== JSON.stringify(nextManifest.words || {})) {
+                throw new Error("Post-write atomic word source materialization reconciliation failed.");
+            }
+            const governanceReport = auditJlptWordSourceEvidence({
+                contract,
+                evidence: reloadedEvidence,
+                limit: 1,
+                asOfDate: todayIsoDate(),
+            });
+            if (!governanceReport.governanceValid) {
+                throw new Error(
+                    "Post-write atomic word source governance validation failed: "
+                    + `${JSON.stringify(governanceReport.issueCounts)}`
+                );
+            }
+        },
     };
 }
 
-function run(options = {}) {
-    const sourceIds = resolveAtomicSourceIds(options);
-    if ((options.sources || []).length > 0) {
-        return runAtomicSupportBatch(options, sourceIds);
+function runAtomicSupportBatch(options = {}, sourceIds = []) {
+    if (!options.write) {
+        return buildAtomicSupportBatchPlan(options, sourceIds).result;
     }
+    try {
+        const transaction = runGovernedFileTransactionSync({
+            transactionName: "jlpt-word-source-import-atomic-support-batch",
+            lockPath: resolveWordSourceImportLockPath(),
+            workspaceRoot: process.cwd(),
+            prepareChanges: () => {
+                const plan = buildAtomicSupportBatchPlan(options, sourceIds);
+                if (!plan.result.preflightValid) {
+                    throw new WordSourceImportPreflightError(plan.result);
+                }
+                return {
+                    changes: plan.changes,
+                    metadata: plan,
+                };
+            },
+            validateAfterWrite: ({ metadata }) => {
+                metadata.validateAfterWrite();
+            },
+        });
+        return transaction.metadata.result;
+    } catch (error) {
+        if (error instanceof WordSourceImportPreflightError) {
+            return error.result;
+        }
+        throw error;
+    }
+}
+
+function buildSingleSourceImportPlan(options = {}) {
     const evidencePath = path.resolve(process.cwd(), options.evidence || DEFAULT_EVIDENCE);
     const contract = loadJlptWordLevelContract(options.contract || DEFAULT_CONTRACT);
     const inputManifest = loadJlptWordSourceInputs(path.resolve(process.cwd(), options.config || DEFAULT_CONFIG));
@@ -371,22 +408,25 @@ function run(options = {}) {
         : { valid: true, blockers: [] };
     if (!preflight.valid || !sourceReport?.valid || !accessPacketValidation.valid) {
         return {
-            sourceId: options.source,
-            write: options.write === true,
-            evidencePath,
-            preflightValid: false,
-            blockers: [
-                ...(sourceReport?.blockers || (!preflight.valid ? ["word source input preflight failed"] : [])),
-                ...(accessPacketValidation.blockers || []),
-            ],
-            summary: {
-                importedAssignmentCount: 0,
-                importedSupportRecordCount: 0,
-                previousAssignmentCount: 0,
-                changedAssignmentCount: 0,
-                changedWords: [],
-                materializedShiftCount: 0,
-                materializedShifts: [],
+            changes: [],
+            result: {
+                sourceId: options.source,
+                write: options.write === true,
+                evidencePath,
+                preflightValid: false,
+                blockers: [
+                    ...(sourceReport?.blockers || (!preflight.valid ? ["word source input preflight failed"] : [])),
+                    ...(accessPacketValidation.blockers || []),
+                ],
+                summary: {
+                    importedAssignmentCount: 0,
+                    importedSupportRecordCount: 0,
+                    previousAssignmentCount: 0,
+                    changedAssignmentCount: 0,
+                    changedWords: [],
+                    materializedShiftCount: 0,
+                    materializedShifts: [],
+                },
             },
         };
     }
@@ -419,96 +459,127 @@ function run(options = {}) {
         materializedShiftCount: materializedShifts.length,
         materializedShifts,
     };
-    if (options.write) {
-        const relativeDataFile = supportMode
-            ? (manifest.supportFiles?.[options.source] || buildDefaultSupportFile(options.source))
-            : (manifest.assignmentFiles?.[options.source] || buildDefaultAssignmentFile(options.source));
-        if (supportMode) {
-            manifest.supportFiles = {
-                ...(manifest.supportFiles || {}),
-                [options.source]: relativeDataFile,
-            };
-        } else {
-            manifest.assignmentFiles = {
-                ...(manifest.assignmentFiles || {}),
-                [options.source]: relativeDataFile,
-            };
-        }
-        const before = dataBeforeStates.get(options.source);
-        if (before.relativeDataFile !== relativeDataFile) {
-            throw new Error(`Word source data path changed after validation for ${options.source}.`);
-        }
-        const dataPath = before.dataPath;
-        const sourceData = supportMode
-            ? formatWordSourceSupportFileJson({
-                sourceId: options.source,
-                supportRecords: manifest.supportRecords?.[options.source] || {},
-            })
-            : formatWordSourceAssignmentFileJson({
-                sourceId: options.source,
-                assignments: manifest.assignments?.[options.source] || {},
+    const relativeDataFile = supportMode
+        ? (manifest.supportFiles?.[options.source] || buildDefaultSupportFile(options.source))
+        : (manifest.assignmentFiles?.[options.source] || buildDefaultAssignmentFile(options.source));
+    if (supportMode) {
+        manifest.supportFiles = {
+            ...(manifest.supportFiles || {}),
+            [options.source]: relativeDataFile,
+        };
+    } else {
+        manifest.assignmentFiles = {
+            ...(manifest.assignmentFiles || {}),
+            [options.source]: relativeDataFile,
+        };
+    }
+    const before = dataBeforeStates.get(options.source);
+    if (before.relativeDataFile !== relativeDataFile) {
+        throw new Error(`Word source data path changed after validation for ${options.source}.`);
+    }
+    const sourceData = supportMode
+        ? formatWordSourceSupportFileJson({
+            sourceId: options.source,
+            supportRecords: manifest.supportRecords?.[options.source] || {},
+        })
+        : formatWordSourceAssignmentFileJson({
+            sourceId: options.source,
+            assignments: manifest.assignments?.[options.source] || {},
+        });
+    const changes = [
+        {
+            filePath: before.dataPath,
+            data: sourceData,
+            expectedBeforeSha256: before.state.sha256,
+        },
+        {
+            filePath: evidencePath,
+            data: formatWordSourceEvidenceJson(buildStorageManifest(manifest)),
+            expectedBeforeSha256: evidenceBeforeState.sha256,
+        },
+    ];
+
+    return {
+        changes,
+        result: {
+            sourceId: options.source,
+            evidenceMode: supportMode ? "support" : "placement",
+            write: options.write === true,
+            evidencePath,
+            preflightValid: true,
+            summary,
+        },
+        validateAfterWrite: () => {
+            const reloadedManifest = readJlptWordSourceEvidenceManifest(evidencePath);
+            const reloadedEvidence = normalizeJlptWordSourceEvidence(reloadedManifest, {
+                manifestPath: evidencePath,
             });
-        const evidenceData = formatWordSourceEvidenceJson(buildStorageManifest(manifest));
-        runGovernedFileTransactionSync({
+            const expectedRecords = supportMode
+                ? (manifest.supportRecords?.[options.source] || {})
+                : (manifest.assignments?.[options.source] || {});
+            const actualRecords = supportMode
+                ? (reloadedEvidence.supportRecords?.[options.source] || {})
+                : (reloadedEvidence.assignments?.[options.source] || {});
+            if (JSON.stringify(actualRecords) !== JSON.stringify(expectedRecords)) {
+                throw new Error(`Post-write word source ${supportMode ? "support" : "assignment"} reconciliation failed for ${options.source}.`);
+            }
+            const rematerialized = materializeWordEvidenceEntries({
+                evidenceManifest: reloadedEvidence,
+                contract,
+            });
+            if (JSON.stringify(rematerialized.words || {}) !== JSON.stringify(manifest.words || {})) {
+                throw new Error(`Post-write word source materialization reconciliation failed for ${options.source}.`);
+            }
+            const governanceReport = auditJlptWordSourceEvidence({
+                contract,
+                evidence: reloadedEvidence,
+                limit: 1,
+                asOfDate: todayIsoDate(),
+            });
+            if (!governanceReport.governanceValid) {
+                throw new Error(
+                    `Post-write word source governance validation failed for ${options.source}: `
+                    + `${JSON.stringify(governanceReport.issueCounts)}`
+                );
+            }
+        },
+    };
+}
+
+function run(options = {}) {
+    const sourceIds = resolveAtomicSourceIds(options);
+    if ((options.sources || []).length > 0) {
+        return runAtomicSupportBatch(options, sourceIds);
+    }
+    if (!options.write) {
+        return buildSingleSourceImportPlan(options).result;
+    }
+    try {
+        const transaction = runGovernedFileTransactionSync({
             transactionName: `jlpt-word-source-import-${options.source}`,
             lockPath: resolveWordSourceImportLockPath(),
             workspaceRoot: process.cwd(),
-            changes: [
-                {
-                    filePath: dataPath,
-                    data: sourceData,
-                    expectedBeforeSha256: before.state.sha256,
-                },
-                {
-                    filePath: evidencePath,
-                    data: evidenceData,
-                    expectedBeforeSha256: evidenceBeforeState.sha256,
-                },
-            ],
-            validateAfterWrite: () => {
-                const reloadedManifest = readJlptWordSourceEvidenceManifest(evidencePath);
-                const reloadedEvidence = normalizeJlptWordSourceEvidence(reloadedManifest, {
-                    manifestPath: evidencePath,
-                });
-                const expectedRecords = supportMode
-                    ? (manifest.supportRecords?.[options.source] || {})
-                    : (manifest.assignments?.[options.source] || {});
-                const actualRecords = supportMode
-                    ? (reloadedEvidence.supportRecords?.[options.source] || {})
-                    : (reloadedEvidence.assignments?.[options.source] || {});
-                if (JSON.stringify(actualRecords) !== JSON.stringify(expectedRecords)) {
-                    throw new Error(`Post-write word source ${supportMode ? "support" : "assignment"} reconciliation failed for ${options.source}.`);
+            prepareChanges: () => {
+                const plan = buildSingleSourceImportPlan(options);
+                if (!plan.result.preflightValid) {
+                    throw new WordSourceImportPreflightError(plan.result);
                 }
-                const rematerialized = materializeWordEvidenceEntries({
-                    evidenceManifest: reloadedEvidence,
-                    contract,
-                });
-                if (JSON.stringify(rematerialized.words || {}) !== JSON.stringify(manifest.words || {})) {
-                    throw new Error(`Post-write word source materialization reconciliation failed for ${options.source}.`);
-                }
-                const governanceReport = auditJlptWordSourceEvidence({
-                    contract,
-                    evidence: reloadedEvidence,
-                    limit: 1,
-                    asOfDate: todayIsoDate(),
-                });
-                if (!governanceReport.governanceValid) {
-                    throw new Error(
-                        `Post-write word source governance validation failed for ${options.source}: `
-                        + `${JSON.stringify(governanceReport.issueCounts)}`
-                    );
-                }
+                return {
+                    changes: plan.changes,
+                    metadata: plan,
+                };
+            },
+            validateAfterWrite: ({ metadata }) => {
+                metadata.validateAfterWrite();
             },
         });
+        return transaction.metadata.result;
+    } catch (error) {
+        if (error instanceof WordSourceImportPreflightError) {
+            return error.result;
+        }
+        throw error;
     }
-    return {
-        sourceId: options.source,
-        evidenceMode: supportMode ? "support" : "placement",
-        write: options.write === true,
-        evidencePath,
-        preflightValid: true,
-        summary,
-    };
 }
 
 function formatReport(result = {}) {

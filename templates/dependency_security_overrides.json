@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "checkedAt": "2026-08-01",
+  "checkedAt": "2026-09-03",
   "overrides": [
     {
       "parentPackage": "@huggingface/transformers",
@@ -40,14 +40,14 @@
           ]
         },
         "upstreamEvidence": {
-          "checkedAt": "2026-08-01",
+          "checkedAt": "2026-09-03",
           "latestParentVersion": "4.2.0",
           "latestDeclaredRange": "^0.34.5",
           "resolutionStatus": "parent_range_still_excludes_forced_version",
           "verificationCommand": "npm view @huggingface/transformers version dependencies.sharp --json"
         }
       },
-      "nextReview": "2026-08-26"
+      "nextReview": "2026-09-28"
     },
     {
       "parentPackage": "onnxruntime-node",
@@ -63,7 +63,7 @@
         "npm run supply-chain:audit",
         "npm test -- --scope=nlp"
       ],
-      "nextReview": "2026-08-26"
+      "nextReview": "2026-09-28"
     }
   ]
 }

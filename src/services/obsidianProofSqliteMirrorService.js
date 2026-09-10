@@ -16,7 +16,7 @@ const { resolvePythonCommand } = require("./toolchainService");
 
 const DEFAULT_OBSIDIAN_PROOF_SQLITE_DIR = path.join("out", "obsidian-proof", "sqlite");
 const DEFAULT_OBSIDIAN_PROOF_SQLITE_DB_FILE = "obsidian-proof-ledger.sqlite";
-const OBSIDIAN_PROOF_SQLITE_PAYLOAD_SCHEMA_VERSION = 1;
+const OBSIDIAN_PROOF_SQLITE_PAYLOAD_SCHEMA_VERSION = 2;
 
 function toPosixPath(value) {
     return String(value).replace(/\\/g, "/");
@@ -79,7 +79,8 @@ function buildSqlitePayload({
         inputHashes: {
             ledgerFiles: ledger.files.map((file) => buildFileHashRecord({ cwd, filePath: file })),
         },
-        events: ledger.events,
+        records: ledger.records,
+        events: ledger.activeEvents,
     };
 }
 
@@ -242,7 +243,8 @@ function buildObsidianProofSqliteMirror({
             payload: buildFileHashRecord({ cwd: resolvedCwd, filePath: payloadPath }),
             sqlite: buildFileHashRecord({ cwd: resolvedCwd, filePath: output.outputDbPath }),
         },
-        proofEvents: ledger.events.length,
+        ledgerRecords: ledger.records.length,
+        proofEvents: ledger.activeEvents.length,
         sqlite: {
             ...sqliteSummary,
             outputDb: toPosixPath(path.relative(resolvedCwd, sqliteSummary.outputDb)),
@@ -263,6 +265,7 @@ function buildObsidianProofSqliteMirrorReport(options = {}) {
             payloadPath: null,
             ledgerDir: options.ledgerDir || null,
             ledgerFiles: [],
+            ledgerRecords: 0,
             proofEvents: 0,
             sqlite: null,
             failures: [error.message],
@@ -332,6 +335,7 @@ function formatObsidianProofSqliteMirrorReport(report = {}) {
         `Result: ${report.passed ? "passing" : "failing"}`,
         `Output database: ${report.outputDbPath || "(not written)"}`,
         `Payload: ${report.payloadPath || "(not written)"}`,
+        `Ledger records retained for audit: ${report.ledgerRecords || 0}`,
         `Ledger proof events: ${report.proofEvents || 0}`,
     ];
 

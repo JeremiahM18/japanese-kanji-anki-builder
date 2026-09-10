@@ -19,8 +19,10 @@ and governed JSONL proof-ledger append.
   Sapphire, Gold, release readiness, migration theater, or a structural stamp.
 - The generated active word rows are the denominator. Do not silently shrink the
   denominator to make a status pass.
-- The active reviewer owns the natural-language and learner-quality judgment.
-  Do not record a generic "human review" label or automation-only approval.
+- The accountable review owner owns the natural-language and learner-quality
+  judgment in this non-human governed lane. The structured identity records
+  accountability; it does not claim human-reviewed provenance. Do not record a
+  generic "human review" label or automation-only approval.
 
 ## Non-Negotiable Stop Rules
 
@@ -124,15 +126,30 @@ Create complete draft events under `out/obsidian-proof/drafts/`.
 
 Every word Obsidian v2.5 proof event must include:
 
+- `schemaVersion: 2`
 - `obsidianStandardVersion: "word-obsidian-v2.5-sentence-audio"`
 - `mechanicalMigration: false`
 - `reviewedAfterStandard: true`
 - exact `target.cardReviewed` and `proof.cardReviewed` as `written|reading`
+- structured `reviewerIdentity` and matching `ledger.recordedByIdentity` using
+  `type: "accountable-review-owner"`
 - full `evidenceChecked`
+- every required common and word-specific `typedChecks` value set explicitly
+  to `true`
 - structured `sentenceQualityReview`
 - structured `sentenceAudioReview`
 - `reviewSession.mode: "card-by-card-observable-rereview"`
+- `lifecycle.action: "certify"` for a new versioned target, or
+  `lifecycle.action: "supersede"` with the active `previousProofId` and reason
+  after an actual replacement rereview
 - reviewer judgment that explains why the actual card is acceptable
+
+The dry-run may calculate the full source commit, committed review-set blob
+SHA-256, exact tracked-entry snapshot and digest, complete generated TSV
+SHA-256, exact normalized row snapshot and digest, and canonical payload
+SHA-256. It never calculates or infers review ownership, typed checks, review
+judgments, or approval. A revocation is a separate schema-v2 lifecycle record;
+it stops the linked proof from counting without deleting history.
 
 Dry-run first:
 

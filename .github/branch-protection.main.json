@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "policyVersion": "2026-06-03",
+  "policyVersion": "2026-09-10",
   "requiredSettings": {
     "requirePullRequestBeforeMerging": true,
     "requiredApprovingReviewCount": 0,
@@ -12,7 +12,8 @@
     "requireLinearHistory": true,
     "doNotAllowBypassing": true,
     "allowForcePushes": false,
-    "allowDeletions": false
+    "allowDeletions": false,
+    "requireSignedCommits": true
   },
   "requiredStatusChecks": [
     "Dependency Review",

@@ -5,9 +5,11 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+    CURRENT_KANJI_OBSIDIAN_STANDARD_VERSION,
     OBSIDIAN_PROOF_LEDGER_AUTHORITY,
 } = require("../src/datasets/obsidianProofLedger");
 const {
+    buildCompatibilityEntries,
     buildObsidianProofCompatibilityViewReport,
     buildObsidianProofCompatibilityViews,
 } = require("../src/services/obsidianProofCompatibilityViewService");
@@ -188,6 +190,35 @@ test("buildObsidianProofCompatibilityViews writes ledger-derived review-set JSON
     assert.equal(outputEntries[0].rereviewProvenance.cardReviewed, "常|じょう");
     assert.equal(outputEntries[0].rereviewProvenance.reviewStandard, "kanji-platinum-v3-evidence-lanes");
     assert.equal(outputEntries[1].rereviewProvenance, undefined);
+});
+
+test("current kanji snapshot-bound proof outranks earlier versioned proof for the same card", () => {
+    const base = buildProofEvent();
+    const legacy = buildProofEvent({
+        proof: {
+            ...base.proof,
+            obsidianStandardVersion: "kanji-obsidian-v1",
+            reviewedAt: "2026-09-01",
+        },
+    });
+    const current = buildProofEvent({
+        schemaVersion: 2,
+        proofId: "kanji-n3-obsidian-fixture-v2",
+        proof: {
+            ...base.proof,
+            obsidianStandardVersion: CURRENT_KANJI_OBSIDIAN_STANDARD_VERSION,
+            reviewedAt: "2026-08-01",
+        },
+    });
+    const report = buildCompatibilityEntries({
+        entries: [{ kanji: "常", readingIncludes: ["じょう"] }],
+        events: [legacy, current],
+        deckKind: "kanji",
+        level: 3,
+    });
+
+    assert.equal(report.entries[0].rereviewProvenance.proofId, current.proofId);
+    assert.equal(report.summary.ledgerProofEventsSuperseded, 1);
 });
 
 test("buildObsidianProofCompatibilityViews writes word ledger-derived review-set JSON", () => {

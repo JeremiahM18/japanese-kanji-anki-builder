@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const {
+    CURRENT_KANJI_OBSIDIAN_STANDARD_VERSION,
     CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     OBSIDIAN_PROOF_LEDGER_AUTHORITY,
     buildObsidianProofTargetKey,
@@ -109,10 +110,11 @@ function stripInlineRereviewProvenance(entry = {}) {
 }
 
 function getObsidianProofPriority(event) {
-    if (
-        event?.target?.deckKind === "word"
-        && resolveObsidianProofStandardVersion(event) === CURRENT_WORD_OBSIDIAN_STANDARD_VERSION
-    ) {
+    const standardVersion = resolveObsidianProofStandardVersion(event);
+    const currentStandardVersion = event?.target?.deckKind === "kanji"
+        ? CURRENT_KANJI_OBSIDIAN_STANDARD_VERSION
+        : CURRENT_WORD_OBSIDIAN_STANDARD_VERSION;
+    if (standardVersion === currentStandardVersion) {
         return 100;
     }
     if (event?.proof?.obsidianStandardVersion) {
@@ -262,7 +264,7 @@ function buildObsidianProofCompatibilityViews({
     });
 
     ensureDir(resolvedOutputDir);
-    const eventGroups = buildLedgerEventGroups(ledger.events);
+    const eventGroups = buildLedgerEventGroups(ledger.activeEvents);
     const reviewSets = [];
 
     for (const [groupKey, events] of [...eventGroups.entries()].sort()) {
@@ -288,7 +290,9 @@ function buildObsidianProofCompatibilityViews({
         inputHashes: {
             ledgerFiles: ledger.files.map((file) => buildFileHashRecord({ cwd: resolvedCwd, filePath: file })),
         },
+        ledgerProofRecords: ledger.records.length,
         ledgerProofEvents: ledger.events.length,
+        activeLedgerProofEvents: ledger.activeEvents.length,
         reviewSets,
     };
 

@@ -882,6 +882,7 @@ test("child process execution stays explicit and allowlisted", () => {
         "src/services/focusedVerificationPlanService.js",
         "src/services/githubRepositorySettingsAuthenticatedAuditCommandService.js",
         "src/services/laneOpsStatusService.js",
+        "src/services/obsidianProofGitBindingService.js",
         "src/services/obsidianProofSqliteMirrorService.js",
         "src/services/productReadinessService.js",
         "src/services/toolchainService.js",

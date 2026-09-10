@@ -58,6 +58,7 @@ function buildAuditEndpoints(repo, branch) {
         { key: "repository", url: base },
         { key: "branch", url: `${base}/branches/${encodeURIComponent(branch)}` },
         { key: "branchProtection", url: `${base}/branches/${encodeURIComponent(branch)}/protection` },
+        { key: "requiredSignatures", url: `${base}/branches/${encodeURIComponent(branch)}/protection/required_signatures` },
         { key: "codeScanningAlerts", url: `${base}/code-scanning/alerts?state=open&per_page=100` },
         { key: "secretScanningAlerts", url: `${base}/secret-scanning/alerts?state=open&per_page=100` },
         { key: "dependabotAlerts", url: `${base}/dependabot/alerts?state=open&per_page=100` },
@@ -183,7 +184,7 @@ function hasHostedAttestationVerification(releaseWorkflowText) {
     );
 }
 
-function listBranchProtectionPolicyGaps(branchProtectionResult, policy) {
+function listBranchProtectionPolicyGaps(branchProtectionResult, policy, requiredSignaturesResult = null) {
     if (!branchProtectionResult?.ok || !policy?.requiredSettings) {
         return [];
     }
@@ -208,6 +209,8 @@ function listBranchProtectionPolicyGaps(branchProtectionResult, policy) {
         ["doNotAllowBypassing", body.enforce_admins?.enabled === true],
         ["allowForcePushes", body.allow_force_pushes?.enabled === true],
         ["allowDeletions", body.allow_deletions?.enabled === true],
+        ["requireSignedCommits", requiredSignaturesResult?.ok === true
+            && requiredSignaturesResult?.body?.enabled === true],
     ];
 
     for (const [key, actual] of expectations) {
@@ -236,7 +239,8 @@ function evaluateGithubSettingsAudit(audit) {
     const releaseWorkflowText = decodeGitHubContent(audit.endpoints.releaseWorkflowContent);
     const branchProtectionPolicyGaps = listBranchProtectionPolicyGaps(
         audit.endpoints.branchProtection,
-        audit.branchProtectionPolicy
+        audit.branchProtectionPolicy,
+        audit.endpoints.requiredSignatures
     );
     const repositorySecurityAndAnalysis = audit.endpoints.repository?.body?.security_and_analysis;
     const repositorySecurityAndAnalysisReadable =
@@ -249,6 +253,8 @@ function evaluateGithubSettingsAudit(audit) {
         branchProtected: audit.endpoints.branch?.body?.protected === true,
         branchProtectionReadable: audit.endpoints.branchProtection?.ok === true,
         branchProtectionMatchesPolicy: branchProtectionPolicyGaps.length === 0,
+        requiredSignedCommits: audit.endpoints.requiredSignatures?.ok === true
+            && audit.endpoints.requiredSignatures?.body?.enabled === true,
         openCodeScanningAlerts: countAlerts(audit.endpoints.codeScanningAlerts),
         openSecretScanningAlerts: countAlerts(audit.endpoints.secretScanningAlerts),
         openDependabotAlerts: countAlerts(audit.endpoints.dependabotAlerts),
@@ -473,6 +479,7 @@ function formatGithubSettingsAudit(audit) {
         `Authenticated API: ${audit.authenticated ? "yes" : "no"}`,
         `Branch protected: ${audit.summary.branchProtected ? "yes" : "no"}`,
         `Branch protection matches policy: ${audit.summary.branchProtectionMatchesPolicy ? "yes" : "no"}`,
+        `Signed commits required on protected branch: ${audit.summary.requiredSignedCommits ? "yes" : "no"}`,
         `CI workflow active: ${audit.summary.ciWorkflowActive ? "yes" : "no"}`,
         `CodeQL workflow active: ${audit.summary.codeqlWorkflowActive ? "yes" : "no"}`,
         `Release workflow active: ${audit.summary.releaseWorkflowActive ? "yes" : "no"}`,

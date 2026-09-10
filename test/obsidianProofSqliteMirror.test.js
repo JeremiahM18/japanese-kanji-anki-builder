@@ -89,6 +89,8 @@ function inspectSqlite(dbPath) {
         "import json, sqlite3, sys",
         "conn = sqlite3.connect(sys.argv[1])",
         "summary = {",
+        "  'ledgerRecords': conn.execute('select count(*) from ledger_records').fetchone()[0],",
+        "  'activeLedgerRecords': conn.execute('select count(*) from ledger_records where is_active_proof = 1').fetchone()[0],",
         "  'proofEvents': conn.execute('select count(*) from proof_events').fetchone()[0],",
         "  'evidenceChecks': conn.execute('select count(*) from evidence_checks').fetchone()[0],",
         "  'cardReviewed': conn.execute('select card_reviewed from proof_events').fetchone()[0],",
@@ -139,6 +141,8 @@ test("buildObsidianProofSqliteMirror writes a queryable local SQLite mirror", {
 
     const inspected = inspectSqlite(dbPath);
     assert.equal(inspected.proofEvents, 1);
+    assert.equal(inspected.ledgerRecords, 1);
+    assert.equal(inspected.activeLedgerRecords, 1);
     assert.equal(inspected.evidenceChecks, 8);
     assert.equal(inspected.cardReviewed, "常|じょう");
     assert.equal(inspected.obsidianStandardVersion, "legacy-kanji-obsidian-standard");

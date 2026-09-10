@@ -162,7 +162,9 @@ npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>
 npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl --write
 ```
 
-The proof event must bind the exact card identity, review standard, reviewer, reviewed date, non-mechanical current-standard rereview type, evidence checklist, limitation decision, sentence-quality review, source review-set path, batch id, and proof authority boundary.
+Schema-v1 events remain immutable historical proof and must not be mechanically rewritten or relabeled. New appends require schema v2. A schema-v2 certification binds the exact card identity, explicit Obsidian and Platinum standards, structured accountable review-owner identity, reviewed date, non-mechanical card-by-card session, typed deck-specific checklist, narrative evidence, limitation decision, sentence-quality review, source review-set path, batch id, and proof authority boundary. The review-owner identity records accountability for this non-human governed lane and does not claim human-reviewed provenance. The event also records SHA-256 for the complete generated TSV, exact normalized generated row, tracked review entry, committed review-set blob, and canonical event payload. The in-repo `jkb-json-c14n-v1` canonicalization accepts JSON values only, sorts object keys recursively, and rejects undefined, non-finite numbers, and non-plain objects before hashing.
+
+The dry-run may materialize missing integrity metadata from the current clean source commit and live generated TSV; it never authors reviewer judgments or turns mechanical output into review proof. Inspect those calculated bindings before `--write`. A schema-v2 card change invalidates its row binding. Replace an active proof with `lifecycle.action=supersede` and an exact `previousProofId`, or remove its authority with a separate `obsidian-proof-revocation-event`. The ledger retains every prior record, while providers and the SQLite operational view expose only the terminal active certification for each versioned target.
 
 ## Required Verification
 

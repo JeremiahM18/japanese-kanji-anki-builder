@@ -66,7 +66,7 @@ function loadScopedLedgerEvents({
 } = {}) {
     const ledger = loadObsidianProofLedger({ cwd, ledgerDir });
     const expectedSourceReviewSetPath = toPosixPath(sourceReviewSetPath || getReviewSetRelativePath({ deckKind, level }));
-    const events = ledger.events.filter((event) => (
+    const events = ledger.activeEvents.filter((event) => (
         event.target.deckKind === deckKind
         && Number(event.target.level) === Number(level)
     ));

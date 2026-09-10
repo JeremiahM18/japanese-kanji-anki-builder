@@ -64,7 +64,7 @@ If NLP or the batch rubric exposes a real issue, fix tracked source/card data fi
 
 6. Record Obsidian proof only after the review happened.
 
-The canonical proof record is a complete JSONL ledger event under `templates/obsidian_proof_ledger/*.jsonl`. It must carry structured proof fields plus actual card-bound example-sentence quality evidence. Do not add inline `rereviewProvenance` to tracked review sets for migrated ledger levels such as N3 kanji.
+The canonical proof record is a complete JSONL ledger event under `templates/obsidian_proof_ledger/*.jsonl`. Schema-v1 records remain immutable audit history. New certification, supersession, and revocation records use schema v2. New certification must carry structured proof fields, an accountable review-owner identity, typed deck-specific checks, and actual card-bound example-sentence quality evidence. The review-owner identity is accountability metadata for this non-human governed lane; it does not claim human-reviewed provenance. Do not add inline `rereviewProvenance` to tracked review sets for migrated ledger levels such as N3 kanji.
 
 Use the governed appender instead of ad hoc helper scripts. Keep the draft input under an ignored/local path such as `out/obsidian-proof/drafts/`, inspect the dry-run report, then rerun with `--write` only after the Obsidian rereview and dry-run both pass:
 
@@ -73,7 +73,9 @@ npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>
 npm run data:obsidian:proof:append -- --events=out/obsidian-proof/drafts/<batch>.jsonl --write
 ```
 
-The appender validates the governed draft root, proof-event schema, card identity binding, tracked review-set target, canonical ledger output path, duplicate proof ids, duplicate proof targets, explicit card-by-card review-session assertions, non-generated/non-automated author identity, and post-write reconciliation. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, generated TSVs, Gold fixtures, Sapphire pass text, compatibility pass text, or a clean batch report alone.
+The appender validates the governed draft root, schema-v2 record shape, explicit standard, card identity, typed checks, tracked review-set target, canonical ledger output path, proof-id uniqueness, linear lifecycle links, explicit card-by-card review-session assertions, accountable review-owner identity, and post-write reconciliation. For certifications it also binds and rechecks the full source commit, committed review-set blob SHA-256, exact tracked entry, complete generated TSV SHA-256, exact normalized generated row, and canonical payload SHA-256. A missing calculated integrity envelope, source commit, or source review-set digest may be materialized in the dry-run from those live inputs; review judgments, identities, and checks are never inferred. Do not record proof from `revalidatedAt`, lane-valid text, NLP output, generated TSVs, Gold fixtures, Sapphire pass text, compatibility pass text, or a clean batch report alone.
+
+Use `lifecycle.action=certify` only when no proof exists for the exact versioned target. Use `supersede` with `previousProofId` after a real replacement rereview. Use a separate `obsidian-proof-revocation-event` with `previousProofId`, exact standard version, accountable reviewer identity, and reason when prior proof must stop counting. Lifecycle history must be one unbranched chain; deletion or in-place correction is forbidden.
 
 7. Verify the structural and reading gates for the batch.
 

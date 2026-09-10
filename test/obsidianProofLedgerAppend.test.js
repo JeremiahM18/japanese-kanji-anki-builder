@@ -798,6 +798,32 @@ test("schema-v2 lifecycle supersedes and revokes without erasing audit history",
     assert.equal(ledger.activeEvents.length, 0);
 });
 
+test("schema-v2 revocation remains appendable after its target leaves the review set", () => {
+    const rootDir = makeWorkspace();
+    const certification = buildProofEvent();
+    runObsidianProofLedgerAppend({
+        cwd: rootDir,
+        eventsPath: writeDraft(rootDir, [certification], "certification-before-removal.jsonl"),
+        write: true,
+    });
+    fs.writeFileSync(
+        path.join(rootDir, "templates", "platinum_n3_review_set.json"),
+        "[]\n",
+        "utf8"
+    );
+
+    const revocation = buildRevocationEvent(certification);
+    const eventsPath = writeDraft(rootDir, [revocation], "revocation-after-removal.jsonl");
+    const dryRun = buildObsidianProofLedgerAppendReport({ cwd: rootDir, eventsPath });
+    assert.equal(dryRun.passed, true);
+
+    runObsidianProofLedgerAppend({ cwd: rootDir, eventsPath, write: true });
+    const ledger = loadObsidianProofLedger({ cwd: rootDir });
+    assert.equal(ledger.records.length, 2);
+    assert.equal(ledger.revocationEvents.length, 1);
+    assert.equal(ledger.activeEvents.length, 0);
+});
+
 test("schema-v2 lifecycle requires an explicit reason and monotonic record dates", () => {
     const missingReason = buildProofEvent({
         proofId: "kanji-n3-obsidian-append-fixture-02",

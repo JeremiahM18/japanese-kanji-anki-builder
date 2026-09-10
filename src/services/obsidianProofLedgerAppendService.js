@@ -351,6 +351,9 @@ function assertEventsBindToReviewSet({ events, reviewSet, deckKind, level }) {
                 `Expected ${expectedSourceReviewSetPath}.`,
             ].join(" "));
         }
+        if (isObsidianProofRevocationEvent(event)) {
+            continue;
+        }
         const targetKey = buildObsidianProofTargetKey(event);
         if (!reviewSet.targetKeys.has(targetKey)) {
             throw new Error(`Obsidian proof event ${event.proofId} target ${targetKey} does not bind to ${reviewSet.sourceReviewSetPath}.`);

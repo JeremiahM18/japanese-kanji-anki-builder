@@ -306,7 +306,12 @@ test("branch protection baseline names the required GitHub checks", () => {
 test("CI workflow uses tracked-input governance checks and documents local-data gates", () => {
     const workflow = readRepoFile(path.join(".github", "workflows", "ci.yml"));
     const readme = readRepoFile("README.md");
+    const verifyJob = workflow.slice(
+        workflow.indexOf("  verify:"),
+        workflow.indexOf("  smoke:")
+    );
 
+    assert.match(verifyJob, /Check out repository[\s\S]*?fetch-depth: 0/);
     assert.equal(workflow.includes("npm run data:audit:jlpt:sources -- --governance-strict --limit=25"), true);
     assert.equal(workflow.includes("npm run security:licenses"), true);
     assert.equal(workflow.includes("npm run security:requirements"), true);

@@ -13,6 +13,11 @@ const {
 const {
     buildObsidianProofLedgerReport,
 } = require("../src/services/obsidianProofLedgerService");
+const {
+    canonicalizeJson,
+    hashCanonicalJson,
+    v2RereviewProvenanceMatchesGeneratedRow,
+} = require("../src/services/obsidianProofIntegrityService");
 
 function buildProofEvent(overrides = {}) {
     return {
@@ -153,4 +158,35 @@ test("buildObsidianProofLedgerReport summarizes valid tracked ledger events", ()
     assert.equal(report.passed, true);
     assert.equal(report.counts.totalEvents, 1);
     assert.deepEqual(report.counts.levels, { "kanji:N3": 1 });
+});
+
+test("Obsidian proof canonical JSON is deterministic and rejects ambiguous values", () => {
+    const left = { z: [3, { b: true, a: "日本" }], a: null };
+    const right = { a: null, z: [3, { a: "日本", b: true }] };
+
+    assert.equal(canonicalizeJson(left), canonicalizeJson(right));
+    assert.equal(hashCanonicalJson(left), hashCanonicalJson(right));
+    assert.throws(() => canonicalizeJson({ value: Number.NaN }), /non-finite number/);
+    assert.throws(() => canonicalizeJson({ value: undefined }), /rejects undefined/);
+});
+
+test("schema-v2 generated-row binding becomes stale when the learner-facing card changes", () => {
+    const generatedRow = { word: "日本", reading: "にほん", meaning: "Japan" };
+    const entry = {
+        word: "日本",
+        rereviewProvenance: {
+            schemaVersion: 2,
+            integrity: {
+                generatedCard: {
+                    rowSha256: hashCanonicalJson(generatedRow),
+                },
+            },
+        },
+    };
+
+    assert.equal(v2RereviewProvenanceMatchesGeneratedRow(entry, generatedRow), true);
+    assert.equal(v2RereviewProvenanceMatchesGeneratedRow(entry, {
+        ...generatedRow,
+        meaning: "Japan; Japanese origin",
+    }), false);
 });

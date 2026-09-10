@@ -2,14 +2,31 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const {
+    CURRENT_OBSIDIAN_PROOF_LEDGER_SCHEMA_VERSION,
     CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
     DEFAULT_OBSIDIAN_PROOF_LEDGER_DIR,
     buildObsidianProofTargetKey,
-    buildObsidianProofVersionedTargetKey,
     loadObsidianProofLedger,
     parseObsidianProofLedgerEvent,
+    expectedObsidianProofGeneratedSourcePath,
+    isObsidianProofCertificationEvent,
+    isObsidianProofRevocationEvent,
+    resolveObsidianProofLifecycle,
     resolveObsidianProofStandardVersion,
 } = require("../datasets/obsidianProofLedger");
+const {
+    hashCanonicalJson,
+    hashObsidianProofIntegrityPayload,
+    sha256Buffer,
+    verifyObsidianProofIntegrityEnvelope,
+} = require("./obsidianProofIntegrityService");
+const {
+    readFileAtCommit,
+    runGit,
+    verifyCurrentV2SourceBinding,
+} = require("./obsidianProofGitBindingService");
+const { parseKanjiTsvForPlatinum } = require("./kanjiGeneratedRowsService");
+const { parseWordTsvForPlatinum } = require("./wordGeneratedRowsService");
 const {
     buildObsidianProofReconciliationReport,
 } = require("./obsidianProofReconciliationService");
@@ -57,6 +74,55 @@ function readJsonArray(filePath, label) {
         throw new Error(`Expected JSON array in ${label}: ${filePath}`);
     }
     return parsed;
+}
+
+function readTsvRows(filePath, label) {
+    let bytes;
+    try {
+        bytes = fs.readFileSync(filePath);
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            throw new Error(`Missing ${label}: ${filePath}`);
+        }
+        throw error;
+    }
+    const text = bytes.toString("utf8");
+    const lines = text.trim().split(/\r?\n/).filter(Boolean);
+    const headers = lines[0]?.split("\t") || [];
+    if (headers.length === 0) {
+        throw new Error(`Missing TSV header in ${label}: ${filePath}`);
+    }
+    return {
+        text,
+        bytes,
+    };
+}
+
+function buildGeneratedCardRowIndex({ cwd, deckKind, level }) {
+    const sourcePath = expectedObsidianProofGeneratedSourcePath({ deckKind, level });
+    const absolutePath = path.resolve(cwd, sourcePath);
+    const parsed = readTsvRows(absolutePath, "live generated card TSV");
+    const normalizedRows = deckKind === "kanji"
+        ? parseKanjiTsvForPlatinum(parsed.text, { level })
+        : parseWordTsvForPlatinum(parsed.text);
+    const rowsByTarget = new Map();
+    for (const row of normalizedRows) {
+        const written = normalizeText(deckKind === "kanji" ? row.kanji : row.word);
+        const reading = normalizeText(deckKind === "kanji" ? row.primaryReading : row.reading);
+        if (!written || !reading) {
+            continue;
+        }
+        const key = `${deckKind}:n${level}:${written}|${reading}`;
+        if (rowsByTarget.has(key)) {
+            throw new Error(`Duplicate generated card target ${key} in ${sourcePath}.`);
+        }
+        rowsByTarget.set(key, row);
+    }
+    return {
+        sourcePath,
+        sourceSha256: sha256Buffer(parsed.bytes),
+        rowsByTarget,
+    };
 }
 
 function parseJsonLine(line, { filePath, lineNumber }) {
@@ -137,11 +203,88 @@ function readDraftProofEvents({ cwd, eventsPath, ledgerDir }) {
     }
     return {
         inputPath,
-        events: draftValues.map((value, index) => parseObsidianProofLedgerEvent(value, {
+        events: draftValues.map((value, index) => parseObsidianProofLedgerEvent(
+            materializeV2DraftIntegrity({ cwd, value }), {
             filePath: inputPath,
             lineNumber: index + 1,
         })),
     };
+}
+
+function materializeV2DraftIntegrity({ cwd, value }) {
+    if (value?.schemaVersion !== CURRENT_OBSIDIAN_PROOF_LEDGER_SCHEMA_VERSION) {
+        return value;
+    }
+    const event = JSON.parse(JSON.stringify(value));
+    const deckKind = event.target?.deckKind;
+    const level = Number(event.target?.level);
+    if (!deckKind || !Number.isInteger(level)) {
+        return event;
+    }
+    const expectedSourceReviewSetPath = getReviewSetRelativePath({ deckKind, level });
+    const suppliedSourceReviewSetPath = normalizeText(event.ledger?.sourceReviewSetPath);
+    if (suppliedSourceReviewSetPath && toPosixPath(suppliedSourceReviewSetPath) !== expectedSourceReviewSetPath) {
+        throw new Error([
+            `Obsidian proof draft has ledger.sourceReviewSetPath ${suppliedSourceReviewSetPath}.`,
+            `Expected ${expectedSourceReviewSetPath}; calculated integrity was not materialized.`,
+        ].join(" "));
+    }
+    event.ledger = {
+        ...event.ledger,
+        sourceReviewSetPath: expectedSourceReviewSetPath,
+    };
+    const reviewSet = buildReviewSetTargetIndex({ cwd, deckKind, level });
+    const suppliedSourceCommit = normalizeText(event.ledger?.sourceCommit);
+    if (suppliedSourceCommit && !/^[a-f0-9]{40}$/.test(suppliedSourceCommit)) {
+        throw new Error("Obsidian proof draft sourceCommit must be a full lowercase 40-character commit before integrity materialization.");
+    }
+    const sourceCommit = suppliedSourceCommit
+        || String(runGit({ cwd, args: ["rev-parse", "HEAD"] })).trim().toLowerCase();
+    event.ledger = {
+        ...event.ledger,
+        sourceCommit,
+        sourceReviewSetSha256: normalizeText(event.ledger?.sourceReviewSetSha256)
+            || sha256Buffer(readFileAtCommit({
+                cwd,
+                sourceCommit,
+                sourcePath: expectedSourceReviewSetPath,
+            })),
+    };
+
+    if (!event.integrity) {
+        if (isObsidianProofRevocationEvent(event)) {
+            event.integrity = {
+                canonicalization: "jkb-json-c14n-v1",
+                digestAlgorithm: "sha256",
+                payloadSha256: "0".repeat(64),
+            };
+        } else {
+            const generatedCards = buildGeneratedCardRowIndex({ cwd, deckKind, level });
+            const targetKey = buildObsidianProofTargetKey(event);
+            const generatedRow = generatedCards.rowsByTarget.get(targetKey);
+            const reviewEntry = reviewSet.entriesByTargetKey.get(targetKey);
+            if (!generatedRow || !reviewEntry) {
+                return event;
+            }
+            event.integrity = {
+                canonicalization: "jkb-json-c14n-v1",
+                digestAlgorithm: "sha256",
+                generatedCard: {
+                    sourcePath: generatedCards.sourcePath,
+                    sourceSha256: generatedCards.sourceSha256,
+                    row: generatedRow,
+                    rowSha256: hashCanonicalJson(generatedRow),
+                },
+                trackedReviewEntry: {
+                    entry: reviewEntry,
+                    entrySha256: hashCanonicalJson(reviewEntry),
+                },
+                payloadSha256: "0".repeat(64),
+            };
+        }
+        event.integrity.payloadSha256 = hashObsidianProofIntegrityPayload(event);
+    }
+    return event;
 }
 
 function assertSingleAppendScope(events = []) {
@@ -178,15 +321,22 @@ function buildReviewSetTargetIndex({ cwd, deckKind, level }) {
     const resolvedSourceReviewSetPath = path.resolve(cwd, sourceReviewSetPath);
     const entries = readJsonArray(resolvedSourceReviewSetPath, "tracked review set");
     const targetKeys = new Set();
+    const entriesByTargetKey = new Map();
     for (const entry of entries) {
         for (const targetKey of buildEntryTargetKeys(entry, { deckKind, level })) {
+            if (entriesByTargetKey.has(targetKey)) {
+                throw new Error(`Duplicate tracked review-set target ${targetKey} in ${sourceReviewSetPath}.`);
+            }
             targetKeys.add(targetKey);
+            entriesByTargetKey.set(targetKey, entry);
         }
     }
     return {
+        cwd,
         sourceReviewSetPath,
         resolvedSourceReviewSetPath,
         targetKeys,
+        entriesByTargetKey,
         entries: entries.length,
         reviewEntries: entries,
     };
@@ -201,9 +351,57 @@ function assertEventsBindToReviewSet({ events, reviewSet, deckKind, level }) {
                 `Expected ${expectedSourceReviewSetPath}.`,
             ].join(" "));
         }
+        if (isObsidianProofRevocationEvent(event)) {
+            continue;
+        }
         const targetKey = buildObsidianProofTargetKey(event);
         if (!reviewSet.targetKeys.has(targetKey)) {
             throw new Error(`Obsidian proof event ${event.proofId} target ${targetKey} does not bind to ${reviewSet.sourceReviewSetPath}.`);
+        }
+    }
+}
+
+function verifySourceCommitBinding({ cwd, event }) {
+    verifyCurrentV2SourceBinding({ cwd, event });
+}
+
+function assertV2IntegrityBindings({ events, reviewSet, generatedCards, verifySourceCommit }) {
+    for (const event of events) {
+        if (event.schemaVersion !== CURRENT_OBSIDIAN_PROOF_LEDGER_SCHEMA_VERSION) {
+            throw new Error([
+                `New Obsidian ledger records must use schemaVersion ${CURRENT_OBSIDIAN_PROOF_LEDGER_SCHEMA_VERSION}: ${event.proofId}.`,
+                "Schema v1 remains readable audit history but is closed to new appends.",
+            ].join(" "));
+        }
+        verifySourceCommit({ cwd: reviewSet.cwd, event, reviewSet });
+        if (isObsidianProofRevocationEvent(event)) {
+            continue;
+        }
+
+        const targetKey = buildObsidianProofTargetKey(event);
+        const generatedRow = generatedCards.rowsByTarget.get(targetKey);
+        if (!generatedRow) {
+            throw new Error(`Obsidian proof event ${event.proofId} has no exact generated card row in ${generatedCards.sourcePath}.`);
+        }
+        const reviewEntry = reviewSet.entriesByTargetKey.get(targetKey);
+        if (!reviewEntry) {
+            throw new Error(`Obsidian proof event ${event.proofId} has no exact tracked review entry in ${reviewSet.sourceReviewSetPath}.`);
+        }
+        if (toPosixPath(event.integrity.generatedCard.sourcePath) !== generatedCards.sourcePath) {
+            throw new Error(`Obsidian proof event ${event.proofId} generatedCard.sourcePath must be ${generatedCards.sourcePath}.`);
+        }
+        if (event.integrity.generatedCard.sourceSha256 !== generatedCards.sourceSha256) {
+            throw new Error(`Obsidian proof event ${event.proofId} generatedCard.sourceSha256 does not match the live generated TSV.`);
+        }
+        if (hashCanonicalJson(generatedRow) !== event.integrity.generatedCard.rowSha256) {
+            throw new Error(`Obsidian proof event ${event.proofId} generated card row digest does not match the live generated row.`);
+        }
+        if (hashCanonicalJson(reviewEntry) !== event.integrity.trackedReviewEntry.entrySha256) {
+            throw new Error(`Obsidian proof event ${event.proofId} tracked review entry digest does not match the live tracked entry.`);
+        }
+        const integrity = verifyObsidianProofIntegrityEnvelope(event);
+        if (!integrity.passed) {
+            throw new Error(`Obsidian proof event ${event.proofId} integrity envelope failed: ${integrity.failures.join("; ")}.`);
         }
     }
 }
@@ -219,9 +417,13 @@ function getSubstantiveProofPredicate(deckKind) {
 }
 
 function assertEventsCountAsSubstantiveProof({ events, reviewSet, deckKind, level }) {
+    const certificationEvents = events.filter(isObsidianProofCertificationEvent);
+    if (certificationEvents.length === 0) {
+        return;
+    }
     const { entries } = buildCompatibilityEntries({
         entries: reviewSet.reviewEntries,
-        events,
+        events: certificationEvents,
         deckKind,
         level,
     });
@@ -234,7 +436,7 @@ function assertEventsCountAsSubstantiveProof({ events, reviewSet, deckKind, leve
     }
 
     const failures = [];
-    for (const event of events) {
+    for (const event of certificationEvents) {
         const targetKey = buildObsidianProofTargetKey(event);
         const entry = entriesByTargetKey.get(targetKey);
         if (!entry || !predicate(entry)) {
@@ -272,8 +474,17 @@ function assertNoDuplicateDraftEvents(events = []) {
 
 function assertNoGeneratedProofAuthorIdentity(event) {
     const identities = [
-        ["proof.reviewer", event.proof.reviewer],
+        ...(isObsidianProofCertificationEvent(event) ? [
+            ["proof.reviewer", event.proof.reviewer],
+            ["proof.reviewerIdentity.id", event.proof.reviewerIdentity?.id],
+            ["proof.reviewerIdentity.displayName", event.proof.reviewerIdentity?.displayName],
+        ] : [
+            ["lifecycle.reviewerIdentity.id", event.lifecycle.reviewerIdentity?.id],
+            ["lifecycle.reviewerIdentity.displayName", event.lifecycle.reviewerIdentity?.displayName],
+        ]),
         ["ledger.recordedBy", event.ledger.recordedBy],
+        ["ledger.recordedByIdentity.id", event.ledger.recordedByIdentity?.id],
+        ["ledger.recordedByIdentity.displayName", event.ledger.recordedByIdentity?.displayName],
     ];
 
     for (const [label, value] of identities) {
@@ -288,8 +499,15 @@ function assertNoGeneratedProofAuthorIdentity(event) {
 
 function assertAppendableProofReviewSession(events = []) {
     for (const event of events) {
+        if (event.schemaVersion !== CURRENT_OBSIDIAN_PROOF_LEDGER_SCHEMA_VERSION) {
+            throw new Error(`New Obsidian proof append requires schemaVersion ${CURRENT_OBSIDIAN_PROOF_LEDGER_SCHEMA_VERSION}: ${event.proofId}.`);
+        }
         if (event.ledger.representationMigration) {
             throw new Error(`Obsidian proof append does not accept representationMigration=true events: ${event.proofId}. Use the dedicated migration command for representation migrations.`);
+        }
+        if (isObsidianProofRevocationEvent(event)) {
+            assertNoGeneratedProofAuthorIdentity(event);
+            continue;
         }
         if (
             event.target.deckKind === "word"
@@ -306,33 +524,21 @@ function assertAppendableProofReviewSession(events = []) {
         ) {
             throw new Error(`New word Obsidian v2.5 proof event ${event.proofId} is missing proof.sentenceAudioReview.`);
         }
-        if (!event.proof.reviewSession) {
-            throw new Error([
-                `Obsidian proof event ${event.proofId} is missing proof.reviewSession.`,
-                "New proof appends must explicitly assert card-by-card-observable-rereview from the live generated card and tracked evidence.",
-                "A clean Platinum gate, batch report, NLP packet, or generated draft is not enough.",
-            ].join(" "));
-        }
         assertNoGeneratedProofAuthorIdentity(event);
     }
 }
 
 function assertNoDuplicateExistingEvents({ cwd, ledgerDir, events }) {
     const ledger = loadObsidianProofLedger({ cwd, ledgerDir });
-    const existingProofIds = new Map(ledger.events.map((event) => [event.proofId, event]));
-    const existingTargetKeys = new Map(ledger.events.map((event) => [buildObsidianProofVersionedTargetKey(event), event]));
+    const existingProofIds = new Map(ledger.records.map((event) => [event.proofId, event]));
 
     for (const event of events) {
         const priorProof = existingProofIds.get(event.proofId);
         if (priorProof) {
             throw new Error(`Obsidian proof id ${event.proofId} already exists for ${priorProof.target.cardReviewed}.`);
         }
-        const targetKey = buildObsidianProofVersionedTargetKey(event);
-        const priorTarget = existingTargetKeys.get(targetKey);
-        if (priorTarget) {
-            throw new Error(`Obsidian proof target ${targetKey} already exists as ${priorTarget.proofId}.`);
-        }
     }
+    resolveObsidianProofLifecycle([...ledger.records, ...events]);
 
     return ledger;
 }
@@ -348,7 +554,8 @@ function buildAppendedJsonlText(existingText = "", events = []) {
 
 function summarizeBatches(events = []) {
     return events.reduce((acc, event) => {
-        acc[event.batch.id] = (acc[event.batch.id] || 0) + 1;
+        const key = event.batch?.id || `lifecycle:${event.lifecycle?.action || "unknown"}`;
+        acc[key] = (acc[key] || 0) + 1;
         return acc;
     }, {});
 }
@@ -387,6 +594,19 @@ function buildObsidianProofLedgerAppendReport(options = {}) {
         deckKind: scope.deckKind,
         level: scope.level,
     });
+    const generatedCards = draft.events.some(isObsidianProofCertificationEvent)
+        ? buildGeneratedCardRowIndex({
+            cwd,
+            deckKind: scope.deckKind,
+            level: scope.level,
+        })
+        : null;
+    assertV2IntegrityBindings({
+        events: draft.events,
+        reviewSet,
+        generatedCards,
+        verifySourceCommit: options.verifySourceCommitBinding || verifySourceCommitBinding,
+    });
     assertEventsCountAsSubstantiveProof({
         events: draft.events,
         reviewSet,
@@ -410,9 +630,14 @@ function buildObsidianProofLedgerAppendReport(options = {}) {
         sourceReviewSetPath: reviewSet.sourceReviewSetPath,
         sourceReviewSetEntries: reviewSet.entries,
         ledgerOutputPath: toPosixPath(path.relative(cwd, ledgerOutputPath)),
+        existingLedgerRecords: existingLedger.records.length,
         existingLedgerEvents: existingLedger.events.length,
         appendEvents: draft.events.length,
-        postAppendLedgerEvents: existingLedger.events.length + draft.events.length,
+        postAppendLedgerRecords: existingLedger.records.length + draft.events.length,
+        postAppendLedgerEvents: existingLedger.events.length
+            + draft.events.filter(isObsidianProofCertificationEvent).length,
+        generatedCardSourcePath: generatedCards?.sourcePath || null,
+        generatedCardSourceSha256: generatedCards?.sourceSha256 || null,
         proofIds: draft.events.map((event) => event.proofId),
         targets: draft.events.map(buildObsidianProofTargetKey),
         batches: summarizeBatches(draft.events),
@@ -497,9 +722,13 @@ function formatObsidianProofLedgerAppendReport(report = {}) {
         `Tracked review set: ${report.sourceReviewSetPath}`,
         `Tracked review entries: ${report.sourceReviewSetEntries}`,
         `Canonical ledger output: ${report.ledgerOutputPath}`,
+        `Generated card source: ${report.generatedCardSourcePath || "(revocation only)"}`,
+        `Generated card source SHA-256: ${report.generatedCardSourceSha256 || "(not applicable)"}`,
+        `Existing ledger records: ${report.existingLedgerRecords}`,
         `Existing ledger events: ${report.existingLedgerEvents}`,
         `Events to append: ${report.appendEvents}`,
         `Post-append ledger events: ${report.postAppendLedgerEvents}`,
+        `Post-append ledger records: ${report.postAppendLedgerRecords}`,
         "",
         "Batches:",
         ...Object.entries(report.batches || {})
@@ -510,7 +739,8 @@ function formatObsidianProofLedgerAppendReport(report = {}) {
         ...((report.targets || []).map((target) => `- ${target}`)),
         "",
         "Authority boundary:",
-        "- This command appends complete governed card-by-card Obsidian proof events to canonical JSONL only.",
+        "- This command appends schema-v2 governed card-by-card proof or lifecycle records to canonical JSONL only.",
+        "- New certifications are bound to the full source commit, committed tracked review-set bytes, exact tracked entry, exact generated TSV bytes, exact generated row, typed review checks, and a canonical SHA-256 payload chain.",
         "- Dry-run is the default. Use --write only after reviewing the draft and dry-run report.",
         "- It rejects ad hoc lane-batch proof inputs and proof authored by generated, automated, migration, or assistant tooling identities.",
         "- It does not create inline rereviewProvenance, Japanese-source evidence, generated TSV authority, APKG authority, NLP certification, or release readiness.",

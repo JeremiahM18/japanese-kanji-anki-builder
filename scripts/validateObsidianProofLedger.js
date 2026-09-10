@@ -34,7 +34,9 @@ async function main() {
     assertNoUnknownArgs("data:obsidian:proof:validate", options.unknownArgs);
 
     const report = buildObsidianProofLedgerReport({
+        cwd: process.cwd(),
         ledgerDir: options.ledgerDir,
+        verifyGitBindings: true,
     });
 
     if (options.json) {

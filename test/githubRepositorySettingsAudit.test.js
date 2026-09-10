@@ -46,6 +46,7 @@ const branchProtectionPolicy = Object.freeze({
         doNotAllowBypassing: true,
         allowForcePushes: false,
         allowDeletions: false,
+        requireSignedCommits: true,
     },
     requiredStatusChecks: [
         "Dependency Review",
@@ -134,6 +135,7 @@ test("authenticated GitHub settings wrapper falls back to gh auth token without 
         summary: {
             branchProtected: true,
             branchProtectionMatchesPolicy: true,
+            requiredSignedCommits: true,
             ciWorkflowActive: true,
             codeqlWorkflowActive: true,
             releaseWorkflowActive: true,
@@ -192,6 +194,7 @@ test("buildAuditEndpoints covers hosted P0 settings", () => {
         "repository",
         "branch",
         "branchProtection",
+        "requiredSignatures",
         "codeScanningAlerts",
         "secretScanningAlerts",
         "dependabotAlerts",
@@ -245,19 +248,28 @@ test("hosted workflow content helpers detect dependency review and attestation p
 });
 
 test("listBranchProtectionPolicyGaps compares hosted branch protection to tracked policy", () => {
-    assert.deepEqual(listBranchProtectionPolicyGaps(protectedBranchEndpoint(), branchProtectionPolicy), []);
+    assert.deepEqual(listBranchProtectionPolicyGaps(
+        protectedBranchEndpoint(),
+        branchProtectionPolicy,
+        endpoint({ body: { enabled: true } })
+    ), []);
     assert.deepEqual(
         listBranchProtectionPolicyGaps(protectedBranchEndpoint({
             required_status_checks: {
                 strict: false,
                 contexts: ["Dependency Review"],
             },
-        }), branchProtectionPolicy),
+        }), branchProtectionPolicy, endpoint({ body: { enabled: true } })),
         [
             "requireBranchesUpToDateBeforeMerging expected true but hosted value is false",
             "missing required status check: Release Gate Ubuntu Node 22",
         ]
     );
+    assert.deepEqual(listBranchProtectionPolicyGaps(
+        protectedBranchEndpoint(),
+        branchProtectionPolicy,
+        endpoint({ body: { enabled: false } })
+    ), ["requireSignedCommits expected true but hosted value is false"]);
 });
 
 test("evaluateGithubSettingsAudit fails closed on unprotected main and auth-only gaps", () => {
@@ -270,6 +282,7 @@ test("evaluateGithubSettingsAudit fails closed on unprotected main and auth-only
             repository: endpoint({ body: { private: false, default_branch: "main" } }),
             branch: endpoint({ body: { protected: false } }),
             branchProtection: endpoint({ ok: false, statusCode: 401 }),
+            requiredSignatures: endpoint({ ok: false, statusCode: 401 }),
             codeScanningAlerts: endpoint({ ok: false, statusCode: 401 }),
             secretScanningAlerts: endpoint({ ok: false, statusCode: 401 }),
             dependabotAlerts: endpoint({ ok: false, statusCode: 401 }),
@@ -348,6 +361,7 @@ test("evaluateGithubSettingsAudit fails closed on open hosted security alerts", 
             }),
             branch: endpoint({ body: { protected: true } }),
             branchProtection: protectedBranchEndpoint(),
+            requiredSignatures: endpoint({ body: { enabled: true } }),
             codeScanningAlerts: endpoint({ body: [{ number: 1 }, { number: 2 }] }),
             secretScanningAlerts: endpoint({ body: [{ number: 3 }] }),
             dependabotAlerts: endpoint({ body: [{ number: 4 }] }),
@@ -413,6 +427,7 @@ test("evaluateGithubSettingsAudit requires a successful hosted release run to pr
             }),
             branch: endpoint({ body: { protected: true } }),
             branchProtection: protectedBranchEndpoint(),
+            requiredSignatures: endpoint({ body: { enabled: true } }),
             codeScanningAlerts: endpoint({ body: [] }),
             secretScanningAlerts: endpoint({ body: [] }),
             dependabotAlerts: endpoint({ body: [] }),
@@ -478,6 +493,7 @@ test("evaluateGithubSettingsAudit fails closed when hosted security controls are
             }),
             branch: endpoint({ body: { protected: true } }),
             branchProtection: protectedBranchEndpoint(),
+            requiredSignatures: endpoint({ body: { enabled: true } }),
             codeScanningAlerts: endpoint({ body: [] }),
             secretScanningAlerts: endpoint({ body: [] }),
             dependabotAlerts: endpoint({ body: [] }),
@@ -551,6 +567,7 @@ test("evaluateGithubSettingsAudit can pass when every hosted signal is clean", (
             }),
             branch: endpoint({ body: { protected: true } }),
             branchProtection: protectedBranchEndpoint(),
+            requiredSignatures: endpoint({ body: { enabled: true } }),
             codeScanningAlerts: endpoint({ body: [] }),
             secretScanningAlerts: endpoint({ body: [] }),
             dependabotAlerts: endpoint({ body: [] }),

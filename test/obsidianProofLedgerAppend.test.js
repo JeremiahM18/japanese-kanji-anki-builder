@@ -1,63 +1,195 @@
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
+const { spawnSync } = require("node:child_process");
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
-    buildObsidianProofLedgerAppendReport,
+    buildObsidianProofLedgerAppendReport: buildObsidianProofLedgerAppendReportService,
     GOVERNED_OBSIDIAN_PROOF_DRAFT_DIR,
     parseDraftEventsText,
-    runObsidianProofLedgerAppend,
+    readDraftProofEvents,
+    runObsidianProofLedgerAppend: runObsidianProofLedgerAppendService,
 } = require("../src/services/obsidianProofLedgerAppendService");
 const {
     parseArgs,
 } = require("../scripts/appendObsidianProofLedgerEvents");
+const {
+    hashCanonicalJson,
+    hashObsidianProofIntegrityPayload,
+    sha256Text,
+} = require("../src/services/obsidianProofIntegrityService");
+const {
+    loadObsidianProofLedger,
+    parseObsidianProofLedgerEvent,
+} = require("../src/datasets/obsidianProofLedger");
+const { parseKanjiTsvForPlatinum } = require("../src/services/kanjiGeneratedRowsService");
+const { parseWordTsvForPlatinum } = require("../src/services/wordGeneratedRowsService");
+
+const KANJI_REVIEW_ENTRIES = [
+    {
+        kanji: "常",
+        status: "platinum",
+        readingIncludes: ["じょう"],
+        meaningIncludes: ["usual"],
+        kanjiMeaningsIncludes: ["usual", "normal"],
+        exampleIncludes: ["日常の生活を大切にしています。"],
+    },
+    {
+        kanji: "幸",
+        status: "platinum",
+        readingIncludes: ["しあわせ"],
+        meaningIncludes: ["happiness"],
+        kanjiMeaningsIncludes: ["happiness", "fortune"],
+        exampleIncludes: ["家族の幸せを願っています。"],
+    },
+];
+const WORD_REVIEW_ENTRIES = [{
+    word: "日本",
+    status: "platinum",
+    readingIncludes: ["にほん"],
+    meaningIncludes: ["Japan"],
+    exampleIncludes: ["日本に行きます。"],
+}];
+const KANJI_TSV = "Kanji\tPrimaryReading\tMeaningJP\n常\tじょう\tusual\n幸\tしあわせ\thappiness\n";
+const WORD_TSV = "Word\tReading\tMeaning\n日本\tにほん\tJapan\n";
+const TEST_SOURCE_COMMIT = "a".repeat(40);
+const TEST_SOURCE_REVIEW_SET_SHA256 = "b".repeat(64);
+const TEST_GIT_BINDING = () => {};
+
+function buildObsidianProofLedgerAppendReport(options) {
+    return buildObsidianProofLedgerAppendReportService({
+        ...options,
+        verifySourceCommitBinding: TEST_GIT_BINDING,
+    });
+}
+
+function runObsidianProofLedgerAppend(options) {
+    return runObsidianProofLedgerAppendService({
+        ...options,
+        verifySourceCommitBinding: TEST_GIT_BINDING,
+    });
+}
 
 function makeWorkspace() {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-append-"));
     fs.mkdirSync(path.join(rootDir, "templates", "obsidian_proof_ledger"), { recursive: true });
     fs.mkdirSync(path.join(rootDir, "out", "obsidian-proof", "drafts"), { recursive: true });
-    fs.writeFileSync(path.join(rootDir, "templates", "platinum_n3_review_set.json"), `${JSON.stringify([
-        {
-            kanji: "常",
-            status: "platinum",
-            readingIncludes: ["じょう"],
-            meaningIncludes: ["usual"],
-            kanjiMeaningsIncludes: ["usual", "normal"],
-            exampleIncludes: ["日常の生活を大切にしています。"],
-        },
-        {
-            kanji: "幸",
-            status: "platinum",
-            readingIncludes: ["しあわせ"],
-            meaningIncludes: ["happiness"],
-            kanjiMeaningsIncludes: ["happiness", "fortune"],
-            exampleIncludes: ["家族の幸せを願っています。"],
-        },
-    ], null, 2)}\n`, "utf8");
+    fs.mkdirSync(path.join(rootDir, "out", "build", "exports"), { recursive: true });
+    fs.writeFileSync(path.join(rootDir, "templates", "platinum_n3_review_set.json"), `${JSON.stringify(KANJI_REVIEW_ENTRIES, null, 2)}\n`, "utf8");
+    fs.writeFileSync(path.join(rootDir, "out", "build", "exports", "jlpt-n3.tsv"), KANJI_TSV, "utf8");
     return rootDir;
+}
+
+function runFixtureGit(rootDir, args) {
+    const result = spawnSync("git", args, {
+        cwd: rootDir,
+        encoding: "utf8",
+        shell: false,
+        windowsHide: true,
+    });
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    return result.stdout.trim();
+}
+
+function initializeFixtureGit(rootDir) {
+    runFixtureGit(rootDir, ["init"]);
+    runFixtureGit(rootDir, ["config", "user.email", "fixture@example.invalid"]);
+    runFixtureGit(rootDir, ["config", "user.name", "Fixture Reviewer"]);
+    runFixtureGit(rootDir, ["add", "templates/platinum_n3_review_set.json"]);
+    runFixtureGit(rootDir, ["-c", "commit.gpgsign=false", "commit", "-m", "fixture review set"]);
+    return runFixtureGit(rootDir, ["rev-parse", "HEAD"]);
 }
 
 function makeWordWorkspace() {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "jkb-obsidian-word-append-"));
     fs.mkdirSync(path.join(rootDir, "templates", "obsidian_proof_ledger"), { recursive: true });
     fs.mkdirSync(path.join(rootDir, "out", "obsidian-proof", "drafts"), { recursive: true });
-    fs.writeFileSync(path.join(rootDir, "templates", "platinum_n5_word_review_set.json"), `${JSON.stringify([
-        {
-            word: "日本",
-            status: "platinum",
-            readingIncludes: ["にほん"],
-            meaningIncludes: ["Japan"],
-            exampleIncludes: ["日本に行きます。"],
-        },
-    ], null, 2)}\n`, "utf8");
+    fs.mkdirSync(path.join(rootDir, "out", "word-build", "exports"), { recursive: true });
+    fs.writeFileSync(path.join(rootDir, "templates", "platinum_n5_word_review_set.json"), `${JSON.stringify(WORD_REVIEW_ENTRIES, null, 2)}\n`, "utf8");
+    fs.writeFileSync(path.join(rootDir, "out", "word-build", "exports", "jlpt-n5-words.tsv"), WORD_TSV, "utf8");
     return rootDir;
 }
 
+function generatedRowForEvent(event) {
+    if (event.target.deckKind === "kanji") {
+        return parseKanjiTsvForPlatinum(KANJI_TSV, { level: 3 })
+            .find((row) => row.kanji === event.target.written && row.primaryReading === event.target.reading)
+            || { kanji: event.target.written, primaryReading: event.target.reading };
+    }
+    return parseWordTsvForPlatinum(WORD_TSV)
+        .find((row) => row.word === event.target.written && row.reading === event.target.reading)
+        || { word: event.target.written, reading: event.target.reading };
+}
+
+function reviewEntryForEvent(event) {
+    const entries = event.target.deckKind === "kanji" ? KANJI_REVIEW_ENTRIES : WORD_REVIEW_ENTRIES;
+    return entries.find((entry) => (
+        (entry.kanji || entry.word) === event.target.written
+        && entry.readingIncludes.includes(event.target.reading)
+    )) || {
+        kanji: event.target.written,
+        status: "platinum",
+        readingIncludes: [event.target.reading],
+    };
+}
+
+function sealV2ProofEvent(event) {
+    const generatedRow = generatedRowForEvent(event);
+    const reviewEntry = reviewEntryForEvent(event);
+    const sourcePath = event.target.deckKind === "kanji"
+        ? "out/build/exports/jlpt-n3.tsv"
+        : "out/word-build/exports/jlpt-n5-words.tsv";
+    const sourceText = event.target.deckKind === "kanji" ? KANJI_TSV : WORD_TSV;
+    event.integrity = {
+        canonicalization: "jkb-json-c14n-v1",
+        digestAlgorithm: "sha256",
+        generatedCard: {
+            sourcePath,
+            sourceSha256: sha256Text(sourceText),
+            row: generatedRow,
+            rowSha256: hashCanonicalJson(generatedRow),
+        },
+        trackedReviewEntry: {
+            entry: reviewEntry,
+            entrySha256: hashCanonicalJson(reviewEntry),
+        },
+        payloadSha256: "0".repeat(64),
+    };
+    event.integrity.payloadSha256 = hashObsidianProofIntegrityPayload(event);
+    return event;
+}
+
+function buildRevocationEvent(previousEvent, overrides = {}) {
+    const event = {
+        schemaVersion: 2,
+        recordType: "obsidian-proof-revocation-event",
+        proofId: `${previousEvent.proofId}-revoked`,
+        target: previousEvent.target,
+        authority: previousEvent.authority,
+        ledger: previousEvent.ledger,
+        lifecycle: {
+            action: "revoke",
+            previousProofId: previousEvent.proofId,
+            obsidianStandardVersion: previousEvent.proof.obsidianStandardVersion,
+            reason: "Fixture review found the prior proof must no longer be trusted.",
+            reviewerIdentity: previousEvent.proof.reviewerIdentity,
+        },
+        integrity: {
+            canonicalization: "jkb-json-c14n-v1",
+            digestAlgorithm: "sha256",
+            payloadSha256: "0".repeat(64),
+        },
+        ...overrides,
+    };
+    event.integrity.payloadSha256 = hashObsidianProofIntegrityPayload(event);
+    return event;
+}
+
 function buildProofEvent(overrides = {}) {
-    return {
-        schemaVersion: 1,
+    return sealV2ProofEvent({
+        schemaVersion: 2,
         recordType: "obsidian-proof-event",
         proofId: "kanji-n3-obsidian-append-fixture-01",
         target: {
@@ -74,8 +206,14 @@ function buildProofEvent(overrides = {}) {
         proof: {
             type: "substantive current standard rereview",
             reviewStandard: "kanji-platinum-v3-evidence-lanes",
+            obsidianStandardVersion: "kanji-obsidian-v2-snapshot-bound",
             reviewedAt: "2026-05-28",
-            reviewer: "fixture-reviewer",
+            reviewer: "Fixture Reviewer",
+            reviewerIdentity: {
+                type: "accountable-review-owner",
+                id: "fixture-reviewer",
+                displayName: "Fixture Reviewer",
+            },
             reviewedAfterStandard: true,
             mechanicalMigration: false,
             result: "approved_for_current_standard_platinum",
@@ -109,6 +247,21 @@ function buildProofEvent(overrides = {}) {
                 generatedFromPriorLaneOnly: false,
                 batchReportOnly: false,
             },
+            typedChecks: {
+                liveGeneratedCard: true,
+                trackedReviewEntry: true,
+                japaneseSourceEvidence: true,
+                learnerFacingMeaning: true,
+                exampleSentence: true,
+                notesAndSupport: true,
+                readingStructure: true,
+                levelAndCoverage: true,
+                primaryAudioIdentity: true,
+                managedMediaProvenance: true,
+                laneSeparation: true,
+                limitationsReviewed: true,
+                strokeOrderIdentity: true,
+            },
         },
         authority: {
             sourceOfTruth: "tracked-jsonl-obsidian-proof-ledger",
@@ -118,18 +271,27 @@ function buildProofEvent(overrides = {}) {
         },
         ledger: {
             recordedAt: "2026-05-28",
-            recordedBy: "fixture-reviewer",
+            recordedBy: "Fixture Reviewer",
+            recordedByIdentity: {
+                type: "accountable-review-owner",
+                id: "fixture-reviewer",
+                displayName: "Fixture Reviewer",
+            },
             sourceReviewSetPath: "templates/platinum_n3_review_set.json",
-            sourceCommit: "abcdef1",
+            sourceCommit: TEST_SOURCE_COMMIT,
+            sourceReviewSetSha256: TEST_SOURCE_REVIEW_SET_SHA256,
             representationMigration: false,
         },
+        lifecycle: {
+            action: "certify",
+        },
         ...overrides,
-    };
+    });
 }
 
 function buildWordProofEvent(overrides = {}) {
-    return {
-        schemaVersion: 1,
+    return sealV2ProofEvent({
+        schemaVersion: 2,
         recordType: "obsidian-proof-event",
         proofId: "word-n5-obsidian-append-fixture-01",
         target: {
@@ -148,7 +310,12 @@ function buildWordProofEvent(overrides = {}) {
             reviewStandard: "word-platinum-v3-evidence-lanes",
             obsidianStandardVersion: "word-obsidian-v2.5-sentence-audio",
             reviewedAt: "2026-07-02",
-            reviewer: "word-rereview-owner",
+            reviewer: "Word Rereview Owner",
+            reviewerIdentity: {
+                type: "accountable-review-owner",
+                id: "word-rereview-owner",
+                displayName: "Word Rereview Owner",
+            },
             reviewedAfterStandard: true,
             mechanicalMigration: false,
             result: "approved_for_current_standard_obsidian",
@@ -204,6 +371,23 @@ function buildWordProofEvent(overrides = {}) {
                 generatedFromPriorLaneOnly: false,
                 batchReportOnly: false,
             },
+            typedChecks: {
+                liveGeneratedCard: true,
+                trackedReviewEntry: true,
+                japaneseSourceEvidence: true,
+                learnerFacingMeaning: true,
+                exampleSentence: true,
+                notesAndSupport: true,
+                readingStructure: true,
+                levelAndCoverage: true,
+                primaryAudioIdentity: true,
+                managedMediaProvenance: true,
+                laneSeparation: true,
+                limitationsReviewed: true,
+                exampleAudioIdentity: true,
+                pitchAccent: true,
+                wordDeckProductFit: true,
+            },
         },
         authority: {
             sourceOfTruth: "tracked-jsonl-obsidian-proof-ledger",
@@ -213,13 +397,22 @@ function buildWordProofEvent(overrides = {}) {
         },
         ledger: {
             recordedAt: "2026-07-02",
-            recordedBy: "word-rereview-owner",
+            recordedBy: "Word Rereview Owner",
+            recordedByIdentity: {
+                type: "accountable-review-owner",
+                id: "word-rereview-owner",
+                displayName: "Word Rereview Owner",
+            },
             sourceReviewSetPath: "templates/platinum_n5_word_review_set.json",
-            sourceCommit: "abcdef1",
+            sourceCommit: TEST_SOURCE_COMMIT,
+            sourceReviewSetSha256: TEST_SOURCE_REVIEW_SET_SHA256,
             representationMigration: false,
         },
+        lifecycle: {
+            action: "certify",
+        },
         ...overrides,
-    };
+    });
 }
 
 function writeDraft(rootDir, value, fileName = "events.jsonl") {
@@ -275,6 +468,57 @@ test("append dry-run validates complete events without writing ledger output", (
     assert.equal(fs.existsSync(ledgerPath), false);
 });
 
+test("append dry-run materializes calculated v2 bindings from the exact clean Git snapshot", () => {
+    const rootDir = makeWorkspace();
+    const sourceCommit = initializeFixtureGit(rootDir);
+    const event = buildProofEvent();
+    delete event.integrity;
+    delete event.ledger.sourceCommit;
+    delete event.ledger.sourceReviewSetSha256;
+    const eventsPath = writeDraft(rootDir, [event]);
+
+    const parsed = readDraftProofEvents({
+        cwd: rootDir,
+        eventsPath,
+        ledgerDir: "templates/obsidian_proof_ledger",
+    }).events[0];
+    const report = buildObsidianProofLedgerAppendReportService({
+        cwd: rootDir,
+        eventsPath,
+    });
+
+    assert.equal(report.passed, true);
+    assert.equal(parsed.ledger.sourceCommit, sourceCommit);
+    assert.match(parsed.ledger.sourceReviewSetSha256, /^[a-f0-9]{64}$/);
+    assert.equal(parsed.integrity.generatedCard.sourcePath, "out/build/exports/jlpt-n3.tsv");
+    assert.match(parsed.integrity.generatedCard.sourceSha256, /^[a-f0-9]{64}$/);
+    assert.equal(parsed.integrity.generatedCard.row.kanji, "常");
+    assert.match(parsed.integrity.payloadSha256, /^[a-f0-9]{64}$/);
+});
+
+test("v2 draft materialization rejects untrusted review-set paths and abbreviated commits before Git reads", () => {
+    const rootDir = makeWorkspace();
+    const wrongPathEvent = buildProofEvent();
+    delete wrongPathEvent.integrity;
+    wrongPathEvent.ledger.sourceReviewSetPath = "templates/unrelated.json";
+    const wrongPathEvents = writeDraft(rootDir, [wrongPathEvent], "wrong-path.jsonl");
+
+    assert.throws(() => buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath: wrongPathEvents,
+    }), /Expected templates\/platinum_n3_review_set\.json; calculated integrity was not materialized/);
+
+    const abbreviatedCommitEvent = buildProofEvent();
+    delete abbreviatedCommitEvent.integrity;
+    abbreviatedCommitEvent.ledger.sourceCommit = "abcdef1";
+    const abbreviatedCommitEvents = writeDraft(rootDir, [abbreviatedCommitEvent], "abbreviated-commit.jsonl");
+
+    assert.throws(() => buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath: abbreviatedCommitEvents,
+    }), /full lowercase 40-character commit/);
+});
+
 test("append dry-run validates word proof against Obsidian status predicate", () => {
     const rootDir = makeWordWorkspace();
     const eventsPath = writeDraft(rootDir, [buildWordProofEvent()]);
@@ -292,24 +536,23 @@ test("append dry-run validates word proof against Obsidian status predicate", ()
     assert.equal(fs.existsSync(ledgerPath), false);
 });
 
-test("append rejects word proof that would not count in Obsidian status", () => {
+test("append rejects word proof without the complete typed review checklist", () => {
     const rootDir = makeWordWorkspace();
     const baseEvent = buildWordProofEvent();
     const eventsPath = writeDraft(rootDir, [buildWordProofEvent({
         proof: {
             ...baseEvent.proof,
-            evidenceChecked: baseEvent.proof.evidenceChecked.map((entry) => (
-                entry.startsWith("Exact word reading audio identity")
-                    ? "Exact word-reading-日本-にほん identity checked without the status checklist phrase."
-                    : entry
-            )),
+            typedChecks: {
+                ...baseEvent.proof.typedChecks,
+                primaryAudioIdentity: false,
+            },
         },
     })]);
 
     assert.throws(() => buildObsidianProofLedgerAppendReport({
         cwd: rootDir,
         eventsPath,
-    }), /would not count as substantive current-standard proof.*日本\|にほん/);
+    }), /typedChecks|Invalid input/);
 });
 
 test("append rejects ad hoc lane-batch proof drafts", () => {
@@ -331,7 +574,7 @@ test("append rejects new proof without an explicit card-by-card review session",
     assert.throws(() => buildObsidianProofLedgerAppendReport({
         cwd: rootDir,
         eventsPath,
-    }), /missing proof\.reviewSession/);
+    }), /reviewSession/);
 });
 
 test("append rejects generated or automated author identities for new proof", () => {
@@ -340,10 +583,20 @@ test("append rejects generated or automated author identities for new proof", ()
         proof: {
             ...buildProofEvent().proof,
             reviewer: "codex-generated-proof-helper",
+            reviewerIdentity: {
+                type: "accountable-review-owner",
+                id: "codex-generated-proof-helper",
+                displayName: "codex-generated-proof-helper",
+            },
         },
         ledger: {
             ...buildProofEvent().ledger,
             recordedBy: "script-generator",
+            recordedByIdentity: {
+                type: "accountable-review-owner",
+                id: "script-generator",
+                displayName: "script-generator",
+            },
         },
     })]);
 
@@ -457,7 +710,7 @@ test("append write revalidates duplicate targets after taking the transaction lo
             });
             return options.prepareChanges();
         },
-    }), /already exists/);
+    }), /already exists|Duplicate Obsidian proof target|lifecycle root/);
     assert.equal(typeof prepareChanges, "function");
 });
 
@@ -473,7 +726,7 @@ test("append rejects duplicate existing proof targets", () => {
     assert.throws(() => buildObsidianProofLedgerAppendReport({
         cwd: rootDir,
         eventsPath,
-    }), /already exists/);
+    }), /already exists|Duplicate Obsidian proof target|lifecycle root/);
 });
 
 test("append rejects proof events that do not bind to the tracked review set", () => {
@@ -497,4 +750,113 @@ test("append rejects proof events that do not bind to the tracked review set", (
         cwd: rootDir,
         eventsPath,
     }), /does not bind/);
+});
+
+test("schema-v2 proof detects snapshot and payload tampering", () => {
+    const event = buildProofEvent();
+    assert.equal(parseObsidianProofLedgerEvent(event).schemaVersion, 2);
+
+    const tamperedRow = JSON.parse(JSON.stringify(event));
+    tamperedRow.integrity.generatedCard.row.meaningJP = "changed";
+    assert.throws(() => parseObsidianProofLedgerEvent(tamperedRow), /generatedCard\.rowSha256/);
+
+    const tamperedProof = JSON.parse(JSON.stringify(event));
+    tamperedProof.proof.limitationDecision = "changed after sealing";
+    assert.throws(() => parseObsidianProofLedgerEvent(tamperedProof), /payloadSha256/);
+});
+
+test("schema-v2 lifecycle supersedes and revokes without erasing audit history", () => {
+    const rootDir = makeWorkspace();
+    const first = buildProofEvent();
+    const firstDraft = writeDraft(rootDir, [first], "first.jsonl");
+    runObsidianProofLedgerAppend({ cwd: rootDir, eventsPath: firstDraft, write: true });
+
+    const second = buildProofEvent({
+        proofId: "kanji-n3-obsidian-append-fixture-02",
+        lifecycle: {
+            action: "supersede",
+            previousProofId: first.proofId,
+            reason: "Fixture card was rereviewed against a replacement generated snapshot.",
+        },
+    });
+    const secondDraft = writeDraft(rootDir, [second], "second.jsonl");
+    runObsidianProofLedgerAppend({ cwd: rootDir, eventsPath: secondDraft, write: true });
+
+    let ledger = loadObsidianProofLedger({ cwd: rootDir });
+    assert.equal(ledger.records.length, 2);
+    assert.equal(ledger.events.length, 2);
+    assert.deepEqual(ledger.activeEvents.map((event) => event.proofId), [second.proofId]);
+
+    const revocation = buildRevocationEvent(second);
+    const revocationDraft = writeDraft(rootDir, [revocation], "revocation.jsonl");
+    runObsidianProofLedgerAppend({ cwd: rootDir, eventsPath: revocationDraft, write: true });
+
+    ledger = loadObsidianProofLedger({ cwd: rootDir });
+    assert.equal(ledger.records.length, 3);
+    assert.equal(ledger.events.length, 2);
+    assert.equal(ledger.revocationEvents.length, 1);
+    assert.equal(ledger.activeEvents.length, 0);
+});
+
+test("schema-v2 revocation remains appendable after its target leaves the review set", () => {
+    const rootDir = makeWorkspace();
+    const certification = buildProofEvent();
+    runObsidianProofLedgerAppend({
+        cwd: rootDir,
+        eventsPath: writeDraft(rootDir, [certification], "certification-before-removal.jsonl"),
+        write: true,
+    });
+    fs.writeFileSync(
+        path.join(rootDir, "templates", "platinum_n3_review_set.json"),
+        "[]\n",
+        "utf8"
+    );
+
+    const revocation = buildRevocationEvent(certification);
+    const eventsPath = writeDraft(rootDir, [revocation], "revocation-after-removal.jsonl");
+    const dryRun = buildObsidianProofLedgerAppendReport({ cwd: rootDir, eventsPath });
+    assert.equal(dryRun.passed, true);
+
+    runObsidianProofLedgerAppend({ cwd: rootDir, eventsPath, write: true });
+    const ledger = loadObsidianProofLedger({ cwd: rootDir });
+    assert.equal(ledger.records.length, 2);
+    assert.equal(ledger.revocationEvents.length, 1);
+    assert.equal(ledger.activeEvents.length, 0);
+});
+
+test("schema-v2 lifecycle requires an explicit reason and monotonic record dates", () => {
+    const missingReason = buildProofEvent({
+        proofId: "kanji-n3-obsidian-append-fixture-02",
+        lifecycle: {
+            action: "supersede",
+            previousProofId: "kanji-n3-obsidian-append-fixture-01",
+        },
+    });
+    assert.throws(() => parseObsidianProofLedgerEvent(missingReason), /lifecycle\.reason|Invalid input/);
+
+    const rootDir = makeWorkspace();
+    const first = buildProofEvent({
+        ledger: {
+            ...buildProofEvent().ledger,
+            recordedAt: "2026-05-30",
+        },
+    });
+    runObsidianProofLedgerAppend({
+        cwd: rootDir,
+        eventsPath: writeDraft(rootDir, [first], "first-later.jsonl"),
+        write: true,
+    });
+
+    const regressingSuccessor = buildProofEvent({
+        proofId: "kanji-n3-obsidian-append-fixture-02",
+        lifecycle: {
+            action: "supersede",
+            previousProofId: first.proofId,
+            reason: "Fixture successor must not predate the proof it replaces.",
+        },
+    });
+    assert.throws(() => buildObsidianProofLedgerAppendReport({
+        cwd: rootDir,
+        eventsPath: writeDraft(rootDir, [regressingSuccessor], "regressing-successor.jsonl"),
+    }), /cannot predate previous proof/);
 });

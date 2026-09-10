@@ -20,6 +20,7 @@ const DOC_SETTING_PHRASES = Object.freeze({
     doNotAllowBypassing: "do not allow bypassing required protections",
     allowForcePushes: "block force pushes",
     allowDeletions: "block branch deletion",
+    requireSignedCommits: "require signed commits",
 });
 
 function readText(cwd, relativePath) {

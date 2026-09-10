@@ -356,7 +356,7 @@ test("databricks snapshot writes required metadata files without granting certif
         buildSourceEvidenceSummaryRowsFn: () => [],
         loadProofLedgerFn: () => ({
             files: [],
-            events: [
+            activeEvents: [
                 proofEvent({
                     deckKind: "kanji",
                     written: "日",
@@ -434,7 +434,7 @@ test("databricks snapshot rejects duplicate generated card identities", () => {
         runCommandEvidenceFn: stubCommandEvidence,
         buildCloseoutReportFn: () => closeoutReport,
         buildSourceEvidenceSummaryRowsFn: () => [],
-        loadProofLedgerFn: () => ({ files: [], events: [] }),
+        loadProofLedgerFn: () => ({ files: [], activeEvents: [] }),
     }), /Duplicate generated card identity/u);
 });
 
@@ -450,7 +450,7 @@ test("databricks snapshot rejects proof events without active Platinum binding",
         buildSourceEvidenceSummaryRowsFn: () => [],
         loadProofLedgerFn: () => ({
             files: [],
-            events: [proofEvent({
+            activeEvents: [proofEvent({
                 deckKind: "kanji",
                 written: "日",
                 reading: "にち",
@@ -472,7 +472,7 @@ test("databricks snapshot preserves legacy history but rejects duplicate current
         buildSourceEvidenceSummaryRowsFn: () => [],
         loadProofLedgerFn: () => ({
             files: [],
-            events: [
+            activeEvents: [
                 proofEvent({
                     deckKind: "word",
                     written: "日本",
@@ -504,7 +504,7 @@ test("databricks snapshot rejects generated count mismatches", () => {
         runCommandEvidenceFn: stubCommandEvidence,
         buildCloseoutReportFn: () => closeoutReport,
         buildSourceEvidenceSummaryRowsFn: () => [],
-        loadProofLedgerFn: () => ({ files: [], events: [] }),
+        loadProofLedgerFn: () => ({ files: [], activeEvents: [] }),
     }), /generated-count-preserved/u);
 });
 

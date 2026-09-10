@@ -114,6 +114,8 @@ For card content defects, rerun the applicable Gold, native Sapphire or structur
 
 Word Silver application, Sapphire promotion, Sapphire limitation migration, and Obsidian proof append use the shared governed file-transaction layer. It stages same-directory temporary files durably, records before/after SHA-256 hashes and backups under `out/file-transactions/`, acquires an exclusive scoped lock, and rolls committed targets back in reverse order if a later write or post-write validator fails.
 
+Do not repair an already committed Obsidian proof record in place. After resolving the exact target and retained transaction state, append a schema-v2 `supersede` record following a real replacement rereview, or append a schema-v2 revocation with an accountable reviewer and explicit reason. Both must link the active `previousProofId`; branched or disconnected histories fail closed. This lifecycle rule does not replace transaction rollback for a write that failed before commit.
+
 Normal validation or write failures that roll back cleanly leave no recovery lock. If rollback cannot be completed safely, the transaction deliberately leaves its journal, backup files, and `.lock` file in place. Do not delete that lock or copy a backup by hand.
 
 Inspect a retained lock first:

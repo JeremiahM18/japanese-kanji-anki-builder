@@ -6,6 +6,9 @@ const {
 const { normalizeEvidenceEntries } = require("./platinumEvidenceService");
 const { buildWordIdentity } = require("./platinumWordBatchReportService");
 const {
+    v2RereviewProvenanceMatchesGeneratedRow,
+} = require("./obsidianProofIntegrityService");
+const {
     MISSING_SUBSTANTIVE_REREVIEW_PROOF_MARKER,
     NON_MECHANICAL_PROOF_MARKER,
     SENTENCE_AUDIO_REVIEW_PROOF_MARKER,
@@ -199,7 +202,10 @@ function classifyGeneratedWordRereviewStatus({
         };
     }
 
-    if (entryHasSubstantiveCurrentStandardRereviewProof(platinumPassingEntry)) {
+    if (
+        entryHasSubstantiveCurrentStandardRereviewProof(platinumPassingEntry)
+        && v2RereviewProvenanceMatchesGeneratedRow(platinumPassingEntry, row)
+    ) {
         return {
             identity,
             label,

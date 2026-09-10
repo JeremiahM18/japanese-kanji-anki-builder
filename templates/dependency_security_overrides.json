@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "checkedAt": "2026-09-03",
+  "checkedAt": "2026-09-10",
   "overrides": [
     {
       "parentPackage": "@huggingface/transformers",
       "packageName": "sharp",
-      "forcedVersion": "0.35.3",
+      "forcedVersion": "0.35.4",
       "declaredParentRange": "^0.34.1",
       "rangeCompatibility": "outside_declared_range",
-      "securityAdvisory": "GHSA-f88m-g3jw-g9cj",
+      "securityAdvisory": "GHSA-rgj7-g3m4-5g8c",
       "scope": "The active Transformers.js integration is text-embedding only. It does not invoke image decoding, image preprocessing, or vision pipelines.",
-      "rationale": "The upstream 3.8.1 package still declares vulnerable sharp ^0.34.1. The reviewed override moves the installed native dependency to the patched 0.35 line while retaining the already-pinned Transformers.js API used by this repository.",
+      "rationale": "The upstream 3.8.1 package still declares vulnerable sharp ^0.34.1. The reviewed override resolves sharp 0.35.4, which fixes the libheif vulnerabilities in GHSA-rgj7-g3m4-5g8c as well as the earlier sharp advisory, while retaining the already-pinned Transformers.js API used by this repository.",
       "validationCommands": [
         "npm run security:advisories",
         "npm run supply-chain:audit",
@@ -40,14 +40,14 @@
           ]
         },
         "upstreamEvidence": {
-          "checkedAt": "2026-09-03",
+          "checkedAt": "2026-09-10",
           "latestParentVersion": "4.2.0",
           "latestDeclaredRange": "^0.34.5",
           "resolutionStatus": "parent_range_still_excludes_forced_version",
           "verificationCommand": "npm view @huggingface/transformers version dependencies.sharp --json"
         }
       },
-      "nextReview": "2026-09-28"
+      "nextReview": "2026-10-10"
     },
     {
       "parentPackage": "onnxruntime-node",

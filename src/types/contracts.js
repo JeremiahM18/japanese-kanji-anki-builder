@@ -1,6 +1,37 @@
 /**
  * Shared JSDoc contracts for the highest-value runtime boundaries in this repo.
- * These contracts are intentionally focused on media, inference, and build artifacts.
+ * These contracts are intentionally focused on media, inference, proof, and build artifacts.
+ */
+
+/**
+ * @typedef {object} AccountableReviewOwnerIdentity
+ * @property {"accountable-review-owner"} type
+ * @property {string} id Stable local reviewer identifier
+ * @property {string} displayName Display label for the accountable review owner
+ */
+
+/**
+ * @typedef {object} ObsidianProofSnapshot
+ * @property {string} sourcePath Ignored generated TSV path reviewed under the accountable review owner
+ * @property {string} sourceSha256 SHA-256 of the complete generated TSV bytes
+ * @property {Record<string, unknown>} row Exact normalized learner-facing generated row
+ * @property {string} rowSha256 SHA-256 of canonicalized row JSON
+ */
+
+/**
+ * @typedef {object} ObsidianProofIntegrityEnvelope
+ * @property {"jkb-json-c14n-v1"} canonicalization
+ * @property {"sha256"} digestAlgorithm
+ * @property {ObsidianProofSnapshot} generatedCard
+ * @property {{entry: Record<string, unknown>, entrySha256: string}} trackedReviewEntry
+ * @property {string} payloadSha256 SHA-256 over the entire canonical record except this self-referential field
+ */
+
+/**
+ * @typedef {object} ObsidianProofLifecycle
+ * @property {"certify"|"supersede"|"revoke"} action
+ * @property {string=} previousProofId Required for supersede and revoke
+ * @property {string=} reason
  */
 
 /**

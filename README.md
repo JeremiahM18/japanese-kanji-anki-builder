@@ -103,6 +103,8 @@ The governed review sequence is **Silver → Gold → Sapphire → Platinum → 
 
 Current word Obsidian v2.5 proof covers `876/1622` current N5/N4 generated word rows. Legacy word Obsidian proof history remains audit-visible at `1118` N5/N4 targets and `1994` raw ledger events; `700` legacy events are superseded by current v2.5 proof. Legacy history does not count as current certification.
 
+The canonical ledger currently contains `2976` immutable schema-v1 certification events and `0` schema-v2 snapshot-bound active proofs. That is an explicit assurance-generation boundary, not a retroactive downgrade or mechanical upgrade of the completed reviews above. Schema v1 stays readable as historical evidence. Every new governed append must use schema v2, whose digest chain binds the accountable reviewer identity, typed deck-specific checks, full source commit, committed review-set bytes, exact tracked review entry, exact generated TSV bytes, and exact normalized learner-facing row. Later correction uses linked `supersede` or `revoke` records; history is never overwritten. `data:obsidian:proof:validate` reports both content-proof totals and snapshot-bound coverage.
+
 ## Pipeline At A Glance
 
 ```mermaid

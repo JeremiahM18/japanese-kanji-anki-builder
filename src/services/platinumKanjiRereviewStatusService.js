@@ -4,6 +4,10 @@ const {
     isCurrentStandardPlatinumEntry,
 } = require("./platinumKanjiReviewService");
 const { normalizeEvidenceEntries } = require("./platinumEvidenceService");
+const {
+    v2RereviewProvenanceMatchesGeneratedRow,
+    v2TypedReviewProofPasses,
+} = require("./obsidianProofIntegrityService");
 
 const REREVIEW_STATUS_CATEGORIES = Object.freeze({
     CURRENT_V3_PLATINUM_PASS: "current_v3_platinum_pass",
@@ -203,6 +207,15 @@ function hasKanjiSentenceQualityReviewProof(entry = {}) {
 }
 
 function hasStructuredRereviewProvenance(entry = {}) {
+    const provenance = getRereviewProvenance(entry);
+    if (provenance?.schemaVersion === 2) {
+        const expectedIdentities = normalizeStringArray(entry.readingIncludes)
+            .map((reading) => `${normalizeText(entry.kanji)}|${normalizeText(reading)}`);
+        return hasBaseStructuredRereviewProvenance(entry)
+            && expectedIdentities.includes(normalizeText(provenance.cardReviewed))
+            && v2TypedReviewProofPasses(entry, "kanji")
+            && structuredSentenceQualityReviewPasses(entry);
+    }
     return hasBaseStructuredRereviewProvenance(entry)
         && hasCardIdentityProof(entry)
         && hasKanjiSentenceQualityReviewProof(entry);
@@ -292,7 +305,10 @@ function classifyGeneratedKanjiRereviewStatus({
         };
     }
 
-    if (entryHasSubstantiveCurrentStandardRereviewProof(platinumPassingEntry)) {
+    if (
+        entryHasSubstantiveCurrentStandardRereviewProof(platinumPassingEntry)
+        && v2RereviewProvenanceMatchesGeneratedRow(platinumPassingEntry, row)
+    ) {
         return {
             kanji,
             categories: [

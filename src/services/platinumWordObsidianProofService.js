@@ -4,6 +4,9 @@ const {
 const {
     CURRENT_WORD_OBSIDIAN_STANDARD_VERSION,
 } = require("../datasets/obsidianProofLedger");
+const {
+    v2TypedReviewProofPasses,
+} = require("./obsidianProofIntegrityService");
 const { normalizeEvidenceEntries } = require("./platinumEvidenceService");
 
 const SUBSTANTIVE_REREVIEW_PROOF_MARKER = "substantive Obsidian v2.5 rereview";
@@ -295,6 +298,17 @@ function hasWordSentenceAudioReviewProof(entry = {}) {
 }
 
 function entryHasSubstantiveCurrentStandardRereviewProof(entry = {}) {
+    const provenance = getRereviewProvenance(entry);
+    if (provenance?.schemaVersion === 2) {
+        const expectedIdentities = normalizeStringArray(entry.readingIncludes)
+            .map((reading) => `${normalizeText(entry.word)}|${normalizeText(reading)}`);
+        return hasBaseStructuredRereviewProvenance(entry)
+            && hasCurrentWordObsidianStandardVersion(entry)
+            && expectedIdentities.includes(normalizeText(provenance.cardReviewed))
+            && v2TypedReviewProofPasses(entry, "word")
+            && structuredWordSentenceQualityReviewPasses(entry)
+            && hasWordSentenceAudioReviewProof(entry);
+    }
     return hasBaseStructuredRereviewProvenance(entry)
         && hasCurrentWordObsidianStandardVersion(entry)
         && hasWordCardIdentityProof(entry)

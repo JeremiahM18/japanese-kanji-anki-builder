@@ -201,7 +201,7 @@ function buildObsidianProofReconciliation({
 } = {}) {
     const resolvedCwd = path.resolve(cwd);
     const ledger = loadObsidianProofLedger({ cwd: resolvedCwd, ledgerDir });
-    const ledgerProofs = buildLedgerProofRecords(ledger.events);
+    const ledgerProofs = buildLedgerProofRecords(ledger.activeEvents);
     const scopeReports = [];
     const skippedScopes = [];
 

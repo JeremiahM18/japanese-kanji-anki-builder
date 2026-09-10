@@ -53,7 +53,7 @@ test("supply-chain audit keeps lockfile, install scripts, workflows, and release
         report.dependencySecurityOverrides.entries.some((entry) => (
             entry.parentPackage === "@huggingface/transformers"
             && entry.packageName === "sharp"
-            && entry.forcedVersion === "0.35.3"
+            && entry.forcedVersion === "0.35.4"
         )),
         true
     );
@@ -140,7 +140,7 @@ test("supply-chain audit report is readable for local verification", () => {
     assert.match(text, /npm allowScripts approvals:/);
     assert.match(text, /fsevents@2\.3\.3/);
     assert.match(text, /Dependency security overrides:/);
-    assert.match(text, /GHSA-f88m-g3jw-g9cj/);
+    assert.match(text, /GHSA-rgj7-g3m4-5g8c/);
     assert.match(text, /compatibility boundary: imports=src\/services\/nlpEmbeddingModelEvaluationService\.js/);
     assert.match(text, /pipeline tasks=feature-extraction; active model tasks=embedding/);
     assert.match(text, /upstream 4\.2\.0 declares \^0\.34\.5/);
@@ -162,7 +162,7 @@ test("supply-chain audit report preserves validation errors for malformed compat
 
 test("dependency override audit computes range posture and rejects recorded-range drift", () => {
     assert.equal(satisfiesReviewedSimpleRange("7.5.22", "^7.0.1"), true);
-    assert.equal(satisfiesReviewedSimpleRange("0.35.3", "^0.34.1"), false);
+    assert.equal(satisfiesReviewedSimpleRange("0.35.4", "^0.34.1"), false);
 
     const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
     const lock = JSON.parse(fs.readFileSync(path.join(repoRoot, "package-lock.json"), "utf8"));
@@ -284,7 +284,7 @@ test("outside-range override compatibility audit rejects stale upstream-resoluti
             entry: mutatedEntry,
             policyCheckedAt: policy.checkedAt,
         });
-        assert.equal(report.errors.some((error) => /now accepts 0\.35\.3/u.test(error)), true);
+        assert.equal(report.errors.some((error) => /now accepts 0\.35\.4/u.test(error)), true);
     } finally {
         fs.rmSync(tempDir, { recursive: true, force: true });
     }

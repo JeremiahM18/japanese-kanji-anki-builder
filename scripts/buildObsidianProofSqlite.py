@@ -5,7 +5,7 @@ import sqlite3
 import sys
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 def parse_args(argv):
@@ -31,6 +31,9 @@ def load_payload(input_json):
     events = payload.get("events")
     if not isinstance(events, list):
         raise ValueError("SQLite payload events must be an array")
+    records = payload.get("records")
+    if not isinstance(records, list):
+        raise ValueError("SQLite payload records must be an array")
     return payload
 
 
@@ -59,6 +62,7 @@ def initialize_schema(conn):
         CREATE TABLE proof_events (
             proof_id TEXT PRIMARY KEY,
             target_key TEXT NOT NULL UNIQUE,
+            ledger_schema_version INTEGER NOT NULL,
             obsidian_standard_version TEXT NOT NULL,
             deck_kind TEXT NOT NULL,
             level INTEGER NOT NULL,
@@ -77,6 +81,10 @@ def initialize_schema(conn):
             recorded_by TEXT NOT NULL,
             source_review_set_path TEXT NOT NULL,
             source_commit TEXT NOT NULL,
+            source_review_set_sha256 TEXT,
+            payload_sha256 TEXT,
+            generated_card_row_sha256 TEXT,
+            tracked_review_entry_sha256 TEXT,
             representation_migration INTEGER NOT NULL CHECK (representation_migration IN (0, 1)),
             event_json TEXT NOT NULL,
             sentence_quality_json TEXT NOT NULL,
@@ -97,6 +105,23 @@ def initialize_schema(conn):
             PRIMARY KEY (proof_id, position),
             FOREIGN KEY (proof_id) REFERENCES proof_events(proof_id) ON DELETE CASCADE
         );
+
+        CREATE TABLE ledger_records (
+            proof_id TEXT PRIMARY KEY,
+            record_type TEXT NOT NULL,
+            ledger_schema_version INTEGER NOT NULL,
+            target_key TEXT NOT NULL,
+            lifecycle_action TEXT NOT NULL,
+            previous_proof_id TEXT,
+            is_active_proof INTEGER NOT NULL CHECK (is_active_proof IN (0, 1)),
+            source_commit TEXT NOT NULL,
+            source_review_set_path TEXT NOT NULL,
+            payload_sha256 TEXT,
+            record_json TEXT NOT NULL
+        );
+
+        CREATE INDEX idx_ledger_records_target
+            ON ledger_records(target_key, lifecycle_action);
         """
     )
 
@@ -117,6 +142,9 @@ def build_target_key(event):
 
 
 def resolve_obsidian_standard_version(event):
+    if event.get("recordType") == "obsidian-proof-revocation-event":
+        lifecycle = event.get("lifecycle") or {}
+        return require_text(lifecycle.get("obsidianStandardVersion"), "lifecycle.obsidianStandardVersion")
     proof = event.get("proof") or {}
     explicit_version = str(proof.get("obsidianStandardVersion") or "").strip()
     if explicit_version:
@@ -135,23 +163,28 @@ def insert_event(conn, event):
     ledger = event.get("ledger") or {}
     authority = event.get("authority") or {}
     evidence_checked = proof.get("evidenceChecked")
+    integrity = event.get("integrity") or {}
+    generated_card = integrity.get("generatedCard") or {}
+    tracked_review_entry = integrity.get("trackedReviewEntry") or {}
     if not isinstance(evidence_checked, list) or len(evidence_checked) < 1:
         raise ValueError(f"event {proof_id} must include evidenceChecked array")
 
     conn.execute(
         """
         INSERT INTO proof_events(
-            proof_id, target_key, obsidian_standard_version, deck_kind, level, written, reading, card_reviewed,
+            proof_id, target_key, ledger_schema_version, obsidian_standard_version, deck_kind, level, written, reading, card_reviewed,
             batch_id, batch_sequence, review_standard, reviewed_at, reviewer, result,
             scope, limitation_decision, recorded_at, recorded_by, source_review_set_path,
-            source_commit, representation_migration, event_json, sentence_quality_json,
+            source_commit, source_review_set_sha256, payload_sha256, generated_card_row_sha256,
+            tracked_review_entry_sha256, representation_migration, event_json, sentence_quality_json,
             authority_json, ledger_json
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             proof_id,
             build_target_key(event),
+            int(event.get("schemaVersion")),
             resolve_obsidian_standard_version(event),
             require_text(target.get("deckKind"), f"{proof_id}.target.deckKind"),
             int(target.get("level")),
@@ -170,6 +203,10 @@ def insert_event(conn, event):
             require_text(ledger.get("recordedBy"), f"{proof_id}.ledger.recordedBy"),
             require_text(ledger.get("sourceReviewSetPath"), f"{proof_id}.ledger.sourceReviewSetPath"),
             require_text(ledger.get("sourceCommit"), f"{proof_id}.ledger.sourceCommit"),
+            ledger.get("sourceReviewSetSha256"),
+            integrity.get("payloadSha256"),
+            generated_card.get("rowSha256"),
+            tracked_review_entry.get("entrySha256"),
             1 if ledger.get("representationMigration") else 0,
             json.dumps(event, ensure_ascii=False, sort_keys=True),
             json.dumps(proof.get("sentenceQualityReview", {}), ensure_ascii=False, sort_keys=True),
@@ -187,6 +224,42 @@ def insert_event(conn, event):
     )
 
 
+def insert_ledger_record(conn, record, active_proof_ids):
+    proof_id = require_text(record.get("proofId"), "proofId")
+    ledger = record.get("ledger") or {}
+    lifecycle = record.get("lifecycle") or {}
+    schema_version = int(record.get("schemaVersion"))
+    if schema_version == 1:
+        lifecycle_action = "legacy-certify"
+        previous_proof_id = None
+    else:
+        lifecycle_action = require_text(lifecycle.get("action"), f"{proof_id}.lifecycle.action")
+        previous_proof_id = lifecycle.get("previousProofId")
+    integrity = record.get("integrity") or {}
+    conn.execute(
+        """
+        INSERT INTO ledger_records(
+            proof_id, record_type, ledger_schema_version, target_key, lifecycle_action,
+            previous_proof_id, is_active_proof, source_commit, source_review_set_path,
+            payload_sha256, record_json
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            proof_id,
+            require_text(record.get("recordType"), f"{proof_id}.recordType"),
+            schema_version,
+            build_target_key(record),
+            lifecycle_action,
+            previous_proof_id,
+            1 if proof_id in active_proof_ids else 0,
+            require_text(ledger.get("sourceCommit"), f"{proof_id}.ledger.sourceCommit"),
+            require_text(ledger.get("sourceReviewSetPath"), f"{proof_id}.ledger.sourceReviewSetPath"),
+            integrity.get("payloadSha256"),
+            json.dumps(record, ensure_ascii=False, sort_keys=True),
+        ),
+    )
+
+
 def build_sqlite_mirror(payload, db_path):
     assert_safe_output_path(db_path)
     tmp_path = f"{db_path}.tmp"
@@ -201,6 +274,9 @@ def build_sqlite_mirror(payload, db_path):
     try:
         initialize_schema(conn)
         insert_metadata(conn, payload)
+        active_proof_ids = {event.get("proofId") for event in payload["events"]}
+        for record in payload["records"]:
+            insert_ledger_record(conn, record, active_proof_ids)
         for event in payload["events"]:
             insert_event(conn, event)
         conn.commit()
@@ -210,10 +286,11 @@ def build_sqlite_mirror(payload, db_path):
     os.replace(tmp_path, db_path)
     return {
         "sqliteVersion": sqlite3.sqlite_version,
+        "ledgerRecords": len(payload["records"]),
         "proofEvents": len(payload["events"]),
         "evidenceChecks": sum(len(event["proof"]["evidenceChecked"]) for event in payload["events"]),
         "outputDb": os.path.abspath(db_path),
-        "tables": ["metadata", "proof_events", "evidence_checks"],
+        "tables": ["metadata", "ledger_records", "proof_events", "evidence_checks"],
     }
 
 

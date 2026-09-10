@@ -19,6 +19,7 @@ Enable these protections on `main`:
 - do not allow bypassing required protections
 - block force pushes
 - block branch deletion
+- require signed commits
 
 ## Required status checks
 

@@ -770,7 +770,7 @@ function buildObsidianProofEventRows({ rootDir, loadProofLedgerFn = loadObsidian
     const rows = [];
     const seenProofIds = new Map();
     const seenVersionedProofTargets = new Map();
-    for (const event of ledger.events || []) {
+    for (const event of ledger.activeEvents || []) {
         const proofTargetKey = buildObsidianProofTargetKey(event);
         const versionedProofTargetKey = buildObsidianProofVersionedTargetKey(event);
         const obsidianStandardVersion = resolveObsidianProofStandardVersion(event);

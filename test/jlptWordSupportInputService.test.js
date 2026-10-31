@@ -144,6 +144,7 @@ function corpusFixtureWithoutDistributionCounts() {
 test("support input preflight emits reviewed typed records without placement assignments", () => {
     const value = fixture();
     const result = buildJlptWordSourceInputReport({
+        asOfDate: "2026-08-23",
         sourceId: "jmdict",
         sourceConfig: value.sourceConfig,
         sourceBuffer: Buffer.from(value.text),
@@ -162,6 +163,7 @@ test("support input preflight emits reviewed typed records without placement ass
 test("support input preflight rejects any embedded JLPT level", () => {
     const value = fixture({ withLevel: true });
     const result = buildJlptWordSourceInputReport({
+        asOfDate: "2026-08-23",
         sourceId: "jmdict",
         sourceConfig: value.sourceConfig,
         sourceBuffer: Buffer.from(value.text),
@@ -181,6 +183,7 @@ test("support input preflight rejects a nonempty evidence reference that is not 
     value.sourceConfig.sha256 = sha256(value.text);
     value.sourceConfig.byteSize = Buffer.byteLength(value.text);
     const result = buildJlptWordSourceInputReport({
+        asOfDate: "2026-08-23",
         sourceId: "jmdict",
         sourceConfig: value.sourceConfig,
         sourceBuffer: Buffer.from(value.text),
@@ -197,6 +200,7 @@ test("support input preflight rejects a nonempty evidence reference that is not 
 test("corpus support preflight rejects missing positive document and channel counts", () => {
     const value = corpusFixtureWithoutDistributionCounts();
     const result = buildJlptWordSourceInputReport({
+        asOfDate: "2026-08-23",
         sourceId: "tubelex-ja-frequency",
         sourceConfig: value.sourceConfig,
         sourceBuffer: Buffer.from(value.text),

@@ -315,10 +315,19 @@
   },
   "overrides": {
     "@huggingface/transformers": {
-      "sharp": "0.35.3"
+      "sharp": "0.35.5"
     },
     "onnxruntime-node": {
       "tar": "7.5.22"
+    },
+    "eslint": {
+      "minimatch": "11.0.1"
+    },
+    "@eslint/config-array": {
+      "minimatch": "11.0.1"
+    },
+    "nodemon": {
+      "minimatch": "11.0.1"
     }
   },
   "allowScripts": {

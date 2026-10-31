@@ -210,7 +210,7 @@ test("supply-chain audit catches dependency and workflow mutation abuse", () => 
         const ciWorkflowText = fs.readFileSync(ciWorkflowPath, "utf-8")
             .replace(/actions\/checkout@[a-f0-9]{40}/u, "actions/checkout@v4")
             .replace("run: npm ci --ignore-scripts", "run: npm ci")
-            .replace(/\r?\n\s+env:\r?\n\s+ONNXRUNTIME_NODE_INSTALL:\s+skip/u, "");
+            .replace(/\r?\n\s+env:\r?\n\s+ONNXRUNTIME_NODE_INSTALL_CUDA:\s+skip/u, "");
         fs.writeFileSync(ciWorkflowPath, ciWorkflowText, "utf-8");
 
         const report = buildSupplyChainAuditReport({ cwd: tempRepo });
@@ -220,7 +220,7 @@ test("supply-chain audit catches dependency and workflow mutation abuse", () => 
         assert.match(errors, /Direct dependency express must come from the npm registry/);
         assert.match(errors, /must pin actions\/checkout@v6\.0\.3 to the reviewed SHA/);
         assert.match(errors, /must use exact npm ci --ignore-scripts bootstrap and npm rebuild lifecycle-activation steps/);
-        assert.match(errors, /must set ONNXRUNTIME_NODE_INSTALL: skip/);
+        assert.match(errors, /must set ONNXRUNTIME_NODE_INSTALL_CUDA: skip/);
     } finally {
         fs.rmSync(tempRepo, { recursive: true, force: true });
     }

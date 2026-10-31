@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "checkedAt": "2026-09-03",
+  "checkedAt": "2026-10-31",
   "overrides": [
     {
       "parentPackage": "@huggingface/transformers",
       "packageName": "sharp",
-      "forcedVersion": "0.35.3",
+      "forcedVersion": "0.35.5",
       "declaredParentRange": "^0.34.1",
       "rangeCompatibility": "outside_declared_range",
-      "securityAdvisory": "GHSA-f88m-g3jw-g9cj",
+      "securityAdvisory": "GHSA-wq5f-xc86-pv6w",
       "scope": "The active Transformers.js integration is text-embedding only. It does not invoke image decoding, image preprocessing, or vision pipelines.",
-      "rationale": "The upstream 3.8.1 package still declares vulnerable sharp ^0.34.1. The reviewed override moves the installed native dependency to the patched 0.35 line while retaining the already-pinned Transformers.js API used by this repository.",
+      "rationale": "Transformers.js 3.8.1 remains pinned and declares sharp ^0.34.1. Sharp 0.35.5 fixes GHSA-f88m-g3jw-g9cj plus the later libheif GHSA-rgj7-g3m4-5g8c and librsvg GHSA-wq5f-xc86-pv6w advisories. Retain a narrowly validated text-embedding-only override rather than silently migrating the governed Transformers/ONNX runtime.",
       "validationCommands": [
         "npm run security:advisories",
         "npm run supply-chain:audit",
@@ -40,14 +40,15 @@
           ]
         },
         "upstreamEvidence": {
-          "checkedAt": "2026-09-03",
-          "latestParentVersion": "4.2.0",
-          "latestDeclaredRange": "^0.34.5",
-          "resolutionStatus": "parent_range_still_excludes_forced_version",
-          "verificationCommand": "npm view @huggingface/transformers version dependencies.sharp --json"
+          "checkedAt": "2026-10-31",
+          "latestParentVersion": "4.3.2",
+          "latestDeclaredRange": "^0.35.4",
+          "resolutionStatus": "newer_parent_major_accepts_forced_version_pending_migration",
+          "verificationCommand": "npm view @huggingface/transformers version dependencies.sharp --json",
+          "migrationRationale": "Transformers.js 4.3.2 adopts patched Sharp and ONNX 1.30.0, but this repository pins Transformers.js 3.8.1, its integrity, and the exact local model artifact and evaluation. A major runtime migration needs separate model/runtime validation. Retain Sharp 0.35.5 only within the existing AST-enforced feature-extraction and embedding-only boundary, with a fresh live benchmark against the unchanged pinned model."
         }
       },
-      "nextReview": "2026-09-28"
+      "nextReview": "2026-11-30"
     },
     {
       "parentPackage": "onnxruntime-node",
@@ -57,13 +58,110 @@
       "rangeCompatibility": "inside_declared_range",
       "securityAdvisory": "GHSA-r292-9mhp-454m",
       "scope": "The override applies only to the ONNX Runtime installer dependency graph.",
-      "rationale": "The parent range accepts tar 7.5.22, which is newer than the vulnerable <=7.5.20 range, but npm overrides pin the reviewed patched resolution so a stale lock refresh cannot reintroduce the advisory.",
+      "rationale": "Pinned onnxruntime-node 1.21.0 declares tar ^7.0.1. Tar 7.5.22 is newer than the GHSA-r292-9mhp-454m affected <=7.5.20 range and remains within that declaration. Retain the exact patched installer resolution. Upstream ONNX 1.30.0 removes tar, but requires migration of the governed Transformers/ONNX runtime rather than an unvalidated transitive replacement.",
       "validationCommands": [
         "npm run security:advisories",
         "npm run supply-chain:audit",
         "npm test -- --scope=nlp"
       ],
-      "nextReview": "2026-09-28"
+      "nextReview": "2026-11-30"
+    },
+    {
+      "parentPackage": "eslint",
+      "packageName": "minimatch",
+      "forcedVersion": "11.0.1",
+      "declaredParentRange": "^10.2.5",
+      "rangeCompatibility": "outside_declared_range",
+      "securityAdvisory": "GHSA-g3hv-75wg-m249",
+      "scope": "Development-only lint or watch-tool glob matching; not an application runtime dependency.",
+      "rationale": "Minimatch <11.0.1 is affected by glob preprocessing amplification. This parent still declares major 10. Reviewed installed consumer sources use only the retained Minimatch constructor/match/pattern or minimatch function APIs, not removed makeRe/matchOne/regexp APIs. Retain this exact parent-specific override only while source hashes, dev-only lock graph, full lint and cross-platform glob integration tests remain valid.",
+      "validationCommands": [
+        "npm run security:advisories",
+        "npm run supply-chain:audit",
+        "npm run lint",
+        "npm test -- --scope=ci-release"
+      ],
+      "compatibilityBoundary": {
+        "kind": "development_tool_glob",
+        "parentVersion": "10.8.0",
+        "consumerFiles": [
+          {
+            "path": "lib/eslint/eslint-helpers.js",
+            "sha256": "ba70c76105da4536ca807c70e6758180a4c8991a0f03a0694392a60a89a8bde0"
+          }
+        ],
+        "liveValidationCommands": [
+          "npm run lint",
+          "npm test -- --scope=ci-release"
+        ]
+      },
+      "nextReview": "2026-11-30"
+    },
+    {
+      "parentPackage": "@eslint/config-array",
+      "packageName": "minimatch",
+      "forcedVersion": "11.0.1",
+      "declaredParentRange": "^10.2.4",
+      "rangeCompatibility": "outside_declared_range",
+      "securityAdvisory": "GHSA-g3hv-75wg-m249",
+      "scope": "Development-only lint or watch-tool glob matching; not an application runtime dependency.",
+      "rationale": "Minimatch <11.0.1 is affected by glob preprocessing amplification. This parent still declares major 10. Reviewed installed consumer sources use only the retained Minimatch constructor/match/pattern or minimatch function APIs, not removed makeRe/matchOne/regexp APIs. Retain this exact parent-specific override only while source hashes, dev-only lock graph, full lint and cross-platform glob integration tests remain valid.",
+      "validationCommands": [
+        "npm run security:advisories",
+        "npm run supply-chain:audit",
+        "npm run lint",
+        "npm test -- --scope=ci-release"
+      ],
+      "compatibilityBoundary": {
+        "kind": "development_tool_glob",
+        "parentVersion": "0.23.5",
+        "consumerFiles": [
+          {
+            "path": "dist/cjs/index.cjs",
+            "sha256": "615889758115b8254f0c5ae4761ab659a98c4b4cc16da0f06215b9107ba49675"
+          },
+          {
+            "path": "dist/esm/index.js",
+            "sha256": "39fd87507068ce385a79a9672bdc5e1483ed6cddf195124ef29dad7ba07f60c6"
+          }
+        ],
+        "liveValidationCommands": [
+          "npm run lint",
+          "npm test -- --scope=ci-release"
+        ]
+      },
+      "nextReview": "2026-11-30"
+    },
+    {
+      "parentPackage": "nodemon",
+      "packageName": "minimatch",
+      "forcedVersion": "11.0.1",
+      "declaredParentRange": "^10.2.1",
+      "rangeCompatibility": "outside_declared_range",
+      "securityAdvisory": "GHSA-g3hv-75wg-m249",
+      "scope": "Development-only lint or watch-tool glob matching; not an application runtime dependency.",
+      "rationale": "Minimatch <11.0.1 is affected by glob preprocessing amplification. This parent still declares major 10. Reviewed installed consumer sources use only the retained Minimatch constructor/match/pattern or minimatch function APIs, not removed makeRe/matchOne/regexp APIs. Retain this exact parent-specific override only while source hashes, dev-only lock graph, full lint and cross-platform glob integration tests remain valid.",
+      "validationCommands": [
+        "npm run security:advisories",
+        "npm run supply-chain:audit",
+        "npm run lint",
+        "npm test -- --scope=ci-release"
+      ],
+      "compatibilityBoundary": {
+        "kind": "development_tool_glob",
+        "parentVersion": "3.1.14",
+        "consumerFiles": [
+          {
+            "path": "lib/monitor/match.js",
+            "sha256": "0a0a14d4899aa25edca320cb962130012a976f0eddc430dfd8834ee946632eb6"
+          }
+        ],
+        "liveValidationCommands": [
+          "npm run lint",
+          "npm test -- --scope=ci-release"
+        ]
+      },
+      "nextReview": "2026-11-30"
     }
   ]
 }

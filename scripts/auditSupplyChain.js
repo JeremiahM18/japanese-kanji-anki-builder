@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const { createHash } = require("node:crypto");
 const path = require("node:path");
 const ts = require("typescript");
 
@@ -298,7 +299,7 @@ function isCanonicalDate(value) {
     return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
 }
 
-function auditOutOfRangeOverrideCompatibility({ cwd, entry, policyCheckedAt }) {
+function auditOutOfRangeOverrideCompatibility({ cwd, entry, policyCheckedAt, installedParentVersion, pinnedParentVersion }) {
     const errors = [];
     const key = `${entry.parentPackage || "(missing)"}>${entry.packageName || "(missing)"}`;
     const boundary = entry.compatibilityBoundary;
@@ -328,12 +329,15 @@ function auditOutOfRangeOverrideCompatibility({ cwd, entry, policyCheckedAt }) {
     }
 
     const upstream = boundary?.upstreamEvidence;
+    const migrationStatus = "newer_parent_major_accepts_forced_version_pending_migration";
+    const migrationPending = upstream?.resolutionStatus === migrationStatus;
     const expectedUpstreamFields = [
         "checkedAt",
         "latestDeclaredRange",
         "latestParentVersion",
         "resolutionStatus",
         "verificationCommand",
+        ...(migrationPending ? ["migrationRationale"] : []),
     ].sort();
     const actualUpstreamFields = Object.keys(upstream || {}).sort();
     assertCondition(
@@ -354,21 +358,48 @@ function auditOutOfRangeOverrideCompatibility({ cwd, entry, policyCheckedAt }) {
         `${key} upstreamEvidence.latestParentVersion must be an exact semantic version.`
     );
     assertCondition(
-        upstream?.resolutionStatus === "parent_range_still_excludes_forced_version",
+        upstream?.resolutionStatus === "parent_range_still_excludes_forced_version" || migrationPending,
         errors,
-        `${key} upstreamEvidence.resolutionStatus must remain parent_range_still_excludes_forced_version while the override is active.`
+        `${key} upstreamEvidence.resolutionStatus must declare an unresolved parent range or a reviewed newer-major migration.`
     );
     assertCondition(
         upstream?.verificationCommand === `npm view ${entry.parentPackage} version dependencies.${entry.packageName} --json`,
         errors,
         `${key} upstreamEvidence.verificationCommand must query the governed parent and child dependency.`
     );
+    if (migrationPending) {
+        const installed = parseSimpleSemver(installedParentVersion);
+        const latest = parseSimpleSemver(upstream?.latestParentVersion);
+        assertCondition(
+            installed !== null && pinnedParentVersion === installedParentVersion,
+            errors,
+            `${key} pending migration requires an exact direct parent pin matching the installed lockfile version.`
+        );
+        assertCondition(
+            installed !== null && latest !== null && latest[0] > installed[0],
+            errors,
+            `${key} pending migration requires a strictly newer parent major, not a same-major compatible update.`
+        );
+        assertCondition(
+            typeof upstream?.migrationRationale === "string" && upstream.migrationRationale.trim().length > 0,
+            errors,
+            `${key} pending migration requires a nonempty migrationRationale.`
+        );
+    }
+    assertCondition(
+        typeof upstream?.latestDeclaredRange === "string" && upstream.latestDeclaredRange.trim().length > 0,
+        errors,
+        `${key} upstreamEvidence.latestDeclaredRange must record a reviewed dependency range.`
+    );
     if (entry.forcedVersion && upstream?.latestDeclaredRange) {
         try {
+            const latestAcceptsForcedVersion = satisfiesReviewedSimpleRange(entry.forcedVersion, upstream.latestDeclaredRange);
             assertCondition(
-                !satisfiesReviewedSimpleRange(entry.forcedVersion, upstream.latestDeclaredRange),
+                migrationPending ? latestAcceptsForcedVersion : !latestAcceptsForcedVersion,
                 errors,
-                `${key} latest upstream range ${upstream.latestDeclaredRange} now accepts ${entry.forcedVersion}; remove or re-review the override instead of retaining the compatibility exception.`
+                migrationPending
+                    ? `${key} pending migration requires latest upstream range ${upstream.latestDeclaredRange} to accept ${entry.forcedVersion}.`
+                    : `${key} latest upstream range ${upstream.latestDeclaredRange} now accepts ${entry.forcedVersion}; remove or re-review the override instead of retaining the compatibility exception.`
             );
         } catch (error) {
             errors.push(error.message);
@@ -729,6 +760,80 @@ function auditPackageManifest({ packageJson, lock }) {
     };
 }
 
+// This is deliberately not a general-purpose outside-range override exemption.
+const REVIEWED_GLOB_CONSUMERS = Object.freeze({
+    eslint: ["lib/eslint/eslint-helpers.js"],
+    "@eslint/config-array": ["dist/cjs/index.cjs", "dist/esm/index.js"],
+    nodemon: ["lib/monitor/match.js"],
+});
+
+function auditDevToolGlobCompatibility({ cwd, entry, lock }) {
+    const errors = [];
+    const key = `${entry.parentPackage}>${entry.packageName}`;
+    const boundary = entry.compatibilityBoundary;
+    const expectedFields = ["kind", "parentVersion", "consumerFiles", "liveValidationCommands"].sort();
+    assertCondition(
+        JSON.stringify(Object.keys(boundary || {}).sort()) === JSON.stringify(expectedFields),
+        errors, `${key} development-tool boundary must use the exact governed fields.`
+    );
+    const expectedFiles = REVIEWED_GLOB_CONSUMERS[entry.parentPackage];
+    assertCondition(
+        !!expectedFiles && entry.packageName === "minimatch" && entry.forcedVersion === "11.0.1"
+            && boundary?.kind === "development_tool_glob",
+        errors, `${key} is not a reviewed development-tool minimatch override.`
+    );
+    const parent = lock.packages?.[`node_modules/${entry.parentPackage}`];
+    assertCondition(
+        parent?.dev === true && parseSimpleSemver(boundary?.parentVersion) !== null
+            && parent?.version === boundary?.parentVersion,
+        errors, `${key} must retain its exact reviewed development-only parent version.`
+    );
+    for (const [packagePath, metadata] of Object.entries(lock.packages || {})) {
+        if (packagePath.endsWith("/node_modules/minimatch") || packagePath === "node_modules/minimatch") {
+            assertCondition(
+                metadata.dev === true && metadata.version === "11.0.1",
+                errors, `${key} every minimatch resolution must be development-only and patched at 11.0.1: ${packagePath}.`
+            );
+        }
+        if (metadata.dependencies?.minimatch || metadata.optionalDependencies?.minimatch) {
+            const reviewedRootPaths = Object.keys(REVIEWED_GLOB_CONSUMERS).map((name) => `node_modules/${name}`);
+            assertCondition(
+                metadata.dev === true && reviewedRootPaths.includes(packagePath),
+                errors, `${key} contains an unreviewed or production minimatch consumer: ${packagePath}.`
+            );
+        }
+    }
+    const files = Array.isArray(boundary?.consumerFiles) ? boundary.consumerFiles : [];
+    assertCondition(
+        JSON.stringify(files.map((file) => file?.path).sort()) === JSON.stringify([...(expectedFiles || [])].sort()),
+        errors, `${key} reviewed consumer file paths drifted.`
+    );
+    for (const file of files) {
+        assertCondition(
+            JSON.stringify(Object.keys(file || {}).sort()) === JSON.stringify(["path", "sha256"])
+                && /^[a-f0-9]{64}$/u.test(file?.sha256 || ""),
+            errors, `${key} consumer file must declare only path and exact SHA-256.`
+        );
+        if (!file || !expectedFiles?.includes(file.path)) {
+            continue;
+        }
+        const filePath = path.join(cwd, "node_modules", entry.parentPackage, file.path);
+        try {
+            const actualHash = createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+            assertCondition(actualHash === file.sha256, errors, `${key} reviewed consumer source hash drifted: ${file.path}.`);
+        } catch {
+            errors.push(`${key} reviewed installed consumer source is unavailable: ${file.path}.`);
+        }
+    }
+    const requiredCommands = ["npm run lint", "npm test -- --scope=ci-release"];
+    assertCondition(
+        JSON.stringify(boundary?.liveValidationCommands) === JSON.stringify(requiredCommands)
+            && requiredCommands.every((command) => entry.validationCommands?.includes(command)),
+        errors, `${key} requires full lint and ci-release integration validation commands.`
+    );
+    return { errors };
+}
+
 function auditDependencySecurityOverrides({
     cwd,
     packageJson,
@@ -846,11 +951,16 @@ function auditDependencySecurityOverrides({
             );
         }
         if (entry.rangeCompatibility === "outside_declared_range") {
-            const compatibilityAudit = auditOutOfRangeOverrideCompatibility({
-                cwd,
-                entry,
-                policyCheckedAt: policy?.checkedAt,
-            });
+            const compatibilityAudit = entry.packageName === "minimatch"
+                ? auditDevToolGlobCompatibility({ cwd, entry, lock })
+                : auditOutOfRangeOverrideCompatibility({
+                    cwd,
+                    entry,
+                    policyCheckedAt: policy?.checkedAt,
+                    installedParentVersion: parentMetadata?.version,
+                    pinnedParentVersion: packageJson.dependencies?.[entry.parentPackage]
+                        || packageJson.devDependencies?.[entry.parentPackage],
+                });
             errors.push(...compatibilityAudit.errors);
         }
     }
@@ -923,7 +1033,7 @@ function collectDependencyInstallSteps(workflowText) {
         .filter((step) => /^\s*run:\s*npm (?:ci|rebuild)(?:\s|$)/mu.test(step.text))
         .map((step) => ({
             name: step.name,
-            hasOnnxruntimeNodeInstallSkip: /^\s*ONNXRUNTIME_NODE_INSTALL:\s*skip\s*$/mu.test(step.text),
+            hasOnnxruntimeNodeInstallSkip: /^\s*ONNXRUNTIME_NODE_INSTALL_CUDA:\s*skip\s*$/mu.test(step.text),
             kind: /^\s*run:\s*npm ci --ignore-scripts\s*$/mu.test(step.text)
                 ? "no-script-bootstrap"
                 : /^\s*run:\s*npm rebuild\s*$/mu.test(step.text)
@@ -995,7 +1105,7 @@ function assertOnnxruntimeNodeCudaInstallSkipForEveryInstall(workflowText, relat
         assertCondition(
             step.hasOnnxruntimeNodeInstallSkip,
             errors,
-            `${relativePath} dependency install step "${step.name}" must set ONNXRUNTIME_NODE_INSTALL: skip so CI activates the reviewed CPU runtime without external CUDA NuGet side-downloads.`
+            `${relativePath} dependency install step "${step.name}" must set ONNXRUNTIME_NODE_INSTALL_CUDA: skip so CI activates the reviewed CPU runtime without external CUDA NuGet side-downloads.`
         );
     }
 }
@@ -1280,7 +1390,9 @@ function formatSupplyChainAuditReport(report) {
         lines.push(
             `- ${entry.parentPackage} > ${entry.packageName}@${entry.forcedVersion}; ${entry.rangeCompatibility}; ${entry.securityAdvisory}; next review ${entry.nextReview}`
         );
-        if (entry.compatibilityBoundary) {
+        if (entry.compatibilityBoundary?.kind === "development_tool_glob") {
+            lines.push(`  development-tool boundary: parent=${entry.compatibilityBoundary.parentVersion}; reviewed consumer files=${entry.compatibilityBoundary.consumerFiles?.length || 0}; minimatch=11.0.1; production use forbidden`);
+        } else if (entry.compatibilityBoundary) {
             const sourceBoundary = entry.compatibilityBoundary.sourceBoundary;
             const upstream = entry.compatibilityBoundary.upstreamEvidence;
             const productionImports = Array.isArray(sourceBoundary?.productionImports)
@@ -1304,7 +1416,7 @@ function formatSupplyChainAuditReport(report) {
         const bootstrapCount = workflow.installSteps.filter((step) => step.kind === "no-script-bootstrap").length;
         const activationCount = workflow.installSteps.filter((step) => step.kind === "reviewed-lifecycle-activation").length;
         const skipCount = workflow.installSteps.filter((step) => step.hasOnnxruntimeNodeInstallSkip).length;
-        lines.push(`- ${workflow.relativePath}: no-script bootstrap=${bootstrapCount}; reviewed lifecycle activation=${activationCount}; ONNXRUNTIME_NODE_INSTALL=skip ${skipCount}/${workflow.installSteps.length}`);
+        lines.push(`- ${workflow.relativePath}: no-script bootstrap=${bootstrapCount}; reviewed lifecycle activation=${activationCount}; ONNXRUNTIME_NODE_INSTALL_CUDA=skip ${skipCount}/${workflow.installSteps.length}`);
     }
 
     lines.push("Release artifact boundary:");
@@ -1345,6 +1457,7 @@ module.exports = {
     auditPackageManifest,
     auditDependencySecurityOverrides,
     auditOutOfRangeOverrideCompatibility,
+    auditDevToolGlobCompatibility,
     buildSupplyChainAuditReport,
     formatSupplyChainAuditReport,
     satisfiesReviewedSimpleRange,

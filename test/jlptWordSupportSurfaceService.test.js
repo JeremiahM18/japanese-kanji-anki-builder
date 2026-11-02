@@ -59,6 +59,7 @@ test("JMdict identity support emits exact typed facts without a JLPT placement l
         "",
     ].join("\n");
     const result = buildJlptWordSupportSurface({
+        asOfDate: "2026-08-23",
         sourceId: "jmdict",
         source: sourceConfig({ sourceId: "jmdict", text: sourceText, evidenceKinds: ["exact-dictionary-entry"] }),
         sourceText,
@@ -92,6 +93,7 @@ test("JMdict priority support excludes rows without an explicit positive priorit
         "",
     ].join("\n");
     const result = buildJlptWordSupportSurface({
+        asOfDate: "2026-08-23",
         sourceId: "jmdict-priority-commonness",
         source: sourceConfig({
             sourceId: "jmdict-priority-commonness",
@@ -118,6 +120,7 @@ test("TubeLex support accepts exact positive non-poor frequency and rejects ambi
         "",
     ].join("\n");
     const result = buildJlptWordSupportSurface({
+        asOfDate: "2026-08-23",
         sourceId: "tubelex-ja-frequency",
         source: sourceConfig({ sourceId: "tubelex-ja-frequency", text: sourceText, evidenceKinds: ["corpus-frequency"] }),
         sourceText,
@@ -149,6 +152,7 @@ test("TubeLex support excludes rows without positive document and channel counts
         "",
     ].join("\n");
     const result = buildJlptWordSupportSurface({
+        asOfDate: "2026-08-23",
         sourceId: "tubelex-ja-frequency",
         source: sourceConfig({ sourceId: "tubelex-ja-frequency", text: sourceText, evidenceKinds: ["corpus-frequency"] }),
         sourceText,
@@ -166,6 +170,7 @@ test("support-surface construction requires the profile's exact allowed use", ()
     source.allowedUse = [];
 
     assert.throws(() => buildJlptWordSupportSurface({
+        asOfDate: "2026-08-23",
         sourceId: "jmdict",
         source,
         sourceText,
@@ -180,6 +185,7 @@ test("support-surface construction fails closed on stale local integrity", () =>
     source.local.sha256 = "f".repeat(64);
 
     assert.throws(() => buildJlptWordSupportSurface({
+        asOfDate: "2026-08-23",
         sourceId: "jmdict",
         source,
         sourceText,

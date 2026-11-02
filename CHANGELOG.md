@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Security
+
+- Patch body-parser's compressed-request crash and refresh vulnerable Sharp, brace-expansion, fast-copy, proxy-addr, Zod, and development-only Minimatch resolutions. Retain narrow, dated, tested override boundaries rather than silently migrating the pinned NLP runtime.
+- Reverify exact native-package license evidence, correct the ONNX CPU-only install flag, and make stale test-fixture clocks deterministic. Hosted security reviews and source-risk owner renewal remain explicit blockers; these changes do not claim release readiness.
+
 ### Added
 
 - Added a fail-closed word multi-lane status process and repeatable diagnostic benchmark. The status process deep-freezes and shares only loaded inputs/read-only indexes while keeping Silver, Gold, Sapphire, Platinum, and Obsidian evaluator results and authority independent; no review counts, proof, denominators, or release posture are changed.

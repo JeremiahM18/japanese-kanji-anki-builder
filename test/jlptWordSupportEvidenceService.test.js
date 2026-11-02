@@ -351,7 +351,9 @@ test("typed support facts satisfy policy without becoming JLPT placement votes",
     assert.deepEqual(row.commonnessSourceIds, ["frequency"]);
 });
 
-test("support-only facts materialize separately without changing placement metrics", () => {
+test("support-only facts materialize separately without changing placement metrics", (t) => {
+    // The materializer intentionally uses the live clock; keep fixture freshness deterministic.
+    t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-08-23T00:00:00.000Z") });
     const raw = rawEvidence();
     raw.assignments = {};
     raw.supportRecords.frequency = {};
@@ -535,7 +537,9 @@ test("typed support records outside the full operational contract fail governanc
     assert.match(outsideIssue.reason, /outside.*operational.*contract/iu);
 });
 
-test("out-of-contract support cannot contribute support flags or materialized support sources", () => {
+test("out-of-contract support cannot contribute support flags or materialized support sources", (t) => {
+    // The materializer intentionally uses the live clock; keep fixture freshness deterministic.
+    t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-08-23T00:00:00.000Z") });
     const outsideIdentity = "校外|こうがい";
     const raw = rawEvidence();
     raw.assignments.placement_a[outsideIdentity] = {
@@ -676,7 +680,9 @@ test("governance rejects one canonical source row reused by a later in-contract 
     assert.match(report.issues.invalidSupportFacts[0].reason, /duplicate|reused.*row|evidence reference/iu);
 });
 
-test("canonical support row references remain bound to their exact in-contract identities", () => {
+test("canonical support row references remain bound to their exact in-contract identities", (t) => {
+    // The materializer intentionally uses the live clock; keep fixture freshness deterministic.
+    t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-08-23T00:00:00.000Z") });
     const secondIdentity = "校外|こうがい";
     const firstRecord = dictionaryRecord();
     const secondRecord = {

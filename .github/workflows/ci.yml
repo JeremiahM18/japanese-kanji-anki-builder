@@ -54,7 +54,7 @@ jobs:
 
       - name: Materialize dependencies without lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm ci --ignore-scripts
 
       - name: Audit supply-chain policy
@@ -80,7 +80,7 @@ jobs:
 
       - name: Activate reviewed dependency lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm rebuild
 
       - name: Run npm advisory audit
@@ -111,7 +111,7 @@ jobs:
 
       - name: Materialize dependencies without lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm ci --ignore-scripts
 
       - name: Audit supply-chain policy
@@ -122,7 +122,7 @@ jobs:
 
       - name: Activate reviewed dependency lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm rebuild
 
       - name: Run lint
@@ -220,7 +220,7 @@ jobs:
 
       - name: Materialize dependencies without lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm ci --ignore-scripts
 
       - name: Audit supply-chain policy
@@ -231,7 +231,7 @@ jobs:
 
       - name: Activate reviewed dependency lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm rebuild
 
       - name: Run release smoke verification
@@ -272,7 +272,7 @@ jobs:
 
       - name: Materialize dependencies without lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm ci --ignore-scripts
 
       - name: Audit supply-chain policy
@@ -283,7 +283,7 @@ jobs:
 
       - name: Activate reviewed dependency lifecycle scripts
         env:
-          ONNXRUNTIME_NODE_INSTALL: skip
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: npm rebuild
 
       - name: Run release gate

@@ -54,6 +54,8 @@ Use `data/README.md` for local-data setup. Native `.apkg` packaging also require
 
 The Express server and VOICEVOX are local-only by default. The server binds to `127.0.0.1`; use `SERVER_HOST=0.0.0.0` only for a deliberate trusted-network session. The governed VOICEVOX shape is host `127.0.0.1:50021` to container port `50121`, with the documented Docker hardening.
 
+Dependency bootstrap uses `npm ci --ignore-scripts`, followed by the supply-chain audit before reviewed lifecycle activation. For ONNX 1.21.0 CPU-only activation, set `ONNXRUNTIME_NODE_INSTALL_CUDA=skip`; the shorter `ONNXRUNTIME_NODE_INSTALL` variable does not suppress its GPU download. Exact security overrides and their validation boundaries are documented in [supply-chain security](docs/supply-chain-security.md).
+
 Treat ignored `data/`, `downloads/`, and `out/` content as local, review-required material. See [SECURITY.md](SECURITY.md), [docs/threat-model.md](docs/threat-model.md), and [docs/supply-chain-security.md](docs/supply-chain-security.md).
 
 ## Review Tiers
